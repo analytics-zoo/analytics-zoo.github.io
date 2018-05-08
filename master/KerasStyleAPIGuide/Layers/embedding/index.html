@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Embedding Layers - Analytics-Zoo Project</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Embedding", url: "#embedding", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+
+    <h2 id="embedding"><strong>Embedding</strong></h2>
+<p>Turn positive integers (indexes) into dense vectors of fixed size.</p>
+<p>The input of this layer should be 2D.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">Embedding(inputDim, outputDim, init = &quot;uniform&quot;, wRegularizer = null, inputShape = null)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">Embedding(input_dim, output_dim, init=&quot;uniform&quot;, W_regularizer=None, input_shape=None, name=None)
+</code></pre>
+
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>inputDim</code>: Int &gt; 0. Size of the vocabulary.</li>
+<li><code>outputDim</code>: Int &gt;= 0. Dimension of the dense embedding.</li>
+<li><code>init</code>: String representation of the initialization method for the weights of the layer. See <a href="../initialization/#available-initialization-methods">here</a> for available initialization strings. Default is "uniform".</li>
+<li><code>wRegularizer</code>: An instance of <a href="../../../APIGuide/Regularizers/">Regularizer</a>, (eg. L1 or L2 regularization), applied to the input weights matrices. Default is null.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+</ul>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala">import com.intel.analytics.bigdl.nn.keras.{Sequential, Embedding}
+import com.intel.analytics.bigdl.utils.Shape
+import com.intel.analytics.bigdl.tensor.Tensor
+
+val model = Sequential[Float]()
+model.add(Embedding(8, 2, inputShape = Shape(4)))
+val input = Tensor[Float](2, 4)
+input(Array(1, 1)) = 1
+input(Array(1, 2)) = 2
+input(Array(1, 3)) = 4
+input(Array(1, 4)) = 5
+input(Array(2, 1)) = 4
+input(Array(2, 2)) = 3
+input(Array(2, 3)) = 2
+input(Array(2, 4)) = 6
+val output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="scala">input: com.intel.analytics.bigdl.tensor.Tensor[Float] =
+1.0 2.0 4.0 5.0
+4.0 3.0 2.0 6.0
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x4]
+</code></pre>
+
+<p>Output is:</p>
+<pre><code class="scala">output: com.intel.analytics.bigdl.nn.abstractnn.Activity =
+(1,.,.) =
+0.03256504      -0.043232664
+-0.044753443    0.026075097
+0.045668535     0.02456015
+0.021222712     -0.04373116
+
+(2,.,.) =
+0.045668535     0.02456015
+0.03761902      -0.0014174521
+-0.044753443    0.026075097
+-0.030343587    -0.0015718295
+
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x4x2]
+</code></pre>
+
+<p><strong>Python example:</strong></p>
+<pre><code class="python">import numpy as np
+from bigdl.nn.keras.topology import Sequential
+from bigdl.nn.keras.layer import Embedding
+
+model = Sequential()
+model.add(Embedding(8, 2, input_shape=(4,)))
+input = np.random.randint(4, size=(2, 4))
+output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="python">[[0 2 2 2]
+ [2 1 1 0]]
+</code></pre>
+
+<p>Output is</p>
+<pre><code class="python">[[[ 0.0094721  -0.01927968]
+  [-0.00483634 -0.03992473]
+  [-0.00483634 -0.03992473]
+  [-0.00483634 -0.03992473]]
+
+ [[-0.00483634 -0.03992473]
+  [-0.03603687 -0.03708585]
+  [-0.03603687 -0.03708585]
+  [ 0.0094721  -0.01927968]]]
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
