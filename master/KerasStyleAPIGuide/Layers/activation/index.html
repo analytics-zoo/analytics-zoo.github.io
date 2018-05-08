@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Activation - Analytics-Zoo Project</title>
+    <link href="../../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Activation", url: "#activation", children: [
+          ]},
+          {title: "Available Activations", url: "#available-activations", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+
+    <h2 id="activation"><strong>Activation</strong></h2>
+<p>Simple activation function to be applied to the output.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">Activation(activation, inputShape = null)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">Activation(activation, input_shape=None, name=None)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>activation</code>: Name of the activation function as string. See <a href="#available-activations">here</a> for available activation strings.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+</ul>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala">import com.intel.analytics.bigdl.nn.keras.{Sequential, Activation}
+import com.intel.analytics.bigdl.utils.Shape
+import com.intel.analytics.bigdl.tensor.Tensor
+
+val model = Sequential[Float]()
+model.add(Activation(&quot;tanh&quot;, inputShape = Shape(3)))
+val input = Tensor[Float](2, 3).randn()
+val output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="scala">input: com.intel.analytics.bigdl.tensor.Tensor[Float] =
+2.1659365   0.28006053  -0.20148286
+0.9146865    3.4301455    1.0930616
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x3]
+</code></pre>
+
+<p>Output is:</p>
+<pre><code class="scala">output: com.intel.analytics.bigdl.nn.abstractnn.Activity =
+0.9740552    0.2729611    -0.1988
+ 0.723374   0.99790496  0.7979928
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x3]
+</code></pre>
+
+<p><strong>Python example:</strong></p>
+<pre><code class="python">import numpy as np
+from bigdl.nn.keras.topology import Sequential
+from bigdl.nn.keras.layer import Activation
+
+model = Sequential()
+model.add(Activation(&quot;tanh&quot;, input_shape=(3, )))
+input = np.random.random([2, 3])
+output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="python">[[ 0.26202468  0.15868397  0.27812652]
+ [ 0.45931689  0.32100054  0.51839282]]
+</code></pre>
+
+<p>Output is</p>
+<pre><code class="python">[[ 0.2561883   0.15736534  0.27117023]
+ [ 0.42952728  0.31041133  0.47645861]]
+</code></pre>
+
+<p>Note that the following two pieces of code will be equivalent:</p>
+<pre><code class="python">model.add(Dense(32))
+model.add(Activation('relu'))
+</code></pre>
+
+<pre><code class="python">model.add(Dense(32, activation=&quot;relu&quot;))
+</code></pre>
+
+<hr />
+<h2 id="available-activations"><strong>Available Activations</strong></h2>
+<ul>
+<li><a href="../../../APIGuide/Layers/Activations/#relu">relu</a></li>
+<li><a href="../../../APIGuide/Layers/Activations/#tanh">tanh</a></li>
+<li><a href="../../../APIGuide/Layers/Activations/#sigmoid">sigmoid</a></li>
+<li><a href="../../../APIGuide/Layers/Activations/#hardsigmoid">hard_sigmoid</a></li>
+<li><a href="../../../APIGuide/Layers/Activations/#softmax">softmax</a></li>
+<li><a href="../../../APIGuide/Layers/Activations/#softplus">softplus</a></li>
+<li><a href="../../../APIGuide/Layers/Activations/#softsign">softsign</a></li>
+</ul>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
