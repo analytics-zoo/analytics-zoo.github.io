@@ -33,6 +33,12 @@
       var is_top_frame = false;
         
         var pageToc = [
+          {title: "Overview", url: "#overview", children: [
+              {title: "Loading a pre-trained model", url: "#loading-a-pre-trained-model" },
+              {title: "Remove the last a few layers", url: "#remove-the-last-a-few-layers" },
+              {title: "Freeze some layers", url: "#freeze-some-layers" },
+              {title: "Example", url: "#example" },
+          ]},
         ];
 
     </script>
@@ -50,7 +56,45 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Transfer Learning</strong></h1>
     <hr>
-    
+    <h2 id="overview">Overview</h2>
+<p>Analytics Zoo provides some useful utilities for transfer learning.</p>
+<h3 id="loading-a-pre-trained-model">Loading a pre-trained model</h3>
+<p>We can use the <code>Net</code> api to load a pre-trained model, including models saved by Analytics Zoo,
+BigDL, Torch, Caffe and Tensorflow. Please refer to <a href="../../APIGuide/PipelineAPI/net/">Net API Guide</a></p>
+<h3 id="remove-the-last-a-few-layers">Remove the last a few layers</h3>
+<p>When a model is loaded using <code>Net</code>, we can use the <code>newGraph(output)</code> api to define a Model with
+the output specified by the parameter.</p>
+<p>For example, </p>
+<p>In scala:</p>
+<pre><code class="scala">val inception = Net.loadBigDL[Float](inception_path)
+      .newGraph(output = &quot;pool5/drop_7x7_s1&quot;)
+
+</code></pre>
+
+<p>In python:</p>
+<pre><code class="python">full_model = Net.load_bigdl(model_path)
+# create a new model by remove layers after pool5/drop_7x7_s1
+model = full_model.new_graph([&quot;pool5/drop_7x7_s1&quot;])
+</code></pre>
+
+<p>The returning model's output layer is "pool5/drop_7x7_s1".</p>
+<h3 id="freeze-some-layers">Freeze some layers</h3>
+<p>In transfer learning, we often want to freeze some layers to prevent overfitting. In Analytics Zoo,
+we can use the <code>freezeUpTo(endPoint)</code> api to do that.</p>
+<p>For example,</p>
+<p>In scala:</p>
+<pre><code class="scala">inception.freezeUpTo(&quot;pool4/3x3_s2&quot;) // freeze layer pool4/3x3_s2 and the layers before it
+</code></pre>
+
+<p>In python:</p>
+<pre><code class="python"># freeze layers from input to pool4/3x3_s2 inclusive
+model.freeze_up_to([&quot;pool4/3x3_s2&quot;])
+</code></pre>
+
+<p>This will freeze all the layers from the input layer to "pool4/3x3_s2"</p>
+<h3 id="example">Example</h3>
+<p>For a complete example, refer to the <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/nnframes/finetune">scala transfer learning example</a>
+and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/nnframes/finetune">python transfer learning example</a></p>
 
   <br>
 </div>

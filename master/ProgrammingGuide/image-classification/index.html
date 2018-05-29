@@ -33,6 +33,9 @@
       var is_top_frame = false;
         
         var pageToc = [
+          {title: "Analytics Zoo Image Classification", url: "#analytics-zoo-image-classification", children: [
+              {title: "Download link", url: "#download-link" },
+          ]},
         ];
 
     </script>
@@ -50,7 +53,60 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Image Classification</strong></h1>
     <hr>
-    
+    <h1 id="analytics-zoo-image-classification">Analytics Zoo Image Classification</h1>
+<p>Analytics Zoo provides a collection of pre-trained models for Image Classification. These models can be used for out-of-the-box inference if you are interested in categories already in the corresponding datasets. According to the business scenarios, users can embed the models locally, distributedly in Spark such as Apache Storm and Apache Flink.</p>
+<p><strong><em>Image Classification models</em></strong></p>
+<p>Analytics Zoo provides several typical kind of pre-trained Image Classfication models : <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networksese">Alexnet</a>, <a href="https://arxiv.org/abs/1409.4842">Inception-V1</a>, <a href="https://arxiv.org/abs/1409.1556">VGG</a>, <a href="https://arxiv.org/abs/1512.03385">Resnet</a>, <a href="https://arxiv.org/abs/1608.06993">Densenet</a>, <a href="https://arxiv.org/abs/1704.04861">Mobilenet</a>, <a href="https://arxiv.org/abs/1602.07360">Squeezenet</a> models. To use these models, please check below examples.</p>
+<p><strong>Scala</strong></p>
+<p><a href="https://github.com/intel-analytics/zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/imageclassification">Scala example</a></p>
+<p>It's very easy to apply the model for inference with below code piece.</p>
+<pre><code class="scala">val imc = ImageClassifier.loadModel[Float](params.model)
+val data = ImageSet.read(params.image, sc, params.nPartition)
+val output = imc.predictImageSet(data)
+</code></pre>
+
+<p>User can also define his own configuration to do the inference with below code piece.</p>
+<pre><code class="scala">val imc = ImageClassifier.loadModel[Float](params.model)
+val data = ImageSet.read(params.image, sc, params.nPartition)
+val preprocessing = ImageResize(256, 256)-&gt; ImageCenterCrop(224, 224) -&gt;
+        ImageChannelNormalize(123, 117, 104) -&gt;
+        ImageMatToTensor[Float]() -&gt;
+        ImageSetToSample[Float]()
+val config = ImageConfigure[Float](preprocessing)        
+val output = imc.predictImageSet(data, config)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<p><a href="https://github.com/intel-analytics/zoo/tree/master/pyzoo/zoo/examples/imageclassification">Python example</a></p>
+<p>It's very easy to apply the model for inference with below code piece.</p>
+<pre><code>imc = ImageClassifier.load_model(model_path)
+image_set = ImageSet.read(img_path, sc)
+output = imc.predict_image_set(image_set)
+</code></pre>
+
+<p>User can also define his own configuration to do the inference with below code piece.</p>
+<pre><code>imc = ImageClassifier.load_model(model_path)
+image_set = ImageSet.read(img_path, sc)
+preprocessing = ChainedPreprocessing(
+                [ImageResize(256, 256), ImageCenterCrop(224, 224),
+                ImageChannelNormalize(123.0, 117.0, 104.0), ImageMatToTensor(),
+                ImageSetToSample()])
+config = ImageConfigure(preprocessing) 
+output = imc.predict_image_set(image_set)
+</code></pre>
+
+<p>For preprocessors for Image Classification models, please check <a href="https://github.com/intel-analytics/zoo/blob/master/zoo/src/main/scala/com/intel/analytics/zoo/models/image/imageclassification/ImageClassificationConfig.scala">Image Classification Config</a></p>
+<h2 id="download-link">Download link</h2>
+<ul>
+<li><a href="https://s3-ap-southeast-1.amazonaws.com/analytics-zoo-models/imageclassification/imagenet/analytics-zoo_alexnet_imagenet_0.1.0">Alexnet</a></li>
+<li><a href="https://s3-ap-southeast-1.amazonaws.com/analytics-zoo-models/imageclassification/imagenet/analytics-zoo_inception-v1_imagenet_0.1.0">Inception-V1</a></li>
+<li><a href="https://s3-ap-southeast-1.amazonaws.com/analytics-zoo-models/imageclassification/imagenet/analytics-zoo_vgg-16_imagenet_0.1.0">VGG-16</a></li>
+<li><a href="https://s3-ap-southeast-1.amazonaws.com/analytics-zoo-models/imageclassification/imagenet/analytics-zoo_vgg-19_imagenet_0.1.0">VGG-19</a></li>
+<li><a href="https://s3-ap-southeast-1.amazonaws.com/analytics-zoo-models/imageclassification/imagenet/analytics-zoo_resnet-50_imagenet_0.1.0">Resnet-50</a></li>
+<li><a href="https://s3-ap-southeast-1.amazonaws.com/analytics-zoo-models/imageclassification/imagenet/analytics-zoo_densenet-161_imagenet_0.1.0">Densenet-161</a></li>
+<li><a href="https://s3-ap-southeast-1.amazonaws.com/analytics-zoo-models/imageclassification/imagenet/analytics-zoo_mobilenet_imagenet_0.1.0">Mobilenet</a></li>
+<li><a href="https://s3-ap-southeast-1.amazonaws.com/analytics-zoo-models/imageclassification/imagenet/analytics-zoo_squeezenet_imagenet_0.1.0">Squeezenet</a></li>
+</ul>
 
   <br>
 </div>
