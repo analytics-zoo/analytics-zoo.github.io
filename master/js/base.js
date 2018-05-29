@@ -186,6 +186,49 @@ function cleanUrlPath(relUrl) {
 }
 
 /**
+ *function to load versions
+ */
+function loadVersion() {
+  var file = '/version-list'
+  var result = null;
+  var xmlhttp = new XMLHttpRequest();
+  var versionSelect = document.getElementById("versions")
+  xmlhttp.open("GET", file, true);
+  xmlhttp.send();
+  xmlhttp.onload = function () {
+    if (xmlhttp.status == 200) {
+      result = xmlhttp.responseText;
+      var versionsList = result.split(/\r?\n/);
+      var len = versionsList.length
+      for (var i = 0; i < len; i++) {
+        if (versionsList[i] === "") {
+          continue;   
+        }
+        
+        var opt = document.createElement('option');
+        opt.value = versionsList[i];
+        opt.innerHTML = versionsList[i];
+        versionSelect.appendChild(opt);
+      }
+      var path = window.location.pathname;
+      var dir = path.split("/")[1];
+      var idx = dir.indexOf("#");
+      if (idx != -1) {
+        dir = dir.substring(idx + 1, dir.length);
+      }
+      versionSelect.value = dir;
+    }
+  }
+}
+
+/**
+ *function to switch versions
+ */
+function switchVersion(opt) {
+  window.location = "/" + opt.value + "/index.html"
+}
+
+/**
  * Initialize the main window.
  */
 function initMainWindow() {
@@ -252,7 +295,11 @@ function initMainWindow() {
 
   // Load the iframe now, and whenever we navigate the top frame.
   setTimeout(function() { updateIframe(false); }, 0);
-  $(window).on('popstate', function() { updateIframe(true); });
+  // For our usage, 'popstate' or 'hashchange' would work, but only 'hashchange' work on IE.
+  $(window).on('hashchange', function() { updateIframe(true); });
+
+  // load version
+  loadVersion()
 }
 
 function onIframeBeforeLoad(url) {
@@ -355,7 +402,7 @@ if (is_top_frame) {
 
   // Other initialization of iframe contents.
   hljs.initHighlightingOnLoad();
-  $(document).ready(() => {
+  $(document).ready(function() {
     $('table').addClass('table table-striped table-hover table-bordered table-condensed');
   });
 }

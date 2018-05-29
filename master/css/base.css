@@ -1,5 +1,5 @@
 body {
-    background-color: #f8f8f8;
+    background-color: #ffffff;
 }
 
 /***********************************************************************
@@ -7,7 +7,7 @@ body {
  ***********************************************************************/
 
 .navbar {
-  background-color: #546e7a;
+  background-color: #0071c5;
   box-shadow: 0 1.5px 3px rgba(0,0,0,.24), 0 3px 8px rgba(0,0,0,.05);
   border: none;
   border-radius: 0px;
@@ -21,7 +21,12 @@ body {
 }
 
 .wm-page-content {
-  max-width: 700px;
+  max-width: 850px;
+  margin-left: unset;
+  background-color: #ffffff;
+  padding-top: 20px;
+  padding-left: 40px;
+  padding-right: 50px;
 }
 
 .wm-page-top-frame { display: none; }
@@ -32,10 +37,9 @@ body {
   display: inline-block;
   float: left;
   overflow: visible;
-  width: 0px;
   height: 50px;
   color: #fff;
-  font-size: 18px;
+  font-size: 22px;
   white-space: nowrap;
   text-decoration: none;
 }
@@ -44,6 +48,7 @@ body {
   color: #fff;
   text-decoration: none;
 }
+
 
 .wm-vcenter:before {
   content: '';
@@ -62,6 +67,8 @@ body {
   display: inline-block;
   line-height: 16px;
   vertical-align: middle;
+  float: left;
+  margin: 0 0% 0% 0;
 }
 
 .wm-top-logo {
@@ -71,9 +78,26 @@ body {
 .wm-top-version {
   border: 1px solid #ddd;
   border-radius: 3px;
-  padding: 0px 5px;
+  padding: 0px 3px;
   color: #ddd;
   font-size: 8pt;
+}
+
+.wm-top-more{
+  height: 50px;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-size: 10pt;
+}
+
+.wm-top-version-select {
+  background-color: #0071c5;
+  border: none
+}
+
+.wm-top-version-select option {
+  background-color: #f2f2f2;
+  color: #546e7a
 }
 
 .wm-top-tool {
@@ -86,7 +110,7 @@ body {
   right: 0px;
   padding: inherit;
   width: 100%;
-  background-color: #546e7a;
+  background-color: #0071c5;
 }
 
 .wm-top-search {
@@ -96,6 +120,7 @@ body {
 #wm-toc-button {
   margin-right: 1rem;
   margin-left: 0.5rem;
+  display: none;
 }
 
 /***********************************************************************
@@ -130,7 +155,6 @@ body {
   transition: padding-left 0.3s;
   /* required for iPhone to scroll the contained iframe */
   -webkit-overflow-scrolling: touch;
-  overflow: auto;
 }
 
 .wm-toc-pane.wm-toc-dropdown {
@@ -148,6 +172,10 @@ body {
   margin-bottom: 5px;
   padding-bottom: 5px;
   border-bottom: 1px solid #e0e0e0;
+}
+
+.wm-toc-repolink {
+  font-weight: bold;
 }
 
 .wm-toc-hidden > .wm-toc-pane {
@@ -210,6 +238,9 @@ body {
     padding-left: 0px;
     overflow: visible;
   }
+  #wm-toc-button {
+    display: inline;
+  }
 }
 
 .wm-toctree {
@@ -219,7 +250,7 @@ body {
 }
 
 .wm-toctree a, .wm-toctree a:visited, .wm-toctree a:hover, .wm-toctree a:focus {
-  color: #546e7a;
+  color: #333;
   text-decoration: none;
   outline: none;
 }
@@ -249,6 +280,7 @@ body {
   vertical-align: middle;
   font-size: 8px;
   width: 14px;
+  margin-left: -14px;
 }
 
 .wm-toc-opener.wm-toc-open > .wm-toc-text::before {
@@ -256,7 +288,7 @@ body {
 }
 
 .wm-toc-li.wm-current, .wm-toc-li.wm-current:hover {
-  background-color: #546e7a;
+  background-color: #0071c5;
   color: white;
 }
 
@@ -298,6 +330,8 @@ body {
   min-width: 100%;
   height: 100%;
   border: none;
+  /*padding-top: 10px;*/
+  padding-bottom: 10px;
 }
 
 .btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn.active.focus {
@@ -478,7 +512,7 @@ a:hover code, a:focus code {
 
 footer {
     margin-bottom: 10px;
-    text-align: center;
+    /*text-align: center;*/
     font-weight: 200;
     font-size: smaller;
 }

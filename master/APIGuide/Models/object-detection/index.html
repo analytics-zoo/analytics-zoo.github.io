@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Object Detection - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Analytics Zoo Object Detection API", url: "#analytics-zoo-object-detection-api", children: [
+              {title: "Model Load", url: "#model-load" },
+              {title: "Creat image configuration", url: "#creat-image-configuration" },
+              {title: "Predict with loaded object detection model", url: "#predict-with-loaded-object-detection-model" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Object Detection</strong></h1>
+    <hr>
+    <h1 id="analytics-zoo-object-detection-api">Analytics Zoo Object Detection API</h1>
+<p>Analytics Zoo provides a collection of pre-trained models for Object Detection. These models can be used for out-of-the-box inference if you are interested in categories already in the corresponding datasets. According to the business scenarios. User can run the inference as local program without Spark Context, or in a distributed environment such like Apache Spark, Apache Storm or Apache Flink.</p>
+<h2 id="model-load">Model Load</h2>
+<p>Use <code>ObjectDetector.loadModel</code>(in Scala) or <code>ObjectDetector.load_model</code> (in Python) to load an pre-trained Analytics Zoo model or third-party(BigDL) model. We just need to specify the model path and optionally weight path if exists where we previously saved the model.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">import com.intel.analytics.zoo.models.image.objectdetection._
+
+val model = ObjectDetector.loadModel[Float](&quot;/tmp/zoo.model&quot;) //load from local fs
+val model = ObjectDetector.loadModel(&quot;hdfs://...&quot;) //load from hdfs
+val model = ObjectDetector.loadModel(&quot;s3://...&quot;) //load from s3
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">from zoo.models.image.objectdetection import *
+
+model = ObjectDetector.load_model(&quot;/tmp/zoo.model&quot;) //load from local fs
+model = ObjectDetector.load_model(&quot;hdfs://...&quot;) //load from hdfs
+model = ObjectDetector.load_model(&quot;s3://...&quot;) //load from s3
+</code></pre>
+
+<h2 id="creat-image-configuration">Creat image configuration</h2>
+<p>If the loaded model is a published Analytics Zoo model, when you call <code>ObjectDetector.loadModel</code>(in Scala) or <code>ObjectDetector.load_model</code> (in Python), it would create the default Image Configuration for model inference. If the loaded model is not a published Analytics Zoo model or you want to customize the configuration for model inference, you need to create your own Image Configuration.</p>
+<p><strong>Scala API</strong></p>
+<pre><code>ImageConfigure[T: ClassTag](
+  preProcessor: Preprocessing[ImageFeature, ImageFeature] = null,
+  postProcessor: Preprocessing[ImageFeature, ImageFeature] = null,
+  batchPerPartition: Int = 4,
+  labelMap: Map[Int, String] = null,
+  featurePaddingParam: Option[PaddingParam[T]] = None)
+</code></pre>
+
+<ul>
+<li>preProcessor: preprocessor of ImageSet before model inference</li>
+<li>postProcessor: postprocessor of ImageSet after model inference</li>
+<li>batchPerPartition: batch size per partition</li>
+<li>labelMap: label mapping</li>
+<li>featurePaddingParam: featurePaddingParam if the inputs have variant size</li>
+</ul>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">import com.intel.analytics.zoo.models.image.common._
+import com.intel.analytics.zoo.feature.image._
+
+val preprocessing = ImageResize(256, 256)-&gt; ImageCenterCrop(224, 224) -&gt;
+                     ImageChannelNormalize(123, 117, 104) -&gt;
+                     ImageMatToTensor[Float]() -&gt;
+                     ImageSetToSample[Float]()
+val config = ImageConfigure[Float](preProcessor=preprocessing)
+</code></pre>
+
+<p><strong>Python API</strong></p>
+<pre><code>class ImageConfigure()
+    def __init__(self, pre_processor=None,
+                 post_processor=None,
+                 batch_per_partition=4,
+                 label_map=None, feature_padding_param=None, jvalue=None, bigdl_type=&quot;float&quot;)
+</code></pre>
+
+<ul>
+<li>pre_processor:  preprocessor of ImageSet before model inference</li>
+<li>post_processor:  postprocessor of ImageSet after model inference</li>
+<li>batch_per_partition:  batch size per partition</li>
+<li>label_map mapping:  from prediction result indexes to real dataset labels</li>
+<li>feature_padding_param:  featurePaddingParam if the inputs have variant size</li>
+</ul>
+<p><strong>Python example</strong></p>
+<pre><code class="python">from zoo.models.image.common.image_config import *
+from zoo.feature.image.imagePreprocessing import *
+
+preprocessing = ChainedPreprocessing(
+                [ImageResize(256, 256), ImageCenterCrop(224, 224),
+                ImageChannelNormalize(123.0, 117.0, 104.0), ImageMatToTensor(),
+                ImageSetToSample()])
+config = ImageConfigure(pre_processor=preprocessing)
+</code></pre>
+
+<h2 id="predict-with-loaded-object-detection-model">Predict with loaded object detection model</h2>
+<p><strong>Scala API</strong></p>
+<pre><code>predictImageSet(image: ImageSet, configure: ImageConfigure[T] = null)
+</code></pre>
+
+<ul>
+<li>image:  Analytics Zoo ImageSet to be predicted</li>
+<li>configure: Image Configure for this prediction</li>
+</ul>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">import com.intel.analytics.zoo.models.image.objectdetection._
+import com.intel.analytics.zoo.common.NNContext
+import com.intel.analytics.zoo.feature.image._
+
+val imagePath=&quot;/tmp/image&quot;
+val sc = NNContext.getNNContext()
+val model = ObjectDetector.loadModel(&quot;/tmp/analytics-zoo_ssd-mobilenet-300x300_PASCAL_0.1.0.model&quot;)
+val data = ImageSet.read(image_path, sc)
+val output = model.predictImageSet(data)
+</code></pre>
+
+<p><strong>Python API</strong></p>
+<pre><code>predict_image_set(image, configure=None)
+</code></pre>
+
+<ul>
+<li>image:  Analytics Zoo ImageSet to be predicted</li>
+<li>configure: Image Configure for this  prediction</li>
+</ul>
+<p><strong>Python example</strong></p>
+<pre><code class="python">from zoo.common.nncontext import get_nncontext
+from zoo.models.image.objectdetection import *
+
+imc = ObjectDetector.load_model(model_path)
+image_set = ImageSet.read(img_path, sc)
+output = imc.predict_image_set(image_set)
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

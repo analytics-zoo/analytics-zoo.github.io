@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Run - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Run after pip install", url: "#run-after-pip-install", children: [
+              {title: "Precondition", url: "#precondition" },
+              {title: "Use an Interactive Shell", url: "#use-an-interactive-shell" },
+              {title: "Use Jupyter Notebook", url: "#use-jupyter-notebook" },
+              {title: "Example code", url: "#example-code" },
+              {title: "Configurations", url: "#configurations" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Run</strong></h1>
+    <hr>
+    <h2 id="run-after-pip-install">Run after pip install</h2>
+<h3 id="precondition"><strong>Precondition</strong></h3>
+<ul>
+<li><a href="../install.md/#install-from-pip">Install analytics-zoo from pip</a></li>
+<li>Only <strong>Python 2.7</strong>, <strong>Python 3.5</strong> and <strong>Python 3.6</strong> are supported for now.</li>
+</ul>
+<hr />
+<h3 id="use-an-interactive-shell"><strong>Use an Interactive Shell</strong></h3>
+<ul>
+<li>Type <code>python</code> in the command line to start a REPL.</li>
+<li>Try to run the <a href="#example-code">example code</a> to verify the installation.</li>
+</ul>
+<hr />
+<h3 id="use-jupyter-notebook"><strong>Use Jupyter Notebook</strong></h3>
+<ul>
+<li>Just start jupyter notebook as you normally do, e.g.</li>
+</ul>
+<pre><code class="bash">jupyter notebook --notebook-dir=./ --ip=* --no-browser
+</code></pre>
+
+<ul>
+<li>Try to run the <a href="#example-code">example code</a> to verify the installation.</li>
+</ul>
+<hr />
+<h3 id="example-code"><strong>Example code</strong></h3>
+<p>To verify if Analytics Zoo can run successfully, run the following simple code:</p>
+<pre><code class="python">import zoo.version
+from zoo.common.nncontext import *
+from zoo.pipeline.api.keras.models import *
+from zoo.pipeline.api.keras.layers import *
+
+# Get the current Analytics Zoo version
+zoo.version.__version__
+# Create or get a SparkContext. This will also init the BigDL engine.
+sc = get_nncontext()
+# Create a Sequential model containing a Dense layer.
+model = Sequential()
+model.add(Dense(8, input_shape=(10, )))
+</code></pre>
+
+<h3 id="configurations"><strong>Configurations</strong></h3>
+<ul>
+<li>Increase memory</li>
+</ul>
+<pre><code class="bash">export SPARK_DRIVER_MEMORY=20g
+</code></pre>
+
+<ul>
+<li>Add extra jars or python packages</li>
+</ul>
+<p>&emsp; Set the environment variables <code>BIGDL_JARS</code> and <code>BIGDL_PACKAGES</code> <strong>BEFORE</strong> creating <code>SparkContext</code>:</p>
+<pre><code class="bash">export BIGDL_JARS=...
+export BIGDL_PACKAGES=...
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
