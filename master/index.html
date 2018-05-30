@@ -36,9 +36,19 @@
         
         var pageToc = [
           {title: "Analytics Zoo", url: "#analytics-zoo", children: [
-              {title: "High level pipeline APIs", url: "#high-level-pipeline-apis" },
-              {title: "Built-in deep learning models", url: "#built-in-deep-learning-models" },
-              {title: "Reference use cases", url: "#reference-use-cases" },
+          ]},
+          {title: "High level pipeline APIs", url: "#high-level-pipeline-apis", children: [
+              {title: "nnframes", url: "#nnframes" },
+              {title: "autograd", url: "#autograd" },
+              {title: "Transfer learning", url: "#transfer-learning" },
+          ]},
+          {title: "Built-in deep learning models", url: "#built-in-deep-learning-models", children: [
+              {title: "Object detection API", url: "#object-detection-api" },
+              {title: "Image classification API", url: "#image-classification-api" },
+              {title: "Text classification API", url: "#text-classification-api" },
+              {title: "Recommendation API", url: "#recommendation-api" },
+          ]},
+          {title: "Reference use cases", url: "#reference-use-cases", children: [
           ]},
         ];
 
@@ -168,7 +178,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
 <li class="wm-toc-li-nested collapse">
   <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/usercases-overview/" class="wm-article-link wm-toc-text">overview</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/usercases-overview/" class="wm-article-link wm-toc-text">Overview</a>
 </li>
       <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/anomaly-detection/" class="wm-article-link wm-toc-text">Anomaly Detection</a>
 </li>
@@ -239,7 +249,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   </ul>
 </li>
 
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Model</span>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Models</span>
 </li>
 <li class="wm-toc-li-nested collapse">
   <ul class="wm-toctree">
@@ -273,8 +283,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Overview</strong></h1>
     <hr>
-    <h1 id="analytics-zoo">Analytics Zoo</h1>
-<p><em>Analytics + AI Platform for Apache Spark and <a href="https://bigdl-project.github.io/master/#whitepaper/">BigDL</a></em></p>
+    <h2 id="analytics-zoo">Analytics Zoo</h2>
+<p><em>Analytics + AI Platform for Apache Spark and <a href="https://bigdl-project.github.io/master/#whitepaper/">BigDL</a>.</em></p>
 <hr />
 <p>Analytics Zoo makes it easy to build deep learning application on Spark and BigDL, by providing an end-to-end analytics + AI Platform (including <em>high level pipeline APIs</em>, <em>built-in deep learning models</em>, <em>reference use cases</em>, etc.).</p>
 <ul>
@@ -413,9 +423,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </code></pre>
 
 <h3 id="text-classification-api">Text classification API</h3>
-<p><em>Analytics Zoo Text Classification API</em> provides a set of pre-defined models (using CNN, LSTM, etc.) for text classifications. (See more details <a href="APIGuide/Models/text-classification/">here</a>)</p>
+<p><em>Analytics Zoo Text Classification API</em> provides a set of pre-defined models (using CNN, LSTM, etc.) for text classifications. (See more details <a href="ProgrammingGuide/text-classification/">here</a>)</p>
 <h3 id="recommendation-api">Recommendation API</h3>
-<p><em>Analytics Zoo Recommendation API</em> provides a set of pre-defined models (such as Neural Collaborative Filtering, Wide and Deep Learning, etc.) for receommendations. (See more details <a href="ProgrammingGuide/recommendation/">here</a>)</p>
+<p><em>Analytics Zoo Recommendation API</em> provides a set of pre-defined models (such as Neural Collaborative Filtering, Wide and Deep Learning, etc.) for recommendations. (See more details <a href="ProgrammingGuide/recommendation/">here</a>)</p>
 <hr />
 <h2 id="reference-use-cases">Reference use cases</h2>
 <p>Analytics Zoo provides a collection of end-to-end reference use cases, including <em>anomaly detection (for time series data)</em>, <em>sentiment analysis</em>, <em>fraud detection</em>, <em>image augmentation</em>, <em>object detection</em>, <em>variational autoencoder</em>, etc. (See more details <a href="ProgrammingGuide/usercases-overview/">here</a>)</p>
@@ -431,5 +441,5 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </html>
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2018-05-30 03:22:07
+Build Date UTC : 2018-05-30 07:09:44
 -->

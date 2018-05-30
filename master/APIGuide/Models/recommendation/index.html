@@ -33,10 +33,18 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Analytics Zoo Recommender API", url: "#analytics-zoo-recommender-api", children: [
-              {title: "Wide and Deep", url: "#wide-and-deep" },
-              {title: "Neural network-based Collaborative Filtering", url: "#neural-network-based-collaborative-filtering" },
-              {title: "Prediction and Recommendation", url: "#prediction-and-recommendation" },
+          {title: "Wide and Deep", url: "#wide-and-deep", children: [
+          ]},
+          {title: "Neural network-based Collaborative Filtering", url: "#neural-network-based-collaborative-filtering", children: [
+          ]},
+          {title: "Prediction and Recommendation", url: "#prediction-and-recommendation", children: [
+          ]},
+          {title: "Model Save", url: "#model-save", children: [
+          ]},
+          {title: "Model Load", url: "#model-load", children: [
+              {title: "UserItemFeature", url: "#useritemfeature" },
+              {title: "UserItemPrediction", url: "#useritemprediction" },
+              {title: "ColumnFeatureInfo", url: "#columnfeatureinfo" },
           ]},
         ];
 
@@ -55,8 +63,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Recommendation</strong></h1>
     <hr>
-    <h1 id="analytics-zoo-recommender-api">Analytics Zoo Recommender API</h1>
-<p>Analytics Zoo provides two Recommenders, including Wide and Deep (WND) model and Neural network-based Collaborative Filtering (NCF) model. Each model could be fed into NNFrames and BigDL Optimizer directly for training.</p>
+    <p>Analytics Zoo provides two Recommenders, including Wide and Deep (WND) model and Neural network-based Collaborative Filtering (NCF) model. Each model could be fed into NNFrames or BigDL Optimizer directly for training.</p>
 <p>Recommenders can handle models with either explict or implicit feedback, given corresponding features.</p>
 <p>We also provide three user-friendly APIs to predict user item pairs, and recommend items (users) for users (items). See <a href="#prediction-and-recommendation">here</a> for more details.</p>
 <hr />
@@ -64,7 +71,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>Wide and Deep Learning Model, proposed by <a href="https://arxiv.org/pdf/1606.07792.pdf">Google, 2016</a>, is a DNN-Linear mixed model, which combines the strength of memorization and generalization. It's useful for generic large-scale regression and classification problems with sparse input features (e.g., categorical features with a large number of possible feature values). It has been used for Google App Store for their app recommendation.</p>
 <p>After training the model, users can use the model to <a href="#prediction-and-recommendation">do prediction and recommendation</a>.</p>
 <p><strong>Scala</strong></p>
-<pre><code class="scala">WideAndDeep(modelType = &quot;wide_n_deep&quot;, numClasses, columnInfo, hiddenLayers = Array(40, 20, 10))
+<pre><code class="scala">val wideAndDeep = WideAndDeep(modelType = &quot;wide_n_deep&quot;, numClasses, columnInfo, hiddenLayers = Array(40, 20, 10))
 </code></pre>
 
 <ul>
@@ -73,9 +80,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><code>columnInfo</code> An instance of <a href="#columnfeatureinfo">ColumnFeatureInfo</a>.</li>
 <li><code>hiddenLayers</code>: Units of hidden layers for the deep model. Array of positive integers. Default is Array(40, 20, 10).</li>
 </ul>
-<p>See <a href="https://github.com/intel-analytics/zoo/blob/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/recommendation/WideAndDeepExample.scala">here</a> for the Scala example that trains the <code>WideAndDeep</code> model on MovieLens 1M dataset and uses the model to do prediction and recommendation.</p>
+<p>See <a href="https://github.com/intel-analytics/zoo/blob/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/recommendation/WideAndDeepExample.scala">here</a> for the Scala example that trains the WideAndDeep model on MovieLens 1M dataset and uses the model to do prediction and recommendation.</p>
 <p><strong>Python</strong></p>
-<pre><code class="python">WideAndDeep(class_num, column_info, model_type=&quot;wide_n_deep&quot;, hidden_layers=(40, 20, 10))
+<pre><code class="python">wide_and_deep = WideAndDeep(class_num, column_info, model_type=&quot;wide_n_deep&quot;, hidden_layers=(40, 20, 10))
 </code></pre>
 
 <ul>
@@ -84,7 +91,171 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><code>model_type</code>: String. 'wide', 'deep' and 'wide_n_deep' are supported. Default is 'wide_n_deep'.</li>
 <li><code>hidden_layers</code>: Units of hidden layers for the deep model. Tuple of positive int. Default is (40, 20, 10).</li>
 </ul>
-<p>See <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/apps/recommendation/wide_n_deep.ipynb">here</a> for the Python notebook that trains the <code>WideAndDeep</code> model on MovieLens 1M dataset and uses the model to do prediction and recommendation.</p>
+<p>See <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/apps/recommendation/wide_n_deep.ipynb">here</a> for the Python notebook that trains the WideAndDeep model on MovieLens 1M dataset and uses the model to do prediction and recommendation.</p>
+<hr />
+<h2 id="neural-network-based-collaborative-filtering">Neural network-based Collaborative Filtering</h2>
+<p>NCF (<a href="https://www.comp.nus.edu.sg/~xiangnan/papers/ncf.pdf">He, 2015</a>) leverages a multi-layer perceptrons to learn the user–item interaction function. At the mean time, NCF can express and generalize matrix factorization under its framework. <code>includeMF</code>(Boolean) is provided for users to build a <code>NeuralCF</code> model with or without matrix factorization. </p>
+<p>After training the model, users can use the model to <a href="#prediction-and-recommendation">do prediction and recommendation</a>.</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">val ncf = NeuralCF(userCount, itemCount, numClasses, userEmbed = 20, itemEmbed = 20, hiddenLayers = Array(40, 20, 10), includeMF = true, mfEmbed = 20)
+</code></pre>
+
+<ul>
+<li><code>userCount</code>: The number of users. Positive integer.</li>
+<li><code>itemCount</code>: The number of items. Positive integer.</li>
+<li><code>numClasses</code>: The number of classes. Positive integer.</li>
+<li><code>userEmbed</code>: Units of user embedding. Positive integer. Default is 20.</li>
+<li><code>itemEmbed</code>: Units of item embedding. Positive integer. Default is 20.</li>
+<li><code>hiddenLayers</code>: Units hiddenLayers for MLP. Array of positive integers. Default is Array(40, 20, 10).</li>
+<li><code>includeMF</code>: Whether to include Matrix Factorization. Boolean. Default is true.</li>
+<li><code>mfEmbed</code>: Units of matrix factorization embedding. Positive integer. Default is 20.</li>
+</ul>
+<p>See <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/recommendation/NeuralCFexample.scala">here</a> for the Scala example that trains the NeuralCF model on MovieLens 1M dataset and uses the model to do prediction and recommendation.</p>
+<p><strong>Python</strong></p>
+<pre><code class="python">ncf = NeuralCF(user_count, item_count, class_num, user_embed=20, item_embed=20, hidden_layers=(40, 20, 10), include_mf=True, mf_embed=20)
+</code></pre>
+
+<ul>
+<li><code>user_count</code>: The number of users. Positive int.</li>
+<li><code>item_count</code>: The number of classes. Positive int.</li>
+<li><code>class_num:</code> The number of classes. Positive int.</li>
+<li><code>user_embed</code>: Units of user embedding. Positive int. Default is 20.</li>
+<li><code>item_embed</code>: itemEmbed Units of item embedding. Positive int. Default is 20.</li>
+<li><code>hidden_layers</code>: Units of hidden layers for MLP. Tuple of positive int. Default is (40, 20, 10).</li>
+<li><code>include_mf</code>: Whether to include Matrix Factorization. Boolean. Default is True.</li>
+<li><code>mf_embed</code>: Units of matrix factorization embedding. Positive int. Default is 20.</li>
+</ul>
+<p>See <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/apps/recommendation/ncf-explicit-feedback.ipynb">here</a> for the Python notebook that trains the NeuralCF model on MovieLens 1M dataset and uses the model to do prediction and recommendation.</p>
+<hr />
+<h2 id="prediction-and-recommendation">Prediction and Recommendation</h2>
+<p><strong><em>Predict for user-item pairs</em></strong></p>
+<p>Give prediction for each pair of user and item. Return RDD of <a href="#useritemprediction">UserItemPrediction</a>.</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">predictUserItemPair(featureRdd)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<pre><code class="python">predict_user_item_pair(feature_rdd)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>featureRdd</code>: RDD of <a href="#useritemfeature">UserItemFeature</a>.</li>
+</ul>
+<p><strong><em>Recommend for users</em></strong></p>
+<p>Recommend a number of items for each user. Return RDD of <a href="#useritemprediction">UserItemPrediction</a>.</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">recommendForUser(featureRdd, maxItems)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<pre><code class="python">recommend_for_user(feature_rdd, max_items)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>featureRdd</code>: RDD of <a href="#useritemfeature">UserItemFeature</a>.</li>
+<li><code>maxItems</code>: The number of items to be recommended to each user. Positive integer.</li>
+</ul>
+<p><strong><em>Recommend for items</em></strong></p>
+<p>Recommend a number of users for each item. Return RDD of <a href="#useritemprediction">UserItemPrediction</a>.</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">recommendForItem(featureRdd, maxUsers)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<pre><code class="python">recommend_for_item(feature_rdd, max_users)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>featureRdd</code>: RDD of <a href="#useritemfeature">UserItemFeature</a>.</li>
+<li><code>maxUsers</code>: The number of users to be recommended to each item. Positive integer.</li>
+</ul>
+<hr />
+<h2 id="model-save">Model Save</h2>
+<p>After building and training a WideAndDeep or NeuralCF model, you can save it for future use.</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">wideAndDeep.saveModel(path, weightPath = null, overWrite = false)
+
+ncf.saveModel(path, weightPath = null, overWrite = false)
+</code></pre>
+
+<ul>
+<li><code>path</code>: The path to save the model. Local file system, HDFS and Amazon S3 are supported. HDFS path should be like "hdfs://[host]:[port]/xxx". Amazon S3 path should be like "s3a://bucket/xxx".</li>
+<li><code>weightPath</code>: The path to save weights. Default is null.</li>
+<li><code>overWrite</code>: Whether to overwrite the file if it already exists. Default is false.</li>
+</ul>
+<p><strong>Python</strong></p>
+<pre><code class="python">wide_and_deep.save_model(path, weight_path=None, over_write=False)
+
+ncf.save_model(path, weight_path=None, over_write=False)
+</code></pre>
+
+<ul>
+<li><code>path</code>: The path to save the model. Local file system, HDFS and Amazon S3 are supported. HDFS path should be like 'hdfs://[host]:[port]/xxx'. Amazon S3 path should be like 's3a://bucket/xxx'.</li>
+<li><code>weight_path</code>: The path to save weights. Default is None.</li>
+<li><code>over_write</code>: Whether to overwrite the file if it already exists. Default is False.</li>
+</ul>
+<hr />
+<h2 id="model-load">Model Load</h2>
+<p>To load a WideAndDeep or NeuralCF model (with weights) saved <a href="#model-save">above</a>:</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">WideAndDeep.loadModel[Float](path, weightPath = null)
+
+NeuralCF.loadModel[Float](path, weightPath = null)
+</code></pre>
+
+<ul>
+<li><code>path</code>: The path for the pre-defined model. Local file system, HDFS and Amazon S3 are supported. HDFS path should be like "hdfs://[host]:[port]/xxx". Amazon S3 path should be like "s3a://bucket/xxx".</li>
+<li><code>weightPath</code>: The path for pre-trained weights if any. Default is null.</li>
+</ul>
+<p><strong>Python</strong></p>
+<pre><code class="python">WideAndDeep.load_model(path, weight_path=None)
+
+NeuralCF.load_model(path, weight_path=None)
+</code></pre>
+
+<ul>
+<li><code>path</code>: The path for the pre-defined model. Local file system, HDFS and Amazon S3 are supported. HDFS path should be like 'hdfs://[host]:[port]/xxx'. Amazon S3 path should be like 's3a://bucket/xxx'.</li>
+<li><code>weight_path</code>: The path for pre-trained weights if any. Default is None.</li>
+</ul>
+<hr />
+<h3 id="useritemfeature">UserItemFeature</h3>
+<p>Represent records of user-item with features.</p>
+<p>Each record should contain the following fields:</p>
+<ul>
+<li><code>userId</code>: Positive integer.</li>
+<li><code>item_id</code>: Positive integer.</li>
+<li><code>sample</code>: <a href="https://bigdl-project.github.io/master/#APIGuide/Data/#sample">Sample</a> which consists of feature(s) and label(s).</li>
+</ul>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">UserItemFeature(userId, itemId, sample)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<pre><code class="python">UserItemFeature(user_id, item_id, sample)
+</code></pre>
+
+<hr />
+<h3 id="useritemprediction">UserItemPrediction</h3>
+<p>Represent the prediction results of user-item pairs.</p>
+<p>Each prediction record will contain the following information:</p>
+<ul>
+<li><code>userId</code>: Positive integer.</li>
+<li><code>itemId</code>: Positive integer.</li>
+<li><code>prediction</code>: The prediction (rating) for the user on the item.</li>
+<li><code>probability</code>: The probability for the prediction.</li>
+</ul>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">UserItemPrediction(userId, itemId, prediction, probability)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<pre><code class="python">UserItemPrediction(user_id, item_id, prediction, probability)
+</code></pre>
+
+<hr />
 <h3 id="columnfeatureinfo">ColumnFeatureInfo</h3>
 <p>An instance of <code>ColumnFeatureInfo</code> contains the same data information shared by the <code>WideAndDeep</code> model and its feature generation part.</p>
 <p>You can choose to include the following information for feature engineering and the <code>WideAndDeep</code> model:</p>
@@ -133,119 +304,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     embed_out_dims=None,
     continuous_cols=None,
     label=&quot;label&quot;)
-</code></pre>
-
-<hr />
-<h2 id="neural-network-based-collaborative-filtering">Neural network-based Collaborative Filtering</h2>
-<p>NCF (<a href="https://www.comp.nus.edu.sg/~xiangnan/papers/ncf.pdf">He, 2015</a>) leverages a multi-layer perceptrons to learn the user–item interaction function. At the mean time, NCF can express and generalize matrix factorization under its framework. <code>includeMF</code>(Boolean) is provided for users to build a <code>NeuralCF</code> model with or without matrix factorization. </p>
-<p>After training the model, users can use the model to <a href="#prediction-and-recommendation">do prediction and recommendation</a>.</p>
-<p><strong>Scala</strong></p>
-<pre><code class="scala">NeuralCF(userCount, itemCount, numClasses, userEmbed = 20, itemEmbed = 20, hiddenLayers = Array(40, 20, 10), includeMF = true, mfEmbed = 20)
-</code></pre>
-
-<ul>
-<li><code>userCount</code>: The number of users. Positive integer.</li>
-<li><code>itemCount</code>: The number of items. Positive integer.</li>
-<li><code>numClasses</code>: The number of classes. Positive integer.</li>
-<li><code>userEmbed</code>: Units of user embedding. Positive integer. Default is 20.</li>
-<li><code>itemEmbed</code>: Units of item embedding. Positive integer. Default is 20.</li>
-<li><code>hiddenLayers</code>: Units hiddenLayers for MLP. Array of positive integers. Default is Array(40, 20, 10).</li>
-<li><code>includeMF</code>: Whether to include Matrix Factorization. Boolean. Default is true.</li>
-<li><code>mfEmbed</code>: Units of matrix factorization embedding. Positive integer. Default is 20.</li>
-</ul>
-<p>See <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/recommendation/NeuralCFexample.scala">here</a> for the Scala example that trains the <code>NeuralCF</code> model on MovieLens 1M dataset and uses the model to do prediction and recommendation.</p>
-<p><strong>Python</strong></p>
-<pre><code class="python">NeuralCF(user_count, item_count, class_num, user_embed=20, item_embed=20, hidden_layers=(40, 20, 10), include_mf=True, mf_embed=20)
-</code></pre>
-
-<ul>
-<li><code>user_count</code>: The number of users. Positive int.</li>
-<li><code>item_count</code>: The number of classes. Positive int.</li>
-<li><code>class_num:</code> The number of classes. Positive int.</li>
-<li><code>user_embed</code>: Units of user embedding. Positive int. Default is 20.</li>
-<li><code>item_embed</code>: itemEmbed Units of item embedding. Positive int. Default is 20.</li>
-<li><code>hidden_layers</code>: Units of hidden layers for MLP. Tuple of positive int. Default is (40, 20, 10).</li>
-<li><code>include_mf</code>: Whether to include Matrix Factorization. Boolean. Default is True.</li>
-<li><code>mf_embed</code>: Units of matrix factorization embedding. Positive int. Default is 20.</li>
-</ul>
-<p>See <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/apps/recommendation/ncf-explicit-feedback.ipynb">here</a> for the Python notebook that trains the <code>NeuralCF</code> model on MovieLens 1M dataset and uses the model to do prediction and recommendation.</p>
-<hr />
-<h2 id="prediction-and-recommendation">Prediction and Recommendation</h2>
-<h3 id="predict-for-user-item-pairs">Predict for user-item pairs</h3>
-<p>Give prediction for each pair of user and item. Return RDD of <a href="#useritemprediction">UserItemPrediction</a>.</p>
-<p><strong>Scala</strong></p>
-<pre><code class="scala">predictUserItemPair(featureRdd)
-</code></pre>
-
-<p><strong>Python</strong></p>
-<pre><code class="python">predict_user_item_pair(feature_rdd)
-</code></pre>
-
-<p>Parameters:</p>
-<ul>
-<li><code>featureRdd</code>: RDD of <a href="#useritemfeature">UserItemFeature</a>.</li>
-</ul>
-<h3 id="recommend-for-users">Recommend for users</h3>
-<p>Recommend a number of items for each user. Return RDD of <a href="#useritemprediction">UserItemPrediction</a>.</p>
-<p><strong>Scala</strong></p>
-<pre><code class="scala">recommendForUser(featureRdd, maxItems)
-</code></pre>
-
-<p><strong>Python</strong></p>
-<pre><code class="python">recommend_for_user(feature_rdd, max_items)
-</code></pre>
-
-<p>Parameters:</p>
-<ul>
-<li><code>featureRdd</code>: RDD of <a href="#useritemfeature">UserItemFeature</a>.</li>
-<li><code>maxItems</code>: The number of items to be recommended to each user. Positive integer.</li>
-</ul>
-<h3 id="recommend-for-items">Recommend for items</h3>
-<p>Recommend a number of users for each item. Return RDD of <a href="#useritemprediction">UserItemPrediction</a>.</p>
-<p><strong>Scala</strong></p>
-<pre><code class="scala">recommendForItem(featureRdd, maxUsers)
-</code></pre>
-
-<p><strong>Python</strong></p>
-<pre><code class="python">recommend_for_item(feature_rdd, max_users)
-</code></pre>
-
-<p>Parameters:</p>
-<ul>
-<li><code>featureRdd</code>: RDD of <a href="#useritemfeature">UserItemFeature</a>.</li>
-<li><code>maxUsers</code>: The number of users to be recommended to each item. Positive integer.</li>
-</ul>
-<h3 id="useritemfeature">UserItemFeature</h3>
-<p>Represent records of user-item with features.</p>
-<p>Each record should contain the following fields:</p>
-<ul>
-<li><code>userId</code>: Positive integer.</li>
-<li><code>item_id</code>: Positive integer.</li>
-<li><code>sample</code>: <a href="https://bigdl-project.github.io/master/#APIGuide/Data/#sample">Sample</a> which consists of feature(s) and label(s).</li>
-</ul>
-<p><strong>Scala</strong></p>
-<pre><code class="scala">UserItemFeature(userId, itemId, sample)
-</code></pre>
-
-<p><strong>Python</strong></p>
-<pre><code class="python">UserItemFeature(user_id, item_id, sample)
-</code></pre>
-
-<h3 id="useritemprediction">UserItemPrediction</h3>
-<p>Represent the prediction results of user-item pairs.</p>
-<p>Each prediction record will contain the following information:</p>
-<ul>
-<li><code>userId</code>: Positive integer.</li>
-<li><code>itemId</code>: Positive integer.</li>
-<li><code>prediction</code>: The prediction (rating) for the user on the item.</li>
-<li><code>probability</code>: The probability for the prediction.</li>
-</ul>
-<p><strong>Scala</strong></p>
-<pre><code class="scala">UserItemPrediction(userId, itemId, prediction, probability)
-</code></pre>
-
-<p><strong>Python</strong></p>
-<pre><code class="python">UserItemPrediction(user_id, item_id, prediction, probability)
 </code></pre>
 
   <br>

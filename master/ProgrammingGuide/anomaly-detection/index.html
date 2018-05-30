@@ -33,8 +33,6 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Analytics Zoo Anomaly detection", url: "#analytics-zoo-anomaly-detection", children: [
-          ]},
         ];
 
     </script>
@@ -52,10 +50,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Anomaly Detection</strong></h1>
     <hr>
-    <h1 id="analytics-zoo-anomaly-detection">Analytics Zoo Anomaly detection</h1>
-<p>Analytics Zoo shows how to detect anomalies in time series data based on RNN network. Currently, a <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/anomaly-detection">python notebook</a> is provided. 
-In the example, a RNN network using Analytics Zoo Keras-Style API is built, and <a href="../raw.githubusercontent.com/numenta/NAB/master/data/realKnownCause/nyc_taxi.csv">NYC taxi passengers dataset</a> is used to train and test the model.</p>
-<p>Build a RNN model for anomaly detection. There are three LSTM layers followed by one Dense layer at the end.</p>
+    <p>Analytics Zoo shows how to detect anomalies in time series data based on RNN network. Currently, a <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/anomaly-detection">Python notebook</a> is provided. 
+In the example, a RNN network using Analytics Zoo Keras-Style API is built, and <a href="https://raw.githubusercontent.com/numenta/NAB/master/data/realKnownCause/nyc_taxi.csv">NYC taxi passengers dataset</a> is used to train and test the model.</p>
+<p>We split the entire curve into 2 sections - training data and testing data. The training data section is treated all as normal and an RNN model is trained to fit the training data, the model has three LSTM layers followed by one Dense layer at the end.</p>
 <pre><code class="python">model = Sequential()
 model.add(LSTM(input_shape=(input_dim1, input_dim2, output_dim=8, return_sequences=True))
 model.add(Dropout(0.2))
@@ -66,16 +63,16 @@ model.add(Dropout(0.2))
 model.add(Dense(output_dim=1))
 </code></pre>
 
-<p>Train the model using Analytics Zoo APIs.</p>
+<p>Train the model using using MSE loss (as a regression problem).</p>
 <pre><code class="python">model.compile(loss='mse', optimizer='rmsprop')
 model.fit(x_train,y_train,batch_size=3028,nb_epoch=30)
 </code></pre>
 
-<p>Predict with given features.</p>
+<p>Use this RNN model to predict the testing curve.</p>
 <pre><code class="python">predictions = model.predict(x_test)
 </code></pre>
 
-<p>Anomalies could be defined by comparing the predictions and actual values. The current example defines data points as anomalies if the difference of predictions and actual values are larger than a certain value.
+<p>Anomalies could be defined by comparing the predictions and actual values. The current example defines data points as anomalies if the difference of predictions and actual values are larger than a certain value(threshold).
 See more details in the exmaple <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/anomaly-detection/anomaly-detection-nyc-taxi.ipynb">Python notebook</a></p>
 
   <br>
