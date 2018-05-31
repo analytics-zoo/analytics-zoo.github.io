@@ -33,10 +33,11 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Analytics Zoo Object Detection API", url: "#analytics-zoo-object-detection-api", children: [
-              {title: "Model Load", url: "#model-load" },
-              {title: "Creat image configuration", url: "#creat-image-configuration" },
-              {title: "Predict with loaded object detection model", url: "#predict-with-loaded-object-detection-model" },
+          {title: "Model Load", url: "#model-load", children: [
+          ]},
+          {title: "Creat image configuration", url: "#creat-image-configuration", children: [
+          ]},
+          {title: "Predict with loaded object detection model", url: "#predict-with-loaded-object-detection-model", children: [
           ]},
         ];
 
@@ -55,8 +56,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Object Detection</strong></h1>
     <hr>
-    <h1 id="analytics-zoo-object-detection-api">Analytics Zoo Object Detection API</h1>
-<p>Analytics Zoo provides a collection of pre-trained models for Object Detection. These models can be used for out-of-the-box inference if you are interested in categories already in the corresponding datasets. According to the business scenarios. User can run the inference as local program without Spark Context, or in a distributed environment such like Apache Spark, Apache Storm or Apache Flink.</p>
+    <p>Analytics Zoo provides a collection of pre-trained models for Object Detection. These models can be used for out-of-the-box inference if you are interested in categories already in the corresponding datasets. According to the business scenarios. User can run the inference as local program without Spark Context, or in a distributed environment such like Apache Spark, Apache Storm or Apache Flink.</p>
 <h2 id="model-load">Model Load</h2>
 <p>Use <code>ObjectDetector.loadModel</code>(in Scala) or <code>ObjectDetector.load_model</code> (in Python) to load an pre-trained Analytics Zoo model or third-party(BigDL) model. We just need to specify the model path and optionally weight path if exists where we previously saved the model.</p>
 <p><strong>Scala example</strong></p>
