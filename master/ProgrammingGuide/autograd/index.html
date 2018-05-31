@@ -33,6 +33,8 @@
       var is_top_frame = false;
         
         var pageToc = [
+          {title: "AutoGrad", url: "#autograd", children: [
+          ]},
         ];
 
     </script>
@@ -50,7 +52,38 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Autograd</strong></h1>
     <hr>
-    
+    <h1 id="autograd">AutoGrad</h1>
+<p><code>autograd</code> provides automatic differentiation for math operations, so that you can easily build your own <em>custom loss and layer</em> (in both Python and Scala), as illustracted below. (See more examples <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/autograd">here</a>). Conceptually we use reverse mode together with the chain rule for automatic differentiation. <code>Variable</code> is used to record the linkage of the operation history, which would generated a directed acyclic graph for the backward execution. Within the execution graph, leaves are the input <code>variables</code> and roots are the output <code>variables</code>.</p>
+<ol>
+<li>Define custom functions using <code>autograd</code>
+   ```
+   from zoo.pipeline.api.autograd import *</li>
+</ol>
+<p>def mean_absolute_error(y_true, y_pred):
+       return mean(abs(y_true - y_pred), axis=1)</p>
+<p>def add_one_func(x):
+       return x + 1.0
+   ```</p>
+<ol>
+<li>Define model using Keras-style API and <em>custom <code>Lambda</code> layer</em>
+   ```
+   from zoo.pipeline.api.keras.layers import <em>
+   from zoo.pipeline.api.keras.models import </em>
+   model = Sequential().add(Dense(1, input_shape=(2,))) \
+                       .add(Lambda(function=add_one_func))
+   # Evaluation for debug purpose.
+   model.forward(np.random.uniform(0, 1, shape[3, 2])) # 3 is the batch size</li>
+</ol>
+<p>```</p>
+<ol>
+<li>Train model with <em>custom loss function</em>
+   ```
+   model.compile(optimizer = SGD(), loss = mean_absolute_error)
+   model.fit(x = ..., y = ...)</li>
+</ol>
+<p># Evaluation for debug purpose
+   CustomLoss(mean_absolute_error, [2]).forward(np.random.uniform(0, 1, shape[3, 2])) # [2] is the shape without batch, 3 is the batch size.
+   ```</p>
 
   <br>
 </div>

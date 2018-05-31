@@ -11,12 +11,12 @@
     
     <link rel="shortcut icon" href="/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>FAQ and Known Issues - Analytics Zoo</title>
+    <title>FAQ - Analytics Zoo</title>
     <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/highlight.css">
-    <link href="../extra.css" rel="stylesheet">
+    <link href="../../extra.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -29,7 +29,7 @@
     
     <base target="_top">
     <script>
-      var base_url = '..';
+      var base_url = '../..';
       var is_top_frame = false;
         
         var pageToc = [
@@ -48,17 +48,40 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
 <div class="container-fluid wm-page-content">
     
-    <h1><strong>FAQ and Known Issues</strong></h1>
+    <h1><strong>FAQ</strong></h1>
     <hr>
-    <ul>
-<li>If you encounter the following exception when calling the Python API of Analytics Zoo when you are using Python 3.5 or 3.6:</li>
+    <p>This page lists solutions to some common questions.</p>
+<ol>
+<li>
+<p><strong>ImportError</strong>: from zoo.pipeline.api.keras.layers import *</p>
+<ul>
+<li>Check if the path is pointing to python-api.zip: <code>--py-files ${ANALYTICS_ZOO_PY_ZIP}</code></li>
+<li>Check if the path is pointing to python-api.zip:</li>
 </ul>
-<pre><code>Py4JJavaError: An error occurred while calling z:org.apache.spark.bigdl.api.python.BigDLSerDe.loads.
-: net.razorvine.pickle.PickleException: expected zero arguments for construction of ClassDict (for numpy.dtype)
-</code></pre>
-
-<p>you may need to check whether your input argument involves Numpy types (such as <code>numpy.int64</code>). See <a href="https://issues.apache.org/jira/browse/SPARK-12157">here</a> for the related issue.</p>
-<p>For example, invoking <code>np.min</code>, <code>np.max</code>, <code>np.unique</code>, etc. will return type <code>numpy.int64</code>. One way to solve this is to use <code>int()</code> to convert a number of type <code>numpy.int64</code> to a Python int.</p>
+<p><code>export PYTHONPATH=${ANALYTICS_ZOO_PY_ZIP}:$PYTHONPATH</code></p>
+</li>
+<li>
+<p>Python in worker has a different version 2.7 than that in driver 3.5</p>
+<ul>
+<li><code>export PYSPARK_PYTHON=/usr/local/bin/python3.5</code>  This path should be valid on every worker node.</li>
+<li><code>export PYSPARK_DRIVER_PYTHON=/usr/local/bin/python3.5</code>  This path should be valid on every driver node.</li>
+</ul>
+</li>
+<li>
+<p><strong>TypeError</strong>: 'JavaPackage' object is not callable</p>
+<ul>
+<li>Check if every path within the launch script is valid especially the path that ends with jar.</li>
+<li>If there are extra jars involved, check if the Spark version Analytics Zoo is built and the Spark version the extra jar is built are compatible.</li>
+</ul>
+</li>
+<li>
+<p>java.lang.<strong>NoSuchMethodError</strong>:XXX or <strong>Py4JError</strong>: ofFloat does not exist in the JVM</p>
+<ul>
+<li>Check if the Spark version matches, i.e check if you are using Spark 2.x but the underneath Analytics Zoo is compiled with Spark 1.6.</li>
+<li>If there are extra jars involved, also check if the Spark version matches.</li>
+</ul>
+</li>
+</ol>
 
   <br>
 </div>

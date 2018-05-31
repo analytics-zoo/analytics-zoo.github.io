@@ -33,9 +33,11 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Install From Pip", url: "#install-from-pip", children: [
-              {title: "NOTES", url: "#notes" },
-              {title: "Install analytics-zoo-0.1.0.dev0", url: "#install-analytics-zoo-010dev0" },
+          {title: "Install from pip", url: "#install-from-pip", children: [
+          ]},
+          {title: "Install without pip", url: "#install-without-pip", children: [
+              {title: "For Spark standalone cluster", url: "#for-spark-standalone-cluster" },
+              {title: "For Yarn cluster", url: "#for-yarn-cluster" },
           ]},
         ];
 
@@ -54,35 +56,97 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Install</strong></h1>
     <hr>
-    <h2 id="install-from-pip">Install From Pip</h2>
+    <p>For Python users, Analytics Zoo can be installed either <a href="#install-from-pip">from pip</a> or <a href="#install-without-pip">without pip</a>.</p>
+<p><strong>NOTE</strong>: Only <strong>Python 2.7</strong>, <strong>Python 3.5</strong> and <strong>Python 3.6</strong> are supported for now.</p>
 <hr />
-<h3 id="notes"><strong>NOTES</strong></h3>
+<h2 id="install-from-pip"><strong>Install from pip</strong></h2>
+<p>Analytics Zoo can be installed via pip easily using the following command.</p>
+<p><strong><em>Install analytics-zoo-0.1.0.dev0</em></strong></p>
 <ul>
-<li>Pip install supports <strong>Mac</strong> and <strong>Linux</strong> platforms.</li>
-<li>Pip install only supports <strong>local</strong> mode. Cluster mode might be supported in the future. For those who want to use Analytics Zoo in cluster mode, please try to <a href="./install-without-pip.md">install without pip</a>.</li>
-<li>If you use pip install, it is <strong>not</strong> necessary to set <code>SPARK_HOME</code>.</li>
-<li>You need to install Java <strong>&gt;= JDK8</strong> before running Analytics Zoo, which is required by <strong>pyspark</strong>.</li>
-<li>We've tested this package with <strong>Python 2.7</strong>, <strong>Python 3.5</strong> and <strong>Python 3.6</strong>. Only these three Python versions are supported for now.</li>
+<li>Note that you might need to add <code>sudo</code> if you don't have the permission for installation.</li>
 </ul>
-<hr />
-<h3 id="install-analytics-zoo-010dev0"><strong>Install analytics-zoo-0.1.0.dev0</strong></h3>
 <pre><code class="bash">pip install --upgrade pip
 pip install analytics-zoo==0.1.0.dev0     # for Python 2.7
 pip3 install analytics-zoo==0.1.0.dev0    # for Python 3.5 and Python 3.6
 </code></pre>
 
-<p><strong>Remark:</strong></p>
+<p><strong>Remarks:</strong></p>
+<ol>
+<li>Pip install supports <strong>Mac</strong> and <strong>Linux</strong> platforms.</li>
+<li>Pip install only supports <strong>local</strong> mode. Cluster mode might be supported in the future. For those who want to use Analytics Zoo in cluster mode, please try to <a href="#install-without-pip">install without pip</a>.</li>
+<li>If you use pip install, it is <strong>not</strong> necessary to set <code>SPARK_HOME</code>.</li>
+<li>You need to install Java <strong>&gt;= JDK8</strong> before running Analytics Zoo, which is required by <strong>pyspark</strong>.</li>
+<li>We've tested this package with pip 9.0.1.</li>
+<li><code>bigdl==0.5.0</code> and its dependencies will be automatically installed first before installing analytics-zoo if they haven't been detected in the current Python environment.</li>
+</ol>
+<hr />
+<h2 id="install-without-pip"><strong>Install without pip</strong></h2>
+<p>If you choose to install Analytics Zoo without pip, you need to prepare Spark and install necessary Python dependencies.</p>
+<p><strong>Steps:</strong></p>
+<ol>
+<li>
+<p><a href="https://spark.apache.org/downloads.html">Download Spark</a></p>
+<ul>
+<li>Note that <strong>Python 3.6</strong> is only compatible with Spark 1.6.4, 2.0.3, 2.1.1 and &gt;=2.2.0. See <a href="https://issues.apache.org/jira/browse/SPARK-19019">this issue</a> for more discussion.</li>
+</ul>
+</li>
+<li>
+<p>You can download the Analytics Zoo release and nightly build from the <a href="../../release-download/">Release Page</a>
+  or build the Analytics Zoo package from <a href="../../ScalaUserGuide/install/#build-with-script-recommended">source</a>.</p>
+</li>
+<li>
+<p>Install Python dependencies. Analytics Zoo only depends on <code>numpy</code> and <code>six</code> for now.</p>
+</li>
+</ol>
+<h4 id="for-spark-standalone-cluster"><strong><em>For Spark standalone cluster</em></strong></h4>
+<ul>
+<li><strong>Remark</strong>: If you're running in cluster mode, you need to install Python dependencies on both client and each worker node.</li>
+<li>Install numpy: 
+<code>sudo apt-get install python-numpy</code> (Ubuntu)</li>
+<li>Install six: 
+<code>sudo apt-get install python-six</code> (Ubuntu)</li>
+</ul>
+<h4 id="for-yarn-cluster"><strong><em>For Yarn cluster</em></strong></h4>
+<p>You can run Analytics Zoo Python programs on Yarn clusters without changes to the cluster (i.e., no need to pre-install any Python dependency).</p>
+<p>You can first package all the required dependencies into a virtual environment on the local node (where you will run the spark-submit command),
+and then directly use spark-submit to run the Analytics Zoo Python program on the Yarn cluster using that virtual environment.</p>
+<p>Follow the steps below to create the virtual environment: </p>
+<ul>
+<li>Make sure you already installed such libraries (python-setuptools, python-dev, gcc, make, zip, pip) for creating the virtual environment. If not, please install them first.
+On Ubuntu, you can run these commands to install:</li>
+</ul>
+<pre><code>apt-get update
+apt-get install -y python-setuptools python-dev
+apt-get install -y gcc make
+apt-get install -y zip
+easy_install pip
+</code></pre>
+
 <ul>
 <li>
-<p>We tested this on pip 9.0.1.</p>
+<p>Create the virtualenv package for dependencies.</p>
+<ul>
+<li>
+<p>Under $ANALYTICS_ZOO_HOME (the dist directory under the Analytics Zoo project), you can find <code>bin/python_package.sh</code>. Run this script to create the dependency virtual environment according to the dependencies listed in <code>requirements.txt</code>. You can add your own dependencies into this file if you wish. The current requirements only contain those needed for running Analytics Zoo Python examples and models.</p>
 </li>
 <li>
-<p>You might need to add <code>sudo</code> if you don't have the permission for installation.</p>
-</li>
-<li>
-<p><code>bigdl==0.5.0</code> and its dependencies (including <code>pyspark</code>, <code>numpy</code> and <code>six</code>) will be automatically installed first before installing analytics-zoo if they haven't been detected in the current Python environment.</p>
+<p>After running this script, there will be <code>venv.zip</code> and <code>venv</code> directory generated in current directory. You can use them to submit your Python jobs. Please refer to <a href="../run/#run-with-virtual-environment-on-yarn">here</a> for the commands to submit an Analytics Zoo Python job with the created virtual environment in Yarn cluster.</p>
 </li>
 </ul>
+</li>
+</ul>
+<p><strong>FAQ</strong></p>
+<p>In case you encounter the following errors when you create the environment package using the above command:</p>
+<ol>
+<li>virtualenv ImportError: No module named urllib3<ul>
+<li>Using python in anaconda to create virtualenv may cause this problem. Try using python default in your system instead of installing virtualenv in anaconda.</li>
+</ul>
+</li>
+<li>AttributeError: 'module' object has no attribute 'sslwrap'<ul>
+<li>Try upgrading <code>gevent</code> with <code>pip install --upgrade gevent</code>.</li>
+</ul>
+</li>
+</ol>
 
   <br>
 </div>

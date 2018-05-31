@@ -33,6 +33,9 @@
       var is_top_frame = false;
         
         var pageToc = [
+          {title: "AutoGrad", url: "#autograd", children: [
+              {title: "mean", url: "#mean" },
+          ]},
         ];
 
     </script>
@@ -50,7 +53,22 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Autograd</strong></h1>
     <hr>
-    
+    <h2 id="autograd">AutoGrad</h2>
+<h3 id="mean">mean</h3>
+<p>Mean of a <code>Variable</code>, alongside the specified axis.
+- <code>axis</code> axis to compute the mean. 0-based indexed.
+- <code>keepDims</code> A boolean, whether to keep the dimensions or not.
+   If <code>keepdims</code> is <code>False</code>, the rank of the tensor is reduced
+   by 1. If <code>keep_dims</code> is <code>True</code>,
+   the reduced dimensions are retained with length 1.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">mean(x: Variable[T], axis: Int = 0, keepDims: Boolean = false)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">mean(a, axis=0, keepDims=False):
+
+</code></pre>
 
   <br>
 </div>
