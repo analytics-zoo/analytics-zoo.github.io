@@ -145,7 +145,7 @@ import com.intel.analytics.zoo.common.NNContext
 import com.intel.analytics.zoo.feature.image._
 
 val imagePath=&quot;/tmp/image&quot;
-val sc = NNContext.getNNContext()
+val sc = NNContext.initNNContext()
 val model = ObjectDetector.loadModel(&quot;/tmp/analytics-zoo_ssd-mobilenet-300x300_PASCAL_0.1.0.model&quot;)
 val data = ImageSet.read(image_path, sc)
 val output = model.predictImageSet(data)
@@ -160,12 +160,13 @@ val output = model.predictImageSet(data)
 <li>configure: Image Configure for this  prediction</li>
 </ul>
 <p><strong>Python example</strong></p>
-<pre><code class="python">from zoo.common.nncontext import get_nncontext
+<pre><code class="python">from zoo.common.nncontext import *
 from zoo.models.image.objectdetection import *
 
-imc = ObjectDetector.load_model(model_path)
+sc = init_nncontext()
+model = ObjectDetector.load_model(model_path)
 image_set = ImageSet.read(img_path, sc)
-output = imc.predict_image_set(image_set)
+output = model.predict_image_set(image_set)
 </code></pre>
 
   <br>

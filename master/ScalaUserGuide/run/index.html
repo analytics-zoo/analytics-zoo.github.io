@@ -137,9 +137,8 @@ scala&gt; ObjectDetector.loadModel[Float](params.modelPath)
 </code></pre>
 
 <p>If you are to run your own program, do remember to create SparkContext and initialize before calling other Analytics Zoo API's, as shown below.</p>
-<pre><code class="scala"> import com.intel.analytics.zoo.common.NNContext
- // Scala code example
- val sc = NNContext.getNNContext(conf)
+<pre><code class="scala">import com.intel.analytics.zoo.common.NNContext
+val sc = NNContext.initNNContext(conf)
 </code></pre>
 
   <br>

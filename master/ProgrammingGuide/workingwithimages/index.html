@@ -73,7 +73,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <pre><code class="scala">import com.intel.analytics.zoo.common.NNContext
 import com.intel.analytics.zoo.pipeline.nnframes.NNImageReader
 
-val sc = NNContext.getNNContext(&quot;app&quot;)
+val sc = NNContext.initNNContext(&quot;app&quot;)
 val imageDF1 = NNImageReader.readImages(&quot;/tmp&quot;, sc)
 val imageDF2 = NNImageReader.readImages(&quot;/tmp/*.jpg&quot;, sc)
 val imageDF3 = NNImageReader.readImages(&quot;/tmp/a.jpg, /tmp/b.jpg&quot;, sc)
@@ -84,7 +84,7 @@ val imageDF3 = NNImageReader.readImages(&quot;/tmp/a.jpg, /tmp/b.jpg&quot;, sc)
 <pre><code class="python">from zoo.common.nncontext import *
 from zoo.pipeline.nnframes import *
 
-sc = get_nncontext(create_spark_conf().setAppName(&quot;app&quot;))
+sc = init_nncontext(create_spark_conf().setAppName(&quot;app&quot;))
 imageDF1 = NNImageReader.readImages(&quot;/tmp&quot;, sc)
 imageDF2 = NNImageReader.readImages(&quot;/tmp/*.jpg&quot;, sc)
 imageDF3 = NNImageReader.readImages(&quot;/tmp/a.jpg, /tmp/b.jpg&quot;, sc)
@@ -234,7 +234,7 @@ trainedModel = classifier.fit(trainDf)
 <h3 id="train-with-imageset">Train with ImageSet</h3>
 <p>You can train Zoo Keras model with ImageSet. Just call <code>fit</code> method to let Analytics Zoo train the model.</p>
 <p><strong>Python example:</strong></p>
-<pre><code class="python">from zoo.common.nncontext import get_nncontext
+<pre><code class="python">from zoo.common.nncontext import *
 from zoo.feature.common import *
 from zoo.feature.image.imagePreprocessing import *
 from zoo.pipeline.api.keras.layers import Dense, Input, Flatten
@@ -242,7 +242,7 @@ from zoo.pipeline.api.keras.models import *
 from zoo.pipeline.api.net import *
 from bigdl.optim.optimizer import *
 
-sc = get_nncontext(create_spark_conf().setAppName(&quot;train keras&quot;))
+sc = init_nncontext(create_spark_conf().setAppName(&quot;train keras&quot;))
 img_path=&quot;/tmp/image&quot;
 image_set = ImageSet.read(img_path,sc, min_partitions=1)
 transformer = ChainedPreprocessing(
@@ -338,7 +338,7 @@ resultDF = dlmodel.transform(testDf)
 Or you can load pre-trained Analytics-Zoo/BigDL model. Then call to <code>predictImageSet</code> to predict ImageSet.</p>
 <h4 id="predict-with-trained-zoo-keras-model">Predict with trained Zoo Keras Model</h4>
 <p><strong>Python example:</strong></p>
-<pre><code class="python">from zoo.common.nncontext import get_nncontext
+<pre><code class="python">from zoo.common.nncontext import *
 from zoo.feature.common import *
 from zoo.feature.image.imagePreprocessing import *
 from zoo.pipeline.api.keras.layers import Dense, Input, Flatten
@@ -346,7 +346,7 @@ from zoo.pipeline.api.keras.models import *
 from zoo.pipeline.api.net import *
 from bigdl.optim.optimizer import *
 
-sc = get_nncontext(create_spark_conf().setAppName(&quot;train keras&quot;))
+sc = init_nncontext(create_spark_conf().setAppName(&quot;train keras&quot;))
 img_path=&quot;/tmp/image&quot;
 image_set = ImageSet.read(img_path,sc, min_partitions=1)
 transformer = ChainedPreprocessing(
