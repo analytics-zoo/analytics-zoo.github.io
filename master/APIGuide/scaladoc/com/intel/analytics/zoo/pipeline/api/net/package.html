@@ -119,7 +119,9 @@
       <p class="shortcomment cmt"><a href="TFNet.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.net.TFNet">TFNet</a> wraps a tensorflow subgraph as a layer, and use tensorflow to
 calculate the layer's output.</p><div class="fullcomment"><div class="comment cmt"><p><a href="TFNet.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.net.TFNet">TFNet</a> wraps a tensorflow subgraph as a layer, and use tensorflow to
 calculate the layer's output.</p><p>This subgraph should not contain any tensorflow Variable and the input/output
-must be numeric types</p></div></div>
+must be numeric types</p><p>When used with other layers for training, there should be no trainable layer
+before this one, as the gradInput of this layer is always zero.
+</p></div></div>
     </li></ol>
             </div>
 

@@ -116,7 +116,7 @@ model = Net.loadCaffe(&quot;s3://def/path&quot;, &quot;s3://model/path&quot;) //
 <h3 id="load-tensorflow-model">Load Tensorflow model</h3>
 <p>We also provides utilities to load tensorflow model.
 for more information.</p>
-<p>If we already have a freezed graph protobuf file, we can use the <code>loadTF</code> api directly to
+<p>If we already have a frozen graph protobuf file, we can use the <code>loadTF</code> api directly to
 load the tensorflow model. </p>
 <p>Otherwise, we should first use the <code>export_tf_checkpoint.py</code> script provided by BigDL's distribution
 package, or the <code>dump_model</code> function defined in <a href="https://github.com/intel-analytics/BigDL/blob/master/pyspark/bigdl/util/tf_utils.py">here</a> to
@@ -154,7 +154,7 @@ val binPath = &quot;/tmp/model/model.bin&quot;
 val inputs = Seq(&quot;Placeholder&quot;)
 val outputs = Seq(&quot;output&quot;)
 
-// For tensorflow freezed graph or graph without Variables
+// For tensorflow frozen graph or graph without Variables
 val model = Net.loadTF(modelPath, inputs, outputs, ByteOrder.LITTLE_ENDIAN)
 
 // For tensorflow graph with Variables
@@ -166,7 +166,7 @@ val model = Net.loadTF(modelPath, inputs, outputs, ByteOrder.LITTLE_ENDIAN, Some
 model_variable = &quot;/tmp/model/model.bin&quot;
 inputs = [&quot;Placeholder&quot;]
 outputs = [&quot;output&quot;]
-# For tensorflow freezed graph or graph without Variables
+# For tensorflow frozen graph or graph without Variables
 model = Net.load_tensorflow(model_def, inputs, outputs, byte_order = &quot;little_endian&quot;, bigdl_type=&quot;float&quot;)
 
 # For tensorflow graph with Variables
@@ -175,14 +175,14 @@ model = Net.load_tensorflow(model_def, inputs, outputs, byte_order = &quot;littl
 
 <h2 id="tfnet">TFNet</h2>
 <p><strong>Scala:</strong></p>
-<pre><code class="scala">val m = TFNet(freezedModelPath, inputs, outputs)
+<pre><code class="scala">val m = TFNet(frozenModelPath, inputs, outputs)
 </code></pre>
 
 <p><strong>Python:</strong></p>
-<pre><code class="python">m = TFNet(freezed_model_path, inputs, outputs)
+<pre><code class="python">m = TFNet(frozen_model_path, inputs, outputs)
 </code></pre>
 
-<p>This is a layer that wraps a tensorflow freezed sub graph as a layer and run tensorflow in parallel.</p>
+<p>This is a layer that wraps a tensorflow frozen sub graph as a layer and run tensorflow in parallel.</p>
 
   <br>
 </div>

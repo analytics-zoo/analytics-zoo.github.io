@@ -53,7 +53,9 @@
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.net.TFNet">TFNet</a> wraps a tensorflow subgraph as a layer, and use tensorflow to
 calculate the layer's output.</p><p>This subgraph should not contain any tensorflow Variable and the input/output
-must be numeric types</p></div><div class="toggleContainer block">
+must be numeric types</p><p>When used with other layers for training, there should be no trainable layer
+before this one, as the gradInput of this layer is always zero.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="scala.Float">Float</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
