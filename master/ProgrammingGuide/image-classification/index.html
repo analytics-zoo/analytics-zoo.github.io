@@ -58,7 +58,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h2 id="image-classification-examples">Image Classification examples</h2>
 <p>Analytics Zoo provides several typical kind of pre-trained Image Classfication models : <a href="http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networksese">Alexnet</a>, <a href="https://arxiv.org/abs/1409.4842">Inception-V1</a>, <a href="https://arxiv.org/abs/1409.1556">VGG</a>, <a href="https://arxiv.org/abs/1512.03385">Resnet</a>, <a href="https://arxiv.org/abs/1608.06993">Densenet</a>, <a href="https://arxiv.org/abs/1704.04861">Mobilenet</a>, <a href="https://arxiv.org/abs/1602.07360">Squeezenet</a> models. To use these models, please check below examples.</p>
 <p><strong>Scala</strong></p>
-<p><a href="https://github.com/intel-analytics/zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/imageclassification">Scala example</a></p>
+<p><a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/imageclassification">Scala example</a></p>
 <p>It's very easy to apply the model for inference with below code piece.</p>
 <pre><code class="scala">val imc = ImageClassifier.loadModel[Float](params.model)
 val data = ImageSet.read(params.image, sc, params.nPartition)
@@ -77,7 +77,7 @@ val output = imc.predictImageSet(data, config)
 </code></pre>
 
 <p><strong>Python</strong></p>
-<p><a href="https://github.com/intel-analytics/zoo/tree/master/pyzoo/zoo/examples/imageclassification">Python example</a></p>
+<p><a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/imageclassification">Python example</a></p>
 <p>It's very easy to apply the model for inference with below code piece.</p>
 <pre><code>imc = ImageClassifier.load_model(model_path)
 image_set = ImageSet.read(img_path, sc)
