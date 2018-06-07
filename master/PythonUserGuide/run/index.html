@@ -64,7 +64,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><strong>NOTE</strong>: Only <strong>Python 2.7</strong>, <strong>Python 3.5</strong> and <strong>Python 3.6</strong> are supported for now.</p>
 <hr />
 <h2 id="run-after-pip-install"><strong>Run after pip install</strong></h2>
-<p><strong>Important:</strong> Please always first call <code>init_nncontext()</code> at the very beginning of your code after pip install. This will create a SparkContext with optimized performance configuration and initialize the BigDL engine.</p>
+<p><strong>Important:</strong></p>
+<ol>
+<li>
+<p>Installing analytics-zoo from pip will automatically install <code>pyspark</code>. To avoid possible conflicts, you are highly recommended to <strong>unset <code>SPARK_HOME</code></strong> if it exists in your environment.</p>
+</li>
+<li>
+<p>Please always first call <code>init_nncontext()</code> at the very beginning of your code after pip install. This will create a SparkContext with optimized performance configuration and initialize the BigDL engine.</p>
+</li>
+</ol>
 <pre><code class="python">from zoo.common.nncontext import *
 sc = init_nncontext()
 </code></pre>
