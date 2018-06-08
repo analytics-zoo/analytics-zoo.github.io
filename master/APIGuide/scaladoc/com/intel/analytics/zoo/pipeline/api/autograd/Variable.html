@@ -448,6 +448,33 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.autograd.Variable#indexSelect" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="indexSelect(dim:Int,index:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
+      <a id="indexSelect(Int,Int):Variable[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">indexSelect</span><span class="params">(<span name="dim">dim: <span class="extype" name="scala.Int">Int</span></span>, <span name="index">index: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.autograd.Variable@indexSelect(dim:Int,index:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Select an index of the input in the given dim and return the subset part.</p><div class="fullcomment"><div class="comment cmt"><p>Select an index of the input in the given dim and return the subset part.
+The batch dimension needs to be unchanged.
+The selected dim would be remove after this operation.
+For example, if input is:
+1 2 3
+4 5 6
+Select(1, 1) will give output [2 5]
+Select(1, -1) will give output [3 6]
+</p></div><dl class="paramcmts block"><dt class="param">dim</dt><dd class="cmt"><p>The dimension to select. 0-based index. Cannot select the batch dimension.
+           -1 means the last dimension of the input.</p></dd><dt class="param">index</dt><dd class="cmt"><p>The index of the dimension to be selected. 0-based index.
+             -1 means the last dimension of the input.</p></dd></dl></div>
     </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <a id="isInstanceOf[T0]:Boolean"></a>
@@ -465,6 +492,51 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.autograd.Variable#name" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="name:String"></a>
+      <a id="name:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">name</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.autograd.Variable@name:String" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.autograd.Variable#narrow" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="narrow(dim:Int,startIndex:Int,length:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
+      <a id="narrow(Int,Int,Int):Variable[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">narrow</span><span class="params">(<span name="dim">dim: <span class="extype" name="scala.Int">Int</span></span>, <span name="startIndex">startIndex: <span class="extype" name="scala.Int">Int</span></span>, <span name="length">length: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.autograd.Variable@narrow(dim:Int,startIndex:Int,length:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Narrow the input with the number of dimensions not being reduced.</p><div class="fullcomment"><div class="comment cmt"><p>Narrow the input with the number of dimensions not being reduced.
+The batch dimension needs to be unchanged.
+For example, if input is:
+1 2 3
+4 5 6
+Narrow(1, 1, 2) will give output
+2 3
+5 6
+Narrow(1, 2, -1) will give output
+3
+6
+</p></div></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -550,6 +622,28 @@
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.pipeline.api.autograd.Variable#squeeze" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="squeeze(dim:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
+      <a id="squeeze(Int):Variable[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">squeeze</span><span class="params">(<span name="dim">dim: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.autograd.Variable@squeeze(dim:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Delete the singleton dimension(s).</p><div class="fullcomment"><div class="comment cmt"><p>Delete the singleton dimension(s).
+The batch dimension needs to be unchanged.
+For example, if input has size (2, 1, 3, 4, 1):
+Squeeze(dim = 1) will give output size (2, 3, 4, 1)
+Squeeze(dims = null) will give output size (2, 3, 4)
+</p></div></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
