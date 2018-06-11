@@ -47,10 +47,6 @@
           ]},
           {title: "Image Predict", url: "#image-predict", children: [
               {title: "Predict with Image DataFrame", url: "#predict-with-image-dataframe" },
-          ]},
-          {title: "predict with trained model", url: "#predict-with-trained-model", children: [
-          ]},
-          {title: "predict with loaded pre-trained model", url: "#predict-with-loaded-pre-trained-model", children: [
               {title: "Predict with ImageSet", url: "#predict-with-imageset" },
           ]},
         ];
@@ -163,7 +159,7 @@ distributed_image_frame = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
 <li><code>MatToTensor</code>: Transform opencv mat to tensor, note that in this transformer, the mat is released.</li>
 <li><code>ImageFrameToSample</code>: Transforms tensors that map inputKeys and targetKeys to sample, note that in this transformer, the mat has been released.</li>
 </ul>
-<p>More examples can be found <a href="../APIGuide/image.md">here</a></p>
+<p>More examples can be found <a href="../../APIGuide/FeatureEngineering/image/">here</a></p>
 <p>You can also define your own Transformer by extending <code>ImageProcessing</code>,
 and override the function <code>transformMat</code> to do the actual transformation to <code>ImageFeature</code>.</p>
 <h2 id="build-image-transformation-pipeline"><strong>Build Image Transformation Pipeline</strong></h2>
@@ -180,13 +176,23 @@ val imgAug = ImageBytesToMat() -&gt; ImageResize(256, 256)-&gt; ImageCenterCrop(
 </code></pre>
 
 <p>In the above example, the transformations will perform sequentially.</p>
-<p>Assume you have an ImageFrame containing original bytes array,
-<code>ImageBytesToMat</code> will transform the bytes array to <code>OpenCVMat</code>.</p>
+<p>Assume you have an ImageFrame containing original bytes array,</p>
+<ul>
+<li>
+<p><code>ImageBytesToMat</code> will transform the bytes array to <code>OpenCVMat</code>.</p>
+</li>
+<li>
 <p><code>ImageColorJitter</code>, <code>ImageExpand</code>, <code>ImageResize</code>, <code>ImageHFlip</code> and <code>ImageChannelNormalize</code> will transform over <code>OpenCVMat</code>,
 note that <code>OpenCVMat</code> is overwrite by default.</p>
+</li>
+<li>
 <p><code>ImageMatToTensor</code> transform <code>OpenCVMat</code> to <code>Tensor</code>, and <code>OpenCVMat</code> is released in this step.</p>
+</li>
+<li>
 <p><code>ImageSetToSample</code> transform the tensors that map inputKeys and targetKeys to sample,
 which can be used by the following prediction or training tasks.</p>
+</li>
+</ul>
 <p><strong>Python example:</strong></p>
 <pre><code class="python">from zoo.feature.image.imagePreprocessing import *
 
@@ -285,20 +291,18 @@ lrModel.fit(x = samples, batch_size=batchsize, nb_epoch=nEpochs)
 
 <h2 id="image-predict"><strong>Image Predict</strong></h2>
 <h3 id="predict-with-image-dataframe">Predict with Image DataFrame</h3>
-<p>After training with NNEstimator/NNCLassifier, you'll get a trained NNModel/NNClassifierModel. You can call <code>transform</code> to predict Image DataFrame with this NNModel/NNClassifierModel.
- Or you can load pre-trained Analytics-Zoo/BigDL/Caffe/Torch/Tensorflow model and create NNModel/NNClassifierModel with this model. Then call to <code>transform</code> to predict Image DataFrame.
- After prediction, there is a new column <code>prediction</code> in the prediction image dataframe.</p>
-<p><strong>Scala example:</strong>
- ```scala
- val batchsize = 128
+<p>After training with <em>NNEstimator/NNCLassifier</em>, you'll get a trained <em>NNModel/NNClassifierModel</em> . You can call <code>transform</code> to predict Image DataFrame with this <em>NNModel/NNClassifierModel</em> . Or you can load pre-trained <em>Analytics-Zoo/BigDL/Caffe/Torch/Tensorflow</em>  model and create <em>NNModel/NNClassifierModel</em> with this model. Then call to <code>transform</code> to Image DataFrame.</p>
+<p>After prediction, there is a new column <code>prediction</code> in the prediction image dataframe.</p>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala"> val batchsize = 128
  val nEpochs = 10
  val featureTransformer = RowToImageFeature() -&gt; ImageResize(256, 256) -&gt;
                                     ImageCenterCrop(224, 224) -&gt;
                                     ImageChannelNormalize(123, 117, 104) -&gt;
                                     ImageMatToTensor() -&gt;
                                     ImageFeatureToTensor()
- val classifier = NNClassifier(model, CrossEntropyCriterion<a href="">Float</a>, featureTransformer)
-         .setFeaturesCol("image")
+ val classifier = NNClassifier(model, CrossEntropyCriterion[Float](), featureTransformer)
+         .setFeaturesCol(&quot;image&quot;)
          .setLearningRate(0.003)
          .setBatchSize(batchsize)
          .setMaxEpoch(nEpochs)
@@ -306,16 +310,19 @@ lrModel.fit(x = samples, batch_size=batchsize, nb_epoch=nEpochs)
  val trainedModel = classifier.fit(trainDf)
  // predict with trained model
  val predictions = trainedModel.transform(testDf)
- predictions.select(col("image"), col("label"), col("prediction")).show(false)</p>
-<p>// predict with loaded pre-trained model
- val model = Module.loadModule<a href="../modelPath">Float</a>
+ predictions.select(col(&quot;image&quot;), col(&quot;label&quot;), col(&quot;prediction&quot;)).show(false)
+
+ // predict with loaded pre-trained model
+ val model = Module.loadModule[Float](modelPath)
  val dlmodel = NNClassifierModel(model, featureTransformer)
          .setBatchSize(batchsize)
-         .setFeaturesCol("image")
-         .setPredictionCol("prediction") 
+         .setFeaturesCol(&quot;image&quot;)
+         .setPredictionCol(&quot;prediction&quot;) 
  val resultDF = dlmodel.transform(testDf)
- <code>**Python example:**</code>python
- batchsize = 128
+</code></pre>
+
+<p><strong>Python example:</strong></p>
+<pre><code class="python"> batchsize = 128
  nEpochs = 10
  featureTransformer = ChainedPreprocessing([RowToImageFeature(), ImageResize(256, 256),
                                     ImageCenterCrop(224, 224),
@@ -323,23 +330,25 @@ lrModel.fit(x = samples, batch_size=batchsize, nb_epoch=nEpochs)
                                     ImageMatToTensor(),
                                     ImageFeatureToTensor()])
  classifier = NNClassifier(model, CrossEntropyCriterion(), featureTransformer)\
-         .setFeaturesCol("image")\
+         .setFeaturesCol(&quot;image&quot;)\
          .setLearningRate(0.003)\
          .setBatchSize(batchsize)\
          .setMaxEpoch(nEpochs)\
          .setValidation(EveryEpoch(), valDf, [Top1Accuracy()], batch_size)
-trainedModel = classifier.fit(trainDf)</p>
-<h1 id="predict-with-trained-model">predict with trained model</h1>
-<p>predictions = trainedModel.transform(testDf)
-predictions.select("image", "label","prediction").show(False)</p>
-<h1 id="predict-with-loaded-pre-trained-model">predict with loaded pre-trained model</h1>
-<p>model = Model.loadModel(model_path)
+trainedModel = classifier.fit(trainDf)
+# predict with trained model
+predictions = trainedModel.transform(testDf)
+predictions.select(&quot;image&quot;, &quot;label&quot;,&quot;prediction&quot;).show(False)
+
+# predict with loaded pre-trained model
+model = Model.loadModel(model_path)
 dlmodel = NNClassifierModel(model, featureTransformer)\
          .setBatchSize(batchsize)\
-         .setFeaturesCol("image")\
-         .setPredictionCol("prediction") 
+         .setFeaturesCol(&quot;image&quot;)\
+         .setPredictionCol(&quot;prediction&quot;) 
 resultDF = dlmodel.transform(testDf)
- ```</p>
+</code></pre>
+
 <h3 id="predict-with-imageset">Predict with ImageSet</h3>
 <p>After training Zoo Keras model, you can call <code>predict</code> to predict ImageSet.
 Or you can load pre-trained Analytics-Zoo/BigDL model. Then call to <code>predictImageSet</code> to predict ImageSet.</p>
