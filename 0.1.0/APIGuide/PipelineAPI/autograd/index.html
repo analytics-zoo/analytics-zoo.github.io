@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Autograd - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "mean", url: "#mean", children: [
+          ]},
+          {title: "abs", url: "#abs", children: [
+          ]},
+          {title: "sum", url: "#sum", children: [
+          ]},
+          {title: "clip", url: "#clip", children: [
+          ]},
+          {title: "square", url: "#square", children: [
+          ]},
+          {title: "sqrt", url: "#sqrt", children: [
+          ]},
+          {title: "maximum", url: "#maximum", children: [
+          ]},
+          {title: "log", url: "#log", children: [
+          ]},
+          {title: "exp", url: "#exp", children: [
+          ]},
+          {title: "pow", url: "#pow", children: [
+          ]},
+          {title: "softsign", url: "#softsign", children: [
+          ]},
+          {title: "softplus", url: "#softplus", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Autograd</strong></h1>
+    <hr>
+    <h2 id="mean">mean</h2>
+<p>Mean of a <code>Variable</code>, alongside the specified axis.
+- <code>axis</code> axis to compute the mean. 0-based indexed.
+- <code>keepDims</code> A boolean, whether to keep the dimensions or not.
+   If <code>keepDims</code> is <code>False</code>, the rank of the <code>Variable</code> is reduced
+   by 1. If <code>keepDims</code> is <code>True</code>,
+   the reduced dimensions are retained with length 1.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">mean(x: Variable[T], axis: Int = 0, keepDims: Boolean = false)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">mean(x, axis=0, keepDims=False):
+</code></pre>
+
+<h2 id="abs">abs</h2>
+<p>Element-wise absolute value.
+- <code>x</code> A <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">abs(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">abs(x):
+</code></pre>
+
+<h2 id="sum">sum</h2>
+<p>Sum of the values in a <code>Variable</code>, alongside the specified axis.
+- <code>axis</code> axis to compute the mean. 0-based indexed.
+- <code>keepDims</code> A boolean, whether to keep the dimensions or not.
+   If <code>keepdims</code> is <code>False</code>, the rank of the <code>Variable</code> is reduced
+   by 1. If <code>keep_dims</code> is <code>True</code>,
+   the reduced dimensions are retained with length 1.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">sum(x: Variable[T], axis: Int = 0, keepDims: Boolean = false)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">sum(x, axis=0, keepDims=False):
+</code></pre>
+
+<h2 id="clip">clip</h2>
+<p>Element-wise value clipping.
+- <code>x</code> A <code>Variable</code>.
+- <code>min</code> Double
+- <code>max</code> Double</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">clip(x: Variable[T], min: Double, max: Double)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">clip(x, min, max)
+</code></pre>
+
+<h2 id="square">square</h2>
+<p>Element-wise square.
+- <code>x</code> A <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">square(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">square(x):
+</code></pre>
+
+<h2 id="sqrt">sqrt</h2>
+<p>Element-wise square root.
+- <code>x</code> A <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">sqrt(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">sqrt(x):
+</code></pre>
+
+<h2 id="maximum">maximum</h2>
+<p>Element-wise maximum of two <code>Variables</code>.
+- <code>x</code> A <code>Variable</code>.
+- <code>y</code> A <code>Variable</code> or Double.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">maximum(x: Variable[T], y: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">maximum(x, y):
+</code></pre>
+
+<h2 id="log">log</h2>
+<p>Element-wise log.
+- <code>x</code> A <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">log(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">log(x):
+</code></pre>
+
+<h2 id="exp">exp</h2>
+<p>Element-wise exponential.
+- <code>x</code> A <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">exp(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">exp(x):
+</code></pre>
+
+<h2 id="pow">pow</h2>
+<p>Element-wise exponentiation.
+- <code>x</code> A <code>Variable</code>.
+- <code>a</code> Double.   </p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">pow(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">pow(x):
+</code></pre>
+
+<h2 id="softsign">softsign</h2>
+<p>Softsign of a <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">softsign(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">softsign(x):
+</code></pre>
+
+<h2 id="softplus">softplus</h2>
+<p>Softplus of a <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">softplus(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">softplus(x):
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
