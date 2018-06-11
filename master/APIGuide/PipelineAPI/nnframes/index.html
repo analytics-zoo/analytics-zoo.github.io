@@ -99,14 +99,18 @@ More concrete examples are available in package <code>com.intel.analytics.zoo.ex
    <code>Preprocessing</code>. <code>NNEstimator</code> will extract the data from feature and label columns (
    only Scalar, Array[_] or Vector data type are supported) and convert each feature/label to
    1-dimension Tensor. The tensors will be combined into BigDL <code>Sample</code> and send to model for
-   training.
-2. <code>NNEstimator(model, criterion, featureSize: Array[Int], labelSize: Array[Int])</code></p>
+   training.</p>
+<ol>
+<li><code>NNEstimator(model, criterion, featureSize: Array[Int], labelSize: Array[Int])</code></li>
+</ol>
 <p>Takes model, criterion, featureSize(Array of Int) and labelSize(Array of Int). <code>NNEstimator</code>
    will extract the data from feature and label columns (only Scalar, Array[_] or Vector data
    type are supported) and convert each feature/label to Tensor according to the specified Tensor
-   size.
-3. <code>NNEstimator(model, criterion, featurePreprocessing: Preprocessing[F, Tensor[T]],
-labelPreprocessing: Preprocessing[F, Tensor[T]])</code></p>
+   size.</p>
+<ol>
+<li><code>NNEstimator(model, criterion, featurePreprocessing: Preprocessing[F, Tensor[T]],
+labelPreprocessing: Preprocessing[F, Tensor[T]])</code></li>
+</ol>
 <p>Takes model, criterion, featurePreprocessing and labelPreprocessing.  <code>NNEstimator</code>
    will extract the data from feature and label columns and convert each feature/label to Tensor
    with the featurePreprocessing and labelPreprocessing. This constructor provides more flexibility
@@ -181,12 +185,16 @@ and use it as a transformer in your Spark ML pipeline to predict the results for
 </ol>
 <p>Takes only model and use <code>SeqToTensor</code> as feature Preprocessing. <code>NNModel</code> will extract the
    data from feature column (only Scalar, Array[_] or Vector data type are supported) and
-   convert each feature to 1-dimension Tensor. The tensors will be sent to model for inference.
-2. <code>NNModel(model, featureSize: Array[Int])</code></p>
+   convert each feature to 1-dimension Tensor. The tensors will be sent to model for inference.</p>
+<ol>
+<li><code>NNModel(model, featureSize: Array[Int])</code></li>
+</ol>
 <p>Takes model and featureSize(Array of Int). <code>NNModel</code> will extract the data from feature
    column (only Scalar, Array[_] or Vector data type are supported) and convert each feature
-   to Tensor according to the specified Tensor size.
-3. <code>NNModel(model, featurePreprocessing: Preprocessing[F, Tensor[T]])</code></p>
+   to Tensor according to the specified Tensor size.</p>
+<ol>
+<li><code>NNModel(model, featurePreprocessing: Preprocessing[F, Tensor[T]])</code></li>
+</ol>
 <p>Takes model and featurePreprocessing. <code>NNModel</code> will extract the data from feature column
    and convert each feature to Tensor with the featurePreprocessing. This constructor provides
    more flexibility in supporting extra data types.</p>
@@ -219,12 +227,16 @@ DoubleType.</p>
    Preprocessing. <code>NNClassifier</code> will extract the data from feature and label columns (
    only Scalar, Array[_] or Vector data type are supported) and convert each feature/label to
    1-dimension Tensor. The tensors will be combined into BigDL samples and send to model for
-   training.
-2. <code>NNClassifier(model, criterion, featureSize: Array[Int])</code></p>
+   training.</p>
+<ol>
+<li><code>NNClassifier(model, criterion, featureSize: Array[Int])</code></li>
+</ol>
 <p>Takes model, criterion, featureSize(Array of Int). <code>NNClassifier</code>
    will extract the data from feature and label columns and convert each feature to Tensor
-   according to the specified Tensor size. <code>ScalarToTensor</code> is used to convert the label column.
-3. <code>NNClassifier(model, criterion, featurePreprocessing: Preprocessing[F, Tensor[T]])</code></p>
+   according to the specified Tensor size. <code>ScalarToTensor</code> is used to convert the label column.</p>
+<ol>
+<li><code>NNClassifier(model, criterion, featurePreprocessing: Preprocessing[F, Tensor[T]])</code></li>
+</ol>
 <p>Takes model, criterion and featurePreprocessing.  <code>NNClassifier</code>
    will extract the data from feature and label columns and convert each feature to Tensor
    with the featurePreprocessing. This constructor provides more flexibility
@@ -294,12 +306,16 @@ Both label and prediction column will have the datatype of Double.</p>
 </ol>
 <p>Takes only model and use <code>SeqToTensor</code> as feature Preprocessing. <code>NNClassifierModel</code> will
    extract the data from feature column (only Scalar, Array[_] or Vector data type are supported)
-   and convert each feature to 1-dimension Tensor. The tensors will be sent to model for inference.
-2. <code>NNClassifierModel(model, featureSize: Array[Int])</code></p>
+   and convert each feature to 1-dimension Tensor. The tensors will be sent to model for inference.</p>
+<ol>
+<li><code>NNClassifierModel(model, featureSize: Array[Int])</code></li>
+</ol>
 <p>Takes model and featureSize(Array of Int). <code>NNClassifierModel</code> will extract the data from feature
    column (only Scalar, Array[_] or Vector data type are supported) and convert each feature
-   to Tensor according to the specified Tensor size.
-3. <code>NNClassifierModel(model, featurePreprocessing: Preprocessing[F, Tensor[T]])</code></p>
+   to Tensor according to the specified Tensor size.</p>
+<ol>
+<li><code>NNClassifierModel(model, featurePreprocessing: Preprocessing[F, Tensor[T]])</code></li>
+</ol>
 <p>Takes model and featurePreprocessing. <code>NNClassifierModel</code> will extract the data from feature
    column and convert each feature to Tensor with the featurePreprocessing. This constructor provides
    more flexibility in supporting extra data types.</p>
