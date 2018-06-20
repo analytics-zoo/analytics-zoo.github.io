@@ -64,7 +64,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <pre><code class="scala">package com.intel.analytics.zoo.pipeline.nnframes
 
 object NNImageReader {
-  def readImages(path: String, sc: SparkContext, minPartitions: Int = 1): DataFrame
+  def readImages(path: String, sc: SparkContext, minPartitions: Int = 1, resizeH: Int = -1, resizeW: Int = -1): DataFrame
 }
 </code></pre>
 
@@ -73,10 +73,12 @@ object NNImageReader {
 <li>path: Directory to the input data files, the path can be comma separated paths as the list of inputs. Wildcards path are supported similarly to sc.binaryFiles(path).</li>
 <li>sc: SparkContext to be used.</li>
 <li>minPartitions: Number of the DataFrame partitions, if omitted uses defaultParallelism instead</li>
+<li>resizeH: height after resize, by default is -1 which will not resize the image</li>
+<li>resizeW: width after resize, by default is -1 which will not resize the image</li>
 </ul>
 <p>Python:</p>
 <pre><code class="python">class zoo.pipeline.nnframes.NNImageReader
-    static readImages(path, sc=None, minPartitions=1, bigdl_type=&quot;float&quot;)
+    static readImages(path, sc=None, minPartitions=1, resizeH=-1, resizeW=-1, bigdl_type=&quot;float&quot;)
 </code></pre>
 
 <h3 id="imageset">ImageSet</h3>
@@ -101,7 +103,7 @@ You can read image data as <code>ImageSet</code> from local/distributed image pa
 <ul>
 <li>data: array of ImageFeature</li>
 </ul>
-<pre><code>  def read(path: String, sc: SparkContext = null, minPartitions: Int = 1): ImageSet
+<pre><code>  def read(path: String, sc: SparkContext = null, minPartitions: Int = 1, resizeH: Int = -1, resizeW: Int = -1): ImageSet
 </code></pre>
 
 <p>Read images as Image Set.
@@ -111,6 +113,8 @@ If sc is null, Read image as LocalImageSet from local file system</p>
 <li>path: path to read images. If sc is defined, path can be local or HDFS. Wildcard character are supported. If sc is null, path is local directory/image file/image file with wildcard character</li>
 <li>sc: SparkContext</li>
 <li>minPartitions: A suggestion value of the minimal splitting number for input data.</li>
+<li>resizeH: height after resize, by default is -1 which will not resize the image</li>
+<li>resizeW: width after resize, by default is -1 which will not resize the image</li>
 </ul>
 <p>Example:</p>
 <pre><code>// create LocalImageSet from an image folder
@@ -124,7 +128,7 @@ val distributedImageFrame2 = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
 <pre><code>class zoo.feature.image.ImageSet
 </code></pre>
 
-<pre><code>read(path, sc=None, min_partitions=1, bigdl_type=&quot;float&quot;)
+<pre><code>read(path, sc=None, min_partitions=1, resize_height=-1, resize_width=-1, bigdl_type=&quot;float&quot;)
 </code></pre>
 
 <p>Read images as Image Set.
@@ -133,7 +137,9 @@ If sc is null, Read image as LocalImageSet from local file system</p>
 <ul>
 <li>path: path to read images. If sc is defined, path can be local or HDFS. Wildcard character are supported. If sc is null, path is local directory/image file/image file with wildcard character</li>
 <li>sc: SparkContext</li>
-<li>minPartitions: A suggestion value of the minimal splitting number for input data.</li>
+<li>min_partitions: A suggestion value of the minimal splitting number for input data.</li>
+<li>resize_height height after resize, by default is -1 which will not resize the image</li>
+<li>resize_width width after resize, by default is -1 which will not resize the image</li>
 </ul>
 <p>Python example:</p>
 <pre><code class="python"># create LocalImageFrame from an image folder
