@@ -63,6 +63,12 @@
           ]},
           {title: "contiguous", url: "#contiguous", children: [
           ]},
+          {title: "mm", url: "#mm", children: [
+          ]},
+          {title: "batch_dot", url: "#batch_dot", children: [
+          ]},
+          {title: "l2_normalize", url: "#l2_normalize", children: [
+          ]},
         ];
 
     </script>
@@ -253,6 +259,48 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
 <p><strong>Python example</strong></p>
 <pre><code class="python">def contiguous(x)
+</code></pre>
+
+<h2 id="mm">mm</h2>
+<p>Module to perform matrix multiplication on two mini-batch inputs, producing a mini-batch.
+- <code>x</code> A variable.
+- <code>y</code> A variable.
+- <code>axes</code> Axes along which to perform multiplication.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">def mm[T: ClassTag](x: Variable[T], y: Variable[T], axes: List[Int])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">def mm(x, y, axes)
+</code></pre>
+
+<h2 id="batch_dot">batch_dot</h2>
+<p>Operator that computes a dot product between samples in two tensors.
+- <code>x</code> Shape should only be [batch, xx]
+- <code>y</code> Shape should only be [batch, xx]
+- <code>axes</code> Integer or tuple of integers, axis or axes along which to take the dot product.
+- <code>normalize</code> Whether to L2-normalize samples along the
+              dot product axis before taking the dot product.
+              If set to True, then the output of the dot product
+              is the cosine proximity between the two samples.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">def batchDot[T: ClassTag](x: Variable[T], y: Variable[T], axes: List[Int], normalize: Boolean = false)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">def batch_dot(x, y, axes=1, normalize=False)
+</code></pre>
+
+<h2 id="l2_normalize">l2_normalize</h2>
+<p>Normalizes a tensor wrt the L2 norm alongside the specified axis.
+- <code>x</code> A variable.
+- <code>axis</code> Axis along which to perform normalization.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">def l2Normalize[T: ClassTag](x: Variable[T], axis: Int)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">def l2_normalize(x, axis)
 </code></pre>
 
   <br>
