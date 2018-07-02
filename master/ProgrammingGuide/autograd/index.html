@@ -34,6 +34,9 @@
         
         var pageToc = [
           {title: "Overview", url: "#overview", children: [
+              {title: "CustomLoss", url: "#customloss" },
+              {title: "Lambda layer", url: "#lambda-layer" },
+              {title: "Construct variable computation without Lambda layer", url: "#construct-variable-computation-without-lambda-layer" },
           ]},
         ];
 
@@ -53,13 +56,44 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1><strong>Autograd</strong></h1>
     <hr>
     <h2 id="overview">Overview</h2>
-<p><code>autograd</code> provides automatic differentiation for math operations, so that you can easily build your own <em>custom loss and layer</em> (in both Python and Scala), as illustracted below. (See more examples <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/autograd">here</a>). Conceptually we use reverse mode together with the chain rule for automatic differentiation. <code>Variable</code> is used to record the linkage of the operation history, which would generated a directed acyclic graph for the backward execution. Within the execution graph, leaves are the input <code>variables</code> and roots are the output <code>variables</code>.</p>
-<p>1.Define custom functions using <code>autograd</code></p>
+<p><code>autograd</code> provides automatic differentiation for math operations, so that you can easily build your own <em>custom loss and layer</em> (in both Python and Scala), as illustracted below. (See more examples <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/autograd">here</a>). Conceptually we use reverse mode together with the chain rule for automatic differentiation. <code>Variable</code> is used to record the linkage of the operation history, which would generated a static directed acyclic graph for the backward execution. Within the execution graph, leaves are the input <code>variables</code> and roots are the output <code>variables</code>.</p>
+<h3 id="customloss">CustomLoss</h3>
+<p>1.Define a custom function using <code>autograd</code></p>
 <pre><code>from zoo.pipeline.api.autograd import *
 
 def mean_absolute_error(y_true, y_pred):
    return mean(abs(y_true - y_pred), axis=1)
+</code></pre>
 
+<ol>
+<li>Use <code>CustomLoss</code> in <code>compile</code> method.</li>
+</ol>
+<pre><code># You can pass the loss function directly into `loss`
+model.compile(optimizer = SGD(), loss = mean_absolute_error)
+model.fit(x = ..., y = ...)
+</code></pre>
+
+<ol>
+<li>Use <code>CustomLoss</code> in <code>nnframe</code> pipeline.</li>
+</ol>
+<pre><code># 1) Create a CustomLoss object from function.
+loss = CustomLoss(mean_absolute_error, y_pred_shape=[2], y_true_shape=[2])
+# 2) Passing the CustomLoss object to NNClassifier.
+classifier = NNClassifier(lrModel, loss, SeqToTensor([1000]))
+</code></pre>
+
+<ol>
+<li>Use <code>forward</code> and <code>backward</code> to evaluate a <code>CustomLoss</code> for debugging.</li>
+</ol>
+<pre><code># y_pred_shape=[2] is a shape without batch
+loss = CustomLoss(mean_absolute_error, y_pred_shape=[2], y_true_shape=[2])
+error = loss.forward(y_true=np.random.uniform(0, 1, shape[3, 2]), y_pred=np.random.uniform(0, 1, shape[3, 2]))
+grad = loss.backward(y_true=np.random.uniform(0, 1, shape[3, 2]), y_pred=np.random.uniform(0, 1, shape[3, 2]))
+</code></pre>
+
+<h3 id="lambda-layer">Lambda layer</h3>
+<p>1.Define custom function using <code>autograd</code></p>
+<pre><code>from zoo.pipeline.api.autograd import *
 def add_one_func(x):
    return x + 1.0
 </code></pre>
@@ -74,12 +108,44 @@ model.forward(np.random.uniform(0, 1, shape[3, 2])) # 3 is the batch size
 
 </code></pre>
 
-<p>3.Train model with <em>custom loss function</em></p>
-<pre><code>model.compile(optimizer = SGD(), loss = mean_absolute_error)
-model.fit(x = ..., y = ...)
+<h3 id="construct-variable-computation-without-lambda-layer">Construct variable computation without <code>Lambda</code> layer</h3>
+<ul>
+<li>The returning type for each operation is a <code>Variable</code>, so you can connect those <code>Variable</code> together freely without using <code>Lambda</code>. i.e <code>Dense[Float](3).from(input2)</code> or <code>input1 + input2</code></li>
+<li>Shape inference is supported as well, which means you can check the output shape of a <code>Variable</code> by calling <code>get_output_shape()</code></li>
+</ul>
+<p>Python</p>
+<pre><code>import zoo.pipeline.api.autograd as auto
+from zoo.pipeline.api.keras.layers import *
+from zoo.pipeline.api.keras.models import *
 
-# Evaluation for debug purpose
-CustomLoss(mean_absolute_error, [2]).forward(np.random.uniform(0, 1, shape[3, 2])) # [2] is the shape without batch, 3 is the batch size.
+input = Input(shape=[2, 20]) # create a variable
+time = TimeDistributed(layer=Dense(30))(input) # time is a variable
+t1 = time.index_select(1, 0) # t1 is a variable
+t2 = time.index_select(1, 1)
+diff = auto.abs(t1 - t2)
+assert diff.get_output_shape() == (None, 30)
+assert diff.get_input_shape() == (None, 30)
+model = Model(input, diff)
+data = np.random.uniform(0, 1, [10, 2, 20])
+output = model.forward(data)
+</code></pre>
+
+<p>Scala
+- In respect of backward compatibility, the scala API is slightly different with the python API.
+- <code>layer.inputs(node)</code> would return a node(backward compatibility).
+- <code>layer.from(variable)</code> would return a variable.(You may want to use this style as it can support autograd.)</p>
+<pre><code>import com.intel.analytics.zoo.pipeline.api.autograd.Variable
+import com.intel.analytics.zoo.pipeline.api.autograd.AutoGrad
+import com.intel.analytics.zoo.pipeline.api.keras.models.Model
+import com.intel.analytics.zoo.pipeline.api.keras.layers._
+
+val input1 = Variable[Float](inputShape = Shape(3))
+val input2 = Variable[Float](inputShape = Shape(3))
+val diff = AutoGrad.abs(input1 - Dense[Float](3).from(input2))
+val model = Model[Float](input = Array(input1, input2), output = diff)
+val inputValue = Tensor[Float](1, 3).randn()
+// In scala, we use Table for multiple inputs. `T` is a short-cut for creating a Table.
+val out = model.forward(T(inputValue, inputValue)).toTensor[Float]
 </code></pre>
 
   <br>
