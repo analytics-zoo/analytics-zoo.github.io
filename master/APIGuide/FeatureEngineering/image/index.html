@@ -118,10 +118,10 @@ If sc is null, Read image as LocalImageSet from local file system</p>
 </ul>
 <p>Example:</p>
 <pre><code>// create LocalImageSet from an image folder
-val localImageFrame = ImageSet.read(&quot;/tmp/image/&quot;)
+val localImageSet = ImageSet.read(&quot;/tmp/image/&quot;)
 
-// create DistributedImageFrame from an image folder
-val distributedImageFrame2 = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
+// create DistributedImageSet from an image folder
+val distributedImageSet2 = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
 </code></pre>
 
 <p><strong>Python APIs:</strong></p>
@@ -142,11 +142,11 @@ If sc is null, Read image as LocalImageSet from local file system</p>
 <li>resize_width width after resize, by default is -1 which will not resize the image</li>
 </ul>
 <p>Python example:</p>
-<pre><code class="python"># create LocalImageFrame from an image folder
-local_image_frame2 = ImageSet.read(&quot;/tmp/image/&quot;)
+<pre><code class="python"># create LocalImageSet from an image folder
+local_image_set2 = ImageSet.read(&quot;/tmp/image/&quot;)
 
-# create DistributedImageFrame from an image folder
-distributed_image_frame = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
+# create DistributedImageSet from an image folder
+distributed_image_set = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
 </code></pre>
 
 <h2 id="image-transformer">Image Transformer</h2>
@@ -183,6 +183,33 @@ def __init__(delta_low, delta_high, bigdl_type=&quot;float&quot;)
 <p>Example:</p>
 <pre><code>transformer = ImageBrightness(0.0, 32.0)
 transformed = imageSet.transform(transformer)
+</code></pre>
+
+<p><strong>Scala APIs:</strong></p>
+<pre><code>package com.intel.analytics.zoo.feature.image
+
+object ImageBytesToMat
+
+def apply(byteKey: String = ImageFeature.bytes,
+          imageCodec: Int = Imgcodecs.CV_LOAD_IMAGE_UNCHANGED): ImageBytesToMat
+</code></pre>
+
+<p>Transform byte array(original image file in byte) to OpenCVMat</p>
+<ul>
+<li>byteKey: key that maps byte array. Default value is ImageFeature.bytes</li>
+<li>imageCodec: specifying the color type of a loaded image, same as in OpenCV.imread.
+              1. CV_LOAD_IMAGE_ANYDEPTH - If set, return 16-bit/32-bit image when the input has the corresponding depth, otherwise convert it to 8-bit.
+              2. CV_LOAD_IMAGE_COLOR - If set, always convert image to the color one
+              3. CV_LOAD_IMAGE_GRAYSCALE - If set, always convert image to the grayscale one
+              4. &gt;0 Return a 3-channel color image.
+              Note The alpha channel is stripped from the output image. Use negative value if you need the alpha channel.
+              5. =0 Return a grayscale image.
+              6. &lt;0 Return the loaded image as is (with alpha channel).
+              Default value is Imgcodecs.CV_LOAD_IMAGE_UNCHANGED.</li>
+</ul>
+<p>Example:</p>
+<pre><code>val imageSet = ImageSet.read(path, sc)
+imageSet -&gt; ImageBytesToMat()
 </code></pre>
 
   <br>

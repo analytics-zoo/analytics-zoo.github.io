@@ -381,18 +381,18 @@
     </span>
       <p class="shortcomment cmt">create DistributedImageSet</p><div class="fullcomment"><div class="comment cmt"><p>create DistributedImageSet</p></div><dl class="paramcmts block"><dt class="param">data</dt><dd class="cmt"><p>rdd of ImageFeature</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.image.ImageSet#read" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="read(path:String,sc:org.apache.spark.SparkContext,minPartitions:Int,resizeH:Int,resizeW:Int):com.intel.analytics.zoo.feature.image.ImageSet"></a>
-      <a id="read(String,SparkContext,Int,Int,Int):ImageSet"></a>
+      <a id="read(path:String,sc:org.apache.spark.SparkContext,minPartitions:Int,resizeH:Int,resizeW:Int,imageCodec:Int):com.intel.analytics.zoo.feature.image.ImageSet"></a>
+      <a id="read(String,SparkContext,Int,Int,Int,Int):ImageSet"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">read</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="sc">sc: <span class="extype" name="org.apache.spark.SparkContext">SparkContext</span> = <span class="symbol">null</span></span>, <span name="minPartitions">minPartitions: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="resizeH">resizeH: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="resizeW">resizeW: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>)</span><span class="result">: <a href="ImageSet.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageSet">ImageSet</a></span>
+        <span class="name">read</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="sc">sc: <span class="extype" name="org.apache.spark.SparkContext">SparkContext</span> = <span class="symbol">null</span></span>, <span name="minPartitions">minPartitions: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="resizeH">resizeH: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="resizeW">resizeW: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="imageCodec">imageCodec: <span class="extype" name="scala.Int">Int</span> = <span class="symbol"><span class="name"><a href="../../../../../../org/package.html">Imgcodecs.CV_LOAD_IMAGE_UNCHANGED</a></span></span></span>)</span><span class="result">: <a href="ImageSet.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageSet">ImageSet</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.ImageSet$@read(path:String,sc:org.apache.spark.SparkContext,minPartitions:Int,resizeH:Int,resizeW:Int):com.intel.analytics.zoo.feature.image.ImageSet" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.ImageSet$@read(path:String,sc:org.apache.spark.SparkContext,minPartitions:Int,resizeH:Int,resizeW:Int,imageCodec:Int):com.intel.analytics.zoo.feature.image.ImageSet" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -404,7 +404,8 @@ if sc is defined, Read image as DistributedImageSet from local file system or HD
 if sc is null, Read image as LocalImageSet from local file system
 </p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>path to read images
 if sc is defined, path can be local or HDFS. Wildcard character are supported.
-if sc is null, path is local directory/image file/image file with wildcard character</p></dd><dt class="param">sc</dt><dd class="cmt"><p>SparkContext</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>A suggestion value of the minimal splitting number for input data.</p></dd><dt class="param">resizeH</dt><dd class="cmt"><p>height after resize, by default is -1 which will not resize the image</p></dd><dt class="param">resizeW</dt><dd class="cmt"><p>width after resize, by default is -1 which will not resize the image</p></dd><dt>returns</dt><dd class="cmt"><p>ImageSet</p></dd></dl></div>
+if sc is null, path is local directory/image file/image file with wildcard character</p></dd><dt class="param">sc</dt><dd class="cmt"><p>SparkContext</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>A suggestion value of the minimal splitting number for input data.</p></dd><dt class="param">resizeH</dt><dd class="cmt"><p>height after resize, by default is -1 which will not resize the image</p></dd><dt class="param">resizeW</dt><dd class="cmt"><p>width after resize, by default is -1 which will not resize the image</p></dd><dt class="param">imageCodec</dt><dd class="cmt"><p>specifying the color type of a loaded image, same as in OpenCV.imread.
+             By default is Imgcodecs.CV_LOAD_IMAGE_UNCHANGED</p></dd><dt>returns</dt><dd class="cmt"><p>ImageSet</p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>

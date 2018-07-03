@@ -91,7 +91,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.intel.analytics.zoo.feature.image.ImageBytesToMat#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(byteKey:String):com.intel.analytics.zoo.feature.image.ImageBytesToMat"></a>
+      <a id="&lt;init&gt;(byteKey:String,imageCodec:Int):com.intel.analytics.zoo.feature.image.ImageBytesToMat"></a>
       <a id="&lt;init&gt;:ImageBytesToMat"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -99,14 +99,15 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">ImageBytesToMat</span><span class="params">(<span name="byteKey">byteKey: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol"><span class="name"><a href="../../../../../package.html">ImageFeature.bytes</a></span></span></span>)</span>
+        <span class="name">ImageBytesToMat</span><span class="params">(<span name="byteKey">byteKey: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol"><span class="name"><a href="../../../../../package.html">ImageFeature.bytes</a></span></span></span>, <span name="imageCodec">imageCodec: <span class="extype" name="scala.Int">Int</span> = <span class="symbol"><span class="name"><a href="../../../../../../org/package.html">Imgcodecs.CV_LOAD_IMAGE_UNCHANGED</a></span></span></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.ImageBytesToMat@&lt;init&gt;(byteKey:String):com.intel.analytics.zoo.feature.image.ImageBytesToMat" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.ImageBytesToMat@&lt;init&gt;(byteKey:String,imageCodec:Int):com.intel.analytics.zoo.feature.image.ImageBytesToMat" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">byteKey</dt><dd class="cmt"><p>key that maps byte array</p></dd></dl></div>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">byteKey</dt><dd class="cmt"><p>key that maps byte array</p></dd><dt class="param">imageCodec</dt><dd class="cmt"><p>specifying the color type of a loaded image, same as in OpenCV.imread.
+             By default is Imgcodecs.CV_LOAD_IMAGE_UNCHANGED</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -604,7 +605,7 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.intel.analytics.bigdl.transform.vision.image.FeatureTransformer#transform" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.feature.image.ImageBytesToMat#transform" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="transform(feature:com.intel.analytics.bigdl.transform.vision.image.ImageFeature):com.intel.analytics.bigdl.transform.vision.image.ImageFeature"></a>
       <a id="transform(ImageFeature):ImageFeature"></a>
       <h4 class="signature">
@@ -620,7 +621,7 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>FeatureTransformer</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.feature.image.ImageBytesToMat">ImageBytesToMat</a> → FeatureTransformer</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.transform.vision.image.FeatureTransformer#transformMat" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="transformMat(feature:com.intel.analytics.bigdl.transform.vision.image.ImageFeature):Unit"></a>
       <a id="transformMat(ImageFeature):Unit"></a>
