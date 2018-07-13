@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Inference - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Inference Model", url: "#inference-model", children: [
+          ]},
+          {title: "Overview", url: "#overview", children: [
+          ]},
+          {title: "Highlights", url: "#highlights", children: [
+          ]},
+          {title: "Java Example", url: "#java-example", children: [
+          ]},
+          {title: "Scala Example", url: "#scala-example", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Inference</strong></h1>
+    <hr>
+    <h2 id="inference-model">Inference Model</h2>
+<h2 id="overview">Overview</h2>
+<p>Inference is a package in Analytics Zoo aiming to provide high level APIs to speed-up development. It 
+allows user to conveniently use pre-trained models from Analytics Zoo, Tensorflow and Caffe.
+Inference provides multiple Java/Scala interfaces.</p>
+<h2 id="highlights">Highlights</h2>
+<ol>
+<li>
+<p>Easy-to-use java/scala API for loading and prediction with deep learning models.</p>
+</li>
+<li>
+<p>Support transformation of various input data type, thus supporting future prediction tasks</p>
+</li>
+</ol>
+<h2 id="java-example">Java Example</h2>
+<p>It's very easy to apply abstract inference model for inference with below code piece.
+You will need to write a subclass that extends AbstractinferenceModel.</p>
+<pre><code class="java">import com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel;
+import com.intel.analytics.zoo.pipeline.inference.JTensor;
+
+public class TextClassificationModel extends AbstractInferenceModel {
+    public TextClassificationModel() {
+        super();
+    }
+ }
+TextClassificationModel model = new TextClassificationModel();
+model.load(modelPath, weightPath);
+List&lt;List&lt;JTensor&gt;&gt; result = model.predict(inputList);
+</code></pre>
+
+<h2 id="scala-example">Scala Example</h2>
+<pre><code class="scala">import com.intel.analytics.zoo.pipeline.inference.FloatInferenceModel
+
+class TextClassificationModel(var model: AbstractModule[Activity, Activity, Float],
+                                @transient var predictor: LocalPredictor[Float]) extends FloatInferenceModel {
+
+}
+
+TextClassificationModel model = new TextClassificationModel(model, predictor)
+val result = model.predict(inputList)
+
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
