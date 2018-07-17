@@ -118,46 +118,46 @@ in <code>com.intel.analytics.zoo.feature.image</code>.</p>
 You can read image data as <code>ImageSet</code> from local/distributed image path, or you can directly construct a ImageSet from RDD[ImageFeature] or Array[ImageFeature].</p>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">// create LocalImageSet from an image folder
-val localImageFrame = ImageSet.read(&quot;/tmp/image/&quot;)
+val localImageSet = ImageSet.read(&quot;/tmp/image/&quot;)
 
-// create DistributedImageFrame from an image folder
-val distributedImageFrame2 = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
+// create DistributedImageSet from an image folder
+val distributedImageSet2 = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
 </code></pre>
 
 <p><strong>Python example:</strong></p>
-<pre><code class="python"># create LocalImageFrame from an image folder
+<pre><code class="python"># create LocalImageSet from an image folder
 local_image_frame2 = ImageSet.read(&quot;/tmp/image/&quot;)
 
-# create DistributedImageFrame from an image folder
+# create DistributedImageSet from an image folder
 distributed_image_frame = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
 </code></pre>
 
 <h2 id="image-transformer">Image Transformer</h2>
 <p>Analytics Zoo has many pre-defined image processing transformers built on top of OpenCV:</p>
 <ul>
-<li><code>Brightness</code>: Adjust the image brightness.</li>
-<li><code>Hue</code>: Adjust the image hue.</li>
-<li><code>Saturation</code>: Adjust the image Saturation.</li>
-<li><code>Contrast</code>: Adjust the image Contrast.</li>
-<li><code>ChannelOrder</code>: Random change the channel order of an image</li>
-<li><code>ColorJitter</code>: Random adjust brightness, contrast, hue, saturation</li>
-<li><code>Resize</code>: Resize image</li>
-<li><code>AspectScale</code>: Resize the image, keep the aspect ratio. scale according to the short edge</li>
-<li><code>RandomAspectScale</code>: Resize the image by randomly choosing a scale</li>
-<li><code>ChannelNormalize</code>: Image channel normalize</li>
-<li><code>PixelNormalizer</code>: Pixel level normalizer</li>
-<li><code>CenterCrop</code>: Crop a <code>cropWidth</code> x <code>cropHeight</code> patch from center of image.</li>
-<li><code>RandomCrop</code>: Random crop a <code>cropWidth</code> x <code>cropHeight</code> patch from an image.</li>
-<li><code>FixedCrop</code>: Crop a fixed area of image</li>
-<li><code>DetectionCrop</code>: Crop from object detections, each image should has a tensor detection,</li>
-<li><code>Expand</code>: Expand image, fill the blank part with the meanR, meanG, meanB</li>
-<li><code>Filler</code>: Fill part of image with certain pixel value</li>
-<li><code>HFlip</code>: Flip the image horizontally</li>
-<li><code>RandomTransformer</code>: It is a wrapper for transformers to control the transform probability</li>
-<li><code>BytesToMat</code>: Transform byte array(original image file in byte) to OpenCVMat</li>
-<li><code>MatToFloats</code>: Transform OpenCVMat to float array, note that in this transformer, the mat is released.</li>
-<li><code>MatToTensor</code>: Transform opencv mat to tensor, note that in this transformer, the mat is released.</li>
-<li><code>ImageFrameToSample</code>: Transforms tensors that map inputKeys and targetKeys to sample, note that in this transformer, the mat has been released.</li>
+<li><code>ImageBrightness</code>: Adjust the image brightness.</li>
+<li><code>ImageHue</code>: Adjust the image hue.</li>
+<li><code>ImageSaturation</code>: Adjust the image Saturation.</li>
+<li><code>ImageContrast</code>: Adjust the image Contrast.</li>
+<li><code>ImageChannelOrder</code>: Random change the channel order of an image</li>
+<li><code>ImageColorJitter</code>: Random adjust brightness, contrast, hue, saturation</li>
+<li><code>ImageResize</code>: Resize image</li>
+<li><code>ImageAspectScale</code>: Resize the image, keep the aspect ratio. scale according to the short edge</li>
+<li><code>ImageRandomAspectScale</code>: Resize the image by randomly choosing a scale</li>
+<li><code>ImageChannelNormalize</code>: Image channel normalize</li>
+<li><code>ImagePixelNormalizer</code>: Pixel level normalizer</li>
+<li><code>ImageCenterCrop</code>: Crop a <code>cropWidth</code> x <code>cropHeight</code> patch from center of image.</li>
+<li><code>ImageRandomCrop</code>: Random crop a <code>cropWidth</code> x <code>cropHeight</code> patch from an image.</li>
+<li><code>ImageFixedCrop</code>: Crop a fixed area of image</li>
+<li><code>ImageDetectionCrop</code>: Crop from object detections, each image should has a tensor detection,</li>
+<li><code>ImageExpand</code>: Expand image, fill the blank part with the meanR, meanG, meanB</li>
+<li><code>ImageFiller</code>: Fill part of image with certain pixel value</li>
+<li><code>ImageHFlip</code>: Flip the image horizontally</li>
+<li><code>ImageRandomTransformer</code>: It is a wrapper for transformers to control the transform probability</li>
+<li><code>ImageBytesToMat</code>: Transform byte array(original image file in byte) to OpenCVMat</li>
+<li><code>ImageMatToFloats</code>: Transform OpenCVMat to float array, note that in this transformer, the mat is released.</li>
+<li><code>ImageMatToTensor</code>: Transform opencv mat to tensor, note that in this transformer, the mat is released.</li>
+<li><code>ImageSetToSample</code>: Transforms tensors that map inputKeys and targetKeys to sample, note that in this transformer, the mat has been released.</li>
 </ul>
 <p>More examples can be found <a href="../../APIGuide/FeatureEngineering/image/">here</a></p>
 <p>You can also define your own Transformer by extending <code>ImageProcessing</code>,
@@ -176,7 +176,7 @@ val imgAug = ImageBytesToMat() -&gt; ImageResize(256, 256)-&gt; ImageCenterCrop(
 </code></pre>
 
 <p>In the above example, the transformations will perform sequentially.</p>
-<p>Assume you have an ImageFrame containing original bytes array,</p>
+<p>Assume you have an ImageSet containing original bytes array,</p>
 <ul>
 <li>
 <p><code>ImageBytesToMat</code> will transform the bytes array to <code>OpenCVMat</code>.</p>

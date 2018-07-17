@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>NNImageReader - analytics-zoo 0.1.0 API - com.intel.analytics.zoo.pipeline.nnframes.NNImageReader</title>
-          <meta name="description" content="NNImageReader - analytics - zoo 0.1.0 API - com.intel.analytics.zoo.pipeline.nnframes.NNImageReader" />
-          <meta name="keywords" content="NNImageReader analytics zoo 0.1.0 API com.intel.analytics.zoo.pipeline.nnframes.NNImageReader" />
+          <title>NNImageReader - analytics-zoo-bigdl_0.6.0-spark_2.1.0 0.2.0 API - com.intel.analytics.zoo.pipeline.nnframes.NNImageReader</title>
+          <meta name="description" content="NNImageReader - analytics - zoo - bigdl 0.6.0 - spark 2.1.0 0.2.0 API - com.intel.analytics.zoo.pipeline.nnframes.NNImageReader" />
+          <meta name="keywords" content="NNImageReader analytics zoo bigdl 0.6.0 spark 2.1.0 0.2.0 API com.intel.analytics.zoo.pipeline.nnframes.NNImageReader" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -346,25 +346,26 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNImageReader#readImages" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="readImages(path:String,sc:org.apache.spark.SparkContext,minPartitions:Int):org.apache.spark.sql.DataFrame"></a>
-      <a id="readImages(String,SparkContext,Int):DataFrame"></a>
+      <a id="readImages(path:String,sc:org.apache.spark.SparkContext,minPartitions:Int,resizeH:Int,resizeW:Int,imageCodec:Int):org.apache.spark.sql.DataFrame"></a>
+      <a id="readImages(String,SparkContext,Int,Int,Int,Int):DataFrame"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">readImages</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="sc">sc: <span class="extype" name="org.apache.spark.SparkContext">SparkContext</span></span>, <span name="minPartitions">minPartitions: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>
+        <span class="name">readImages</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="sc">sc: <span class="extype" name="org.apache.spark.SparkContext">SparkContext</span></span>, <span name="minPartitions">minPartitions: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="resizeH">resizeH: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="resizeW">resizeW: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="imageCodec">imageCodec: <span class="extype" name="scala.Int">Int</span> = <span class="symbol"><span class="name"><a href="../../../../../../org/package.html">Imgcodecs.CV_LOAD_IMAGE_UNCHANGED</a></span></span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNImageReader$@readImages(path:String,sc:org.apache.spark.SparkContext,minPartitions:Int):org.apache.spark.sql.DataFrame" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNImageReader$@readImages(path:String,sc:org.apache.spark.SparkContext,minPartitions:Int,resizeH:Int,resizeW:Int,imageCodec:Int):org.apache.spark.sql.DataFrame" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">Read the directory of images into DataFrame from the local or remote source.</p><div class="fullcomment"><div class="comment cmt"><p>Read the directory of images into DataFrame from the local or remote source.
 </p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>Directory to the input data files, the path can be comma separated paths as the
             list of inputs. Wildcards path are supported similarly to sc.binaryFiles(path).</p></dd><dt class="param">sc</dt><dd class="cmt"><p>SparkContext to be used.</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>Number of the DataFrame partitions,
-                     if omitted uses defaultParallelism instead</p></dd><dt>returns</dt><dd class="cmt"><p>DataFrame with a single column &quot;image&quot; of images;
+                     if omitted uses defaultParallelism instead</p></dd><dt class="param">resizeH</dt><dd class="cmt"><p>height after resize, by default is -1 which will not resize the image</p></dd><dt class="param">resizeW</dt><dd class="cmt"><p>width after resize, by default is -1 which will not resize the image</p></dd><dt class="param">imageCodec</dt><dd class="cmt"><p>specifying the color type of a loaded image, same as in OpenCV.imread.
+             By default is Imgcodecs.CV_LOAD_IMAGE_UNCHANGED</p></dd><dt>returns</dt><dd class="cmt"><p>DataFrame with a single column &quot;image&quot; of images;
         see DLImageSchema.byteSchema for the details</p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>

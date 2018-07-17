@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>PythonZooKeras - analytics-zoo 0.1.0 API - com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras</title>
-          <meta name="description" content="PythonZooKeras - analytics - zoo 0.1.0 API - com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras" />
-          <meta name="keywords" content="PythonZooKeras analytics zoo 0.1.0 API com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras" />
+          <title>PythonZooKeras - analytics-zoo-bigdl_0.6.0-spark_2.1.0 0.2.0 API - com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras</title>
+          <meta name="description" content="PythonZooKeras - analytics - zoo - bigdl 0.6.0 - spark 2.1.0 0.2.0 API - com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras" />
+          <meta name="keywords" content="PythonZooKeras analytics zoo bigdl 0.6.0 spark 2.1.0 0.2.0 API com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -262,7 +262,7 @@
               
         </dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#compile" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="compile(module:&lt;?&gt;,optimizer:&lt;?&gt;,loss:&lt;?&gt;,metrics:&lt;?&gt;):Unit"></a>
+      <a id="compile(module:com.intel.analytics.bigdl.nn.keras.KerasModel[T],optimizer:com.intel.analytics.bigdl.optim.OptimMethod[T],loss:com.intel.analytics.bigdl.Criterion[T],metrics:java.util.List[com.intel.analytics.bigdl.optim.ValidationMethod[T]]):Unit"></a>
       <a id="compile(KerasModel[T],OptimMethod[T],Criterion[T],List[ValidationMethod[T]]):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -278,6 +278,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#connectInputs" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="connectInputs(module:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],x:java.util.List[com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]]):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
+      <a id="connectInputs(AbstractModule[Activity,Activity,T],List[Variable[T]]):Variable[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">connectInputs</span><span class="params">(<span name="module">module: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="x">x: <span class="extype" name="java.util.List">List</span>[<a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>)</span><span class="result">: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@connectInputs(module:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],x:java.util.List[com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]]):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#createAUC" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="createAUC(thresholdNum:Int):com.intel.analytics.bigdl.optim.ValidationMethod[T]"></a>
       <a id="createAUC(Int):ValidationMethod[T]"></a>
@@ -1435,35 +1452,35 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#createDistriOptimizer" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createDistriOptimizer(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],trainingRdd:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],criterion:com.intel.analytics.bigdl.Criterion[T],optimMethod:com.intel.analytics.bigdl.optim.OptimMethod[T],endTrigger:com.intel.analytics.bigdl.optim.Trigger,batchSize:Int):com.intel.analytics.bigdl.optim.Optimizer[T,com.intel.analytics.bigdl.dataset.MiniBatch[T]]"></a>
-      <a id="createDistriOptimizer(AbstractModule[Activity,Activity,T],JavaRDD[Sample],Criterion[T],OptimMethod[T],Trigger,Int):Optimizer[T,MiniBatch[T]]"></a>
+      <a id="createDistriOptimizer(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],trainingRdd:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],criterion:com.intel.analytics.bigdl.Criterion[T],optimMethod:java.util.Map[String,com.intel.analytics.bigdl.optim.OptimMethod[T]],endTrigger:com.intel.analytics.bigdl.optim.Trigger,batchSize:Int):com.intel.analytics.bigdl.optim.Optimizer[T,com.intel.analytics.bigdl.dataset.MiniBatch[T]]"></a>
+      <a id="createDistriOptimizer(AbstractModule[Activity,Activity,T],JavaRDD[Sample],Criterion[T],Map[String,OptimMethod[T]],Trigger,Int):Optimizer[T,MiniBatch[T]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">createDistriOptimizer</span><span class="params">(<span name="model">model: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="trainingRdd">trainingRdd: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.Sample">Sample</span>]</span>, <span name="criterion">criterion: <span class="extype" name="com.intel.analytics.bigdl.Criterion">Criterion</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="optimMethod">optimMethod: <span class="extype" name="com.intel.analytics.bigdl.optim.OptimMethod">OptimMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="endTrigger">endTrigger: <span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.Optimizer">Optimizer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>, <span class="extype" name="com.intel.analytics.bigdl.dataset.MiniBatch">MiniBatch</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>
+        <span class="name">createDistriOptimizer</span><span class="params">(<span name="model">model: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="trainingRdd">trainingRdd: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.Sample">Sample</span>]</span>, <span name="criterion">criterion: <span class="extype" name="com.intel.analytics.bigdl.Criterion">Criterion</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="optimMethod">optimMethod: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="com.intel.analytics.bigdl.optim.OptimMethod">OptimMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>, <span name="endTrigger">endTrigger: <span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.Optimizer">Optimizer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>, <span class="extype" name="com.intel.analytics.bigdl.dataset.MiniBatch">MiniBatch</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createDistriOptimizer(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],trainingRdd:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],criterion:com.intel.analytics.bigdl.Criterion[T],optimMethod:com.intel.analytics.bigdl.optim.OptimMethod[T],endTrigger:com.intel.analytics.bigdl.optim.Trigger,batchSize:Int):com.intel.analytics.bigdl.optim.Optimizer[T,com.intel.analytics.bigdl.dataset.MiniBatch[T]]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createDistriOptimizer(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],trainingRdd:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],criterion:com.intel.analytics.bigdl.Criterion[T],optimMethod:java.util.Map[String,com.intel.analytics.bigdl.optim.OptimMethod[T]],endTrigger:com.intel.analytics.bigdl.optim.Trigger,batchSize:Int):com.intel.analytics.bigdl.optim.Optimizer[T,com.intel.analytics.bigdl.dataset.MiniBatch[T]]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#createDistriOptimizerFromDataSet" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createDistriOptimizerFromDataSet(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],trainDataSet:com.intel.analytics.bigdl.DataSet[com.intel.analytics.bigdl.transform.vision.image.ImageFeature],criterion:com.intel.analytics.bigdl.Criterion[T],optimMethod:com.intel.analytics.bigdl.optim.OptimMethod[T],endTrigger:com.intel.analytics.bigdl.optim.Trigger,batchSize:Int):com.intel.analytics.bigdl.optim.Optimizer[T,com.intel.analytics.bigdl.dataset.MiniBatch[T]]"></a>
-      <a id="createDistriOptimizerFromDataSet(AbstractModule[Activity,Activity,T],DataSet[ImageFeature],Criterion[T],OptimMethod[T],Trigger,Int):Optimizer[T,MiniBatch[T]]"></a>
+      <a id="createDistriOptimizerFromDataSet(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],trainDataSet:com.intel.analytics.bigdl.DataSet[com.intel.analytics.bigdl.transform.vision.image.ImageFeature],criterion:com.intel.analytics.bigdl.Criterion[T],optimMethod:java.util.Map[String,com.intel.analytics.bigdl.optim.OptimMethod[T]],endTrigger:com.intel.analytics.bigdl.optim.Trigger,batchSize:Int):com.intel.analytics.bigdl.optim.Optimizer[T,com.intel.analytics.bigdl.dataset.MiniBatch[T]]"></a>
+      <a id="createDistriOptimizerFromDataSet(AbstractModule[Activity,Activity,T],DataSet[ImageFeature],Criterion[T],Map[String,OptimMethod[T]],Trigger,Int):Optimizer[T,MiniBatch[T]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">createDistriOptimizerFromDataSet</span><span class="params">(<span name="model">model: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="trainDataSet">trainDataSet: <span class="extype" name="com.intel.analytics.bigdl.DataSet">DataSet</span>[<span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFeature">ImageFeature</span>]</span>, <span name="criterion">criterion: <span class="extype" name="com.intel.analytics.bigdl.Criterion">Criterion</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="optimMethod">optimMethod: <span class="extype" name="com.intel.analytics.bigdl.optim.OptimMethod">OptimMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="endTrigger">endTrigger: <span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.Optimizer">Optimizer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>, <span class="extype" name="com.intel.analytics.bigdl.dataset.MiniBatch">MiniBatch</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>
+        <span class="name">createDistriOptimizerFromDataSet</span><span class="params">(<span name="model">model: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="trainDataSet">trainDataSet: <span class="extype" name="com.intel.analytics.bigdl.DataSet">DataSet</span>[<span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFeature">ImageFeature</span>]</span>, <span name="criterion">criterion: <span class="extype" name="com.intel.analytics.bigdl.Criterion">Criterion</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="optimMethod">optimMethod: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="com.intel.analytics.bigdl.optim.OptimMethod">OptimMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>, <span name="endTrigger">endTrigger: <span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.Optimizer">Optimizer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>, <span class="extype" name="com.intel.analytics.bigdl.dataset.MiniBatch">MiniBatch</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createDistriOptimizerFromDataSet(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],trainDataSet:com.intel.analytics.bigdl.DataSet[com.intel.analytics.bigdl.transform.vision.image.ImageFeature],criterion:com.intel.analytics.bigdl.Criterion[T],optimMethod:com.intel.analytics.bigdl.optim.OptimMethod[T],endTrigger:com.intel.analytics.bigdl.optim.Trigger,batchSize:Int):com.intel.analytics.bigdl.optim.Optimizer[T,com.intel.analytics.bigdl.dataset.MiniBatch[T]]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createDistriOptimizerFromDataSet(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],trainDataSet:com.intel.analytics.bigdl.DataSet[com.intel.analytics.bigdl.transform.vision.image.ImageFeature],criterion:com.intel.analytics.bigdl.Criterion[T],optimMethod:java.util.Map[String,com.intel.analytics.bigdl.optim.OptimMethod[T]],endTrigger:com.intel.analytics.bigdl.optim.Trigger,batchSize:Int):com.intel.analytics.bigdl.optim.Optimizer[T,com.intel.analytics.bigdl.dataset.MiniBatch[T]]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1719,6 +1736,23 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createFlattenTable():com.intel.analytics.bigdl.nn.FlattenTable[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#createFtrl" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="createFtrl(learningRate:Double,learningRatePower:Double,initialAccumulatorValue:Double,l1RegularizationStrength:Double,l2RegularizationStrength:Double,l2ShrinkageRegularizationStrength:Double):com.intel.analytics.bigdl.optim.Ftrl[T]"></a>
+      <a id="createFtrl(Double,Double,Double,Double,Double,Double):Ftrl[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createFtrl</span><span class="params">(<span name="learningRate">learningRate: <span class="extype" name="scala.Double">Double</span></span>, <span name="learningRatePower">learningRatePower: <span class="extype" name="scala.Double">Double</span></span>, <span name="initialAccumulatorValue">initialAccumulatorValue: <span class="extype" name="scala.Double">Double</span></span>, <span name="l1RegularizationStrength">l1RegularizationStrength: <span class="extype" name="scala.Double">Double</span></span>, <span name="l2RegularizationStrength">l2RegularizationStrength: <span class="extype" name="scala.Double">Double</span></span>, <span name="l2ShrinkageRegularizationStrength">l2ShrinkageRegularizationStrength: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.Ftrl">Ftrl</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createFtrl(learningRate:Double,learningRatePower:Double,initialAccumulatorValue:Double,l1RegularizationStrength:Double,l2RegularizationStrength:Double,l2ShrinkageRegularizationStrength:Double):com.intel.analytics.bigdl.optim.Ftrl[T]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -2081,7 +2115,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasActivation" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasActivation(activation:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Activation[T]"></a>
+      <a id="createKerasActivation(activation:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Activation[T]"></a>
       <a id="createKerasActivation(String,List[Int]):Activation[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2098,7 +2132,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasAtrousConvolution1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasAtrousConvolution1D(nbFilter:&lt;?&gt;,filterLength:&lt;?&gt;,init:&lt;?&gt;,activation:&lt;?&gt;,subsampleLength:&lt;?&gt;,atrousRate:&lt;?&gt;,wRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.AtrousConvolution1D[T]"></a>
+      <a id="createKerasAtrousConvolution1D(nbFilter:Int,filterLength:Int,init:String,activation:String,subsampleLength:Int,atrousRate:Int,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.AtrousConvolution1D[T]"></a>
       <a id="createKerasAtrousConvolution1D(Int,Int,String,String,Int,Int,Regularizer[T],Regularizer[T],List[Int]):AtrousConvolution1D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2115,7 +2149,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasAtrousConvolution2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasAtrousConvolution2D(nbFilter:&lt;?&gt;,nbRow:&lt;?&gt;,nbCol:&lt;?&gt;,init:&lt;?&gt;,activation:&lt;?&gt;,subsample:&lt;?&gt;,atrousRate:&lt;?&gt;,dimOrdering:&lt;?&gt;,wRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.AtrousConvolution2D[T]"></a>
+      <a id="createKerasAtrousConvolution2D(nbFilter:Int,nbRow:Int,nbCol:Int,init:String,activation:String,subsample:java.util.List[Int],atrousRate:java.util.List[Int],dimOrdering:String,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.AtrousConvolution2D[T]"></a>
       <a id="createKerasAtrousConvolution2D(Int,Int,Int,String,String,List[Int],List[Int],String,Regularizer[T],Regularizer[T],List[Int]):AtrousConvolution2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2132,7 +2166,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasAveragePooling1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasAveragePooling1D(poolLength:&lt;?&gt;,stride:&lt;?&gt;,borderMode:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.AveragePooling1D[T]"></a>
+      <a id="createKerasAveragePooling1D(poolLength:Int,stride:Int,borderMode:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.AveragePooling1D[T]"></a>
       <a id="createKerasAveragePooling1D(Int,Int,String,List[Int]):AveragePooling1D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2149,7 +2183,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasAveragePooling2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasAveragePooling2D(poolSize:&lt;?&gt;,strides:&lt;?&gt;,borderMode:&lt;?&gt;,dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.AveragePooling2D[T]"></a>
+      <a id="createKerasAveragePooling2D(poolSize:java.util.List[Int],strides:java.util.List[Int],borderMode:String,dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.AveragePooling2D[T]"></a>
       <a id="createKerasAveragePooling2D(List[Int],List[Int],String,String,List[Int]):AveragePooling2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2166,7 +2200,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasAveragePooling3D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasAveragePooling3D(poolSize:&lt;?&gt;,strides:&lt;?&gt;,dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.AveragePooling3D[T]"></a>
+      <a id="createKerasAveragePooling3D(poolSize:java.util.List[Int],strides:java.util.List[Int],dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.AveragePooling3D[T]"></a>
       <a id="createKerasAveragePooling3D(List[Int],List[Int],String,List[Int]):AveragePooling3D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2183,7 +2217,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasBatchNormalization" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasBatchNormalization(epsilon:&lt;?&gt;,momentum:&lt;?&gt;,betaInit:&lt;?&gt;,gammaInit:&lt;?&gt;,dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.BatchNormalization[T]"></a>
+      <a id="createKerasBatchNormalization(epsilon:Double,momentum:Double,betaInit:String,gammaInit:String,dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.BatchNormalization[T]"></a>
       <a id="createKerasBatchNormalization(Double,Double,String,String,String,List[Int]):BatchNormalization[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2200,7 +2234,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasBidirectional" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasBidirectional(layer:&lt;?&gt;,mergeMode:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Bidirectional[T]"></a>
+      <a id="createKerasBidirectional(layer:com.intel.analytics.bigdl.nn.keras.Recurrent[T],mergeMode:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Bidirectional[T]"></a>
       <a id="createKerasBidirectional(Recurrent[T],String,List[Int]):Bidirectional[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2217,7 +2251,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasConvLSTM2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasConvLSTM2D(nbFilter:&lt;?&gt;,nbKernel:&lt;?&gt;,activation:&lt;?&gt;,innerActivation:&lt;?&gt;,dimOrdering:&lt;?&gt;,subsample:&lt;?&gt;,wRegularizer:&lt;?&gt;,uRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,returnSequences:&lt;?&gt;,goBackwards:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.ConvLSTM2D[T]"></a>
+      <a id="createKerasConvLSTM2D(nbFilter:Int,nbKernel:Int,activation:String,innerActivation:String,dimOrdering:String,subsample:Int,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],uRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],returnSequences:Boolean,goBackwards:Boolean,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.ConvLSTM2D[T]"></a>
       <a id="createKerasConvLSTM2D(Int,Int,String,String,String,Int,Regularizer[T],Regularizer[T],Regularizer[T],Boolean,Boolean,List[Int]):ConvLSTM2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2234,7 +2268,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasConvolution1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasConvolution1D(nbFilter:&lt;?&gt;,filterLength:&lt;?&gt;,init:&lt;?&gt;,activation:&lt;?&gt;,borderMode:&lt;?&gt;,subsampleLength:&lt;?&gt;,wRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,bias:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Convolution1D[T]"></a>
+      <a id="createKerasConvolution1D(nbFilter:Int,filterLength:Int,init:String,activation:String,borderMode:String,subsampleLength:Int,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bias:Boolean,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Convolution1D[T]"></a>
       <a id="createKerasConvolution1D(Int,Int,String,String,String,Int,Regularizer[T],Regularizer[T],Boolean,List[Int]):Convolution1D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2251,7 +2285,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasConvolution2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasConvolution2D(nbFilter:&lt;?&gt;,nbRow:&lt;?&gt;,nbCol:&lt;?&gt;,init:&lt;?&gt;,activation:&lt;?&gt;,borderMode:&lt;?&gt;,subsample:&lt;?&gt;,dimOrdering:&lt;?&gt;,wRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,bias:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Convolution2D[T]"></a>
+      <a id="createKerasConvolution2D(nbFilter:Int,nbRow:Int,nbCol:Int,init:String,activation:String,borderMode:String,subsample:java.util.List[Int],dimOrdering:String,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bias:Boolean,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Convolution2D[T]"></a>
       <a id="createKerasConvolution2D(Int,Int,Int,String,String,String,List[Int],String,Regularizer[T],Regularizer[T],Boolean,List[Int]):Convolution2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2268,7 +2302,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasConvolution3D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasConvolution3D(nbFilter:&lt;?&gt;,kernelDim1:&lt;?&gt;,kernelDim2:&lt;?&gt;,kernelDim3:&lt;?&gt;,init:&lt;?&gt;,activation:&lt;?&gt;,borderMode:&lt;?&gt;,subsample:&lt;?&gt;,dimOrdering:&lt;?&gt;,wRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,bias:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Convolution3D[T]"></a>
+      <a id="createKerasConvolution3D(nbFilter:Int,kernelDim1:Int,kernelDim2:Int,kernelDim3:Int,init:String,activation:String,borderMode:String,subsample:java.util.List[Int],dimOrdering:String,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bias:Boolean,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Convolution3D[T]"></a>
       <a id="createKerasConvolution3D(Int,Int,Int,Int,String,String,String,List[Int],String,Regularizer[T],Regularizer[T],Boolean,List[Int]):Convolution3D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2285,7 +2319,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasCropping1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasCropping1D(cropping:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Cropping1D[T]"></a>
+      <a id="createKerasCropping1D(cropping:java.util.List[Int],inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Cropping1D[T]"></a>
       <a id="createKerasCropping1D(List[Int],List[Int]):Cropping1D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2302,7 +2336,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasCropping2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasCropping2D(heightCrop:&lt;?&gt;,widthCrop:&lt;?&gt;,dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Cropping2D[T]"></a>
+      <a id="createKerasCropping2D(heightCrop:java.util.List[Int],widthCrop:java.util.List[Int],dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Cropping2D[T]"></a>
       <a id="createKerasCropping2D(List[Int],List[Int],String,List[Int]):Cropping2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2319,7 +2353,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasCropping3D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasCropping3D(dim1Crop:&lt;?&gt;,dim2Crop:&lt;?&gt;,dim3Crop:&lt;?&gt;,dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Cropping3D[T]"></a>
+      <a id="createKerasCropping3D(dim1Crop:java.util.List[Int],dim2Crop:java.util.List[Int],dim3Crop:java.util.List[Int],dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Cropping3D[T]"></a>
       <a id="createKerasCropping3D(List[Int],List[Int],List[Int],String,List[Int]):Cropping3D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2336,7 +2370,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasDeconvolution2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasDeconvolution2D(nbFilter:&lt;?&gt;,nbRow:&lt;?&gt;,nbCol:&lt;?&gt;,init:&lt;?&gt;,activation:&lt;?&gt;,subsample:&lt;?&gt;,dimOrdering:&lt;?&gt;,wRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,bias:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Deconvolution2D[T]"></a>
+      <a id="createKerasDeconvolution2D(nbFilter:Int,nbRow:Int,nbCol:Int,init:String,activation:String,subsample:java.util.List[Int],dimOrdering:String,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bias:Boolean,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Deconvolution2D[T]"></a>
       <a id="createKerasDeconvolution2D(Int,Int,Int,String,String,List[Int],String,Regularizer[T],Regularizer[T],Boolean,List[Int]):Deconvolution2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2353,7 +2387,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasDense" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasDense(outputDim:&lt;?&gt;,init:&lt;?&gt;,activation:&lt;?&gt;,wRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,bias:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Dense[T]"></a>
+      <a id="createKerasDense(outputDim:Int,init:String,activation:String,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bias:Boolean,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Dense[T]"></a>
       <a id="createKerasDense(Int,String,String,Regularizer[T],Regularizer[T],Boolean,List[Int]):Dense[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2370,7 +2404,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasDropout" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasDropout(p:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Dropout[T]"></a>
+      <a id="createKerasDropout(p:Double,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Dropout[T]"></a>
       <a id="createKerasDropout(Double,List[Int]):Dropout[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2387,7 +2421,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasELU" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasELU(alpha:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.ELU[T]"></a>
+      <a id="createKerasELU(alpha:Double,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.ELU[T]"></a>
       <a id="createKerasELU(Double,List[Int]):ELU[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2404,7 +2438,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasEmbedding" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasEmbedding(inputDim:&lt;?&gt;,outputDim:&lt;?&gt;,init:&lt;?&gt;,wRegularizer:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Embedding[T]"></a>
+      <a id="createKerasEmbedding(inputDim:Int,outputDim:Int,init:String,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Embedding[T]"></a>
       <a id="createKerasEmbedding(Int,Int,String,Regularizer[T],List[Int]):Embedding[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2421,7 +2455,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasFlatten" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasFlatten(inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Flatten[T]"></a>
+      <a id="createKerasFlatten(inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Flatten[T]"></a>
       <a id="createKerasFlatten(List[Int]):Flatten[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2438,7 +2472,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasGRU" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasGRU(outputDim:&lt;?&gt;,activation:&lt;?&gt;,innerActivation:&lt;?&gt;,returnSequences:&lt;?&gt;,goBackwards:&lt;?&gt;,wRegularizer:&lt;?&gt;,uRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.GRU[T]"></a>
+      <a id="createKerasGRU(outputDim:Int,activation:String,innerActivation:String,returnSequences:Boolean,goBackwards:Boolean,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],uRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.GRU[T]"></a>
       <a id="createKerasGRU(Int,String,String,Boolean,Boolean,Regularizer[T],Regularizer[T],Regularizer[T],List[Int]):GRU[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2455,7 +2489,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasGaussianDropout" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasGaussianDropout(p:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.GaussianDropout[T]"></a>
+      <a id="createKerasGaussianDropout(p:Double,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.GaussianDropout[T]"></a>
       <a id="createKerasGaussianDropout(Double,List[Int]):GaussianDropout[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2472,7 +2506,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasGaussianNoise" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasGaussianNoise(sigma:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.GaussianNoise[T]"></a>
+      <a id="createKerasGaussianNoise(sigma:Double,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.GaussianNoise[T]"></a>
       <a id="createKerasGaussianNoise(Double,List[Int]):GaussianNoise[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2489,7 +2523,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasGlobalAveragePooling1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasGlobalAveragePooling1D(inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.GlobalAveragePooling1D[T]"></a>
+      <a id="createKerasGlobalAveragePooling1D(inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.GlobalAveragePooling1D[T]"></a>
       <a id="createKerasGlobalAveragePooling1D(List[Int]):GlobalAveragePooling1D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2506,7 +2540,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasGlobalAveragePooling2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasGlobalAveragePooling2D(dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.GlobalAveragePooling2D[T]"></a>
+      <a id="createKerasGlobalAveragePooling2D(dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.GlobalAveragePooling2D[T]"></a>
       <a id="createKerasGlobalAveragePooling2D(String,List[Int]):GlobalAveragePooling2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2523,7 +2557,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasGlobalAveragePooling3D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasGlobalAveragePooling3D(dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.GlobalAveragePooling3D[T]"></a>
+      <a id="createKerasGlobalAveragePooling3D(dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.GlobalAveragePooling3D[T]"></a>
       <a id="createKerasGlobalAveragePooling3D(String,List[Int]):GlobalAveragePooling3D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2540,7 +2574,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasGlobalMaxPooling1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasGlobalMaxPooling1D(inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.GlobalMaxPooling1D[T]"></a>
+      <a id="createKerasGlobalMaxPooling1D(inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.GlobalMaxPooling1D[T]"></a>
       <a id="createKerasGlobalMaxPooling1D(List[Int]):GlobalMaxPooling1D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2557,7 +2591,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasGlobalMaxPooling2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasGlobalMaxPooling2D(dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.GlobalMaxPooling2D[T]"></a>
+      <a id="createKerasGlobalMaxPooling2D(dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.GlobalMaxPooling2D[T]"></a>
       <a id="createKerasGlobalMaxPooling2D(String,List[Int]):GlobalMaxPooling2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2574,7 +2608,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasGlobalMaxPooling3D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasGlobalMaxPooling3D(dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.GlobalMaxPooling3D[T]"></a>
+      <a id="createKerasGlobalMaxPooling3D(dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.GlobalMaxPooling3D[T]"></a>
       <a id="createKerasGlobalMaxPooling3D(String,List[Int]):GlobalMaxPooling3D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2591,7 +2625,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasHighway" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasHighway(activation:&lt;?&gt;,wRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,bias:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Highway[T]"></a>
+      <a id="createKerasHighway(activation:String,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bias:Boolean,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Highway[T]"></a>
       <a id="createKerasHighway(String,Regularizer[T],Regularizer[T],Boolean,List[Int]):Highway[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2608,7 +2642,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasInput" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasInput(name:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]"></a>
+      <a id="createKerasInput(name:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]"></a>
       <a id="createKerasInput(String,List[Int]):ModuleNode[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2625,7 +2659,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasInputLayer" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasInputLayer(inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]"></a>
+      <a id="createKerasInputLayer(inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]"></a>
       <a id="createKerasInputLayer(List[Int]):KerasLayer[Activity,Activity,T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2642,7 +2676,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasLSTM" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasLSTM(outputDim:&lt;?&gt;,activation:&lt;?&gt;,innerActivation:&lt;?&gt;,returnSequences:&lt;?&gt;,goBackwards:&lt;?&gt;,wRegularizer:&lt;?&gt;,uRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.LSTM[T]"></a>
+      <a id="createKerasLSTM(outputDim:Int,activation:String,innerActivation:String,returnSequences:Boolean,goBackwards:Boolean,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],uRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.LSTM[T]"></a>
       <a id="createKerasLSTM(Int,String,String,Boolean,Boolean,Regularizer[T],Regularizer[T],Regularizer[T],List[Int]):LSTM[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2659,7 +2693,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasLeakyReLU" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasLeakyReLU(alpha:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.LeakyReLU[T]"></a>
+      <a id="createKerasLeakyReLU(alpha:Double,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.LeakyReLU[T]"></a>
       <a id="createKerasLeakyReLU(Double,List[Int]):LeakyReLU[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2676,7 +2710,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasLocallyConnected1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasLocallyConnected1D(nbFilter:&lt;?&gt;,filterLength:&lt;?&gt;,activation:&lt;?&gt;,subsampleLength:&lt;?&gt;,wRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,bias:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.LocallyConnected1D[T]"></a>
+      <a id="createKerasLocallyConnected1D(nbFilter:Int,filterLength:Int,activation:String,subsampleLength:Int,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bias:Boolean,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.LocallyConnected1D[T]"></a>
       <a id="createKerasLocallyConnected1D(Int,Int,String,Int,Regularizer[T],Regularizer[T],Boolean,List[Int]):LocallyConnected1D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2693,7 +2727,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasLocallyConnected2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasLocallyConnected2D(nbFilter:&lt;?&gt;,nbRow:&lt;?&gt;,nbCol:&lt;?&gt;,activation:&lt;?&gt;,borderMode:&lt;?&gt;,subsample:&lt;?&gt;,dimOrdering:&lt;?&gt;,wRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,bias:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.LocallyConnected2D[T]"></a>
+      <a id="createKerasLocallyConnected2D(nbFilter:Int,nbRow:Int,nbCol:Int,activation:String,borderMode:String,subsample:java.util.List[Int],dimOrdering:String,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bias:Boolean,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.LocallyConnected2D[T]"></a>
       <a id="createKerasLocallyConnected2D(Int,Int,Int,String,String,List[Int],String,Regularizer[T],Regularizer[T],Boolean,List[Int]):LocallyConnected2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2710,7 +2744,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasMasking" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasMasking(maskValue:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Masking[T]"></a>
+      <a id="createKerasMasking(maskValue:Double,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Masking[T]"></a>
       <a id="createKerasMasking(Double,List[Int]):Masking[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2727,7 +2761,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasMaxPooling1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasMaxPooling1D(poolLength:&lt;?&gt;,stride:&lt;?&gt;,borderMode:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.MaxPooling1D[T]"></a>
+      <a id="createKerasMaxPooling1D(poolLength:Int,stride:Int,borderMode:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.MaxPooling1D[T]"></a>
       <a id="createKerasMaxPooling1D(Int,Int,String,List[Int]):MaxPooling1D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2744,7 +2778,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasMaxPooling2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasMaxPooling2D(poolSize:&lt;?&gt;,strides:&lt;?&gt;,borderMode:&lt;?&gt;,dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.MaxPooling2D[T]"></a>
+      <a id="createKerasMaxPooling2D(poolSize:java.util.List[Int],strides:java.util.List[Int],borderMode:String,dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.MaxPooling2D[T]"></a>
       <a id="createKerasMaxPooling2D(List[Int],List[Int],String,String,List[Int]):MaxPooling2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2761,7 +2795,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasMaxPooling3D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasMaxPooling3D(poolSize:&lt;?&gt;,strides:&lt;?&gt;,dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.MaxPooling3D[T]"></a>
+      <a id="createKerasMaxPooling3D(poolSize:java.util.List[Int],strides:java.util.List[Int],dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.MaxPooling3D[T]"></a>
       <a id="createKerasMaxPooling3D(List[Int],List[Int],String,List[Int]):MaxPooling3D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2778,7 +2812,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasMaxoutDense" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasMaxoutDense(outputDim:&lt;?&gt;,nbFeature:&lt;?&gt;,wRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,bias:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.MaxoutDense[T]"></a>
+      <a id="createKerasMaxoutDense(outputDim:Int,nbFeature:Int,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bias:Boolean,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.MaxoutDense[T]"></a>
       <a id="createKerasMaxoutDense(Int,Int,Regularizer[T],Regularizer[T],Boolean,List[Int]):MaxoutDense[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2795,7 +2829,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasMerge" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasMerge(layers:&lt;?&gt;,mode:&lt;?&gt;,concatAxis:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Merge[T]"></a>
+      <a id="createKerasMerge(layers:java.util.List[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]],mode:String,concatAxis:Int,inputShape:java.util.List[java.util.List[Int]]):com.intel.analytics.bigdl.nn.keras.Merge[T]"></a>
       <a id="createKerasMerge(List[AbstractModule[Activity,Activity,T]],String,Int,List[List[Int]]):Merge[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2812,7 +2846,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasModel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasModel(input:&lt;?&gt;,output:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Model[T]"></a>
+      <a id="createKerasModel(input:java.util.List[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]],output:java.util.List[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):com.intel.analytics.bigdl.nn.keras.Model[T]"></a>
       <a id="createKerasModel(List[ModuleNode[T]],List[ModuleNode[T]]):Model[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2829,7 +2863,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasPermute" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasPermute(dims:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Permute[T]"></a>
+      <a id="createKerasPermute(dims:java.util.List[Int],inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Permute[T]"></a>
       <a id="createKerasPermute(List[Int],List[Int]):Permute[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2846,7 +2880,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasRepeatVector" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasRepeatVector(n:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.RepeatVector[T]"></a>
+      <a id="createKerasRepeatVector(n:Int,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.RepeatVector[T]"></a>
       <a id="createKerasRepeatVector(Int,List[Int]):RepeatVector[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2863,7 +2897,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasReshape" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasReshape(targetShape:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.Reshape[T]"></a>
+      <a id="createKerasReshape(targetShape:java.util.List[Int],inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.Reshape[T]"></a>
       <a id="createKerasReshape(List[Int],List[Int]):Reshape[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2880,7 +2914,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasSReLU" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasSReLU(tLeftInit:&lt;?&gt;,aLeftInit:&lt;?&gt;,tRightInit:&lt;?&gt;,aRightInit:&lt;?&gt;,sharedAxes:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.SReLU[T]"></a>
+      <a id="createKerasSReLU(tLeftInit:String,aLeftInit:String,tRightInit:String,aRightInit:String,sharedAxes:java.util.List[Int],inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.SReLU[T]"></a>
       <a id="createKerasSReLU(String,String,String,String,List[Int],List[Int]):SReLU[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2897,7 +2931,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasSeparableConvolution2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasSeparableConvolution2D(nbFilter:&lt;?&gt;,nbRow:&lt;?&gt;,nbCol:&lt;?&gt;,init:&lt;?&gt;,activation:&lt;?&gt;,borderMode:&lt;?&gt;,subsample:&lt;?&gt;,depthMultiplier:&lt;?&gt;,dimOrdering:&lt;?&gt;,depthwiseRegularizer:&lt;?&gt;,pointwiseRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,bias:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.SeparableConvolution2D[T]"></a>
+      <a id="createKerasSeparableConvolution2D(nbFilter:Int,nbRow:Int,nbCol:Int,init:String,activation:String,borderMode:String,subsample:java.util.List[Int],depthMultiplier:Int,dimOrdering:String,depthwiseRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],pointwiseRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bias:Boolean,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.SeparableConvolution2D[T]"></a>
       <a id="createKerasSeparableConvolution2D(Int,Int,Int,String,String,String,List[Int],Int,String,Regularizer[T],Regularizer[T],Regularizer[T],Boolean,List[Int]):SeparableConvolution2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2931,7 +2965,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasSimpleRNN" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasSimpleRNN(outputDim:&lt;?&gt;,activation:&lt;?&gt;,returnSequences:&lt;?&gt;,goBackwards:&lt;?&gt;,wRegularizer:&lt;?&gt;,uRegularizer:&lt;?&gt;,bRegularizer:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.SimpleRNN[T]"></a>
+      <a id="createKerasSimpleRNN(outputDim:Int,activation:String,returnSequences:Boolean,goBackwards:Boolean,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],uRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.SimpleRNN[T]"></a>
       <a id="createKerasSimpleRNN(Int,String,Boolean,Boolean,Regularizer[T],Regularizer[T],Regularizer[T],List[Int]):SimpleRNN[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2948,7 +2982,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasSpatialDropout1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasSpatialDropout1D(p:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.SpatialDropout1D[T]"></a>
+      <a id="createKerasSpatialDropout1D(p:Double,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.SpatialDropout1D[T]"></a>
       <a id="createKerasSpatialDropout1D(Double,List[Int]):SpatialDropout1D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2965,7 +2999,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasSpatialDropout2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasSpatialDropout2D(p:&lt;?&gt;,dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.SpatialDropout2D[T]"></a>
+      <a id="createKerasSpatialDropout2D(p:Double,dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.SpatialDropout2D[T]"></a>
       <a id="createKerasSpatialDropout2D(Double,String,List[Int]):SpatialDropout2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2982,7 +3016,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasSpatialDropout3D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasSpatialDropout3D(p:&lt;?&gt;,dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.SpatialDropout3D[T]"></a>
+      <a id="createKerasSpatialDropout3D(p:Double,dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.SpatialDropout3D[T]"></a>
       <a id="createKerasSpatialDropout3D(Double,String,List[Int]):SpatialDropout3D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2999,7 +3033,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasThresholdedReLU" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasThresholdedReLU(theta:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.ThresholdedReLU[T]"></a>
+      <a id="createKerasThresholdedReLU(theta:Double,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.ThresholdedReLU[T]"></a>
       <a id="createKerasThresholdedReLU(Double,List[Int]):ThresholdedReLU[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -3016,7 +3050,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasTimeDistributed" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasTimeDistributed(layer:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.TimeDistributed[T]"></a>
+      <a id="createKerasTimeDistributed(layer:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T],inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.TimeDistributed[T]"></a>
       <a id="createKerasTimeDistributed(KerasLayer[Tensor[T],Tensor[T],T],List[Int]):TimeDistributed[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -3033,7 +3067,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasUpSampling1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasUpSampling1D(length:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.UpSampling1D[T]"></a>
+      <a id="createKerasUpSampling1D(length:Int,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.UpSampling1D[T]"></a>
       <a id="createKerasUpSampling1D(Int,List[Int]):UpSampling1D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -3050,7 +3084,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasUpSampling2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasUpSampling2D(size:&lt;?&gt;,dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.UpSampling2D[T]"></a>
+      <a id="createKerasUpSampling2D(size:java.util.List[Int],dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.UpSampling2D[T]"></a>
       <a id="createKerasUpSampling2D(List[Int],String,List[Int]):UpSampling2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -3067,7 +3101,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasUpSampling3D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasUpSampling3D(size:&lt;?&gt;,dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.UpSampling3D[T]"></a>
+      <a id="createKerasUpSampling3D(size:java.util.List[Int],dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.UpSampling3D[T]"></a>
       <a id="createKerasUpSampling3D(List[Int],String,List[Int]):UpSampling3D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -3084,7 +3118,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasZeroPadding1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasZeroPadding1D(padding:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.ZeroPadding1D[T]"></a>
+      <a id="createKerasZeroPadding1D(padding:java.util.List[Int],inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.ZeroPadding1D[T]"></a>
       <a id="createKerasZeroPadding1D(List[Int],List[Int]):ZeroPadding1D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -3101,7 +3135,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasZeroPadding2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasZeroPadding2D(padding:&lt;?&gt;,dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.ZeroPadding2D[T]"></a>
+      <a id="createKerasZeroPadding2D(padding:java.util.List[Int],dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.ZeroPadding2D[T]"></a>
       <a id="createKerasZeroPadding2D(List[Int],String,List[Int]):ZeroPadding2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -3118,7 +3152,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#createKerasZeroPadding3D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createKerasZeroPadding3D(padding:&lt;?&gt;,dimOrdering:&lt;?&gt;,inputShape:&lt;?&gt;):com.intel.analytics.bigdl.nn.keras.ZeroPadding3D[T]"></a>
+      <a id="createKerasZeroPadding3D(padding:java.util.List[Int],dimOrdering:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.keras.ZeroPadding3D[T]"></a>
       <a id="createKerasZeroPadding3D(List[Int],String,List[Int]):ZeroPadding3D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -3356,18 +3390,18 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#createLocalOptimizer" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="createLocalOptimizer(features:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],y:com.intel.analytics.bigdl.python.api.JTensor,model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],criterion:com.intel.analytics.bigdl.Criterion[T],optimMethod:com.intel.analytics.bigdl.optim.OptimMethod[T],endTrigger:com.intel.analytics.bigdl.optim.Trigger,batchSize:Int,localCores:Int):com.intel.analytics.bigdl.optim.Optimizer[T,com.intel.analytics.bigdl.dataset.MiniBatch[T]]"></a>
-      <a id="createLocalOptimizer(List[JTensor],JTensor,AbstractModule[Activity,Activity,T],Criterion[T],OptimMethod[T],Trigger,Int,Int):Optimizer[T,MiniBatch[T]]"></a>
+      <a id="createLocalOptimizer(features:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],y:com.intel.analytics.bigdl.python.api.JTensor,model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],criterion:com.intel.analytics.bigdl.Criterion[T],optimMethod:java.util.Map[String,com.intel.analytics.bigdl.optim.OptimMethod[T]],endTrigger:com.intel.analytics.bigdl.optim.Trigger,batchSize:Int,localCores:Int):com.intel.analytics.bigdl.optim.Optimizer[T,com.intel.analytics.bigdl.dataset.MiniBatch[T]]"></a>
+      <a id="createLocalOptimizer(List[JTensor],JTensor,AbstractModule[Activity,Activity,T],Criterion[T],Map[String,OptimMethod[T]],Trigger,Int,Int):Optimizer[T,MiniBatch[T]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">createLocalOptimizer</span><span class="params">(<span name="features">features: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]</span>, <span name="y">y: <span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span></span>, <span name="model">model: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="criterion">criterion: <span class="extype" name="com.intel.analytics.bigdl.Criterion">Criterion</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="optimMethod">optimMethod: <span class="extype" name="com.intel.analytics.bigdl.optim.OptimMethod">OptimMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="endTrigger">endTrigger: <span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>, <span name="localCores">localCores: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.Optimizer">Optimizer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>, <span class="extype" name="com.intel.analytics.bigdl.dataset.MiniBatch">MiniBatch</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>
+        <span class="name">createLocalOptimizer</span><span class="params">(<span name="features">features: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]</span>, <span name="y">y: <span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span></span>, <span name="model">model: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="criterion">criterion: <span class="extype" name="com.intel.analytics.bigdl.Criterion">Criterion</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="optimMethod">optimMethod: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="com.intel.analytics.bigdl.optim.OptimMethod">OptimMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>, <span name="endTrigger">endTrigger: <span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>, <span name="localCores">localCores: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.Optimizer">Optimizer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>, <span class="extype" name="com.intel.analytics.bigdl.dataset.MiniBatch">MiniBatch</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createLocalOptimizer(features:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],y:com.intel.analytics.bigdl.python.api.JTensor,model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],criterion:com.intel.analytics.bigdl.Criterion[T],optimMethod:com.intel.analytics.bigdl.optim.OptimMethod[T],endTrigger:com.intel.analytics.bigdl.optim.Trigger,batchSize:Int,localCores:Int):com.intel.analytics.bigdl.optim.Optimizer[T,com.intel.analytics.bigdl.dataset.MiniBatch[T]]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createLocalOptimizer(features:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],y:com.intel.analytics.bigdl.python.api.JTensor,model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],criterion:com.intel.analytics.bigdl.Criterion[T],optimMethod:java.util.Map[String,com.intel.analytics.bigdl.optim.OptimMethod[T]],endTrigger:com.intel.analytics.bigdl.optim.Trigger,batchSize:Int,localCores:Int):com.intel.analytics.bigdl.optim.Optimizer[T,com.intel.analytics.bigdl.dataset.MiniBatch[T]]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -6126,6 +6160,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#createZooKerasAccuracy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="createZooKerasAccuracy(zeroBasedLabel:Boolean):com.intel.analytics.bigdl.optim.ValidationMethod[T]"></a>
+      <a id="createZooKerasAccuracy(Boolean):ValidationMethod[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createZooKerasAccuracy</span><span class="params">(<span name="zeroBasedLabel">zeroBasedLabel: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createZooKerasAccuracy(zeroBasedLabel:Boolean):com.intel.analytics.bigdl.optim.ValidationMethod[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#createZooKerasActivation" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="createZooKerasActivation(activation:String,inputShape:java.util.List[Int]):com.intel.analytics.zoo.pipeline.api.keras.layers.Activation[T]"></a>
       <a id="createZooKerasActivation(String,List[Int]):Activation[T]"></a>
@@ -6790,18 +6841,18 @@
     </span>
       
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#createZooKerasInput" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="createZooKerasInput(name:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]"></a>
-      <a id="createZooKerasInput(String,List[Int]):ModuleNode[T]"></a>
+      <a id="createZooKerasInput(inputShape:java.util.List[java.util.List[Int]],name:String):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
+      <a id="createZooKerasInput(List[List[Int]],String):Variable[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">createZooKerasInput</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">null</span></span>, <span name="inputShape">inputShape: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="scala.Int">Int</span>] = <span class="symbol">null</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
+        <span class="name">createZooKerasInput</span><span class="params">(<span name="inputShape">inputShape: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="java.util.List">List</span>[<span class="extype" name="scala.Int">Int</span>]] = <span class="symbol">null</span></span>, <span name="name">name: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">null</span></span>)</span><span class="result">: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createZooKerasInput(name:String,inputShape:java.util.List[Int]):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createZooKerasInput(inputShape:java.util.List[java.util.List[Int]],name:String):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -7010,6 +7061,23 @@
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#createZooKerasMeanAbsoluteError" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="createZooKerasMeanAbsoluteError(sizeAverage:Boolean):com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsoluteError[T]"></a>
+      <a id="createZooKerasMeanAbsoluteError(Boolean):MeanAbsoluteError[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createZooKerasMeanAbsoluteError</span><span class="params">(<span name="sizeAverage">sizeAverage: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result">: <a href="../objectives/MeanAbsoluteError.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsoluteError">MeanAbsoluteError</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createZooKerasMeanAbsoluteError(sizeAverage:Boolean):com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsoluteError[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#createZooKerasMerge" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="createZooKerasMerge(layers:java.util.List[com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]],mode:String,concatAxis:Int,inputShape:java.util.List[java.util.List[Int]]):com.intel.analytics.zoo.pipeline.api.keras.layers.Merge[T]"></a>
       <a id="createZooKerasMerge(List[KerasLayer[Activity,Activity,T]],String,Int,List[List[Int]]):Merge[T]"></a>
@@ -7028,18 +7096,18 @@
     </span>
       
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#createZooKerasModel" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="createZooKerasModel(input:java.util.List[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]],output:java.util.List[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):com.intel.analytics.zoo.pipeline.api.keras.models.Model[T]"></a>
-      <a id="createZooKerasModel(List[ModuleNode[T]],List[ModuleNode[T]]):Model[T]"></a>
+      <a id="createZooKerasModel(input:java.util.List[com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]],output:java.util.List[com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]]):com.intel.analytics.zoo.pipeline.api.keras.models.Model[T]"></a>
+      <a id="createZooKerasModel(List[Variable[T]],List[Variable[T]]):Model[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">createZooKerasModel</span><span class="params">(<span name="input">input: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>, <span name="output">output: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>)</span><span class="result">: <a href="../models/Model.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.Model">Model</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
+        <span class="name">createZooKerasModel</span><span class="params">(<span name="input">input: <span class="extype" name="java.util.List">List</span>[<a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>, <span name="output">output: <span class="extype" name="java.util.List">List</span>[<a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>)</span><span class="result">: <a href="../models/Model.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.Model">Model</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createZooKerasModel(input:java.util.List[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]],output:java.util.List[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):com.intel.analytics.zoo.pipeline.api.keras.models.Model[T]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createZooKerasModel(input:java.util.List[com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]],output:java.util.List[com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]]):com.intel.analytics.zoo.pipeline.api.keras.models.Model[T]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -7367,6 +7435,23 @@
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#createZooKerasSparseCategoricalCrossEntropy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="createZooKerasSparseCategoricalCrossEntropy(logProbAsInput:Boolean,zeroBasedLabel:Boolean,weights:com.intel.analytics.bigdl.tensor.Tensor[T],sizeAverage:Boolean,paddingValue:Int):com.intel.analytics.zoo.pipeline.api.keras.objectives.SparseCategoricalCrossEntropy[T]"></a>
+      <a id="createZooKerasSparseCategoricalCrossEntropy(Boolean,Boolean,Tensor[T],Boolean,Int):SparseCategoricalCrossEntropy[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createZooKerasSparseCategoricalCrossEntropy</span><span class="params">(<span name="logProbAsInput">logProbAsInput: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>, <span name="zeroBasedLabel">zeroBasedLabel: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>, <span name="weights">weights: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>] = <span class="symbol">null</span></span>, <span name="sizeAverage">sizeAverage: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>, <span name="paddingValue">paddingValue: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>)</span><span class="result">: <a href="../objectives/SparseCategoricalCrossEntropy.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.SparseCategoricalCrossEntropy">SparseCategoricalCrossEntropy</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createZooKerasSparseCategoricalCrossEntropy(logProbAsInput:Boolean,zeroBasedLabel:Boolean,weights:com.intel.analytics.bigdl.tensor.Tensor[T],sizeAverage:Boolean,paddingValue:Int):com.intel.analytics.zoo.pipeline.api.keras.objectives.SparseCategoricalCrossEntropy[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#createZooKerasSpatialDropout1D" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="createZooKerasSpatialDropout1D(p:Double,inputShape:java.util.List[Int]):com.intel.analytics.zoo.pipeline.api.keras.layers.SpatialDropout1D[T]"></a>
       <a id="createZooKerasSpatialDropout1D(Double,List[Int]):SpatialDropout1D[T]"></a>
@@ -7469,6 +7554,23 @@
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#createZooKerasThreshold" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="createZooKerasThreshold(th:Double,v:Double,inputShape:java.util.List[Int]):com.intel.analytics.zoo.pipeline.api.keras.layers.Threshold[T]"></a>
+      <a id="createZooKerasThreshold(Double,Double,List[Int]):Threshold[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createZooKerasThreshold</span><span class="params">(<span name="th">th: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">1e-6</span></span>, <span name="v">v: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.0</span></span>, <span name="inputShape">inputShape: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="scala.Int">Int</span>] = <span class="symbol">null</span></span>)</span><span class="result">: <a href="../layers/Threshold.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Threshold">Threshold</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createZooKerasThreshold(th:Double,v:Double,inputShape:java.util.List[Int]):com.intel.analytics.zoo.pipeline.api.keras.layers.Threshold[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#createZooKerasThresholdedReLU" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="createZooKerasThresholdedReLU(theta:Double,inputShape:java.util.List[Int]):com.intel.analytics.zoo.pipeline.api.keras.layers.ThresholdedReLU[T]"></a>
       <a id="createZooKerasThresholdedReLU(Double,List[Int]):ThresholdedReLU[T]"></a>
@@ -7499,6 +7601,23 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createZooKerasTimeDistributed(layer:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T],inputShape:java.util.List[Int]):com.intel.analytics.zoo.pipeline.api.keras.layers.TimeDistributed[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#createZooKerasTop5Accuracy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="createZooKerasTop5Accuracy(zeroBasedLabel:Boolean):com.intel.analytics.bigdl.optim.ValidationMethod[T]"></a>
+      <a id="createZooKerasTop5Accuracy(Boolean):ValidationMethod[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createZooKerasTop5Accuracy</span><span class="params">(<span name="zeroBasedLabel">zeroBasedLabel: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@createZooKerasTop5Accuracy(zeroBasedLabel:Boolean):com.intel.analytics.bigdl.optim.ValidationMethod[T]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -7673,6 +7792,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#distributedImageFrameRandomSplit" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="distributedImageFrameRandomSplit(imageFrame:com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame,weights:java.util.List[Double]):Array[com.intel.analytics.bigdl.transform.vision.image.ImageFrame]"></a>
+      <a id="distributedImageFrameRandomSplit(DistributedImageFrame,List[Double]):Array[ImageFrame]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">distributedImageFrameRandomSplit</span><span class="params">(<span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame">DistributedImageFrame</span></span>, <span name="weights">weights: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="scala.Double">Double</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFrame">ImageFrame</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@distributedImageFrameRandomSplit(imageFrame:com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame,weights:java.util.List[Double]):Array[com.intel.analytics.bigdl.transform.vision.image.ImageFrame]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#distributedImageFrameToImageTensorRdd" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="distributedImageFrameToImageTensorRdd(imageFrame:com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame,floatKey:String,toChw:Boolean):org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.JTensor]"></a>
       <a id="distributedImageFrameToImageTensorRdd(DistributedImageFrame,String,Boolean):JavaRDD[JTensor]"></a>
@@ -7720,6 +7856,40 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@distributedImageFrameToPredict(imageFrame:com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame,key:String):org.apache.spark.api.java.JavaRDD[java.util.List[Any]]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#distributedImageFrameToSample" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="distributedImageFrameToSample(imageFrame:com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame,key:String):org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample]"></a>
+      <a id="distributedImageFrameToSample(DistributedImageFrame,String):JavaRDD[Sample]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">distributedImageFrameToSample</span><span class="params">(<span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame">DistributedImageFrame</span></span>, <span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.Sample">Sample</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@distributedImageFrameToSample(imageFrame:com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame,key:String):org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#distributedImageFrameToUri" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="distributedImageFrameToUri(imageFrame:com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame,key:String):org.apache.spark.api.java.JavaRDD[String]"></a>
+      <a id="distributedImageFrameToUri(DistributedImageFrame,String):JavaRDD[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">distributedImageFrameToUri</span><span class="params">(<span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame">DistributedImageFrame</span></span>, <span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@distributedImageFrameToUri(imageFrame:com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame,key:String):org.apache.spark.api.java.JavaRDD[String]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -7918,7 +8088,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#fit" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="fit(module:&lt;?&gt;,xTrain:&lt;?&gt;,yTrain:&lt;?&gt;,batchSize:&lt;?&gt;,epochs:&lt;?&gt;,xVal:&lt;?&gt;,yVal:&lt;?&gt;,localCores:&lt;?&gt;):Unit"></a>
+      <a id="fit(module:com.intel.analytics.bigdl.nn.keras.KerasModel[T],xTrain:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],yTrain:com.intel.analytics.bigdl.python.api.JTensor,batchSize:Int,epochs:Int,xVal:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],yVal:com.intel.analytics.bigdl.python.api.JTensor,localCores:Int):Unit"></a>
       <a id="fit(KerasModel[T],List[JTensor],JTensor,Int,Int,List[JTensor],JTensor,Int):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -7935,7 +8105,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#fit" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="fit(module:&lt;?&gt;,x:&lt;?&gt;,batchSize:&lt;?&gt;,epochs:&lt;?&gt;,validationData:&lt;?&gt;):Unit"></a>
+      <a id="fit(module:com.intel.analytics.bigdl.nn.keras.KerasModel[T],x:com.intel.analytics.bigdl.DataSet[com.intel.analytics.bigdl.transform.vision.image.ImageFeature],batchSize:Int,epochs:Int,validationData:com.intel.analytics.bigdl.DataSet[com.intel.analytics.bigdl.transform.vision.image.ImageFeature]):Unit"></a>
       <a id="fit(KerasModel[T],DataSet[ImageFeature],Int,Int,DataSet[ImageFeature]):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -7952,7 +8122,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDLKeras</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#fit" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="fit(module:&lt;?&gt;,x:&lt;?&gt;,batchSize:&lt;?&gt;,epochs:&lt;?&gt;,validationData:&lt;?&gt;):Unit"></a>
+      <a id="fit(module:com.intel.analytics.bigdl.nn.keras.KerasModel[T],x:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],batchSize:Int,epochs:Int,validationData:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample]):Unit"></a>
       <a id="fit(KerasModel[T],JavaRDD[Sample],Int,Int,JavaRDD[Sample]):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -8122,7 +8292,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#getInputShape" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="getInputShape(module:&lt;?&gt;):java.util.List[java.util.List[Int]]"></a>
+      <a id="getInputShape(module:com.intel.analytics.bigdl.nn.Container[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]):java.util.List[java.util.List[Int]]"></a>
       <a id="getInputShape(Container[Activity,Activity,T]):List[List[Int]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -8156,7 +8326,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDLKeras#getOutputShape" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="getOutputShape(module:&lt;?&gt;):java.util.List[java.util.List[Int]]"></a>
+      <a id="getOutputShape(module:com.intel.analytics.bigdl.nn.Container[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]):java.util.List[java.util.List[Int]]"></a>
       <a id="getOutputShape(Container[Activity,Activity,T]):List[List[Int]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -8564,18 +8734,18 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#loadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="loadTF(path:String,inputs:java.util.List[String],outputs:java.util.List[String],byteOrder:String,binFile:String):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]"></a>
-      <a id="loadTF(String,List[String],List[String],String,String):AbstractModule[Activity,Activity,T]"></a>
+      <a id="loadTF(path:String,inputs:java.util.List[String],outputs:java.util.List[String],byteOrder:String,binFile:String,generatedBackward:Boolean):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]"></a>
+      <a id="loadTF(String,List[String],List[String],String,String,Boolean):AbstractModule[Activity,Activity,T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">loadTF</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="byteOrder">byteOrder: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="binFile">binFile: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
+        <span class="name">loadTF</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="byteOrder">byteOrder: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="binFile">binFile: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="generatedBackward">generatedBackward: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@loadTF(path:String,inputs:java.util.List[String],outputs:java.util.List[String],byteOrder:String,binFile:String):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@loadTF(path:String,inputs:java.util.List[String],outputs:java.util.List[String],byteOrder:String,binFile:String,generatedBackward:Boolean):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -8648,6 +8818,40 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#localImageFrameToSample" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="localImageFrameToSample(imageFrame:com.intel.analytics.bigdl.transform.vision.image.LocalImageFrame,key:String):java.util.List[com.intel.analytics.bigdl.python.api.Sample]"></a>
+      <a id="localImageFrameToSample(LocalImageFrame,String):List[Sample]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">localImageFrameToSample</span><span class="params">(<span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.LocalImageFrame">LocalImageFrame</span></span>, <span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.Sample">Sample</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@localImageFrameToSample(imageFrame:com.intel.analytics.bigdl.transform.vision.image.LocalImageFrame,key:String):java.util.List[com.intel.analytics.bigdl.python.api.Sample]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#localImageFrameToUri" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="localImageFrameToUri(imageFrame:com.intel.analytics.bigdl.transform.vision.image.LocalImageFrame,key:String):java.util.List[String]"></a>
+      <a id="localImageFrameToUri(LocalImageFrame,String):List[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">localImageFrameToUri</span><span class="params">(<span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.LocalImageFrame">LocalImageFrame</span></span>, <span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@localImageFrameToUri(imageFrame:com.intel.analytics.bigdl.transform.vision.image.LocalImageFrame,key:String):java.util.List[String]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#modelBackward" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="modelBackward(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],input:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],inputIsTable:Boolean,gradOutput:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],gradOutputIsTable:Boolean):java.util.List[com.intel.analytics.bigdl.python.api.JTensor]"></a>
       <a id="modelBackward(AbstractModule[Activity,Activity,T],List[JTensor],Boolean,List[JTensor],Boolean):List[JTensor]"></a>
@@ -8678,6 +8882,23 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@modelEvaluate(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],valRDD:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],batchSize:Int,valMethods:java.util.List[com.intel.analytics.bigdl.optim.ValidationMethod[T]]):java.util.List[com.intel.analytics.bigdl.python.api.EvaluatedResult]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#modelEvaluateImageFrame" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="modelEvaluateImageFrame(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame,batchSize:Int,valMethods:java.util.List[com.intel.analytics.bigdl.optim.ValidationMethod[T]]):java.util.List[com.intel.analytics.bigdl.python.api.EvaluatedResult]"></a>
+      <a id="modelEvaluateImageFrame(AbstractModule[Activity,Activity,T],ImageFrame,Int,List[ValidationMethod[T]]):List[EvaluatedResult]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">modelEvaluateImageFrame</span><span class="params">(<span name="model">model: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFrame">ImageFrame</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>, <span name="valMethods">valMethods: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.EvaluatedResult">EvaluatedResult</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@modelEvaluateImageFrame(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame,batchSize:Int,valMethods:java.util.List[com.intel.analytics.bigdl.optim.ValidationMethod[T]]):java.util.List[com.intel.analytics.bigdl.python.api.EvaluatedResult]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -8751,18 +8972,18 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#modelPredictRDD" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="modelPredictRDD(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],dataRdd:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample]):org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.JTensor]"></a>
-      <a id="modelPredictRDD(AbstractModule[Activity,Activity,T],JavaRDD[Sample]):JavaRDD[JTensor]"></a>
+      <a id="modelPredictRDD(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],dataRdd:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],batchSize:Int):org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.JTensor]"></a>
+      <a id="modelPredictRDD(AbstractModule[Activity,Activity,T],JavaRDD[Sample],Int):JavaRDD[JTensor]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">modelPredictRDD</span><span class="params">(<span name="model">model: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="dataRdd">dataRdd: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.Sample">Sample</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]</span>
+        <span class="name">modelPredictRDD</span><span class="params">(<span name="model">model: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="dataRdd">dataRdd: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.Sample">Sample</span>]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@modelPredictRDD(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],dataRdd:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample]):org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.JTensor]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@modelPredictRDD(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],dataRdd:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],batchSize:Int):org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.JTensor]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -8848,6 +9069,23 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@netLoadCaffe(defPath:String,modelPath:String):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#netLoadTF" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="netLoadTF(folder:String):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]"></a>
+      <a id="netLoadTF(String):AbstractModule[Activity,Activity,T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">netLoadTF</span><span class="params">(<span name="folder">folder: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@netLoadTF(folder:String):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -8955,18 +9193,18 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#predictLocal" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="predictLocal(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],features:java.util.List[com.intel.analytics.bigdl.python.api.JTensor]):java.util.List[com.intel.analytics.bigdl.python.api.JTensor]"></a>
-      <a id="predictLocal(AbstractModule[Activity,Activity,T],List[JTensor]):List[JTensor]"></a>
+      <a id="predictLocal(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],features:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],batchSize:Int):java.util.List[com.intel.analytics.bigdl.python.api.JTensor]"></a>
+      <a id="predictLocal(AbstractModule[Activity,Activity,T],List[JTensor],Int):List[JTensor]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">predictLocal</span><span class="params">(<span name="model">model: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="features">features: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]</span>)</span><span class="result">: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]</span>
+        <span class="name">predictLocal</span><span class="params">(<span name="model">model: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="features">features: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@predictLocal(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],features:java.util.List[com.intel.analytics.bigdl.python.api.JTensor]):java.util.List[com.intel.analytics.bigdl.python.api.JTensor]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@predictLocal(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],features:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],batchSize:Int):java.util.List[com.intel.analytics.bigdl.python.api.JTensor]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -9023,18 +9261,18 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#readParquet" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="readParquet(path:String,sqlContext:org.apache.spark.sql.SQLContext):com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame"></a>
-      <a id="readParquet(String,SQLContext):DistributedImageFrame"></a>
+      <a id="readParquet(path:String,sc:org.apache.spark.api.java.JavaSparkContext):com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame"></a>
+      <a id="readParquet(String,JavaSparkContext):DistributedImageFrame"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">readParquet</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="sqlContext">sqlContext: <span class="extype" name="org.apache.spark.sql.SQLContext">SQLContext</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame">DistributedImageFrame</span></span>
+        <span class="name">readParquet</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="sc">sc: <span class="extype" name="org.apache.spark.api.java.JavaSparkContext">JavaSparkContext</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame">DistributedImageFrame</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@readParquet(path:String,sqlContext:org.apache.spark.sql.SQLContext):com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@readParquet(path:String,sc:org.apache.spark.api.java.JavaSparkContext):com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -9375,6 +9613,23 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@setL2NormClip(optimizer:com.intel.analytics.bigdl.optim.Optimizer[T,com.intel.analytics.bigdl.dataset.MiniBatch[T]],normValue:Float):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#setLabel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setLabel(labelMap:java.util.Map[String,Float],imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame):Unit"></a>
+      <a id="setLabel(Map[String,Float],ImageFrame):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setLabel</span><span class="params">(<span name="labelMap">labelMap: <span class="extype" name="java.util.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Float">Float</span>]</span>, <span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFrame">ImageFrame</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@setLabel(labelMap:java.util.Map[String,Float],imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame):Unit" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -10128,6 +10383,23 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.python.api.PythonBigDL#writeParquet" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="writeParquet(path:String,output:String,sc:org.apache.spark.api.java.JavaSparkContext,partitionNum:Int):Unit"></a>
+      <a id="writeParquet(String,String,JavaSparkContext,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">writeParquet</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="output">output: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="sc">sc: <span class="extype" name="org.apache.spark.api.java.JavaSparkContext">JavaSparkContext</span></span>, <span name="partitionNum">partitionNum: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@writeParquet(path:String,output:String,sc:org.apache.spark.api.java.JavaSparkContext,partitionNum:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>PythonBigDL</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#zooClearGradientClipping" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="zooClearGradientClipping(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T]):Unit"></a>
       <a id="zooClearGradientClipping(KerasNet[T]):Unit"></a>
@@ -10180,7 +10452,7 @@
     </span>
       
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#zooFit" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="zooFit(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],xTrain:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],yTrain:com.intel.analytics.bigdl.python.api.JTensor,batchSize:Int,epochs:Int,xVal:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],yVal:com.intel.analytics.bigdl.python.api.JTensor):Unit"></a>
+      <a id="zooFit(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],xTrain:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],yTrain:com.intel.analytics.bigdl.python.api.JTensor,batchSize:Int,nbEpoch:Int,xVal:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],yVal:com.intel.analytics.bigdl.python.api.JTensor):Unit"></a>
       <a id="zooFit(KerasNet[T],List[JTensor],JTensor,Int,Int,List[JTensor],JTensor):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -10188,33 +10460,33 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">zooFit</span><span class="params">(<span name="module">module: <a href="../models/KerasNet.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet">KerasNet</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="xTrain">xTrain: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]</span>, <span name="yTrain">yTrain: <span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>, <span name="epochs">epochs: <span class="extype" name="scala.Int">Int</span></span>, <span name="xVal">xVal: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]</span>, <span name="yVal">yVal: <span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">zooFit</span><span class="params">(<span name="module">module: <a href="../models/KerasNet.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet">KerasNet</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="xTrain">xTrain: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]</span>, <span name="yTrain">yTrain: <span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>, <span name="nbEpoch">nbEpoch: <span class="extype" name="scala.Int">Int</span></span>, <span name="xVal">xVal: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]</span>, <span name="yVal">yVal: <span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@zooFit(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],xTrain:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],yTrain:com.intel.analytics.bigdl.python.api.JTensor,batchSize:Int,epochs:Int,xVal:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],yVal:com.intel.analytics.bigdl.python.api.JTensor):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@zooFit(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],xTrain:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],yTrain:com.intel.analytics.bigdl.python.api.JTensor,batchSize:Int,nbEpoch:Int,xVal:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],yVal:com.intel.analytics.bigdl.python.api.JTensor):Unit" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#zooFit" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="zooFit(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:com.intel.analytics.bigdl.DataSet[com.intel.analytics.bigdl.transform.vision.image.ImageFeature],batchSize:Int,epochs:Int,validationData:com.intel.analytics.bigdl.DataSet[com.intel.analytics.bigdl.transform.vision.image.ImageFeature]):Unit"></a>
-      <a id="zooFit(KerasNet[T],DataSet[ImageFeature],Int,Int,DataSet[ImageFeature]):Unit"></a>
+      <a id="zooFit(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:com.intel.analytics.zoo.feature.image.ImageSet,batchSize:Int,nbEpoch:Int,validationData:com.intel.analytics.zoo.feature.image.ImageSet):Unit"></a>
+      <a id="zooFit(KerasNet[T],ImageSet,Int,Int,ImageSet):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">zooFit</span><span class="params">(<span name="module">module: <a href="../models/KerasNet.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet">KerasNet</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="x">x: <span class="extype" name="com.intel.analytics.bigdl.DataSet">DataSet</span>[<span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFeature">ImageFeature</span>]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>, <span name="epochs">epochs: <span class="extype" name="scala.Int">Int</span></span>, <span name="validationData">validationData: <span class="extype" name="com.intel.analytics.bigdl.DataSet">DataSet</span>[<span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFeature">ImageFeature</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">zooFit</span><span class="params">(<span name="module">module: <a href="../models/KerasNet.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet">KerasNet</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="x">x: <a href="../../../../feature/image/ImageSet.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageSet">ImageSet</a></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>, <span name="nbEpoch">nbEpoch: <span class="extype" name="scala.Int">Int</span></span>, <span name="validationData">validationData: <a href="../../../../feature/image/ImageSet.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageSet">ImageSet</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@zooFit(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:com.intel.analytics.bigdl.DataSet[com.intel.analytics.bigdl.transform.vision.image.ImageFeature],batchSize:Int,epochs:Int,validationData:com.intel.analytics.bigdl.DataSet[com.intel.analytics.bigdl.transform.vision.image.ImageFeature]):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@zooFit(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:com.intel.analytics.zoo.feature.image.ImageSet,batchSize:Int,nbEpoch:Int,validationData:com.intel.analytics.zoo.feature.image.ImageSet):Unit" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#zooFit" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="zooFit(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],batchSize:Int,epochs:Int,validationData:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample]):Unit"></a>
+      <a id="zooFit(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],batchSize:Int,nbEpoch:Int,validationData:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample]):Unit"></a>
       <a id="zooFit(KerasNet[T],JavaRDD[Sample],Int,Int,JavaRDD[Sample]):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -10222,10 +10494,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">zooFit</span><span class="params">(<span name="module">module: <a href="../models/KerasNet.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet">KerasNet</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="x">x: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.Sample">Sample</span>]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">32</span></span>, <span name="epochs">epochs: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">10</span></span>, <span name="validationData">validationData: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.Sample">Sample</span>] = <span class="symbol">null</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">zooFit</span><span class="params">(<span name="module">module: <a href="../models/KerasNet.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet">KerasNet</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="x">x: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.Sample">Sample</span>]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">32</span></span>, <span name="nbEpoch">nbEpoch: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">10</span></span>, <span name="validationData">validationData: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.Sample">Sample</span>] = <span class="symbol">null</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@zooFit(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],batchSize:Int,epochs:Int,validationData:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample]):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@zooFit(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],batchSize:Int,nbEpoch:Int,validationData:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample]):Unit" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -10243,6 +10515,57 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@zooKerasNetSummary(model:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],lineLength:Int,positions:java.util.List[Double]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#zooPredict" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="zooPredict(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],batchSize:Int):java.util.List[java.util.List[com.intel.analytics.bigdl.python.api.JTensor]]"></a>
+      <a id="zooPredict(KerasNet[T],List[JTensor],Int):List[List[JTensor]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">zooPredict</span><span class="params">(<span name="module">module: <a href="../models/KerasNet.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet">KerasNet</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="x">x: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@zooPredict(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:java.util.List[com.intel.analytics.bigdl.python.api.JTensor],batchSize:Int):java.util.List[java.util.List[com.intel.analytics.bigdl.python.api.JTensor]]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#zooPredict" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="zooPredict(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],batchSize:Int):org.apache.spark.api.java.JavaRDD[java.util.List[com.intel.analytics.bigdl.python.api.JTensor]]"></a>
+      <a id="zooPredict(KerasNet[T],JavaRDD[Sample],Int):JavaRDD[List[JTensor]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">zooPredict</span><span class="params">(<span name="module">module: <a href="../models/KerasNet.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet">KerasNet</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="x">x: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.Sample">Sample</span>]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">32</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="java.util.List">List</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.JTensor">JTensor</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@zooPredict(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],batchSize:Int):org.apache.spark.api.java.JavaRDD[java.util.List[com.intel.analytics.bigdl.python.api.JTensor]]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras#zooPredictClasses" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="zooPredictClasses(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],batchSize:Int,zeroBasedLabel:Boolean):org.apache.spark.api.java.JavaRDD[Int]"></a>
+      <a id="zooPredictClasses(KerasNet[T],JavaRDD[Sample],Int,Boolean):JavaRDD[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">zooPredictClasses</span><span class="params">(<span name="module">module: <a href="../models/KerasNet.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet">KerasNet</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras.T">T</span>]</span>, <span name="x">x: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="com.intel.analytics.bigdl.python.api.Sample">Sample</span>]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">32</span></span>, <span name="zeroBasedLabel">zeroBasedLabel: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.api.java.JavaRDD">JavaRDD</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.python.PythonZooKeras@zooPredictClasses(module:com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet[T],x:org.apache.spark.api.java.JavaRDD[com.intel.analytics.bigdl.python.api.Sample],batchSize:Int,zeroBasedLabel:Boolean):org.apache.spark.api.java.JavaRDD[Int]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
