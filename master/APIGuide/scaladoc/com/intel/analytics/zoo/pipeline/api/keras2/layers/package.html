@@ -139,6 +139,26 @@ or <code>(None, 128)</code> for variable-length sequences of 128-dimensional vec
 3D tensor with shape: <code>(batch_size, new_steps, filters)</code>
 <code>steps</code> value might have changed due to padding or strides.
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras2.layers.Cropping1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="Cropping1D[T]extendsCropping1D[T]withNet"></a>
+      <a id="Cropping1D[T]:Cropping1D[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Cropping1D.html"><span class="name">Cropping1D</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="../../keras/layers/Cropping1D.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Cropping1D">keras.layers.Cropping1D</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras2.layers.Cropping1D.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras2.layers.package@Cropping1D[T]extendsCropping1D[T]withNet" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Cropping layer for 1D input (e.g.</p><div class="fullcomment"><div class="comment cmt"><p>Cropping layer for 1D input (e.g. temporal sequence).
+The input of this layer should be 3D.</p><p>When you use this layer as the first layer of a model, you need to provide the argument
+inputShape (a Single Shape, does not include the batch dimension).
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras2.layers.Dense" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="Dense[T]extendsDense[T]withNet"></a>
       <a id="Dense[T]:Dense[T]"></a>
@@ -325,6 +345,31 @@ padding currently supported for this layer is 'valid'.
 The input of this layer should be 5D.</p><p>When you use this layer as the first layer of a model, you need to provide the argument
 inputShape (a Single Shape, does not include the batch dimension).
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras2.layers.LocallyConnected1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="LocallyConnected1D[T]extendsLocallyConnected1D[T]withNet"></a>
+      <a id="LocallyConnected1D[T]:LocallyConnected1D[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="LocallyConnected1D.html"><span class="name">LocallyConnected1D</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="../../keras/layers/LocallyConnected1D.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LocallyConnected1D">keras.layers.LocallyConnected1D</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras2.layers.LocallyConnected1D.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras2.layers.package@LocallyConnected1D[T]extendsLocallyConnected1D[T]withNet" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Locally-connected layer for 1D inputs which works similarly to the TemporalConvolution layer,
+except that weights are unshared, that is, a different set of filters
+is applied at each different patch of the input.</p><div class="fullcomment"><div class="comment cmt"><p>Locally-connected layer for 1D inputs which works similarly to the TemporalConvolution layer,
+except that weights are unshared, that is, a different set of filters
+is applied at each different patch of the input.
+Padding currently supported for this layer is 'valid'.
+The input of this layer should be 3D.</p><p>When using this layer as the first layer in a model, you need to provide the argument
+inputShape (a Single Shape, does not include the batch dimension).
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras2.layers.MaxPooling1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="MaxPooling1D[T]extendsMaxPooling1D[T]withNet"></a>
       <a id="MaxPooling1D[T]:MaxPooling1D[T]"></a>
@@ -439,6 +484,23 @@ a single node (also of the same shape).
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras2.layers.package@Conv1D" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras2.layers.Cropping1D" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Cropping1D"></a>
+      <a id="Cropping1D:Cropping1D"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Cropping1D$.html"><span class="name">Cropping1D</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras2.layers.package@Cropping1D" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -592,6 +654,23 @@ a single node (also of the same shape).
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras2.layers.package@GlobalMaxPooling3D" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras2.layers.LocallyConnected1D" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LocallyConnected1D"></a>
+      <a id="LocallyConnected1D:LocallyConnected1D"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="LocallyConnected1D$.html"><span class="name">LocallyConnected1D</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras2.layers.package@LocallyConnected1D" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
