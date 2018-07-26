@@ -139,6 +139,41 @@ or <code>(None, 128)</code> for variable-length sequences of 128-dimensional vec
 3D tensor with shape: <code>(batch_size, new_steps, filters)</code>
 <code>steps</code> value might have changed due to padding or strides.
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras2.layers.Conv2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="Conv2D[T]extendsConvolution2D[T]withNet"></a>
+      <a id="Conv2D[T]:Conv2D[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Conv2D.html"><span class="name">Conv2D</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="../../keras/layers/Convolution2D.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Convolution2D">Convolution2D</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras2.layers.Conv2D.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras2.layers.package@Conv2D[T]extendsConvolution2D[T]withNet" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">2D convolution layer (e.g.</p><div class="fullcomment"><div class="comment cmt"><p>2D convolution layer (e.g. spatial convolution over images).</p><p>This layer creates a convolution kernel that is convolved
+with the layer input to produce a tensor of
+outputs. If <code>use_bias</code> is True,
+a bias vector is created and added to the outputs. Finally, if
+<code>activation</code> is not <code>None</code>, it is applied to the outputs as well.</p><p>When using this layer as the first layer in a model,
+provide the keyword argument <code>input_shape</code>
+(tuple of integers, does not include the sample axis),
+e.g. <code>input_shape=(128, 128, 3)</code> for 128x128 RGB pictures
+in <code>data_format=&quot;channels_last&quot;</code>.</p><p>Input shape
+4D tensor with shape:
+<code>(samples, channels, rows, cols)</code> if data_format='channels_first'
+or 4D tensor with shape:
+<code>(samples, rows, cols, channels)</code> if data_format='channels_last'.</p><p>Output shape
+4D tensor with shape:
+<code>(samples, filters, new_rows, new_cols)</code> if data_format='channels_first'
+or 4D tensor with shape:
+<code>(samples, new_rows, new_cols, filters)</code> if data_format='channels_last'.
+<code>rows</code> and <code>cols</code> values might have changed due to padding.
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras2.layers.Cropping1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="Cropping1D[T]extendsCropping1D[T]withNet"></a>
       <a id="Cropping1D[T]:Cropping1D[T]"></a>
@@ -484,6 +519,23 @@ a single node (also of the same shape).
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras2.layers.package@Conv1D" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras2.layers.Conv2D" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Conv2D"></a>
+      <a id="Conv2D:Conv2D"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Conv2D$.html"><span class="name">Conv2D</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras2.layers.package@Conv2D" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>

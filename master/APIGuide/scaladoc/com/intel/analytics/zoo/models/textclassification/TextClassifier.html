@@ -52,7 +52,7 @@
       </h4>
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>The model used for text classification.
-</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl><div class="toggleContainer block">
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="../common/ZooModel.html" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.Container">Container</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -319,7 +319,7 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#classNum" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#classNum" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="classNum:Int"></a>
       <a id="classNum:Int"></a>
       <h4 class="signature">
@@ -335,7 +335,7 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">The number of text categories to be classified.</p><div class="fullcomment"><div class="comment cmt"><p>The number of text categories to be classified. Positive integer.</p></div></div>
+      
     </li><li name="com.intel.analytics.bigdl.nn.Container#clearState" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clearState():Container.this.type"></a>
       <a id="clearState():TextClassifier.this.type"></a>
@@ -410,7 +410,24 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#encoder" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#embedding" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="embedding:com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding[T]"></a>
+      <a id="embedding:Embedding[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">embedding</span><span class="result">: <a href="../../pipeline/api/keras/layers/Embedding.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding">Embedding</a>[<span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.textclassification.TextClassifier@embedding:com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#encoder" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="encoder:String"></a>
       <a id="encoder:String"></a>
       <h4 class="signature">
@@ -426,9 +443,8 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">The encoder for input sequences.</p><div class="fullcomment"><div class="comment cmt"><p>The encoder for input sequences. String. &quot;cnn&quot; or &quot;lstm&quot; or &quot;gru&quot; are supported.
-               Default is &quot;cnn&quot;.</p></div></div>
-    </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#encoderOutputDim" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      
+    </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#encoderOutputDim" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="encoderOutputDim:Int"></a>
       <a id="encoderOutputDim:Int"></a>
       <h4 class="signature">
@@ -444,7 +460,7 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">The output dimension for the encoder.</p><div class="fullcomment"><div class="comment cmt"><p>The output dimension for the encoder. Positive integer. Default is 256.</p></div></div>
+      
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -1495,7 +1511,7 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#sequenceLength" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#sequenceLength" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="sequenceLength:Int"></a>
       <a id="sequenceLength:Int"></a>
       <h4 class="signature">
@@ -1511,7 +1527,7 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">The length of a sequence.</p><div class="fullcomment"><div class="comment cmt"><p>The length of a sequence. Positive integer. Default is 500.</p></div></div>
+      
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#setExtraParameter" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="setExtraParameter(extraParam:&lt;?&gt;):AbstractModule.this.type"></a>
       <a id="setExtraParameter(Array[Tensor[T]]):TextClassifier.this.type"></a>
@@ -1683,7 +1699,7 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule → AnyRef → Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#tokenLength" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#tokenLength" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="tokenLength:Int"></a>
       <a id="tokenLength:Int"></a>
       <h4 class="signature">
@@ -1699,7 +1715,7 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">The size of each word vector.</p><div class="fullcomment"><div class="comment cmt"><p>The size of each word vector. Positive integer.</p></div></div>
+      
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#train" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="train:Boolean"></a>
       <a id="train:Boolean"></a>

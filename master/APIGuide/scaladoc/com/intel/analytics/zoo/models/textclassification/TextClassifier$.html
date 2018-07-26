@@ -147,23 +147,37 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#apply" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="apply[T](classNum:Int,tokenLength:Int,sequenceLength:Int,encoder:String,encoderOutputDim:Int)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.textclassification.TextClassifier[T]"></a>
-      <a id="apply[T](Int,Int,Int,String,Int)(ClassTag[T],TensorNumeric[T]):TextClassifier[T]"></a>
+    </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="apply[T](classNum:Int,embeddingFile:String,wordIndex:Map[String,Int],sequenceLength:Int,encoder:String,encoderOutputDim:Int)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.textclassification.TextClassifier[T]"></a>
+      <a id="apply[T](Int,String,Map[String,Int],Int,String,Int)(ClassTag[T],TensorNumeric[T]):TextClassifier[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="classNum">classNum: <span class="extype" name="scala.Int">Int</span></span>, <span name="tokenLength">tokenLength: <span class="extype" name="scala.Int">Int</span></span>, <span name="sequenceLength">sequenceLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">500</span></span>, <span name="encoder">encoder: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;cnn&quot;</span></span>, <span name="encoderOutputDim">encoderOutputDim: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">256</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.apply.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.apply.T">T</span>]</span>)</span><span class="result">: <a href="TextClassifier.html" class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier">TextClassifier</a>[<span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.apply.T">T</span>]</span>
+        <span class="name">apply</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="classNum">classNum: <span class="extype" name="scala.Int">Int</span></span>, <span name="embeddingFile">embeddingFile: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="wordIndex">wordIndex: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>] = <span class="symbol">null</span></span>, <span name="sequenceLength">sequenceLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">500</span></span>, <span name="encoder">encoder: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;cnn&quot;</span></span>, <span name="encoderOutputDim">encoderOutputDim: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">256</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.apply.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.apply.T">T</span>]</span>)</span><span class="result">: <a href="TextClassifier.html" class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier">TextClassifier</a>[<span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.apply.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.textclassification.TextClassifier$@apply[T](classNum:Int,tokenLength:Int,sequenceLength:Int,encoder:String,encoderOutputDim:Int)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.textclassification.TextClassifier[T]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.textclassification.TextClassifier$@apply[T](classNum:Int,embeddingFile:String,wordIndex:Map[String,Int],sequenceLength:Int,encoder:String,encoderOutputDim:Int)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.textclassification.TextClassifier[T]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">The factory method to create a TextClassifier instance.</p>
+      <p class="shortcomment cmt">The factory method to create a TextClassifier instance with WordEmbedding as
+its first layer.</p><div class="fullcomment"><div class="comment cmt"><p>The factory method to create a TextClassifier instance with WordEmbedding as
+its first layer.
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd><dt class="param">classNum</dt><dd class="cmt"><p>The number of text categories to be classified. Positive integer.</p></dd><dt class="param">embeddingFile</dt><dd class="cmt"><p>The path to the embedding file.
+                     Currently only the following GloVe files are supported:
+                     &quot;glove.6B.50d.txt&quot;, &quot;glove.6B.100d.txt&quot;, &quot;glove.6B.200d.txt&quot;
+                     &quot;glove.6B.300d.txt&quot;, &quot;glove.42B.300d.txt&quot;, &quot;glove.840B.300d.txt&quot;.
+                     You can download them from: https://nlp.stanford.edu/projects/glove/.</p></dd><dt class="param">wordIndex</dt><dd class="cmt"><p>Map of word (String) and its corresponding index (integer).
+                 The index is supposed to start from 1 with 0 reserved for unknown words.
+                 During the prediction, if you have words that are not in the wordIndex
+                 for the training, you can map them to index 0.
+                 Default is null. In this case, all the words in the embeddingFile will
+                 be taken into account and you can call
+                 WordEmbedding.getWordIndex(embeddingFile) to retrieve the map.</p></dd><dt class="param">sequenceLength</dt><dd class="cmt"><p>The length of a sequence. Positive integer. Default is 500.</p></dd><dt class="param">encoder</dt><dd class="cmt"><p>The encoder for input sequences. String. &quot;cnn&quot; or &quot;lstm&quot; or &quot;gru&quot; are supported.
+               Default is &quot;cnn&quot;.</p></dd><dt class="param">encoderOutputDim</dt><dd class="cmt"><p>The output dimension for the encoder. Positive integer. Default is 256.</p></dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
@@ -313,7 +327,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#loadModel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="loadModel[T](path:String,weightPath:String)(implicitevidence$4:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.textclassification.TextClassifier[T]"></a>
+      <a id="loadModel[T](path:String,weightPath:String)(implicitevidence$5:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.textclassification.TextClassifier[T]"></a>
       <a id="loadModel[T](String,String)(ClassTag[T],TensorNumeric[T]):TextClassifier[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -324,7 +338,7 @@
         <span class="name">loadModel</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="weightPath">weightPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">null</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.loadModel.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.loadModel.T">T</span>]</span>)</span><span class="result">: <a href="TextClassifier.html" class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier">TextClassifier</a>[<span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.loadModel.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.textclassification.TextClassifier$@loadModel[T](path:String,weightPath:String)(implicitevidence$4:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.textclassification.TextClassifier[T]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.textclassification.TextClassifier$@loadModel[T](path:String,weightPath:String)(implicitevidence$5:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.textclassification.TextClassifier[T]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -492,7 +506,31 @@
 
         
 
-        
+        <div id="values" class="values members">
+              <h3>Deprecated Value Members</h3>
+              <ol><li name="com.intel.analytics.zoo.models.textclassification.TextClassifier#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="apply[T](classNum:Int,tokenLength:Int,sequenceLength:Int,encoder:String,encoderOutputDim:Int)(implicitevidence$3:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.textclassification.TextClassifier[T]"></a>
+      <a id="apply[T](Int,Int,Int,String,Int)(ClassTag[T],TensorNumeric[T]):TextClassifier[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: ">apply</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="classNum">classNum: <span class="extype" name="scala.Int">Int</span></span>, <span name="tokenLength">tokenLength: <span class="extype" name="scala.Int">Int</span></span>, <span name="sequenceLength">sequenceLength: <span class="extype" name="scala.Int">Int</span></span>, <span name="encoder">encoder: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="encoderOutputDim">encoderOutputDim: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.apply.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.apply.T">T</span>]</span>)</span><span class="result">: <a href="TextClassifier.html" class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier">TextClassifier</a>[<span class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier.apply.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.textclassification.TextClassifier$@apply[T](classNum:Int,tokenLength:Int,sequenceLength:Int,encoder:String,encoderOutputDim:Int)(implicitevidence$3:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.textclassification.TextClassifier[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The factory method to create a TextClassifier instance that takes word vectors as input.</p><div class="fullcomment"><div class="comment cmt"><p>The factory method to create a TextClassifier instance that takes word vectors as input.
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"></dd></dl></div>
+    </li></ol>
+            </div>
         </div>
 
         <div id="inheritedMembers">

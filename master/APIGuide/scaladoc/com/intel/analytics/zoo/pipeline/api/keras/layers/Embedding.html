@@ -51,13 +51,16 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Turn positive integers (indexes) into dense vectors of fixed size.
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Turn non-negative integers (indices) into dense vectors of fixed size.
 The input of this layer should be 2D.</p><p>This layer can only be used as the first layer in a model, you need to provide the argument
 inputShape (a Single Shape, does not include the batch dimension).
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a>, <span class="extype" name="com.intel.analytics.bigdl.nn.keras.Embedding">bigdl.nn.keras.Embedding</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.Container">Container</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
-        </div></div>
+        </div><div class="toggleContainer block">
+            <span class="toggle">Known Subclasses</span>
+            <div class="subClasses hiddenContent"><a href="WordEmbedding.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.WordEmbedding">WordEmbedding</a></div>
+          </div></div>
         
 
       <div id="mbrsel">
@@ -109,7 +112,9 @@ inputShape (a Single Shape, does not include the batch dimension).
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">inputDim</dt><dd class="cmt"><p>Int &gt; 0. Size of the vocabulary.</p></dd><dt class="param">outputDim</dt><dd class="cmt"><p>Int &gt;= 0. Dimension of the dense embedding.</p></dd><dt class="param">init</dt><dd class="cmt"><p>Initialization method for the weights of the layer. Default is RandomUniform.
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">inputDim</dt><dd class="cmt"><p>Int &gt; 0. Size of the vocabulary, ie. 1 + maximum integer
+                index occurring in the input data.
+                Each word index in the input should be within range [0, inputDim-1].</p></dd><dt class="param">outputDim</dt><dd class="cmt"><p>Int &gt;= 0. Dimension of the dense embedding.</p></dd><dt class="param">init</dt><dd class="cmt"><p>Initialization method for the weights of the layer. Default is RandomUniform.
             You can also pass in corresponding string representations such as 'uniform'
             or 'normal', etc. for simple init methods in the factory method.</p></dd><dt class="param">wRegularizer</dt><dd class="cmt"><p>An instance of <span class="extype" name="Regularizer">Regularizer</span>, (eg. L1 or L2 regularization),
                     applied to the embedding matrix. Default is null.</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>A Single Shape, does not include the batch dimension.</p></dd></dl></div>
@@ -934,7 +939,9 @@ inputShape (a Single Shape, does not include the batch dimension).
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Int &gt; 0.</p><div class="fullcomment"><div class="comment cmt"><p>Int &gt; 0. Size of the vocabulary.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding">Embedding</a> → Embedding</dd></dl></div>
+      <p class="shortcomment cmt">Int &gt; 0.</p><div class="fullcomment"><div class="comment cmt"><p>Int &gt; 0. Size of the vocabulary, ie. 1 + maximum integer
+                index occurring in the input data.
+                Each word index in the input should be within range [0, inputDim-1].</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Embedding">Embedding</a> → Embedding</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.keras.Embedding#inputShape" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="inputShape:com.intel.analytics.bigdl.utils.Shape"></a>
       <a id="inputShape:Shape"></a>
