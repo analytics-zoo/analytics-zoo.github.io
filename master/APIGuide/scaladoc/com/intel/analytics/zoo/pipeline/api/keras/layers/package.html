@@ -1638,6 +1638,53 @@ f(x) = ⎨ x + value, if x &lt; -value
        ⎩ 0, otherwise</p><p>When you use this layer as the first layer of a model, you need to provide
 the argument inputShape (a Single Shape, does not include the batch dimension).</p><p>Remark: This layer is from Torch and wrapped in Keras style.
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.SparseDense" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="SparseDense[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withNet"></a>
+      <a id="SparseDense[T]:SparseDense[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="SparseDense.html"><span class="name">SparseDense</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.SparseDense.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.SparseDense.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.SparseDense.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@SparseDense[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withNet" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">SparseDense is the sparse version of layer Dense.</p><div class="fullcomment"><div class="comment cmt"><p>SparseDense is the sparse version of layer Dense. SparseDense has two different from Dense:
+firstly, SparseDense's input Tensor is a SparseTensor. Secondly, SparseDense doesn't backward
+gradient to next layer in the backpropagation by default, as the gradInput of SparseDense is
+useless and very big in most cases.</p><p>But, considering model like Wide&amp;Deep, we provide backwardStart and backwardLength to backward
+part of the gradient to next layer.</p><p>The most common input is 2D.</p><p>When you use this layer as the first layer of a model, you need to provide the argument
+inputShape (a Single Shape, does not include the batch dimension).
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.SparseEmbedding" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="SparseEmbedding[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withNet"></a>
+      <a id="SparseEmbedding[T]:SparseEmbedding[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="SparseEmbedding.html"><span class="name">SparseEmbedding</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.SparseEmbedding.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.SparseEmbedding.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.SparseEmbedding.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@SparseEmbedding[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withNet" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">SparseEmbedding is the sparse version of layer Embedding.</p><div class="fullcomment"><div class="comment cmt"><p>SparseEmbedding is the sparse version of layer Embedding.</p><p>The input of SparseEmbedding should be a 2D SparseTensor or two 2D sparseTensors.
+If the input is a SparseTensor, the values are positive integer ids,
+values in each row of this SparseTensor will be turned into a dense vector.
+If the input is two SparseTensors, the first tensor should be the integer ids, just
+like the SparseTensor input. And the second tensor is the corresponding
+weights of the integer ids.</p><p>This layer can only be used as the first layer in a model, you need to provide the argument
+inputShape (a Single Shape, does not include the batch dimension).
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.SpatialDropout1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="SpatialDropout1D[T]extendsSpatialDropout1D[T]withNet"></a>
       <a id="SpatialDropout1D[T]:SpatialDropout1D[T]"></a>
@@ -3358,6 +3405,40 @@ inputShape (a Single Shape, does not include the batch dimension).
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@SoftShrink" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.SparseDense" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SparseDense"></a>
+      <a id="SparseDense:SparseDense"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="SparseDense$.html"><span class="name">SparseDense</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@SparseDense" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.SparseEmbedding" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SparseEmbedding"></a>
+      <a id="SparseEmbedding:SparseEmbedding"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="SparseEmbedding$.html"><span class="name">SparseEmbedding</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@SparseEmbedding" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>

@@ -111,12 +111,13 @@ and target(y_true) is supposed to be the class label starting from 0.
     </span>
       <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">logProbAsInput</dt><dd class="cmt"><p>Boolean. Whether to accept log-probabilities or probabilities
                       as input. Default is false and inputs should be probabilities.</p></dd><dt class="param">zeroBasedLabel</dt><dd class="cmt"><p>Boolean. Whether target labels start from 0. Default is true.
-                      If false, labels start from 1.</p></dd><dt class="param">weights</dt><dd class="cmt"><p>Weights of each class if you have an unbalanced training set.</p></dd><dt class="param">sizeAverage</dt><dd class="cmt"><p>Boolean. Whether losses are averaged over observations for each
+                      If false, labels start from 1.</p></dd><dt class="param">weights</dt><dd class="cmt"><p>Tensor. Weights of each class if you have an unbalanced training set.
+               Default is null.</p></dd><dt class="param">sizeAverage</dt><dd class="cmt"><p>Boolean. Whether losses are averaged over observations for each
                    mini-batch. Default is true. If false, the losses are instead
                    summed for each mini-batch.</p></dd><dt class="param">paddingValue</dt><dd class="cmt"><p>Integer. If the target is set to this value, the training process
                     will skip this sample. In other words, the forward process will
                     return zero output and the backward process will also return
-                    zero gradInput. Default is 1.</p></dd></dl></div>
+                    zero gradInput. Default is -1.</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -532,7 +533,7 @@ and target(y_true) is supposed to be the class label starting from 0.
       <p class="shortcomment cmt">Integer.</p><div class="fullcomment"><div class="comment cmt"><p>Integer. If the target is set to this value, the training process
                     will skip this sample. In other words, the forward process will
                     return zero output and the backward process will also return
-                    zero gradInput. Default is 1.</p></div></div>
+                    zero gradInput. Default is -1.</p></div></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.SparseCategoricalCrossEntropy#sizeAverage" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="sizeAverage:Boolean"></a>
       <a id="sizeAverage:Boolean"></a>
@@ -689,7 +690,7 @@ and target(y_true) is supposed to be the class label starting from 0.
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.SparseCategoricalCrossEntropy#weights" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.SparseCategoricalCrossEntropy#weights" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="weights:com.intel.analytics.bigdl.tensor.Tensor[T]"></a>
       <a id="weights:Tensor[T]"></a>
       <h4 class="signature">
@@ -705,7 +706,8 @@ and target(y_true) is supposed to be the class label starting from 0.
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Weights of each class if you have an unbalanced training set.</p>
+      <p class="shortcomment cmt">Tensor.</p><div class="fullcomment"><div class="comment cmt"><p>Tensor. Weights of each class if you have an unbalanced training set.
+               Default is null.</p></div></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.SparseCategoricalCrossEntropy#zeroBasedLabel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="zeroBasedLabel:Boolean"></a>
       <a id="zeroBasedLabel:Boolean"></a>
