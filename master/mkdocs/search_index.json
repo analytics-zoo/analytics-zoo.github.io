@@ -906,6 +906,96 @@
             "title": "ColumnFeatureInfo"
         }, 
         {
+            "location": "/KerasStyleAPIGuide/keras-api-python/", 
+            "text": "", 
+            "title": "Python Guide"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/keras-api-scala/", 
+            "text": "", 
+            "title": "Scala Guide"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Layers/activation/", 
+            "text": "", 
+            "title": "Activation"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Layers/initialization/", 
+            "text": "", 
+            "title": "Initialization"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Layers/core/", 
+            "text": "SparseDense\n\n\nSparseDense is the sparse version of layer Dense. SparseDense has two different from Dense:\nfirstly, SparseDense's input Tensor is a SparseTensor. Secondly, SparseDense doesn't backward\ngradient to next layer in the backpropagation by default, as the gradInput of SparseDense is\nuseless and very big in most cases.\n\n\nBut, considering model like Wide\nDeep, we provide backwardStart and backwardLength to backward\npart of the gradient to next layer.\n\n\nThe most common input is 2D.\n\n\nWhen you use this layer as the first layer of a model, you need to provide the argument\ninputShape (a Single Shape, does not include the batch dimension).\n\n\nScala:\n\n\nSparseDense(outputDim, init = \nglorot_uniform\n, activation = null, wRegularizer = null, bRegularizer = null, backwardStart = -1, backwardLength = -1, initWeight = null, initBias = null, initGradWeight = null, initGradBias = null, bias = true, inputShape = null)\n\n\n\n\nPython:\n\n\nSparseDense(output_dim, init=\nglorot_uniform\n, activation=None, W_regularizer=None, b_regularizer=None, backward_start=-1, backward_length=-1, init_weight=None, init_bias=None, init_grad_weight=None, init_grad_bias=None, bias=True, input_shape=None, name=None)\n\n\n\n\nParameters:\n\n\n\n\noutputDim\n: The size of the output dimension.\n\n\ninit\n: String representation of the initialization method for the weights of the layer. Default is 'glorot_uniform'.\n\n\nactivation\n: String representation of the activation function to use. Default is null.\n\n\nwRegularizer\n: An instance of [Regularizer], applied to the input weights matrices. Default is null.\n\n\nbRegularizer\n: An instance of [Regularizer], applied to the bias. Default is null.\n\n\nbias\n: Whether to include a bias (i.e. make the layer affine rather than linear). Default is true.\n\n\nbackwardStart\n: Backward start index, counting from 1.\n\n\nbackwardLength\n: Backward length.\n\n\ninputShape\n: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a \nShape\n object. For Python API, it should be a shape tuple. Batch dimension should be excluded.\n\n\nname\n: String to set the name of the layer. If not specified, its name will by default to be a generated string.\n\n\n\n\nScala example:\n\n\nimport com.intel.analytics.zoo.pipeline.api.keras.layers.SparseDense\nimport com.intel.analytics.bigdl.utils.Shape\nimport com.intel.analytics.bigdl.tensor.Tensor\n\nval layer = SparseDense[Float](outputDim = 5, inputShape = Shape(2, 4))\nlayer.build(Shape(-1, 2, 4))\nval input = Tensor[Float](Array(2, 4)).rand()\ninput.setValue(1, 1, 1f)\ninput.setValue(2, 3, 3f)\nval sparseInput = Tensor.sparse(input)\nval output = layer.forward(sparseInput)\n\n\n\n\nInput is:\n\n\ninput: \n(0, 0) : 1.0\n(0, 1) : 0.2992794\n(0, 2) : 0.11227019\n(0, 3) : 0.722947\n(1, 0) : 0.6147614\n(1, 1) : 0.4288646\n(1, 2) : 3.0\n(1, 3) : 0.7749917\n[com.intel.analytics.bigdl.tensor.SparseTensor of size 2x4]\n\n\n\n\nOutput is:\n\n\noutput: \n0.053516    0.33429605  0.22587383  -0.8998945  0.24308181  \n0.76745665  -1.614114   0.5381658   -2.2226436  -0.15573677 \n[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x5]\n\n\n\n\nPython example:\n\n\nimport numpy as np\nfrom zoo.pipeline.api.keras.layers import SparseDense\nfrom zoo.pipeline.api.keras.models import Sequential\nfrom bigdl.util.common import JTensor\n\nmodel = Sequential()\nmodel.add(SparseDense(output_dim=2, input_shape=(3, 4)))\ninput = JTensor.sparse(\n    a_ndarray=np.array([1, 3, 2, 4]),\n    i_ndarray = np.array([[0, 0, 1, 2],\n             [0, 3, 2, 1]]),\n    shape = np.array([3, 4])\n)\noutput = model.forward(input)\n\n\n\n\nInput is:\n\n\nJTensor: storage: [1. 3. 2. 4.], shape: [3 4] ,indices [[0 0 1 2]\n [0 3 2 1]], float\n\n\n\n\nOutput is\n```python\n[[ 1.57136     2.29596   ]\n [ 0.5791738  -1.6598101 ]\n [ 2.331141   -0.84687066]]", 
+            "title": "Core Layers"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Layers/core/#sparsedense", 
+            "text": "SparseDense is the sparse version of layer Dense. SparseDense has two different from Dense:\nfirstly, SparseDense's input Tensor is a SparseTensor. Secondly, SparseDense doesn't backward\ngradient to next layer in the backpropagation by default, as the gradInput of SparseDense is\nuseless and very big in most cases.  But, considering model like Wide Deep, we provide backwardStart and backwardLength to backward\npart of the gradient to next layer.  The most common input is 2D.  When you use this layer as the first layer of a model, you need to provide the argument\ninputShape (a Single Shape, does not include the batch dimension).  Scala:  SparseDense(outputDim, init =  glorot_uniform , activation = null, wRegularizer = null, bRegularizer = null, backwardStart = -1, backwardLength = -1, initWeight = null, initBias = null, initGradWeight = null, initGradBias = null, bias = true, inputShape = null)  Python:  SparseDense(output_dim, init= glorot_uniform , activation=None, W_regularizer=None, b_regularizer=None, backward_start=-1, backward_length=-1, init_weight=None, init_bias=None, init_grad_weight=None, init_grad_bias=None, bias=True, input_shape=None, name=None)  Parameters:   outputDim : The size of the output dimension.  init : String representation of the initialization method for the weights of the layer. Default is 'glorot_uniform'.  activation : String representation of the activation function to use. Default is null.  wRegularizer : An instance of [Regularizer], applied to the input weights matrices. Default is null.  bRegularizer : An instance of [Regularizer], applied to the bias. Default is null.  bias : Whether to include a bias (i.e. make the layer affine rather than linear). Default is true.  backwardStart : Backward start index, counting from 1.  backwardLength : Backward length.  inputShape : Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a  Shape  object. For Python API, it should be a shape tuple. Batch dimension should be excluded.  name : String to set the name of the layer. If not specified, its name will by default to be a generated string.   Scala example:  import com.intel.analytics.zoo.pipeline.api.keras.layers.SparseDense\nimport com.intel.analytics.bigdl.utils.Shape\nimport com.intel.analytics.bigdl.tensor.Tensor\n\nval layer = SparseDense[Float](outputDim = 5, inputShape = Shape(2, 4))\nlayer.build(Shape(-1, 2, 4))\nval input = Tensor[Float](Array(2, 4)).rand()\ninput.setValue(1, 1, 1f)\ninput.setValue(2, 3, 3f)\nval sparseInput = Tensor.sparse(input)\nval output = layer.forward(sparseInput)  Input is:  input: \n(0, 0) : 1.0\n(0, 1) : 0.2992794\n(0, 2) : 0.11227019\n(0, 3) : 0.722947\n(1, 0) : 0.6147614\n(1, 1) : 0.4288646\n(1, 2) : 3.0\n(1, 3) : 0.7749917\n[com.intel.analytics.bigdl.tensor.SparseTensor of size 2x4]  Output is:  output: \n0.053516    0.33429605  0.22587383  -0.8998945  0.24308181  \n0.76745665  -1.614114   0.5381658   -2.2226436  -0.15573677 \n[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x5]  Python example:  import numpy as np\nfrom zoo.pipeline.api.keras.layers import SparseDense\nfrom zoo.pipeline.api.keras.models import Sequential\nfrom bigdl.util.common import JTensor\n\nmodel = Sequential()\nmodel.add(SparseDense(output_dim=2, input_shape=(3, 4)))\ninput = JTensor.sparse(\n    a_ndarray=np.array([1, 3, 2, 4]),\n    i_ndarray = np.array([[0, 0, 1, 2],\n             [0, 3, 2, 1]]),\n    shape = np.array([3, 4])\n)\noutput = model.forward(input)  Input is:  JTensor: storage: [1. 3. 2. 4.], shape: [3 4] ,indices [[0 0 1 2]\n [0 3 2 1]], float  Output is\n```python\n[[ 1.57136     2.29596   ]\n [ 0.5791738  -1.6598101 ]\n [ 2.331141   -0.84687066]]", 
+            "title": "SparseDense"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Layers/convolutional/", 
+            "text": "", 
+            "title": "Convolutional Layers"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Layers/pooling/", 
+            "text": "", 
+            "title": "Pooling Layers"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Layers/recurrent/", 
+            "text": "", 
+            "title": "Recurrent Layers"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Layers/normalization/", 
+            "text": "", 
+            "title": "Normalization Layers"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Layers/embedding/", 
+            "text": "SparseEmbedding\n\n\nSparseEmbedding is the sparse version of layer Embedding.\n\n\nThe input of SparseEmbedding should be a 2D SparseTensor or two 2D sparseTensors.\nIf the input is a SparseTensor, the values are positive integer ids,\nvalues in each row of this SparseTensor will be turned into a dense vector.\nIf the input is two SparseTensors, the first tensor should be the integer ids, just\nlike the SparseTensor input. And the second tensor is the corresponding\nweights of the integer ids.\n\n\nThis layer can only be used as the first layer in a model, you need to provide the argument\ninputShape (a Single Shape, does not include the batch dimension).\n\n\nScala:\n\n\nSparseEmbedding(inputDim, outputDim, combiner = \nsum\n, max_norm = -1.0, init = \nuniform\n, wRegularizer = null, inputShape = null)\n\n\n\n\nPython:\n\n\nSparseEmbedding(input_dim, output_dim, combiner=\nsum\n, max_norm=-1.0, init=\nuniform\n, W_regularizer=None, input_shape=None, name=None)\n\n\n\n\nParameters:\n\n\n\n\ninputDim\n: Int \n 0. Size of the vocabulary.\n\n\noutputDim\n: Int \n= 0. Dimension of the dense embedding.\n\n\ninit\n: String representation of the initialization method for the weights of the layer. Default is \"uniform\".\n\n\ncombiner\n: A string specifying the reduce type.\n              Currently \"mean\", \"sum\", \"sqrtn\" is supported.\n\n\nmaxNorm\n: If provided, each embedding is normalized to have l2 norm equal to\n               maxNorm before combining.\n\n\nwRegularizer\n: An instance of [Regularizer], (eg. L1 or L2 regularization), applied to the input weights matrices. Default is null.\n\n\ninputShape\n: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a \nShape\n object. For Python API, it should be a shape tuple. Batch dimension should be excluded.\n\n\nname\n: String to set the name of the layer.\n          If not specified, its name will by default to be a generated string.\n\n\n\n\nScala example:\n\n\nimport com.intel.analytics.zoo.pipeline.api.keras.layers.SparseEmbedding\nimport com.intel.analytics.bigdl.utils.Shape\nimport com.intel.analytics.bigdl.tensor.Tensor\n\nval indices1 = Array(0, 0, 1, 2)\nval indices2 = Array(0, 1, 0, 3)\nval values = Array(2f, 4, 1, 2)\nval input = Tensor.sparse(Array(indices1, indices2), values, Array(3, 4))\nval layer = SparseEmbedding[Float](inputDim = 10, outputDim = 4,\n  combiner = \nsum\n, inputShape = Shape(10))\nlayer.build(Shape(-1, 10))\nval output = layer.forward(input)\n\n\n\n\nInput is:\n\n\ninput: \n(0, 0) : 2.0\n(0, 1) : 4.0\n(1, 0) : 1.0\n(2, 3) : 2.0\n[com.intel.analytics.bigdl.tensor.SparseTensor of size 3x4]\n\n\n\n\nOutput is:\n\n\n-0.03674142 -0.01844017 -0.015794257    -0.045957662    \n-0.02645839 -0.024193227    -0.046255145    -0.047514524    \n-0.042759597    0.002117775 -0.041510757    1.9092667E-4    \n[com.intel.analytics.bigdl.tensor.DenseTensor of size 3x4]\n\n\n\n\nPython example:\n\n\nimport numpy as np\nfrom zoo.pipeline.api.keras.layers import SparseEmbedding\nfrom zoo.pipeline.api.keras.models import Sequential\nfrom bigdl.util.common import JTensor\n\nmodel = Sequential()\nmodel.add(SparseEmbedding(input_dim=10, output_dim=4, input_shape=(4, )))\ninput = JTensor.sparse(\n    a_ndarray=np.array([1, 3, 2, 4]),\n    i_ndarray = np.array([[0, 0, 1, 2],\n             [0, 3, 2, 1]]),\n    shape = np.array([3, 4])\n)\noutput = model.forward(input)\n\n\n\n\nInput is:\n\n\nJTensor: storage: [1. 3. 2. 4.], shape: [3 4] ,indices [[0 0 1 2]\n [0 3 2 1]], float\n\n\n\n\nOutput is\n\n\n[[ 0.00771878 -0.05676365  0.03861053  0.04300173]\n [-0.04647886 -0.03346863  0.04642192 -0.0145219 ]\n [ 0.03964841  0.0243053   0.04841208  0.04862341]]", 
+            "title": "Embedding Layers"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Layers/embedding/#sparseembedding", 
+            "text": "SparseEmbedding is the sparse version of layer Embedding.  The input of SparseEmbedding should be a 2D SparseTensor or two 2D sparseTensors.\nIf the input is a SparseTensor, the values are positive integer ids,\nvalues in each row of this SparseTensor will be turned into a dense vector.\nIf the input is two SparseTensors, the first tensor should be the integer ids, just\nlike the SparseTensor input. And the second tensor is the corresponding\nweights of the integer ids.  This layer can only be used as the first layer in a model, you need to provide the argument\ninputShape (a Single Shape, does not include the batch dimension).  Scala:  SparseEmbedding(inputDim, outputDim, combiner =  sum , max_norm = -1.0, init =  uniform , wRegularizer = null, inputShape = null)  Python:  SparseEmbedding(input_dim, output_dim, combiner= sum , max_norm=-1.0, init= uniform , W_regularizer=None, input_shape=None, name=None)  Parameters:   inputDim : Int   0. Size of the vocabulary.  outputDim : Int  = 0. Dimension of the dense embedding.  init : String representation of the initialization method for the weights of the layer. Default is \"uniform\".  combiner : A string specifying the reduce type.\n              Currently \"mean\", \"sum\", \"sqrtn\" is supported.  maxNorm : If provided, each embedding is normalized to have l2 norm equal to\n               maxNorm before combining.  wRegularizer : An instance of [Regularizer], (eg. L1 or L2 regularization), applied to the input weights matrices. Default is null.  inputShape : Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a  Shape  object. For Python API, it should be a shape tuple. Batch dimension should be excluded.  name : String to set the name of the layer.\n          If not specified, its name will by default to be a generated string.   Scala example:  import com.intel.analytics.zoo.pipeline.api.keras.layers.SparseEmbedding\nimport com.intel.analytics.bigdl.utils.Shape\nimport com.intel.analytics.bigdl.tensor.Tensor\n\nval indices1 = Array(0, 0, 1, 2)\nval indices2 = Array(0, 1, 0, 3)\nval values = Array(2f, 4, 1, 2)\nval input = Tensor.sparse(Array(indices1, indices2), values, Array(3, 4))\nval layer = SparseEmbedding[Float](inputDim = 10, outputDim = 4,\n  combiner =  sum , inputShape = Shape(10))\nlayer.build(Shape(-1, 10))\nval output = layer.forward(input)  Input is:  input: \n(0, 0) : 2.0\n(0, 1) : 4.0\n(1, 0) : 1.0\n(2, 3) : 2.0\n[com.intel.analytics.bigdl.tensor.SparseTensor of size 3x4]  Output is:  -0.03674142 -0.01844017 -0.015794257    -0.045957662    \n-0.02645839 -0.024193227    -0.046255145    -0.047514524    \n-0.042759597    0.002117775 -0.041510757    1.9092667E-4    \n[com.intel.analytics.bigdl.tensor.DenseTensor of size 3x4]  Python example:  import numpy as np\nfrom zoo.pipeline.api.keras.layers import SparseEmbedding\nfrom zoo.pipeline.api.keras.models import Sequential\nfrom bigdl.util.common import JTensor\n\nmodel = Sequential()\nmodel.add(SparseEmbedding(input_dim=10, output_dim=4, input_shape=(4, )))\ninput = JTensor.sparse(\n    a_ndarray=np.array([1, 3, 2, 4]),\n    i_ndarray = np.array([[0, 0, 1, 2],\n             [0, 3, 2, 1]]),\n    shape = np.array([3, 4])\n)\noutput = model.forward(input)  Input is:  JTensor: storage: [1. 3. 2. 4.], shape: [3 4] ,indices [[0 0 1 2]\n [0 3 2 1]], float  Output is  [[ 0.00771878 -0.05676365  0.03861053  0.04300173]\n [-0.04647886 -0.03346863  0.04642192 -0.0145219 ]\n [ 0.03964841  0.0243053   0.04841208  0.04862341]]", 
+            "title": "SparseEmbedding"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Layers/dropout/", 
+            "text": "", 
+            "title": "Dropout Layers"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Layers/advanced-activation/", 
+            "text": "", 
+            "title": "Advanced Activations"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Layers/wrappers/", 
+            "text": "", 
+            "title": "Layer Wrappers"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Optimization/training/", 
+            "text": "", 
+            "title": "Train, evaluate or predict a model"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Optimization/optimizer/", 
+            "text": "", 
+            "title": "Optimizers"
+        }, 
+        {
+            "location": "/KerasStyleAPIGuide/Optimization/loss/", 
+            "text": "", 
+            "title": "Losses"
+        }, 
+        {
             "location": "/Keras2StyleAPIGuide/keras-api-python/", 
             "text": "", 
             "title": "Python Guide"

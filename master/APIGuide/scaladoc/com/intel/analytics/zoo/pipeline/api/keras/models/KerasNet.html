@@ -1535,6 +1535,24 @@ string representations when calling compile.</p><p>For example: optimizer = &quo
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet#predict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="predict(x:com.intel.analytics.zoo.feature.image.ImageSet):com.intel.analytics.zoo.feature.image.ImageSet"></a>
+      <a id="predict(ImageSet):ImageSet"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">predict</span><span class="params">(<span name="x">x: <a href="../../../../feature/image/ImageSet.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageSet">ImageSet</a></span>)</span><span class="result">: <a href="../../../../feature/image/ImageSet.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageSet">ImageSet</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet@predict(x:com.intel.analytics.zoo.feature.image.ImageSet):com.intel.analytics.zoo.feature.image.ImageSet" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">For distributed ImageSet, the batchSize is 4 * rdd.getNumPartitions.</p><div class="fullcomment"><div class="comment cmt"><p>For distributed ImageSet, the batchSize is 4 * rdd.getNumPartitions.
+For local ImageSet, the batchSize value is 4 * numOfCores.</p></div></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet#predict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="predict(x:com.intel.analytics.zoo.feature.image.ImageSet,batchSize:Int):com.intel.analytics.zoo.feature.image.ImageSet"></a>
       <a id="predict(ImageSet,Int):ImageSet"></a>
       <h4 class="signature">
@@ -1551,7 +1569,26 @@ string representations when calling compile.</p><p>For example: optimizer = &quo
       </a>
     </span>
       <p class="shortcomment cmt">Use a model to do prediction on ImageSet.</p><div class="fullcomment"><div class="comment cmt"><p>Use a model to do prediction on ImageSet.
-</p></div><dl class="paramcmts block"><dt class="param">x</dt><dd class="cmt"><p>Prediction data, ImageSet.</p></dd><dt class="param">batchSize</dt><dd class="cmt"><p>Number of samples per batch.</p></dd></dl></div>
+</p></div><dl class="paramcmts block"><dt class="param">x</dt><dd class="cmt"><p>Prediction data, ImageSet.</p></dd><dt class="param">batchSize</dt><dd class="cmt"><p>The batchSize should be divisible by
+                 rdd.getNumPartitions(distributed mode) or numOfCores(local mode)</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet#predict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="predict(x:com.intel.analytics.bigdl.dataset.LocalDataSet[com.intel.analytics.bigdl.dataset.MiniBatch[T]])(implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Array[com.intel.analytics.bigdl.nn.abstractnn.Activity]"></a>
+      <a id="predict(LocalDataSet[MiniBatch[T]])(TensorNumeric[T]):Array[Activity]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">predict</span><span class="params">(<span name="x">x: <span class="extype" name="com.intel.analytics.bigdl.dataset.LocalDataSet">LocalDataSet</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.MiniBatch">MiniBatch</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet.T">T</span>]]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet@predict(x:com.intel.analytics.bigdl.dataset.LocalDataSet[com.intel.analytics.bigdl.dataset.MiniBatch[T]])(implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Array[com.intel.analytics.bigdl.nn.abstractnn.Activity]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Use a model to do prediction in local mode.</p><div class="fullcomment"><div class="comment cmt"><p>Use a model to do prediction in local mode.
+The default batchSize is 4 * numOfCores</p></div><dl class="paramcmts block"><dt class="param">x</dt><dd class="cmt"><p>Prediction data, LocalDataSet.</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet#predict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="predict(x:com.intel.analytics.bigdl.dataset.LocalDataSet[com.intel.analytics.bigdl.dataset.MiniBatch[T]],batchSize:Int)(implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Array[com.intel.analytics.bigdl.nn.abstractnn.Activity]"></a>
       <a id="predict(LocalDataSet[MiniBatch[T]],Int)(TensorNumeric[T]):Array[Activity]"></a>
@@ -1569,7 +1606,25 @@ string representations when calling compile.</p><p>For example: optimizer = &quo
       </a>
     </span>
       <p class="shortcomment cmt">Use a model to do prediction in local mode.</p><div class="fullcomment"><div class="comment cmt"><p>Use a model to do prediction in local mode.
-</p></div><dl class="paramcmts block"><dt class="param">x</dt><dd class="cmt"><p>Prediction data, LocalDataSet.</p></dd><dt class="param">batchSize</dt><dd class="cmt"><p>Number of samples per batch.</p></dd></dl></div>
+</p></div><dl class="paramcmts block"><dt class="param">x</dt><dd class="cmt"><p>Prediction data, LocalDataSet.</p></dd><dt class="param">batchSize</dt><dd class="cmt"><p>The batch_size should be divisible by number of cores</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet#predict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="predict(x:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]])(implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.nn.abstractnn.Activity]"></a>
+      <a id="predict(RDD[Sample[T]])(TensorNumeric[T]):RDD[Activity]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">predict</span><span class="params">(<span name="x">x: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet.T">T</span>]]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet@predict(x:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]])(implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.nn.abstractnn.Activity]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Use a model to do prediction for RDD.</p><div class="fullcomment"><div class="comment cmt"><p>Use a model to do prediction for RDD.
+The default batchSize is 4 * rdd.getNumPartitions.</p></div><dl class="paramcmts block"><dt class="param">x</dt><dd class="cmt"><p>Prediction data, RDD of Sample.</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet#predict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="predict(x:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int)(implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.nn.abstractnn.Activity]"></a>
       <a id="predict(RDD[Sample[T]],Int)(TensorNumeric[T]):RDD[Activity]"></a>
@@ -1587,7 +1642,8 @@ string representations when calling compile.</p><p>For example: optimizer = &quo
       </a>
     </span>
       <p class="shortcomment cmt">Use a model to do prediction for RDD.</p><div class="fullcomment"><div class="comment cmt"><p>Use a model to do prediction for RDD.
-</p></div><dl class="paramcmts block"><dt class="param">x</dt><dd class="cmt"><p>Prediction data, RDD of Sample.</p></dd><dt class="param">batchSize</dt><dd class="cmt"><p>Number of samples per batch.</p></dd></dl></div>
+</p></div><dl class="paramcmts block"><dt class="param">x</dt><dd class="cmt"><p>Prediction data, RDD of Sample.</p></dd><dt class="param">batchSize</dt><dd class="cmt"><p>The batchSize should be divisible by
+                 rdd.getNumPartitions</p></dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#predict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="predict(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int,shareBuffer:Boolean):org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.nn.abstractnn.Activity]"></a>
       <a id="predict(RDD[Sample[T]],Int,Boolean):RDD[Activity]"></a>
@@ -1631,7 +1687,7 @@ string representations when calling compile.</p><p>For example: optimizer = &quo
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">predictClasses</span><span class="params">(<span name="x">x: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">32</span></span>, <span name="zeroBasedLabel">zeroBasedLabel: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+        <span class="name">predictClasses</span><span class="params">(<span name="x">x: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="zeroBasedLabel">zeroBasedLabel: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.models.KerasNet@predictClasses(x:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int,zeroBasedLabel:Boolean):org.apache.spark.rdd.RDD[Int]" title="Permalink" target="_top">
@@ -1639,7 +1695,8 @@ string representations when calling compile.</p><p>For example: optimizer = &quo
       </a>
     </span>
       <p class="shortcomment cmt">Use a model to predict for classes.</p><div class="fullcomment"><div class="comment cmt"><p>Use a model to predict for classes. By default, label predictions start from 0.
-</p></div><dl class="paramcmts block"><dt class="param">x</dt><dd class="cmt"><p>Prediction data, RDD of Sample.</p></dd><dt class="param">batchSize</dt><dd class="cmt"><p>Number of samples per batch. Default is 32.</p></dd><dt class="param">zeroBasedLabel</dt><dd class="cmt"><p>Boolean. Whether result labels start from 0.
+</p></div><dl class="paramcmts block"><dt class="param">x</dt><dd class="cmt"><p>Prediction data, RDD of Sample.</p></dd><dt class="param">batchSize</dt><dd class="cmt"><p>The batchSize should be divisible by rdd.getNumPartitions.
+                 and the default value is 4 * rdd.getNumPartitions</p></dd><dt class="param">zeroBasedLabel</dt><dd class="cmt"><p>Boolean. Whether result labels start from 0.
                       Default is true. If false, result labels start from 1.</p></dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#predictImage" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="predictImage(imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame,outputLayer:String,shareBuffer:Boolean,batchPerPartition:Int,predictKey:String,featurePaddingParam:Option[com.intel.analytics.bigdl.dataset.PaddingParam[T]]):com.intel.analytics.bigdl.transform.vision.image.ImageFrame"></a>
