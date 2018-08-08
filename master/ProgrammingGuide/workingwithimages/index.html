@@ -87,7 +87,7 @@ val imageDF3 = NNImageReader.readImages(&quot;/tmp/a.jpg, /tmp/b.jpg&quot;, sc)
 <pre><code class="python">from zoo.common.nncontext import *
 from zoo.pipeline.nnframes import *
 
-sc = init_nncontext(create_spark_conf().setAppName(&quot;app&quot;))
+sc = init_nncontext(&quot;app&quot;)
 imageDF1 = NNImageReader.readImages(&quot;/tmp&quot;, sc)
 imageDF2 = NNImageReader.readImages(&quot;/tmp/*.jpg&quot;, sc)
 imageDF3 = NNImageReader.readImages(&quot;/tmp/a.jpg, /tmp/b.jpg&quot;, sc)
@@ -255,7 +255,7 @@ from zoo.pipeline.api.keras.models import *
 from zoo.pipeline.api.net import *
 from bigdl.optim.optimizer import *
 
-sc = init_nncontext(create_spark_conf().setAppName(&quot;train keras&quot;))
+sc = init_nncontext(&quot;train keras&quot;)
 img_path=&quot;/tmp/image&quot;
 image_set = ImageSet.read(img_path,sc, min_partitions=1)
 transformer = ChainedPreprocessing(
@@ -362,7 +362,7 @@ from zoo.pipeline.api.keras.models import *
 from zoo.pipeline.api.net import *
 from bigdl.optim.optimizer import *
 
-sc = init_nncontext(create_spark_conf().setAppName(&quot;train keras&quot;))
+sc = init_nncontext(&quot;train keras&quot;)
 img_path=&quot;/tmp/image&quot;
 image_set = ImageSet.read(img_path,sc, min_partitions=1)
 transformer = ChainedPreprocessing(
