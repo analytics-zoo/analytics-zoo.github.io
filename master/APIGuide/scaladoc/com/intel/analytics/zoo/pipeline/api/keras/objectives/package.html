@@ -88,7 +88,108 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.LossFunction" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+              <ol><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.BinaryCrossEntropy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="BinaryCrossEntropy[T]extendsTensorLossFunction[T]"></a>
+      <a id="BinaryCrossEntropy[T]:BinaryCrossEntropy[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="BinaryCrossEntropy.html"><span class="name">BinaryCrossEntropy</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="TensorLossFunction.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.TensorLossFunction">TensorLossFunction</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.BinaryCrossEntropy.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@BinaryCrossEntropy[T]extendsTensorLossFunction[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This loss function measures the Binary Cross Entropy between the target and the output
+        loss(o, t) = - 1/n sum_i (t[i] * log(o[i]) + (1 - t[i]) * log(1 - o[i]))
+or in the case of the weights argument being specified:
+        loss(o, t) = - 1/n sum_i weights[i] * (t[i] * log(o[i]) + (1 - t[i]) * log(1 - o[i]))
+</p>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.CategoricalCrossEntropy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="CategoricalCrossEntropy[T]extendsTensorLossFunction[T]"></a>
+      <a id="CategoricalCrossEntropy[T]:CategoricalCrossEntropy[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="CategoricalCrossEntropy.html"><span class="name">CategoricalCrossEntropy</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="TensorLossFunction.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.TensorLossFunction">TensorLossFunction</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.CategoricalCrossEntropy.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@CategoricalCrossEntropy[T]extendsTensorLossFunction[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This is same with cross entropy criterion
+except the target tensor is a one-hot tensor
+</p>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.CosineProximity" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="CosineProximity[T]extendsTensorLossFunction[T]"></a>
+      <a id="CosineProximity[T]:CosineProximity[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="CosineProximity.html"><span class="name">CosineProximity</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="TensorLossFunction.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.TensorLossFunction">TensorLossFunction</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.CosineProximity.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@CosineProximity[T]extendsTensorLossFunction[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The negative of the mean cosine proximity between predictions and targets.</p><div class="fullcomment"><div class="comment cmt"><p>The negative of the mean cosine proximity between predictions and targets.
+The cosine proximity is defined as below:
+x'(i) = x(i) / sqrt(max(sum(x(i)<sup>2), 1e-12))
+y'(i) = y(i) / sqrt(max(sum(x(i)</sup>2), 1e-12))
+cosine_proximity(x, y) = mean(-1 * x'(i) * y'(i))
+</p></div></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.Hinge" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Hinge[T]extendsTensorLossFunction[T]"></a>
+      <a id="Hinge[T]:Hinge[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Hinge.html"><span class="name">Hinge</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="TensorLossFunction.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.TensorLossFunction">TensorLossFunction</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.Hinge.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@Hinge[T]extendsTensorLossFunction[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Creates a criterion that optimizes a two-class classification
+hinge loss (margin-based loss) between input x (a Tensor of dimension 1) and output y.</p>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.KullbackLeiblerDivergence" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="KullbackLeiblerDivergence[T]extendsTensorLossFunction[T]"></a>
+      <a id="KullbackLeiblerDivergence[T]:KullbackLeiblerDivergence[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="KullbackLeiblerDivergence.html"><span class="name">KullbackLeiblerDivergence</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="TensorLossFunction.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.TensorLossFunction">TensorLossFunction</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.KullbackLeiblerDivergence.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@KullbackLeiblerDivergence[T]extendsTensorLossFunction[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Loss calculated as:
+y_true = K.clip(y_true, K.epsilon(), 1)
+y_pred = K.clip(y_pred, K.epsilon(), 1)
+and output K.sum(y_true * K.log(y_true / y_pred), axis=-1)
+</p>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.LossFunction" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
       <a id="LossFunction[A&lt;:com.intel.analytics.bigdl.nn.abstractnn.Activity,B&lt;:com.intel.analytics.bigdl.nn.abstractnn.Activity,T]extendsAbstractCriterion[A,B,T]"></a>
       <a id="LossFunction[A&lt;:Activity,B&lt;:Activity,T]:LossFunction[A,B,T]"></a>
       <h4 class="signature">
@@ -105,7 +206,7 @@
       </a>
     </span>
       <p class="shortcomment cmt">The base class for Keras-style API objectives in Analytics Zoo.</p><div class="fullcomment"><div class="comment cmt"><p>The base class for Keras-style API objectives in Analytics Zoo.
-</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>Input data type.</p></dd><dt class="tparam">B</dt><dd class="cmt"><p>Target data type.</p></dd><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter. Only support float/double now.</p></dd></dl></div>
+</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>Input data type.</p></dd><dt class="tparam">B</dt><dd class="cmt"><p>Target data type.</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsoluteError" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="MeanAbsoluteError[T]extendsTensorLossFunction[T]"></a>
       <a id="MeanAbsoluteError[T]:MeanAbsoluteError[T]"></a>
@@ -124,6 +225,85 @@
     </span>
       <p class="shortcomment cmt">A loss that measures the mean absolute value of the element-wise difference
 between the input and the target.</p>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsolutePercentageError" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="MeanAbsolutePercentageError[T]extendsTensorLossFunction[T]"></a>
+      <a id="MeanAbsolutePercentageError[T]:MeanAbsolutePercentageError[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="MeanAbsolutePercentageError.html"><span class="name">MeanAbsolutePercentageError</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="TensorLossFunction.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.TensorLossFunction">TensorLossFunction</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsolutePercentageError.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@MeanAbsolutePercentageError[T]extendsTensorLossFunction[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">It caculates diff = K.abs((y - x) / K.clip(K.abs(y), K.epsilon(), Double.MaxValue))
+and return 100 * K.mean(diff) as outpout
+</p>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredError" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="MeanSquaredError[T]extendsTensorLossFunction[T]"></a>
+      <a id="MeanSquaredError[T]:MeanSquaredError[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="MeanSquaredError.html"><span class="name">MeanSquaredError</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="TensorLossFunction.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.TensorLossFunction">TensorLossFunction</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredError.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@MeanSquaredError[T]extendsTensorLossFunction[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">The mean squared error criterion
+e.g.</p><div class="fullcomment"><div class="comment cmt"><p>The mean squared error criterion
+e.g. input: a, target: b, total elements: n
+loss(a, b) = 1/n \sum |a_i - b_i|^2</p></div></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredLogarithmicError" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="MeanSquaredLogarithmicError[T]extendsTensorLossFunction[T]"></a>
+      <a id="MeanSquaredLogarithmicError[T]:MeanSquaredLogarithmicError[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="MeanSquaredLogarithmicError.html"><span class="name">MeanSquaredLogarithmicError</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="TensorLossFunction.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.TensorLossFunction">TensorLossFunction</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredLogarithmicError.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@MeanSquaredLogarithmicError[T]extendsTensorLossFunction[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">It calculates:
+first_log = K.log(K.clip(y, K.epsilon(), Double.MaxValue) + 1.)
+second_log = K.log(K.clip(x, K.epsilon(), Double.MaxValue) + 1.)
+and output K.mean(K.square(first_log - second_log))
+</p>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.Poisson" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Poisson[T]extendsTensorLossFunction[T]"></a>
+      <a id="Poisson[T]:Poisson[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Poisson.html"><span class="name">Poisson</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="TensorLossFunction.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.TensorLossFunction">TensorLossFunction</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.Poisson.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@Poisson[T]extendsTensorLossFunction[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Loss calculated as:
+K.mean(y_pred - y_true * K.log(y_pred + K.epsilon()), axis=-1)
+</p>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.SparseCategoricalCrossEntropy" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="SparseCategoricalCrossEntropy[T]extendsTensorLossFunction[T]"></a>
       <a id="SparseCategoricalCrossEntropy[T]:SparseCategoricalCrossEntropy[T]"></a>
@@ -142,10 +322,28 @@ between the input and the target.</p>
     </span>
       <p class="shortcomment cmt">A loss often used in multi-class classification problems with SoftMax
 as the last layer of the neural network.</p><div class="fullcomment"><div class="comment cmt"><p>A loss often used in multi-class classification problems with SoftMax
-as the last layer of the neural network.</p><p>By default, same as Keras, input(y_pred) is supposed to be probabilities of each class,
+as the last layer of the neural network.</p><p>By default, input(y_pred) is supposed to be probabilities of each class,
 and target(y_true) is supposed to be the class label starting from 0.
 </p></div></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.TensorLossFunction" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.SquaredHinge" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SquaredHinge[T]extendsTensorLossFunction[T]"></a>
+      <a id="SquaredHinge[T]:SquaredHinge[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="SquaredHinge.html"><span class="name">SquaredHinge</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="TensorLossFunction.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.TensorLossFunction">TensorLossFunction</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.SquaredHinge.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@SquaredHinge[T]extendsTensorLossFunction[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Creates a criterion that optimizes a  two-class classification
+squared hinge loss (margin-based loss) between input x (a Tensor of dimension 1) and output y.</p>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.TensorLossFunction" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="TensorLossFunction[T]extendsLossFunction[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]"></a>
       <a id="TensorLossFunction[T]:TensorLossFunction[T]"></a>
       <h4 class="signature">
@@ -161,8 +359,7 @@ and target(y_true) is supposed to be the class label starting from 0.
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">A subclass of LossFunction where input and target are both Tensors.</p><div class="fullcomment"><div class="comment cmt"><p>A subclass of LossFunction where input and target are both Tensors.
-</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter. Only support float/double now.</p></dd></dl></div>
+      <p class="shortcomment cmt">A subclass of LossFunction where input and target are both Tensors.</p>
     </li></ol>
             </div>
 
@@ -170,7 +367,92 @@ and target(y_true) is supposed to be the class label starting from 0.
 
         <div id="values" class="values members">
               <h3>Value Members</h3>
-              <ol><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives#MAE" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.BinaryCrossEntropy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="BinaryCrossEntropy"></a>
+      <a id="BinaryCrossEntropy:BinaryCrossEntropy"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="BinaryCrossEntropy$.html"><span class="name">BinaryCrossEntropy</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@BinaryCrossEntropy" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.CategoricalCrossEntropy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="CategoricalCrossEntropy"></a>
+      <a id="CategoricalCrossEntropy:CategoricalCrossEntropy"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="CategoricalCrossEntropy$.html"><span class="name">CategoricalCrossEntropy</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@CategoricalCrossEntropy" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.CosineProximity" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="CosineProximity"></a>
+      <a id="CosineProximity:CosineProximity"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="CosineProximity$.html"><span class="name">CosineProximity</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@CosineProximity" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.Hinge" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Hinge"></a>
+      <a id="Hinge:Hinge"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Hinge$.html"><span class="name">Hinge</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@Hinge" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.KullbackLeiblerDivergence" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="KullbackLeiblerDivergence"></a>
+      <a id="KullbackLeiblerDivergence:KullbackLeiblerDivergence"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="KullbackLeiblerDivergence$.html"><span class="name">KullbackLeiblerDivergence</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@KullbackLeiblerDivergence" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives#MAE" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="MAE:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsoluteError.type"></a>
       <a id="MAE:MeanAbsoluteError.type"></a>
       <h4 class="signature">
@@ -183,6 +465,57 @@ and target(y_true) is supposed to be the class label starting from 0.
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@MAE:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsoluteError.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives#MAPE" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="MAPE:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsolutePercentageError.type"></a>
+      <a id="MAPE:MeanAbsolutePercentageError.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">MAPE</span><span class="result">: <a href="MeanAbsolutePercentageError$.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsolutePercentageError">MeanAbsolutePercentageError</a>.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@MAPE:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsolutePercentageError.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives#MSE" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="MSE:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredError.type"></a>
+      <a id="MSE:MeanSquaredError.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">MSE</span><span class="result">: <a href="MeanSquaredError$.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredError">MeanSquaredError</a>.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@MSE:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredError.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives#MSLE" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="MSLE:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredLogarithmicError.type"></a>
+      <a id="MSLE:MeanSquaredLogarithmicError.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">MSLE</span><span class="result">: <a href="MeanSquaredLogarithmicError$.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredLogarithmicError">MeanSquaredLogarithmicError</a>.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@MSLE:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredLogarithmicError.type" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -204,6 +537,74 @@ and target(y_true) is supposed to be the class label starting from 0.
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsolutePercentageError" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="MeanAbsolutePercentageError"></a>
+      <a id="MeanAbsolutePercentageError:MeanAbsolutePercentageError"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="MeanAbsolutePercentageError$.html"><span class="name">MeanAbsolutePercentageError</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@MeanAbsolutePercentageError" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredError" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="MeanSquaredError"></a>
+      <a id="MeanSquaredError:MeanSquaredError"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="MeanSquaredError$.html"><span class="name">MeanSquaredError</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@MeanSquaredError" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredLogarithmicError" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="MeanSquaredLogarithmicError"></a>
+      <a id="MeanSquaredLogarithmicError:MeanSquaredLogarithmicError"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="MeanSquaredLogarithmicError$.html"><span class="name">MeanSquaredLogarithmicError</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@MeanSquaredLogarithmicError" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.Poisson" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Poisson"></a>
+      <a id="Poisson:Poisson"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Poisson$.html"><span class="name">Poisson</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@Poisson" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.SparseCategoricalCrossEntropy" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="SparseCategoricalCrossEntropy"></a>
       <a id="SparseCategoricalCrossEntropy:SparseCategoricalCrossEntropy"></a>
@@ -221,6 +622,23 @@ and target(y_true) is supposed to be the class label starting from 0.
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives.SquaredHinge" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SquaredHinge"></a>
+      <a id="SquaredHinge:SquaredHinge"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="SquaredHinge$.html"><span class="name">SquaredHinge</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@SquaredHinge" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives#mae" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="mae:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsoluteError.type"></a>
       <a id="mae:MeanAbsoluteError.type"></a>
@@ -234,6 +652,57 @@ and target(y_true) is supposed to be the class label starting from 0.
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@mae:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsoluteError.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives#mape" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="mape:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsolutePercentageError.type"></a>
+      <a id="mape:MeanAbsolutePercentageError.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">mape</span><span class="result">: <a href="MeanAbsolutePercentageError$.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsolutePercentageError">MeanAbsolutePercentageError</a>.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@mape:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanAbsolutePercentageError.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives#mse" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="mse:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredError.type"></a>
+      <a id="mse:MeanSquaredError.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">mse</span><span class="result">: <a href="MeanSquaredError$.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredError">MeanSquaredError</a>.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@mse:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredError.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.objectives#msle" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="msle:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredLogarithmicError.type"></a>
+      <a id="msle:MeanSquaredLogarithmicError.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">msle</span><span class="result">: <a href="MeanSquaredLogarithmicError$.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredLogarithmicError">MeanSquaredLogarithmicError</a>.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.objectives.package@msle:com.intel.analytics.zoo.pipeline.api.keras.objectives.MeanSquaredLogarithmicError.type" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
