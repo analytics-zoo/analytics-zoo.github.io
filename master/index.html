@@ -39,7 +39,7 @@
               {title: "What is Analytics Zoo?", url: "#what-is-analytics-zoo" },
               {title: "How to use Analytics Zoo?", url: "#how-to-use-analytics-zoo" },
               {title: "Overview", url: "#overview" },
-              {title: "Distributed Tensoflow and Keras on Spark/BigDL", url: "#distributed-tensoflow-and-keras-on-sparkbigdl" },
+              {title: "Distributed Tensorflow and Keras on Spark/BigDL", url: "#distributed-tensorflow-and-keras-on-sparkbigdl" },
               {title: "High level abstractions and APIs", url: "#high-level-abstractions-and-apis" },
               {title: "Built-in deep learning models", url: "#built-in-deep-learning-models" },
               {title: "Reference use cases", url: "#reference-use-cases" },
@@ -188,6 +188,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
       <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/inference/" class="wm-article-link wm-toc-text">Model Serving</a>
 </li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/tensorflow/" class="wm-article-link wm-toc-text">Distributed Tensoflow on Spark/BigDL</a>
+</li>
   </ul>
 </li>
 
@@ -305,7 +307,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1><strong>Overview</strong></h1>
     <hr>
     <h1 id="analytics-zoo"><font size="6">Analytics Zoo</font></h1>
-<p><em>A unified analytics + AI platform for <strong>distribtued TensoFlow, Keras and BigDL on Apache Spark</strong></em></p>
+<p><em>A unified analytics + AI platform for <strong>distributed TensorFlow, Keras and BigDL on Apache Spark</strong></em></p>
 <hr />
 <h2 id="what-is-analytics-zoo">What is Analytics Zoo?</h2>
 <p><strong>Analytics Zoo</strong> provides a unified analytics + AI platform that seamlessly unites <em><strong>Spark, TensorFlow, Keras and BigDL</strong></em> programs into an integrated pipeline; the entire pipeline can then transparently scale out to a large Hadoop/Spark cluster for distributed training or inference. </p>
@@ -317,7 +319,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 <p>In addition, Analytics Zoo also provides a rich set of analytics and AI support for the end-to-end pipeline, including:</p>
 <ul>
-<li><em>Easy-to-use abstractions and APIs</em> (e.g., transfer learning support, autograd operations, Spark Dataframe and ML pipeline support, online model serving API, etc.) </li>
+<li><em>Easy-to-use abstractions and APIs</em> (e.g., transfer learning support, autograd operations, Spark DataFrame and ML pipeline support, online model serving API, etc.) </li>
 <li><em>Common feature engineering operations</em> (for image, text, 3D image, etc.)</li>
 <li><em>Built-in deep learning models</em> (e.g., object detection, image classification, text classification, recommendation, etc.) </li>
 <li><em>Reference use cases</em> (e.g., anomaly detection, sentiment analysis, fraud detection, image similarity, etc.)</li>
@@ -328,10 +330,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>To get started, please refer to the <a href="https://analytics-zoo.github.io/master/#PythonUserGuide/install/">Python install guide</a> or <a href="https://analytics-zoo.github.io/master/#ScalaUserGuide/install/">Scala install guide</a>.</p>
 </li>
 <li>
-<p>For running distributed TensorFlow on Spark and BigDL, please refer to the quick start <a href="#distributed-tensoflow-and-keras-on-sparkbigdl">here</a> and more examples <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/tfnet">here</a>.</p>
+<p>For running distributed TensorFlow on Spark and BigDL, please refer to the quick start <a href="#distributed-tensorflow-and-keras-on-sparkbigdl">here</a> and more examples <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/tfnet">here</a>.</p>
 </li>
 <li>
-<p>For more information, You may refer to the <a href="https://analytics-zoo.github.io/">Analytis Zoo document website</a>.</p>
+<p>For more information, You may refer to the <a href="https://analytics-zoo.github.io/">Analytics Zoo document website</a>.</p>
 </li>
 <li>
 <p>For additional questions and discussions, you can join the <a href="https://groups.google.com/forum/#!forum/bigdl-user-group">Google User Group</a> (or subscribe to the <a href="mailto:bigdl-user-group+subscribe@googlegroups.com">Mail List</a>).</p>
@@ -341,7 +343,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h2 id="overview">Overview</h2>
 <ul>
 <li>
-<p><a href="#distributed-tensoflow-and-keras-on-sparkbigdl">Distributed Tensoflow and Keras on Spark/BigDL</a></p>
+<p><a href="#distributed-tensorflow-and-keras-on-sparkbigdl">Distributed Tensorflow and Keras on Spark/BigDL</a></p>
 <ul>
 <li>Data wrangling and analysis using PySpark</li>
 <li>Deep learning model development using TensorFlow or Keras</li>
@@ -371,8 +373,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><a href="#reference-use-cases">Reference use cases</a>: a collection of end-to-end <em>reference use cases</em> (e.g., anomaly detection, sentiment analysis, fraud detection, image augmentation, object detection, variational autoencoder, etc.)</p>
 </li>
 </ul>
-<h2 id="distributed-tensoflow-and-keras-on-sparkbigdl"><em>Distributed Tensoflow and Keras on Spark/BigDL</em></h2>
-<p>To make it easy to build and productionize the deep learning applications for Big Data, Analytics Zoo provides a unified analytics + AI platform that seamlessly unites Spark, TensorFlow, Keras and BigDL programs into an integrated pipeline (as illustrated below), which can then transparently run on a large-scale Hadoop/Spark clusters for distributed training and inference. (Please see more examples <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/tfnet">here</a>).</p>
+<h2 id="distributed-tensorflow-and-keras-on-sparkbigdl"><em>Distributed Tensorflow and Keras on Spark/BigDL</em></h2>
+<p>To make it easy to build and productionize the deep learning applications for Big Data, Analytics Zoo provides a unified analytics + AI platform that seamlessly unites Spark, TensorFlow, Keras and BigDL programs into an integrated pipeline (as illustrated below), which can then transparently run on a large-scale Hadoop/Spark clusters for distributed training and inference. (Please see more examples <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/tensorflow/distributed_training/">here</a>).</p>
 <p>1.Data wrangling and analysis using PySpark</p>
 <pre><code class="python">   from zoo import init_nncontext
    from zoo.pipeline.api.net import TFDataset
@@ -415,7 +417,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
    optimizer.optimize(end_trigger=MaxEpoch(5))
 </code></pre>
 
-<p>4.Alternatively, using Keras APIs for model development and distribtued training</p>
+<p>4.Alternatively, using Keras APIs for model development and distributed training</p>
 <pre><code class="python">   from zoo.pipeline.api.keras.models import *
    from zoo.pipeline.api.keras.layers import *
 
@@ -583,5 +585,5 @@ List&lt;List&lt;JTensor&gt;&gt; result = model.predict(inputs);
 </html>
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2018-09-13 03:28:07
+Build Date UTC : 2018-09-13 17:28:58
 -->

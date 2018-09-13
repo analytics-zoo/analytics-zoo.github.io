@@ -44,6 +44,12 @@
               {title: "Export tensorflow model to frozen inference graph", url: "#export-tensorflow-model-to-frozen-inference-graph" },
               {title: "Creating a TFNet", url: "#creating-a-tfnet" },
           ]},
+          {title: "TFDataset", url: "#tfdataset", children: [
+          ]},
+          {title: "TFOptimizer", url: "#tfoptimizer", children: [
+          ]},
+          {title: "TFPredictor", url: "#tfpredictor", children: [
+          ]},
         ];
 
     </script>
@@ -222,8 +228,40 @@ export_tf(sess, &quot;/tmp/models/tfnet&quot;, inputs=[images], outputs=[logits]
 <pre><code class="python">m = TFNet.from_export_folder(&quot;/tmp/models/tfnet&quot;)
 </code></pre>
 
-<p>Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/tfnet">TFNet Object Detection Example</a> and
+<p>Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/tensorflow/tfnet">TFNet Object Detection Example</a> and
 the <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/tfnet">Image Classification Using TFNet Notebook</a> for more information.</p>
+<h2 id="tfdataset">TFDataset</h2>
+<p>TFDatset represents a distributed collection of elements to be feed into Tensorflow graph.
+TFDatasets can be created using a RDD and each of its records is a list of numpy.ndarray representing
+the tensors to be feed into tensorflow graph on each iteration. TFDatasets must be used with the
+TFOptimizer or TFPredictor.</p>
+<p><strong>Python</strong></p>
+<pre><code class="python">   dataset = TFDataset.from_rdd(train_rdd,
+                                 names=[&quot;features&quot;, &quot;labels&quot;],
+                                 shapes=[[28, 28, 1], [1]],
+                                 types=[tf.float32, tf.int32],
+                                 batch_size=BATCH_SIZE)
+</code></pre>
+
+<h2 id="tfoptimizer">TFOptimizer</h2>
+<p>TFOptimizer is the class that does all the hard work in distributed training, such as model
+distribution and parameter synchronization. It takes the <strong>loss</strong> (a scalar tensor) as input and runs
+stochastic gradient descent using the given <strong>optimMethod</strong> on all the <strong>Variables</strong> that contributing
+to this loss.</p>
+<p><strong>Python</strong></p>
+<pre><code class="python">optimizer = TFOptimizer(loss, Adam(1e-3))
+optimizer.set_train_summary(TrainSummary(&quot;/tmp/az_lenet&quot;, &quot;lenet&quot;))
+optimizer.optimize(end_trigger=MaxEpoch(5))
+</code></pre>
+
+<h2 id="tfpredictor">TFPredictor</h2>
+<p>TFPredictor takes a list of tensorflow tensors as the model outputs and feed all the elements in
+ TFDatasets to produce those outputs and returns a Spark RDD with each of its elements representing the
+ model prediction for the corresponding input elements.</p>
+<p><strong>Python</strong></p>
+<pre><code class="python">predictor = TFPredictor(sess, [logits])
+predictions_rdd = predictor.predict()
+</code></pre>
 
   <br>
 </div>
