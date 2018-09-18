@@ -37,6 +37,7 @@
               {title: "CustomLoss", url: "#customloss" },
               {title: "Lambda layer", url: "#lambda-layer" },
               {title: "Construct variable computation without Lambda layer", url: "#construct-variable-computation-without-lambda-layer" },
+              {title: "Define a model using trainable Parameter", url: "#define-a-model-using-trainable-parameter" },
           ]},
         ];
 
@@ -155,6 +156,32 @@ val model = Model[Float](input = Array(input1, input2), output = diff)
 val inputValue = Tensor[Float](1, 3).randn()
 // In scala, we use Table for multiple inputs. `T` is a short-cut for creating a Table.
 val out = model.forward(T(inputValue, inputValue)).toTensor[Float]
+</code></pre>
+
+<h3 id="define-a-model-using-trainable-parameter">Define a model using trainable Parameter</h3>
+<p>Build a <code>Linear</code> Model (Wx + b) by using trainable <code>Parameter</code> which is equivalent to use <code>Dense</code> layer.
+* Scala</p>
+<pre><code>import com.intel.analytics.zoo.pipeline.api.autograd.{AutoGrad, Parameter, Variable}
+import com.intel.analytics.zoo.pipeline.api.keras.models.Model
+val input = Variable[Float](Shape(3))
+val w = Parameter[Float](Shape(2, 3)) // outputSize * inputSize
+val bias = Parameter[Float](Shape(2))
+val cDense = AutoGrad.mm(input, w, axes = List(1, 1)) + bias
+val model = Model[Float](input = input, output = cDense)
+
+</code></pre>
+
+<ul>
+<li>Python</li>
+</ul>
+<pre><code>from zoo.pipeline.api.autograd import *
+from zoo.pipeline.api.keras.models import *
+input = Variable((3,))
+w = Parameter((2, 3)) # outputSize * inputSize
+bias = Parameter((2,))
+cDense = mm(input, w, axes = (1, 1)) + bias
+model = Model(input = input, output = cDense)
+
 </code></pre>
 
   <br>
