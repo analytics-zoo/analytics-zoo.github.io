@@ -365,7 +365,11 @@
 </p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>Directory to the input data files, the path can be comma separated paths as the
             list of inputs. Wildcards path are supported similarly to sc.binaryFiles(path).</p></dd><dt class="param">sc</dt><dd class="cmt"><p>SparkContext to be used.</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>Number of the DataFrame partitions,
                      if omitted uses defaultParallelism instead</p></dd><dt class="param">resizeH</dt><dd class="cmt"><p>height after resize, by default is -1 which will not resize the image</p></dd><dt class="param">resizeW</dt><dd class="cmt"><p>width after resize, by default is -1 which will not resize the image</p></dd><dt class="param">imageCodec</dt><dd class="cmt"><p>specifying the color type of a loaded image, same as in OpenCV.imread.
-             By default is Imgcodecs.CV_LOAD_IMAGE_UNCHANGED</p></dd><dt>returns</dt><dd class="cmt"><p>DataFrame with a single column &quot;image&quot; of images;
+             By default is Imgcodecs.CV_LOAD_IMAGE_UNCHANGED.
+             &gt;0 Return a 3-channel color image. Note In the current implementation the
+                alpha channel, if any, is stripped from the output image. Use negative value
+                 if you need the alpha channel.</p><h3>0 Return a grayscale image.
+             &lt;0 Return the loaded image as is (with alpha channel if any).</h3></dd><dt>returns</dt><dd class="cmt"><p>DataFrame with a single column &quot;image&quot; of images;
         see DLImageSchema.byteSchema for the details</p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
