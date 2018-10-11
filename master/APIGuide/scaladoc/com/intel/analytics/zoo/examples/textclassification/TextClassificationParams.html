@@ -45,7 +45,7 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">TextClassificationParams</span><span class="params">(<span name="baseDir">baseDir: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="tokenLength">tokenLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">200</span></span>, <span name="sequenceLength">sequenceLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">500</span></span>, <span name="encoder">encoder: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;cnn&quot;</span></span>, <span name="encoderOutputDim">encoderOutputDim: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">256</span></span>, <span name="maxWordsNum">maxWordsNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">5000</span></span>, <span name="trainingSplit">trainingSplit: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.8</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">128</span></span>, <span name="nbEpoch">nbEpoch: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">20</span></span>, <span name="learningRate">learningRate: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.01</span></span>, <span name="partitionNum">partitionNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">4</span></span>, <span name="model">model: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">TextClassificationParams</span><span class="params">(<span name="dataPath">dataPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="embeddingPath">embeddingPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="classNum">classNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">20</span></span>, <span name="tokenLength">tokenLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">200</span></span>, <span name="sequenceLength">sequenceLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">500</span></span>, <span name="encoder">encoder: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;cnn&quot;</span></span>, <span name="encoderOutputDim">encoderOutputDim: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">256</span></span>, <span name="maxWordsNum">maxWordsNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">5000</span></span>, <span name="trainingSplit">trainingSplit: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.8</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">128</span></span>, <span name="nbEpoch">nbEpoch: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">20</span></span>, <span name="learningRate">learningRate: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.01</span></span>, <span name="partitionNum">partitionNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">4</span></span>, <span name="model">model: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
@@ -89,7 +89,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.intel.analytics.zoo.examples.textclassification.TextClassificationParams#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(baseDir:String,tokenLength:Int,sequenceLength:Int,encoder:String,encoderOutputDim:Int,maxWordsNum:Int,trainingSplit:Double,batchSize:Int,nbEpoch:Int,learningRate:Double,partitionNum:Int,model:Option[String]):com.intel.analytics.zoo.examples.textclassification.TextClassificationParams"></a>
+      <a id="&lt;init&gt;(dataPath:String,embeddingPath:String,classNum:Int,tokenLength:Int,sequenceLength:Int,encoder:String,encoderOutputDim:Int,maxWordsNum:Int,trainingSplit:Double,batchSize:Int,nbEpoch:Int,learningRate:Double,partitionNum:Int,model:Option[String]):com.intel.analytics.zoo.examples.textclassification.TextClassificationParams"></a>
       <a id="&lt;init&gt;:TextClassificationParams"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -97,10 +97,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">TextClassificationParams</span><span class="params">(<span name="baseDir">baseDir: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="tokenLength">tokenLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">200</span></span>, <span name="sequenceLength">sequenceLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">500</span></span>, <span name="encoder">encoder: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;cnn&quot;</span></span>, <span name="encoderOutputDim">encoderOutputDim: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">256</span></span>, <span name="maxWordsNum">maxWordsNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">5000</span></span>, <span name="trainingSplit">trainingSplit: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.8</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">128</span></span>, <span name="nbEpoch">nbEpoch: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">20</span></span>, <span name="learningRate">learningRate: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.01</span></span>, <span name="partitionNum">partitionNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">4</span></span>, <span name="model">model: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span>
+        <span class="name">TextClassificationParams</span><span class="params">(<span name="dataPath">dataPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="embeddingPath">embeddingPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="classNum">classNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">20</span></span>, <span name="tokenLength">tokenLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">200</span></span>, <span name="sequenceLength">sequenceLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">500</span></span>, <span name="encoder">encoder: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;cnn&quot;</span></span>, <span name="encoderOutputDim">encoderOutputDim: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">256</span></span>, <span name="maxWordsNum">maxWordsNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">5000</span></span>, <span name="trainingSplit">trainingSplit: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.8</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">128</span></span>, <span name="nbEpoch">nbEpoch: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">20</span></span>, <span name="learningRate">learningRate: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.01</span></span>, <span name="partitionNum">partitionNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">4</span></span>, <span name="model">model: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol">None</span></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.examples.textclassification.TextClassificationParams@&lt;init&gt;(baseDir:String,tokenLength:Int,sequenceLength:Int,encoder:String,encoderOutputDim:Int,maxWordsNum:Int,trainingSplit:Double,batchSize:Int,nbEpoch:Int,learningRate:Double,partitionNum:Int,model:Option[String]):com.intel.analytics.zoo.examples.textclassification.TextClassificationParams" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.examples.textclassification.TextClassificationParams@&lt;init&gt;(dataPath:String,embeddingPath:String,classNum:Int,tokenLength:Int,sequenceLength:Int,encoder:String,encoderOutputDim:Int,maxWordsNum:Int,trainingSplit:Double,batchSize:Int,nbEpoch:Int,learningRate:Double,partitionNum:Int,model:Option[String]):com.intel.analytics.zoo.examples.textclassification.TextClassificationParams" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -182,23 +182,6 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.examples.textclassification.TextClassificationParams#baseDir" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="baseDir:String"></a>
-      <a id="baseDir:String"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">baseDir</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.examples.textclassification.TextClassificationParams@baseDir:String" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="com.intel.analytics.zoo.examples.textclassification.TextClassificationParams#batchSize" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="batchSize:Int"></a>
       <a id="batchSize:Int"></a>
@@ -212,6 +195,23 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.examples.textclassification.TextClassificationParams@batchSize:Int" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.examples.textclassification.TextClassificationParams#classNum" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="classNum:Int"></a>
+      <a id="classNum:Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">classNum</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.examples.textclassification.TextClassificationParams@classNum:Int" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -239,6 +239,40 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.examples.textclassification.TextClassificationParams#dataPath" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="dataPath:String"></a>
+      <a id="dataPath:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">dataPath</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.examples.textclassification.TextClassificationParams@dataPath:String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.examples.textclassification.TextClassificationParams#embeddingPath" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="embeddingPath:String"></a>
+      <a id="embeddingPath:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">embeddingPath</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.examples.textclassification.TextClassificationParams@embeddingPath:String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="com.intel.analytics.zoo.examples.textclassification.TextClassificationParams#encoder" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="encoder:String"></a>
       <a id="encoder:String"></a>
