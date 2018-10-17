@@ -35,9 +35,9 @@
         var pageToc = [
           {title: "Build a TextClassifier Model", url: "#build-a-textclassifier-model", children: [
           ]},
-          {title: "Model Save", url: "#model-save", children: [
+          {title: "Save Model", url: "#save-model", children: [
           ]},
-          {title: "Model Load", url: "#model-load", children: [
+          {title: "Load Model", url: "#load-model", children: [
           ]},
         ];
 
@@ -68,33 +68,36 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <p>Analytics Zoo provides pre-defined models having different encoders that can be used for classifying texts.
 The model could be fed into NNFrames or BigDL Optimizer directly for training.</p>
 <hr />
-<h2 id="build-a-textclassifier-model">Build a TextClassifier Model</h2>
+<h2 id="build-a-textclassifier-model"><strong>Build a TextClassifier Model</strong></h2>
+<p>You can call the following API in Scala and Python respectively to create a <code>TextClassifier</code> with <em>pre-trained GloVe word embeddings as the first layer</em>.</p>
 <p><strong>Scala</strong></p>
-<pre><code class="scala">val textClassifier = TextClassifier(classNum, tokenLength, sequenceLength = 500, encoder = &quot;cnn&quot;, encoderOutputDim = 256)
+<pre><code class="scala">val textClassifier = TextClassifier(classNum, embeddingFile, wordIndex = null, sequenceLength = 500, encoder = &quot;cnn&quot;, encoderOutputDim = 256)
 </code></pre>
 
 <ul>
 <li><code>classNum</code>: The number of text categories to be classified. Positive integer.</li>
-<li><code>tokenLength</code>: The size of each word vector. Positive integer.</li>
+<li><code>embeddingFile</code> The path to the word embedding file. Currently only <em>glove.6B.50d.txt, glove.6B.100d.txt, glove.6B.200d.txt, glove.6B.300d.txt, glove.42B.300d.txt, glove.840B.300d.txt</em> are supported. You can download from <a href="https://nlp.stanford.edu/projects/glove/">here</a>.</li>
+<li><code>wordIndex</code> Map of word (String) and its corresponding index (integer). The index is supposed to <strong>start from 1</strong> with 0 reserved for unknown words. During the prediction, if you have words that are not in the wordIndex for the training, you can map them to index 0. Default is null. In this case, all the words in the embeddingFile will be taken into account and you can call <code>WordEmbedding.getWordIndex(embeddingFile)</code> to retrieve the map.</li>
 <li><code>sequenceLength</code>: The length of a sequence. Positive integer. Default is 500.</li>
 <li><code>encoder</code>: The encoder for input sequences. String. "cnn" or "lstm" or "gru" are supported. Default is "cnn".</li>
 <li><code>encoderOutputDim</code>: The output dimension for the encoder. Positive integer. Default is 256.</li>
 </ul>
 <p>See <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/textclassification">here</a> for the Scala example that trains the TextClassifier model on 20 Newsgroup dataset and uses the model to do prediction.</p>
 <p><strong>Python</strong></p>
-<pre><code class="python">text_classifier = TextClassifier(class_num, token_length, sequence_length=500, encoder=&quot;cnn&quot;, encoder_output_dim=256)
+<pre><code class="python">text_classifier = TextClassifier(class_num, embedding_file, word_index=None, sequence_length=500, encoder=&quot;cnn&quot;, encoder_output_dim=256)
 </code></pre>
 
 <ul>
 <li><code>class_num</code>: The number of text categories to be classified. Positive int.</li>
-<li><code>token_length</code>: The size of each word vector. Positive int.</li>
+<li><code>embedding_file</code> The path to the word embedding file. Currently only <em>glove.6B.50d.txt, glove.6B.100d.txt, glove.6B.200d.txt, glove.6B.300d.txt, glove.42B.300d.txt, glove.840B.300d.txt</em> are supported. You can download from <a href="https://nlp.stanford.edu/projects/glove/">here</a>.</li>
+<li><code>word_index</code> Dictionary of word (string) and its corresponding index (int). The index is supposed to <strong>start from 1</strong> with 0 reserved for unknown words. During the prediction, if you have words that are not in the wordIndex for the training, you can map them to index 0. Default is None. In this case, all the words in the embedding_file will be taken into account and you can call <code>WordEmbedding.get_word_index(embedding_file)</code> to retrieve the map.</li>
 <li><code>sequence_length</code>: The length of a sequence. Positive int. Default is 500.</li>
 <li><code>encoder</code>: The encoder for input sequences. String. 'cnn' or 'lstm' or 'gru' are supported. Default is 'cnn'.</li>
 <li><code>encoder_output_dim</code>: The output dimension for the encoder. Positive int. Default is 256.</li>
 </ul>
 <p>See <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/textclassification">here</a> for the Python example that trains the TextClassifier model on 20 Newsgroup dataset and uses the model to do prediction.</p>
 <hr />
-<h2 id="model-save">Model Save</h2>
+<h2 id="save-model"><strong>Save Model</strong></h2>
 <p>After building and training a TextClassifier model, you can save it for future use.</p>
 <p><strong>Scala</strong></p>
 <pre><code class="scala">textClassifier.saveModel(path, weightPath = null, overWrite = false)
@@ -115,8 +118,8 @@ The model could be fed into NNFrames or BigDL Optimizer directly for training.</
 <li><code>over_write</code>: Whether to overwrite the file if it already exists. Default is False.</li>
 </ul>
 <hr />
-<h2 id="model-load">Model Load</h2>
-<p>To load a TextClassifier model (with weights) saved <a href="#model-save">above</a>:</p>
+<h2 id="load-model"><strong>Load Model</strong></h2>
+<p>To load a TextClassifier model (with weights) saved <a href="#save-model">above</a>:</p>
 <p><strong>Scala</strong></p>
 <pre><code class="scala">TextClassifier.loadModel[Float](path, weightPath = null)
 </code></pre>
