@@ -37,8 +37,6 @@
           ]},
           {title: "Link with a release version", url: "#link-with-a-release-version", children: [
           ]},
-          {title: "Link with a development version", url: "#link-with-a-development-version", children: [
-          ]},
           {title: "Download Analytics Zoo Source", url: "#download-analytics-zoo-source", children: [
           ]},
           {title: "Setup Build Environment", url: "#setup-build-environment", children: [
@@ -78,37 +76,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <pre><code class="xml">&lt;dependency&gt;
     &lt;groupId&gt;com.intel.analytics.zoo&lt;/groupId&gt;
     &lt;artifactId&gt;analytics-zoo-[bigdl_0.6.0|bigdl_0.5.0]-[spark_1.6.2|spark_2.1.1|spark_2.2.0]&lt;/artifactId&gt;
-    &lt;version&gt;${ANALYTICS_ZOO_VERSION}&lt;/version&gt;
+    &lt;version&gt;0.2.0&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
 
-<p>Please choose the suffix according to your Spark platform.</p>
 <p>SBT developers can use</p>
 <pre><code class="sbt">libraryDependencies += &quot;com.intel.analytics.zoo&quot; % &quot;analytics-zoo-[bigdl_0.6.0|bigdl_0.5.0]-[spark_1.6.2|spark_2.1.1|spark_2.2.0]&quot; % &quot;${ANALYTICS_ZOO_VERSION}&quot;
 </code></pre>
 
-<p>You can find the optional <code>${ANALYTICS_ZOO_VERSION}</code> from the <a href="../../release-download/">Release Page</a>.</p>
+<p>Remarks:</p>
+<ul>
+<li>Please choose the available suffix above according to your Spark platform and the BigDL version you want to use.</li>
+<li>You don't need to add the BigDL dependency to your project as it has already been packaged within Analytics Zoo.</li>
+</ul>
 <hr />
-<h2 id="link-with-a-development-version"><strong>Link with a development version</strong></h2>
-<p>Currently, Analytics Zoo development version is hosted on <a href="https://oss.sonatype.org/content/groups/public/com/intel/analytics/zoo/">SonaType</a>.</p>
-<p>To link your application with the latest Analytics Zoo development version, you should add some dependencies like <a href="#link-with-a-release-version">Linking with Analytics Zoo releases</a>, but set <code>${ANALYTICS_ZOO_VERSION}</code> to <code>0.2.0</code>, and add below repository to your pom.xml.</p>
-<pre><code class="xml">&lt;repository&gt;
-    &lt;id&gt;sonatype&lt;/id&gt;
-    &lt;name&gt;sonatype repository&lt;/name&gt;
-    &lt;url&gt;https://oss.sonatype.org/content/groups/public/&lt;/url&gt;
-    &lt;releases&gt;
-        &lt;enabled&gt;true&lt;/enabled&gt;
-    &lt;/releases&gt;
-    &lt;snapshots&gt;
-        &lt;enabled&gt;true&lt;/enabled&gt;
-    &lt;/snapshots&gt;
-&lt;/repository&gt;
-</code></pre>
-
-<p>SBT developers can use</p>
-<pre><code class="sbt">resolvers += &quot;ossrh repository&quot; at &quot;https://oss.sonatype.org/content/repositories/snapshots/&quot;
-</code></pre>
-
 <h2 id="download-analytics-zoo-source"><strong>Download Analytics Zoo Source</strong></h2>
 <p>Analytics Zoo source code is available at <a href="https://github.com/intel-analytics/analytics-zoo">GitHub</a></p>
 <pre><code class="bash">$ git clone https://github.com/intel-analytics/analytics-zoo.git
