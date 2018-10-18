@@ -37,8 +37,6 @@
           ]},
           {title: "Link with a release version", url: "#link-with-a-release-version", children: [
           ]},
-          {title: "Link with a development version", url: "#link-with-a-development-version", children: [
-          ]},
           {title: "Download Analytics Zoo Source", url: "#download-analytics-zoo-source", children: [
           ]},
           {title: "Setup Build Environment", url: "#setup-build-environment", children: [
@@ -92,26 +90,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>You don't need to add the BigDL dependency to your project as it has already been packaged within Analytics Zoo.</li>
 </ul>
 <hr />
-<h2 id="link-with-a-development-version"><strong>Link with a development version</strong></h2>
-<p>Currently, Analytics Zoo development version is hosted on <a href="https://oss.sonatype.org/content/groups/public/com/intel/analytics/zoo/">SonaType</a>.</p>
-<p>To link your application with the latest Analytics Zoo development version, you should add some dependencies like <a href="#link-with-a-release-version">Linking with Analytics Zoo releases</a>, but set <code>${ANALYTICS_ZOO_VERSION}</code> to <code>0.2.0</code>, and add below repository to your pom.xml.</p>
-<pre><code class="xml">&lt;repository&gt;
-    &lt;id&gt;sonatype&lt;/id&gt;
-    &lt;name&gt;sonatype repository&lt;/name&gt;
-    &lt;url&gt;https://oss.sonatype.org/content/groups/public/&lt;/url&gt;
-    &lt;releases&gt;
-        &lt;enabled&gt;true&lt;/enabled&gt;
-    &lt;/releases&gt;
-    &lt;snapshots&gt;
-        &lt;enabled&gt;true&lt;/enabled&gt;
-    &lt;/snapshots&gt;
-&lt;/repository&gt;
-</code></pre>
-
-<p>SBT developers can use</p>
-<pre><code class="sbt">resolvers += &quot;ossrh repository&quot; at &quot;https://oss.sonatype.org/content/repositories/snapshots/&quot;
-</code></pre>
-
 <h2 id="download-analytics-zoo-source"><strong>Download Analytics Zoo Source</strong></h2>
 <p>Analytics Zoo source code is available at <a href="https://github.com/intel-analytics/analytics-zoo">GitHub</a></p>
 <pre><code class="bash">$ git clone https://github.com/intel-analytics/analytics-zoo.git
