@@ -49,7 +49,8 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Measures top1 accuracy for classification problems.
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Measures top1 accuracy for multi-class classification
+or accuracy for binary classification.
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="com.intel.analytics.bigdl.optim.Top1Accuracy">Top1Accuracy</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.metrics.Accuracy.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.metrics.Accuracy.T">T</span>], <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="scala.AnyRef">AnyRef</span>, <span class="extype" name="scala.Any">Any</span></div>
@@ -106,7 +107,9 @@
       </a>
     </span>
       <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">zeroBasedLabel</dt><dd class="cmt"><p>Boolean. Whether target labels start from 0. Default is true.
-                      If false, labels start from 1.</p></dd></dl></div>
+                      If false, labels start from 1.
+                      Note that this only takes effect for multi-class classification.
+                      For binary classification, labels ought to be 0 or 1.</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -514,7 +517,9 @@
       </a>
     </span>
       <p class="shortcomment cmt">Boolean.</p><div class="fullcomment"><div class="comment cmt"><p>Boolean. Whether target labels start from 0. Default is true.
-                      If false, labels start from 1.</p></div></div>
+                      If false, labels start from 1.
+                      Note that this only takes effect for multi-class classification.
+                      For binary classification, labels ought to be 0 or 1.</p></div></div>
     </li></ol>
             </div>
 
