@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Recommendation API - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Wide and Deep", url: "#wide-and-deep", children: [
+          ]},
+          {title: "Neural network-based Collaborative Filtering", url: "#neural-network-based-collaborative-filtering", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Recommendation API</strong></h1>
+    <hr>
+    <p>Analytics Zoo provides two Recommender models, including Wide and Deep(WND) learning model and Neural network-based Collaborative Filtering (NCF) model. </p>
+<p><strong>Highlights</strong></p>
+<ol>
+<li>Easy-to-use models, could be fed into NNFrames or BigDL Optimizer for training.</li>
+<li>Recommenders can handle either explict or implicit feedback, given corresponding features.</li>
+<li>It provides three user-friendly APIs to predict user item pairs, and recommend items (users) for users (items).</li>
+</ol>
+<p>The examples/notebooks are included in the Analytics Zoo source code.</p>
+<ol>
+<li>Wide and Deep Learning Model.
+    <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/models/recommendation/WideAndDeepExample.scala">Scala example</a>
+    <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation/wide_n_deep.ipynb">Python notebook</a></li>
+<li>NCF.
+    <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/models/recommendation/NeuralCFexample.scala">Scala example</a>
+    <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation/ncf-explicit-feedback.ipynb">Python notebook</a></li>
+</ol>
+<hr />
+<h2 id="wide-and-deep">Wide and Deep</h2>
+<p><strong>Scala</strong></p>
+<p>Build a WND model for recommendation. </p>
+<pre><code class="scala">val wideAndDeep = WideAndDeep(modelType = &quot;wide_n_deep&quot;, numClasses, columnInfo, hiddenLayers = Array(40, 20, 10))
+</code></pre>
+
+<p>Train a WND model using BigDL Optimizer.</p>
+<pre><code class="scala">val optimizer = Optimizer(
+      model = wideAndDeep,
+      sampleRDD = trainRdds,
+      criterion = ClassNLLCriterion[Float](),
+      batchSize = 8000)
+
+optimizer
+      .setOptimMethod(new Adam[Float](learningRate = 1e-2,learningRateDecay = 1e-5))
+      .setEndWhen(Trigger.maxEpoch(10))
+      .optimize()
+</code></pre>
+
+<p>Predict and recommend items(users) for users(items) with given features.</p>
+<pre><code class="scala">val userItemPairPrediction = wideAndDeep.predictUserItemPair(validationpairFeatureRdds)
+val userRecs = wideAndDeep.recommendForUser(validationpairFeatureRdds, 3)
+val itemRecs = wideAndDeep.recommendForItem(validationpairFeatureRdds, 3)
+</code></pre>
+
+<p>See more details in our<a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/models/recommendation/WideAndDeepExample.scala">Scala example</a>.</p>
+<p><strong>Python</strong></p>
+<p>Build a WND model for recommendation. </p>
+<pre><code class="python">wide_n_deep = WideAndDeep(class_num, column_info, model_type=&quot;wide_n_deep&quot;, hidden_layers=(40, 20, 10))
+</code></pre>
+
+<p>Train a WND model using BigDL Optimizer </p>
+<pre><code class="python">optimizer = Optimizer(
+    model=wide_n_deep,
+    training_rdd=train_data,
+    criterion=ClassNLLCriterion(),
+    optim_method=Adam(learningrate = 0.001, learningrate_decay=0.00005),
+    end_trigger=MaxEpoch(10),
+    batch_size=batch_size)
+optimizer.optimize() 
+</code></pre>
+
+<p>Predict and recommend items(users) for users(items) with given features.</p>
+<pre><code class="python">userItemPairPrediction = wide_n_deep.predict_user_item_pair(valPairFeatureRdds)
+userRecs = wide_n_deep.recommend_for_user(valPairFeatureRdds, 3)
+itemRecs = wide_n_deep.recommend_for_item(valPairFeatureRdds, 3)
+</code></pre>
+
+<p>See more details in our <a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation/wide_n_deep.ipynb">Python notebook</a>.</p>
+<hr />
+<h2 id="neural-network-based-collaborative-filtering">Neural network-based Collaborative Filtering</h2>
+<p><strong>Scala</strong></p>
+<p>Build a NCF model for recommendation. </p>
+<pre><code class="scala">val ncf = NeuralCF(userCount, itemCount, numClasses, userEmbed = 20, itemEmbed = 20, hiddenLayers = Array(40, 20, 10), includeMF = true, mfEmbed = 20)
+</code></pre>
+
+<p>Train a NCF model using BigDL Optimizer </p>
+<pre><code class="scala">val optimizer = Optimizer(
+      model = ncf,
+      sampleRDD = trainRdds,
+      criterion = ClassNLLCriterion[Float](),
+      batchSize = 8000)
+
+optimizer
+      .setOptimMethod(new Adam[Float](learningRate = 1e-2,learningRateDecay = 1e-5))
+      .setEndWhen(Trigger.maxEpoch(10))
+      .optimize()
+</code></pre>
+
+<p>Predict and recommend items(users) for users(items) with given features.</p>
+<pre><code class="scala">val userItemPairPrediction = ncf.predictUserItemPair(validationpairFeatureRdds)
+val userRecs = ncf.recommendForUser(validationpairFeatureRdds, 3)
+val itemRecs = ncf.recommendForItem(validationpairFeatureRdds, 3)
+</code></pre>
+
+<p>See more details in our<a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/models/recommendation/NeuralCFexample.scala">Scala example</a></p>
+<p><strong>Python</strong></p>
+<p>Build a NCF model for recommendation. </p>
+<pre><code class="python">ncf=NeuralCF(user_count, item_count, class_num, user_embed=20, item_embed=20, hidden_layers=(40, 20, 10), include_mf=True, mf_embed=20)
+</code></pre>
+
+<p>Train a NCF model using BigDL Optimizer </p>
+<pre><code class="python">optimizer = Optimizer(
+    model=ncf,
+    training_rdd=train_data,
+    criterion=ClassNLLCriterion(),
+    optim_method=Adam(learningrate = 0.001, learningrate_decay=0.00005),
+    end_trigger=MaxEpoch(10),
+    batch_size=batch_size)
+optimizer.optimize() 
+</code></pre>
+
+<p>Predict and recommend items(users) for users(items) with given features.</p>
+<pre><code class="python">userItemPairPrediction = ncf.predict_user_item_pair(valPairFeatureRdds)
+userRecs = ncf.recommend_for_user(valPairFeatureRdds, 3)
+itemRecs = ncf.recommend_for_item(valPairFeatureRdds, 3)
+</code></pre>
+
+<p>See more details in our <a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation/ncf-explicit-feedback.ipynb">Python notebook</a>.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

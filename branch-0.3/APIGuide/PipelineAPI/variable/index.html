@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Autograd-Variable - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Basic operators: + - * /", url: "#basic-operators-", children: [
+          ]},
+          {title: "squeeze", url: "#squeeze", children: [
+          ]},
+          {title: "slice", url: "#slice", children: [
+          ]},
+          {title: "index_select", url: "#index_select", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Autograd-Variable</strong></h1>
+    <hr>
+    <h2 id="basic-operators-">Basic operators: <code>+ - * /</code></h2>
+<p>Those are supported as element-wise operation.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">x + 1.0
+x + y
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">x + 1.0
+x + y
+</code></pre>
+
+<h2 id="squeeze">squeeze</h2>
+<p>Delete the singleton dimension(s).
+   The batch dimension needs to be unchanged.
+   For example, if input has size (2, 1, 3, 4, 1):
+   - squeeze(dim = 1) will give output size (2, 3, 4, 1)
+   - squeeze(dims = null) will give output size (2, 3, 4)</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">x.squeeze(1)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">x.squeeze(1)
+</code></pre>
+
+<h2 id="slice">slice</h2>
+<p>Slice the input with the number of dimensions not being reduced.
+The batch dimension needs to be unchanged.
+- dim The dimension to narrow. 0-based index. Cannot narrow the batch dimension.
+     -1 means the last dimension of the input.
+- startIndex Non-negative integer. The start index on the given dimension. 0-based index.
+- length The length to be sliced. Default is 1.</p>
+<p>For example, 
+if input is:
+1 2 3
+4 5 6
+- slice(1, 1, 2) will give output
+2 3
+5 6
+- slice(1, 2, -1) will give output
+3
+6</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">x.slice(1, 1, 2)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">x.slice(1, 1, 2)
+</code></pre>
+
+<h2 id="index_select">index_select</h2>
+<p>Select an index of the input in the given dim and return the subset part.
+ The batch dimension needs to be unchanged.
+ The selected dim would be remove after this operation.
+ - dim: The dimension to select. 0-based index. Cannot select the batch dimension.
+                 -1 means the last dimension of the input.
+ - index: The index of the dimension to be selected. 0-based index.
+                -1 means the last dimension of the input.</p>
+<p>For example, if input is:
+           1 2 3
+           4 5 6
+ - Select(1, 1) will give output [2 5]
+ - Select(1, -1) will give output [3 6]</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">x.select(1, 1)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">x.select(1, 1)
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
