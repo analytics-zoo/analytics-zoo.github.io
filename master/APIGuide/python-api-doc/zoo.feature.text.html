@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.models.html" title="zoo.models package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -42,10 +45,10 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.feature.text package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-feature-text-text-feature-module">zoo.feature.text.text_feature module</a></li>
-<li><a class="reference internal" href="#zoo-feature-text-text-set-module">zoo.feature.text.text_set module</a></li>
-<li><a class="reference internal" href="#zoo-feature-text-transformer-module">zoo.feature.text.transformer module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.feature.text.text_feature">zoo.feature.text.text_feature module</a></li>
+<li><a class="reference internal" href="#module-zoo.feature.text.text_set">zoo.feature.text.text_set module</a></li>
+<li><a class="reference internal" href="#module-zoo.feature.text.transformer">zoo.feature.text.transformer module</a></li>
+<li><a class="reference internal" href="#module-zoo.feature.text">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -88,17 +91,521 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-feature-text-text-feature-module">
-<h2>zoo.feature.text.text_feature module<a class="headerlink" href="#zoo-feature-text-text-feature-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.feature.text.text_feature">
+<span id="zoo-feature-text-text-feature-module"></span><h2>zoo.feature.text.text_feature module<a class="headerlink" href="#module-zoo.feature.text.text_feature" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.feature.text.text_feature.TextFeature">
+<em class="property">class </em><code class="descclassname">zoo.feature.text.text_feature.</code><code class="descname">TextFeature</code><span class="sig-paren">(</span><em>text=None</em>, <em>label=None</em>, <em>jvalue=None</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_feature.html#TextFeature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_feature.TextFeature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bigdl.util.common.JavaValue</span></code></p>
+<p>Each TextFeature keeps information of a single text record.
+It can include various status of a text,
+e.g. original text content, category label, tokens, index representation
+of tokens, BigDL Sample representation, prediction result and so on.</p>
+<dl class="method">
+<dt id="zoo.feature.text.text_feature.TextFeature.get_label">
+<code class="descname">get_label</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_feature.html#TextFeature.get_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_feature.TextFeature.get_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the label of the TextFeature.
+If no label is stored, -1 will be returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_feature.TextFeature.get_sample">
+<code class="descname">get_sample</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_feature.html#TextFeature.get_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_feature.TextFeature.get_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the Sample representation of the TextFeature.
+If the TextFeature hasn’t been transformed to Sample, None will be returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">BigDL Sample</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_feature.TextFeature.get_text">
+<code class="descname">get_text</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_feature.html#TextFeature.get_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_feature.TextFeature.get_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the text content of the TextFeature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_feature.TextFeature.get_tokens">
+<code class="descname">get_tokens</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_feature.html#TextFeature.get_tokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_feature.TextFeature.get_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the tokens of the TextFeature.
+If text hasn’t been segmented, None will be returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_feature.TextFeature.has_label">
+<code class="descname">has_label</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_feature.html#TextFeature.has_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_feature.TextFeature.has_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the TextFeature contains label.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_feature.TextFeature.keys">
+<code class="descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_feature.html#TextFeature.keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_feature.TextFeature.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the keys that the TextFeature contains.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_feature.TextFeature.set_label">
+<code class="descname">set_label</code><span class="sig-paren">(</span><em>label</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_feature.html#TextFeature.set_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_feature.TextFeature.set_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the label for the TextFeature.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>label</strong> – Int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The TextFeature with label.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-feature-text-text-set-module">
-<h2>zoo.feature.text.text_set module<a class="headerlink" href="#zoo-feature-text-text-set-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.feature.text.text_set">
+<span id="zoo-feature-text-text-set-module"></span><h2>zoo.feature.text.text_set module<a class="headerlink" href="#module-zoo.feature.text.text_set" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.feature.text.text_set.DistributedTextSet">
+<em class="property">class </em><code class="descclassname">zoo.feature.text.text_set.</code><code class="descname">DistributedTextSet</code><span class="sig-paren">(</span><em>texts=None</em>, <em>labels=None</em>, <em>jvalue=None</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#DistributedTextSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.DistributedTextSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.text.text_set.TextSet" title="zoo.feature.text.text_set.TextSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.text.text_set.TextSet</span></code></a></p>
+<p>DistributedTextSet is comprised of RDDs.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.text.text_set.LocalTextSet">
+<em class="property">class </em><code class="descclassname">zoo.feature.text.text_set.</code><code class="descname">LocalTextSet</code><span class="sig-paren">(</span><em>texts=None</em>, <em>labels=None</em>, <em>jvalue=None</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#LocalTextSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.LocalTextSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.text.text_set.TextSet" title="zoo.feature.text.text_set.TextSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.text.text_set.TextSet</span></code></a></p>
+<p>LocalTextSet is comprised of lists.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.text.text_set.TextSet">
+<em class="property">class </em><code class="descclassname">zoo.feature.text.text_set.</code><code class="descname">TextSet</code><span class="sig-paren">(</span><em>jvalue</em>, <em>bigdl_type='float'</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bigdl.util.common.JavaValue</span></code></p>
+<p>TextSet wraps a set of texts with status.</p>
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.generate_sample">
+<code class="descname">generate_sample</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.generate_sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.generate_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate BigDL Sample.
+See TextFeatureToSample for more details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TextSet with Samples.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.generate_word_index_map">
+<code class="descname">generate_word_index_map</code><span class="sig-paren">(</span><em>remove_topN=0</em>, <em>max_words_num=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.generate_word_index_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.generate_word_index_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate word_index map based on sorted word frequencies in descending order.
+Return the result dictionary, which can also be retrieved by ‘get_word_index()’.
+Make sure you call this after tokenize. Otherwise you will get an error.
+See word2idx for more details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary {word: id}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.get_labels">
+<code class="descname">get_labels</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.get_labels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.get_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the labels of a TextSet (if any).
+If a text doesn’t have a label, its corresponding position will be -1.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of int for LocalTextSet.</td>
+</tr>
+</tbody>
+</table>
+<p>RDD of int for DistributedTextSet.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.get_predicts">
+<code class="descname">get_predicts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.get_predicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.get_predicts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the prediction results of a TextSet (if any).
+If a text hasn’t been predicted by a model, its corresponding position will be None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of list of numpy array for LocalTextSet.</td>
+</tr>
+</tbody>
+</table>
+<p>RDD of list of numpy array for DistributedTextSet.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.get_samples">
+<code class="descname">get_samples</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.get_samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.get_samples" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the BigDL Sample representations of a TextSet (if any).
+If a text hasn’t been transformed to Sample, its corresponding position will be None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of Sample for LocalTextSet.</td>
+</tr>
+</tbody>
+</table>
+<p>RDD of Sample for DistributedTextSet.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.get_texts">
+<code class="descname">get_texts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.get_texts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.get_texts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the text contents of a TextSet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of String for LocalTextSet.</td>
+</tr>
+</tbody>
+</table>
+<p>RDD of String for DistributedTextSet.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.get_word_index">
+<code class="descname">get_word_index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.get_word_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.get_word_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the word index dictionary of the TextSet.
+If the TextSet hasn’t been transformed from word to index, None will be returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary {word: id}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.is_distributed">
+<code class="descname">is_distributed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.is_distributed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.is_distributed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether it is a DistributedTextSet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.is_local">
+<code class="descname">is_local</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.is_local"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.is_local" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether it is a LocalTextSet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.normalize">
+<code class="descname">normalize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.normalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do normalization on tokens.
+See Normalizer for more details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TextSet after normalization.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.random_split">
+<code class="descname">random_split</code><span class="sig-paren">(</span><em>weights</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.random_split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.random_split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomly split into list of TextSet with provided weights.
+Only available for DistributedTextSet for now.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>weights</strong> – List of float indicating the split portions.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="zoo.feature.text.text_set.TextSet.read">
+<em class="property">classmethod </em><code class="descname">read</code><span class="sig-paren">(</span><em>path</em>, <em>sc=None</em>, <em>min_partitions=1</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read text files as TextSet.
+If sc is defined, read texts as DistributedTextSet from local file system or HDFS.
+If sc is None, read texts as LocalTextSet from local file system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – String. Folder path to texts.</td>
+</tr>
+</tbody>
+</table>
+<p>The folder structure is expected to be the following:
+path
+<a href="#id1"><span class="problematic" id="id2">|</span></a>dir1 - text1, text2, …
+<a href="#id3"><span class="problematic" id="id4">|</span></a>dir2 - text1, text2, …
+<a href="#id5"><span class="problematic" id="id6">|</span></a>dir3 - text1, text2, …
+Under the target path, there ought to be N subdirectories (dir1 to dirN). Each
+subdirectory represents a category and contains all texts that belong to such
+category. Each category will be a given a label according to its position in the
+ascending order sorted among all subdirectories.
+All texts will be given a label according to the subdirectory where it is located.
+Labels start from 0.
+:param sc: An instance of SparkContext if any. Default is None.
+:param min_partitions: A suggestion value of the minimal partition number.
+Int. Default is 1. Only need to specify this when sc is not None.
+:return: TextSet.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.shape_sequence">
+<code class="descname">shape_sequence</code><span class="sig-paren">(</span><em>len</em>, <em>mode='pre'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.shape_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.shape_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shape the sequence of tokens to a fixed length. Padding element will be “##”.
+See SequenceShaper for more details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TextSet after sequence shaping.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.to_distributed">
+<code class="descname">to_distributed</code><span class="sig-paren">(</span><em>sc=None</em>, <em>partition_num=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.to_distributed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.to_distributed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to a DistributedTextSet.</p>
+<p>Need to specify SparkContext to convert a LocalTextSet to a DistributedTextSet.
+In this case, you may also want to specify partition_num, the default of which is 4.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">DistributedTextSet</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.to_local">
+<code class="descname">to_local</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.to_local"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.to_local" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to a LocalTextSet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">LocalTextSet</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.tokenize">
+<code class="descname">tokenize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.tokenize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.tokenize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do tokenization on original text.
+See Tokenizer for more details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TextSet after tokenization.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>transformer</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.feature.text.text_set.TextSet.word2idx">
+<code class="descname">word2idx</code><span class="sig-paren">(</span><em>remove_topN=0</em>, <em>max_words_num=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/text_set.html#TextSet.word2idx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.text_set.TextSet.word2idx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map word tokens to indices.
+Index will start from 1 and corresponds to the occurrence frequency of each word sorted
+in descending order.
+See WordIndexer for more details.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>remove_topN</strong> – Int. Remove the topN words with highest frequencies in the case</td>
+</tr>
+</tbody>
+</table>
+<p>where those are treated as stopwords.
+Default is 0, namely remove nothing.
+:param max_words_num: Int. The maximum number of words to be taken into consideration.
+Default is -1, namely all words will be considered.
+:return: TextSet after word2idx.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-feature-text-transformer-module">
-<h2>zoo.feature.text.transformer module<a class="headerlink" href="#zoo-feature-text-transformer-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.feature.text.transformer">
+<span id="zoo-feature-text-transformer-module"></span><h2>zoo.feature.text.transformer module<a class="headerlink" href="#module-zoo.feature.text.transformer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.feature.text.transformer.Normalizer">
+<em class="property">class </em><code class="descclassname">zoo.feature.text.transformer.</code><code class="descname">Normalizer</code><span class="sig-paren">(</span><em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/transformer.html#Normalizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.transformer.Normalizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.text.transformer.TextTransformer" title="zoo.feature.text.transformer.TextTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.text.transformer.TextTransformer</span></code></a></p>
+<p>Removes all dirty characters from tokens and convert to lower case.
+Original tokens will be replaced by normalized tokens.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">Normalizer</span><span class="p">()</span>
+<span class="go">creating: createNormalizer</span>
+</pre></div>
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.text.transformer.SequenceShaper">
+<em class="property">class </em><code class="descclassname">zoo.feature.text.transformer.</code><code class="descname">SequenceShaper</code><span class="sig-paren">(</span><em>len</em>, <em>trunc_mode='pre'</em>, <em>pad_element='##'</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/transformer.html#SequenceShaper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.transformer.SequenceShaper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.text.transformer.TextTransformer" title="zoo.feature.text.transformer.TextTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.text.transformer.TextTransformer</span></code></a></p>
+<p>Shape the sequence of tokens to a fixed length.
+If the original sequence is longer than the target length, it will be truncated from
+the beginning or the end.
+If the original sequence is shorter than the target length, it will be padded to the end.
+The original token sequence will be replaced by the shaped sequence.</p>
+<p># Arguments
+len: The target length.
+trunc_mode: Truncation mode. Either ‘pre’ or ‘post’. Default is ‘pre’.
+If ‘pre’, the sequence will be truncated from the beginning.
+If ‘post’, the sequence will be truncated from the end.
+pad_element: String. The element to be padded to the sequence if the original length is
+smaller than the target length. Default is “##”.
+Make sure that the padding element is meaningless in your corpus.
+&gt;&gt;&gt; sequence_shaper = SequenceShaper(len=6, trunc_mode=”post”, pad_element=”xxxx”)
+creating: createSequenceShaper</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.text.transformer.TextFeatureToSample">
+<em class="property">class </em><code class="descclassname">zoo.feature.text.transformer.</code><code class="descname">TextFeatureToSample</code><span class="sig-paren">(</span><em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/transformer.html#TextFeatureToSample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.transformer.TextFeatureToSample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.text.transformer.TextTransformer" title="zoo.feature.text.transformer.TextTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.text.transformer.TextTransformer</span></code></a></p>
+<p>Transform indexedTokens and label (if any) of a TextFeature to a BigDL Sample.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">to_sample</span> <span class="o">=</span> <span class="n">TextFeatureToSample</span><span class="p">()</span>
+<span class="go">creating: createTextFeatureToSample</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.text.transformer.TextTransformer">
+<em class="property">class </em><code class="descclassname">zoo.feature.text.transformer.</code><code class="descname">TextTransformer</code><span class="sig-paren">(</span><em>bigdl_type='float'</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/transformer.html#TextTransformer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.transformer.TextTransformer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="zoo.feature.html#zoo.feature.common.Preprocessing" title="zoo.feature.common.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.common.Preprocessing</span></code></a></p>
+<p>Base class of Transformers that transform TextFeature.</p>
+<dl class="method">
+<dt id="zoo.feature.text.transformer.TextTransformer.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>text_feature</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/transformer.html#TextTransformer.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.transformer.TextTransformer.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform a TextFeature.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.text.transformer.Tokenizer">
+<em class="property">class </em><code class="descclassname">zoo.feature.text.transformer.</code><code class="descname">Tokenizer</code><span class="sig-paren">(</span><em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/transformer.html#Tokenizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.transformer.Tokenizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.text.transformer.TextTransformer" title="zoo.feature.text.transformer.TextTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.text.transformer.TextTransformer</span></code></a></p>
+<p>Transform text to array of string tokens.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">Tokenizer</span><span class="p">()</span>
+<span class="go">creating: createTokenizer</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.text.transformer.WordIndexer">
+<em class="property">class </em><code class="descclassname">zoo.feature.text.transformer.</code><code class="descname">WordIndexer</code><span class="sig-paren">(</span><em>map</em>, <em>replace_element=0</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/text/transformer.html#WordIndexer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.text.transformer.WordIndexer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.text.transformer.TextTransformer" title="zoo.feature.text.transformer.TextTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.text.transformer.TextTransformer</span></code></a></p>
+<p>Given a wordIndex map, transform tokens to corresponding indices.</p>
+<p># Arguments
+map: Dict with word as its key and index as its value.
+It is recommended that the map contains all the words in your corpus.
+replace_element: Int. The element to fill if the word is not in the given map.
+Default is 0 with the convention that 0 is reserved for unknown words.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">word_indexer</span> <span class="o">=</span> <span class="n">WordIndexer</span><span class="p">(</span><span class="nb">map</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;it&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;me&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="n">replace_element</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="go">creating: createWordIndexer</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-zoo.feature.text">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.feature.text" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -114,6 +621,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.models.html" title="zoo.models package"
              >next</a> |</li>
