@@ -82,7 +82,7 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">DistributedTextSet is comprised of RDD of TextFeature.</p>
     </li><li name="com.intel.analytics.zoo.feature.text.LocalTextSet" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="LocalTextSetextendsTextSet"></a>
       <a id="LocalTextSet:LocalTextSet"></a>
@@ -99,7 +99,7 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">LocalTextSet is comprised of array of TextFeature.</p>
     </li><li name="com.intel.analytics.zoo.feature.text.Normalizer" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="NormalizerextendsTextTransformer"></a>
       <a id="Normalizer:Normalizer"></a>
@@ -116,7 +116,9 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Removes all dirty (non English alphabet) characters from tokens and convert to lower case.</p><div class="fullcomment"><div class="comment cmt"><p>Removes all dirty (non English alphabet) characters from tokens and convert to lower case.
+      <p class="shortcomment cmt">Removes all dirty (non English alphabet) characters from tokens and converts words
+to lower case.</p><div class="fullcomment"><div class="comment cmt"><p>Removes all dirty (non English alphabet) characters from tokens and converts words
+to lower case. Need to tokenize first.
 Input key: TextFeature.tokens
 Output key: TextFeature.tokens
             In this case, original tokens will be replaced by normalized tokens.
@@ -141,6 +143,7 @@ Output key: TextFeature.tokens
 If the original sequence is longer than the target length, it will be truncated from
 the beginning or the end.
 If the original sequence is shorter than the target length, it will be padded to the end.
+Need to tokenize first.
 Input key: TextFeature.tokens
 Output key: TextFeature.tokens
 The original token sequence will be replaced by the shaped sequence.
@@ -185,6 +188,7 @@ Each key is a string that can be used to identify the corresponding value.
       </a>
     </span>
       <p class="shortcomment cmt">Transform indexedTokens and label (if any) of a TextFeature to a BigDL Sample.</p><div class="fullcomment"><div class="comment cmt"><p>Transform indexedTokens and label (if any) of a TextFeature to a BigDL Sample.
+Need to word2idx first.
 Input key: TextFeature.indexedTokens and TextFeature.label (if any)
 Output key: TextFeature.sample
 </p></div></div>
@@ -276,6 +280,7 @@ Output key: TextFeature.tokens
       </a>
     </span>
       <p class="shortcomment cmt">Given a wordIndex map, transform tokens to corresponding indices.</p><div class="fullcomment"><div class="comment cmt"><p>Given a wordIndex map, transform tokens to corresponding indices.
+Need to tokenize first.
 Input key: TextFeature.tokens
 Output key: TextFeature.indexedTokens
 </p></div></div>

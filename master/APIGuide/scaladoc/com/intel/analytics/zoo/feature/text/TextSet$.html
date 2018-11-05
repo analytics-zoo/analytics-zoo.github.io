@@ -426,8 +426,10 @@ If sc is null, read texts as LocalTextSet from local file system.
             category. Each category will be a given a label according to its position in the
             ascending order sorted among all subdirectories.
             All texts will be given a label according to the subdirectory where it is located.
-            Labels start from 0.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext if any. Default is null.</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>A suggestion value of the minimal partition number.
-                     Integer. Default is 1. Only need to specify this when sc is not null.</p></dd><dt>returns</dt><dd class="cmt"><p>TextSet.</p></dd></dl></div>
+            Labels start from 0.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext.
+          If specified, texts will be read as a DistributedTextSet.
+          Default is null and in this case texts will be read as a LocalTextSet.</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>Integer. A suggestion value of the minimal partition number for input
+                     texts. Only need to specify this when sc is not null. Default is 1.</p></dd><dt>returns</dt><dd class="cmt"><p>TextSet.</p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>

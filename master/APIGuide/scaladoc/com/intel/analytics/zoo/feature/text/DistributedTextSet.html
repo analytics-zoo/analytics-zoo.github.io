@@ -49,7 +49,8 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>DistributedTextSet is comprised of RDD of TextFeature.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a>, <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -296,6 +297,7 @@
       </a>
     </span>
       <p class="shortcomment cmt">Generate BigDL Sample.</p><div class="fullcomment"><div class="comment cmt"><p>Generate BigDL Sample.
+Need to word2idx first.
 See TextFeatureToSample for more details.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.text.DistributedTextSet#generateWordIndexMap" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -458,7 +460,7 @@ If the TextSet hasn't been transformed from word to index, null will be returned
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Do normalization on tokens.</p><div class="fullcomment"><div class="comment cmt"><p>Do normalization on tokens.
+      <p class="shortcomment cmt">Do normalization on tokens.</p><div class="fullcomment"><div class="comment cmt"><p>Do normalization on tokens. Need to tokenize first.
 See Normalizer for more details.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -565,6 +567,7 @@ Only available for DistributedTextSet for now.
       </a>
     </span>
       <p class="shortcomment cmt">Shape the sequence of tokens to a fixed length.</p><div class="fullcomment"><div class="comment cmt"><p>Shape the sequence of tokens to a fixed length. Padding element will be &quot;##&quot;.
+Need to tokenize first.
 See SequenceShaper for more details.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -779,12 +782,14 @@ See Tokenizer for more details.
       </a>
     </span>
       <p class="shortcomment cmt">Map word tokens to indices.</p><div class="fullcomment"><div class="comment cmt"><p>Map word tokens to indices.
-Index will start from 1 and corresponds to the occurrence frequency of each word sorted
-in descending order.
+Result index will start from 1 and corresponds to the occurrence frequency of each word
+sorted in descending order.
+Need to tokenize first.
 See WordIndexer for more details.
-After word2idx, you can get the wordIndex map by calling 'getWordIndex'.
-</p></div><dl class="paramcmts block"><dt class="param">removeTopN</dt><dd class="cmt"><p>Integer. Remove the topN words with highest frequencies in the case
-                  where those are treated as stopwords. Default is 0, namely remove nothing.</p></dd><dt class="param">maxWordsNum</dt><dd class="cmt"><p>Integer. The maximum number of words to be taken into consideration.
+After word2idx, you can get the generated wordIndex map by calling 'getWordIndex'.
+</p></div><dl class="paramcmts block"><dt class="param">removeTopN</dt><dd class="cmt"><p>Non-negative Integer. Remove the topN words with highest frequencies in
+                  the case where those are treated as stopwords.
+                  Default is 0, namely remove nothing.</p></dd><dt class="param">maxWordsNum</dt><dd class="cmt"><p>Integer. The maximum number of words to be taken into consideration.
                    Default is -1, namely all words will be considered.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li></ol>
             </div>
