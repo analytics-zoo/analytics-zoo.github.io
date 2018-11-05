@@ -55,6 +55,7 @@
 If the original sequence is longer than the target length, it will be truncated from
 the beginning or the end.
 If the original sequence is shorter than the target length, it will be padded to the end.
+Need to tokenize first.
 Input key: TextFeature.tokens
 Output key: TextFeature.tokens
 The original token sequence will be replaced by the shaped sequence.
@@ -113,9 +114,10 @@ The original token sequence will be replaced by the shaped sequence.
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">len</dt><dd class="cmt"><p>The target length.</p></dd><dt class="param">truncMode</dt><dd class="cmt"><p>Truncation mode. Either 'pre' or 'post'. Default is 'pre'.
-                 If 'pre', the sequence will be truncated from the beginning.
-                 If 'post', the sequence will be truncated from the end.</p></dd><dt class="param">padElement</dt><dd class="cmt"><p>String. The element to be padded to the sequence if the original length
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">len</dt><dd class="cmt"><p>Positive integer. The target length.</p></dd><dt class="param">truncMode</dt><dd class="cmt"><p>Truncation mode. Either TruncMode.pre or TruncMode.post.
+                 If TruncMode.pre, the sequence will be truncated from the beginning.
+                 If TruncMode.post, the sequence will be truncated from the end.
+                 Default is TruncMode.post.</p></dd><dt class="param">padElement</dt><dd class="cmt"><p>String. The element to be padded to the sequence if the original length
                   is smaller than the target length.
                   Default is &quot;##&quot;. Make sure that the padding element is meaningless in
                   your corpus.</p></dd></dl></div>
@@ -480,7 +482,7 @@ The original token sequence will be replaced by the shaped sequence.
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.feature.text.SequenceShaper#len" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.feature.text.SequenceShaper#len" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="len:Int"></a>
       <a id="len:Int"></a>
       <h4 class="signature">
@@ -496,7 +498,7 @@ The original token sequence will be replaced by the shaped sequence.
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">The target length.</p>
+      <p class="shortcomment cmt">Positive integer.</p><div class="fullcomment"><div class="comment cmt"><p>Positive integer. The target length.</p></div></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -635,9 +637,10 @@ The original token sequence will be replaced by the shaped sequence.
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Truncation mode.</p><div class="fullcomment"><div class="comment cmt"><p>Truncation mode. Either 'pre' or 'post'. Default is 'pre'.
-                 If 'pre', the sequence will be truncated from the beginning.
-                 If 'post', the sequence will be truncated from the end.</p></div></div>
+      <p class="shortcomment cmt">Truncation mode.</p><div class="fullcomment"><div class="comment cmt"><p>Truncation mode. Either TruncMode.pre or TruncMode.post.
+                 If TruncMode.pre, the sequence will be truncated from the beginning.
+                 If TruncMode.post, the sequence will be truncated from the end.
+                 Default is TruncMode.post.</p></div></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>
