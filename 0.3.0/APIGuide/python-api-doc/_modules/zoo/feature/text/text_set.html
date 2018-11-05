@@ -212,7 +212,7 @@
 
 <div class="viewcode-block" id="TextSet.normalize"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.normalize">[docs]</a>    <span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Do normalization on tokens.</span>
+<span class="sd">        Do normalization on tokens. Need to tokenize first.</span>
 <span class="sd">        See Normalizer for more details.</span>
 
 <span class="sd">        :return: TextSet after normalization.</span>
@@ -220,25 +220,28 @@
         <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetNormalize&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
         <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TextSet.shape_sequence"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.shape_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">shape_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">len</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;pre&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="TextSet.shape_sequence"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.shape_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">shape_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">len</span><span class="p">,</span> <span class="n">trunc_mode</span><span class="o">=</span><span class="s2">&quot;pre&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shape the sequence of tokens to a fixed length. Padding element will be &quot;##&quot;.</span>
+<span class="sd">        Need to tokenize first.</span>
 <span class="sd">        See SequenceShaper for more details.</span>
 
 <span class="sd">        :return: TextSet after sequence shaping.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetShapeSequence&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">len</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span></div>
+        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetShapeSequence&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">len</span><span class="p">,</span> <span class="n">trunc_mode</span><span class="p">)</span></div>
         <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TextSet.word2idx"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.word2idx">[docs]</a>    <span class="k">def</span> <span class="nf">word2idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">remove_topN</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_words_num</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Map word tokens to indices.</span>
-<span class="sd">        Index will start from 1 and corresponds to the occurrence frequency of each word sorted</span>
-<span class="sd">        in descending order.</span>
+<span class="sd">        Result index will start from 1 and corresponds to the occurrence frequency of each word</span>
+<span class="sd">        sorted in descending order.</span>
+<span class="sd">        Need to tokenize first.</span>
 <span class="sd">        See WordIndexer for more details.</span>
+<span class="sd">        After word2idx, you can get the generated wordIndex dict by calling &#39;get_word_index()&#39;.</span>
 
-<span class="sd">        :param remove_topN: Int. Remove the topN words with highest frequencies in the case</span>
-<span class="sd">                            where those are treated as stopwords.</span>
+<span class="sd">        :param remove_topN: Non-negative int. Remove the topN words with highest frequencies</span>
+<span class="sd">                            in the case where those are treated as stopwords.</span>
 <span class="sd">                            Default is 0, namely remove nothing.</span>
 <span class="sd">        :param max_words_num: Int. The maximum number of words to be taken into consideration.</span>
 <span class="sd">                              Default is -1, namely all words will be considered.</span>
@@ -251,6 +254,7 @@
 <div class="viewcode-block" id="TextSet.generate_sample"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.generate_sample">[docs]</a>    <span class="k">def</span> <span class="nf">generate_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate BigDL Sample.</span>
+<span class="sd">        Need to word2idx first.</span>
 <span class="sd">        See TextFeatureToSample for more details.</span>
 
 <span class="sd">        :return: TextSet with Samples.</span>
@@ -281,9 +285,11 @@
 <span class="sd">               ascending order sorted among all subdirectories.</span>
 <span class="sd">               All texts will be given a label according to the subdirectory where it is located.</span>
 <span class="sd">               Labels start from 0.</span>
-<span class="sd">        :param sc: An instance of SparkContext if any. Default is None.</span>
-<span class="sd">        :param min_partitions: A suggestion value of the minimal partition number.</span>
-<span class="sd">                               Int. Default is 1. Only need to specify this when sc is not None.</span>
+<span class="sd">        :param sc: An instance of SparkContext.</span>
+<span class="sd">                   If specified, texts will be read as a DistributedTextSet.</span>
+<span class="sd">                   Default is None and in this case texts will be read as a LocalTextSet.</span>
+<span class="sd">        :param min_partitions: Int. A suggestion value of the minimal partition number for input</span>
+<span class="sd">                               texts. Only need to specify this when sc is not None. Default is 1.</span>
 <span class="sd">        :return: TextSet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;readTextSet&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="n">min_partitions</span><span class="p">)</span></div></div>

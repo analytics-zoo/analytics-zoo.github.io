@@ -108,7 +108,8 @@
 
 <div class="viewcode-block" id="Normalizer"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.transformer.Normalizer">[docs]</a><span class="k">class</span> <span class="nc">Normalizer</span><span class="p">(</span><span class="n">TextTransformer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Removes all dirty characters from tokens and convert to lower case.</span>
+<span class="sd">    Removes all dirty characters (non English alphabet) from tokens and converts words to</span>
+<span class="sd">    lower case. Need to tokenize first.</span>
 <span class="sd">    Original tokens will be replaced by normalized tokens.</span>
 
 <span class="sd">    &gt;&gt;&gt; normalizer = Normalizer()</span>
@@ -125,9 +126,10 @@
 <span class="sd">    the beginning or the end.</span>
 <span class="sd">    If the original sequence is shorter than the target length, it will be padded to the end.</span>
 <span class="sd">    The original token sequence will be replaced by the shaped sequence.</span>
+<span class="sd">    Need to tokenize first.</span>
 
 <span class="sd">    # Arguments</span>
-<span class="sd">    len: The target length.</span>
+<span class="sd">    len: Positive int. The target length.</span>
 <span class="sd">    trunc_mode: Truncation mode. Either &#39;pre&#39; or &#39;post&#39;. Default is &#39;pre&#39;.</span>
 <span class="sd">                If &#39;pre&#39;, the sequence will be truncated from the beginning.</span>
 <span class="sd">                If &#39;post&#39;, the sequence will be truncated from the end.</span>
@@ -145,6 +147,7 @@
 <div class="viewcode-block" id="WordIndexer"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.transformer.WordIndexer">[docs]</a><span class="k">class</span> <span class="nc">WordIndexer</span><span class="p">(</span><span class="n">TextTransformer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Given a wordIndex map, transform tokens to corresponding indices.</span>
+<span class="sd">    Need to tokenize first.</span>
 
 <span class="sd">    # Arguments</span>
 <span class="sd">    map: Dict with word as its key and index as its value.</span>
@@ -163,6 +166,7 @@
 <div class="viewcode-block" id="TextFeatureToSample"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.transformer.TextFeatureToSample">[docs]</a><span class="k">class</span> <span class="nc">TextFeatureToSample</span><span class="p">(</span><span class="n">TextTransformer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transform indexedTokens and label (if any) of a TextFeature to a BigDL Sample.</span>
+<span class="sd">    Need to word2idx first.</span>
 
 <span class="sd">    &gt;&gt;&gt; to_sample = TextFeatureToSample()</span>
 <span class="sd">    creating: createTextFeatureToSample</span>
