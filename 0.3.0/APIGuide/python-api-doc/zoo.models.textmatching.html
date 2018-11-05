@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.pipeline.html" title="zoo.pipeline package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -45,9 +42,9 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.models.textmatching package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.models.textmatching.knrm">zoo.models.textmatching.knrm module</a></li>
-<li><a class="reference internal" href="#module-zoo.models.textmatching.text_matcher">zoo.models.textmatching.text_matcher module</a></li>
-<li><a class="reference internal" href="#module-zoo.models.textmatching">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-models-textmatching-knrm-module">zoo.models.textmatching.knrm module</a></li>
+<li><a class="reference internal" href="#zoo-models-textmatching-text-matcher-module">zoo.models.textmatching.text_matcher module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,60 +87,14 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.models.textmatching.knrm">
-<span id="zoo-models-textmatching-knrm-module"></span><h2>zoo.models.textmatching.knrm module<a class="headerlink" href="#module-zoo.models.textmatching.knrm" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.models.textmatching.knrm.KNRM">
-<em class="property">class </em><code class="descclassname">zoo.models.textmatching.knrm.</code><code class="descname">KNRM</code><span class="sig-paren">(</span><em>text1_length</em>, <em>text2_length</em>, <em>vocab_size</em>, <em>embed_size=300</em>, <em>embed_weights=None</em>, <em>train_embed=True</em>, <em>kernel_num=21</em>, <em>sigma=0.1</em>, <em>exact_sigma=0.001</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textmatching/knrm.html#KNRM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textmatching.knrm.KNRM" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.models.textmatching.text_matcher.TextMatcher" title="zoo.models.textmatching.text_matcher.TextMatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.models.textmatching.text_matcher.TextMatcher</span></code></a></p>
-<p>Kernel-pooling Neural Ranking Model with RBF kernel.
-<a class="reference external" href="https://arxiv.org/abs/1706.06613">https://arxiv.org/abs/1706.06613</a></p>
-<p># Arguments:
-text1_length: Sequence length of text1 (query).
-text2_length: Sequence length of text2 (doc).
-vocab_size: Int. The input_dim of the embedding layer. Ought to be the total number
-of words in the corpus +1, with index 0 reserved for unknown words.
-embed_size: Int. The output_dim of the embedding layer. Default is 300.
-embed_weights: Numpy array. Pre-trained word embedding weights if any. Default is None
-and in this case, initial weights will be randomized.
-train_embed: Boolean. Whether to train the embedding layer or not. Default is True.
-kernel_num: Int. The number of kernels to use. Default is 21.
-sigma: Float. Defines the kernel width, or the range of its softTF count. Default is 0.1.
-exact_sigma: Float. The sigma used for the kernel that harvests exact matches
-in the case where RBF mu=1.0. Default is 0.001.</p>
-<dl class="method">
-<dt id="zoo.models.textmatching.knrm.KNRM.build_model">
-<code class="descname">build_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textmatching/knrm.html#KNRM.build_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textmatching.knrm.KNRM.build_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="zoo.models.textmatching.knrm.KNRM.load_model">
-<em class="property">static </em><code class="descname">load_model</code><span class="sig-paren">(</span><em>weight_path=None</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textmatching/knrm.html#KNRM.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textmatching.knrm.KNRM.load_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load an existing KNRM model (with weights).</p>
-<p># Arguments
-path: The path for the pre-defined model.
-Local file system, HDFS and Amazon S3 are supported.
-HDFS path should be like ‘hdfs://[host]:[port]/xxx’.
-Amazon S3 path should be like ‘s3a://bucket/xxx’.
-weight_path: The path for pre-trained weights if any. Default is None.</p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="zoo-models-textmatching-knrm-module">
+<h2>zoo.models.textmatching.knrm module<a class="headerlink" href="#zoo-models-textmatching-knrm-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.models.textmatching.text_matcher">
-<span id="zoo-models-textmatching-text-matcher-module"></span><h2>zoo.models.textmatching.text_matcher module<a class="headerlink" href="#module-zoo.models.textmatching.text_matcher" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.models.textmatching.text_matcher.TextMatcher">
-<em class="property">class </em><code class="descclassname">zoo.models.textmatching.text_matcher.</code><code class="descname">TextMatcher</code><span class="sig-paren">(</span><em>text1_length</em>, <em>vocab_size</em>, <em>embed_size=300</em>, <em>embed_weights=None</em>, <em>train_embed=True</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textmatching/text_matcher.html#TextMatcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textmatching.text_matcher.TextMatcher" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="zoo.models.common.html#zoo.models.common.zoo_model.ZooModel" title="zoo.models.common.zoo_model.ZooModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.models.common.zoo_model.ZooModel</span></code></a></p>
-<p>The base class for text matching models in Analytics Zoo.
-Referred to MatchZoo implementation: <a class="reference external" href="https://github.com/NTMC-Community/MatchZoo">https://github.com/NTMC-Community/MatchZoo</a></p>
-</dd></dl>
-
+<div class="section" id="zoo-models-textmatching-text-matcher-module">
+<h2>zoo.models.textmatching.text_matcher module<a class="headerlink" href="#zoo-models-textmatching-text-matcher-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.models.textmatching">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.models.textmatching" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -160,9 +111,6 @@ Referred to MatchZoo implementation: <a class="reference external" href="https:/
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.pipeline.html" title="zoo.pipeline package"
              >next</a> |</li>
         <li class="right" >
@@ -175,7 +123,7 @@ Referred to MatchZoo implementation: <a class="reference external" href="https:/
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
   </body>
 </html>
