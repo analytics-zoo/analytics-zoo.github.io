@@ -175,6 +175,14 @@
                       <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span></div>
                       <span class="nb">float</span><span class="p">(</span><span class="n">clip_norm</span><span class="p">))</span>
 
+<div class="viewcode-block" id="KerasNet.set_evaluate_status"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.engine.html#zoo.pipeline.api.keras.engine.topology.KerasNet.set_evaluate_status">[docs]</a>    <span class="k">def</span> <span class="nf">set_evaluate_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the model to be in evaluate status, i.e. remove the effect of Dropout, etc.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooSetEvaluateStatus&quot;</span><span class="p">,</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span>
+
 <div class="viewcode-block" id="KerasNet.fit"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.engine.html#zoo.pipeline.api.keras.engine.topology.KerasNet.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">nb_epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">distributed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Train a model for a fixed number of epochs on a DataSet.</span>

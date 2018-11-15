@@ -131,6 +131,14 @@
         <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooModelSummary&quot;</span><span class="p">,</span></div>
                       <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
+<div class="viewcode-block" id="ZooModel.set_evaluate_status"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModel.set_evaluate_status">[docs]</a>    <span class="k">def</span> <span class="nf">set_evaluate_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the model to be in evaluate status, i.e. remove the effect of Dropout, etc.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooModelSetEvaluateStatus&quot;</span><span class="p">,</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span>
+
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_do_load</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Layer</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="n">bigdl_type</span><span class="p">)</span>
