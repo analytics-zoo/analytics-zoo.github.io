@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>TextPredictor - analytics-zoo-bigdl_0.7.1-spark_2.1.0 0.4.0-SNAPSHOT API - com.intel.analytics.zoo.feature.text.TextPredictor</title>
-          <meta name="description" content="TextPredictor - analytics - zoo - bigdl 0.7.1 - spark 2.1.0 0.4.0 - SNAPSHOT API - com.intel.analytics.zoo.feature.text.TextPredictor" />
-          <meta name="keywords" content="TextPredictor analytics zoo bigdl 0.7.1 spark 2.1.0 0.4.0 SNAPSHOT API com.intel.analytics.zoo.feature.text.TextPredictor" />
+          <title>Predictor - analytics-zoo-bigdl_0.7.1-spark_2.1.0 0.4.0-SNAPSHOT API - com.intel.analytics.zoo.pipeline.api.Predictor</title>
+          <meta name="description" content="Predictor - analytics - zoo - bigdl 0.7.1 - spark 2.1.0 0.4.0 - SNAPSHOT API - com.intel.analytics.zoo.pipeline.api.Predictor" />
+          <meta name="keywords" content="Predictor analytics zoo bigdl 0.7.1 spark 2.1.0 0.4.0 SNAPSHOT API com.intel.analytics.zoo.pipeline.api.Predictor" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -16,7 +16,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../../../../../../index.html';
-            var hash = 'com.intel.analytics.zoo.feature.text.TextPredictor$';
+            var hash = 'com.intel.analytics.zoo.pipeline.api.Predictor';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -26,16 +26,16 @@
    	  </script>
     
         </head>
-        <body class="value">
+        <body class="type">
       <div id="definition">
-        <a href="TextPredictor.html" title="See companion class"><img alt="Object/Class" src="../../../../../../lib/object_to_class_big.png" /></a>
-        <p id="owner"><a href="../../../../../package.html" class="extype" name="com">com</a>.<a href="../../../../package.html" class="extype" name="com.intel">intel</a>.<a href="../../../package.html" class="extype" name="com.intel.analytics">analytics</a>.<a href="../../package.html" class="extype" name="com.intel.analytics.zoo">zoo</a>.<a href="../package.html" class="extype" name="com.intel.analytics.zoo.feature">feature</a>.<a href="package.html" class="extype" name="com.intel.analytics.zoo.feature.text">text</a></p>
-        <h1><a href="TextPredictor.html" title="See companion class">TextPredictor</a></h1><h3><span class="morelinks"><div>
+        <a href="Predictor$.html" title="See companion object"><img alt="Class/Object" src="../../../../../../lib/class_to_object_big.png" /></a>
+        <p id="owner"><a href="../../../../../package.html" class="extype" name="com">com</a>.<a href="../../../../package.html" class="extype" name="com.intel">intel</a>.<a href="../../../package.html" class="extype" name="com.intel.analytics">analytics</a>.<a href="../../package.html" class="extype" name="com.intel.analytics.zoo">zoo</a>.<a href="../package.html" class="extype" name="com.intel.analytics.zoo.pipeline">pipeline</a>.<a href="package.html" class="extype" name="com.intel.analytics.zoo.pipeline.api">api</a></p>
+        <h1><a href="Predictor$.html" title="See companion object">Predictor</a></h1><h3><span class="morelinks"><div>
             Related Docs:
-            <a href="TextPredictor.html" title="See companion class">class TextPredictor</a>
-            | <a href="package.html" class="extype" name="com.intel.analytics.zoo.feature.text">package text</a>
+            <a href="Predictor$.html" title="See companion object">object Predictor</a>
+            | <a href="package.html" class="extype" name="com.intel.analytics.zoo.pipeline.api">package api</a>
           </div></span></h3><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -44,14 +44,20 @@
       <h4 id="signature" class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
-        <span class="kind">object</span>
+        <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">TextPredictor</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">Predictor</span><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Predictor for distributed data</p><p>NOTE: The <code>predictClass</code>, <code>predict</code> and <code>predictImage</code> will call the relevant methods of
+object <code>Predictor</code>. Why we do this? Because every these methods uses the ClassTag <code>T</code>. If we do
+these jobs in the methods of class<code>Predictor</code>, when we do <code>mapPartition</code>, Spark will find all
+used values and do serialization. The <code>T</code> is the argument of constructor, the serialization will
+package the whole <code>Predictor</code> class, which contains the<code>model</code>. It will send a duplicate model
+to the workers. So we should move these methods to object <code>Predictor</code>.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -71,7 +77,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="com.intel.analytics.zoo.feature.text.TextPredictor"><span>TextPredictor</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="com.intel.analytics.zoo.pipeline.api.Predictor"><span>Predictor</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -108,7 +114,7 @@
         <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@!=(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -125,7 +131,7 @@
         <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@##():Int" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@##():Int" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -142,28 +148,11 @@
         <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@==(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@==(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.feature.text.TextPredictor#apply" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="apply[T](model:com.intel.analytics.bigdl.Module[T],batchPerThread:Int)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.feature.text.TextPredictor[T]"></a>
-      <a id="apply[T](Module[T],Int)(ClassTag[T],TensorNumeric[T]):TextPredictor[T]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">apply</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="model">model: <a href="../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="com.intel.analytics.zoo.feature.text.TextPredictor.apply.T">T</span>]</span>, <span name="batchPerThread">batchPerThread: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.feature.text.TextPredictor.apply.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.feature.text.TextPredictor.apply.T">T</span>]</span>)</span><span class="result">: <a href="TextPredictor.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextPredictor">TextPredictor</a>[<span class="extype" name="com.intel.analytics.zoo.feature.text.TextPredictor.apply.T">T</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@apply[T](model:com.intel.analytics.bigdl.Module[T],batchPerThread:Int)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.feature.text.TextPredictor[T]" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
@@ -176,7 +165,7 @@
         <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@asInstanceOf[T0]:T0" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -193,7 +182,7 @@
         <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@clone():Object" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@clone():Object" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -216,7 +205,7 @@
         <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -233,7 +222,7 @@
         <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@equals(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -250,7 +239,7 @@
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@finalize():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@finalize():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -273,7 +262,7 @@
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@getClass():Class[_]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@getClass():Class[_]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -290,7 +279,7 @@
         <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@hashCode():Int" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@hashCode():Int" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -307,7 +296,7 @@
         <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -324,7 +313,7 @@
         <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -341,7 +330,7 @@
         <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@notify():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@notify():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -358,45 +347,63 @@
         <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@notifyAll():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@notifyAll():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.feature.text.TextPredictor#predict" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="predict[T](textSet:com.intel.analytics.zoo.feature.text.DistributedTextSet,model:com.intel.analytics.bigdl.Module[T],batchPerThread:Int,shareBuffer:Boolean)(implicitevidence$3:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.feature.text.DistributedTextSet"></a>
-      <a id="predict[T](DistributedTextSet,Module[T],Int,Boolean)(ClassTag[T],TensorNumeric[T]):DistributedTextSet"></a>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.Predictor#predict" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="predict(dataSet:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int,shareBuffer:Boolean):org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.nn.abstractnn.Activity]"></a>
+      <a id="predict(RDD[Sample[T]],Int,Boolean):RDD[Activity]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">predict</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="textSet">textSet: <a href="DistributedTextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.DistributedTextSet">DistributedTextSet</a></span>, <span name="model">model: <a href="../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="com.intel.analytics.zoo.feature.text.TextPredictor.predict.T">T</span>]</span>, <span name="batchPerThread">batchPerThread: <span class="extype" name="scala.Int">Int</span></span>, <span name="shareBuffer">shareBuffer: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.feature.text.TextPredictor.predict.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.feature.text.TextPredictor.predict.T">T</span>]</span>)</span><span class="result">: <a href="DistributedTextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.DistributedTextSet">DistributedTextSet</a></span>
+        <span class="name">predict</span><span class="params">(<span name="dataSet">dataSet: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.Predictor.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="shareBuffer">shareBuffer: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@predict[T](textSet:com.intel.analytics.zoo.feature.text.DistributedTextSet,model:com.intel.analytics.bigdl.Module[T],batchPerThread:Int,shareBuffer:Boolean)(implicitevidence$3:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.feature.text.DistributedTextSet" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@predict(dataSet:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int,shareBuffer:Boolean):org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.nn.abstractnn.Activity]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       
-    </li><li name="com.intel.analytics.zoo.feature.text.TextPredictor#predictTextBatch" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="predictTextBatch[T](localModel:com.intel.analytics.bigdl.Module[T],textFeatures:Seq[com.intel.analytics.zoo.feature.text.TextFeature],localToBatch:com.intel.analytics.bigdl.dataset.Transformer[com.intel.analytics.bigdl.dataset.Sample[T],com.intel.analytics.bigdl.dataset.MiniBatch[T]],shareBuffer:Boolean)(implicitevidence$4:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Seq[com.intel.analytics.zoo.feature.text.TextFeature]"></a>
-      <a id="predictTextBatch[T](Module[T],Seq[TextFeature],Transformer[Sample[T],MiniBatch[T]],Boolean)(ClassTag[T],TensorNumeric[T]):Seq[TextFeature]"></a>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.Predictor#predictClass" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="predictClass(dataSet:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int):org.apache.spark.rdd.RDD[Int]"></a>
+      <a id="predictClass(RDD[Sample[T]],Int):RDD[Int]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">predictTextBatch</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="localModel">localModel: <a href="../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="com.intel.analytics.zoo.feature.text.TextPredictor.predictTextBatch.T">T</span>]</span>, <span name="textFeatures">textFeatures: <a href="../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TextFeature.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextFeature">TextFeature</a>]</span>, <span name="localToBatch">localToBatch: <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.text.TextPredictor.predictTextBatch.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.dataset.MiniBatch">MiniBatch</span>[<span class="extype" name="com.intel.analytics.zoo.feature.text.TextPredictor.predictTextBatch.T">T</span>]]</span>, <span name="shareBuffer">shareBuffer: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.feature.text.TextPredictor.predictTextBatch.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.feature.text.TextPredictor.predictTextBatch.T">T</span>]</span>)</span><span class="result">: <a href="../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="TextFeature.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextFeature">TextFeature</a>]</span>
+        <span class="name">predictClass</span><span class="params">(<span name="dataSet">dataSet: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.Predictor.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@predictTextBatch[T](localModel:com.intel.analytics.bigdl.Module[T],textFeatures:Seq[com.intel.analytics.zoo.feature.text.TextFeature],localToBatch:com.intel.analytics.bigdl.dataset.Transformer[com.intel.analytics.bigdl.dataset.Sample[T],com.intel.analytics.bigdl.dataset.MiniBatch[T]],shareBuffer:Boolean)(implicitevidence$4:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Seq[com.intel.analytics.zoo.feature.text.TextFeature]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@predictClass(dataSet:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int):org.apache.spark.rdd.RDD[Int]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.pipeline.api.Predictor#predictImage" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="predictImage(imageFrame:com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame,outputLayer:String,shareBuffer:Boolean,predictKey:String):com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame"></a>
+      <a id="predictImage(DistributedImageFrame,String,Boolean,String):DistributedImageFrame"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">predictImage</span><span class="params">(<span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame">DistributedImageFrame</span></span>, <span name="outputLayer">outputLayer: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">null</span></span>, <span name="shareBuffer">shareBuffer: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>, <span name="predictKey">predictKey: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol"><span class="name"><a href="../../../../../package.html">ImageFeature.predict</a></span></span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame">DistributedImageFrame</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@predictImage(imageFrame:com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame,outputLayer:String,shareBuffer:Boolean,predictKey:String):com.intel.analytics.bigdl.transform.vision.image.DistributedImageFrame" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">model predict DistributedImageFrame, return imageFrame with predicted tensor</p><div class="fullcomment"><div class="comment cmt"><p>model predict DistributedImageFrame, return imageFrame with predicted tensor</p></div><dl class="paramcmts block"><dt class="param">imageFrame</dt><dd class="cmt"><p>imageFrame that contains images</p></dd><dt class="param">outputLayer</dt><dd class="cmt"><p>if outputLayer is not null, the output of layer that matches
+                     outputLayer will be used as predicted output</p></dd><dt class="param">shareBuffer</dt><dd class="cmt"><p>whether to share same memory for each batch predict results</p></dd><dt class="param">predictKey</dt><dd class="cmt"><p>key to store predicted result</p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -409,7 +416,7 @@
         <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -426,7 +433,7 @@
         <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@toString():String" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@toString():String" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -443,7 +450,7 @@
         <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@wait():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@wait():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -466,7 +473,7 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -489,7 +496,7 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextPredictor$@wait(x$1:Long):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.Predictor@wait(x$1:Long):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>

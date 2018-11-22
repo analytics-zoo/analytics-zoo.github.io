@@ -66,7 +66,24 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="com.intel.analytics.zoo.pipeline.api.Net" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+              <ol><li name="com.intel.analytics.zoo.pipeline.api.FlatMapIteratorWithShutdown" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="FlatMapIteratorWithShutdown[T,B]extendsIterator[B]"></a>
+      <a id="FlatMapIteratorWithShutdown[T,B]:FlatMapIteratorWithShutdown[T,B]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="FlatMapIteratorWithShutdown.html"><span class="name">FlatMapIteratorWithShutdown</span></a><span class="tparams">[<span name="T">T</span>, <span name="B">B</span>]</span><span class="result"> extends <span class="extype" name="scala.collection.Iterator">Iterator</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.FlatMapIteratorWithShutdown.B">B</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.package@FlatMapIteratorWithShutdown[T,B]extendsIterator[B]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.Net" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="NetextendsAnyRef"></a>
       <a id="Net:Net"></a>
       <h4 class="signature">
@@ -84,6 +101,46 @@
     </span>
       <p class="shortcomment cmt">A placeholder to add layer's utilities
 </p>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.Predictable" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="Predictable[T]extendsAnyRef"></a>
+      <a id="Predictable[T]:Predictable[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="Predictable.html"><span class="name">Predictable</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.package@Predictable[T]extendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.Predictor" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="Predictor[T]extendsSerializable"></a>
+      <a id="Predictor[T]:Predictor[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Predictor.html"><span class="name">Predictor</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.package@Predictor[T]extendsSerializable" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Predictor for distributed data</p><div class="fullcomment"><div class="comment cmt"><p>Predictor for distributed data</p><p>NOTE: The <code>predictClass</code>, <code>predict</code> and <code>predictImage</code> will call the relevant methods of
+object <code>Predictor</code>. Why we do this? Because every these methods uses the ClassTag <code>T</code>. If we do
+these jobs in the methods of class<code>Predictor</code>, when we do <code>mapPartition</code>, Spark will find all
+used values and do serialization. The <code>T</code> is the argument of constructor, the serialization will
+package the whole <code>Predictor</code> class, which contains the<code>model</code>. It will send a duplicate model
+to the workers. So we should move these methods to object <code>Predictor</code>.
+</p></div></div>
     </li></ol>
             </div>
 
@@ -91,7 +148,24 @@
 
         <div id="values" class="values members">
               <h3>Value Members</h3>
-              <ol><li name="com.intel.analytics.zoo.pipeline.api.Net" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="com.intel.analytics.zoo.pipeline.api.FlatMapIteratorWithShutdown" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="FlatMapIteratorWithShutdown"></a>
+      <a id="FlatMapIteratorWithShutdown:FlatMapIteratorWithShutdown"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="FlatMapIteratorWithShutdown$.html"><span class="name">FlatMapIteratorWithShutdown</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.package@FlatMapIteratorWithShutdown" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.Net" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="Net"></a>
       <a id="Net:Net"></a>
       <h4 class="signature">
@@ -104,6 +178,23 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.package@Net" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.Predictor" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Predictor"></a>
+      <a id="Predictor:Predictor"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Predictor$.html"><span class="name">Predictor</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.package@Predictor" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
