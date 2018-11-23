@@ -52,6 +52,7 @@
       </h4>
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Given a wordIndex map, transform tokens to corresponding indices.
+Those words not in the map will be aborted.
 Need to tokenize first.
 Input key: TextFeature.tokens
 Output key: TextFeature.indexedTokens
@@ -95,7 +96,7 @@ Output key: TextFeature.indexedTokens
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.intel.analytics.zoo.feature.text.WordIndexer#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(map:Map[String,Int],replaceElement:Int):com.intel.analytics.zoo.feature.text.WordIndexer"></a>
+      <a id="&lt;init&gt;(map:Map[String,Int]):com.intel.analytics.zoo.feature.text.WordIndexer"></a>
       <a id="&lt;init&gt;:WordIndexer"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -103,17 +104,14 @@ Output key: TextFeature.indexedTokens
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">WordIndexer</span><span class="params">(<span name="map">map: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>]</span>, <span name="replaceElement">replaceElement: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">0</span></span>)</span>
+        <span class="name">WordIndexer</span><span class="params">(<span name="map">map: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>]</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.WordIndexer@&lt;init&gt;(map:Map[String,Int],replaceElement:Int):com.intel.analytics.zoo.feature.text.WordIndexer" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.WordIndexer@&lt;init&gt;(map:Map[String,Int]):com.intel.analytics.zoo.feature.text.WordIndexer" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">map</dt><dd class="cmt"><p>Map of each word (String) and its index (integer).
-           It is recommended that the map contains all the words in your corpus.</p></dd><dt class="param">replaceElement</dt><dd class="cmt"><p>Integer. The element to fill if the word is not in
-                      the given map. Default is 0 with the convention that
-                      0 is reserved for unknown words.</p></dd></dl></div>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">map</dt><dd class="cmt"><p>Map of each word (String) and its index (integer).</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -475,7 +473,7 @@ Output key: TextFeature.indexedTokens
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.feature.text.WordIndexer#map" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.feature.text.WordIndexer#map" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="map:Map[String,Int]"></a>
       <a id="map:Map[String,Int]"></a>
       <h4 class="signature">
@@ -491,8 +489,7 @@ Output key: TextFeature.indexedTokens
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Map of each word (String) and its index (integer).</p><div class="fullcomment"><div class="comment cmt"><p>Map of each word (String) and its index (integer).
-           It is recommended that the map contains all the words in your corpus.</p></div></div>
+      <p class="shortcomment cmt">Map of each word (String) and its index (integer).</p>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -544,25 +541,6 @@ Output key: TextFeature.indexedTokens
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.feature.text.WordIndexer#replaceElement" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="replaceElement:Int"></a>
-      <a id="replaceElement:Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">replaceElement</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.WordIndexer@replaceElement:Int" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Integer.</p><div class="fullcomment"><div class="comment cmt"><p>Integer. The element to fill if the word is not in
-                      the given map. Default is 0 with the convention that
-                      0 is reserved for unknown words.</p></div></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>

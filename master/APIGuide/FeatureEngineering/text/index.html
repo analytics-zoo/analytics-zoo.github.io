@@ -38,8 +38,8 @@
           {title: "TextSet Transformations", url: "#textset-transformations", children: [
               {title: "Tokenization", url: "#tokenization" },
               {title: "Normalization", url: "#normalization" },
-              {title: "Sequence Shaping", url: "#sequence-shaping" },
               {title: "Word To Index", url: "#word-to-index" },
+              {title: "Sequence Shaping", url: "#sequence-shaping" },
               {title: "BigDL Sample Generation", url: "#bigdl-sample-generation" },
           ]},
           {title: "WordEmbedding", url: "#wordembedding", children: [
@@ -131,38 +131,12 @@ Need to tokenize first.</p>
 <pre><code class="python">transformed_text_set = text_set.normalize()
 </code></pre>
 
-<h3 id="sequence-shaping"><strong>Sequence Shaping</strong></h3>
-<p>Shape the sequence of tokens to a fixed length. 
-If the original sequence is shorter than the target length, "##" will be padded to the end. 
-Need to tokenize first.</p>
-<p><strong>Scala</strong></p>
-<pre><code class="scala">transformedTextSet = textSet.shapeSequence(len, truncMode = TruncMode.pre)
-</code></pre>
-
-<ul>
-<li><code>len</code>: Positive integer. The target length.</li>
-<li><code>truncMode</code>: Truncation mode if the original sequence is longer than the target length. Either <code>TruncMode.pre</code> or <code>TruncMode.post</code>. 
-If <code>TruncMode.pre</code>, the sequence will be truncated from the beginning. 
-If <code>TruncMode.post</code>, the sequence will be truncated from the end. 
-Default is <code>TruncMode.post</code>.</li>
-</ul>
-<p><strong>Python</strong></p>
-<pre><code class="python">transformed_text_set = text_set.shape_sequence(len, trunc_mode=&quot;pre&quot;)
-</code></pre>
-
-<ul>
-<li><code>len</code>: Positive int. The target length.</li>
-<li><code>truncMode</code>: String. Truncation mode if the original sequence is longer than the target length. Either <code>pre</code> or <code>post</code>. 
-If <code>pre</code>, the sequence will be truncated from the beginning. 
-If <code>post</code>, the sequence will be truncated from the end. 
-Default is <code>post</code>.</li>
-</ul>
 <h3 id="word-to-index"><strong>Word To Index</strong></h3>
 <p>Map word tokens to indices. 
 Result index will start from 1 and corresponds to the occurrence frequency of each word sorted in descending order. 
 Here we adopt the convention that index 0 will be reserved for unknown words.
-Need to tokenize first.
-After word2idx, you can get the generated wordIndex map by calling <code>getWordIndex</code> (Scala) or <code>get_word_index()</code> (Python) of the transformed <code>TextSet</code>.</p>
+Need to tokenize first.</p>
+<p>After word2idx, you can get the generated wordIndex map by calling <code>getWordIndex</code> (Scala) or <code>get_word_index()</code> (Python) of the transformed <code>TextSet</code>.</p>
 <p><strong>Scala</strong></p>
 <pre><code class="scala">transformedTextSet = textSet.word2idx(removeTopN = 0, maxWordsNum = -1)
 </code></pre>
@@ -178,6 +152,35 @@ After word2idx, you can get the generated wordIndex map by calling <code>getWord
 <ul>
 <li><code>remove_topN</code>: Non-negative int. Remove the topN words with highest frequencies in the case where those are treated as stopwords. Default is 0, namely remove nothing.</li>
 <li><code>max_words_num</code>: Int. The maximum number of words to be taken into consideration. Default is -1, namely all words will be considered.</li>
+</ul>
+<h3 id="sequence-shaping"><strong>Sequence Shaping</strong></h3>
+<p>Shape the sequence of indices to a fixed length. 
+Need to word2idx first.</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">transformedTextSet = textSet.shapeSequence(len, truncMode = TruncMode.pre, padElement = 0)
+</code></pre>
+
+<ul>
+<li><code>len</code>: Positive integer. The target length.</li>
+<li><code>truncMode</code>: Truncation mode if the original sequence is longer than the target length. Either <code>TruncMode.pre</code> or <code>TruncMode.post</code>. 
+If <code>TruncMode.pre</code>, the sequence will be truncated from the beginning. 
+If <code>TruncMode.post</code>, the sequence will be truncated from the end. 
+Default is <code>TruncMode.post</code>.</li>
+<li><code>padElement</code>: Integer. The index element to be padded to the end of the sequence if the original length is smaller than the target length.
+Default is 0 with the convention that we reserve index 0 for unknown words.</li>
+</ul>
+<p><strong>Python</strong></p>
+<pre><code class="python">transformed_text_set = text_set.shape_sequence(len, trunc_mode=&quot;pre&quot;, pad_element=0)
+</code></pre>
+
+<ul>
+<li><code>len</code>: Positive int. The target length.</li>
+<li><code>truncMode</code>: String. Truncation mode if the original sequence is longer than the target length. Either <code>pre</code> or <code>post</code>. 
+If <code>pre</code>, the sequence will be truncated from the beginning. 
+If <code>post</code>, the sequence will be truncated from the end. 
+Default is <code>post</code>.</li>
+<li><code>padElement</code>: Int. The index element to be padded to the end of the sequence if the original length is smaller than the target length.
+Default is 0 with the convention that we reserve index 0 for unknown words.</li>
 </ul>
 <h3 id="bigdl-sample-generation"><strong>BigDL Sample Generation</strong></h3>
 <p>Transform indices and label (if any) to a BigDL <a href="https://bigdl-project.github.io/master/#APIGuide/Data/#sample">Sample</a>. 

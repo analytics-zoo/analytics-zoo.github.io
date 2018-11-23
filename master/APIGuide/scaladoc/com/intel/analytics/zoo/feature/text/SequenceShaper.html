@@ -51,14 +51,14 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Shape the sequence of tokens to a fixed length.
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Shape the sequence of indices to a fixed length.
 If the original sequence is longer than the target length, it will be truncated from
 the beginning or the end.
 If the original sequence is shorter than the target length, it will be padded to the end.
-Need to tokenize first.
-Input key: TextFeature.tokens
-Output key: TextFeature.tokens
-The original token sequence will be replaced by the shaped sequence.
+Need to word2idx first.
+Input key: TextFeature.indexedTokens
+Output key: TextFeature.indexedTokens
+The original indices sequence will be replaced by the shaped sequence.
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="TextTransformer.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextTransformer">TextTransformer</a>, <a href="../common/Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[<a href="TextFeature.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextFeature">TextFeature</a>, <a href="TextFeature.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextFeature">TextFeature</a>], <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[<a href="TextFeature.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextFeature">TextFeature</a>, <a href="TextFeature.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextFeature">TextFeature</a>], <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
@@ -99,7 +99,7 @@ The original token sequence will be replaced by the shaped sequence.
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.intel.analytics.zoo.feature.text.SequenceShaper#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(len:Int,truncMode:com.intel.analytics.zoo.feature.text.TruncMode.TruncMode,padElement:String):com.intel.analytics.zoo.feature.text.SequenceShaper"></a>
+      <a id="&lt;init&gt;(len:Int,truncMode:com.intel.analytics.zoo.feature.text.TruncMode.TruncMode,padElement:Int):com.intel.analytics.zoo.feature.text.SequenceShaper"></a>
       <a id="&lt;init&gt;:SequenceShaper"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -107,20 +107,19 @@ The original token sequence will be replaced by the shaped sequence.
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">SequenceShaper</span><span class="params">(<span name="len">len: <span class="extype" name="scala.Int">Int</span></span>, <span name="truncMode">truncMode: <a href="TruncMode$.html#TruncMode=com.intel.analytics.zoo.feature.text.TruncMode.Value" class="extmbr" name="com.intel.analytics.zoo.feature.text.TruncMode.TruncMode">TruncMode</a> = <span class="symbol"><span class="name"><a href="TruncMode$.html">TruncMode.pre</a></span></span></span>, <span name="padElement">padElement: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;##&quot;</span></span>)</span>
+        <span class="name">SequenceShaper</span><span class="params">(<span name="len">len: <span class="extype" name="scala.Int">Int</span></span>, <span name="truncMode">truncMode: <a href="TruncMode$.html#TruncMode=com.intel.analytics.zoo.feature.text.TruncMode.Value" class="extmbr" name="com.intel.analytics.zoo.feature.text.TruncMode.TruncMode">TruncMode</a> = <span class="symbol"><span class="name"><a href="TruncMode$.html">TruncMode.pre</a></span></span></span>, <span name="padElement">padElement: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">0</span></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.SequenceShaper@&lt;init&gt;(len:Int,truncMode:com.intel.analytics.zoo.feature.text.TruncMode.TruncMode,padElement:String):com.intel.analytics.zoo.feature.text.SequenceShaper" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.SequenceShaper@&lt;init&gt;(len:Int,truncMode:com.intel.analytics.zoo.feature.text.TruncMode.TruncMode,padElement:Int):com.intel.analytics.zoo.feature.text.SequenceShaper" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">len</dt><dd class="cmt"><p>Positive integer. The target length.</p></dd><dt class="param">truncMode</dt><dd class="cmt"><p>Truncation mode. Either TruncMode.pre or TruncMode.post.
                  If TruncMode.pre, the sequence will be truncated from the beginning.
                  If TruncMode.post, the sequence will be truncated from the end.
-                 Default is TruncMode.post.</p></dd><dt class="param">padElement</dt><dd class="cmt"><p>String. The element to be padded to the sequence if the original length
-                  is smaller than the target length.
-                  Default is &quot;##&quot;. Make sure that the padding element is meaningless in
-                  your corpus.</p></dd></dl></div>
+                 Default is TruncMode.pre.</p></dd><dt class="param">padElement</dt><dd class="cmt"><p>Integer. The index element to be padded to the sequence if the original
+                  length is smaller than the target length.
+                  Default is 0 with the convention that we reserve index 0 for unknown words.</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -551,25 +550,24 @@ The original token sequence will be replaced by the shaped sequence.
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.text.SequenceShaper#padElement" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="padElement:String"></a>
-      <a id="padElement:String"></a>
+      <a id="padElement:Int"></a>
+      <a id="padElement:Int"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">padElement</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+        <span class="name">padElement</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.SequenceShaper@padElement:String" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.SequenceShaper@padElement:Int" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">String.</p><div class="fullcomment"><div class="comment cmt"><p>String. The element to be padded to the sequence if the original length
-                  is smaller than the target length.
-                  Default is &quot;##&quot;. Make sure that the padding element is meaningless in
-                  your corpus.</p></div></div>
+      <p class="shortcomment cmt">Integer.</p><div class="fullcomment"><div class="comment cmt"><p>Integer. The index element to be padded to the sequence if the original
+                  length is smaller than the target length.
+                  Default is 0 with the convention that we reserve index 0 for unknown words.</p></div></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -640,7 +638,7 @@ The original token sequence will be replaced by the shaped sequence.
       <p class="shortcomment cmt">Truncation mode.</p><div class="fullcomment"><div class="comment cmt"><p>Truncation mode. Either TruncMode.pre or TruncMode.post.
                  If TruncMode.pre, the sequence will be truncated from the beginning.
                  If TruncMode.post, the sequence will be truncated from the end.
-                 Default is TruncMode.post.</p></div></div>
+                 Default is TruncMode.pre.</p></div></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>

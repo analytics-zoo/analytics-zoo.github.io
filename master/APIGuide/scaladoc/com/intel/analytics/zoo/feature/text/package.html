@@ -139,14 +139,14 @@ Output key: TextFeature.tokens
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Shape the sequence of tokens to a fixed length.</p><div class="fullcomment"><div class="comment cmt"><p>Shape the sequence of tokens to a fixed length.
+      <p class="shortcomment cmt">Shape the sequence of indices to a fixed length.</p><div class="fullcomment"><div class="comment cmt"><p>Shape the sequence of indices to a fixed length.
 If the original sequence is longer than the target length, it will be truncated from
 the beginning or the end.
 If the original sequence is shorter than the target length, it will be padded to the end.
-Need to tokenize first.
-Input key: TextFeature.tokens
-Output key: TextFeature.tokens
-The original token sequence will be replaced by the shaped sequence.
+Need to word2idx first.
+Input key: TextFeature.indexedTokens
+Output key: TextFeature.indexedTokens
+The original indices sequence will be replaced by the shaped sequence.
 </p></div></div>
     </li><li name="com.intel.analytics.zoo.feature.text.TextFeature" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="TextFeatureextendsSerializable"></a>
@@ -280,6 +280,7 @@ Output key: TextFeature.tokens
       </a>
     </span>
       <p class="shortcomment cmt">Given a wordIndex map, transform tokens to corresponding indices.</p><div class="fullcomment"><div class="comment cmt"><p>Given a wordIndex map, transform tokens to corresponding indices.
+Those words not in the map will be aborted.
 Need to tokenize first.
 Input key: TextFeature.tokens
 Output key: TextFeature.indexedTokens

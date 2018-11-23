@@ -110,11 +110,11 @@ Only need to specify this when <code>sc</code> is not None. Default is 1.</li>
 <h2 id="build-text-transformation-pipeline"><strong>Build Text Transformation Pipeline</strong></h2>
 <p>You can easily call transformation methods of a <code>TextSet</code> one by one to build the text transformation pipeline. Please refer to <a href="../../APIGuide/FeatureEngineering/text/#textset-transformations">here</a> for more details.</p>
 <p><strong>Scala Example</strong></p>
-<pre><code class="scala">transformedTextSet = textSet.tokenize().normalize().shapeSequence(len).word2idx().generateSample()
+<pre><code class="scala">transformedTextSet = textSet.tokenize().normalize().word2idx().shapeSequence(len).generateSample()
 </code></pre>
 
 <p><strong>Python Example</strong></p>
-<pre><code class="python">transformed_text_set = text_set.tokenize().normalize().shape_sequence(len).word2idx().generate_sample()
+<pre><code class="python">transformed_text_set = text_set.tokenize().normalize().word2idx().shape_sequence(len).generate_sample()
 </code></pre>
 
 <hr />
