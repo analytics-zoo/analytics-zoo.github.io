@@ -298,21 +298,21 @@
     </span>
       <p class="shortcomment cmt">Generate BigDL Sample.</p><div class="fullcomment"><div class="comment cmt"><p>Generate BigDL Sample.
 Need to word2idx first.
-See TextFeatureToSample for more details.
+See <a href="TextFeatureToSample.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextFeatureToSample">TextFeatureToSample</a> for more details.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.text.DistributedTextSet#generateWordIndexMap" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="generateWordIndexMap(removeTopN:Int,maxWordsNum:Int):Map[String,Int]"></a>
-      <a id="generateWordIndexMap(Int,Int):Map[String,Int]"></a>
+      <a id="generateWordIndexMap(removeTopN:Int,maxWordsNum:Int,minFreq:Int,existingMap:Map[String,Int]):Map[String,Int]"></a>
+      <a id="generateWordIndexMap(Int,Int,Int,Map[String,Int]):Map[String,Int]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">generateWordIndexMap</span><span class="params">(<span name="removeTopN">removeTopN: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">0</span></span>, <span name="maxWordsNum">maxWordsNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>]</span>
+        <span class="name">generateWordIndexMap</span><span class="params">(<span name="removeTopN">removeTopN: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">0</span></span>, <span name="maxWordsNum">maxWordsNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="minFreq">minFreq: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="existingMap">existingMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>] = <span class="symbol">null</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.DistributedTextSet@generateWordIndexMap(removeTopN:Int,maxWordsNum:Int):Map[String,Int]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.DistributedTextSet@generateWordIndexMap(removeTopN:Int,maxWordsNum:Int,minFreq:Int,existingMap:Map[String,Int]):Map[String,Int]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -462,7 +462,7 @@ If the TextSet hasn't been transformed from word to index, null will be returned
     </span>
       <p class="shortcomment cmt">Do normalization on tokens.</p><div class="fullcomment"><div class="comment cmt"><p>Do normalization on tokens.
 Need to tokenize first.
-See Normalizer for more details.
+See <a href="Normalizer.html" class="extype" name="com.intel.analytics.zoo.feature.text.Normalizer">Normalizer</a> for more details.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="notify():Unit"></a>
@@ -534,6 +534,25 @@ Only available for DistributedTextSet for now.
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.feature.text.TextSet#saveWordIndex" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="saveWordIndex(path:String):Unit"></a>
+      <a id="saveWordIndex(String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">saveWordIndex</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.DistributedTextSet@saveWordIndex(path:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Save wordIndex map to local text file, which may be used for inference.</p><div class="fullcomment"><div class="comment cmt"><p>Save wordIndex map to local text file, which may be used for inference.
+Each line will be &quot;word id&quot;.
+</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>Local text file path.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.text.TextSet#setWordIndex" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="setWordIndex(map:Map[String,Int]):TextSet.this.type"></a>
       <a id="setWordIndex(Map[String,Int]):DistributedTextSet.this.type"></a>
@@ -569,7 +588,7 @@ Only available for DistributedTextSet for now.
     </span>
       <p class="shortcomment cmt">Shape the sequence of indices to a fixed length.</p><div class="fullcomment"><div class="comment cmt"><p>Shape the sequence of indices to a fixed length.
 Need to word2idx first.
-See SequenceShaper for more details.
+See <a href="SequenceShaper.html" class="extype" name="com.intel.analytics.zoo.feature.text.SequenceShaper">SequenceShaper</a> for more details.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
@@ -677,7 +696,7 @@ In this case, you may also want to specify partitionNum, the default of which is
       </a>
     </span>
       <p class="shortcomment cmt">Do tokenization on original text.</p><div class="fullcomment"><div class="comment cmt"><p>Do tokenization on original text.
-See Tokenizer for more details.
+See <a href="Tokenizer.html" class="extype" name="com.intel.analytics.zoo.feature.text.Tokenizer">Tokenizer</a> for more details.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.text.DistributedTextSet#transform" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="transform(transformer:com.intel.analytics.zoo.feature.common.Preprocessing[com.intel.analytics.zoo.feature.text.TextFeature,com.intel.analytics.zoo.feature.text.TextFeature]):com.intel.analytics.zoo.feature.text.TextSet"></a>
@@ -767,18 +786,18 @@ See Tokenizer for more details.
               
         </dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.text.TextSet#word2idx" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="word2idx(removeTopN:Int,maxWordsNum:Int):com.intel.analytics.zoo.feature.text.TextSet"></a>
-      <a id="word2idx(Int,Int):TextSet"></a>
+      <a id="word2idx(removeTopN:Int,maxWordsNum:Int,minFreq:Int,existingMap:Map[String,Int]):com.intel.analytics.zoo.feature.text.TextSet"></a>
+      <a id="word2idx(Int,Int,Int,Map[String,Int]):TextSet"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">word2idx</span><span class="params">(<span name="removeTopN">removeTopN: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">0</span></span>, <span name="maxWordsNum">maxWordsNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>)</span><span class="result">: <a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></span>
+        <span class="name">word2idx</span><span class="params">(<span name="removeTopN">removeTopN: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">0</span></span>, <span name="maxWordsNum">maxWordsNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="minFreq">minFreq: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="existingMap">existingMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>] = <span class="symbol">null</span></span>)</span><span class="result">: <a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.DistributedTextSet@word2idx(removeTopN:Int,maxWordsNum:Int):com.intel.analytics.zoo.feature.text.TextSet" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.DistributedTextSet@word2idx(removeTopN:Int,maxWordsNum:Int,minFreq:Int,existingMap:Map[String,Int]):com.intel.analytics.zoo.feature.text.TextSet" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -786,12 +805,17 @@ See Tokenizer for more details.
 Result index will start from 1 and corresponds to the occurrence frequency of each word
 sorted in descending order.
 Need to tokenize first.
-See WordIndexer for more details.
+See <a href="WordIndexer.html" class="extype" name="com.intel.analytics.zoo.feature.text.WordIndexer">WordIndexer</a> for more details.
 After word2idx, you can get the generated wordIndex map by calling 'getWordIndex'.
-</p></div><dl class="paramcmts block"><dt class="param">removeTopN</dt><dd class="cmt"><p>Non-negative Integer. Remove the topN words with highest frequencies in
+</p></div><dl class="paramcmts block"><dt class="param">removeTopN</dt><dd class="cmt"><p>Non-negative integer. Remove the topN words with highest frequencies in
                   the case where those are treated as stopwords.
                   Default is 0, namely remove nothing.</p></dd><dt class="param">maxWordsNum</dt><dd class="cmt"><p>Integer. The maximum number of words to be taken into consideration.
-                   Default is -1, namely all words will be considered.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
+                   Default is -1, namely all words will be considered. Otherwise, it should
+                   be a positive integer.</p></dd><dt class="param">minFreq</dt><dd class="cmt"><p>Positive integer. Only those words with frequency &gt;= minFreq will be taken into
+               consideration. Default is 1, namely all words that occur will be considered.</p></dd><dt class="param">existingMap</dt><dd class="cmt"><p>Existing map of word index if any. Default is null and in this case a new
+                   map with index starting from 1 will be generated.
+                   If not null, then the generated map will preserve the word index in
+                   existingMap and assign subsequent indices to new words.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li></ol>
             </div>
 

@@ -261,6 +261,60 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.text.TextSet#fromRelationLists" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fromRelationLists(relations:org.apache.spark.rdd.RDD[com.intel.analytics.zoo.feature.common.Relation],corpus1:com.intel.analytics.zoo.feature.text.TextSet,corpus2:com.intel.analytics.zoo.feature.text.TextSet):com.intel.analytics.zoo.feature.text.DistributedTextSet"></a>
+      <a id="fromRelationLists(RDD[Relation],TextSet,TextSet):DistributedTextSet"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fromRelationLists</span><span class="params">(<span name="relations">relations: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<a href="../common/Relation.html" class="extype" name="com.intel.analytics.zoo.feature.common.Relation">Relation</a>]</span>, <span name="corpus1">corpus1: <a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></span>, <span name="corpus2">corpus2: <a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></span>)</span><span class="result">: <a href="DistributedTextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.DistributedTextSet">DistributedTextSet</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextSet$@fromRelationLists(relations:org.apache.spark.rdd.RDD[com.intel.analytics.zoo.feature.common.Relation],corpus1:com.intel.analytics.zoo.feature.text.TextSet,corpus2:com.intel.analytics.zoo.feature.text.TextSet):com.intel.analytics.zoo.feature.text.DistributedTextSet" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Used to generate a TextSet for ranking.</p><div class="fullcomment"><div class="comment cmt"><p>Used to generate a TextSet for ranking.</p><p>This method does the following:
+1. For each <span class="extype" name="Relation.id1">Relation.id1</span>, find the list of <span class="extype" name="Relation.id2">Relation.id2</span> with corresponding
+<span class="extype" name="Relation.label">Relation.label</span> that comes together with <span class="extype" name="Relation.id1">Relation.id1</span>.
+In other words, group relations by <span class="extype" name="Relation.id1">Relation.id1</span>.
+2. Join with corpus to transform each id to indexedTokens.
+Note: Make sure that the corpus has been transformed by <a href="SequenceShaper.html" class="extype" name="com.intel.analytics.zoo.feature.text.SequenceShaper">SequenceShaper</a> and <a href="WordIndexer.html" class="extype" name="com.intel.analytics.zoo.feature.text.WordIndexer">WordIndexer</a>.
+3. For each pair, generate a TextFeature having Sample with:
+- feature of shape (listLength, text1Length + text2Length).
+- label of shape (listLength, 1).
+</p></div><dl class="paramcmts block"><dt class="param">relations</dt><dd class="cmt"><p>RDD of <span class="extype" name="Relation">Relation</span>.</p></dd><dt class="param">corpus1</dt><dd class="cmt"><p>DistributedTextSet that contains all <span class="extype" name="Relation.id1">Relation.id1</span>. For each TextFeature
+               in corpus1, text must have been transformed to indexedTokens of the same length.</p></dd><dt class="param">corpus2</dt><dd class="cmt"><p>DistributedTextSet that contains all <span class="extype" name="Relation.id2">Relation.id2</span>. For each TextFeature
+               in corpus2, text must have been transformed to indexedTokens of the same length.</p></dd><dt>returns</dt><dd class="cmt"><p>DistributedTextSet.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.text.TextSet#fromRelationPairs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fromRelationPairs(relations:org.apache.spark.rdd.RDD[com.intel.analytics.zoo.feature.common.Relation],corpus1:com.intel.analytics.zoo.feature.text.TextSet,corpus2:com.intel.analytics.zoo.feature.text.TextSet):com.intel.analytics.zoo.feature.text.DistributedTextSet"></a>
+      <a id="fromRelationPairs(RDD[Relation],TextSet,TextSet):DistributedTextSet"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fromRelationPairs</span><span class="params">(<span name="relations">relations: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<a href="../common/Relation.html" class="extype" name="com.intel.analytics.zoo.feature.common.Relation">Relation</a>]</span>, <span name="corpus1">corpus1: <a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></span>, <span name="corpus2">corpus2: <a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></span>)</span><span class="result">: <a href="DistributedTextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.DistributedTextSet">DistributedTextSet</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextSet$@fromRelationPairs(relations:org.apache.spark.rdd.RDD[com.intel.analytics.zoo.feature.common.Relation],corpus1:com.intel.analytics.zoo.feature.text.TextSet,corpus2:com.intel.analytics.zoo.feature.text.TextSet):com.intel.analytics.zoo.feature.text.DistributedTextSet" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Used to generate a TextSet for pairwise training.</p><div class="fullcomment"><div class="comment cmt"><p>Used to generate a TextSet for pairwise training.</p><p>This method does the following:
+1. Generate all RelationPairs: (id1, id2Positive, id2Negative) from Relations.
+2. Join RelationPairs with corpus to transform id to indexedTokens.
+Note: Make sure that the corpus has been transformed by <a href="SequenceShaper.html" class="extype" name="com.intel.analytics.zoo.feature.text.SequenceShaper">SequenceShaper</a> and <a href="WordIndexer.html" class="extype" name="com.intel.analytics.zoo.feature.text.WordIndexer">WordIndexer</a>.
+3. For each pair, generate a TextFeature having Sample with:
+- feature of shape (2, text1Length + text2Length).
+- label of value [1 0] as the positive relation is placed before the negative one.
+</p></div><dl class="paramcmts block"><dt class="param">relations</dt><dd class="cmt"><p>RDD of <span class="extype" name="Relation">Relation</span>.</p></dd><dt class="param">corpus1</dt><dd class="cmt"><p>DistributedTextSet that contains all <span class="extype" name="Relation.id1">Relation.id1</span>. For each TextFeature
+               in corpus1, text must have been transformed to indexedTokens of the same length.</p></dd><dt class="param">corpus2</dt><dd class="cmt"><p>DistributedTextSet that contains all <span class="extype" name="Relation.id2">Relation.id2</span>. For each TextFeature
+               in corpus2, text must have been transformed to indexedTokens of the same length.</p></dd><dt>returns</dt><dd class="cmt"><p>DistributedTextSet.</p></dd></dl></div>
     </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <a id="getClass():Class[_]"></a>
@@ -430,6 +484,51 @@ If sc is null, read texts as LocalTextSet from local file system.
           If specified, texts will be read as a DistributedTextSet.
           Default is null and in this case texts will be read as a LocalTextSet.</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>Integer. A suggestion value of the minimal partition number for input
                      texts. Only need to specify this when sc is not null. Default is 1.</p></dd><dt>returns</dt><dd class="cmt"><p>TextSet.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.text.TextSet#readCSV" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readCSV(path:String,sc:org.apache.spark.SparkContext,minPartitions:Int):com.intel.analytics.zoo.feature.text.TextSet"></a>
+      <a id="readCSV(String,SparkContext,Int):TextSet"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readCSV</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="sc">sc: <span class="extype" name="org.apache.spark.SparkContext">SparkContext</span> = <span class="symbol">null</span></span>, <span name="minPartitions">minPartitions: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>)</span><span class="result">: <a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextSet$@readCSV(path:String,sc:org.apache.spark.SparkContext,minPartitions:Int):com.intel.analytics.zoo.feature.text.TextSet" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Read texts from csv file.</p><div class="fullcomment"><div class="comment cmt"><p>Read texts from csv file.
+Each record is supposed to contain the following two fields in order:
+id(String) and text(String).</p><p>Note that the csv file should be without header.
+If sc is defined, read texts as DistributedTextSet from local file system or HDFS.
+If sc is null, read texts as LocalTextSet from local file system.
+</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The path to the csv file.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext.
+          If specified, texts will be read as a DistributedTextSet.
+          Default is null and in this case texts will be read as a LocalTextSet.</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>Integer. A suggestion value of the minimal partition number for input
+                     texts. Only need to specify this when sc is not null. Default is 1.</p></dd><dt>returns</dt><dd class="cmt"><p>TextSet.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.text.TextSet#readParquet" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readParquet(path:String,sqlContext:org.apache.spark.sql.SQLContext):com.intel.analytics.zoo.feature.text.DistributedTextSet"></a>
+      <a id="readParquet(String,SQLContext):DistributedTextSet"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readParquet</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="sqlContext">sqlContext: <span class="extype" name="org.apache.spark.sql.SQLContext">SQLContext</span></span>)</span><span class="result">: <a href="DistributedTextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.DistributedTextSet">DistributedTextSet</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextSet$@readParquet(path:String,sqlContext:org.apache.spark.sql.SQLContext):com.intel.analytics.zoo.feature.text.DistributedTextSet" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Read texts from parquet file.</p><div class="fullcomment"><div class="comment cmt"><p>Read texts from parquet file.
+Schema should be the following:
+&quot;id&quot;(String) and &quot;text&quot;(String).
+</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The path to the parquet file.</p></dd><dt class="param">sqlContext</dt><dd class="cmt"><p>An instance of SQLContext.</p></dd><dt>returns</dt><dd class="cmt"><p>DistributedTextSet.</p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -533,23 +632,27 @@ If sc is null, read texts as LocalTextSet from local file system.
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.feature.text.TextSet#wordIndexFromFrequencies" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="wordIndexFromFrequencies(frequencies:Array[(String,Int)]):Map[String,Int]"></a>
-      <a id="wordIndexFromFrequencies(Array[(String,Int)]):Map[String,Int]"></a>
+    </li><li name="com.intel.analytics.zoo.feature.text.TextSet#wordsToMap" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wordsToMap(words:Array[String],existingMap:Map[String,Int]):Map[String,Int]"></a>
+      <a id="wordsToMap(Array[String],Map[String,Int]):Map[String,Int]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">wordIndexFromFrequencies</span><span class="params">(<span name="frequencies">frequencies: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>)]</span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>]</span>
+        <span class="name">wordsToMap</span><span class="params">(<span name="words">words: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="existingMap">existingMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>] = <span class="symbol">null</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextSet$@wordIndexFromFrequencies(frequencies:Array[(String,Int)]):Map[String,Int]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextSet$@wordsToMap(words:Array[String],existingMap:Map[String,Int]):Map[String,Int]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Zip word with its corresponding index.</p><div class="fullcomment"><div class="comment cmt"><p>Zip word with its corresponding index. Index starts from 1.</p></div><dl class="paramcmts block"><dt class="param">frequencies</dt><dd class="cmt"><p>Array of words, each with its occurrence frequency in descending order.</p></dd><dt>returns</dt><dd class="cmt"><p>WordIndex map.</p></dd></dl></div>
+      <p class="shortcomment cmt">Assign each word an index to form a map.</p><div class="fullcomment"><div class="comment cmt"><p>Assign each word an index to form a map.
+</p></div><dl class="paramcmts block"><dt class="param">words</dt><dd class="cmt"><p>Array of words.</p></dd><dt class="param">existingMap</dt><dd class="cmt"><p>Existing map of word index if any. Default is null and in this case a new
+                   map with index starting from 1 will be generated.
+                   If not null, then the generated map will preserve the word index in
+                   existingMap and assign subsequent indices to new words.</p></dd><dt>returns</dt><dd class="cmt"><p>WordIndex map.</p></dd></dl></div>
     </li></ol>
             </div>
 

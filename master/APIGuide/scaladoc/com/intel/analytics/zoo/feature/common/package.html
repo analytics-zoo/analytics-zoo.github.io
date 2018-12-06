@@ -177,6 +177,43 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
 Multiple <a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a> can be combined into a <a href="ChainedPreprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.ChainedPreprocessing">ChainedPreprocessing</a>.
 E.g., FeatureStep1[A, B] -&gt; FeatureStep2[B, C] yield a ChainedFeatureSteps[A, C]
 </p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>input data type</p></dd><dt class="tparam">B</dt><dd class="cmt"><p>output data type</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.common.Relation" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="RelationextendsProductwithSerializable"></a>
+      <a id="Relation:Relation"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="Relation.html"><span class="name">Relation</span></a><span class="params">(<span name="id1">id1: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="id2">id2: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="label">label: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.package@RelationextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">It represents the relationship between two items.</p>
+    </li><li name="com.intel.analytics.zoo.feature.common.RelationPair" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="RelationPairextendsProductwithSerializable"></a>
+      <a id="RelationPair:RelationPair"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="RelationPair.html"><span class="name">RelationPair</span></a><span class="params">(<span name="id1">id1: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="id2Positive">id2Positive: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="id2Negative">id2Negative: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.package@RelationPairextendsProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A relation pair is made up of two relations:
+Relation(id1, id2Positive, label&gt;0) [Positive Relation]
+Relation(id1, id2Negative, label=0) [Negative Relation]
+</p>
     </li><li name="com.intel.analytics.zoo.feature.common.ScalarToTensor" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="ScalarToTensor[T]extendsPreprocessing[AnyVal,com.intel.analytics.bigdl.tensor.Tensor[T]]"></a>
       <a id="ScalarToTensor[T]:ScalarToTensor[T]"></a>
@@ -334,6 +371,23 @@ Tensor.</p>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.package@MLlibVectorToTensor" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.feature.common.Relations" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="Relations"></a>
+      <a id="Relations:Relations"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="Relations$.html"><span class="name">Relations</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.package@Relations" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>

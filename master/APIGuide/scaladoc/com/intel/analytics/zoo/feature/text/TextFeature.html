@@ -338,7 +338,7 @@ Each key is a string that can be used to identify the corresponding value.
       </a>
     </span>
       <p class="shortcomment cmt">Get the token indices of the TextFeature.</p><div class="fullcomment"><div class="comment cmt"><p>Get the token indices of the TextFeature.
-If text hasn't been segmented or mapped from word to index, null will be returned.
+If text hasn't been segmented or transformed from word to index, null will be returned.
 </p></div></div>
     </li><li name="com.intel.analytics.zoo.feature.text.TextFeature#getLabel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getLabel:Int"></a>
@@ -397,7 +397,7 @@ If the TextFeature hasn't been predicted by a model, null will be returned.
       <p class="shortcomment cmt">Get the Sample representation of the TextFeature.</p><div class="fullcomment"><div class="comment cmt"><p>Get the Sample representation of the TextFeature.
 If the TextFeature hasn't been transformed to Sample, null will be returned.
 </p></div></div>
-    </li><li name="com.intel.analytics.zoo.feature.text.TextFeature#getText" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.feature.text.TextFeature#getText" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getText:String"></a>
       <a id="getText:String"></a>
       <h4 class="signature">
@@ -413,7 +413,9 @@ If the TextFeature hasn't been transformed to Sample, null will be returned.
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Get the text content of the TextFeature.</p>
+      <p class="shortcomment cmt">Get the text content of the TextFeature.</p><div class="fullcomment"><div class="comment cmt"><p>Get the text content of the TextFeature.
+Return null if it doesn't exist.
+</p></div></div>
     </li><li name="com.intel.analytics.zoo.feature.text.TextFeature#getTokens" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getTokens:Array[String]"></a>
       <a id="getTokens:Array[String]"></a>
@@ -620,6 +622,25 @@ If text hasn't been segmented, null will be returned.
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.feature.text.TextFeature#uri" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="uri():String"></a>
+      <a id="uri():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">uri</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.TextFeature@uri():String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Get the identifier of the TextFeature.</p><div class="fullcomment"><div class="comment cmt"><p>Get the identifier of the TextFeature.
+Return null if it doesn't exist.
+</p></div></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>
