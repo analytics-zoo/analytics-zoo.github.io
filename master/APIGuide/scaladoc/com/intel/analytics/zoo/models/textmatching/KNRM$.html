@@ -164,7 +164,7 @@
       </a>
     </span>
       
-    </li><li name="com.intel.analytics.zoo.models.textmatching.KNRM#apply" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.models.textmatching.KNRM#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="apply[T](text1Length:Int,text2Length:Int,embeddingFile:String,wordIndex:Map[String,Int],trainEmbed:Boolean,kernelNum:Int,sigma:Double,exactSigma:Double,targetMode:String)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.textmatching.KNRM[T]"></a>
       <a id="apply[T](Int,Int,String,Map[String,Int],Boolean,Int,Double,Double,String)(ClassTag[T],TensorNumeric[T]):KNRM[T]"></a>
       <h4 class="signature">
@@ -180,7 +180,18 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">The factory method to create a KNRM instance using embeddingFile and wordIndex.</p><div class="fullcomment"><div class="comment cmt"><p>The factory method to create a KNRM instance using embeddingFile and wordIndex.
+</p></div><dl class="paramcmts block"><dt class="param">embeddingFile</dt><dd class="cmt"><p>The path to the word embedding file.
+                     Currently only the following GloVe files are supported:
+                     &quot;glove.6B.50d.txt&quot;, &quot;glove.6B.100d.txt&quot;, &quot;glove.6B.200d.txt&quot;,
+                     &quot;glove.6B.300d.txt&quot;, &quot;glove.42B.300d.txt&quot;, &quot;glove.840B.300d.txt&quot;.
+                     You can download from: https://nlp.stanford.edu/projects/glove/.</p></dd><dt class="param">wordIndex</dt><dd class="cmt"><p>Map of word (String) and its corresponding index (integer).
+                 The index is supposed to start from 1 with 0 reserved for unknown words.
+                 During the prediction, if you have words that are not in the wordIndex
+                 for the training, you can map them to index 0.
+                 Default is null. In this case, all the words in the embeddingFile will
+                 be taken into account and you can call
+                 WordEmbedding.getWordIndex(embeddingFile) to retrieve the map.</p></dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
