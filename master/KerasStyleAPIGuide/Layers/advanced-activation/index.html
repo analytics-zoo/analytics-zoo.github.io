@@ -33,6 +33,8 @@
       var is_top_frame = false;
         
         var pageToc = [
+          {title: "ELU", url: "#elu", children: [
+          ]},
         ];
 
     </script>
@@ -59,7 +61,68 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Advanced Activations</strong></h1>
     <hr>
-    
+    <h2 id="elu"><strong>ELU</strong></h2>
+<p>Exponential Linear Unit.</p>
+<p>It follows: f(x) =  alpha * (exp(x) - 1.) for x &lt; 0, f(x) = x for x &gt;= 0.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">ELU(alpha = 1.0, inputShape = null)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">ELU(alpha=1.0, input_shape=None, name=None)
+</code></pre>
+
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>alpha</code>: Scale for the negative factor. Default is 1.0.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+</ul>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.ELU
+import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
+import com.intel.analytics.bigdl.utils.Shape
+import com.intel.analytics.bigdl.tensor.Tensor
+
+val model = Sequential[Float]()
+model.add(ELU[Float](inputShape = Shape(3)))
+val input = Tensor[Float](2, 3).randn()
+val output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="scala">input: com.intel.analytics.bigdl.tensor.Tensor[Float] =
+-0.13405465 0.05160992  -1.4711418
+1.5808829   -1.3145303  0.6709266
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x3]
+</code></pre>
+
+<p>Output is:</p>
+<pre><code class="scala">output: com.intel.analytics.bigdl.nn.abstractnn.Activity =
+-0.1254577  0.05160992  -0.77033687
+1.5808829   -0.73139954 0.6709266
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x3]
+</code></pre>
+
+<p><strong>Python example:</strong></p>
+<pre><code class="python">import numpy as np
+from zoo.pipeline.api.keras.layers import ELU
+from zoo.pipeline.api.keras.models import Sequential
+
+model = Sequential()
+model.add(ELU(input_shape=(3, )))
+input = np.random.random([2, 3])
+output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="python">[[0.90404922 0.23530925 0.49711093]
+ [0.43009161 0.22446032 0.90144771]]
+</code></pre>
+
+<p>Output is</p>
+<pre><code class="python">[[0.9040492  0.23530924 0.49711093]
+ [0.43009162 0.22446032 0.9014477 ]]
+</code></pre>
 
   <br>
 </div>
