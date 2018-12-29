@@ -33,6 +33,10 @@
       var is_top_frame = false;
         
         var pageToc = [
+          {title: "Activation", url: "#activation", children: [
+          ]},
+          {title: "HardTanh", url: "#hardtanh", children: [
+          ]},
         ];
 
     </script>
@@ -59,7 +63,170 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Activation</strong></h1>
     <hr>
-    
+    <h2 id="activation"><strong>Activation</strong></h2>
+<p>Simple activation function to be applied to the output.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">Activation(activation, inputShape = null)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">Activation(activation, input_shape=None, name=None)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>activation</code>: Name of the activation function as string. See <a href="#available-activations">here</a> for available activation strings.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+</ul>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.Activation
+import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
+import com.intel.analytics.bigdl.utils.Shape
+import com.intel.analytics.bigdl.tensor.Tensor
+
+val model = Sequential[Float]()
+model.add(Activation[Float](&quot;tanh&quot;, inputShape = Shape(3)))
+val input = Tensor[Float](2, 3).randn()
+val output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="scala">input: com.intel.analytics.bigdl.tensor.Tensor[Float] =
+2.1659365   0.28006053  -0.20148286
+0.9146865    3.4301455    1.0930616
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x3]
+</code></pre>
+
+<p>Output is:</p>
+<pre><code class="scala">output: com.intel.analytics.bigdl.nn.abstractnn.Activity =
+0.9740552    0.2729611    -0.1988
+ 0.723374   0.99790496  0.7979928
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x3]
+</code></pre>
+
+<p><strong>Python example:</strong></p>
+<pre><code class="python">import numpy as np
+from zoo.pipeline.api.keras.layers import Activation
+from zoo.pipeline.api.keras.models import Sequential
+
+model = Sequential()
+model.add(Activation(&quot;tanh&quot;, input_shape=(3, )))
+input = np.random.random([2, 3])
+output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="python">[[ 0.26202468  0.15868397  0.27812652]
+ [ 0.45931689  0.32100054  0.51839282]]
+</code></pre>
+
+<p>Output is</p>
+<pre><code class="python">[[ 0.2561883   0.15736534  0.27117023]
+ [ 0.42952728  0.31041133  0.47645861]]
+</code></pre>
+
+<p>Note that the following two pieces of code will be equivalent:</p>
+<pre><code class="python">model.add(Dense(32))
+model.add(Activation('relu'))
+</code></pre>
+
+<pre><code class="python">model.add(Dense(32, activation=&quot;relu&quot;))
+</code></pre>
+
+<hr />
+<h2 id="hardtanh"><strong>HardTanh</strong></h2>
+<p>Applies the hard tanh function element-wise to the input.</p>
+<p>f(x) = maxValue, if x &gt; maxValue</p>
+<p>f(x) = minValue, if x &lt; minValue</p>
+<p>f(x) = x, otherwise</p>
+<p>When you use this layer as the first layer of a model, you need to provide the argument input_shape (a shape tuple, does not include the batch dimension).</p>
+<p>Remark: This layer is from Torch and wrapped in Keras style.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">HardTanh(minValue = -1, maxValue = 1, inputShape = null)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">HardTanh(min_value=-1, max_value=1, input_shape=None, name=None)
+</code></pre>
+
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>minValue</code>: The minimum threshold value. Default is -1.</li>
+<li><code>maxValue</code>: The maximum threshold value. Default is 1.</li>
+<li><code>inputShape</code>: A Single Shape, does not include the batch dimension.</li>
+</ul>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.HardTanh
+import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
+import com.intel.analytics.bigdl.utils.Shape
+import com.intel.analytics.bigdl.tensor.Tensor
+
+val model = Sequential[Float]()
+model.add(HardTanh[Float](-1, 0.5, inputShape = Shape(3, 4)))
+val input = Tensor[Float](2, 3, 4).randn()
+val output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="scala">input: com.intel.analytics.bigdl.tensor.Tensor[Float] =
+(1,.,.) =
+1.8396661       -2.096241       -0.36010137     -1.97987
+-0.20326108     1.5972694       -1.4166505      -0.3369559
+-0.22637285     -1.1021988      1.0707928       -1.5014135
+
+(2,.,.) =
+-0.24511681     -1.1103313      -0.7901563      -1.0394055
+-0.033373486    0.22657289      -0.7928737      1.5241393
+0.49224186      -0.21418595     -0.32379007     -0.941034
+
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x3x4]
+</code></pre>
+
+<p>Output is:</p>
+<pre><code class="scala">output: com.intel.analytics.bigdl.nn.abstractnn.Activity =
+(1,.,.) =
+0.5     -1.0    -0.36010137     -1.0
+-0.20326108     0.5     -1.0    -0.3369559
+-0.22637285     -1.0    0.5     -1.0
+
+(2,.,.) =
+-0.24511681     -1.0    -0.7901563      -1.0
+-0.033373486    0.22657289      -0.7928737      0.5
+0.49224186      -0.21418595     -0.32379007     -0.941034
+
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x3x4]
+</code></pre>
+
+<p><strong>Python example:</strong></p>
+<pre><code class="python">import numpy as np
+from zoo.pipeline.api.keras.layers import HardTanh
+from zoo.pipeline.api.keras.models import Sequential
+
+model = Sequential()
+model.add(HardTanh(-1, 0.5, input_shape=(3, 4)))
+input = np.random.random([2, 3, 4])
+output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="python">[[[0.38707977, 0.94085094, 0.50552125, 0.42818523],
+  [0.5544486 , 0.36521357, 0.42551631, 0.93228245],
+  [0.29155494, 0.61710319, 0.93137551, 0.05688166]],
+
+ [[0.75222706, 0.36454257, 0.83076327, 0.82004643],
+  [0.29213453, 0.71532663, 0.99556398, 0.57001469],
+  [0.58088671, 0.32646428, 0.60736   , 0.14861018]]]
+</code></pre>
+
+<p>Output is</p>
+<pre><code class="python">[[[0.38707978, 0.5       , 0.5       , 0.42818522],
+  [0.5       , 0.36521357, 0.4255163 , 0.5       ],
+  [0.29155496, 0.5       , 0.5       , 0.05688166]],
+
+  [[0.5       , 0.36454257, 0.5       , 0.5       ],
+   [0.29213452, 0.5       , 0.5       , 0.5       ],
+   [0.5       , 0.3264643 , 0.5       , 0.14861017]]]
+</code></pre>
 
   <br>
 </div>
