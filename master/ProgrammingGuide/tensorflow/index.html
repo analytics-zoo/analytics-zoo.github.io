@@ -128,11 +128,38 @@ with slim.arg_scope(lenet.lenet_arg_scope()):
 loss = tf.reduce_mean(tf.losses.sparse_softmax_cross_entropy(logits=logits, labels=squeezed_labels))
 </code></pre>
 
+<p>You can also construct your model using Keras provided by Tensorflow.</p>
+<pre><code class="python">from tensorflow.keras.models import Model
+from tensorflow.keras.layers import *
+
+data = Input(shape=[28, 28, 1])
+
+x = Flatten()(data)
+x = Dense(64, activation='relu')(x)
+x = Dense(64, activation='relu')(x)
+predictions = Dense(10, activation='softmax')(x)
+
+model = Model(inputs=data, outputs=predictions)
+
+model.compile(optimizer='rmsprop',
+            loss='sparse_categorical_crossentropy',
+            metrics=['accuracy'])
+</code></pre>
+
 <p>3.Distributed training on Spark and BigDL</p>
 <pre><code class="python">from zoo.pipeline.api.net import TFOptimizer
 from bigdl.optim.optimizer import MaxIteration, Adam, MaxEpoch, TrainSummary
 
-optimizer = TFOptimizer(loss, Adam(1e-3))
+optimizer = TFOptimizer.from_loss(loss, Adam(1e-3))
+optimizer.set_train_summary(TrainSummary(&quot;/tmp/az_lenet&quot;, &quot;lenet&quot;))
+optimizer.optimize(end_trigger=MaxEpoch(5))
+</code></pre>
+
+<p>For Keras model:</p>
+<pre><code class="python">from zoo.pipeline.api.net import TFOptimizer
+from bigdl.optim.optimizer import MaxIteration, MaxEpoch, TrainSummary
+
+optimizer = TFOptimizer.from_keras(keras_model=model, dataset=dataset)
 optimizer.set_train_summary(TrainSummary(&quot;/tmp/az_lenet&quot;, &quot;lenet&quot;))
 optimizer.optimize(end_trigger=MaxEpoch(5))
 </code></pre>
@@ -140,6 +167,10 @@ optimizer.optimize(end_trigger=MaxEpoch(5))
 <p>4.Save the variable to checkpoint</p>
 <pre><code class="python">saver = tf.train.Saver()
 saver.save(optimizer.sess, &quot;/tmp/lenet/&quot;)
+</code></pre>
+
+<p>For Keras model, you can also Keras' <code>save_weights</code> api.</p>
+<pre><code class="python">model.save_weights(&quot;/tmp/keras.h5&quot;)
 </code></pre>
 
 <h3 id="inference">Inference</h3>
@@ -177,8 +208,30 @@ saver = tf.train.Saver()
 saver.restore(sess, &quot;/tmp/lenet&quot;)
 </code></pre>
 
+<p>As before, you can also construct and restore your model using Keras provided by Tensorflow.</p>
+<pre><code class="python">from tensorflow.keras.models import Model
+from tensorflow.keras.layers import *
+
+data = Input(shape=[28, 28, 1])
+
+x = Flatten()(data)
+x = Dense(64, activation='relu')(x)
+x = Dense(64, activation='relu')(x)
+predictions = Dense(10, activation='softmax')(x)
+
+model = Model(inputs=data, outputs=predictions)
+
+model.load_weights(&quot;/tmp/mnist_keras.h5&quot;)
+
+</code></pre>
+
 <p>3.Run predictions</p>
-<pre><code class="python">predictor = TFPredictor(sess, [logits])
+<pre><code class="python">predictor = TFPredictor.from_outputs(sess, [logits])
+predictions_rdd = predictor.predict()
+</code></pre>
+
+<p>For keras model:</p>
+<pre><code class="python">predictor = TFPredictor.from_keras(model, dataset)
 predictions_rdd = predictor.predict()
 </code></pre>
 

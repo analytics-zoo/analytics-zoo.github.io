@@ -65,7 +65,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>Wrap a torch style layer to keras style layer.</p>
 <p>This layer can be built multiple times.</p>
 <p><strong>Scala:</strong></p>
-<pre><code class="scala">KerasLayerWrapper(torchLayer, inputShape = Null)
+<pre><code class="scala">KerasLayerWrapper(torchLayer, inputShape = null)
 </code></pre>
 
 <p><strong>Python:</strong></p>
@@ -75,7 +75,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>torchLayer</code>: a torch style layer.</li>
-<li><code>inputShape</code>: A Single Shape, does not include the batch dimension.i.e If the input data is (2, 3, 4) and 2 is the batch size, you should input: (3, 4) here.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.KerasLayerWrapper

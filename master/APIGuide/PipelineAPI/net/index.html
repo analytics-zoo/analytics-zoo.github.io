@@ -254,16 +254,32 @@ be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorfl
 
 <h2 id="tfoptimizer">TFOptimizer</h2>
 <p>TFOptimizer is the class that does all the hard work in distributed training, such as model
-distribution and parameter synchronization. It takes the <strong>loss</strong> (a scalar tensor) as input and runs
+distribution and parameter synchronization. There are two ways to create a TFOptimizer.</p>
+<p>The <code>from_loss</code> API takes the <strong>loss</strong> (a scalar tensor) as input and runs
 stochastic gradient descent using the given <strong>optimMethod</strong> on all the <strong>Variables</strong> that contributing
 to this loss.</p>
+<p>The <code>from_keras</code> API takes a compiled <strong>Keras Model</strong> and a <strong>TFDataset</strong> and runs stochastic gradient
+descent using the loss function, optimizer and metrics specified by the Keras model.</p>
 <p><strong>Note</strong>: This feature currently requires <strong>tensorflow 1.10</strong> and OS is one of the following 64-bit systems.
 <strong>Ubuntu 16.04 or later</strong>, <strong>macOS 10.12.6 or later</strong> and <strong>Windows 7 or later</strong>.</p>
 <p>To run on other system may require you to manually compile the TensorFlow source code. Instructions can
 be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</p>
 <p><strong>Python</strong></p>
-<pre><code class="python">optimizer = TFOptimizer(loss, Adam(1e-3))
-optimizer.set_train_summary(TrainSummary(&quot;/tmp/az_lenet&quot;, &quot;lenet&quot;))
+<pre><code class="python">loss = ...
+optimizer = TFOptimizer.from_loss(loss, Adam(1e-3))
+optimizer.optimize(end_trigger=MaxEpoch(5))
+</code></pre>
+
+<p>For Keras model:</p>
+<pre><code class="python">
+
+model = Model(inputs=..., outputs=...)
+
+model.compile(optimizer='rmsprop',
+            loss='sparse_categorical_crossentropy',
+            metrics=['accuracy'])
+
+optimizer = TFOptimizer.from_keras(model, dataset)
 optimizer.optimize(end_trigger=MaxEpoch(5))
 </code></pre>
 
@@ -276,7 +292,15 @@ optimizer.optimize(end_trigger=MaxEpoch(5))
 <p>To run on other system may require you to manually compile the TensorFlow source code. Instructions can
  be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</p>
 <p><strong>Python</strong></p>
-<pre><code class="python">predictor = TFPredictor(sess, [logits])
+<pre><code class="python">logist = ...
+predictor = TFPredictor.from_outputs(sess, [logits])
+predictions_rdd = predictor.predict()
+</code></pre>
+
+<p>For Keras model:</p>
+<pre><code class="python">model = Model(inputs=..., outputs=...)
+model.load_weights(&quot;/tmp/mnist_keras.h5&quot;)
+predictor = TFPredictor.from_keras(model, dataset)
 predictions_rdd = predictor.predict()
 </code></pre>
 

@@ -800,8 +800,8 @@ output = model.forward(input)
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>padding</code>: Int array of length 3. How many zeros to add at the beginning and end of the 3 padding dimensions. Symmetric padding will be applied to each dimension. Default is (1, 1, 1).</li>
-<li><code>dimOrdering</code>: Format of the input data. Either "CHANNEL_FIRST" (dimOrdering='th') or "CHANNEL_LAST" (dimOrdering='tf'). Default is "CHANNEL_FIRST".</li>
-<li><code>inputShape</code>: A Single Shape, does not include the batch dimension.</li>
+<li><code>dimOrdering</code>: Format of input data. Either 'th' (Channel First) or 'tf' (Channel Last). Default is 'th'.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.ZeroPadding3D
