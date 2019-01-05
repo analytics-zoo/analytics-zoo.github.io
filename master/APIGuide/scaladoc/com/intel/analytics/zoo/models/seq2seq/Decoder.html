@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>ZooModel - analytics-zoo-bigdl_0.7.1-spark_2.1.0 0.4.0-SNAPSHOT API - com.intel.analytics.zoo.models.common.ZooModel</title>
-          <meta name="description" content="ZooModel - analytics - zoo - bigdl 0.7.1 - spark 2.1.0 0.4.0 - SNAPSHOT API - com.intel.analytics.zoo.models.common.ZooModel" />
-          <meta name="keywords" content="ZooModel analytics zoo bigdl 0.7.1 spark 2.1.0 0.4.0 SNAPSHOT API com.intel.analytics.zoo.models.common.ZooModel" />
+          <title>Decoder - analytics-zoo-bigdl_0.7.1-spark_2.1.0 0.4.0-SNAPSHOT API - com.intel.analytics.zoo.models.seq2seq.Decoder</title>
+          <meta name="description" content="Decoder - analytics - zoo - bigdl 0.7.1 - spark 2.1.0 0.4.0 - SNAPSHOT API - com.intel.analytics.zoo.models.seq2seq.Decoder" />
+          <meta name="keywords" content="Decoder analytics zoo bigdl 0.7.1 spark 2.1.0 0.4.0 SNAPSHOT API com.intel.analytics.zoo.models.seq2seq.Decoder" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -16,7 +16,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../../../../../../index.html';
-            var hash = 'com.intel.analytics.zoo.models.common.ZooModel';
+            var hash = 'com.intel.analytics.zoo.models.seq2seq.Decoder';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -28,14 +28,12 @@
         </head>
         <body class="type">
       <div id="definition">
-        <a href="ZooModel$.html" title="See companion object"><img alt="Class/Object" src="../../../../../../lib/class_to_object_big.png" /></a>
-        <p id="owner"><a href="../../../../../package.html" class="extype" name="com">com</a>.<a href="../../../../package.html" class="extype" name="com.intel">intel</a>.<a href="../../../package.html" class="extype" name="com.intel.analytics">analytics</a>.<a href="../../package.html" class="extype" name="com.intel.analytics.zoo">zoo</a>.<a href="../package.html" class="extype" name="com.intel.analytics.zoo.models">models</a>.<a href="package.html" class="extype" name="com.intel.analytics.zoo.models.common">common</a></p>
-        <h1><a href="ZooModel$.html" title="See companion object">ZooModel</a></h1><h3><span class="morelinks"><div>
-            Related Docs:
-            <a href="ZooModel$.html" title="See companion object">object ZooModel</a>
-            | <a href="package.html" class="extype" name="com.intel.analytics.zoo.models.common">package common</a>
+        <img alt="Class" src="../../../../../../lib/class_big.png" />
+        <p id="owner"><a href="../../../../../package.html" class="extype" name="com">com</a>.<a href="../../../../package.html" class="extype" name="com.intel">intel</a>.<a href="../../../package.html" class="extype" name="com.intel.analytics">analytics</a>.<a href="../../package.html" class="extype" name="com.intel.analytics.zoo">zoo</a>.<a href="../package.html" class="extype" name="com.intel.analytics.zoo.models">models</a>.<a href="package.html" class="extype" name="com.intel.analytics.zoo.models.seq2seq">seq2seq</a></p>
+        <h1>Decoder</h1><h3><span class="morelinks"><div>Related Doc:
+            <a href="package.html" class="extype" name="com.intel.analytics.zoo.models.seq2seq">package seq2seq</a>
           </div></span></h3><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -47,17 +45,17 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">ZooModel</span><span class="tparams">[<span name="A">A &lt;: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>, <span name="B">B &lt;: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>, <span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.nn.Container">Container</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>
+        <span class="name">Decoder</span><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>] with <a href="../../pipeline/api/Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>The base class for models in Analytics Zoo.
-</p></div><dl class="paramcmts block"><dt class="tparam">A</dt><dd class="cmt"><p>Input data type.</p></dd><dt class="tparam">B</dt><dd class="cmt"><p>Output data type.</p></dd><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p><a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a> Base decoder class. Required by :obj:<code>com.intel.analytics.zoo.models.seq2seq</code>.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><span class="extype" name="com.intel.analytics.bigdl.nn.Container">Container</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><a href="../../pipeline/api/Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a>, <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.Container">Container</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div><div class="toggleContainer block">
             <span class="toggle">Known Subclasses</span>
-            <div class="subClasses hiddenContent"><a href="../anomalydetection/AnomalyDetector.html" class="extype" name="com.intel.analytics.zoo.models.anomalydetection.AnomalyDetector">AnomalyDetector</a>, <a href="../image/common/ImageModel.html" class="extype" name="com.intel.analytics.zoo.models.image.common.ImageModel">ImageModel</a>, <a href="../textmatching/KNRM.html" class="extype" name="com.intel.analytics.zoo.models.textmatching.KNRM">KNRM</a>, <a href="../recommendation/NeuralCF.html" class="extype" name="com.intel.analytics.zoo.models.recommendation.NeuralCF">NeuralCF</a>, <a href="../recommendation/Recommender.html" class="extype" name="com.intel.analytics.zoo.models.recommendation.Recommender">Recommender</a>, <a href="../seq2seq/Seq2seq.html" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq">Seq2seq</a>, <a href="../textclassification/TextClassifier.html" class="extype" name="com.intel.analytics.zoo.models.textclassification.TextClassifier">TextClassifier</a>, <a href="../textmatching/TextMatcher.html" class="extype" name="com.intel.analytics.zoo.models.textmatching.TextMatcher">TextMatcher</a>, <a href="../recommendation/WideAndDeep.html" class="extype" name="com.intel.analytics.zoo.models.recommendation.WideAndDeep">WideAndDeep</a></div>
+            <div class="subClasses hiddenContent"><a href="RNNDecoder.html" class="extype" name="com.intel.analytics.zoo.models.seq2seq.RNNDecoder">RNNDecoder</a></div>
           </div></div>
         
 
@@ -75,7 +73,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="com.intel.analytics.zoo.models.common.ZooModel"><span>ZooModel</span></li><li class="in" name="com.intel.analytics.bigdl.nn.Container"><span>Container</span></li><li class="in" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule"><span>AbstractModule</span></li><li class="in" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape"><span>InferShape</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="com.intel.analytics.zoo.models.seq2seq.Decoder"><span>Decoder</span></li><li class="in" name="com.intel.analytics.zoo.pipeline.api.Net"><span>Net</span></li><li class="in" name="com.intel.analytics.bigdl.nn.keras.KerasLayer"><span>KerasLayer</span></li><li class="in" name="com.intel.analytics.bigdl.nn.Container"><span>Container</span></li><li class="in" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule"><span>AbstractModule</span></li><li class="in" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape"><span>InferShape</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -94,23 +92,23 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="com.intel.analytics.zoo.models.common.ZooModel#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;()(implicitevidence$1:scala.reflect.ClassTag[A],implicitevidence$2:scala.reflect.ClassTag[B],implicitevidence$3:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.common.ZooModel[A,B,T]"></a>
-      <a id="&lt;init&gt;:ZooModel[A,B,T]"></a>
+              <ol><li name="com.intel.analytics.zoo.models.seq2seq.Decoder#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(inputShape:com.intel.analytics.bigdl.utils.Shape)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.seq2seq.Decoder[T]"></a>
+      <a id="&lt;init&gt;:Decoder[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">ZooModel</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span>]</span>, <span name="arg1">arg1: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span>]</span>, <span name="arg2">arg2: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>)</span>
+        <span class="name">Decoder</span><span class="params">(<span name="inputShape">inputShape: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span> = <span class="symbol">null</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@&lt;init&gt;()(implicitevidence$1:scala.reflect.ClassTag[A],implicitevidence$2:scala.reflect.ClassTag[B],implicitevidence$3:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.common.ZooModel[A,B,T]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@&lt;init&gt;(inputShape:com.intel.analytics.bigdl.utils.Shape)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.seq2seq.Decoder[T]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt"></p>
+      
     </li></ol>
             </div>
 
@@ -118,24 +116,23 @@
 
         <div id="values" class="values members">
               <h3>Abstract Value Members</h3>
-              <ol><li name="com.intel.analytics.zoo.models.common.ZooModel#buildModel" visbl="prt" data-isabs="true" fullComment="yes" group="Ungrouped">
-      <a id="buildModel():com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]"></a>
-      <a id="buildModel():AbstractModule[A,B,T]"></a>
+              <ol><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#doBuild" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="doBuild(inputShape:com.intel.analytics.bigdl.utils.Shape):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]"></a>
+      <a id="doBuild(Shape):AbstractModule[Activity,Tensor[T],T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">abstract </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">buildModel</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>
+        <span class="name">doBuild</span><span class="params">(<span name="inputShape">inputShape: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@buildModel():com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@doBuild(inputShape:com.intel.analytics.bigdl.utils.Shape):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Override this method to define a model.</p><div class="fullcomment"><div class="comment cmt"><p>Override this method to define a model.
-</p></div><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer</dd></dl></div>
     </li></ol>
             </div>
 
@@ -153,7 +150,7 @@
         <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@!=(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -170,7 +167,7 @@
         <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@##():Int" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@##():Int" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -187,45 +184,28 @@
         <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@==(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@==(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.common.ZooModel#accGradParameters" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#accGradParameters" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="accGradParameters(input:A,gradOutput:B):Unit"></a>
-      <a id="accGradParameters(A,B):Unit"></a>
+      <a id="accGradParameters(Activity,Tensor[T]):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">accGradParameters</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span></span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">accGradParameters</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@accGradParameters(input:A,gradOutput:B):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@accGradParameters(input:A,gradOutput:B):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a> → AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.common.ZooModel#addModel" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="addModel(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]):ZooModel.this.type"></a>
-      <a id="addModel(AbstractModule[A,B,T]):ZooModel.this.type"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">addModel</span><span class="params">(<span name="model">model: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@addModel(model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]):ZooModel.this.type" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.Container#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="apply(name:String):Option[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]]"></a>
       <a id="apply(String):Option[AbstractModule[Activity,Activity,T]]"></a>
@@ -235,10 +215,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>
+        <span class="name">apply</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@apply(name:String):Option[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@apply(name:String):Option[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -255,24 +235,24 @@
         <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@asInstanceOf[T0]:T0" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#backward" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="backward(input:A,gradOutput:B):A"></a>
-      <a id="backward(A,B):A"></a>
+      <a id="backward(Activity,Tensor[T]):Activity"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">backward</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span></span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span></span>
+        <span class="name">backward</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@backward(input:A,gradOutput:B):A" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@backward(input:A,gradOutput:B):A" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -289,28 +269,28 @@
         <span class="name">backwardTime</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@backwardTime:Long" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@backwardTime:Long" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.common.ZooModel#build" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="build():ZooModel.this.type"></a>
-      <a id="build():ZooModel.this.type"></a>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#build" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="build(calcInputShape:com.intel.analytics.bigdl.utils.Shape):com.intel.analytics.bigdl.utils.Shape"></a>
+      <a id="build(Shape):Shape"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">build</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">build</span><span class="params">(<span name="calcInputShape">calcInputShape: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@build():ZooModel.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@build(calcInputShape:com.intel.analytics.bigdl.utils.Shape):com.intel.analytics.bigdl.utils.Shape" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → InferShape</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.Container#canEqual" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="canEqual(other:Any):Boolean"></a>
       <a id="canEqual(Any):Boolean"></a>
@@ -323,58 +303,58 @@
         <span class="name">canEqual</span><span class="params">(<span name="other">other: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@canEqual(other:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@canEqual(other:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.Container#checkEngineType" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="checkEngineType():Container.this.type"></a>
-      <a id="checkEngineType():ZooModel.this.type"></a>
+      <a id="checkEngineType():Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">checkEngineType</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">checkEngineType</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@checkEngineType():Container.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@checkEngineType():Container.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.Container#clearState" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clearState():Container.this.type"></a>
-      <a id="clearState():ZooModel.this.type"></a>
+      <a id="clearState():Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">clearState</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">clearState</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@clearState():Container.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@clearState():Container.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#clone" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone(deepCopy:Boolean):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]"></a>
-      <a id="clone(Boolean):AbstractModule[A,B,T]"></a>
+      <a id="clone(Boolean):AbstractModule[Activity,Tensor[T],T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">clone</span><span class="params">(<span name="deepCopy">deepCopy: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>
+        <span class="name">clone</span><span class="params">(<span name="deepCopy">deepCopy: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@clone(deepCopy:Boolean):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@clone(deepCopy:Boolean):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -391,7 +371,7 @@
         <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@clone():Object" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@clone():Object" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -404,21 +384,38 @@
         </dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#cloneModule" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="cloneModule():AbstractModule.this.type"></a>
-      <a id="cloneModule():ZooModel.this.type"></a>
+      <a id="cloneModule():Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">cloneModule</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">cloneModule</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@cloneModule():AbstractModule.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@cloneModule():AbstractModule.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#computeOutputShape" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="computeOutputShape(inputShape:com.intel.analytics.bigdl.utils.Shape):com.intel.analytics.bigdl.utils.Shape"></a>
+      <a id="computeOutputShape(Shape):Shape"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">computeOutputShape</span><span class="params">(<span name="inputShape">inputShape: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@computeOutputShape(inputShape:com.intel.analytics.bigdl.utils.Shape):com.intel.analytics.bigdl.utils.Shape" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → InferShape</dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -431,7 +428,7 @@
         <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -448,24 +445,24 @@
         <span class="name">equals</span><span class="params">(<span name="other">other: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@equals(other:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@equals(other:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule → AnyRef → Any</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.Container#evaluate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="evaluate():Container.this.type"></a>
-      <a id="evaluate():ZooModel.this.type"></a>
+      <a id="evaluate():Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">evaluate</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">evaluate</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@evaluate():Container.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@evaluate():Container.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -479,10 +476,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">evaluate</span><span class="params">(<span name="dataSet">dataSet: <span class="extype" name="com.intel.analytics.bigdl.dataset.LocalDataSet">LocalDataSet</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.MiniBatch">MiniBatch</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>, <span name="vMethods">vMethods: <span class="extype" name="scala.Array">Array</span>[_ &lt;: <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationResult">ValidationResult</span>, <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>])]</span>
+        <span class="name">evaluate</span><span class="params">(<span name="dataSet">dataSet: <span class="extype" name="com.intel.analytics.bigdl.dataset.LocalDataSet">LocalDataSet</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.MiniBatch">MiniBatch</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>, <span name="vMethods">vMethods: <span class="extype" name="scala.Array">Array</span>[_ &lt;: <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationResult">ValidationResult</span>, <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>])]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@evaluate(dataSet:com.intel.analytics.bigdl.dataset.LocalDataSet[com.intel.analytics.bigdl.dataset.MiniBatch[T]],vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@evaluate(dataSet:com.intel.analytics.bigdl.dataset.LocalDataSet[com.intel.analytics.bigdl.dataset.MiniBatch[T]],vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -496,10 +493,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">evaluate</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>, <span name="vMethods">vMethods: <span class="extype" name="scala.Array">Array</span>[_ &lt;: <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationResult">ValidationResult</span>, <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>])]</span>
+        <span class="name">evaluate</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>, <span name="vMethods">vMethods: <span class="extype" name="scala.Array">Array</span>[_ &lt;: <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationResult">ValidationResult</span>, <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>])]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@evaluate(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]],batchSize:Option[Int]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@evaluate(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]],batchSize:Option[Int]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -513,10 +510,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">evaluateImage</span><span class="params">(<span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFrame">ImageFrame</span></span>, <span name="vMethods">vMethods: <span class="extype" name="scala.Array">Array</span>[_ &lt;: <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationResult">ValidationResult</span>, <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>])]</span>
+        <span class="name">evaluateImage</span><span class="params">(<span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFrame">ImageFrame</span></span>, <span name="vMethods">vMethods: <span class="extype" name="scala.Array">Array</span>[_ &lt;: <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationResult">ValidationResult</span>, <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>])]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@evaluateImage(imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame,vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]],batchSize:Option[Int]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@evaluateImage(imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame,vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]],batchSize:Option[Int]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -533,7 +530,7 @@
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@finalize():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@finalize():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -553,27 +550,27 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">findModules</span><span class="params">(<span name="moduleType">moduleType: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.collection.mutable.ArrayBuffer">ArrayBuffer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[_, _, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>
+        <span class="name">findModules</span><span class="params">(<span name="moduleType">moduleType: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.collection.mutable.ArrayBuffer">ArrayBuffer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[_, _, <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@findModules(moduleType:String):scala.collection.mutable.ArrayBuffer[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[_,_,T]]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@findModules(moduleType:String):scala.collection.mutable.ArrayBuffer[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[_,_,T]]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#forward" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="forward(input:A):B"></a>
-      <a id="forward(A):B"></a>
+      <a id="forward(Activity):Tensor[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">forward</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span></span>
+        <span class="name">forward</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@forward(input:A):B" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@forward(input:A):B" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -590,28 +587,45 @@
         <span class="name">forwardTime</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@forwardTime:Long" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@forwardTime:Long" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.Container#freeze" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="freeze(names:String*):Container.this.type"></a>
-      <a id="freeze(String*):ZooModel.this.type"></a>
+      <a id="freeze(String*):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">freeze</span><span class="params">(<span name="names">names: <span class="extype" name="scala.Predef.String">String</span>*</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">freeze</span><span class="params">(<span name="names">names: <span class="extype" name="scala.Predef.String">String</span>*</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@freeze(names:String*):Container.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@freeze(names:String*):Container.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.Net#from" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="from[T](vars:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]*)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
+      <a id="from[T](Variable[T]*)(ClassTag[T],TensorNumeric[T]):Variable[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">from</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="vars">vars: <a href="../../pipeline/api/autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.Net.from.T">T</span>]*</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.Net.from.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.Net.from.T">T</span>]</span>)</span><span class="result">: <a href="../../pipeline/api/autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.Net.from.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@from[T](vars:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]*)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Build graph: some other modules point to current module</p><div class="fullcomment"><div class="comment cmt"><p>Build graph: some other modules point to current module</p></div><dl class="paramcmts block"><dt class="param">vars</dt><dd class="cmt"><p>upstream variables</p></dd><dt>returns</dt><dd class="cmt"><p>Variable containing current module</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../pipeline/api/Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></dd></dl></div>
     </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <a id="getClass():Class[_]"></a>
@@ -624,7 +638,7 @@
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@getClass():Class[_]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@getClass():Class[_]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -638,10 +652,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getExtraParameter</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>
+        <span class="name">getExtraParameter</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@getExtraParameter():Array[com.intel.analytics.bigdl.tensor.Tensor[T]]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@getExtraParameter():Array[com.intel.analytics.bigdl.tensor.Tensor[T]]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -658,7 +672,7 @@
         <span class="name">getInputShape</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@getInputShape():com.intel.analytics.bigdl.utils.Shape" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@getInputShape():com.intel.analytics.bigdl.utils.Shape" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -675,7 +689,7 @@
         <span class="name">getName</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@getName():String" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@getName():String" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -692,7 +706,7 @@
         <span class="name">getNumericType</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorDataType">TensorDataType</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@getNumericType():com.intel.analytics.bigdl.tensor.TensorDataType" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@getNumericType():com.intel.analytics.bigdl.tensor.TensorDataType" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -709,7 +723,7 @@
         <span class="name">getOutputShape</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@getOutputShape():com.intel.analytics.bigdl.utils.Shape" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@getOutputShape():com.intel.analytics.bigdl.utils.Shape" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -726,7 +740,7 @@
         <span class="name">getParametersTable</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.Table">Table</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@getParametersTable():com.intel.analytics.bigdl.utils.Table" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@getParametersTable():com.intel.analytics.bigdl.utils.Table" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -743,7 +757,7 @@
         <span class="name">getPrintName</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@getPrintName():String" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@getPrintName():String" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -760,7 +774,7 @@
         <span class="name">getScaleB</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@getScaleB():Double" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@getScaleB():Double" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -777,7 +791,7 @@
         <span class="name">getScaleW</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@getScaleW():Double" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@getScaleW():Double" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -791,10 +805,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getTimes</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[_ &lt;: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, _ &lt;: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>], <span class="extype" name="scala.Long">Long</span>, <span class="extype" name="scala.Long">Long</span>)]</span>
+        <span class="name">getTimes</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[_ &lt;: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, _ &lt;: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="scala.Long">Long</span>, <span class="extype" name="scala.Long">Long</span>)]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@getTimes():Array[(com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[_&lt;:com.intel.analytics.bigdl.nn.abstractnn.Activity,_&lt;:com.intel.analytics.bigdl.nn.abstractnn.Activity,T],Long,Long)]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@getTimes():Array[(com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[_&lt;:com.intel.analytics.bigdl.nn.abstractnn.Activity,_&lt;:com.intel.analytics.bigdl.nn.abstractnn.Activity,T],Long,Long)]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -811,7 +825,7 @@
         <span class="name">getTimesGroupByModuleType</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Long">Long</span>, <span class="extype" name="scala.Long">Long</span>)]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@getTimesGroupByModuleType():Array[(String,Long,Long)]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@getTimesGroupByModuleType():Array[(String,Long,Long)]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -825,27 +839,27 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getWeightsBias</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>
+        <span class="name">getWeightsBias</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@getWeightsBias():Array[com.intel.analytics.bigdl.tensor.Tensor[T]]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@getWeightsBias():Array[com.intel.analytics.bigdl.tensor.Tensor[T]]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#gradInput" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="gradInput:A"></a>
-      <a id="gradInput:A"></a>
+      <a id="gradInput:Activity"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">var</span>
       </span>
       <span class="symbol">
-        <span class="name">gradInput</span><span class="result">: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span></span>
+        <span class="name">gradInput</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@gradInput:A" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@gradInput:A" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -862,7 +876,7 @@
         <span class="name">hasName</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@hasName:Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@hasName:Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -879,12 +893,12 @@
         <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@hashCode():Int" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@hashCode():Int" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule → AnyRef → Any</dd></dl></div>
-    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#inputs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#inputs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="inputs(first:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int),nodesWithIndex:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int)*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]"></a>
       <a id="inputs((ModuleNode[T],Int),(ModuleNode[T],Int)*):ModuleNode[T]"></a>
       <h4 class="signature">
@@ -893,15 +907,15 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">inputs</span><span class="params">(<span name="first">first: (<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>], <span class="extype" name="scala.Int">Int</span>)</span>, <span name="nodesWithIndex">nodesWithIndex: (<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>], <span class="extype" name="scala.Int">Int</span>)*</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>
+        <span class="name">inputs</span><span class="params">(<span name="first">first: (<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="scala.Int">Int</span>)</span>, <span name="nodesWithIndex">nodesWithIndex: (<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="scala.Int">Int</span>)*</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@inputs(first:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int),nodesWithIndex:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int)*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@inputs(first:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int),nodesWithIndex:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int)*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#inputs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#inputs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="inputs(nodes:Array[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]"></a>
       <a id="inputs(Array[ModuleNode[T]]):ModuleNode[T]"></a>
       <h4 class="signature">
@@ -910,15 +924,15 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">inputs</span><span class="params">(<span name="nodes">nodes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>
+        <span class="name">inputs</span><span class="params">(<span name="nodes">nodes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@inputs(nodes:Array[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@inputs(nodes:Array[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#inputs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#inputs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="inputs(nodes:com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]"></a>
       <a id="inputs(ModuleNode[T]*):ModuleNode[T]"></a>
       <h4 class="signature">
@@ -927,14 +941,48 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">inputs</span><span class="params">(<span name="nodes">nodes: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]*</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>
+        <span class="name">inputs</span><span class="params">(<span name="nodes">nodes: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]*</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@inputs(nodes:com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@inputs(nodes:com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#isBuilt" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isBuilt():Boolean"></a>
+      <a id="isBuilt():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isBuilt</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@isBuilt():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → InferShape</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.Net#isFrozen" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isFrozen[T]()(implicitevidence$1:scala.reflect.ClassTag[T]):Boolean"></a>
+      <a id="isFrozen[T]()(ClassTag[T]):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isFrozen</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.Net.isFrozen.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@isFrozen[T]()(implicitevidence$1:scala.reflect.ClassTag[T]):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../pipeline/api/Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></dd></dl></div>
     </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <a id="isInstanceOf[T0]:Boolean"></a>
@@ -947,11 +995,28 @@
         <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#isKerasStyle" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isKerasStyle():Boolean"></a>
+      <a id="isKerasStyle():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isKerasStyle</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@isKerasStyle():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → InferShape</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#isTraining" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isTraining():Boolean"></a>
       <a id="isTraining():Boolean"></a>
@@ -964,11 +1029,45 @@
         <span class="name">isTraining</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@isTraining():Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@isTraining():Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#labor" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="labor:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]"></a>
+      <a id="labor:AbstractModule[Activity,Tensor[T],T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">labor</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@labor:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#labor_=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="labor_=(value:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]):Unit"></a>
+      <a id="labor_=(AbstractModule[Activity,Tensor[T],T]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: labor_$eq" class="name">labor_=</span><span class="params">(<span name="value">value: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@labor_=(value:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#line" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="line:String"></a>
       <a id="line:String"></a>
@@ -981,62 +1080,45 @@
         <span class="name">line</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@line:String" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@line:String" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#loadModelWeights" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="loadModelWeights(srcModel:com.intel.analytics.bigdl.Module[Float],matchAll:Boolean):AbstractModule.this.type"></a>
-      <a id="loadModelWeights(Module[Float],Boolean):ZooModel.this.type"></a>
+      <a id="loadModelWeights(Module[Float],Boolean):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">loadModelWeights</span><span class="params">(<span name="srcModel">srcModel: <a href="../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="matchAll">matchAll: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">loadModelWeights</span><span class="params">(<span name="srcModel">srcModel: <a href="../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="matchAll">matchAll: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@loadModelWeights(srcModel:com.intel.analytics.bigdl.Module[Float],matchAll:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@loadModelWeights(srcModel:com.intel.analytics.bigdl.Module[Float],matchAll:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#loadWeights" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="loadWeights(weightPath:String,matchAll:Boolean):AbstractModule.this.type"></a>
-      <a id="loadWeights(String,Boolean):ZooModel.this.type"></a>
+      <a id="loadWeights(String,Boolean):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">loadWeights</span><span class="params">(<span name="weightPath">weightPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="matchAll">matchAll: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">loadWeights</span><span class="params">(<span name="weightPath">weightPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="matchAll">matchAll: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@loadWeights(weightPath:String,matchAll:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@loadWeights(weightPath:String,matchAll:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.common.ZooModel#model" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]"></a>
-      <a id="model:AbstractModule[A,B,T]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">model</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@model:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">The defined model, either from buildModel() or loaded from file.</p>
     </li><li name="com.intel.analytics.bigdl.nn.Container#modules" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="modules:scala.collection.mutable.ArrayBuffer[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]]"></a>
       <a id="modules:ArrayBuffer[AbstractModule[Activity,Activity,T]]"></a>
@@ -1046,10 +1128,10 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">modules</span><span class="result">: <span class="extype" name="scala.collection.mutable.ArrayBuffer">ArrayBuffer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>
+        <span class="name">modules</span><span class="result">: <span class="extype" name="scala.collection.mutable.ArrayBuffer">ArrayBuffer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@modules:scala.collection.mutable.ArrayBuffer[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@modules:scala.collection.mutable.ArrayBuffer[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1066,7 +1148,7 @@
         <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1083,7 +1165,7 @@
         <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@notify():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@notify():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1100,24 +1182,24 @@
         <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@notifyAll():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@notifyAll():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#output" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="output:B"></a>
-      <a id="output:B"></a>
+      <a id="output:Tensor[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">var</span>
       </span>
       <span class="symbol">
-        <span class="name">output</span><span class="result">: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span></span>
+        <span class="name">output</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@output:B" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@output:B" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1131,10 +1213,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">parameters</span><span class="params">()</span><span class="result">: (<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]], <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]])</span>
+        <span class="name">parameters</span><span class="params">()</span><span class="result">: (<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]], <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]])</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@parameters():(Array[com.intel.analytics.bigdl.tensor.Tensor[T]],Array[com.intel.analytics.bigdl.tensor.Tensor[T]])" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@parameters():(Array[com.intel.analytics.bigdl.tensor.Tensor[T]],Array[com.intel.analytics.bigdl.tensor.Tensor[T]])" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1148,10 +1230,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">predict</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>, <span name="shareBuffer">shareBuffer: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>]</span>
+        <span class="name">predict</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>, <span name="shareBuffer">shareBuffer: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@predict(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int,shareBuffer:Boolean):org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.nn.abstractnn.Activity]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@predict(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int,shareBuffer:Boolean):org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.nn.abstractnn.Activity]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1165,33 +1247,14 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">predictClass</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+        <span class="name">predictClass</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="scala.Int">Int</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@predictClass(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int):org.apache.spark.rdd.RDD[Int]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@predictClass(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int):org.apache.spark.rdd.RDD[Int]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.common.ZooModel#predictClasses" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="predictClasses(x:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int,zeroBasedLabel:Boolean):org.apache.spark.rdd.RDD[Int]"></a>
-      <a id="predictClasses(RDD[Sample[T]],Int,Boolean):RDD[Int]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">predictClasses</span><span class="params">(<span name="x">x: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="zeroBasedLabel">zeroBasedLabel: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="scala.Int">Int</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@predictClasses(x:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int,zeroBasedLabel:Boolean):org.apache.spark.rdd.RDD[Int]" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Predict for classes.</p><div class="fullcomment"><div class="comment cmt"><p>Predict for classes. By default, label predictions start from 0.
-</p></div><dl class="paramcmts block"><dt class="param">x</dt><dd class="cmt"><p>Prediction data, RDD of Sample.</p></dd><dt class="param">batchSize</dt><dd class="cmt"><p>Number of samples per batch. Default is 32.</p></dd><dt class="param">zeroBasedLabel</dt><dd class="cmt"><p>Boolean. Whether result labels start from 0.
-                      Default is true. If false, result labels start from 1.</p></dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#predictImage" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="predictImage(imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame,outputLayer:String,shareBuffer:Boolean,batchPerPartition:Int,predictKey:String,featurePaddingParam:Option[com.intel.analytics.bigdl.dataset.PaddingParam[T]]):com.intel.analytics.bigdl.transform.vision.image.ImageFrame"></a>
       <a id="predictImage(ImageFrame,String,Boolean,Int,String,Option[PaddingParam[T]]):ImageFrame"></a>
@@ -1201,10 +1264,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">predictImage</span><span class="params">(<span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFrame">ImageFrame</span></span>, <span name="outputLayer">outputLayer: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="shareBuffer">shareBuffer: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="batchPerPartition">batchPerPartition: <span class="extype" name="scala.Int">Int</span></span>, <span name="predictKey">predictKey: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="featurePaddingParam">featurePaddingParam: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.PaddingParam">PaddingParam</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFrame">ImageFrame</span></span>
+        <span class="name">predictImage</span><span class="params">(<span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFrame">ImageFrame</span></span>, <span name="outputLayer">outputLayer: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="shareBuffer">shareBuffer: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="batchPerPartition">batchPerPartition: <span class="extype" name="scala.Int">Int</span></span>, <span name="predictKey">predictKey: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="featurePaddingParam">featurePaddingParam: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.PaddingParam">PaddingParam</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFrame">ImageFrame</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@predictImage(imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame,outputLayer:String,shareBuffer:Boolean,batchPerPartition:Int,predictKey:String,featurePaddingParam:Option[com.intel.analytics.bigdl.dataset.PaddingParam[T]]):com.intel.analytics.bigdl.transform.vision.image.ImageFrame" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@predictImage(imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame,outputLayer:String,shareBuffer:Boolean,batchPerPartition:Int,predictKey:String,featurePaddingParam:Option[com.intel.analytics.bigdl.dataset.PaddingParam[T]]):com.intel.analytics.bigdl.transform.vision.image.ImageFrame" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1218,10 +1281,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">processInputs</span><span class="params">(<span name="first">first: (<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>], <span class="extype" name="scala.Int">Int</span>)</span>, <span name="nodesWithIndex">nodesWithIndex: (<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>], <span class="extype" name="scala.Int">Int</span>)*</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>
+        <span class="name">processInputs</span><span class="params">(<span name="first">first: (<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="scala.Int">Int</span>)</span>, <span name="nodesWithIndex">nodesWithIndex: (<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="scala.Int">Int</span>)*</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@processInputs(first:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int),nodesWithIndex:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int)*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@processInputs(first:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int),nodesWithIndex:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int)*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1235,10 +1298,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">processInputs</span><span class="params">(<span name="nodes">nodes: <a href="../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>
+        <span class="name">processInputs</span><span class="params">(<span name="nodes">nodes: <a href="../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@processInputs(nodes:Seq[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@processInputs(nodes:Seq[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1252,10 +1315,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">quantize</span><span class="params">()</span><span class="result">: <a href="../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>
+        <span class="name">quantize</span><span class="params">()</span><span class="result">: <a href="../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@quantize():com.intel.analytics.bigdl.Module[T]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@quantize():com.intel.analytics.bigdl.Module[T]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1272,7 +1335,7 @@
         <span class="name">release</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@release():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@release():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1289,7 +1352,7 @@
         <span class="name">reset</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@reset():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@reset():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1306,113 +1369,92 @@
         <span class="name">resetTimes</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@resetTimes():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@resetTimes():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#saveCaffe" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="saveCaffe(prototxtPath:String,modelPath:String,useV2:Boolean,overwrite:Boolean):AbstractModule.this.type"></a>
-      <a id="saveCaffe(String,String,Boolean,Boolean):ZooModel.this.type"></a>
+      <a id="saveCaffe(String,String,Boolean,Boolean):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">saveCaffe</span><span class="params">(<span name="prototxtPath">prototxtPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="useV2">useV2: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="overwrite">overwrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">saveCaffe</span><span class="params">(<span name="prototxtPath">prototxtPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="useV2">useV2: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="overwrite">overwrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@saveCaffe(prototxtPath:String,modelPath:String,useV2:Boolean,overwrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@saveCaffe(prototxtPath:String,modelPath:String,useV2:Boolean,overwrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#saveDefinition" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="saveDefinition(path:String,overWrite:Boolean):AbstractModule.this.type"></a>
-      <a id="saveDefinition(String,Boolean):ZooModel.this.type"></a>
+      <a id="saveDefinition(String,Boolean):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">saveDefinition</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">saveDefinition</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@saveDefinition(path:String,overWrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@saveDefinition(path:String,overWrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.common.ZooModel#saveModel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="saveModel(path:String,weightPath:String,overWrite:Boolean):ZooModel.this.type"></a>
-      <a id="saveModel(String,String,Boolean):ZooModel.this.type"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">saveModel</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="weightPath">weightPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">null</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@saveModel(path:String,weightPath:String,overWrite:Boolean):ZooModel.this.type" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Save the model to the specified path.</p><div class="fullcomment"><div class="comment cmt"><p>Save the model to the specified path.
-</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The path to save the model.
-            Local file system, HDFS and Amazon S3 are supported.
-            HDFS path should be like &quot;hdfs://[host]:[port]/xxx&quot;.
-            Amazon S3 path should be like &quot;s3a://bucket/xxx&quot;.</p></dd><dt class="param">weightPath</dt><dd class="cmt"><p>The path to save weights. Default is null.</p></dd><dt class="param">overWrite</dt><dd class="cmt"><p>Whether to overwrite the file if it already exists. Default is false.</p></dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#saveModule" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="saveModule(path:String,weightPath:String,overWrite:Boolean):AbstractModule.this.type"></a>
-      <a id="saveModule(String,String,Boolean):ZooModel.this.type"></a>
+      <a id="saveModule(String,String,Boolean):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">saveModule</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="weightPath">weightPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">saveModule</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="weightPath">weightPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@saveModule(path:String,weightPath:String,overWrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@saveModule(path:String,weightPath:String,overWrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#saveTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="saveTF(inputs:Seq[(String,Seq[Int])],path:String,byteOrder:java.nio.ByteOrder,dataFormat:com.intel.analytics.bigdl.utils.tf.TensorflowDataFormat):AbstractModule.this.type"></a>
-      <a id="saveTF(Seq[(String,Seq[Int])],String,ByteOrder,TensorflowDataFormat):ZooModel.this.type"></a>
+      <a id="saveTF(Seq[(String,Seq[Int])],String,ByteOrder,TensorflowDataFormat):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">saveTF</span><span class="params">(<span name="inputs">inputs: <a href="../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<span class="extype" name="scala.Predef.String">String</span>, <a href="../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Int">Int</span>])]</span>, <span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="byteOrder">byteOrder: <span class="extype" name="java.nio.ByteOrder">ByteOrder</span></span>, <span name="dataFormat">dataFormat: <span class="extype" name="com.intel.analytics.bigdl.utils.tf.TensorflowDataFormat">TensorflowDataFormat</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">saveTF</span><span class="params">(<span name="inputs">inputs: <a href="../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<span class="extype" name="scala.Predef.String">String</span>, <a href="../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Int">Int</span>])]</span>, <span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="byteOrder">byteOrder: <span class="extype" name="java.nio.ByteOrder">ByteOrder</span></span>, <span name="dataFormat">dataFormat: <span class="extype" name="com.intel.analytics.bigdl.utils.tf.TensorflowDataFormat">TensorflowDataFormat</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@saveTF(inputs:Seq[(String,Seq[Int])],path:String,byteOrder:java.nio.ByteOrder,dataFormat:com.intel.analytics.bigdl.utils.tf.TensorflowDataFormat):AbstractModule.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@saveTF(inputs:Seq[(String,Seq[Int])],path:String,byteOrder:java.nio.ByteOrder,dataFormat:com.intel.analytics.bigdl.utils.tf.TensorflowDataFormat):AbstractModule.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#saveTorch" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="saveTorch(path:String,overWrite:Boolean):AbstractModule.this.type"></a>
-      <a id="saveTorch(String,Boolean):ZooModel.this.type"></a>
+      <a id="saveTorch(String,Boolean):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">saveTorch</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">saveTorch</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@saveTorch(path:String,overWrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@saveTorch(path:String,overWrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1429,7 +1471,7 @@
         <span class="name">saveWeights</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@saveWeights(path:String,overWrite:Boolean):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@saveWeights(path:String,overWrite:Boolean):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1446,7 +1488,7 @@
         <span class="name">scaleB</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@scaleB:Double" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@scaleB:Double" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1463,148 +1505,113 @@
         <span class="name">scaleW</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@scaleW:Double" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@scaleW:Double" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.common.ZooModel#setEvaluateStatus" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="setEvaluateStatus():ZooModel.this.type"></a>
-      <a id="setEvaluateStatus():ZooModel.this.type"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">setEvaluateStatus</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@setEvaluateStatus():ZooModel.this.type" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Set the model to be in evaluate status, i.e.</p><div class="fullcomment"><div class="comment cmt"><p>Set the model to be in evaluate status, i.e. remove the effect of Dropout, etc.
-</p></div></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#setExtraParameter" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="setExtraParameter(extraParam:Array[com.intel.analytics.bigdl.tensor.Tensor[T]]):AbstractModule.this.type"></a>
-      <a id="setExtraParameter(Array[Tensor[T]]):ZooModel.this.type"></a>
+      <a id="setExtraParameter(Array[Tensor[T]]):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">setExtraParameter</span><span class="params">(<span name="extraParam">extraParam: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">setExtraParameter</span><span class="params">(<span name="extraParam">extraParam: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@setExtraParameter(extraParam:Array[com.intel.analytics.bigdl.tensor.Tensor[T]]):AbstractModule.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@setExtraParameter(extraParam:Array[com.intel.analytics.bigdl.tensor.Tensor[T]]):AbstractModule.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#setLine" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="setLine(line:String):AbstractModule.this.type"></a>
-      <a id="setLine(String):ZooModel.this.type"></a>
+      <a id="setLine(String):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">setLine</span><span class="params">(<span name="line">line: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">setLine</span><span class="params">(<span name="line">line: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@setLine(line:String):AbstractModule.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@setLine(line:String):AbstractModule.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#setName" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="setName(name:String):AbstractModule.this.type"></a>
-      <a id="setName(String):ZooModel.this.type"></a>
+      <a id="setName(String):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">setName</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">setName</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@setName(name:String):AbstractModule.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@setName(name:String):AbstractModule.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.Container#setScaleB" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="setScaleB(b:Double):Container.this.type"></a>
-      <a id="setScaleB(Double):ZooModel.this.type"></a>
+      <a id="setScaleB(Double):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">setScaleB</span><span class="params">(<span name="b">b: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">setScaleB</span><span class="params">(<span name="b">b: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@setScaleB(b:Double):Container.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@setScaleB(b:Double):Container.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.Container#setScaleW" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="setScaleW(w:Double):Container.this.type"></a>
-      <a id="setScaleW(Double):ZooModel.this.type"></a>
+      <a id="setScaleW(Double):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">setScaleW</span><span class="params">(<span name="w">w: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">setScaleW</span><span class="params">(<span name="w">w: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@setScaleW(w:Double):Container.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@setScaleW(w:Double):Container.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#setWeightsBias" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="setWeightsBias(newWeights:Array[com.intel.analytics.bigdl.tensor.Tensor[T]]):AbstractModule.this.type"></a>
-      <a id="setWeightsBias(Array[Tensor[T]]):ZooModel.this.type"></a>
+      <a id="setWeightsBias(Array[Tensor[T]]):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">setWeightsBias</span><span class="params">(<span name="newWeights">newWeights: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">setWeightsBias</span><span class="params">(<span name="newWeights">newWeights: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@setWeightsBias(newWeights:Array[com.intel.analytics.bigdl.tensor.Tensor[T]]):AbstractModule.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@setWeightsBias(newWeights:Array[com.intel.analytics.bigdl.tensor.Tensor[T]]):AbstractModule.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.common.ZooModel#summary" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="summary():Unit"></a>
-      <a id="summary():Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">summary</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@summary():Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Print out the summary of the model.</p>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -1617,7 +1624,7 @@
         <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1631,10 +1638,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">toGraph</span><span class="params">(<span name="startNodes">startNodes: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]*</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph">Graph</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</span>
+        <span class="name">toGraph</span><span class="params">(<span name="startNodes">startNodes: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]*</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph">Graph</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@toGraph(startNodes:com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]*):com.intel.analytics.bigdl.nn.Graph[T]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@toGraph(startNodes:com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]*):com.intel.analytics.bigdl.nn.Graph[T]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1651,7 +1658,7 @@
         <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@toString():String" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@toString():String" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1668,79 +1675,79 @@
         <span class="name">train</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@train:Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@train:Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.Container#training" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="training():Container.this.type"></a>
-      <a id="training():ZooModel.this.type"></a>
+      <a id="training():Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">training</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">training</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@training():Container.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@training():Container.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.Container#unFreeze" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="unFreeze(names:String*):Container.this.type"></a>
-      <a id="unFreeze(String*):ZooModel.this.type"></a>
+      <a id="unFreeze(String*):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">unFreeze</span><span class="params">(<span name="names">names: <span class="extype" name="scala.Predef.String">String</span>*</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name">unFreeze</span><span class="params">(<span name="names">names: <span class="extype" name="scala.Predef.String">String</span>*</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@unFreeze(names:String*):Container.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@unFreeze(names:String*):Container.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.common.ZooModel#updateGradInput" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#updateGradInput" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="updateGradInput(input:A,gradOutput:B):A"></a>
-      <a id="updateGradInput(A,B):A"></a>
+      <a id="updateGradInput(Activity,Tensor[T]):Activity"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">updateGradInput</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span></span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span></span>
+        <span class="name">updateGradInput</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@updateGradInput(input:A,gradOutput:B):A" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@updateGradInput(input:A,gradOutput:B):A" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a> → AbstractModule</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.common.ZooModel#updateOutput" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#updateOutput" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="updateOutput(input:A):B"></a>
-      <a id="updateOutput(A):B"></a>
+      <a id="updateOutput(Activity):Tensor[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">updateOutput</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span></span>
+        <span class="name">updateOutput</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@updateOutput(input:A):B" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@updateOutput(input:A):B" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a> → AbstractModule</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>
@@ -1753,7 +1760,7 @@
         <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@wait():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@wait():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1776,7 +1783,7 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1799,7 +1806,7 @@
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@wait(x$1:Long):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@wait(x$1:Long):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1822,7 +1829,7 @@
         <span class="name">zeroGradParameters</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@zeroGradParameters():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@zeroGradParameters():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1836,17 +1843,17 @@
               <h3>Deprecated Value Members</h3>
               <ol><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#save" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="save(path:String,overWrite:Boolean):AbstractModule.this.type"></a>
-      <a id="save(String,Boolean):ZooModel.this.type"></a>
+      <a id="save(String,Boolean):Decoder.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name deprecated" title="Deprecated: (Since version 0.3.0) please use recommended saveModule(path, overWrite)">save</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.common.ZooModel">ZooModel</a>.this.type</span>
+        <span class="name deprecated" title="Deprecated: (Since version 0.3.0) please use recommended saveModule(path, overWrite)">save</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder">Decoder</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.common.ZooModel@save(path:String,overWrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Decoder@save(path:String,overWrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1859,10 +1866,14 @@
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="com.intel.analytics.bigdl.nn.Container">
-              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.Container">Container</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</h3>
+        <div class="parent" name="com.intel.analytics.zoo.pipeline.api.Net">
+              <h3>Inherited from <a href="../../pipeline/api/Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></h3>
+            </div><div class="parent" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</h3>
+            </div><div class="parent" name="com.intel.analytics.bigdl.nn.Container">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.Container">Container</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</h3>
             </div><div class="parent" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">
-              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.A">A</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.B">B</span>, <span class="extype" name="com.intel.analytics.zoo.models.common.ZooModel.T">T</span>]</h3>
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Decoder.T">T</span>]</h3>
             </div><div class="parent" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">
               <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span></h3>
             </div><div class="parent" name="scala.Serializable">

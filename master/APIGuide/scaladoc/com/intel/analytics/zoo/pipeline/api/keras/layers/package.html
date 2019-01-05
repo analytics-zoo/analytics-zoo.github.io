@@ -1639,6 +1639,25 @@ Select(1, 1) will give output [2 5]
 Select(1, -1) will give output [3 6]</p><p>When you use this layer as the first layer of a model, you need to provide the argument
 inputShape (a Single Shape, does not include the batch dimension).</p><p>Remark: This layer is from Torch and wrapped in Keras style.
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.SelectTable" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="SelectTable[T]extendsLayerWrapperByForward[T]"></a>
+      <a id="SelectTable[T]:SelectTable[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="SelectTable.html"><span class="name">SelectTable</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="LayerWrapperByForward.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LayerWrapperByForward">LayerWrapperByForward</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.SelectTable.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@SelectTable[T]extendsLayerWrapperByForward[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Creates a module that takes a table as input and outputs the element at index <code>index</code></p><div class="fullcomment"><div class="comment cmt"><p>Creates a module that takes a table as input and outputs the element at index <code>index</code></p><p>When you use this layer as the first layer of a model, you need to provide the argument
+inputShape.</p><p>Remark: This layer is from Torch and wrapped in Keras style.
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.SeparableConvolution2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="SeparableConvolution2D[T]extendsSeparableConvolution2D[T]withNet"></a>
       <a id="SeparableConvolution2D[T]:SeparableConvolution2D[T]"></a>
@@ -1857,6 +1876,28 @@ between feature maps and should be used instead.
 The input of this layer should be 5D.</p><p>When you use this layer as the first layer of a model, you need to provide the argument
 inputShape (a Single Shape, does not include the batch dimension).
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.SplitTensor" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="SplitTensor[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.utils.Table,T]withNet"></a>
+      <a id="SplitTensor[T]:SplitTensor[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="SplitTensor.html"><span class="name">SplitTensor</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.SplitTensor.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.utils.Table">Table</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.SplitTensor.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@SplitTensor[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.utils.Table,T]withNet" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Creates a module that takes a Tensor as input and
+outputs tables, splitting the Tensor along
+the specified dimension <code>dimension</code>.</p><div class="fullcomment"><div class="comment cmt"><p>Creates a module that takes a Tensor as input and
+outputs tables, splitting the Tensor along
+the specified dimension <code>dimension</code>. Please note the dimension starts from 0.
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type. Only support float/double now</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.Sqrt" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="Sqrt[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withIdentityOutputShapewithNet"></a>
       <a id="Sqrt[T]:Sqrt[T]"></a>
@@ -3449,6 +3490,23 @@ inputShape (a Single Shape, does not include the batch dimension).
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.SelectTable" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SelectTable"></a>
+      <a id="SelectTable:SelectTable"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="SelectTable$.html"><span class="name">SelectTable</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@SelectTable" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers#SeparableConv2D" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="SeparableConv2D:com.intel.analytics.zoo.pipeline.api.keras.layers.SeparableConvolution2D.type"></a>
       <a id="SeparableConv2D:SeparableConvolution2D.type"></a>
@@ -3632,6 +3690,23 @@ inputShape (a Single Shape, does not include the batch dimension).
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@SpatialDropout3D" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.SplitTensor" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="SplitTensor"></a>
+      <a id="SplitTensor:SplitTensor"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="SplitTensor$.html"><span class="name">SplitTensor</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@SplitTensor" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
