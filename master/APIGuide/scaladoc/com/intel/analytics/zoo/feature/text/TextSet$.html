@@ -283,7 +283,7 @@
 In other words, group relations by <span class="extype" name="Relation.id1">Relation.id1</span>.
 2. Join with corpus to transform each id to indexedTokens.
 Note: Make sure that the corpus has been transformed by <a href="SequenceShaper.html" class="extype" name="com.intel.analytics.zoo.feature.text.SequenceShaper">SequenceShaper</a> and <a href="WordIndexer.html" class="extype" name="com.intel.analytics.zoo.feature.text.WordIndexer">WordIndexer</a>.
-3. For each pair, generate a TextFeature having Sample with:
+3. For each list, generate a TextFeature having Sample with:
 - feature of shape (listLength, text1Length + text2Length).
 - label of shape (listLength, 1).
 </p></div><dl class="paramcmts block"><dt class="param">relations</dt><dd class="cmt"><p>RDD of <span class="extype" name="Relation">Relation</span>.</p></dd><dt class="param">corpus1</dt><dd class="cmt"><p>DistributedTextSet that contains all <span class="extype" name="Relation.id1">Relation.id1</span>. For each TextFeature

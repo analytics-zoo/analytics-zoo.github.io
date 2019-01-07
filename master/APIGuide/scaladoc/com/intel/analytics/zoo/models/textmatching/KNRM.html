@@ -583,10 +583,11 @@ Output shape: (batch, 1)
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Evaluate using Mean average precision on TextSet.</p><div class="fullcomment"><div class="comment cmt"><p>Evaluate using Mean average precision on TextSet.
+      <p class="shortcomment cmt">Evaluate using mean average precision on TextSet.</p><div class="fullcomment"><div class="comment cmt"><p>Evaluate using mean average precision on TextSet.
 </p></div><dl class="paramcmts block"><dt class="param">x</dt><dd class="cmt"><p>TextSet. Each TextFeature should contain Sample with batch features and labels.
          In other words, each Sample should be a batch of records having both positive
-         and negative labels.</p></dd><dt class="param">threshold</dt><dd class="cmt"><p>If label &gt; threshold, then it will be considered as a positive record.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../common/Ranker.html" class="extype" name="com.intel.analytics.zoo.models.common.Ranker">Ranker</a></dd></dl></div>
+         and negative labels.</p></dd><dt class="param">threshold</dt><dd class="cmt"><p>Double. If label &gt; threshold, then it will be considered as
+                 a positive record. Default is 0.0.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../common/Ranker.html" class="extype" name="com.intel.analytics.zoo.models.common.Ranker">Ranker</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.models.common.Ranker#evaluateNDCG" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="evaluateNDCG(x:com.intel.analytics.zoo.feature.text.TextSet,k:Int,threshold:Double):Double"></a>
       <a id="evaluateNDCG(TextSet,Int,Double):Double"></a>
@@ -606,7 +607,8 @@ Output shape: (batch, 1)
       <p class="shortcomment cmt">Evaluate using normalized discounted cumulative gain on TextSet.</p><div class="fullcomment"><div class="comment cmt"><p>Evaluate using normalized discounted cumulative gain on TextSet.
 </p></div><dl class="paramcmts block"><dt class="param">x</dt><dd class="cmt"><p>TextSet. Each TextFeature should contain Sample with batch features and labels.
          In other words, each Sample should be a batch of records having both positive
-         and negative labels.</p></dd><dt class="param">k</dt><dd class="cmt"><p>Positive integer. Rank position.</p></dd><dt class="param">threshold</dt><dd class="cmt"><p>If label &gt; threshold, then it will be considered as a positive record.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../common/Ranker.html" class="extype" name="com.intel.analytics.zoo.models.common.Ranker">Ranker</a></dd></dl></div>
+         and negative labels.</p></dd><dt class="param">k</dt><dd class="cmt"><p>Positive integer. Rank position.</p></dd><dt class="param">threshold</dt><dd class="cmt"><p>Double. If label &gt; threshold, then it will be considered as
+                 a positive record. Default is 0.0.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../common/Ranker.html" class="extype" name="com.intel.analytics.zoo.models.common.Ranker">Ranker</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.models.textmatching.KNRM#exactSigma" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="exactSigma:Double"></a>
       <a id="exactSigma:Double"></a>
@@ -1089,7 +1091,7 @@ Output shape: (batch, 1)
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Integer.</p><div class="fullcomment"><div class="comment cmt"><p>Integer. The number of kernels to use. Default is 21.</p></div></div>
+      <p class="shortcomment cmt">Integer &gt; 1.</p><div class="fullcomment"><div class="comment cmt"><p>Integer &gt; 1. The number of kernels to use. Default is 21.</p></div></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#line" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="line:String"></a>
       <a id="line:String"></a>
@@ -1798,7 +1800,7 @@ Output shape: (batch, 1)
     </span>
       <p class="shortcomment cmt">String.</p><div class="fullcomment"><div class="comment cmt"><p>String. The target mode of the model. Either 'ranking' or 'classification'.
                   For ranking, the output will be the relevance score between text1 and text2 and
-                  you are recommended to use RankHinge as loss for pairwise training.
+                  you are recommended to use 'rank_hinge' as loss for pairwise training.
                   For classification, the last layer will be sigmoid and the output will be the
                   probability between 0 and 1 indicating whether text1 is related to text2 and
                   you are recommended to use 'binary_crossentropy' as loss for binary
