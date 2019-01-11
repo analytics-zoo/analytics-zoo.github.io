@@ -223,7 +223,7 @@
       <p class="shortcomment cmt">Compare predictions and truth to detect anomalies by ranking the absolute differences.</p><div class="fullcomment"><div class="comment cmt"><p>Compare predictions and truth to detect anomalies by ranking the absolute differences.
 Most distant values are considered as anomalies.
 </p></div><dl class="paramcmts block"><dt class="param">yTruth</dt><dd class="cmt"><p>Truth to be compared</p></dd><dt class="param">yPredict</dt><dd class="cmt"><p>Predictions</p></dd><dt class="param">threshold</dt><dd class="cmt"><p>Float. The threshold of absolute difference, data points with a difference
-                 above the threshold is considered as anomalies.</p></dd></dl></div>
+                 above the threshold is considered as anomalies.</p></dd><dt>returns</dt><dd class="cmt"><p>RDD[(yTruth, yPredict, anomaly)], anomaly is null or yTruth</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.models.anomalydetection.AnomalyDetector#detectAnomalies" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="detectAnomalies[T](yTruth:org.apache.spark.rdd.RDD[T],yPredict:org.apache.spark.rdd.RDD[T],anomalySize:Int)(implicitevidence$5:scala.reflect.ClassTag[T]):org.apache.spark.rdd.RDD[(T,T,Any)]"></a>
       <a id="detectAnomalies[T](RDD[T],RDD[T],Int)(ClassTag[T]):RDD[(T,T,Any)]"></a>
@@ -243,7 +243,7 @@ Most distant values are considered as anomalies.
       <p class="shortcomment cmt">Compare predictions and truth to detect anomalies by ranking the absolute differences。
 Most distant values are considered as anomalies.</p><div class="fullcomment"><div class="comment cmt"><p>Compare predictions and truth to detect anomalies by ranking the absolute differences。
 Most distant values are considered as anomalies.
-</p></div><dl class="paramcmts block"><dt class="param">yTruth</dt><dd class="cmt"><p>Truth to be compared</p></dd><dt class="param">yPredict</dt><dd class="cmt"><p>Predictions</p></dd><dt class="param">anomalySize</dt><dd class="cmt"><p>Int. The size to be considered as anomalies.</p></dd></dl></div>
+</p></div><dl class="paramcmts block"><dt class="param">yTruth</dt><dd class="cmt"><p>RDD[T]. Truth to be compared</p></dd><dt class="param">yPredict</dt><dd class="cmt"><p>RDD[T]. Predictions</p></dd><dt class="param">anomalySize</dt><dd class="cmt"><p>Int. The size to be considered as anomalies.</p></dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -491,7 +491,7 @@ Most distant values are considered as anomalies.
       </a>
     </span>
       <p class="shortcomment cmt">Unroll a rdd of arrays to prepare features and labels.</p><div class="fullcomment"><div class="comment cmt"><p>Unroll a rdd of arrays to prepare features and labels.
-</p></div><dl class="paramcmts block"><dt class="param">dataRdd</dt><dd class="cmt"><p>data to be unrolled with a length.</p></dd><dt class="param">unrollLength</dt><dd class="cmt"><p>the length of precious values to predict future value.</p></dd><dt class="param">predictStep</dt><dd class="cmt"><p>use precious values to predict future value, default is 1.
+</p></div><dl class="paramcmts block"><dt class="param">dataRdd</dt><dd class="cmt"><p>RDD[Array[T]]. Features to be unrolled.</p></dd><dt class="param">unrollLength</dt><dd class="cmt"><p>Int. The length of precious values to predict future value.</p></dd><dt class="param">predictStep</dt><dd class="cmt"><p>Int. how many time steps to predict future value, default is 1.
                     a simple example
                     data: (1,2,3,4,5,6); unrollLength: 2, predictStep: 1
                     features, label, index
