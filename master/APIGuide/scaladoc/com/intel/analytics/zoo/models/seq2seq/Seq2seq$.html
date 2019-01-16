@@ -47,13 +47,13 @@
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <span class="name">Seq2seq</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">Seq2seq</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ContainerSerializable">ContainerSerializable</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
           <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ContainerSerializable">ContainerSerializable</span>, <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable">ModuleSerializable</span>, <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.Savable">Savable</span>, <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.Loadable">Loadable</span>, <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -71,7 +71,7 @@
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq"><span>Seq2seq</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq"><span>Seq2seq</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="com.intel.analytics.bigdl.utils.serializer.ContainerSerializable"><span>ContainerSerializable</span></li><li class="in" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable"><span>ModuleSerializable</span></li><li class="in" name="com.intel.analytics.bigdl.utils.serializer.Savable"><span>Savable</span></li><li class="in" name="com.intel.analytics.bigdl.utils.serializer.Loadable"><span>Loadable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -147,6 +147,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#_copyWeightAndBias" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="_copyWeightAndBias:Boolean"></a>
+      <a id="_copyWeightAndBias:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">_copyWeightAndBias</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@_copyWeightAndBias:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ModuleSerializable</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.models.seq2seq.Seq2seq#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="apply[T](encoder:com.intel.analytics.zoo.models.seq2seq.RNNEncoder[T],decoder:com.intel.analytics.zoo.models.seq2seq.RNNDecoder[T],inputShape:com.intel.analytics.bigdl.utils.Shape,outputShape:com.intel.analytics.bigdl.utils.Shape,bridge:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T],generator:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T])(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.models.seq2seq.Seq2seq[T]"></a>
       <a id="apply[T](RNNEncoder[T],RNNDecoder[T],Shape,Shape,KerasLayer[Activity,Activity,T],KerasLayer[Activity,Activity,T])(ClassTag[T],TensorNumeric[T]):Seq2seq[T]"></a>
@@ -163,7 +180,7 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt"><a href="Seq2seq.html" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq">Seq2seq</a> A trainable interface for a simple, generic encoder + decoder model</p><div class="fullcomment"><div class="comment cmt"><p><a href="Seq2seq.html" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq">Seq2seq</a> A trainable interface for a simple, generic encoder + decoder model</p></div><dl class="paramcmts block"><dt class="param">encoder</dt><dd class="cmt"><p>a rnn encoder object</p></dd><dt class="param">decoder</dt><dd class="cmt"><p>a rnn decoder object</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>shape of encoder input, for variable length, please input -1</p></dd><dt class="param">outputShape</dt><dd class="cmt"><p>shape of decoder input, for variable length, please input -1</p></dd><dt class="param">bridge</dt><dd class="cmt"><p>connect encoder and decoder</p></dd></dl></div>
+      <p class="shortcomment cmt"><a href="Seq2seq.html" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq">Seq2seq</a> A trainable interface for a simple, generic encoder + decoder model</p><div class="fullcomment"><div class="comment cmt"><p><a href="Seq2seq.html" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq">Seq2seq</a> A trainable interface for a simple, generic encoder + decoder model</p></div><dl class="paramcmts block"><dt class="param">encoder</dt><dd class="cmt"><p>a rnn encoder object</p></dd><dt class="param">decoder</dt><dd class="cmt"><p>a rnn decoder object</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>shape of encoder input, for variable length, please input -1</p></dd><dt class="param">outputShape</dt><dd class="cmt"><p>shape of decoder input, for variable length, please input -1</p></dd><dt class="param">bridge</dt><dd class="cmt"><p>connect encoder and decoder</p></dd><dt class="param">generator</dt><dd class="cmt"><p>Feeding decoder output to generator to generate final result</p></dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <a id="asInstanceOf[T0]:T0"></a>
@@ -181,6 +198,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#checkVersion" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="checkVersion[T&lt;:&lt;?&gt;](module:&lt;?&gt;)(implicitevidence$1:&lt;?&gt;,implicitev:&lt;?&gt;):Unit"></a>
+      <a id="checkVersion[T](BigDLModule)(ClassTag[T],TensorNumeric[T]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">checkVersion</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="module">module: <span class="extype" name="com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule">BigDLModule</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.checkVersion.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.checkVersion.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@checkVersion[T](module:com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule)(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ModuleSerializable</dd></dl></div>
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -204,6 +238,125 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#copy2BigDL" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="copy2BigDL[T&lt;:&lt;?&gt;](context:&lt;?&gt;,module:&lt;?&gt;)(implicitevidence$10:&lt;?&gt;,implicitev:&lt;?&gt;):Unit"></a>
+      <a id="copy2BigDL[T](DeserializeContext,ModuleData[T])(ClassTag[T],TensorNumeric[T]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">copy2BigDL</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="context">context: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.DeserializeContext">DeserializeContext</span></span>, <span name="module">module: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleData">ModuleData</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.copy2BigDL.T">T</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.copy2BigDL.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.copy2BigDL.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@copy2BigDL[T](context:com.intel.analytics.bigdl.utils.serializer.DeserializeContext,module:com.intel.analytics.bigdl.utils.serializer.ModuleData[T])(implicitevidence$10:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ModuleSerializable</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#copyFromBigDL" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="copyFromBigDL[T&lt;:&lt;?&gt;](context:&lt;?&gt;,modelBuilder:&lt;?&gt;)(implicitevidence$13:&lt;?&gt;,implicitev:&lt;?&gt;):Unit"></a>
+      <a id="copyFromBigDL[T](SerializeContext[T],Builder)(ClassTag[T],TensorNumeric[T]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">copyFromBigDL</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="context">context: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.SerializeContext">SerializeContext</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.copyFromBigDL.T">T</span>]</span>, <span name="modelBuilder">modelBuilder: <span class="extype" name="com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule.Builder">Builder</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.copyFromBigDL.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.copyFromBigDL.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@copyFromBigDL[T](context:com.intel.analytics.bigdl.utils.serializer.SerializeContext[T],modelBuilder:com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule.Builder)(implicitevidence$13:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ModuleSerializable</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#copyWeightAndBias" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="copyWeightAndBias():Boolean"></a>
+      <a id="copyWeightAndBias():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">copyWeightAndBias</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@copyWeightAndBias():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ModuleSerializable</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#createBigDLModule" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="createBigDLModule[T&lt;:&lt;?&gt;](context:&lt;?&gt;,module:&lt;?&gt;)(implicitevidence$8:&lt;?&gt;,implicitev:&lt;?&gt;):com.intel.analytics.bigdl.utils.serializer.ModuleData[T]"></a>
+      <a id="createBigDLModule[T](DeserializeContext,AbstractModule[Activity,Activity,T])(ClassTag[T],TensorNumeric[T]):ModuleData[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createBigDLModule</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="context">context: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.DeserializeContext">DeserializeContext</span></span>, <span name="module">module: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.createBigDLModule.T">T</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.createBigDLModule.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.createBigDLModule.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleData">ModuleData</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.createBigDLModule.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@createBigDLModule[T](context:com.intel.analytics.bigdl.utils.serializer.DeserializeContext,module:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T])(implicitevidence$8:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.bigdl.utils.serializer.ModuleData[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ModuleSerializable</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#createSerializeBigDLModule" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="createSerializeBigDLModule[T&lt;:&lt;?&gt;](modelBuilder:&lt;?&gt;,context:&lt;?&gt;)(implicitevidence$9:&lt;?&gt;,implicitev:&lt;?&gt;):com.intel.analytics.bigdl.utils.serializer.SerializeResult"></a>
+      <a id="createSerializeBigDLModule[T](Builder,SerializeContext[T])(ClassTag[T],TensorNumeric[T]):SerializeResult"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createSerializeBigDLModule</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="modelBuilder">modelBuilder: <span class="extype" name="com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule.Builder">Builder</span></span>, <span name="context">context: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.SerializeContext">SerializeContext</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.createSerializeBigDLModule.T">T</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.createSerializeBigDLModule.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.createSerializeBigDLModule.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.SerializeResult">SerializeResult</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@createSerializeBigDLModule[T](modelBuilder:com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule.Builder,context:com.intel.analytics.bigdl.utils.serializer.SerializeContext[T])(implicitevidence$9:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.bigdl.utils.serializer.SerializeResult" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ModuleSerializable</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.models.seq2seq.Seq2seq#doLoadModule" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadModule[T](context:com.intel.analytics.bigdl.utils.serializer.DeserializeContext)(implicitevidence$4:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]"></a>
+      <a id="doLoadModule[T](DeserializeContext)(ClassTag[T],TensorNumeric[T]):AbstractModule[Activity,Activity,T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">doLoadModule</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="context">context: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.DeserializeContext">DeserializeContext</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq.doLoadModule.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq.doLoadModule.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq.doLoadModule.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@doLoadModule[T](context:com.intel.analytics.bigdl.utils.serializer.DeserializeContext)(implicitevidence$4:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq">Seq2seq</a> → ContainerSerializable → ModuleSerializable</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.models.seq2seq.Seq2seq#doSerializeModule" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doSerializeModule[T](context:com.intel.analytics.bigdl.utils.serializer.SerializeContext[T],seq2seqBuilder:com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule.Builder)(implicitevidence$5:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Unit"></a>
+      <a id="doSerializeModule[T](SerializeContext[T],Builder)(ClassTag[T],TensorNumeric[T]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">doSerializeModule</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="context">context: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.SerializeContext">SerializeContext</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq.doSerializeModule.T">T</span>]</span>, <span name="seq2seqBuilder">seq2seqBuilder: <span class="extype" name="com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule.Builder">Builder</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq.doSerializeModule.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq.doSerializeModule.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@doSerializeModule[T](context:com.intel.analytics.bigdl.utils.serializer.SerializeContext[T],seq2seqBuilder:com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule.Builder)(implicitevidence$5:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq">Seq2seq</a> → ContainerSerializable → ModuleSerializable</dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -278,6 +431,40 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#getLock" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getLock:Object"></a>
+      <a id="getLock:AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getLock</span><span class="result">: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@getLock:Object" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ModuleSerializable</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#getTypes" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getTypes(context:&lt;?&gt;):(Array[scala.reflect.ClassTag[_]],Array[com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[_]])"></a>
+      <a id="getTypes(DeserializeContext):(Array[ClassTag[_]],Array[TensorNumeric[_]])"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getTypes</span><span class="params">(<span name="context">context: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.DeserializeContext">DeserializeContext</span></span>)</span><span class="result">: (<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[_]], <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[_]])</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@getTypes(context:com.intel.analytics.bigdl.utils.serializer.DeserializeContext):(Array[scala.reflect.ClassTag[_]],Array[com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[_]])" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ModuleSerializable</dd></dl></div>
     </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hashCode():Int"></a>
       <a id="hashCode():Int"></a>
@@ -333,6 +520,57 @@
             Local file system, HDFS and Amazon S3 are supported.
             HDFS path should be like &quot;hdfs://[host]:[port]/xxx&quot;.
             Amazon S3 path should be like &quot;s3a://bucket/xxx&quot;.</p></dd><dt class="param">weightPath</dt><dd class="cmt"><p>The path for pre-trained weights if any. Default is null.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#loadModule" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="loadModule[T](context:com.intel.analytics.bigdl.utils.serializer.DeserializeContext)(implicitevidence$3:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.bigdl.utils.serializer.ModuleData[T]"></a>
+      <a id="loadModule[T](DeserializeContext)(ClassTag[T],TensorNumeric[T]):ModuleData[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadModule</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="context">context: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.DeserializeContext">DeserializeContext</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.loadModule.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.loadModule.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleData">ModuleData</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.loadModule.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@loadModule[T](context:com.intel.analytics.bigdl.utils.serializer.DeserializeContext)(implicitevidence$3:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.bigdl.utils.serializer.ModuleData[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>ModuleSerializable → Loadable</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ContainerSerializable#loadSubModules" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="loadSubModules[T](context:com.intel.analytics.bigdl.utils.serializer.DeserializeContext,module:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T])(implicitevidence$14:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Unit"></a>
+      <a id="loadSubModules[T](DeserializeContext,AbstractModule[Activity,Activity,T])(ClassTag[T],TensorNumeric[T]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadSubModules</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="context">context: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.DeserializeContext">DeserializeContext</span></span>, <span name="module">module: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ContainerSerializable.loadSubModules.T">T</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ContainerSerializable.loadSubModules.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ContainerSerializable.loadSubModules.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@loadSubModules[T](context:com.intel.analytics.bigdl.utils.serializer.DeserializeContext,module:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T])(implicitevidence$14:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ContainerSerializable</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#lock" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="lock:Object"></a>
+      <a id="lock:AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">lock</span><span class="result">: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@lock:Object" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ModuleSerializable</dd></dl></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -384,6 +622,91 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#serializeModule" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="serializeModule[T](context:com.intel.analytics.bigdl.utils.serializer.SerializeContext[T])(implicitevidence$5:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.bigdl.utils.serializer.SerializeResult"></a>
+      <a id="serializeModule[T](SerializeContext[T])(ClassTag[T],TensorNumeric[T]):SerializeResult"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">serializeModule</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="context">context: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.SerializeContext">SerializeContext</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.serializeModule.T">T</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.serializeModule.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.serializeModule.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.SerializeResult">SerializeResult</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@serializeModule[T](context:com.intel.analytics.bigdl.utils.serializer.SerializeContext[T])(implicitevidence$5:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.bigdl.utils.serializer.SerializeResult" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>ModuleSerializable → Savable</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ContainerSerializable#serializeSubModules" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="serializeSubModules[T&lt;:&lt;?&gt;](context:&lt;?&gt;,containerBuilder:&lt;?&gt;)(implicitevidence$16:&lt;?&gt;,implicitev:&lt;?&gt;):Unit"></a>
+      <a id="serializeSubModules[T](SerializeContext[T],Builder)(ClassTag[T],TensorNumeric[T]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">serializeSubModules</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="context">context: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.SerializeContext">SerializeContext</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ContainerSerializable.serializeSubModules.T">T</span>]</span>, <span name="containerBuilder">containerBuilder: <span class="extype" name="com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule.Builder">Builder</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ContainerSerializable.serializeSubModules.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ContainerSerializable.serializeSubModules.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@serializeSubModules[T](context:com.intel.analytics.bigdl.utils.serializer.SerializeContext[T],containerBuilder:com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule.Builder)(implicitevidence$16:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ContainerSerializable</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#setCopyWeightAndBias" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setCopyWeightAndBias(copyWeightAndBias:&lt;?&gt;):ModuleSerializable.this.type"></a>
+      <a id="setCopyWeightAndBias(Boolean):Seq2seq.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setCopyWeightAndBias</span><span class="params">(<span name="copyWeightAndBias">copyWeightAndBias: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.models.seq2seq.Seq2seq">Seq2seq</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@setCopyWeightAndBias(copyWeightAndBias:Boolean):ModuleSerializable.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>ModuleSerializable</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#setDataTypes" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setDataTypes[T&lt;:&lt;?&gt;](context:&lt;?&gt;,bigDLModelBuilder:&lt;?&gt;)(implicitevidence$6:&lt;?&gt;,implicitev:&lt;?&gt;):Unit"></a>
+      <a id="setDataTypes[T](SerializeContext[T],Builder)(ClassTag[T],TensorNumeric[T]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setDataTypes</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="context">context: <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.SerializeContext">SerializeContext</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.setDataTypes.T">T</span>]</span>, <span name="bigDLModelBuilder">bigDLModelBuilder: <span class="extype" name="com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule.Builder">Builder</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.setDataTypes.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.setDataTypes.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@setDataTypes[T](context:com.intel.analytics.bigdl.utils.serializer.SerializeContext[T],bigDLModelBuilder:com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule.Builder)(implicitevidence$6:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ModuleSerializable</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable#setVersion" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setVersion[T&lt;:&lt;?&gt;](modelBuilder:&lt;?&gt;)(implicitevidence$2:&lt;?&gt;,implicitev:&lt;?&gt;):Unit"></a>
+      <a id="setVersion[T](Builder)(ClassTag[T],TensorNumeric[T]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setVersion</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="modelBuilder">modelBuilder: <span class="extype" name="com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule.Builder">Builder</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.setVersion.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable.setVersion.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.seq2seq.Seq2seq$@setVersion[T](modelBuilder:com.intel.analytics.bigdl.serialization.Bigdl.BigDLModule.Builder)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>ModuleSerializable</dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -517,6 +840,14 @@
               <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
             </div><div class="parent" name="java.io.Serializable">
               <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="com.intel.analytics.bigdl.utils.serializer.ContainerSerializable">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ContainerSerializable">ContainerSerializable</span></h3>
+            </div><div class="parent" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.ModuleSerializable">ModuleSerializable</span></h3>
+            </div><div class="parent" name="com.intel.analytics.bigdl.utils.serializer.Savable">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.Savable">Savable</span></h3>
+            </div><div class="parent" name="com.intel.analytics.bigdl.utils.serializer.Loadable">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.utils.serializer.Loadable">Loadable</span></h3>
             </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></h3>
             </div><div class="parent" name="scala.Any">

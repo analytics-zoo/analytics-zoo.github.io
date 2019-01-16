@@ -35,6 +35,8 @@
         var pageToc = [
           {title: "SparseEmbedding", url: "#sparseembedding", children: [
           ]},
+          {title: "WordEmbedding", url: "#wordembedding", children: [
+          ]},
         ];
 
     </script>
@@ -150,6 +152,86 @@ output = model.forward(input)
 <pre><code class="python">[[ 0.00771878 -0.05676365  0.03861053  0.04300173]
  [-0.04647886 -0.03346863  0.04642192 -0.0145219 ]
  [ 0.03964841  0.0243053   0.04841208  0.04862341]]
+</code></pre>
+
+<hr />
+<h2 id="wordembedding"><strong>WordEmbedding</strong></h2>
+<p>Embedding layer that directly loads pre-trained word vectors as weights.</p>
+<p>Turn non-negative integers (indices) into dense vectors of fixed size.</p>
+<p>Currently only GloVe embedding is supported.</p>
+<p>The input of this layer should be 2D.</p>
+<p>This layer can only be used as the first layer in a model, you need to provide the argument inputLength (a Single Shape, does not include the batch dimension).</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">WordEmbedding(embeddingFile, wordIndex = null, trainable = false, inputLength = -1)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">WordEmbedding(embedding_file, word_index=None, trainable=False, input_length=None, name=None)
+</code></pre>
+
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>embeddingFile</code>: The path to the embedding file.
+                   Currently the following GloVe files are supported:
+                   "glove.6B.50d.txt", "glove.6B.100d.txt", "glove.6B.200d.txt"
+                   "glove.6B.300d.txt", "glove.42B.300d.txt", "glove.840B.300d.txt".
+                   You can download them from: https://nlp.stanford.edu/projects/glove/.</li>
+<li><code>wordIndex</code>: Map of word (String) and its corresponding index (integer).
+               The index is supposed to start from 1 with 0 reserved for unknown words.
+               During the prediction, if you have words that are not in the wordIndex
+               for the training, you can map them to index 0.
+               Default is null. In this case, all the words in the embeddingFile will
+               be taken into account and you can call WordEmbedding.getWordIndex(embeddingFile) to retrieve the map.</li>
+<li><code>trainable</code>: To configure whether the weights of this layer will be updated or not.
+               Only false is supported for now.</li>
+<li><code>inputLength</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a positive integer. For Python API, it should be a positive int. Batch dimension should be excluded.</li>
+</ul>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.WordEmbedding
+import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
+import com.intel.analytics.bigdl.tensor.Tensor
+import com.intel.analytics.bigdl.utils.T
+
+val model = Sequential[Double]()
+model.add(WordEmbedding[Double](&quot;/path/to/glove.6B.50d.txt&quot;, wordIndex = WordEmbedding.getWordIndex(&quot;/path/to/glove.6B.50d.txt&quot;), inputLength = 1))
+val input = Tensor(data = Array(0.418), shape = Array(1, 1))
+val output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="scala">input: com.intel.analytics.bigdl.tensor.Tensor[Double] =
+0.418
+[com.intel.analytics.bigdl.tensor.DenseTensor$mcD$sp of size 1x1]
+</code></pre>
+
+<p>Output is:</p>
+<pre><code class="scala">output: com.intel.analytics.bigdl.nn.abstractnn.Activity =
+(1,.,.) =
+0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.00.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.00.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0     0.0
+
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 1x1x50]
+</code></pre>
+
+<p><strong>Python example:</strong></p>
+<pre><code class="python">import numpy as np
+from zoo.pipeline.api.keras.layers import WordEmbedding
+from zoo.pipeline.api.keras.models import Sequential
+
+model = Sequential()
+model.add(WordEmbedding(&quot;/path/to/glove.6B.50d.txt&quot;, word_index=WordEmbedding.get_word_index(&quot;/path/to/glove.6B.50d.txt&quot;), input_length=1))
+input = np.random.random([1, 1])
+output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="python">array([[0.18575166]])
+</code></pre>
+
+<p>Output is</p>
+<pre><code class="python">array([[[0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+         0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+         0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+         0., 0.]]], dtype=float32)
 </code></pre>
 
   <br>
