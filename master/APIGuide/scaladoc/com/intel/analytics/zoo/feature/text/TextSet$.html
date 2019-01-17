@@ -467,20 +467,19 @@ Note: Make sure that the corpus has been transformed by <a href="SequenceShaper.
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Read text files as TextSet.</p><div class="fullcomment"><div class="comment cmt"><p>Read text files as TextSet.
-If sc is defined, read texts as DistributedTextSet from local file system or HDFS.
-If sc is null, read texts as LocalTextSet from local file system.
-</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>String. Folder path to texts. The folder structure is expected to be the following:
-            path
-               ├── dir1 - text1, text2, ...
-               ├── dir2 - text1, text2, ...
-               └── dir3 - text1, text2, ...
-            Under the target path, there ought to be N subdirectories (dir1 to dirN). Each
-            subdirectory represents a category and contains all texts that belong to such
-            category. Each category will be a given a label according to its position in the
-            ascending order sorted among all subdirectories.
-            All texts will be given a label according to the subdirectory where it is located.
-            Labels start from 0.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext.
+      <p class="shortcomment cmt">Read text files with labels from a directory.</p><div class="fullcomment"><div class="comment cmt"><p>Read text files with labels from a directory.</p><p>The directory structure is expected to be the following:
+path
+  ├── dir1 - text1, text2, ...
+  ├── dir2 - text1, text2, ...
+  └── dir3 - text1, text2, ...
+Under the target path, there ought to be N subdirectories (dir1 to dirN). Each
+subdirectory represents a category and contains all texts that belong to such
+category. Each category will be a given a label according to its position in the
+ascending order sorted among all subdirectories.
+All texts will be given a label according to the subdirectory where it is located.
+Labels start from 0.
+</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The folder path to texts. Local file system and HDFS are supported.
+            If you want to read from HDFS, sc needs to be specified.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext.
           If specified, texts will be read as a DistributedTextSet.
           Default is null and in this case texts will be read as a LocalTextSet.</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>Integer. A suggestion value of the minimal partition number for input
                      texts. Only need to specify this when sc is not null. Default is 1.</p></dd><dt>returns</dt><dd class="cmt"><p>TextSet.</p></dd></dl></div>
@@ -500,12 +499,11 @@ If sc is null, read texts as LocalTextSet from local file system.
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Read texts from csv file.</p><div class="fullcomment"><div class="comment cmt"><p>Read texts from csv file.
+      <p class="shortcomment cmt">Read texts with id from csv file.</p><div class="fullcomment"><div class="comment cmt"><p>Read texts with id from csv file.
 Each record is supposed to contain the following two fields in order:
-id(String) and text(String).</p><p>Note that the csv file should be without header.
-If sc is defined, read texts as DistributedTextSet from local file system or HDFS.
-If sc is null, read texts as LocalTextSet from local file system.
-</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The path to the csv file.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext.
+id(String) and text(String).
+</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The path to the csv file. Local file system and HDFS are supported.
+            If you want to read from HDFS, sc needs to be specified.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext.
           If specified, texts will be read as a DistributedTextSet.
           Default is null and in this case texts will be read as a LocalTextSet.</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>Integer. A suggestion value of the minimal partition number for input
                      texts. Only need to specify this when sc is not null. Default is 1.</p></dd><dt>returns</dt><dd class="cmt"><p>TextSet.</p></dd></dl></div>
@@ -525,7 +523,7 @@ If sc is null, read texts as LocalTextSet from local file system.
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Read texts from parquet file.</p><div class="fullcomment"><div class="comment cmt"><p>Read texts from parquet file.
+      <p class="shortcomment cmt">Read texts with id from parquet file.</p><div class="fullcomment"><div class="comment cmt"><p>Read texts with id from parquet file.
 Schema should be the following:
 &quot;id&quot;(String) and &quot;text&quot;(String).
 </p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The path to the parquet file.</p></dd><dt class="param">sqlContext</dt><dd class="cmt"><p>An instance of SQLContext.</p></dd><dt>returns</dt><dd class="cmt"><p>DistributedTextSet.</p></dd></dl></div>
