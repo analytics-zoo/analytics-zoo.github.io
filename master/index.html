@@ -39,7 +39,7 @@
               {title: "What is Analytics Zoo?", url: "#what-is-analytics-zoo" },
               {title: "How to use Analytics Zoo?", url: "#how-to-use-analytics-zoo" },
               {title: "Overview", url: "#overview" },
-              {title: "Distributed Tensorflow and Keras on Spark/BigDL", url: "#distributed-tensorflow-and-keras-on-sparkbigdl" },
+              {title: "Distributed TensorFlow and Keras on Spark/BigDL", url: "#distributed-tensorflow-and-keras-on-sparkbigdl" },
               {title: "High level abstractions and APIs", url: "#high-level-abstractions-and-apis" },
               {title: "Built-in deep learning models", url: "#built-in-deep-learning-models" },
               {title: "Reference use cases", url: "#reference-use-cases" },
@@ -406,7 +406,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h2 id="overview">Overview</h2>
 <ul>
 <li>
-<p><a href="#distributed-tensorflow-and-keras-on-sparkbigdl">Distributed Tensorflow and Keras on Spark/BigDL</a></p>
+<p><a href="#distributed-tensorflow-and-keras-on-sparkbigdl">Distributed TensorFlow and Keras on Spark/BigDL</a></p>
 <ul>
 <li>Data wrangling and analysis using PySpark</li>
 <li>Deep learning model development using TensorFlow or Keras</li>
@@ -417,7 +417,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>
 <p><a href="#high-level-abstractions-and-apis">High level abstractions and APIs</a></p>
 <ul>
-<li><a href="#transfer-learning">Transfer learning</a>: customize pretained model for <em>feature extraction or fine-tuning</em></li>
+<li><a href="#transfer-learning">Transfer learning</a>: customize pretrained model for <em>feature extraction or fine-tuning</em></li>
 <li><a href="#autograd"><code>autograd</code></a>: build custom layer/loss using <em>auto differentiation operations</em> </li>
 <li><a href="#nnframes"><code>nnframes</code></a>: native deep learning support in <em>Spark DataFrames and ML Pipelines</em></li>
 <li><a href="#model-serving">Model serving</a>: productionize <em>model serving and inference</em> using <a href="https://en.wikipedia.org/wiki/Plain_old_Java_object">POJO</a> APIs</li>
@@ -438,7 +438,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><a href="#reference-use-cases">Reference use cases</a>: a collection of end-to-end <em>reference use cases</em> (e.g., anomaly detection, sentiment analysis, fraud detection, image augmentation, object detection, variational autoencoder, etc.)</p>
 </li>
 </ul>
-<h2 id="distributed-tensorflow-and-keras-on-sparkbigdl"><em>Distributed Tensorflow and Keras on Spark/BigDL</em></h2>
+<h2 id="distributed-tensorflow-and-keras-on-sparkbigdl"><em>Distributed TensorFlow and Keras on Spark/BigDL</em></h2>
 <p>To make it easy to build and productionize the deep learning applications for Big Data, Analytics Zoo provides a unified analytics + AI platform that seamlessly unites Spark, TensorFlow, Keras and BigDL programs into an integrated pipeline (as illustrated below), which can then transparently run on a large-scale Hadoop/Spark clusters for distributed training and inference. (Please see more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/tensorflow/">here</a>).</p>
 <p>1.Data wrangling and analysis using PySpark</p>
 <pre><code class="python">   from zoo import init_nncontext
@@ -452,7 +452,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
      .map(lambda image_label: decode_to_ndarrays(image_label))
 
    #TFDataset represents a distributed set of elements,
-   #in which each element contains one or more Tensorflow Tensor objects. 
+   #in which each element contains one or more TensorFlow Tensor objects. 
    dataset = TFDataset.from_rdd(train_rdd,
                                 names=[&quot;features&quot;, &quot;labels&quot;],
                                 shapes=[[28, 28, 1], [1]],
@@ -531,7 +531,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </code></pre>
 
 <h3 id="autograd"><em><code>autograd</code></em></h3>
-<p><code>autograd</code> provides automatic differentiation for math operations, so that you can easily build your own <em>custom loss and layer</em> (in both Python and Scala), as illustracted below. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/autograd/">here</a>)</p>
+<p><code>autograd</code> provides automatic differentiation for math operations, so that you can easily build your own <em>custom loss and layer</em> (in both Python and Scala), as illustrated below. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/autograd/">here</a>)</p>
 <p>1.Define model using Keras-style API and <code>autograd</code> </p>
 <pre><code class="python">   import zoo.pipeline.api.autograd as A
    from zoo.pipeline.api.keras.layers import *
@@ -590,7 +590,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </code></pre>
 
 <h3 id="model-serving"><em>Model Serving</em></h3>
-<p>Using the <a href="https://en.wikipedia.org/wiki/Plain_old_Java_object">POJO</a> model serving API, you can productionize model serving and infernece in any Java based frameworks (e.g., <a href="https://spring.io">Spring Framework</a>, Apache <a href="http://storm.apache.org">Storm</a>, <a href="http://kafka.apache.org">Kafka</a> or <a href="http://flink.apache.org">Flink</a>, etc.), as illustrated below:</p>
+<p>Using the <a href="https://en.wikipedia.org/wiki/Plain_old_Java_object">POJO</a> model serving API, you can productionize model serving and inference in any Java based frameworks (e.g., <a href="https://spring.io">Spring Framework</a>, Apache <a href="http://storm.apache.org">Storm</a>, <a href="http://kafka.apache.org">Kafka</a> or <a href="http://flink.apache.org">Flink</a>, etc.), as illustrated below:</p>
 <pre><code class="python">import com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel;
 import com.intel.analytics.zoo.pipeline.inference.JTensor;
 
@@ -636,7 +636,7 @@ List&lt;List&lt;JTensor&gt;&gt; result = model.predict(inputs);
 <p><em>Analytics Zoo Text Classification API</em> provides a set of pre-defined models (using CNN, LSTM, etc.) for text classifications. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/text-classification/">here</a>)</p>
 <h3 id="recommendation-api"><em>Recommendation API</em></h3>
 <p><em>Analytics Zoo Recommendation API</em> provides a set of pre-defined models (such as Neural Collaborative Filtering, Wide and Deep Learning, etc.) for recommendations. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/recommendation/">here</a>)</p>
-<h3 id="anomaly-detection-api"><em>Anomaly Detection API</em></h3>
+<h3 id="anomaly-detection-api"><em>Anomaly detection API</em></h3>
 <p><em>Analytics Zoo Anomaly Detection API</em> provides a set of pre-defined models based on LSTM to detect anomalies for time series data. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/anomaly-detection/">here</a>)</p>
 <h3 id="text-matching-api"><em>Text matching API</em></h3>
 <p><em>Analytics Zoo Text Matching API</em> provides pre-defined KNRM model for ranking or classification. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/text-matching/">here</a>)</p>
@@ -654,5 +654,5 @@ List&lt;List&lt;JTensor&gt;&gt; result = model.predict(inputs);
 </html>
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2019-01-17 12:26:18
+Build Date UTC : 2019-01-17 17:24:52
 -->
