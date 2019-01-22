@@ -51,6 +51,8 @@
           ]},
           {title: "3D Image Support", url: "#3d-image-support", children: [
           ]},
+          {title: "Caching Images in Persistent Memory.", url: "#caching-images-in-persistent-memory", children: [
+          ]},
         ];
 
     </script>
@@ -414,6 +416,13 @@ result = prediction.collect()
 <p>For details, you can check guide of <a href="../image-classification/">image classificaion</a> or <a href="../object-detection/">object detection</a></p>
 <h2 id="3d-image-support">3D Image Support</h2>
 <p>For 3D images, we can support above operations based on ImageSet. For details, please refer to <a href="../../APIGuide/FeatureEngineering/image/">image API guide</a></p>
+<h2 id="caching-images-in-persistent-memory">Caching Images in Persistent Memory.</h2>
+<p>Here is a scala <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/inception/README.md">example</a> to train Inception V1 with ImageNet-2012 dataset. If you set the option <code>memoryType</code> to <code>PMEM</code>, the data will be cached in Intel Optane DC Persistent Memory; please refer to the guide <a href="https://github.com/memkind/memkind#run-requirements">here</a> on how to set up the system environment.</p>
+<p>In the InceptionV1 example, we use an new dataset called <a href="../../APIGuide/FeatureEngineering/featureset/">FeatureSet</a> to cache the data. Only scala API is currently available.</p>
+<p><strong>Scala example:</strong>
+ <code>val rawData = readFromSeqFiles(path, sc, classNumber)
+ val featureSet = FeatureSet.rdd(rawData, memoryType = PMEM)</code>
+ <code>readFromSeqFiles</code> read the Sequence File into RDD[ByteRecord], then 'FeatureSet.rdd(rawData, memoryType = PMEM)' will cache the data to Intel Optane DC Persistent Memory.</p>
 
   <br>
 </div>
