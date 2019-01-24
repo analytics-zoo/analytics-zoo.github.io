@@ -1,0 +1,871 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.pipeline.api.net &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.pipeline.api.net</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">six</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">py4j.protocol</span> <span class="k">import</span> <span class="n">Py4JJavaError</span>
+<span class="kn">from</span> <span class="nn">pyspark</span> <span class="k">import</span> <span class="n">RDD</span>
+
+<span class="kn">from</span> <span class="nn">bigdl.nn.criterion</span> <span class="k">import</span> <span class="n">Criterion</span>
+<span class="kn">from</span> <span class="nn">bigdl.nn.layer</span> <span class="k">import</span> <span class="n">Model</span> <span class="k">as</span> <span class="n">BModel</span>
+<span class="kn">from</span> <span class="nn">bigdl.nn.layer</span> <span class="k">import</span> <span class="n">Layer</span>
+<span class="kn">from</span> <span class="nn">bigdl.util.common</span> <span class="k">import</span> <span class="n">to_list</span><span class="p">,</span> <span class="n">callBigDlFunc</span><span class="p">,</span> <span class="n">get_spark_context</span><span class="p">,</span> \
+    <span class="n">JavaValue</span><span class="p">,</span> <span class="n">get_node_and_core_number</span>
+<span class="kn">from</span> <span class="nn">zoo.common</span> <span class="k">import</span> <span class="n">Sample</span><span class="p">,</span> <span class="n">JTensor</span>
+<span class="kn">from</span> <span class="nn">zoo.feature.image</span> <span class="k">import</span> <span class="n">ImageSet</span>
+<span class="kn">from</span> <span class="nn">zoo.pipeline.api.keras.engine.topology</span> <span class="k">import</span> <span class="n">ZooKerasLayer</span><span class="p">,</span> <span class="n">KerasNet</span><span class="p">,</span> <span class="n">to_bigdl_metric</span>
+<span class="kn">from</span> <span class="nn">bigdl.optim.optimizer</span> <span class="k">import</span> <span class="n">EveryEpoch</span><span class="p">,</span> <span class="n">MaxEpoch</span><span class="p">,</span> <span class="n">Optimizer</span><span class="p">,</span> <span class="n">Adam</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span> <span class="o">&gt;=</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>
+    <span class="n">long</span> <span class="o">=</span> <span class="nb">int</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+
+<div class="viewcode-block" id="GraphNet"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.GraphNet">[docs]</a><span class="k">class</span> <span class="nc">GraphNet</span><span class="p">(</span><span class="n">BModel</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">jvalue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">jvalue</span><span class="p">,</span>
+                                     <span class="n">to_list</span><span class="p">(</span><span class="nb">input</span><span class="p">),</span>
+                                     <span class="n">to_list</span><span class="p">(</span><span class="n">output</span><span class="p">),</span>
+                                     <span class="n">bigdl_type</span><span class="p">,</span>
+                                     <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GraphNet.flattened_layers"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.GraphNet.flattened_layers">[docs]</a>    <span class="k">def</span> <span class="nf">flattened_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_container</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">jlayers</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;getFlattenSubModules&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">include_container</span><span class="p">)</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">Layer</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">jlayer</span><span class="p">)</span> <span class="k">for</span> <span class="n">jlayer</span> <span class="ow">in</span> <span class="n">jlayers</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">layers</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">layers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">jlayers</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;getSubModules&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">Layer</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">jlayer</span><span class="p">)</span> <span class="k">for</span> <span class="n">jlayer</span> <span class="ow">in</span> <span class="n">jlayers</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">layers</span>
+
+<div class="viewcode-block" id="GraphNet.from_jvalue"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.GraphNet.from_jvalue">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_jvalue</span><span class="p">(</span><span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a Python Model base on the given java value</span>
+
+<span class="sd">        :param jvalue: Java object create by Py4j</span>
+<span class="sd">        :return: A Python Model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">GraphNet</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="n">bigdl_type</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">jvalue</span>
+        <span class="k">return</span> <span class="n">model</span></div>
+
+<div class="viewcode-block" id="GraphNet.new_graph"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.GraphNet.new_graph">[docs]</a>    <span class="k">def</span> <span class="nf">new_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Specify a list of nodes as output and return a new graph using the existing nodes</span>
+
+<span class="sd">        :param outputs: A list of nodes specified</span>
+<span class="sd">        :return: A graph model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;newGraph&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GraphNet.freeze_up_to"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.GraphNet.freeze_up_to">[docs]</a>    <span class="k">def</span> <span class="nf">freeze_up_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Freeze the model from the bottom up to the layers specified by names (inclusive).</span>
+<span class="sd">        This is useful for finetuning a model</span>
+
+<span class="sd">        :param names: A list of module names to be Freezed</span>
+<span class="sd">        :return: current graph model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;freezeUpTo&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GraphNet.unfreeze"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.GraphNet.unfreeze">[docs]</a>    <span class="k">def</span> <span class="nf">unfreeze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;unfreeze&quot; module, i.e. make the module parameters(weight/bias, if exists)</span>
+<span class="sd">        to be trained(updated) in training process.</span>
+<span class="sd">        If &#39;names&#39; is a non-empty list, unfreeze layers that match given names</span>
+
+<span class="sd">        :param names: list of module names to be unFreezed. Default is None.</span>
+<span class="sd">        :return: current graph model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;unFreeze&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GraphNet.to_keras"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.GraphNet.to_keras">[docs]</a>    <span class="k">def</span> <span class="nf">to_keras</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;netToKeras&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ZooKerasLayer</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Net"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.Net">[docs]</a><span class="k">class</span> <span class="nc">Net</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Net.load_bigdl"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.Net.load_bigdl">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_bigdl</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">weight_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a pre-trained BigDL model.</span>
+
+<span class="sd">        :param model_path: The path to the pre-trained model.</span>
+<span class="sd">        :param weight_path: The path to the weights of the pre-trained model. Default is None.</span>
+<span class="sd">        :return: A pre-trained model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;netLoadBigDL&quot;</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">GraphNet</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">jmodel</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Net.load"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.Net.load">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">weight_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load an existing Analytics Zoo model defined in Keras-style(with weights).</span>
+
+<span class="sd">        :param model_path: The path to load the saved model.</span>
+<span class="sd">                          Local file system, HDFS and Amazon S3 are supported.</span>
+<span class="sd">                          HDFS path should be like &#39;hdfs://[host]:[port]/xxx&#39;.</span>
+<span class="sd">                          Amazon S3 path should be like &#39;s3a://bucket/xxx&#39;.</span>
+<span class="sd">        :param weight_path: The path for pre-trained weights if any. Default is None.</span>
+<span class="sd">        :return: An Analytics Zoo model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;netLoad&quot;</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">KerasNet</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Net.load_torch"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.Net.load_torch">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_torch</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a pre-trained Torch model.</span>
+
+<span class="sd">        :param path: The path containing the pre-trained model.</span>
+<span class="sd">        :return: A pre-trained model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;netLoadTorch&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">GraphNet</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Net.load_tf"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.Net.load_tf">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_tf</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">byte_order</span><span class="o">=</span><span class="s2">&quot;little_endian&quot;</span><span class="p">,</span>
+                <span class="n">bin_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a pre-trained TensorFlow model.</span>
+<span class="sd">        :param path: The path containing the pre-trained model.</span>
+<span class="sd">                     OR alternatively, the exported folder path from `export_tf`.</span>
+<span class="sd">                     In this case, path should contain &#39;frozen_inference_graph.pb&#39; and</span>
+<span class="sd">                     &#39;graph_meta.json&#39;. You don&#39;t need to specify inputs and outputs.</span>
+<span class="sd">        :param inputs: The input nodes of this graph.</span>
+<span class="sd">        :param outputs: The output nodes of this graph.</span>
+<span class="sd">        :param byte_order: Byte_order of the file, `little_endian` or `big_endian`.</span>
+<span class="sd">        :param bin_file: Optional bin file produced by bigdl dump_model util function</span>
+<span class="sd">                         to store the weights. Default is None.</span>
+<span class="sd">        :return: A pre-trained model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inputs</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">outputs</span><span class="p">:</span>  <span class="c1"># load_tf from exported folder</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;load_tf from exported folder requires path to be a folder&quot;</span><span class="p">)</span>
+            <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;netLoadTF&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;netLoadTF&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span>
+                                   <span class="n">byte_order</span><span class="p">,</span> <span class="n">bin_file</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">GraphNet</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Net.load_caffe"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.Net.load_caffe">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_caffe</span><span class="p">(</span><span class="n">def_path</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a pre-trained Caffe model.</span>
+
+<span class="sd">        :param def_path: The path containing the caffe model definition.</span>
+<span class="sd">        :param model_path: The path containing the pre-trained caffe model.</span>
+<span class="sd">        :return: A pre-trained model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;netLoadCaffe&quot;</span><span class="p">,</span> <span class="n">def_path</span><span class="p">,</span> <span class="n">model_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">GraphNet</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Net.load_keras"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.Net.load_keras">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_keras</span><span class="p">(</span><span class="n">json_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hdf5_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">by_name</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a pre-trained Keras model.</span>
+
+<span class="sd">        :param json_path: The json path containing the keras model definition. Default is None.</span>
+<span class="sd">        :param hdf5_path: The HDF5 path containing the pre-trained keras model weights</span>
+<span class="sd">                        with or without the model architecture. Default is None.</span>
+<span class="sd">        :param by_name: by default the architecture should be unchanged.</span>
+<span class="sd">                        If set as True, only layers with the same name will be loaded.</span>
+<span class="sd">        :return: A BigDL model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">BModel</span><span class="o">.</span><span class="n">load_keras</span><span class="p">(</span><span class="n">json_path</span><span class="p">,</span> <span class="n">hdf5_path</span><span class="p">,</span> <span class="n">by_name</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="to_sample_rdd"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.to_sample_rdd">[docs]</a><span class="k">def</span> <span class="nf">to_sample_rdd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="n">num_slices</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Conver x and y into RDD[Sample]</span>
+<span class="sd">    :param sc: SparkContext</span>
+<span class="sd">    :param x: ndarray and the first dimension should be batch</span>
+<span class="sd">    :param y: ndarray and the first dimension should be batch</span>
+<span class="sd">    :param numSlices:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x_rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">num_slices</span><span class="p">)</span>
+    <span class="n">y_rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">num_slices</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x_rdd</span><span class="o">.</span><span class="n">zip</span><span class="p">(</span><span class="n">y_rdd</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">Sample</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
+
+
+<div class="viewcode-block" id="TFNet"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFNet">[docs]</a><span class="k">class</span> <span class="nc">TFNet</span><span class="p">(</span><span class="n">Layer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">input_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">input_names</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">output_names</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">TFNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">,</span>
+                                        <span class="n">path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_names</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+                <span class="n">input_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_names</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output_names</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+                <span class="n">output_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">output_names</span><span class="p">]</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">TFNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">,</span>
+                                        <span class="n">path</span><span class="p">,</span>
+                                        <span class="n">input_names</span><span class="p">,</span>
+                                        <span class="n">output_names</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TFNet.check_input"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFNet.check_input">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">check_input</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param input: ndarray or list of ndarray or JTensor or list of JTensor.</span>
+<span class="sd">        :return: (list of JTensor, isTable)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">to_jtensor</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">JTensor</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">i</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Error unknown input type </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Error when checking: empty input&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">to_jtensor</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="nb">input</span><span class="p">)),</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">to_jtensor</span><span class="p">(</span><span class="nb">input</span><span class="p">)],</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="TFNet.predict"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFNet.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">batch_per_thread</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">distributed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Use a model to do prediction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ImageSet</span><span class="p">):</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooPredict&quot;</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                    <span class="n">x</span><span class="p">,</span>
+                                    <span class="n">batch_per_thread</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">ImageSet</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">distributed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">data_rdd</span> <span class="o">=</span> <span class="n">to_sample_rdd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]]),</span> <span class="n">get_spark_context</span><span class="p">())</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">RDD</span><span class="p">):</span>
+                <span class="n">data_rdd</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Unsupported prediction data type: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooPredict&quot;</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                    <span class="n">data_rdd</span><span class="p">,</span>
+                                    <span class="n">batch_per_thread</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">results</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">result</span><span class="p">:</span> <span class="n">Layer</span><span class="o">.</span><span class="n">convert_output</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooPredict&quot;</span><span class="p">,</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">_to_jtensors</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+                                        <span class="n">batch_per_thread</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">Layer</span><span class="o">.</span><span class="n">convert_output</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Unsupported prediction data type: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TFNet.from_export_folder"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFNet.from_export_folder">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_export_folder</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">folder</span> <span class="o">+</span> <span class="s2">&quot; does not exist&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TFNet</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFNet.from_session"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFNet.from_session">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_session</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span>
+                     <span class="n">generate_backward</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_non_differentiable_input</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">zoo.util.tf</span> <span class="k">import</span> <span class="n">export_tf</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">export_tf</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span>
+                      <span class="n">generate_backward</span><span class="p">,</span> <span class="n">allow_non_differentiable_input</span><span class="p">)</span>
+            <span class="n">net</span> <span class="o">=</span> <span class="n">TFNet</span><span class="o">.</span><span class="n">from_export_folder</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">shutil</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">net</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_find_placeholders</span><span class="p">(</span><span class="n">grads</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    find all the tensors that are used for computing grads and has been</span>
+<span class="sd">    computed during forward</span>
+<span class="sd">    :param grads:</span>
+<span class="sd">    :param forward_ops:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">is_py2</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span>
+    <span class="k">if</span> <span class="n">is_py2</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">Queue</span> <span class="k">as</span> <span class="nn">queue</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">queue</span> <span class="k">as</span> <span class="nn">queue</span>
+    <span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">grad</span> <span class="ow">in</span> <span class="n">grads</span><span class="p">:</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+
+    <span class="n">placeholders</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="c1"># this is necessary, because input may not be differentiable</span>
+        <span class="k">if</span> <span class="n">tensor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tensor</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Placeholder&quot;</span><span class="p">):</span>
+                <span class="n">placeholders</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tensor</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">input_tensor</span> <span class="ow">in</span> <span class="n">tensor</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
+                <span class="c1"># this is necessary because there may be a cycle in the graph such as tf.while_loop</span>
+                <span class="k">if</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">placeholders</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="IdentityCriterion"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.IdentityCriterion">[docs]</a><span class="k">class</span> <span class="nc">IdentityCriterion</span><span class="p">(</span><span class="n">Criterion</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">IdentityCriterion</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TFTrainingHelper"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFTrainingHelper">[docs]</a><span class="k">class</span> <span class="nc">TFTrainingHelper</span><span class="p">(</span><span class="n">Layer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">configProto</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">configProto</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">byte_arr</span> <span class="o">=</span> <span class="n">configProto</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">byte_arr</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TFTrainingHelper</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">byte_arr</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TFValidationMethod"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFValidationMethod">[docs]</a><span class="k">class</span> <span class="nc">TFValidationMethod</span><span class="p">(</span><span class="n">JavaValue</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val_method</span><span class="p">,</span> <span class="n">output_length</span><span class="p">,</span> <span class="n">target_length</span><span class="p">):</span>
+        <span class="n">JavaValue</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span>
+                           <span class="n">val_method</span><span class="p">,</span> <span class="n">output_length</span><span class="p">,</span> <span class="n">target_length</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TFOptimizer"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFOptimizer">[docs]</a><span class="k">class</span> <span class="nc">TFOptimizer</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">optim_method</span><span class="p">,</span> <span class="n">sess</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">grads</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">graph</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">val_outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">val_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">val_method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">val_split</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                 <span class="n">tensors_with_value</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session_config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+        <span class="kn">from</span> <span class="nn">zoo.util.tf</span> <span class="k">import</span> <span class="n">export_tf</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        TFOptimizer is used for distributed training of tensorflow</span>
+<span class="sd">        on Spark/BigDL.</span>
+
+<span class="sd">        :param loss: The loss tensor of the tensorflow model, should be a scalar</span>
+<span class="sd">        :param optim_method: the optimization method to be used, such as bigdl.optim.optimizer.Adam</span>
+<span class="sd">        :param sess: the current tensorflow Session, if you want to used a pre-trained model, you</span>
+<span class="sd">        should use the Session to load the pre-trained variables and pass it to TFOptimizer.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="n">dataset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">TFOptimizer</span><span class="o">.</span><span class="n">_get_arguments_from_loss</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">optim_method</span><span class="p">,</span> <span class="n">sess</span><span class="p">,</span>
+                                                        <span class="n">val_outputs</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">,</span> <span class="n">val_method</span><span class="p">)</span>
+            <span class="n">loss</span><span class="p">,</span> <span class="n">optim_method</span><span class="p">,</span> <span class="n">sess</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">inputs</span> <span class="o">=</span> <span class="n">args</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+            <span class="n">grads</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">val_outputs</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">,</span> <span class="n">val_method</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
+
+        <span class="n">additional_inputs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">additional_values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">all_required_inputs</span> <span class="o">=</span> <span class="n">_find_placeholders</span><span class="p">([</span><span class="n">loss</span><span class="p">])</span>
+        <span class="n">all_required_inputs_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">all_required_inputs</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">tensors_with_value</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">tensors_with_value</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">all_required_inputs_names</span><span class="p">:</span>
+                    <span class="n">additional_inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+                    <span class="n">additional_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">optim_method</span> <span class="o">=</span> <span class="n">optim_method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sess</span> <span class="o">=</span> <span class="n">sess</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span> <span class="o">+</span> <span class="n">additional_inputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>
+
+        <span class="kn">from</span> <span class="nn">zoo.util.tf</span> <span class="k">import</span> <span class="n">process_grad</span>
+        <span class="n">grads</span> <span class="o">=</span> <span class="p">[</span><span class="n">process_grad</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span> <span class="k">for</span> <span class="n">grad</span> <span class="ow">in</span> <span class="n">grads</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You should set batch_size instead of batch_per_thread for training&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">val_outputs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">val_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
+                <span class="n">val_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">val_labels</span><span class="p">]</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">val_outputs</span> <span class="o">+</span> <span class="n">val_labels</span> <span class="o">+</span> <span class="p">[</span><span class="n">loss</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">loss</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">export_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+        <span class="n">export_tf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sess</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">export_dir</span><span class="p">,</span>
+                  <span class="n">inputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">,</span>
+                  <span class="n">outputs</span><span class="o">=</span><span class="n">grads</span> <span class="o">+</span> <span class="n">outputs</span><span class="p">)</span>
+
+        <span class="n">variable_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">]</span>
+        <span class="n">grad_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">grads</span><span class="p">]</span>
+        <span class="n">output_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">]</span>
+
+        <span class="k">def</span> <span class="nf">to_floats</span><span class="p">(</span><span class="n">vs</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vs</span><span class="p">]</span>
+
+        <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;input_names&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">],</span>
+            <span class="s2">&quot;output_names&quot;</span><span class="p">:</span> <span class="n">output_names</span><span class="p">,</span>
+            <span class="s2">&quot;variables&quot;</span><span class="p">:</span> <span class="n">variable_names</span><span class="p">,</span>
+            <span class="s2">&quot;grad_variables&quot;</span><span class="p">:</span> <span class="n">grad_names</span><span class="p">,</span>
+            <span class="s2">&quot;default_tensor_values&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">to_floats</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">additional_values</span><span class="p">]</span>
+        <span class="p">}</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">export_dir</span><span class="p">,</span> <span class="s2">&quot;training_meta.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">meta</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">variable_placeholders</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
+            <span class="n">assigns</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">variable_placeholders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="n">assigns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+            <span class="n">assign</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="o">*</span><span class="n">assigns</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assign</span> <span class="o">=</span> <span class="n">assign</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">training_helper_layer</span> <span class="o">=</span> <span class="n">TFTrainingHelper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">export_dir</span><span class="p">,</span> <span class="n">session_config</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">Py4JJavaError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;expects to be colocated with unknown node&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">If you are using the embedding layer in tf.keras, then this is a</span>
+<span class="s2">known issue of tensorflow, see https://github.com/tensorflow/tensorflow/issues/21889.</span>
+<span class="s2">Please add zoo.util.tf.variable_creator_scope before model construction.</span>
+<span class="s2">For example:</span>
+<span class="s2">from zoo.util.tf import variable_creator_scope</span>
+<span class="s2">with variable_creator_scope():</span>
+<span class="s2">    model = tf.keras.models.Sequential([</span>
+<span class="s2">    tf.keras.layers.Embedding(1, 1, input_length=1)])</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">rdd</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">batch_size</span>
+        <span class="n">sample_rdd</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">Sample</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span>
+            <span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">])]))</span>
+        <span class="k">if</span> <span class="n">val_outputs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">val_labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">val_rdd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">val_rdd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">val_rdd</span> \
+                    <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">Sample</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">t</span><span class="p">,</span>
+                                                       <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">])]))</span>
+                <span class="n">val_method</span> <span class="o">=</span> <span class="p">[</span><span class="n">TFValidationMethod</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">val_outputs</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">val_labels</span><span class="p">))</span>
+                              <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">to_list</span><span class="p">(</span><span class="n">val_method</span><span class="p">)]</span>
+                <span class="n">training_rdd</span> <span class="o">=</span> <span class="n">sample_rdd</span>
+
+            <span class="k">elif</span> <span class="n">val_split</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">:</span>
+                <span class="n">training_rdd</span><span class="p">,</span> <span class="n">val_rdd</span> <span class="o">=</span> <span class="n">sample_rdd</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">([</span><span class="mi">1</span><span class="o">-</span><span class="n">val_split</span><span class="p">,</span> <span class="n">val_split</span><span class="p">])</span>
+                <span class="n">val_method</span> <span class="o">=</span> <span class="p">[</span><span class="n">TFValidationMethod</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">val_outputs</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">val_labels</span><span class="p">))</span>
+                              <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">to_list</span><span class="p">(</span><span class="n">val_method</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Validation data is not specified. Please set &quot;</span> <span class="o">+</span>
+                                 <span class="s2">&quot;val rdd in TFDataset, or set val_split larger than zero&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">Optimizer</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_helper_layer</span><span class="p">,</span>
+                                              <span class="n">training_rdd</span><span class="p">,</span>
+                                              <span class="n">IdentityCriterion</span><span class="p">(),</span>
+                                              <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                                              <span class="n">optim_method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">optim_method</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">set_validation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
+                                          <span class="n">val_rdd</span><span class="p">,</span>
+                                          <span class="n">EveryEpoch</span><span class="p">(),</span>
+                                          <span class="n">val_method</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">training_rdd</span> <span class="o">=</span> <span class="n">sample_rdd</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">Optimizer</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">training_helper_layer</span><span class="p">,</span>
+                                              <span class="n">training_rdd</span><span class="p">,</span>
+                                              <span class="n">IdentityCriterion</span><span class="p">(),</span>
+                                              <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                                              <span class="n">optim_method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">optim_method</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_arguments_from_loss</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">optim_method</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">val_outputs</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">,</span> <span class="n">val_method</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+        <span class="k">if</span> <span class="n">session</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+            <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">sess</span> <span class="o">=</span> <span class="n">session</span>
+        <span class="n">grads_vars</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">compute_gradients</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">grads</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">var</span><span class="p">)</span> <span class="ow">in</span> <span class="n">grads_vars</span><span class="p">:</span>
+            <span class="n">variables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+            <span class="n">grads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+
+        <span class="n">all_required_inputs</span> <span class="o">=</span> <span class="n">_find_placeholders</span><span class="p">([</span><span class="n">loss</span><span class="p">])</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">all_required_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">tensors</span>
+
+        <span class="n">_check_the_same</span><span class="p">(</span><span class="n">all_required_inputs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">loss</span><span class="p">,</span> <span class="n">optim_method</span><span class="p">,</span> <span class="n">sess</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span>
+                <span class="n">grads</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="n">val_outputs</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">,</span> <span class="n">val_method</span><span class="p">]</span>
+
+<div class="viewcode-block" id="TFOptimizer.from_loss"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFOptimizer.from_loss">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_loss</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">optim_method</span><span class="p">,</span> <span class="n">session</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">val_outputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                  <span class="n">val_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">val_method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">val_split</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">TFOptimizer</span><span class="o">.</span><span class="n">_get_arguments_from_loss</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">optim_method</span><span class="p">,</span>
+                                                    <span class="n">session</span><span class="p">,</span> <span class="n">val_outputs</span><span class="p">,</span>
+                                                    <span class="n">val_labels</span><span class="p">,</span> <span class="n">val_method</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">args</span> <span class="o">+</span> <span class="p">[</span><span class="n">val_split</span><span class="p">]),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFOptimizer.from_keras"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFOptimizer.from_keras">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_keras</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">keras_model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">val_spilt</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">tensorflow.keras.backend</span> <span class="k">as</span> <span class="nn">K</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">keras_model</span><span class="o">.</span><span class="n">total_loss</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">keras_model</span><span class="o">.</span><span class="n">inputs</span> <span class="o">+</span> <span class="n">keras_model</span><span class="o">.</span><span class="n">targets</span>
+
+        <span class="n">variables</span> <span class="o">=</span> <span class="n">keras_model</span><span class="o">.</span><span class="n">_collected_trainable_weights</span>
+        <span class="n">keras_optimizer</span> <span class="o">=</span> <span class="n">keras_model</span><span class="o">.</span><span class="n">optimizer</span>
+        <span class="n">grads</span> <span class="o">=</span> <span class="n">keras_optimizer</span><span class="o">.</span><span class="n">get_gradients</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">variables</span><span class="p">)</span>
+
+        <span class="n">sess</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_session</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">sess</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
+            <span class="n">optim_method</span> <span class="o">=</span> <span class="n">TFOptimizer</span><span class="o">.</span><span class="n">to_bigdl_optim_method</span><span class="p">(</span><span class="n">keras_optimizer</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">keras_model</span><span class="o">.</span><span class="n">metrics</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">keras_model</span><span class="o">.</span><span class="n">metrics</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;different metrics for different outputs are not supported right now&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">dataset</span><span class="o">.</span><span class="n">val_rdd</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">val_spilt</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Validation data is not specified. Please set &quot;</span> <span class="o">+</span>
+                                 <span class="s2">&quot;val rdd in TFDataset, or set val_split larger than zero&quot;</span><span class="p">)</span>
+            <span class="n">bigdl_val_methods</span> <span class="o">=</span> <span class="p">[</span><span class="n">to_bigdl_metric</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">keras_model</span><span class="o">.</span><span class="n">metrics_names</span><span class="p">]</span>
+            <span class="n">val_outputs</span> <span class="o">=</span> <span class="n">keras_model</span><span class="o">.</span><span class="n">outputs</span>
+            <span class="n">val_labels</span> <span class="o">=</span> <span class="n">keras_model</span><span class="o">.</span><span class="n">targets</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">val_outputs</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">val_labels</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">bigdl_val_methods</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">tensor_with_value</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">K</span><span class="o">.</span><span class="n">learning_phase</span><span class="p">():</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">optim_method</span><span class="p">,</span> <span class="n">sess</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span>
+                   <span class="n">grads</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span> <span class="n">val_outputs</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">,</span>
+                   <span class="n">bigdl_val_methods</span><span class="p">,</span> <span class="n">val_spilt</span><span class="p">,</span>
+                   <span class="n">tensors_with_value</span><span class="o">=</span><span class="n">tensor_with_value</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFOptimizer.to_bigdl_optim_method"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFOptimizer.to_bigdl_optim_method">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">to_bigdl_optim_method</span><span class="p">(</span><span class="n">koptim_method</span><span class="p">):</span>
+        <span class="c1"># koptim_method is always an object</span>
+        <span class="kn">import</span> <span class="nn">tensorflow.keras.backend</span> <span class="k">as</span> <span class="nn">K</span>
+        <span class="kn">import</span> <span class="nn">tensorflow.keras.optimizers</span> <span class="k">as</span> <span class="nn">koptimizers</span>
+        <span class="kn">import</span> <span class="nn">bigdl.optim.optimizer</span> <span class="k">as</span> <span class="nn">boptimizer</span>
+        <span class="n">lr</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">lr</span><span class="p">))</span>
+        <span class="n">decay</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">decay</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">koptim_method</span><span class="p">,</span> <span class="n">koptimizers</span><span class="o">.</span><span class="n">Adagrad</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;For Adagrad, we don&#39;t support epsilon for now&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">boptimizer</span><span class="o">.</span><span class="n">Adagrad</span><span class="p">(</span><span class="n">learningrate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+                                      <span class="n">learningrate_decay</span><span class="o">=</span><span class="n">decay</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">koptim_method</span><span class="p">,</span> <span class="n">koptimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">):</span>
+            <span class="n">momentum</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">momentum</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">boptimizer</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">learningrate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+                                  <span class="n">learningrate_decay</span><span class="o">=</span><span class="n">decay</span><span class="p">,</span>
+                                  <span class="n">momentum</span><span class="o">=</span><span class="n">momentum</span><span class="p">,</span>
+                                  <span class="n">nesterov</span><span class="o">=</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">nesterov</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">koptim_method</span><span class="p">,</span> <span class="n">koptimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">):</span>
+            <span class="n">beta1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">beta_1</span><span class="p">))</span>
+            <span class="n">beta2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">beta_2</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">boptimizer</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learningrate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+                                   <span class="n">learningrate_decay</span><span class="o">=</span><span class="n">decay</span><span class="p">,</span>
+                                   <span class="n">beta1</span><span class="o">=</span><span class="n">beta1</span><span class="p">,</span>
+                                   <span class="n">beta2</span><span class="o">=</span><span class="n">beta2</span><span class="p">,</span>
+                                   <span class="n">epsilon</span><span class="o">=</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">koptim_method</span><span class="p">,</span> <span class="n">koptimizers</span><span class="o">.</span><span class="n">RMSprop</span><span class="p">):</span>
+            <span class="n">rho</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">rho</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">boptimizer</span><span class="o">.</span><span class="n">RMSprop</span><span class="p">(</span><span class="n">learningrate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+                                      <span class="n">learningrate_decay</span><span class="o">=</span><span class="n">decay</span><span class="p">,</span>
+                                      <span class="n">decayrate</span><span class="o">=</span><span class="n">rho</span><span class="p">,</span>
+                                      <span class="n">epsilon</span><span class="o">=</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">koptim_method</span><span class="p">,</span> <span class="n">koptimizers</span><span class="o">.</span><span class="n">Adadelta</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;For Adadelta, we don&#39;t support learning rate and learning rate decay for now&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">boptimizer</span><span class="o">.</span><span class="n">Adadelta</span><span class="p">(</span><span class="n">decayrate</span><span class="o">=</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">rho</span><span class="p">,</span>
+                                       <span class="n">epsilon</span><span class="o">=</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">koptim_method</span><span class="p">,</span> <span class="n">koptimizers</span><span class="o">.</span><span class="n">Adamax</span><span class="p">):</span>
+            <span class="n">beta1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">beta_1</span><span class="p">))</span>
+            <span class="n">beta2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">K</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">beta_2</span><span class="p">))</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;For Adamax, we don&#39;t support learning rate decay for now&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">boptimizer</span><span class="o">.</span><span class="n">Adamax</span><span class="p">(</span><span class="n">learningrate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+                                     <span class="n">beta1</span><span class="o">=</span><span class="n">beta1</span><span class="p">,</span>
+                                     <span class="n">beta2</span><span class="o">=</span><span class="n">beta2</span><span class="p">,</span>
+                                     <span class="n">epsilon</span><span class="o">=</span><span class="n">koptim_method</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;We don&#39;t support </span><span class="si">%s</span><span class="s2"> for now&quot;</span> <span class="o">%</span> <span class="n">koptim_method</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFOptimizer.set_train_summary"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFOptimizer.set_train_summary">[docs]</a>    <span class="k">def</span> <span class="nf">set_train_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">summary</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">set_train_summary</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFOptimizer.set_val_summary"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFOptimizer.set_val_summary">[docs]</a>    <span class="k">def</span> <span class="nf">set_val_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">summary</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">set_val_summary</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFOptimizer.optimize"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFOptimizer.optimize">[docs]</a>    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">end_trigger</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">end_trigger</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">end_trigger</span> <span class="o">=</span> <span class="n">MaxEpoch</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">set_end_when</span><span class="p">(</span><span class="n">end_trigger</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span>
+
+        <span class="n">variables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">training_helper_layer</span><span class="o">.</span><span class="n">get_weights</span><span class="p">()</span>
+
+        <span class="n">feed_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">variable_placeholders</span><span class="p">,</span> <span class="n">variables</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">assign</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TFDataset"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFDataset">[docs]</a><span class="k">class</span> <span class="nc">TFDataset</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rdd</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span>
+                 <span class="n">batch_per_thread</span><span class="p">,</span> <span class="n">hard_code_batch_size</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">val_rdd</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        TFDatasets represents a distributed collection of elements to be feed into</span>
+<span class="sd">        Tensorflow graph. TFDatasets can be created using a RDD and each of its records</span>
+<span class="sd">        is a list of numpy.ndarray representing the tensors to be feed into tensorflow</span>
+<span class="sd">        graph on each iteration. TFDatasets must be used with TFOptimizer or TFPredictor.</span>
+
+<span class="sd">        :param rdd: a rdd of list of numpy.ndarray each representing a tensor to feed into</span>
+<span class="sd">         tensorflow graph on each iteration</span>
+<span class="sd">        :param names: the names of the resulting tensors, should be a list of str</span>
+<span class="sd">        :param shapes: the shapes of the resulting tensors, should be a list of list of int</span>
+<span class="sd">        :param types: the types of the result tensors, should be a list of tf.dtype</span>
+<span class="sd">        :param batch_size: the batch size, used for training, should be a multiple of</span>
+<span class="sd">        total core num</span>
+<span class="sd">        :param batch_per_thread: the batch size for each thread, used for inference</span>
+<span class="sd">        :param hard_code_batch_size: whether to hard code the batch_size into tensorflow graph,</span>
+<span class="sd">        if True, the static size of the first dimension of the resulting tensors is</span>
+<span class="sd">        batch_size/total_core_num (training) or batch_per_thread for inference; if False,</span>
+<span class="sd">        it is None.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">batch_size</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">batch_per_thread</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;bath_size and batch_per_thread should not be set simultaneously&quot;</span><span class="p">)</span>
+
+        <span class="n">node_num</span><span class="p">,</span> <span class="n">core_num</span> <span class="o">=</span> <span class="n">get_node_and_core_number</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_core_num</span> <span class="o">=</span> <span class="n">node_num</span> <span class="o">*</span> <span class="n">core_num</span>
+        <span class="k">if</span> <span class="n">batch_size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">batch_size</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_core_num</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;batch_size should be a multiple &quot;</span> <span class="o">+</span>
+                                 <span class="s2">&quot;of total core number, but got batch_size: &quot;</span> <span class="o">+</span>
+                                 <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> where total core number is </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span>
+                                                                       <span class="bp">self</span><span class="o">.</span><span class="n">total_core_num</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">batch_size</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">batch_per_thread</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">batch_per_thread</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_core_num</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_per_thread</span> <span class="o">=</span> <span class="n">batch_per_thread</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">hard_code_batch_size</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                           <span class="n">dtype</span><span class="o">=</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                           <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="n">shapes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">))]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">batch_per_thread</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                               <span class="n">dtype</span><span class="o">=</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                               <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">batch_per_thread</span><span class="p">]</span> <span class="o">+</span> <span class="n">shapes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">))]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                               <span class="n">dtype</span><span class="o">=</span><span class="n">types</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                               <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">batch_size</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">total_core_num</span><span class="p">]</span> <span class="o">+</span> <span class="n">shapes</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">))]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">val_rdd</span> <span class="o">=</span> <span class="n">val_rdd</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rdd</span> <span class="o">=</span> <span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">arr</span><span class="p">:</span> <span class="n">arr</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_names</span> <span class="o">=</span> <span class="n">names</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensors</span><span class="p">)):</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">add_to_collection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tensors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TFDataset.from_rdd"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFDataset.from_rdd">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_rdd</span><span class="p">(</span><span class="n">rdd</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shapes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">types</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">batch_size</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">batch_per_thread</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">hard_code_batch_size</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">val_rdd</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">names</span><span class="p">:</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">,</span> <span class="s2">&quot;labels&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">shapes</span><span class="p">:</span>
+            <span class="n">shapes</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">types</span><span class="p">:</span>
+            <span class="n">types</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TFDataset</span><span class="p">(</span><span class="n">rdd</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span>
+                         <span class="n">batch_size</span><span class="p">,</span> <span class="n">batch_per_thread</span><span class="p">,</span>
+                         <span class="n">hard_code_batch_size</span><span class="p">,</span> <span class="n">val_rdd</span><span class="p">)</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_check_the_same</span><span class="p">(</span><span class="n">all_required_inputs</span><span class="p">,</span> <span class="n">inputs_in_datasets</span><span class="p">):</span>
+    <span class="n">inputs_not_in_dataset</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">all_required_inputs</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">inputs_in_datasets</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">inputs_not_in_dataset</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You should not use any placeholder that are not defined in dataset, &quot;</span> <span class="o">+</span>
+                         <span class="s2">&quot;found </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">inputs_not_in_dataset</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs_in_datasets</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_required_inputs</span><span class="p">):</span>
+        <span class="n">inputs_not_require_by_loss</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inputs_in_datasets</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_required_inputs</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You should use all the placeholders that are defined in dataset, &quot;</span> <span class="o">+</span>
+                         <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> are not used&quot;</span> <span class="o">%</span> <span class="n">inputs_not_require_by_loss</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TFPredictor"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFPredictor">[docs]</a><span class="k">class</span> <span class="nc">TFPredictor</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sess</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dataset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        TFPredictor takes a list of tensorflow tensors as the model outputs and</span>
+<span class="sd">        feed all the elements in TFDatasets to produce those outputs and returns</span>
+<span class="sd">        a Spark RDD with each of its elements representing the model prediction</span>
+<span class="sd">        for the corresponding input elements.</span>
+
+<span class="sd">        :param sess: the current tensorflow Session, you should first use this session</span>
+<span class="sd">        to load the trained variables then pass into TFPredictor</span>
+<span class="sd">        :param outputs: the output tensors of the tensorflow model</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">inputs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dataset</span><span class="p">,</span> <span class="n">inputs</span> <span class="o">=</span> <span class="n">TFPredictor</span><span class="o">.</span><span class="n">_get_datasets_and_inputs</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sess</span> <span class="o">=</span> <span class="n">sess</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tfnet</span> <span class="o">=</span> <span class="n">TFNet</span><span class="o">.</span><span class="n">from_session</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">batch_per_thread</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You should set batch_per_thread on TFDataset&quot;</span> <span class="o">+</span>
+                             <span class="s2">&quot;instead of batch_size for prediction&quot;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_datasets_and_inputs</span><span class="p">(</span><span class="n">outputs</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+        <span class="n">all_required_inputs</span> <span class="o">=</span> <span class="n">_find_placeholders</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">all_required_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">tensors</span>
+        <span class="n">_check_the_same</span><span class="p">(</span><span class="n">all_required_inputs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">inputs</span>
+
+<div class="viewcode-block" id="TFPredictor.from_outputs"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFPredictor.from_outputs">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_outputs</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">sess</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+        <span class="n">dataset</span><span class="p">,</span> <span class="n">inputs</span> <span class="o">=</span> <span class="n">TFPredictor</span><span class="o">.</span><span class="n">_get_datasets_and_inputs</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFPredictor.from_keras"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFPredictor.from_keras">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_keras</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">keras_model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">tensorflow.keras.backend</span> <span class="k">as</span> <span class="nn">K</span>
+        <span class="n">sess</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">get_session</span><span class="p">()</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">keras_model</span><span class="o">.</span><span class="n">outputs</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">keras_model</span><span class="o">.</span><span class="n">inputs</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFPredictor.predict"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.net.TFPredictor.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rdd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">rdd</span>
+        <span class="n">sample_rdd</span> <span class="o">=</span> <span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">Sample</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">])))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tfnet</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">sample_rdd</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">batch_per_thread</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+    </div>
+  </body>
+</html>
