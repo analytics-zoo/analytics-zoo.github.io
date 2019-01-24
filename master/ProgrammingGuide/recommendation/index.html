@@ -73,11 +73,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>The examples/notebooks are included in the Analytics Zoo source code.</p>
 <ol>
 <li>Wide and Deep Learning Model.
-    <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/models/recommendation/WideAndDeepExample.scala">Scala example</a>
-    <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation/wide_n_deep.ipynb">Python notebook</a></li>
+    <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/recommendation/WideAndDeepExample.scala">Scala example</a>
+    <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation-wide-n-deep/wide_n_deep.ipynb">Python notebook</a></li>
 <li>NCF.
-    <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/models/recommendation/NeuralCFexample.scala">Scala example</a>
-    <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation/ncf-explicit-feedback.ipynb">Python notebook</a></li>
+    <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/recommendation/NeuralCFexample.scala">Scala example</a>
+    <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation-ncf/ncf-explicit-feedback.ipynb">Python notebook</a></li>
 </ol>
 <hr />
 <h2 id="wide-and-deep">Wide and Deep</h2>
@@ -105,7 +105,7 @@ val userRecs = wideAndDeep.recommendForUser(validationpairFeatureRdds, 3)
 val itemRecs = wideAndDeep.recommendForItem(validationpairFeatureRdds, 3)
 </code></pre>
 
-<p>See more details in our<a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/models/recommendation/WideAndDeepExample.scala">Scala example</a>.</p>
+<p>See more details in our<a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/recommendation/WideAndDeepExample.scala">Scala example</a>.</p>
 <p><strong>Python</strong></p>
 <p>Build a WND model for recommendation. </p>
 <pre><code class="python">wide_n_deep = WideAndDeep(class_num, column_info, model_type=&quot;wide_n_deep&quot;, hidden_layers=(40, 20, 10))
@@ -128,7 +128,7 @@ userRecs = wide_n_deep.recommend_for_user(valPairFeatureRdds, 3)
 itemRecs = wide_n_deep.recommend_for_item(valPairFeatureRdds, 3)
 </code></pre>
 
-<p>See more details in our <a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation/wide_n_deep.ipynb">Python notebook</a>.</p>
+<p>See more details in our <a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation-wide-n-deep/wide_n_deep.ipynb">Python notebook</a>.</p>
 <hr />
 <h2 id="neural-network-based-collaborative-filtering">Neural network-based Collaborative Filtering</h2>
 <p><strong>Scala</strong></p>
@@ -155,7 +155,7 @@ val userRecs = ncf.recommendForUser(validationpairFeatureRdds, 3)
 val itemRecs = ncf.recommendForItem(validationpairFeatureRdds, 3)
 </code></pre>
 
-<p>See more details in our<a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/models/recommendation/NeuralCFexample.scala">Scala example</a></p>
+<p>See more details in our<a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/recommendation/NeuralCFexample.scala">Scala example</a></p>
 <p><strong>Python</strong></p>
 <p>Build a NCF model for recommendation. </p>
 <pre><code class="python">ncf=NeuralCF(user_count, item_count, class_num, user_embed=20, item_embed=20, hidden_layers=(40, 20, 10), include_mf=True, mf_embed=20)
@@ -178,7 +178,7 @@ userRecs = ncf.recommend_for_user(valPairFeatureRdds, 3)
 itemRecs = ncf.recommend_for_item(valPairFeatureRdds, 3)
 </code></pre>
 
-<p>See more details in our <a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation/ncf-explicit-feedback.ipynb">Python notebook</a>.</p>
+<p>See more details in our <a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation-ncf/ncf-explicit-feedback.ipynb">Python notebook</a>.</p>
 
   <br>
 </div>
