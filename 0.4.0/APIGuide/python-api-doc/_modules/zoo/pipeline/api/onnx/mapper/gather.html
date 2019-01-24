@@ -95,8 +95,8 @@
             <span class="n">dim</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onnx_attr</span><span class="p">[</span><span class="s1">&#39;axis&#39;</span><span class="p">])</span>
             <span class="k">assert</span> <span class="n">dim</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Currently only dim&gt;=1 is supported.&quot;</span>
             <span class="k">assert</span> <span class="n">indices</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="s2">&quot;Currently only one index is supported.&quot;</span>
-            <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">indices</span><span class="o">.</span><span class="n">get_weight</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
-            <span class="k">return</span> <span class="n">zautograd</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index_select</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span></div>
+            <span class="n">index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">indices</span><span class="o">.</span><span class="n">get_weight</span><span class="p">()</span><span class="o">.</span><span class="n">max</span><span class="p">())</span></div>
+            <span class="k">return</span> <span class="n">zautograd</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index_select</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">dim</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="n">dim</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -119,7 +119,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>
