@@ -216,22 +216,17 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
       <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/recommendation/" class="wm-article-link wm-toc-text">Recommendation API</a>
 </li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/anomaly-detection/" class="wm-article-link wm-toc-text">Anomaly Detection API</a>
+</li>
       <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/text-matching/" class="wm-article-link wm-toc-text">Text Matching API</a>
 </li>
-  </ul>
-</li>
-
-      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Reference Use Cases</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/usercases-overview/" class="wm-article-link wm-toc-text">Use Cases</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/anomaly-detection/" class="wm-article-link wm-toc-text">Anomaly Detection</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/seq2seq/" class="wm-article-link wm-toc-text">Sequence to Sequence API</a>
 </li>
   </ul>
 </li>
 
+      <li class="wm-toc-li wm-toc-lev2 "><a href="ProgrammingGuide/usercases-overview/" class="wm-article-link wm-toc-text">Reference Use Cases</a>
+</li>
   </ul>
 </li>
 
@@ -292,7 +287,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
       <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/recommendation/" class="wm-article-link wm-toc-text">Recommendation</a>
 </li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/anomaly-detection/" class="wm-article-link wm-toc-text">Anomaly Detection</a>
+</li>
       <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/text-matching/" class="wm-article-link wm-toc-text">Text Matching</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/seq2seq/" class="wm-article-link wm-toc-text">Sequence to Sequence</a>
 </li>
   </ul>
 </li>
@@ -343,9 +342,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <ul class="wm-toctree">
       <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Optimization/training/" class="wm-article-link wm-toc-text">Train, evaluate or predict a model</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Optimization/optimizer/" class="wm-article-link wm-toc-text">Optimizers</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Optimization/optimizers/" class="wm-article-link wm-toc-text">Optimizers</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Optimization/loss/" class="wm-article-link wm-toc-text">Losses</a>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Optimization/objectives/" class="wm-article-link wm-toc-text">Objectives</a>
 </li>
   </ul>
 </li>
@@ -384,7 +383,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <ul>
 <li><em>Easy-to-use abstractions and APIs</em> (e.g., transfer learning support, autograd operations, Spark DataFrame and ML pipeline support, online model serving API, etc.) </li>
 <li><em>Common feature engineering operations</em> (for image, text, 3D image, etc.)</li>
-<li><em>Built-in deep learning models</em> (e.g., object detection, image classification, text classification, recommendation, anomaly detection, text matching, etc.)</li>
+<li><em>Built-in deep learning models</em> (e.g., object detection, image classification, text classification, recommendation, anomaly detection, text matching, sequence to sequence etc.)</li>
 <li><em>Reference use cases</em> (e.g., anomaly detection, sentiment analysis, fraud detection, image similarity, etc.)</li>
 </ul>
 <h2 id="how-to-use-analytics-zoo">How to use Analytics Zoo?</h2>
@@ -429,10 +428,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#object-detection-api">Object detection API</a>: high-level API and pretrained models (e.g., SSD and Faster-RCNN) for <em>object detection</em></li>
 <li><a href="#image-classification-api">Image classification API</a>: high-level API and pretrained models (e.g., VGG, Inception, ResNet, MobileNet, etc.) for <em>image classification</em></li>
 <li><a href="#text-classification-api">Text classification API</a>: high-level API and pre-defined models (using CNN, LSTM, etc.) for <em>text classification</em></li>
-<li><a href="#recommendation-api">Recommedation API</a>: high-level API and pre-defined models (e.g., Neural Collaborative Filtering, Wide and Deep Learning, etc.) for <em>recommendation</em></li>
+<li><a href="#recommendation-api">Recommendation API</a>: high-level API and pre-defined models (e.g., Neural Collaborative Filtering, Wide and Deep Learning, etc.) for <em>recommendation</em></li>
 <li><a href="#anomaly-detection-api">Anomaly detection API</a>: high-level API and pre-defined models based on LSTM for <em>anomaly detection</em></li>
 <li><a href="#text-matching-api">Text matching API</a>: high-level API and pre-defined KNRM model for <em>text matching</em></li>
-<li><a href="#sequence-to-sequence-api">Sequence to Sequence API</a>: high-level API and pre-defined models for <em>sequence to sequence</em></li>
+<li><a href="#sequence-to-sequence-api">Sequence to sequence API</a>: high-level API and pre-defined models for <em>sequence to sequence</em></li>
 </ul>
 </li>
 <li>
@@ -610,7 +609,7 @@ List&lt;List&lt;JTensor&gt;&gt; result = model.predict(inputs);
 </code></pre>
 
 <h2 id="built-in-deep-learning-models"><em>Built-in deep learning models</em></h2>
-<p>Analytics Zoo provides several built-in deep learning models that you can use for a variety of problem types, such as <em>object detection</em>, <em>image classification</em>, <em>text classification</em>, <em>recommendation</em>, <em>anomaly detection</em>, <em>text matching</em>, etc.</p>
+<p>Analytics Zoo provides several built-in deep learning models that you can use for a variety of problem types, such as <em>object detection</em>, <em>image classification</em>, <em>text classification</em>, <em>recommendation</em>, <em>anomaly detection</em>, <em>text matching</em>, <em>sequence to sequence</em>,  etc.</p>
 <h3 id="object-detection-api"><em>Object detection API</em></h3>
 <p>Using <em>Analytics Zoo Object Detection API</em> (including a set of pretrained detection models such as SSD and Faster-RCNN), you can easily build your object detection applications (e.g., localizing and identifying multiple objects in images and videos), as illustrated below. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/object-detection/">here</a>)</p>
 <p>1.Download object detection models in Analytics Zoo</p>
@@ -641,7 +640,7 @@ List&lt;List&lt;JTensor&gt;&gt; result = model.predict(inputs);
 <p><em>Analytics Zoo Anomaly Detection API</em> provides a set of pre-defined models based on LSTM to detect anomalies for time series data. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/anomaly-detection/">here</a>)</p>
 <h3 id="text-matching-api"><em>Text matching API</em></h3>
 <p><em>Analytics Zoo Text Matching API</em> provides pre-defined KNRM model for ranking or classification. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/text-matching/">here</a>)</p>
-<h3 id="sequence-to-sequence-api"><em>Sequence to Sequence API</em></h3>
+<h3 id="sequence-to-sequence-api"><em>Sequence to sequence API</em></h3>
 <p><em>Analytics Zoo Sequence to Sequence API</em> provides a set of pre-defined models based on Recurrent neural network for sequence to sequence problems. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/seq2seq/">here</a>)</p>
 <h2 id="reference-use-cases"><em>Reference use cases</em></h2>
 <p>Analytics Zoo provides a collection of end-to-end reference use cases, including <em>time series anomaly detection</em>, <em>sentiment analysis</em>, <em>fraud detection</em>, <em>image similarity</em>, etc. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/usercases-overview/">here</a>)</p>
@@ -657,5 +656,5 @@ List&lt;List&lt;JTensor&gt;&gt; result = model.predict(inputs);
 </html>
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2019-01-22 17:34:43
+Build Date UTC : 2019-01-24 03:29:27
 -->

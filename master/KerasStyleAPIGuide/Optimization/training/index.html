@@ -33,6 +33,14 @@
       var is_top_frame = false;
         
         var pageToc = [
+          {title: "Compile", url: "#compile", children: [
+          ]},
+          {title: "Fit", url: "#fit", children: [
+          ]},
+          {title: "Evaluate", url: "#evaluate", children: [
+          ]},
+          {title: "Predict", url: "#predict", children: [
+          ]},
         ];
 
     </script>
@@ -59,7 +67,137 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Train, evaluate or predict a model</strong></h1>
     <hr>
-    
+    <p>This page shows how to train, evaluate or predict a model using the Keras-Style API.</p>
+<p>You may refer to the <code>User Guide</code> page to see how to define a model in <a href="../../keras-api-python/">Python</a> or <a href="../../keras-api-scala/">Scala</a> correspondingly.</p>
+<p>You may refer to <a href="../../Layers/core/"><code>Layers</code></a> section to find all the available layers.</p>
+<p>After defining a model with the Keras-Style API, you can call the following <strong>methods</strong> on the model:</p>
+<hr />
+<h2 id="compile"><strong>Compile</strong></h2>
+<p>Configure the learning process. Must be called before <a href="#fit">fit</a> or <a href="#evaluate">evaluate</a>.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">compile(optimizer, loss, metrics = null)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>optimizer</code>: Optimization method to be used.</li>
+<li><code>loss</code>: Criterion to be used.</li>
+<li><code>metrics</code>: Validation method(s) to be used. Default is null if no validation is needed. </li>
+</ul>
+<p>Alternatively, one can pass in the corresponding Keras-Style string representations when calling compile. For example: optimizer = "sgd", loss = "mse", metrics = List("accuracy")</p>
+<p><strong>Python</strong></p>
+<pre><code class="python">compile(optimizer, loss, metrics=None)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>optimizer</code>: Optimization method to be used. One can alternatively pass in the corresponding string representation, such as 'sgd'.</li>
+<li><code>loss</code>: Criterion to be used. One can alternatively pass in the corresponding string representation, such as 'mse'. (see <a href="../objectives/#available-objectives">here</a>).</li>
+<li><code>metrics</code>: List of validation methods to be used. Default is None if no validation is needed. For convenience, string representations are supported: 'accuracy' (or 'acc'), 'top5accuracy' (or 'top5acc'), 'mae', 'auc', 'treennaccuracy' and 'loss'. For example, you can either use [Accuracy()] or ['accuracy'].</li>
+</ul>
+<hr />
+<h2 id="fit"><strong>Fit</strong></h2>
+<p>Train a model for a fixed number of epochs on a DataSet.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">fit(x, batchSize = 32，nbEpoch = 10, validationData = null)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>x</code>: Training dataset. RDD of Sample or <a href="../../../APIGuide/FeatureEngineering/image/">ImageSet</a> or <a href="../../../APIGuide/FeatureEngineering/text">TextSet</a>.</li>
+<li><code>batchSize</code>: Number of samples per gradient update. Default is 32.</li>
+<li><code>nbEpoch</code>: Number of epochs to train. Default is 10.</li>
+<li><code>validationData</code>: RDD of Sample or ImageSet or TextSet, or null if validation is not configured. Default is null.</li>
+</ul>
+<p><strong>Python</strong></p>
+<pre><code class="python">fit(x, y=None, batch_size=32, nb_epoch=10, validation_data=None, distributed=True)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>x</code>: Training data. A Numpy array or RDD of Sample or <a href="../../../APIGuide/FeatureEngineering/image/">ImageSet</a> or <a href="../../../APIGuide/FeatureEngineering/text">TextSet</a>.</li>
+<li><code>y</code>: Labels. A Numpy array. Default is None if x is already Sample RDD or ImageSet or TextSet.</li>
+<li><code>batch_size</code>: Number of samples per gradient update. Default is 32.</li>
+<li><code>nb_epoch</code>: Number of epochs to train. Default is 10.</li>
+<li><code>validation_data</code>: Tuple (x_val, y_val) where x_val and y_val are both Numpy arrays.
+                    Can also be RDD of Sample or ImageSet or TextSet.
+                    Default is None if no validation is involved.</li>
+<li><code>distributed</code>: Boolean. Whether to train the model in distributed mode or local mode.
+                 Default is True. In local mode, x and y must both be Numpy arrays.</li>
+</ul>
+<hr />
+<h2 id="evaluate"><strong>Evaluate</strong></h2>
+<p>Evaluate a model on a given dataset in distributed mode.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">evaluate(x, batchSize = 32)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>x</code>: Evaluation dataset. RDD of Sample or <a href="../../../APIGuide/FeatureEngineering/image/">ImageSet</a> or <a href="../../../APIGuide/FeatureEngineering/text">TextSet</a>.</li>
+<li><code>batchSize</code>: Number of samples per batch. Default is 32.</li>
+</ul>
+<p><strong>Python</strong></p>
+<pre><code class="python">evaluate(x, y=None, batch_size=32)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>x</code>: Evaluation data. A Numpy array or RDD of Sample or <a href="../../../APIGuide/FeatureEngineering/image/">ImageSet</a> or <a href="../../../APIGuide/FeatureEngineering/text">TextSet</a>.</li>
+<li><code>y</code>: Labels. Default is None if x is set already. A Numpy array or RDD of Sample or ImageSet or TextSet.</li>
+<li><code>batch_size</code>: Number of samples per batch. Default is 32.</li>
+</ul>
+<hr />
+<h2 id="predict"><strong>Predict</strong></h2>
+<p>Use a model to do prediction.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">predict(x, batchPerThread = 4)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>x</code>: Prediction dataset. RDD of Sample or <a href="../../../APIGuide/FeatureEngineering/image/">ImageSet</a> or <a href="../../../APIGuide/FeatureEngineering/text">TextSet</a>.</li>
+<li><code>batchPerThread</code>: The total batchSize is batchPerThread * numOfCores.</li>
+</ul>
+<p><strong>Python</strong></p>
+<pre><code class="python">predict(x, batch_per_thread=4, distributed=True)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>x</code>: Prediction data. A Numpy array or RDD of Sample or <a href="../../../APIGuide/FeatureEngineering/image/">ImageSet</a> or <a href="../../../APIGuide/FeatureEngineering/text">TextSet</a>.</li>
+<li><code>batch_per_thread</code>:
+        The default value is 4.
+        When distributed is True, the total batch size is batch_per_thread * rdd.getNumPartitions.
+        When distributed is False, the total batch size is batch_per_thread * numOfCores.</li>
+<li><code>distributed</code>: Boolean. Whether to do prediction in distributed mode or local mode.
+                 Default is True. In local mode, x must be a Numpy array.</li>
+</ul>
+<p>Use a model to predict class labels.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">predictClasses(x, batchPerThread = 4, zeroBasedLabel = true)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>x</code>: Prediction dataset. RDD of Sample or <a href="../../../APIGuide/FeatureEngineering/image/">ImageSet</a> or <a href="../../../APIGuide/FeatureEngineering/text">TextSet</a>.</li>
+<li><code>batchPerThread</code>: The default value is 4, and the total batchSize is batchPerThread * rdd.getNumPartitions.</li>
+<li><code>zeroBasedLabel</code>: Boolean. Whether result labels start from 0. Default is true. If false, result labels start from 1.</li>
+</ul>
+<p><strong>Python</strong></p>
+<pre><code class="python">predict_classes(x, batch_per_thread=4, zero_based_label=True)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>x</code>: Prediction data. A Numpy array or RDD of Sample or <a href="../../../APIGuide/FeatureEngineering/image/">ImageSet</a> or <a href="../../../APIGuide/FeatureEngineering/text">TextSet</a>.</li>
+<li><code>batch_per_thread</code>:
+        The default value is 4.
+        When distributed is True,the total batch size is batch_per_thread * rdd.getNumPartitions.
+        When distributed is False the total batch size is batch_per_thread * numOfCores.</li>
+<li><code>zero_based_label</code>: Boolean. Whether result labels start from 0.
+                      Default is True. If False, result labels start from 1.</li>
+</ul>
 
   <br>
 </div>

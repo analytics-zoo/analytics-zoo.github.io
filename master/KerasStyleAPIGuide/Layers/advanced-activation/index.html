@@ -33,6 +33,8 @@
       var is_top_frame = false;
         
         var pageToc = [
+          {title: "PReLU", url: "#prelu", children: [
+          ]},
           {title: "ELU", url: "#elu", children: [
           ]},
           {title: "SReLU", url: "#srelu", children: [
@@ -65,7 +67,72 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Advanced Activations</strong></h1>
     <hr>
-    <h2 id="elu"><strong>ELU</strong></h2>
+    <h2 id="prelu"><strong>PReLU</strong></h2>
+<p>Applies parametric ReLU, where parameter varies the slope of the negative part.</p>
+<p>It follows: f(x) = max(0, x) + a * min(0, x)</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">PReLU(nOutputPlane = 0, inputShape = null)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">PReLU(nOutputPlane=0, input_shape=None)
+</code></pre>
+
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><code>nOutputPlane</code>: Input map number. Default is 0,
+                  which means using PReLU in shared version and has only one parameter.</li>
+<li><code>inputShape</code>:  A Single Shape, does not include the batch dimension.</li>
+</ul>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.PReLU
+import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
+import com.intel.analytics.bigdl.utils.Shape
+import com.intel.analytics.bigdl.tensor.Tensor
+
+val model = Sequential[Float]()
+model.add(PReLU[Float](inputShape = Shape(3)))
+val input = Tensor[Float](2, 3).randn()
+val output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="scala">input: com.intel.analytics.bigdl.tensor.Tensor[Float] =
+-0.9026888      -1.0402212      1.3878769
+-0.17167428     0.08202032      1.2682742
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x3]
+</code></pre>
+
+<p>Output is:</p>
+<pre><code class="scala">output: com.intel.analytics.bigdl.nn.abstractnn.Activity =
+-0.2256722      -0.2600553      1.3878769
+-0.04291857     0.08202032      1.2682742
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 2x3]
+</code></pre>
+
+<p><strong>Python example:</strong></p>
+<pre><code class="python">import numpy as np
+from zoo.pipeline.api.keras.models import Sequential
+from zoo.pipeline.api.keras.layers import PReLU
+
+model = Sequential()
+model.add(PReLU(input_shape=(3, )))
+input = np.random.random([2, 3])
+output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="python">[[0.61639702 0.08877075 0.93652509]
+ [0.38800821 0.76286851 0.95777973]]
+</code></pre>
+
+<p>Output is</p>
+<pre><code class="python">[[0.616397   0.08877075 0.9365251 ]
+ [0.3880082  0.7628685  0.9577797 ]]
+</code></pre>
+
+<hr />
+<h2 id="elu"><strong>ELU</strong></h2>
 <p>Exponential Linear Unit.</p>
 <p>It follows: f(x) =  alpha * (exp(x) - 1.) for x &lt; 0, f(x) = x for x &gt;= 0.</p>
 <p><strong>Scala:</strong></p>
