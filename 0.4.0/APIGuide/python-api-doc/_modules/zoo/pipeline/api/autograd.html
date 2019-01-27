@@ -93,8 +93,8 @@
 <span class="sd">            by 1 for each entry in `axis`. If `keepDims` is `True`,</span>
 <span class="sd">            the reduced dimensions are retained with length 1.</span>
 <span class="sd">    :return: A variable with the mean of elements of `x`.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">keepDims</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">keepDims</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="abs"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.abs">[docs]</a><span class="k">def</span> <span class="nf">abs</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -102,8 +102,8 @@
 <span class="sd">    Element-wise absolute value.</span>
 <span class="sd">    :param x: A variable.</span>
 <span class="sd">    :return: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;abs&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;abs&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="batch_dot"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.batch_dot">[docs]</a><span class="k">def</span> <span class="nf">batch_dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -127,8 +127,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">normalize</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-            <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">axes</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;batchDot&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">normalize</span><span class="p">))</span>
+            <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">axes</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;batchDot&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">normalize</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="l2_normalize"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.l2_normalize">[docs]</a><span class="k">def</span> <span class="nf">l2_normalize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
@@ -137,8 +137,8 @@
 <span class="sd">    :param x: A variable. Shape should only be [batch, xx]</span>
 <span class="sd">    :param axis: axis along which to perform normalization.</span>
 <span class="sd">    :return: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;l2Normalize&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">axis</span><span class="p">)))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;l2Normalize&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">axis</span><span class="p">)))</span></div>
 
 
 <div class="viewcode-block" id="sum"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.sum">[docs]</a><span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepDims</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -151,8 +151,8 @@
 <span class="sd">            by 1 for each entry in `axis`. If `keepDims` is `True`,</span>
 <span class="sd">            the reduced dimensions are retained with length 1.</span>
 <span class="sd">    :return: A variable with sum of `x`.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">keepDims</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;sum&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">keepDims</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="stack"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.stack">[docs]</a><span class="k">def</span> <span class="nf">stack</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
@@ -162,8 +162,8 @@
 <span class="sd">    :param inputs: List of variables (tensors).</span>
 <span class="sd">    :param axis: axis along which to perform stacking.</span>
 <span class="sd">    :return:</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;stack&quot;</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">axis</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;stack&quot;</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">axis</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="expand_dims"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.expand_dims">[docs]</a><span class="k">def</span> <span class="nf">expand_dims</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
@@ -172,8 +172,8 @@
 <span class="sd">    :param x: a Variable to be expanded</span>
 <span class="sd">    :param axis: axis Position where to add a new axis.</span>
 <span class="sd">    The axis is 0 based and if you set the axis to 0, you would change the batch dim.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;expandDims&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;expandDims&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="clip"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.clip">[docs]</a><span class="k">def</span> <span class="nf">clip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
@@ -183,16 +183,16 @@
 <span class="sd">    :param min: Python float or integer.</span>
 <span class="sd">    :param max: Python float or integer.</span>
 <span class="sd">    :return: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;clip&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">)))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;clip&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">)))</span></div>
 
 
 <div class="viewcode-block" id="contiguous"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.contiguous">[docs]</a><span class="k">def</span> <span class="nf">contiguous</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Turn the output and grad to be contiguous for the input Variable</span>
 <span class="sd">    :param x: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;contiguous&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;contiguous&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="square"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.square">[docs]</a><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -200,8 +200,8 @@
 <span class="sd">    Element-wise square.</span>
 <span class="sd">    :param x: A variable.</span>
 <span class="sd">    :return: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;square&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;square&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="sqrt"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.sqrt">[docs]</a><span class="k">def</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -209,8 +209,8 @@
 <span class="sd">    Element-wise square root.</span>
 <span class="sd">    :param x: A variable.</span>
 <span class="sd">    :return: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;sqrt&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;sqrt&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="exp"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.exp">[docs]</a><span class="k">def</span> <span class="nf">exp</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -218,8 +218,8 @@
 <span class="sd">    Element-wise exponential.</span>
 <span class="sd">    :param x: A variable.</span>
 <span class="sd">    :return: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;exp&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;exp&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="maximum"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.maximum">[docs]</a><span class="k">def</span> <span class="nf">maximum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
@@ -228,8 +228,8 @@
 <span class="sd">    :param x: A variable.</span>
 <span class="sd">    :param y: A variable.</span>
 <span class="sd">    :return: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;maximum&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;maximum&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="log"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.log">[docs]</a><span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -237,8 +237,8 @@
 <span class="sd">    Element-wise log.</span>
 <span class="sd">    :param x: A variable.</span>
 <span class="sd">    :return: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;log&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="pow"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.pow">[docs]</a><span class="k">def</span> <span class="nf">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
@@ -247,16 +247,16 @@
 <span class="sd">    :param x: A variable.</span>
 <span class="sd">    :param a: Python integer.</span>
 <span class="sd">    :return: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;pow&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">)))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;pow&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">)))</span></div>
 
 
 <div class="viewcode-block" id="epsilon"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.epsilon">[docs]</a><span class="k">def</span> <span class="nf">epsilon</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Define the value of epsilon.</span>
 <span class="sd">    :return: A value of type Double.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;epsilon&quot;</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;epsilon&quot;</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="neg"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.neg">[docs]</a><span class="k">def</span> <span class="nf">neg</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -264,8 +264,8 @@
 <span class="sd">    Computes numerical negative value element-wise.</span>
 <span class="sd">    :param x: A variable.</span>
 <span class="sd">    :return: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;neg&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;neg&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="softsign"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.softsign">[docs]</a><span class="k">def</span> <span class="nf">softsign</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -273,8 +273,8 @@
 <span class="sd">    Softsign of a variable.</span>
 <span class="sd">    :param x: A variable.</span>
 <span class="sd">    :return: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;softsign&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;softsign&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="softplus"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.softplus">[docs]</a><span class="k">def</span> <span class="nf">softplus</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -282,8 +282,8 @@
 <span class="sd">    Softplus of a variable.</span>
 <span class="sd">    :param x: A variable.</span>
 <span class="sd">    :return: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;softplus&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;softplus&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="mm"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.mm">[docs]</a><span class="k">def</span> <span class="nf">mm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -294,8 +294,8 @@
 <span class="sd">    :param y: A variable.</span>
 <span class="sd">    :param axes: Axes along which to perform multiplication.</span>
 <span class="sd">    :return: A variable.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;mm&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">axes</span><span class="p">))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;mm&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">axes</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="VariableOperator"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.VariableOperator">[docs]</a><span class="k">class</span> <span class="nc">VariableOperator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -309,26 +309,26 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__to_batch_shape</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shape</span><span class="p">]</span>
 
-<div class="viewcode-block" id="VariableOperator.get_input_shape"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.VariableOperator.get_input_shape">[docs]</a>    <span class="k">def</span> <span class="nf">get_input_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__process_shape</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;varGetInputShape&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+<div class="viewcode-block" id="VariableOperator.get_input_shape"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.VariableOperator.get_input_shape">[docs]</a>    <span class="k">def</span> <span class="nf">get_input_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__process_shape</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;varGetInputShape&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="VariableOperator.get_output_shape"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.VariableOperator.get_output_shape">[docs]</a>    <span class="k">def</span> <span class="nf">get_output_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__process_shape</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;varGetOutputShape&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
+<div class="viewcode-block" id="VariableOperator.get_output_shape"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.VariableOperator.get_output_shape">[docs]</a>    <span class="k">def</span> <span class="nf">get_output_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__process_shape</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;varGetOutputShape&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_output_shape</span><span class="p">()</span>
 
 <div class="viewcode-block" id="VariableOperator.from_jvalue"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.VariableOperator.from_jvalue">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_jvalue</span><span class="p">(</span><span class="n">jvalue</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="n">Variable</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">from_jvalue</span><span class="p">(</span><span class="n">jvalue</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Variable</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="VariableOperator.add"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.VariableOperator.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">))</span>
+<div class="viewcode-block" id="VariableOperator.add"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.VariableOperator.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">))</span></div>
         <span class="c1"># self.value.getClass().getSimpleName()</span>
 
-<div class="viewcode-block" id="VariableOperator.sub"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.VariableOperator.sub">[docs]</a>    <span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;sub&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">))</span>
+<div class="viewcode-block" id="VariableOperator.sub"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.VariableOperator.sub">[docs]</a>    <span class="k">def</span> <span class="nf">sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;sub&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">))</span></div>
 
     <span class="k">def</span> <span class="nf">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
@@ -379,8 +379,8 @@
 <span class="sd">                The start index on the given dimension. 0-based index.</span>
 <span class="sd">        :param length The length to be sliced. Default is 1.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span></div>
-            <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;slice&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">start_index</span><span class="p">,</span> <span class="n">length</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span>
+            <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;slice&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">start_index</span><span class="p">,</span> <span class="n">length</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="VariableOperator.index_select"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.VariableOperator.index_select">[docs]</a>    <span class="k">def</span> <span class="nf">index_select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -397,8 +397,8 @@
 <span class="sd">        :param index: The index of the dimension to be selected. 0-based index.</span>
 <span class="sd">               -1 means the last dimension of the input.</span>
 <span class="sd">        :return:</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
-        <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;indexSelect&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;indexSelect&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="VariableOperator.squeeze"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.VariableOperator.squeeze">[docs]</a>    <span class="k">def</span> <span class="nf">squeeze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -407,8 +407,8 @@
 <span class="sd">        For example, if input has size (2, 1, 3, 4, 1):</span>
 <span class="sd">        Squeeze(dim = 1) will give output size (2, 3, 4, 1)</span>
 <span class="sd">        Squeeze(dims = null) will give output size (2, 3, 4)</span>
-<span class="sd">        &quot;&quot;&quot;</span></div></div>
-        <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;squeeze&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;squeeze&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">))</span></div></div>
 
 
 <div class="viewcode-block" id="Variable"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.Variable">[docs]</a><span class="k">class</span> <span class="nc">Variable</span><span class="p">(</span><span class="n">kbase</span><span class="o">.</span><span class="n">ZooKerasCreator</span><span class="p">,</span> <span class="n">VariableOperator</span><span class="p">):</span>
@@ -423,16 +423,16 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">super</span><span class="p">(</span><span class="n">Variable</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">jvalue</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="n">toMultiShape</span><span class="p">(</span><span class="n">input_shape</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Variable.set_name"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.Variable.set_name">[docs]</a>    <span class="k">def</span> <span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span></div>
-        <span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">element</span><span class="p">()</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<div class="viewcode-block" id="Variable.set_name"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.Variable.set_name">[docs]</a>    <span class="k">def</span> <span class="nf">set_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">element</span><span class="p">()</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Variable.from_node"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.Variable.from_node">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">from_node</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">from_node</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="n">Node</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">node</span><span class="p">())</span>
+    <span class="k">def</span> <span class="nf">node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Node</span><span class="o">.</span><span class="n">of</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">node</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="Lambda"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.Lambda">[docs]</a><span class="k">class</span> <span class="nc">Lambda</span><span class="p">(</span><span class="n">kbase</span><span class="o">.</span><span class="n">ZooKerasCreator</span><span class="p">):</span>
@@ -480,8 +480,8 @@
         <span class="n">input_shapes</span> <span class="o">=</span> <span class="n">toMultiShape</span><span class="p">(</span><span class="n">input_shapes</span><span class="p">)</span>
         <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">Variable</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">output_shape</span><span class="p">))</span> <span class="k">for</span> <span class="n">output_shape</span> <span class="ow">in</span> <span class="n">input_shapes</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">LambdaLayer</span><span class="p">(</span><span class="n">input_vars</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
-                           <span class="n">out_var</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">inputs</span><span class="p">),</span></div></div>
-                           <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shapes</span><span class="p">)</span>
+                           <span class="n">out_var</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">inputs</span><span class="p">),</span>
+                           <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shapes</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="LambdaLayer"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.LambdaLayer">[docs]</a><span class="k">class</span> <span class="nc">LambdaLayer</span><span class="p">(</span><span class="n">kbase</span><span class="o">.</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
@@ -489,8 +489,8 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">LambdaLayer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
                                           <span class="n">input_vars</span><span class="p">,</span>
                                           <span class="n">out_var</span><span class="p">,</span>
-                                          <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span></div>
-                                          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                                          <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Parameter"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.Parameter">[docs]</a><span class="k">class</span> <span class="nc">Parameter</span><span class="p">(</span><span class="n">kbase</span><span class="o">.</span><span class="n">ZooKerasLayer</span><span class="p">,</span> <span class="n">VariableOperator</span><span class="p">):</span>
@@ -525,8 +525,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">jtensor</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span>
                                 <span class="s2">&quot;getParameterWeight&quot;</span><span class="p">,</span>
-                                <span class="bp">self</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">jtensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">()</span>
+                                <span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jtensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Parameter.set_weight"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.Parameter.set_weight">[docs]</a>    <span class="k">def</span> <span class="nf">set_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -535,8 +535,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span>
                       <span class="s2">&quot;setParameterWeight&quot;</span><span class="p">,</span>
-                      <span class="bp">self</span><span class="p">,</span></div></div>
-                      <span class="n">kbase</span><span class="o">.</span><span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                      <span class="bp">self</span><span class="p">,</span>
+                      <span class="n">kbase</span><span class="o">.</span><span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">value</span><span class="p">))</span></div></div>
 
 
 <div class="viewcode-block" id="CustomLoss"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.CustomLoss">[docs]</a><span class="k">class</span> <span class="nc">CustomLoss</span><span class="p">(</span><span class="n">LossFunction</span><span class="p">):</span>
@@ -574,8 +574,8 @@
                                <span class="n">jinput</span><span class="p">,</span>
                                <span class="n">input_is_table</span><span class="p">,</span>
                                <span class="n">jtarget</span><span class="p">,</span>
-                               <span class="n">target_is_table</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">output</span>
+                               <span class="n">target_is_table</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span></div>
 
 <div class="viewcode-block" id="CustomLoss.backward"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.autograd.CustomLoss.backward">[docs]</a>    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -596,8 +596,8 @@
                                <span class="n">jinput</span><span class="p">,</span>
                                <span class="n">input_is_table</span><span class="p">,</span>
                                <span class="n">jtarget</span><span class="p">,</span>
-                               <span class="n">target_is_table</span><span class="p">)</span></div></div>
-        <span class="k">return</span> <span class="n">Layer</span><span class="o">.</span><span class="n">convert_output</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+                               <span class="n">target_is_table</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Layer</span><span class="o">.</span><span class="n">convert_output</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>
@@ -620,7 +620,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
   </body>
 </html>
