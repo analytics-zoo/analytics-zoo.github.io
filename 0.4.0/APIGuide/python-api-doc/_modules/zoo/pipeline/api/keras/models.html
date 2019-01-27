@@ -98,8 +98,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">get_output_shape</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span></div>
+        <span class="k">except</span><span class="p">:</span></div>
+            <span class="k">return</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="Sequential.add"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.models.Sequential.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
         <span class="kn">from</span> <span class="nn">zoo.pipeline.api.autograd</span> <span class="k">import</span> <span class="n">Lambda</span>
@@ -111,8 +111,8 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">input_shapes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_output_shape</span><span class="p">()</span>
             <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">remove_batch</span><span class="p">(</span><span class="n">input_shapes</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span>
 
 <div class="viewcode-block" id="Sequential.from_jvalue"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.models.Sequential.from_jvalue">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_jvalue</span><span class="p">(</span><span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
@@ -122,8 +122,8 @@
 <span class="sd">        :return: A Python Model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">jvalue</span>
-        <span class="k">return</span> <span class="n">model</span></div></div>
+        <span class="n">model</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">jvalue</span></div></div>
+        <span class="k">return</span> <span class="n">model</span>
 
 
 <div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.models.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">KerasNet</span><span class="p">):</span>
@@ -153,18 +153,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooSaveGraphTopology&quot;</span><span class="p">,</span>
                       <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                      <span class="n">log_path</span><span class="p">,</span>
-                      <span class="n">backward</span><span class="p">)</span></div>
+                      <span class="n">log_path</span><span class="p">,</span></div>
+                      <span class="n">backward</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Model.new_graph"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.models.Model.new_graph">[docs]</a>    <span class="k">def</span> <span class="nf">new_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;newGraph&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;newGraph&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Model.freeze_up_to"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.models.Model.freeze_up_to">[docs]</a>    <span class="k">def</span> <span class="nf">freeze_up_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
-        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;freezeUpTo&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Model.freeze_up_to"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.models.Model.freeze_up_to">[docs]</a>    <span class="k">def</span> <span class="nf">freeze_up_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span></div>
+        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;freezeUpTo&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Model.unfreeze"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.models.Model.unfreeze">[docs]</a>    <span class="k">def</span> <span class="nf">unfreeze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
-        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;unFreeze&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Model.unfreeze"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.models.Model.unfreeze">[docs]</a>    <span class="k">def</span> <span class="nf">unfreeze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span></div>
+        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;unFreeze&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Model.from_jvalue"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.models.Model.from_jvalue">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_jvalue</span><span class="p">(</span><span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
@@ -174,8 +174,8 @@
 <span class="sd">        :return: A Python Model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">jvalue</span>
-        <span class="k">return</span> <span class="n">model</span></div></div>
+        <span class="n">model</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">jvalue</span></div></div>
+        <span class="k">return</span> <span class="n">model</span>
 </pre></div>
 
           </div>
@@ -198,7 +198,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>

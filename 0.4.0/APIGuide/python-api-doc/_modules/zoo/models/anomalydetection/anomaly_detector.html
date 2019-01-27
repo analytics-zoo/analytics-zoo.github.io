@@ -125,8 +125,8 @@
         <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span> \
             <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropouts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
 
-        <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">output_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">model</span></div>
+        <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">output_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="n">model</span>
 
 <div class="viewcode-block" id="AnomalyDetector.load_model"><a class="viewcode-back" href="../../../../zoo.models.anomalydetection.html#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.load_model">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
@@ -142,8 +142,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;loadAnomalyDetector&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">)</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">ZooModel</span><span class="o">.</span><span class="n">_do_load</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span>
-        <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">AnomalyDetector</span>
-        <span class="k">return</span> <span class="n">model</span></div>
+        <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">AnomalyDetector</span></div>
+        <span class="k">return</span> <span class="n">model</span>
 
     <span class="c1"># For the following methods, please refer to KerasNet for documentation.</span>
 <div class="viewcode-block" id="AnomalyDetector.compile"><a class="viewcode-back" href="../../../../zoo.models.anomalydetection.html#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -156,20 +156,20 @@
         <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;anomalyDetectorCompile&quot;</span><span class="p">,</span>
                       <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
                       <span class="n">optimizer</span><span class="p">,</span>
-                      <span class="n">loss</span><span class="p">,</span>
-                      <span class="n">metrics</span><span class="p">)</span></div>
+                      <span class="n">loss</span><span class="p">,</span></div>
+                      <span class="n">metrics</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AnomalyDetector.set_tensorboard"><a class="viewcode-back" href="../../../../zoo.models.anomalydetection.html#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.set_tensorboard">[docs]</a>    <span class="k">def</span> <span class="nf">set_tensorboard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_dir</span><span class="p">,</span> <span class="n">app_name</span><span class="p">):</span>
         <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;anomalyDetectorSetTensorBoard&quot;</span><span class="p">,</span>
                       <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                      <span class="n">log_dir</span><span class="p">,</span>
-                      <span class="n">app_name</span><span class="p">)</span></div>
+                      <span class="n">log_dir</span><span class="p">,</span></div>
+                      <span class="n">app_name</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AnomalyDetector.set_checkpoint"><a class="viewcode-back" href="../../../../zoo.models.anomalydetection.html#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.set_checkpoint">[docs]</a>    <span class="k">def</span> <span class="nf">set_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">over_write</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;anomalyDetectorSetCheckpoint&quot;</span><span class="p">,</span>
                       <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                      <span class="n">path</span><span class="p">,</span>
-                      <span class="n">over_write</span><span class="p">)</span></div>
+                      <span class="n">path</span><span class="p">,</span></div>
+                      <span class="n">over_write</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AnomalyDetector.fit"><a class="viewcode-back" href="../../../../zoo.models.anomalydetection.html#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">nb_epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -179,8 +179,8 @@
                       <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
                       <span class="n">x</span><span class="p">,</span>
                       <span class="n">batch_size</span><span class="p">,</span>
-                      <span class="n">nb_epoch</span><span class="p">,</span>
-                      <span class="n">validation_data</span><span class="p">)</span></div>
+                      <span class="n">nb_epoch</span><span class="p">,</span></div>
+                      <span class="n">validation_data</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AnomalyDetector.evaluate"><a class="viewcode-back" href="../../../../zoo.models.anomalydetection.html#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -188,8 +188,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;anomalyDetectorEvaluate&quot;</span><span class="p">,</span>
                              <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                             <span class="n">x</span><span class="p">,</span>
-                             <span class="n">batch_size</span><span class="p">)</span></div>
+                             <span class="n">x</span><span class="p">,</span></div>
+                             <span class="n">batch_size</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AnomalyDetector.predict"><a class="viewcode-back" href="../../../../zoo.models.anomalydetection.html#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">batch_per_thread</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -198,8 +198,8 @@
         <span class="n">results</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;modelPredictRDD&quot;</span><span class="p">,</span>
                                 <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
                                 <span class="n">x</span><span class="p">,</span>
-                                <span class="n">batch_per_thread</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">results</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">data</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span></div>
+                                <span class="n">batch_per_thread</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">results</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">data</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span>
 
 <div class="viewcode-block" id="AnomalyDetector.unroll"><a class="viewcode-back" href="../../../../zoo.models.anomalydetection.html#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.unroll">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">unroll</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data_rdd</span><span class="p">,</span> <span class="n">unroll_length</span><span class="p">,</span> <span class="n">predict_step</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
@@ -219,8 +219,8 @@
 <span class="sd">                     (3,4), 5, 2</span>
 <span class="sd">                     (4,5), 6, 3</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;unroll&quot;</span><span class="p">,</span> <span class="n">data_rdd</span><span class="p">,</span> <span class="n">unroll_length</span><span class="p">,</span> <span class="n">predict_step</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_to_indexed_rdd</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;unroll&quot;</span><span class="p">,</span> <span class="n">data_rdd</span><span class="p">,</span> <span class="n">unroll_length</span><span class="p">,</span> <span class="n">predict_step</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_to_indexed_rdd</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AnomalyDetector.detect_anomalies"><a class="viewcode-back" href="../../../../zoo.models.anomalydetection.html#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.detect_anomalies">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">detect_anomalies</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ytruth</span><span class="p">,</span> <span class="n">ypredict</span><span class="p">,</span> <span class="n">anomaly_size</span><span class="p">):</span>
@@ -230,12 +230,12 @@
 <span class="sd">        :param ypredict: RDD of float or double values. Predictions.</span>
 <span class="sd">        :param anomaly_size: Int. The size to be considered as anomalies.</span>
 <span class="sd">        :return: RDD of [ytruth, ypredict, anomaly], anomaly is None or ytruth</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;detectAnomalies&quot;</span><span class="p">,</span> <span class="n">ytruth</span><span class="p">,</span> <span class="n">ypredict</span><span class="p">,</span> <span class="n">anomaly_size</span><span class="p">)</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;detectAnomalies&quot;</span><span class="p">,</span> <span class="n">ytruth</span><span class="p">,</span> <span class="n">ypredict</span><span class="p">,</span> <span class="n">anomaly_size</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AnomalyDetector.standardScale"><a class="viewcode-back" href="../../../../zoo.models.anomalydetection.html#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.standardScale">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">standardScale</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;standardScaleDF&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">standardScale</span><span class="p">(</span><span class="n">df</span><span class="p">):</span></div>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;standardScaleDF&quot;</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
 
 <div class="viewcode-block" id="AnomalyDetector.train_test_split"><a class="viewcode-back" href="../../../../zoo.models.anomalydetection.html#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.train_test_split">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">train_test_split</span><span class="p">(</span><span class="n">unrolled</span><span class="p">,</span> <span class="n">test_size</span><span class="p">):</span>
@@ -243,8 +243,8 @@
         <span class="n">train</span> <span class="o">=</span> <span class="n">unrolled</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="n">cutPoint</span><span class="p">)</span> \
             <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">Sample</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">feature</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">label</span><span class="p">)))</span>
         <span class="n">test</span> <span class="o">=</span> <span class="n">unrolled</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">cutPoint</span><span class="p">)</span> \
-            <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">Sample</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">feature</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">label</span><span class="p">)))</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">]</span></div>
+            <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">Sample</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">feature</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">label</span><span class="p">)))</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">]</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_to_indexed_rdd</span><span class="p">(</span><span class="n">unrolled_rdd</span><span class="p">):</span>
@@ -258,8 +258,8 @@
             <span class="n">matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">matrix</span>
 
-        <span class="k">return</span> <span class="n">unrolled_rdd</span>\
-            <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="n">FeatureLableIndex</span><span class="p">(</span><span class="n">row_to_feature</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">long</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span></div>
+        <span class="k">return</span> <span class="n">unrolled_rdd</span>\</div>
+            <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="n">FeatureLableIndex</span><span class="p">(</span><span class="n">row_to_feature</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">long</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">])))</span>
 
 
 <div class="viewcode-block" id="FeatureLableIndex"><a class="viewcode-back" href="../../../../zoo.models.anomalydetection.html#zoo.models.anomalydetection.anomaly_detector.FeatureLableIndex">[docs]</a><span class="k">class</span> <span class="nc">FeatureLableIndex</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -280,8 +280,8 @@
         <span class="k">return</span> <span class="n">FeatureLableIndex</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;FeatureLableIndex [feature: </span><span class="si">%s</span><span class="s2">, label: </span><span class="si">%s</span><span class="s2">, index: </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">feature</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="s2">&quot;FeatureLableIndex [feature: </span><span class="si">%s</span><span class="s2">, label: </span><span class="si">%s</span><span class="s2">, index: </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feature</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -304,7 +304,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>
