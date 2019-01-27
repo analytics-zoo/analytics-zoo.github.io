@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.pipeline.api.keras.layers.html" title="zoo.pipeline.api.keras.layers package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -47,8 +44,8 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.pipeline.api.keras.engine package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.pipeline.api.keras.engine.topology">zoo.pipeline.api.keras.engine.topology module</a></li>
-<li><a class="reference internal" href="#module-zoo.pipeline.api.keras.engine">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-pipeline-api-keras-engine-topology-module">zoo.pipeline.api.keras.engine.topology module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -91,272 +88,11 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.pipeline.api.keras.engine.topology">
-<span id="zoo-pipeline-api-keras-engine-topology-module"></span><h2>zoo.pipeline.api.keras.engine.topology module<a class="headerlink" href="#module-zoo.pipeline.api.keras.engine.topology" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.pipeline.api.keras.engine.topology.Input">
-<em class="property">class </em><code class="descclassname">zoo.pipeline.api.keras.engine.topology.</code><code class="descname">Input</code><span class="sig-paren">(</span><em>shape=None</em>, <em>name=None</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#Input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.Input" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="zoo.pipeline.api.html#zoo.pipeline.api.autograd.Variable" title="zoo.pipeline.api.autograd.Variable"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.pipeline.api.autograd.Variable</span></code></a></p>
-<p>Used to instantiate an input node.</p>
-<p># Arguments
-shape: A shape tuple, not including batch.
-name: String to set the name of the layer.
-If not specified, its name will by default to be a generated string.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">input</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;input1&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="go">creating: createZooKerasInput</span>
-</pre></div>
+<div class="section" id="zoo-pipeline-api-keras-engine-topology-module">
+<h2>zoo.pipeline.api.keras.engine.topology module<a class="headerlink" href="#zoo-pipeline-api-keras-engine-topology-module" title="Permalink to this headline">¶</a></h2>
 </div>
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.pipeline.api.keras.engine.topology.InputLayer">
-<em class="property">class </em><code class="descclassname">zoo.pipeline.api.keras.engine.topology.</code><code class="descname">InputLayer</code><span class="sig-paren">(</span><em>input_shape=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#InputLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.InputLayer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.base.ZooKerasLayer" title="zoo.pipeline.api.keras.base.ZooKerasLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.pipeline.api.keras.base.ZooKerasLayer</span></code></a></p>
-<p>Used as an entry point into a model.</p>
-<p># Arguments
-input_shape: A shape tuple, not including batch.
-name: String to set the name of the layer.
-If not specified, its name will by default to be a generated string.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">inputlayer</span> <span class="o">=</span> <span class="n">InputLayer</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;input1&quot;</span><span class="p">)</span>
-<span class="go">creating: createZooKerasInputLayer</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet">
-<em class="property">class </em><code class="descclassname">zoo.pipeline.api.keras.engine.topology.</code><code class="descname">KerasNet</code><span class="sig-paren">(</span><em>jvalue</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.base.ZooKerasLayer" title="zoo.pipeline.api.keras.base.ZooKerasLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.pipeline.api.keras.base.ZooKerasLayer</span></code></a></p>
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.clear_gradient_clipping">
-<code class="descname">clear_gradient_clipping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.clear_gradient_clipping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.clear_gradient_clipping" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear gradient clipping parameters. In this case, gradient clipping will not be applied.
-In order to take effect, it needs to be called before fit.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.compile">
-<code class="descname">compile</code><span class="sig-paren">(</span><em>optimizer</em>, <em>loss</em>, <em>metrics=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.compile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.compile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Configure the learning process. It MUST be called before fit or evaluate.</p>
-<p># Arguments
-optimizer: Optimization method to be used. One can alternatively pass in the corresponding
-string representation, such as ‘sgd’.
-loss: Criterion to be used. One can alternatively pass in the corresponding string
-representation, such as ‘mse’.
-metrics: List of validation methods to be used. Default is None if no validation is needed.
-For convenience, string representations are supported: ‘accuracy’ (or ‘acc’),
-‘top5accuracy’ (or ‘top5acc’), ‘mae’, ‘auc’, ‘treennaccuracy’ and ‘loss’.
-For example, you can either use [Accuracy()] or [‘accuracy’].</p>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.convert_output">
-<em class="property">static </em><code class="descname">convert_output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.convert_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.convert_output" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.evaluate">
-<code class="descname">evaluate</code><span class="sig-paren">(</span><em>x</em>, <em>y=None</em>, <em>batch_size=32</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.evaluate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Evaluate a model on a given dataset in distributed mode.</p>
-<p># Arguments
-x: Evaluation data. A Numpy array or RDD of Sample or ImageSet or TextSet.
-y: Labels. A Numpy array.
-Default is None if x is already Sample RDD or ImageSet or TextSet.
-batch_size: Number of samples per batch. Default is 32.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>x</em>, <em>y=None</em>, <em>batch_size=32</em>, <em>nb_epoch=10</em>, <em>validation_data=None</em>, <em>distributed=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Train a model for a fixed number of epochs on a DataSet.</p>
-<p># Arguments
-x: Input data. A Numpy array or RDD of Sample, ImageSet or TextSet.
-y: Labels. A Numpy array. Default is None if x is already Sample RDD or ImageSet or TextSet.
-batch_size: Number of samples per gradient update. Default is 32.
-nb_epoch: Number of epochs to train.
-validation_data: Tuple (x_val, y_val) where x_val and y_val are both Numpy arrays.
-Can also be RDD of Sample or ImageSet or TextSet.
-Default is None if no validation is involved.
-distributed: Boolean. Whether to train the model in distributed mode or local mode.
-Default is True. In local mode, x and y must both be Numpy arrays.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.flattened_layers">
-<code class="descname">flattened_layers</code><span class="sig-paren">(</span><em>include_container=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.flattened_layers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.flattened_layers" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.forward">
-<code class="descname">forward</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.forward" title="Permalink to this definition">¶</a></dt>
-<dd><p>NB: It’s for debug only, please use optimizer.optimize() in production.
-Takes an input object, and computes the corresponding output of the module
-:param input: ndarray or list of ndarray
-:param input: ndarray or list of ndarray or JTensor or list of JTensor.
-:return: ndarray or list of ndarray</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.get_layer">
-<code class="descname">get_layer</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.get_layer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.get_layer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.layers">
-<code class="descname">layers</code><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.layers" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em>, <em>batch_per_thread=4</em>, <em>distributed=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Use a model to do prediction.</p>
-<p># Arguments
-x: Prediction data. A Numpy array or RDD of Sample or ImageSet.
-batch_per_thread:
-The default value is 4.
-When distributed is True,the total batch size is batch_per_thread * rdd.getNumPartitions.
-When distributed is False the total batch size is batch_per_thread * numOfCores.
-distributed: Boolean. Whether to do prediction in distributed mode or local mode.
-Default is True. In local mode, x must be a Numpy array.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.predict_classes">
-<code class="descname">predict_classes</code><span class="sig-paren">(</span><em>x</em>, <em>batch_per_thread=4</em>, <em>zero_based_label=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.predict_classes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.predict_classes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Use a model to predict for classes. By default, label predictions start from 0.</p>
-<p># Arguments
-x: Prediction data. A Numpy array or RDD of Sample.
-batch_per_partition:
-The default value is 4.
-When distributed is True, the total batch size is batch_per_thread * rdd.getNumPartitions.
-When distributed is False the total batch size is batch_per_thread * numOfCores.
-zero_based_label: Boolean. Whether result labels start from 0.
-Default is True. If False, result labels start from 1.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.set_checkpoint">
-<code class="descname">set_checkpoint</code><span class="sig-paren">(</span><em>path</em>, <em>over_write=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.set_checkpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.set_checkpoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Configure checkpoint settings to write snapshots every epoch during the training process.
-In order to take effect, it needs to be called before fit.</p>
-<p># Arguments
-path: The path to save snapshots. Make sure this path exists beforehand.
-over_write: Whether to overwrite existing snapshots in the given path. Default is True.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.set_constant_gradient_clipping">
-<code class="descname">set_constant_gradient_clipping</code><span class="sig-paren">(</span><em>min</em>, <em>max</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.set_constant_gradient_clipping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.set_constant_gradient_clipping" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set constant gradient clipping during the training process.
-In order to take effect, it needs to be called before fit.</p>
-<p># Arguments
-min: The minimum value to clip by. Float.
-max: The maximum value to clip by. Float.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.set_evaluate_status">
-<code class="descname">set_evaluate_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.set_evaluate_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.set_evaluate_status" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the model to be in evaluate status, i.e. remove the effect of Dropout, etc.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.set_gradient_clipping_by_l2_norm">
-<code class="descname">set_gradient_clipping_by_l2_norm</code><span class="sig-paren">(</span><em>clip_norm</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.set_gradient_clipping_by_l2_norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.set_gradient_clipping_by_l2_norm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clip gradient to a maximum L2-Norm during the training process.
-In order to take effect, it needs to be called before fit.</p>
-<p># Arguments
-clip_norm: Gradient L2-Norm threshold. Float.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.set_tensorboard">
-<code class="descname">set_tensorboard</code><span class="sig-paren">(</span><em>log_dir</em>, <em>app_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.set_tensorboard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.set_tensorboard" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set summary information during the training process for visualization purposes.
-Saved summary can be viewed via TensorBoard.
-In order to take effect, it needs to be called before fit.</p>
-<p>Training summary will be saved to ‘log_dir/app_name/train’
-and validation summary (if any) will be saved to ‘log_dir/app_name/validation’.</p>
-<p># Arguments
-log_dir: The base directory path to store training and validation logs.
-app_name: The name of the application.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.summary">
-<code class="descname">summary</code><span class="sig-paren">(</span><em>line_length=120, positions=[0.33, 0.55, 0.67, 1.0]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.summary" title="Permalink to this definition">¶</a></dt>
-<dd><p>Print out the summary information of an Analytics Zoo Keras Model.</p>
-<p>In addition, total number of parameters of this model, separated into trainable and
-non-trainable counts, will be printed out after the table.</p>
-<p># Arguments
-line_length The total length of one row. Default is 120.
-positions: The maximum absolute length proportion(%) of each field.
-List of Float of length 4.
-Usually you don’t need to adjust this parameter.
-Default is [.33, .55, .67, 1.], meaning that
-the first field will occupy up to 33% of line_length,
-the second field will occupy up to (55-33)% of line_length,
-the third field will occupy up to (67-55)% of line_length,
-the fourth field will occupy the remaining line (100-67)%.
-If the field has a larger length, the remaining part will be trimmed.
-If the field has a smaller length, the remaining part will be white spaces.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.pipeline.api.keras.engine.topology.KerasNet.to_model">
-<code class="descname">to_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#KerasNet.to_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.KerasNet.to_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.pipeline.api.keras.engine.topology.Merge">
-<em class="property">class </em><code class="descclassname">zoo.pipeline.api.keras.engine.topology.</code><code class="descname">Merge</code><span class="sig-paren">(</span><em>layers=None</em>, <em>mode='sum'</em>, <em>concat_axis=-1</em>, <em>input_shape=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#Merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.Merge" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.base.ZooKerasLayer" title="zoo.pipeline.api.keras.base.ZooKerasLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.pipeline.api.keras.base.ZooKerasLayer</span></code></a></p>
-<p>Used to merge a list of inputs into a single output, following some merge mode.
-Merge must have at least two input layers.</p>
-<p>When using this layer as the first layer in a model, you need to provide the argument
-input_shape for input layers (a list of shape tuples, does not include the batch dimension).</p>
-<p># Arguments
-layers: A list of layer instances. Must be more than one layer.
-mode: Merge mode. String, must be one of: ‘sum’, ‘mul’, ‘concat’, ‘ave’, ‘cos’,
-‘dot’, ‘max’, ‘sub’, ‘div’, ‘min’. Default is ‘sum’.
-concat_axis: Int, axis to use when concatenating layers.
-Only specify this when merge mode is ‘concat’.
-Default is -1, meaning the last axis of the input.
-input_shape: A list of shape tuples, each not including batch.
-name: String to set the name of the layer.
-If not specified, its name will by default to be a generated string.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">l1</span> <span class="o">=</span> <span class="n">InputLayer</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="go">creating: createZooKerasInputLayer</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">l2</span> <span class="o">=</span> <span class="n">InputLayer</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="go">creating: createZooKerasInputLayer</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">merge</span> <span class="o">=</span> <span class="n">Merge</span><span class="p">(</span><span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;merge1&quot;</span><span class="p">)</span>
-<span class="go">creating: createZooKerasMerge</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.pipeline.api.keras.engine.topology.merge">
-<code class="descclassname">zoo.pipeline.api.keras.engine.topology.</code><code class="descname">merge</code><span class="sig-paren">(</span><em>inputs</em>, <em>mode='sum'</em>, <em>concat_axis=-1</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/keras/engine/topology.html#merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.keras.engine.topology.merge" title="Permalink to this definition">¶</a></dt>
-<dd><p>Functional merge. Only use this method if you are defining a graph model.
-Used to merge a list of input nodes into a single output node (NOT layers!),
-following some merge mode.</p>
-<p># Arguments
-inputs: A list of node instances. Must be more than one node.
-mode: Merge mode. String, must be one of: ‘sum’, ‘mul’, ‘concat’, ‘ave’, ‘cos’,
-‘dot’, ‘max’, ‘sub’, ‘div’, ‘min’. Default is ‘sum’.
-concat_axis: Int, axis to use when concatenating nodes.
-Only specify this when merge mode is ‘concat’.
-Default is -1, meaning the last axis of the input.
-name: String to set the name of the functional merge.
-If not specified, its name will by default to be a generated string.</p>
-</dd></dl>
-
-</div>
-<div class="section" id="module-zoo.pipeline.api.keras.engine">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.pipeline.api.keras.engine" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -372,9 +108,6 @@ If not specified, its name will by default to be a generated string.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.pipeline.api.keras.layers.html" title="zoo.pipeline.api.keras.layers package"
              >next</a> |</li>

@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.pipeline.html" title="zoo.pipeline package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -45,9 +42,9 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.models.textmatching package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.models.textmatching.knrm">zoo.models.textmatching.knrm module</a></li>
-<li><a class="reference internal" href="#module-zoo.models.textmatching.text_matcher">zoo.models.textmatching.text_matcher module</a></li>
-<li><a class="reference internal" href="#module-zoo.models.textmatching">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-models-textmatching-knrm-module">zoo.models.textmatching.knrm module</a></li>
+<li><a class="reference internal" href="#zoo-models-textmatching-text-matcher-module">zoo.models.textmatching.text_matcher module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,74 +87,14 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.models.textmatching.knrm">
-<span id="zoo-models-textmatching-knrm-module"></span><h2>zoo.models.textmatching.knrm module<a class="headerlink" href="#module-zoo.models.textmatching.knrm" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.models.textmatching.knrm.KNRM">
-<em class="property">class </em><code class="descclassname">zoo.models.textmatching.knrm.</code><code class="descname">KNRM</code><span class="sig-paren">(</span><em>text1_length</em>, <em>text2_length</em>, <em>embedding_file</em>, <em>word_index=None</em>, <em>train_embed=True</em>, <em>kernel_num=21</em>, <em>sigma=0.1</em>, <em>exact_sigma=0.001</em>, <em>target_mode='ranking'</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textmatching/knrm.html#KNRM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textmatching.knrm.KNRM" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.models.textmatching.text_matcher.TextMatcher" title="zoo.models.textmatching.text_matcher.TextMatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.models.textmatching.text_matcher.TextMatcher</span></code></a></p>
-<p>Kernel-pooling Neural Ranking Model with RBF kernel.
-<a class="reference external" href="https://arxiv.org/abs/1706.06613">https://arxiv.org/abs/1706.06613</a></p>
-<p># Arguments:
-text1_length: Sequence length of text1 (query).
-text2_length: Sequence length of text2 (doc).
-embedding_file: The path to the word embedding file.
-Currently only the following GloVe files are supported:
-“glove.6B.50d.txt”, “glove.6B.100d.txt”, “glove.6B.200d.txt”
-“glove.6B.300d.txt”, “glove.42B.300d.txt”, “glove.840B.300d.txt”.
-You can download from: <a class="reference external" href="https://nlp.stanford.edu/projects/glove/">https://nlp.stanford.edu/projects/glove/</a>.
-word_index: Dictionary of word (string) and its corresponding index (int).
-The index is supposed to start from 1 with 0 reserved for unknown words.
-During the prediction, if you have words that are not in the word_index
-for the training, you can map them to index 0.
-Default is None. In this case, all the words in the embedding_file will
-be taken into account and you can call
-WordEmbedding.get_word_index(embedding_file) to retrieve the dictionary.
-train_embed: Boolean. Whether to train the embedding layer or not. Default is True.
-kernel_num: Int &gt; 1. The number of kernels to use. Default is 21.
-sigma: Float. Defines the kernel width, or the range of its softTF count. Default is 0.1.
-exact_sigma: Float. The sigma used for the kernel that harvests exact matches
-in the case where RBF mu=1.0. Default is 0.001.
-target_mode: String. The target mode of the model. Either ‘ranking’ or ‘classification’.
-For ranking, the output will be the relevance score between text1 and text2 and
-you are recommended to use ‘rank_hinge’ as loss for pairwise training.
-For classification, the last layer will be sigmoid and the output will be the
-probability between 0 and 1 indicating whether text1 is related to text2 and
-you are recommended to use ‘binary_crossentropy’ as loss for binary classification.
-Default mode is ‘ranking’.</p>
-<dl class="method">
-<dt id="zoo.models.textmatching.knrm.KNRM.build_model">
-<code class="descname">build_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textmatching/knrm.html#KNRM.build_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textmatching.knrm.KNRM.build_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="zoo.models.textmatching.knrm.KNRM.load_model">
-<em class="property">static </em><code class="descname">load_model</code><span class="sig-paren">(</span><em>weight_path=None</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textmatching/knrm.html#KNRM.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textmatching.knrm.KNRM.load_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load an existing KNRM model (with weights).</p>
-<p># Arguments
-path: The path for the pre-defined model.
-Local file system, HDFS and Amazon S3 are supported.
-HDFS path should be like ‘hdfs://[host]:[port]/xxx’.
-Amazon S3 path should be like ‘s3a://bucket/xxx’.
-weight_path: The path for pre-trained weights if any. Default is None.</p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="zoo-models-textmatching-knrm-module">
+<h2>zoo.models.textmatching.knrm module<a class="headerlink" href="#zoo-models-textmatching-knrm-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.models.textmatching.text_matcher">
-<span id="zoo-models-textmatching-text-matcher-module"></span><h2>zoo.models.textmatching.text_matcher module<a class="headerlink" href="#module-zoo.models.textmatching.text_matcher" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.models.textmatching.text_matcher.TextMatcher">
-<em class="property">class </em><code class="descclassname">zoo.models.textmatching.text_matcher.</code><code class="descname">TextMatcher</code><span class="sig-paren">(</span><em>text1_length</em>, <em>vocab_size</em>, <em>embed_size=300</em>, <em>embed_weights=None</em>, <em>train_embed=True</em>, <em>target_mode='ranking'</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textmatching/text_matcher.html#TextMatcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textmatching.text_matcher.TextMatcher" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="zoo.models.common.html#zoo.models.common.zoo_model.ZooModel" title="zoo.models.common.zoo_model.ZooModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.models.common.zoo_model.ZooModel</span></code></a>, <a class="reference internal" href="zoo.models.common.html#zoo.models.common.ranker.Ranker" title="zoo.models.common.ranker.Ranker"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.models.common.ranker.Ranker</span></code></a></p>
-<p>The base class for text matching models in Analytics Zoo.
-Referred to MatchZoo implementation: <a class="reference external" href="https://github.com/NTMC-Community/MatchZoo">https://github.com/NTMC-Community/MatchZoo</a></p>
-</dd></dl>
-
+<div class="section" id="zoo-models-textmatching-text-matcher-module">
+<h2>zoo.models.textmatching.text_matcher module<a class="headerlink" href="#zoo-models-textmatching-text-matcher-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.models.textmatching">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.models.textmatching" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -173,9 +110,6 @@ Referred to MatchZoo implementation: <a class="reference external" href="https:/
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.pipeline.html" title="zoo.pipeline package"
              >next</a> |</li>
