@@ -103,8 +103,8 @@
                     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">label_id</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="n">class_num</span> <span class="o">=</span> <span class="n">label_id</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Found </span><span class="si">%s</span><span class="s1"> texts.&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">texts</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">texts</span><span class="p">,</span> <span class="n">class_num</span></div>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Found </span><span class="si">%s</span><span class="s1"> texts.&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">texts</span><span class="p">))</span></div>
+    <span class="k">return</span> <span class="n">texts</span><span class="p">,</span> <span class="n">class_num</span>
 
 
 <div class="viewcode-block" id="get_glove"><a class="viewcode-back" href="../../../../zoo.examples.textclassification.html#zoo.examples.textclassification.news20.get_glove">[docs]</a><span class="k">def</span> <span class="nf">get_glove</span><span class="p">(</span><span class="n">base_dir</span><span class="o">=</span><span class="s2">&quot;./data/glove.6B&quot;</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
@@ -125,8 +125,8 @@
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">w2v_f</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
         <span class="n">items</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
         <span class="n">pre_w2v</span><span class="p">[</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">items</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
-    <span class="n">w2v_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">pre_w2v</span></div>
+    <span class="n">w2v_f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="n">pre_w2v</span>
 
 
 <div class="viewcode-block" id="download_news20"><a class="viewcode-back" href="../../../../zoo.examples.textclassification.html#zoo.examples.textclassification.news20.download_news20">[docs]</a><span class="k">def</span> <span class="nf">download_news20</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">):</span>
@@ -136,8 +136,8 @@
     <span class="n">news20_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">,</span> <span class="s2">&quot;20news-18828&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">news20_dir</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Extracting </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">news20_path</span><span class="p">,</span> <span class="n">news20_dir</span><span class="p">))</span>
-        <span class="n">tar</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">)</span>
-        <span class="n">tar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+        <span class="n">tar</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">)</span></div>
+        <span class="n">tar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="download_glove"><a class="viewcode-back" href="../../../../zoo.examples.textclassification.html#zoo.examples.textclassification.news20.download_glove">[docs]</a><span class="k">def</span> <span class="nf">download_glove</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">):</span>
@@ -147,8 +147,8 @@
     <span class="n">glove_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dest_dir</span><span class="p">,</span> <span class="s2">&quot;glove.6B&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">glove_dir</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Extracting </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">glove_path</span><span class="p">,</span> <span class="n">glove_dir</span><span class="p">))</span>
-        <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">glove_dir</span><span class="p">)</span>
-        <span class="n">zip_ref</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+        <span class="n">zip_ref</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">glove_dir</span><span class="p">)</span></div>
+        <span class="n">zip_ref</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
           </div>
@@ -171,7 +171,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>

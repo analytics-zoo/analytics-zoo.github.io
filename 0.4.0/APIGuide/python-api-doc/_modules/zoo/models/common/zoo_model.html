@@ -80,8 +80,8 @@
 <div class="viewcode-block" id="ZooModelCreator"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModelCreator">[docs]</a><span class="k">class</span> <span class="nc">ZooModelCreator</span><span class="p">(</span><span class="n">JavaValue</span><span class="p">):</span>
 <div class="viewcode-block" id="ZooModelCreator.jvm_class_constructor"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModelCreator.jvm_class_constructor">[docs]</a>    <span class="k">def</span> <span class="nf">jvm_class_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;createZoo&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;creating: &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">name</span></div></div>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;creating: &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">name</span>
 
 
 <div class="viewcode-block" id="ZooModel"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModel">[docs]</a><span class="k">class</span> <span class="nc">ZooModel</span><span class="p">(</span><span class="n">ZooModelCreator</span><span class="p">,</span> <span class="n">Container</span><span class="p">):</span>
@@ -107,8 +107,8 @@
         <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooModelPredictClasses&quot;</span><span class="p">,</span>
                              <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
                              <span class="n">data_rdd</span><span class="p">,</span>
-                             <span class="n">batch_size</span><span class="p">,</span>
-                             <span class="n">zero_based_label</span><span class="p">)</span></div>
+                             <span class="n">batch_size</span><span class="p">,</span></div>
+                             <span class="n">zero_based_label</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ZooModel.save_model"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModel.save_model">[docs]</a>    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">over_write</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -121,29 +121,29 @@
 <span class="sd">        weight_path: The path to save weights. Default is None.</span>
 <span class="sd">        over_write: Whether to overwrite the file if it already exists. Default is False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;saveZooModel&quot;</span><span class="p">,</span>
-                      <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">,</span> <span class="n">over_write</span><span class="p">)</span></div>
+        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;saveZooModel&quot;</span><span class="p">,</span></div>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">,</span> <span class="n">over_write</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ZooModel.summary"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModel.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Print out the summary of the model.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooModelSummary&quot;</span><span class="p">,</span>
-                      <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooModelSummary&quot;</span><span class="p">,</span></div>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ZooModel.set_evaluate_status"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModel.set_evaluate_status">[docs]</a>    <span class="k">def</span> <span class="nf">set_evaluate_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set the model to be in evaluate status, i.e. remove the effect of Dropout, etc.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooModelSetEvaluateStatus&quot;</span><span class="p">,</span>
-                      <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span></div>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_do_load</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">Layer</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="n">bigdl_type</span><span class="p">)</span>
-        <span class="n">model</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">jmodel</span>
-        <span class="k">return</span> <span class="n">model</span></div>
+        <span class="n">model</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">jmodel</span></div>
+        <span class="k">return</span> <span class="n">model</span>
 </pre></div>
 
           </div>
@@ -166,7 +166,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>
