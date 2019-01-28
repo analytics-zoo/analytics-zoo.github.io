@@ -80,8 +80,8 @@
 <div class="viewcode-block" id="ZooKerasCreator"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.base.ZooKerasCreator">[docs]</a><span class="k">class</span> <span class="nc">ZooKerasCreator</span><span class="p">(</span><span class="n">JavaValue</span><span class="p">):</span>
 <div class="viewcode-block" id="ZooKerasCreator.jvm_class_constructor"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.base.ZooKerasCreator.jvm_class_constructor">[docs]</a>    <span class="k">def</span> <span class="nf">jvm_class_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;createZooKeras&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;creating: &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span></div></div>
-        <span class="k">return</span> <span class="n">name</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;creating: &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">name</span></div></div>
 
 
 <div class="viewcode-block" id="ZooCallable"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.base.ZooCallable">[docs]</a><span class="k">class</span> <span class="nc">ZooCallable</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -94,8 +94,8 @@
         <span class="kn">from</span> <span class="nn">zoo.pipeline.api.autograd</span> <span class="k">import</span> <span class="n">Variable</span>
         <span class="k">return</span> <span class="n">Variable</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span>
                                                   <span class="s2">&quot;connectInputs&quot;</span><span class="p">,</span>
-                                                  <span class="bp">self</span><span class="p">,</span></div>
-                                                  <span class="n">to_list</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+                                                  <span class="bp">self</span><span class="p">,</span>
+                                                  <span class="n">to_list</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span></div>
 
 
 <div class="viewcode-block" id="InferShape"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.base.InferShape">[docs]</a><span class="k">class</span> <span class="nc">InferShape</span><span class="p">(</span><span class="n">JavaValue</span><span class="p">):</span>
@@ -118,8 +118,8 @@
 <span class="sd">        Return one shape tuple otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">input</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;getInputShape&quot;</span><span class="p">,</span>
-                              <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__process_shape</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__process_shape</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="InferShape.get_output_shape"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.base.InferShape.get_output_shape">[docs]</a>    <span class="k">def</span> <span class="nf">get_output_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -127,8 +127,8 @@
 <span class="sd">        Return one shape tuple otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;getOutputShape&quot;</span><span class="p">,</span>
-                               <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__process_shape</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__process_shape</span><span class="p">(</span><span class="n">output</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="ZooKerasLayer"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.base.ZooKerasLayer">[docs]</a><span class="k">class</span> <span class="nc">ZooKerasLayer</span><span class="p">(</span><span class="n">ZooKerasCreator</span><span class="p">,</span> <span class="n">ZooCallable</span><span class="p">,</span> <span class="n">Layer</span><span class="p">,</span> <span class="n">InferShape</span><span class="p">):</span>
@@ -150,8 +150,8 @@
 <span class="sd">        :return: None if without weights</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">jshapes</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooGetWeightsShape&quot;</span><span class="p">,</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">jshape</span><span class="p">)</span> <span class="k">for</span> <span class="n">jshape</span> <span class="ow">in</span> <span class="n">jshapes</span><span class="p">]</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">jshape</span><span class="p">)</span> <span class="k">for</span> <span class="n">jshape</span> <span class="ow">in</span> <span class="n">jshapes</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="ZooKerasLayer.set_weights"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.base.ZooKerasLayer.set_weights">[docs]</a>    <span class="k">def</span> <span class="nf">set_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -165,12 +165,12 @@
             <span class="k">assert</span> <span class="n">w</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">cws</span><span class="p">,</span> \
                 <span class="s2">&quot;The shape of parameter should be the same, but got </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">cws</span><span class="p">)</span>
 
-        <span class="n">tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">)</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">to_list</span><span class="p">(</span><span class="n">weights</span><span class="p">)]</span></div>
-        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooSetWeights&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">tensors</span><span class="p">)</span>
+        <span class="n">tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">)</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">to_list</span><span class="p">(</span><span class="n">weights</span><span class="p">)]</span>
+        <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooSetWeights&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">tensors</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ZooKerasLayer.of"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.keras.html#zoo.pipeline.api.keras.base.ZooKerasLayer.of">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">of</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span></div></div>
-        <span class="k">return</span> <span class="n">ZooKerasLayer</span><span class="p">(</span><span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">of</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ZooKerasLayer</span><span class="p">(</span><span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>
@@ -193,7 +193,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
   </body>
 </html>

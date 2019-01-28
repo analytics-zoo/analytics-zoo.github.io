@@ -86,16 +86,16 @@
 <span class="sd">        Whether it is a LocalTextSet.</span>
 
 <span class="sd">        :return: Boolean</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetIsLocal&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetIsLocal&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.is_distributed"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.is_distributed">[docs]</a>    <span class="k">def</span> <span class="nf">is_distributed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Whether it is a DistributedTextSet.</span>
 
 <span class="sd">        :return: Boolean</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetIsDistributed&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetIsDistributed&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.to_distributed"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.to_distributed">[docs]</a>    <span class="k">def</span> <span class="nf">to_distributed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">partition_num</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -111,8 +111,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">assert</span> <span class="n">sc</span><span class="p">,</span> <span class="s2">&quot;sc cannot be null to transform a LocalTextSet to a DistributedTextSet&quot;</span>
             <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetToDistributed&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                                   <span class="n">sc</span><span class="p">,</span> <span class="n">partition_num</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">DistributedTextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
+                                   <span class="n">sc</span><span class="p">,</span> <span class="n">partition_num</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">DistributedTextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.to_local"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.to_local">[docs]</a>    <span class="k">def</span> <span class="nf">to_local</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -123,8 +123,8 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_local</span><span class="p">():</span>
             <span class="n">jvalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetToLocal&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">LocalTextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
+            <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetToLocal&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">LocalTextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.get_word_index"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.get_word_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_word_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -132,8 +132,8 @@
 <span class="sd">        If the TextSet hasn&#39;t been transformed from word to index, None will be returned.</span>
 
 <span class="sd">        :return: Dictionary {word: id}</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGetWordIndex&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGetWordIndex&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.generate_word_index_map"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.generate_word_index_map">[docs]</a>    <span class="k">def</span> <span class="nf">generate_word_index_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">remove_topN</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_words_num</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
                                 <span class="n">min_freq</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">existing_map</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -145,8 +145,8 @@
 
 <span class="sd">        :return: Dictionary {word: id}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGenerateWordIndexMap&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span></div>
-                             <span class="n">remove_topN</span><span class="p">,</span> <span class="n">max_words_num</span><span class="p">,</span> <span class="n">min_freq</span><span class="p">,</span> <span class="n">existing_map</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGenerateWordIndexMap&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                             <span class="n">remove_topN</span><span class="p">,</span> <span class="n">max_words_num</span><span class="p">,</span> <span class="n">min_freq</span><span class="p">,</span> <span class="n">existing_map</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.get_texts"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.get_texts">[docs]</a>    <span class="k">def</span> <span class="nf">get_texts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -154,8 +154,8 @@
 
 <span class="sd">        :return: List of String for LocalTextSet.</span>
 <span class="sd">                 RDD of String for DistributedTextSet.</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGetTexts&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGetTexts&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.get_uris"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.get_uris">[docs]</a>    <span class="k">def</span> <span class="nf">get_uris</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -164,8 +164,8 @@
 
 <span class="sd">        :return: List of String for LocalTextSet.</span>
 <span class="sd">                 RDD of String for DistributedTextSet.</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGetURIs&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGetURIs&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.get_labels"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.get_labels">[docs]</a>    <span class="k">def</span> <span class="nf">get_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -174,8 +174,8 @@
 
 <span class="sd">        :return: List of int for LocalTextSet.</span>
 <span class="sd">                 RDD of int for DistributedTextSet.</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGetLabels&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGetLabels&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.get_predicts"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.get_predicts">[docs]</a>    <span class="k">def</span> <span class="nf">get_predicts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -188,8 +188,8 @@
         <span class="n">predicts</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGetPredicts&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">predicts</span><span class="p">,</span> <span class="n">RDD</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">predicts</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">predict</span><span class="p">:</span> <span class="n">_process_predict_result</span><span class="p">(</span><span class="n">predict</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span></div>
-            <span class="k">return</span> <span class="p">[</span><span class="n">_process_predict_result</span><span class="p">(</span><span class="n">predict</span><span class="p">)</span> <span class="k">for</span> <span class="n">predict</span> <span class="ow">in</span> <span class="n">predicts</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">_process_predict_result</span><span class="p">(</span><span class="n">predict</span><span class="p">)</span> <span class="k">for</span> <span class="n">predict</span> <span class="ow">in</span> <span class="n">predicts</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="TextSet.get_samples"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.get_samples">[docs]</a>    <span class="k">def</span> <span class="nf">get_samples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -198,8 +198,8 @@
 
 <span class="sd">        :return: List of Sample for LocalTextSet.</span>
 <span class="sd">                 RDD of Sample for DistributedTextSet.</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGetSamples&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGetSamples&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.random_split"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.random_split">[docs]</a>    <span class="k">def</span> <span class="nf">random_split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -208,8 +208,8 @@
 
 <span class="sd">        :param weights: List of float indicating the split portions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">jvalues</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetRandomSplit&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="p">[</span><span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span> <span class="k">for</span> <span class="n">jvalue</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">jvalues</span><span class="p">)]</span>
+        <span class="n">jvalues</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetRandomSplit&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span> <span class="k">for</span> <span class="n">jvalue</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">jvalues</span><span class="p">)]</span></div>
 
 <div class="viewcode-block" id="TextSet.tokenize"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.tokenize">[docs]</a>    <span class="k">def</span> <span class="nf">tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -218,8 +218,8 @@
 
 <span class="sd">        :return: TextSet after tokenization.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetTokenize&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
+        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetTokenize&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.normalize"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.normalize">[docs]</a>    <span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -229,8 +229,8 @@
 
 <span class="sd">        :return: TextSet after normalization.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetNormalize&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
+        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetNormalize&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.word2idx"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.word2idx">[docs]</a>    <span class="k">def</span> <span class="nf">word2idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">remove_topN</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_words_num</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_freq</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">existing_map</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -259,8 +259,8 @@
 <span class="sd">        :return: TextSet after word2idx.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetWord2idx&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                               <span class="n">remove_topN</span><span class="p">,</span> <span class="n">max_words_num</span><span class="p">,</span> <span class="n">min_freq</span><span class="p">,</span> <span class="n">existing_map</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
+                               <span class="n">remove_topN</span><span class="p">,</span> <span class="n">max_words_num</span><span class="p">,</span> <span class="n">min_freq</span><span class="p">,</span> <span class="n">existing_map</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.shape_sequence"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.shape_sequence">[docs]</a>    <span class="k">def</span> <span class="nf">shape_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">len</span><span class="p">,</span> <span class="n">trunc_mode</span><span class="o">=</span><span class="s2">&quot;pre&quot;</span><span class="p">,</span> <span class="n">pad_element</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -272,8 +272,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pad_element</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="s2">&quot;pad_element should be an int&quot;</span>
         <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetShapeSequence&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                               <span class="nb">len</span><span class="p">,</span> <span class="n">trunc_mode</span><span class="p">,</span> <span class="n">pad_element</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
+                               <span class="nb">len</span><span class="p">,</span> <span class="n">trunc_mode</span><span class="p">,</span> <span class="n">pad_element</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.generate_sample"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.generate_sample">[docs]</a>    <span class="k">def</span> <span class="nf">generate_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -283,12 +283,12 @@
 
 <span class="sd">        :return: TextSet with Samples.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGenerateSample&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
+        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetGenerateSample&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.transform"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transformer</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;transformTextSet&quot;</span><span class="p">,</span> <span class="n">transformer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;transformTextSet&quot;</span><span class="p">,</span> <span class="n">transformer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="TextSet.read"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.read">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_partitions</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
@@ -316,8 +316,8 @@
 
 <span class="sd">        :return: TextSet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;readTextSet&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="n">min_partitions</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
+        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;readTextSet&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="n">min_partitions</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.read_csv"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.read_csv">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">read_csv</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_partitions</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
@@ -340,8 +340,8 @@
 
 <span class="sd">        :return: TextSet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetReadCSV&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="n">min_partitions</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
+        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetReadCSV&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="n">min_partitions</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.read_parquet"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.read_parquet">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">read_parquet</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
@@ -355,8 +355,8 @@
 
 <span class="sd">        :return: DistributedTextSet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetReadParquet&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">DistributedTextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
+        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetReadParquet&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">DistributedTextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.from_relation_pairs"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.from_relation_pairs">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_relation_pairs</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">relations</span><span class="p">,</span> <span class="n">corpus1</span><span class="p">,</span> <span class="n">corpus2</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
@@ -383,8 +383,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">relations</span><span class="p">,</span> <span class="n">RDD</span><span class="p">):</span>
             <span class="n">relations</span> <span class="o">=</span> <span class="n">relations</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">to_tuple</span><span class="p">())</span>
-        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetFromRelationPairs&quot;</span><span class="p">,</span> <span class="n">relations</span><span class="p">,</span> <span class="n">corpus1</span><span class="p">,</span> <span class="n">corpus2</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
+        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetFromRelationPairs&quot;</span><span class="p">,</span> <span class="n">relations</span><span class="p">,</span> <span class="n">corpus1</span><span class="p">,</span> <span class="n">corpus2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TextSet.from_relation_lists"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.TextSet.from_relation_lists">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_relation_lists</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">relations</span><span class="p">,</span> <span class="n">corpus1</span><span class="p">,</span> <span class="n">corpus2</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
@@ -413,8 +413,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">relations</span><span class="p">,</span> <span class="n">RDD</span><span class="p">):</span>
             <span class="n">relations</span> <span class="o">=</span> <span class="n">relations</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">to_tuple</span><span class="p">())</span>
-        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetFromRelationLists&quot;</span><span class="p">,</span> <span class="n">relations</span><span class="p">,</span> <span class="n">corpus1</span><span class="p">,</span> <span class="n">corpus2</span><span class="p">)</span></div></div>
-        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span>
+        <span class="n">jvalue</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;textSetFromRelationLists&quot;</span><span class="p">,</span> <span class="n">relations</span><span class="p">,</span> <span class="n">corpus1</span><span class="p">,</span> <span class="n">corpus2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TextSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jvalue</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="LocalTextSet"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.LocalTextSet">[docs]</a><span class="k">class</span> <span class="nc">LocalTextSet</span><span class="p">(</span><span class="n">TextSet</span><span class="p">):</span>
@@ -433,8 +433,8 @@
             <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">)</span> <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">),</span>\
                 <span class="s2">&quot;texts for LocalTextSet should be list of string&quot;</span>
         <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">]</span></div>
-        <span class="nb">super</span><span class="p">(</span><span class="n">LocalTextSet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">,</span> <span class="n">texts</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LocalTextSet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">,</span> <span class="n">texts</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="DistributedTextSet"><a class="viewcode-back" href="../../../../zoo.feature.text.html#zoo.feature.text.text_set.DistributedTextSet">[docs]</a><span class="k">class</span> <span class="nc">DistributedTextSet</span><span class="p">(</span><span class="n">TextSet</span><span class="p">):</span>
@@ -453,8 +453,8 @@
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">RDD</span><span class="p">),</span> <span class="s2">&quot;texts for DistributedTextSet should be RDD of String&quot;</span>
         <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">RDD</span><span class="p">),</span> <span class="s2">&quot;labels for DistributedTextSet should be RDD of int&quot;</span>
-            <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></div>
-        <span class="nb">super</span><span class="p">(</span><span class="n">DistributedTextSet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">,</span> <span class="n">texts</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DistributedTextSet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">,</span> <span class="n">texts</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span></div>
 
 
 <span class="k">def</span> <span class="nf">_process_predict_result</span><span class="p">(</span><span class="n">predict</span><span class="p">):</span>
@@ -486,7 +486,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
   </body>
 </html>

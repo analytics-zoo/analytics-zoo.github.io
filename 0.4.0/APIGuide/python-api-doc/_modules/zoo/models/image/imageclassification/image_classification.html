@@ -82,8 +82,8 @@
 <div class="viewcode-block" id="read_imagenet_label_map"><a class="viewcode-back" href="../../../../../zoo.models.image.imageclassification.html#zoo.models.image.imageclassification.image_classification.read_imagenet_label_map">[docs]</a><span class="k">def</span> <span class="nf">read_imagenet_label_map</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    load imagenet label map</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;readImagenetLabelMap&quot;</span><span class="p">)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;readImagenetLabelMap&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ImageClassifier"><a class="viewcode-back" href="../../../../../zoo.models.image.imageclassification.html#zoo.models.image.imageclassification.image_classification.ImageClassifier">[docs]</a><span class="k">class</span> <span class="nc">ImageClassifier</span><span class="p">(</span><span class="n">ImageModel</span><span class="p">):</span>
@@ -108,8 +108,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;loadImageClassifier&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">)</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">ImageModel</span><span class="o">.</span><span class="n">_do_load</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span>
-        <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">ImageClassifier</span></div></div>
-        <span class="k">return</span> <span class="n">model</span>
+        <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">ImageClassifier</span>
+        <span class="k">return</span> <span class="n">model</span></div></div>
 
 
 <div class="viewcode-block" id="LabelOutput"><a class="viewcode-back" href="../../../../../zoo.models.image.imageclassification.html#zoo.models.image.imageclassification.image_classification.LabelOutput">[docs]</a><span class="k">class</span> <span class="nc">LabelOutput</span><span class="p">(</span><span class="n">FeatureTransformer</span><span class="p">):</span>
@@ -119,8 +119,8 @@
 <span class="sd">    probs is the key in ImgFeature where you want to store all the sorted probilities for each class</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label_map</span><span class="p">,</span> <span class="n">clses</span><span class="p">,</span> <span class="n">probs</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span></div>
-            <span class="n">bigdl_type</span><span class="p">,</span> <span class="n">JavaValue</span><span class="o">.</span><span class="n">jvm_class_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">label_map</span><span class="p">,</span> <span class="n">clses</span><span class="p">,</span> <span class="n">probs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span>
+            <span class="n">bigdl_type</span><span class="p">,</span> <span class="n">JavaValue</span><span class="o">.</span><span class="n">jvm_class_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">label_map</span><span class="p">,</span> <span class="n">clses</span><span class="p">,</span> <span class="n">probs</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -143,7 +143,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
   </body>
 </html>

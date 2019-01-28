@@ -101,8 +101,8 @@
         <span class="k">return</span> <span class="n">UserItemFeature</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;UserItemFeature [user_id: </span><span class="si">%s</span><span class="s2">, item_id: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span></div>
-            <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;UserItemFeature [user_id: </span><span class="si">%s</span><span class="s2">, item_id: </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="UserItemPrediction"><a class="viewcode-back" href="../../../../zoo.models.recommendation.html#zoo.models.recommendation.recommender.UserItemPrediction">[docs]</a><span class="k">class</span> <span class="nc">UserItemPrediction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -126,8 +126,8 @@
         <span class="k">return</span> <span class="n">UserItemPrediction</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prediction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;UserItemPrediction [user_id: </span><span class="si">%s</span><span class="s2">, item_id: </span><span class="si">%s</span><span class="s2">, prediction: </span><span class="si">%s</span><span class="s2">, probability: </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span></div>
-            <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prediction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;UserItemPrediction [user_id: </span><span class="si">%s</span><span class="s2">, item_id: </span><span class="si">%s</span><span class="s2">, prediction: </span><span class="si">%s</span><span class="s2">, probability: </span><span class="si">%s</span><span class="s2">]&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">prediction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">probability</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Recommender"><a class="viewcode-back" href="../../../../zoo.models.recommendation.html#zoo.models.recommendation.recommender.Recommender">[docs]</a><span class="k">class</span> <span class="nc">Recommender</span><span class="p">(</span><span class="n">ZooModel</span><span class="p">):</span>
@@ -144,8 +144,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result_rdd</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;predictUserItemPair&quot;</span><span class="p">,</span>
                                    <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                                   <span class="bp">self</span><span class="o">.</span><span class="n">_to_tuple_rdd</span><span class="p">(</span><span class="n">feature_rdd</span><span class="p">))</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_prediction_rdd</span><span class="p">(</span><span class="n">result_rdd</span><span class="p">)</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">_to_tuple_rdd</span><span class="p">(</span><span class="n">feature_rdd</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_prediction_rdd</span><span class="p">(</span><span class="n">result_rdd</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Recommender.recommend_for_user"><a class="viewcode-back" href="../../../../zoo.models.recommendation.html#zoo.models.recommendation.recommender.Recommender.recommend_for_user">[docs]</a>    <span class="k">def</span> <span class="nf">recommend_for_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feature_rdd</span><span class="p">,</span> <span class="n">max_items</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -159,8 +159,8 @@
         <span class="n">result_rdd</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;recommendForUser&quot;</span><span class="p">,</span>
                                    <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
                                    <span class="bp">self</span><span class="o">.</span><span class="n">_to_tuple_rdd</span><span class="p">(</span><span class="n">feature_rdd</span><span class="p">),</span>
-                                   <span class="nb">int</span><span class="p">(</span><span class="n">max_items</span><span class="p">))</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_prediction_rdd</span><span class="p">(</span><span class="n">result_rdd</span><span class="p">)</span>
+                                   <span class="nb">int</span><span class="p">(</span><span class="n">max_items</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_prediction_rdd</span><span class="p">(</span><span class="n">result_rdd</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Recommender.recommend_for_item"><a class="viewcode-back" href="../../../../zoo.models.recommendation.html#zoo.models.recommendation.recommender.Recommender.recommend_for_item">[docs]</a>    <span class="k">def</span> <span class="nf">recommend_for_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feature_rdd</span><span class="p">,</span> <span class="n">max_users</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -174,8 +174,8 @@
         <span class="n">result_rdd</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;recommendForItem&quot;</span><span class="p">,</span>
                                    <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
                                    <span class="bp">self</span><span class="o">.</span><span class="n">_to_tuple_rdd</span><span class="p">(</span><span class="n">feature_rdd</span><span class="p">),</span>
-                                   <span class="nb">int</span><span class="p">(</span><span class="n">max_users</span><span class="p">))</span></div>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_prediction_rdd</span><span class="p">(</span><span class="n">result_rdd</span><span class="p">)</span>
+                                   <span class="nb">int</span><span class="p">(</span><span class="n">max_users</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_prediction_rdd</span><span class="p">(</span><span class="n">result_rdd</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_to_tuple_rdd</span><span class="p">(</span><span class="n">feature_rdd</span><span class="p">):</span>
@@ -183,8 +183,8 @@
         <span class="k">return</span> <span class="n">feature_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">item_id</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">sample</span><span class="p">))</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_to_prediction_rdd</span><span class="p">(</span><span class="n">result_rdd</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="n">result_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="n">UserItemPrediction</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">y</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+    <span class="k">def</span> <span class="nf">_to_prediction_rdd</span><span class="p">(</span><span class="n">result_rdd</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">result_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">y</span><span class="p">:</span> <span class="n">UserItemPrediction</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">y</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span></div>
 </pre></div>
 
           </div>
@@ -207,7 +207,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
   </body>
 </html>
