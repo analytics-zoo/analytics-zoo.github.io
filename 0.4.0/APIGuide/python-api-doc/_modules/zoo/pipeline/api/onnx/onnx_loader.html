@@ -80,8 +80,8 @@
 <div class="viewcode-block" id="OnnxInput"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.onnx.html#zoo.pipeline.api.onnx.onnx_loader.OnnxInput">[docs]</a><span class="k">class</span> <span class="nc">OnnxInput</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">zvalue</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">zvalue</span> <span class="o">=</span> <span class="n">zvalue</span>  <span class="c1"># zvalue is a Input or Parameter</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>  <span class="c1"># data is a ndarray</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zvalue</span> <span class="o">=</span> <span class="n">zvalue</span>  <span class="c1"># zvalue is a Input or Parameter</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>  <span class="c1"># data is a ndarray</span>
 
 
 <div class="viewcode-block" id="OnnxLoader"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.onnx.html#zoo.pipeline.api.onnx.onnx_loader.OnnxLoader">[docs]</a><span class="k">class</span> <span class="nc">OnnxLoader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -96,8 +96,8 @@
 
 <div class="viewcode-block" id="OnnxLoader.from_path"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.onnx.html#zoo.pipeline.api.onnx.onnx_loader.OnnxLoader.from_path">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_path</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">onnx_path</span><span class="p">):</span>
-        <span class="n">onnx_model</span> <span class="o">=</span> <span class="n">onnx</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">onnx_path</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">onnx_model</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span></div>
+        <span class="n">onnx_model</span> <span class="o">=</span> <span class="n">onnx</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">onnx_path</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">onnx_model</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
 
 <div class="viewcode-block" id="OnnxLoader.run_node"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.onnx.html#zoo.pipeline.api.onnx.onnx_loader.OnnxLoader.run_node">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="c1"># inputs_dict is a list of batch data</span>
@@ -119,8 +119,8 @@
             <span class="k">for</span> <span class="n">o</span><span class="p">,</span> <span class="n">no</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">output</span><span class="p">):</span>
                 <span class="n">result</span><span class="p">[</span><span class="n">no</span><span class="p">]</span> <span class="o">=</span> <span class="n">o</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">result</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">output</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+            <span class="n">result</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">output</span></div>
+        <span class="k">return</span> <span class="n">result</span>
 
 <div class="viewcode-block" id="OnnxLoader.to_keras"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.onnx.html#zoo.pipeline.api.onnx.onnx_loader.OnnxLoader.to_keras">[docs]</a>    <span class="k">def</span> <span class="nf">to_keras</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Convert a Onnx model to KerasNet model.</span>
@@ -173,8 +173,8 @@
             <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_all_tensors</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;The output haven&#39;t been calculate&quot;</span><span class="p">)</span>
             <span class="n">output_tensors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_all_tensors</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">zvalue</span><span class="p">)</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">zmodels</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inputs</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">output</span><span class="o">=</span><span class="n">output_tensors</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">model</span></div></div>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">zmodels</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_inputs</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">output</span><span class="o">=</span><span class="n">output_tensors</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">model</span>
 </pre></div>
 
           </div>
@@ -197,7 +197,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>

@@ -89,8 +89,8 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">GRU</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nlayers</span><span class="p">)]</span>
     <span class="k">elif</span> <span class="p">(</span><span class="n">_rnn_type</span> <span class="o">==</span> <span class="s2">&quot;simplernn&quot;</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">SimpleRNN</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">return_sequences</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nlayers</span><span class="p">)]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Only support lstm|gru|simplernn&#39;</span><span class="p">)</span></div>
+    <span class="k">else</span><span class="p">:</span></div>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Only support lstm|gru|simplernn&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="RNNEncoder"><a class="viewcode-back" href="../../../../zoo.models.seq2seq.html#zoo.models.seq2seq.seq2seq.RNNEncoder">[docs]</a><span class="k">class</span> <span class="nc">RNNEncoder</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
@@ -128,8 +128,8 @@
 <span class="sd">        hidden_size: hidden size of encoder</span>
 <span class="sd">        embedding: embedding layer in encoder, `None` is supported</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">rnns</span> <span class="o">=</span> <span class="n">createRNN</span><span class="p">(</span><span class="n">rnn_type</span><span class="p">,</span> <span class="n">nlayers</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">RNNEncoder</span><span class="p">(</span><span class="n">rnns</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">)</span></div></div>
+        <span class="n">rnns</span> <span class="o">=</span> <span class="n">createRNN</span><span class="p">(</span><span class="n">rnn_type</span><span class="p">,</span> <span class="n">nlayers</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">RNNEncoder</span><span class="p">(</span><span class="n">rnns</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="RNNDecoder"><a class="viewcode-back" href="../../../../zoo.models.seq2seq.html#zoo.models.seq2seq.seq2seq.RNNDecoder">[docs]</a><span class="k">class</span> <span class="nc">RNNDecoder</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
@@ -167,8 +167,8 @@
 <span class="sd">        hidden_size: hidden size of decoder</span>
 <span class="sd">        embedding: embedding layer in decoder, `None` is supported</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">rnns</span> <span class="o">=</span> <span class="n">createRNN</span><span class="p">(</span><span class="n">rnn_type</span><span class="p">,</span> <span class="n">nlayers</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">RNNDecoder</span><span class="p">(</span><span class="n">rnns</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">)</span></div></div>
+        <span class="n">rnns</span> <span class="o">=</span> <span class="n">createRNN</span><span class="p">(</span><span class="n">rnn_type</span><span class="p">,</span> <span class="n">nlayers</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">RNNDecoder</span><span class="p">(</span><span class="n">rnns</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Bridge"><a class="viewcode-back" href="../../../../zoo.models.seq2seq.html#zoo.models.seq2seq.seq2seq.Bridge">[docs]</a><span class="k">class</span> <span class="nc">Bridge</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
@@ -195,15 +195,15 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        bridge_type: currently only support &quot;dense | densenonlinear&quot;</span>
 <span class="sd">        decoder_hiddenSize: hidden size of decoder</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">Bridge</span><span class="p">(</span><span class="n">bridge_type</span><span class="p">,</span> <span class="n">decoder_hidden_size</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="n">Bridge</span><span class="p">(</span><span class="n">bridge_type</span><span class="p">,</span> <span class="n">decoder_hidden_size</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Bridge.initialize_from_keras_layer"><a class="viewcode-back" href="../../../../zoo.models.seq2seq.html#zoo.models.seq2seq.seq2seq.Bridge.initialize_from_keras_layer">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">initialize_from_keras_layer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">bridge</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        bridge: keras layers used to do the transformation</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">Bridge</span><span class="p">(</span><span class="s2">&quot;customized&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bridge</span><span class="p">)</span></div></div>
+<span class="sd">        &quot;&quot;&quot;</span></div></div>
+        <span class="k">return</span> <span class="n">Bridge</span><span class="p">(</span><span class="s2">&quot;customized&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bridge</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Seq2seq"><a class="viewcode-back" href="../../../../zoo.models.seq2seq.html#zoo.models.seq2seq.seq2seq.Seq2seq">[docs]</a><span class="k">class</span> <span class="nc">Seq2seq</span><span class="p">(</span><span class="n">ZooModel</span><span class="p">):</span>
@@ -243,8 +243,8 @@
 <div class="viewcode-block" id="Seq2seq.set_checkpoint"><a class="viewcode-back" href="../../../../zoo.models.seq2seq.html#zoo.models.seq2seq.seq2seq.Seq2seq.set_checkpoint">[docs]</a>    <span class="k">def</span> <span class="nf">set_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">over_write</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;seq2seqSetCheckpoint&quot;</span><span class="p">,</span>
                       <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                      <span class="n">path</span><span class="p">,</span>
-                      <span class="n">over_write</span><span class="p">)</span></div>
+                      <span class="n">path</span><span class="p">,</span></div>
+                      <span class="n">over_write</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Seq2seq.load_model"><a class="viewcode-back" href="../../../../zoo.models.seq2seq.html#zoo.models.seq2seq.seq2seq.Seq2seq.load_model">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
@@ -260,8 +260,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;loadSeq2seq&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">)</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">ZooModel</span><span class="o">.</span><span class="n">_do_load</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span>
-        <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">Seq2seq</span>
-        <span class="k">return</span> <span class="n">model</span></div>
+        <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">Seq2seq</span></div>
+        <span class="k">return</span> <span class="n">model</span>
 
     <span class="c1"># For the following methods, please refer to KerasNet for documentation.</span>
 <div class="viewcode-block" id="Seq2seq.compile"><a class="viewcode-back" href="../../../../zoo.models.seq2seq.html#zoo.models.seq2seq.seq2seq.Seq2seq.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -274,16 +274,16 @@
         <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;seq2seqCompile&quot;</span><span class="p">,</span>
                       <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
                       <span class="n">optimizer</span><span class="p">,</span>
-                      <span class="n">loss</span><span class="p">,</span>
-                      <span class="n">metrics</span><span class="p">)</span></div>
+                      <span class="n">loss</span><span class="p">,</span></div>
+                      <span class="n">metrics</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Seq2seq.fit"><a class="viewcode-back" href="../../../../zoo.models.seq2seq.html#zoo.models.seq2seq.seq2seq.Seq2seq.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">nb_epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;seq2seqFit&quot;</span><span class="p">,</span>
                       <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
                       <span class="n">x</span><span class="p">,</span>
                       <span class="n">batch_size</span><span class="p">,</span>
-                      <span class="n">nb_epoch</span><span class="p">,</span>
-                      <span class="n">validation_data</span><span class="p">)</span></div>
+                      <span class="n">nb_epoch</span><span class="p">,</span></div>
+                      <span class="n">validation_data</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Seq2seq.infer"><a class="viewcode-back" href="../../../../zoo.models.seq2seq.html#zoo.models.seq2seq.seq2seq.Seq2seq.infer">[docs]</a>    <span class="k">def</span> <span class="nf">infer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">start_sign</span><span class="p">,</span> <span class="n">max_seq_len</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">stop_sign</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">build_output</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -312,8 +312,8 @@
                                 <span class="n">jstart_sign</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                                 <span class="n">max_seq_len</span><span class="p">,</span>
                                 <span class="n">jstop_sign</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">jstop_sign</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
-                                <span class="n">build_output</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">results</span></div></div>
+                                <span class="n">build_output</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">results</span>
 </pre></div>
 
           </div>
@@ -336,7 +336,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>

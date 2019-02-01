@@ -83,16 +83,16 @@
         <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shape</span><span class="p">]</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">shape</span><span class="p">)]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">shape</span><span class="p">]</span></div>
+    <span class="k">else</span><span class="p">:</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="n">shape</span><span class="p">]</span>
 
 
 <span class="c1"># TODO: create a shape mapping here.</span>
 <div class="viewcode-block" id="remove_batch"><a class="viewcode-back" href="../../../../zoo.pipeline.api.html#zoo.pipeline.api.utils.remove_batch">[docs]</a><span class="k">def</span> <span class="nf">remove_batch</span><span class="p">(</span><span class="n">shape</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">shape</span><span class="p">):</span>  <span class="c1"># multi shape</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">remove_batch</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shape</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span></div>
+    <span class="k">else</span><span class="p">:</span></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 </pre></div>
 
           </div>
@@ -115,7 +115,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>
