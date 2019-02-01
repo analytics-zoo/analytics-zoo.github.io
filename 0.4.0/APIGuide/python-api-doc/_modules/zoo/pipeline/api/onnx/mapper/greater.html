@@ -82,8 +82,8 @@
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">zvalue</span>
         <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">zvalue</span>
         <span class="n">truemap</span> <span class="o">=</span> <span class="n">zlayers</span><span class="o">.</span><span class="n">KerasLayerWrapper</span><span class="p">(</span><span class="n">blayer</span><span class="o">.</span><span class="n">Threshold</span><span class="p">(</span><span class="n">th</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="mf">0.0</span><span class="p">))(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
-        <span class="n">falsemap</span> <span class="o">=</span> <span class="n">zlayers</span><span class="o">.</span><span class="n">KerasLayerWrapper</span><span class="p">(</span><span class="n">blayer</span><span class="o">.</span><span class="n">Threshold</span><span class="p">(</span><span class="n">th</span><span class="o">=-</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))(</span><span class="o">-</span><span class="n">truemap</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">falsemap</span>
+        <span class="n">falsemap</span> <span class="o">=</span> <span class="n">zlayers</span><span class="o">.</span><span class="n">KerasLayerWrapper</span><span class="p">(</span><span class="n">blayer</span><span class="o">.</span><span class="n">Threshold</span><span class="p">(</span><span class="n">th</span><span class="o">=-</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="mf">1.0</span><span class="p">))(</span><span class="o">-</span><span class="n">truemap</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">falsemap</span></div>
 </pre></div>
 
           </div>
@@ -106,7 +106,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
   </body>
 </html>

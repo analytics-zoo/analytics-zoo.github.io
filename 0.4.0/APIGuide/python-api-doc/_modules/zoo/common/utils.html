@@ -89,8 +89,8 @@
             <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong type: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
-</div>
-    <span class="k">return</span> <span class="n">results</span>
+
+    <span class="k">return</span> <span class="n">results</span></div>
 
 
 <div class="viewcode-block" id="JTensor"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.JTensor">[docs]</a><span class="k">class</span> <span class="nc">JTensor</span><span class="p">(</span><span class="n">BJTensor</span><span class="p">):</span>
@@ -108,8 +108,8 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a_ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> \
             <span class="s2">&quot;input should be a np.ndarray, not </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">a_ndarray</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">a_ndarray</span><span class="p">,</span>
-                   <span class="n">a_ndarray</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span></div></div>
-                   <span class="n">bigdl_type</span><span class="p">)</span>
+                   <span class="n">a_ndarray</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                   <span class="n">bigdl_type</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="Sample"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.Sample">[docs]</a><span class="k">class</span> <span class="nc">Sample</span><span class="p">(</span><span class="n">BSample</span><span class="p">):</span>
@@ -123,8 +123,8 @@
         <span class="n">labels</span> <span class="o">=</span> <span class="n">to_list_of_numpy</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="n">JTensor</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">feature</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">],</span>
-            <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="n">JTensor</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">label</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">],</span></div></div>
-            <span class="n">bigdl_type</span><span class="o">=</span><span class="n">bigdl_type</span><span class="p">)</span>
+            <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="n">JTensor</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">label</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">],</span>
+            <span class="n">bigdl_type</span><span class="o">=</span><span class="n">bigdl_type</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>
@@ -147,7 +147,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
   </body>
 </html>

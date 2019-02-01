@@ -80,8 +80,8 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">pyspark</span>
         <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span></div>
-        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
 
 <div class="viewcode-block" id="check_spark_source_conflict"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.engine.check_spark_source_conflict">[docs]</a><span class="k">def</span> <span class="nf">check_spark_source_conflict</span><span class="p">(</span><span class="n">spark_home</span><span class="p">,</span> <span class="n">pyspark_path</span><span class="p">):</span>
@@ -93,8 +93,8 @@
                       <span class="s2">&quot;is set to: &quot;</span> <span class="o">+</span> <span class="n">spark_home</span> <span class="o">+</span> \
                       <span class="s2">&quot;, and pyspark is found in: &quot;</span> <span class="o">+</span> <span class="n">pyspark_path</span> <span class="o">+</span> <span class="s2">&quot;. If they are unmatched, &quot;</span> <span class="o">+</span> \
                       <span class="s2">&quot;you are recommended to use one source only to avoid conflict. &quot;</span> <span class="o">+</span> \
-                      <span class="s2">&quot;For example, you can unset SPARK_HOME and use pyspark only.&quot;</span></div>
-        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">warning_msg</span><span class="p">)</span>
+                      <span class="s2">&quot;For example, you can unset SPARK_HOME and use pyspark only.&quot;</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">warning_msg</span><span class="p">)</span></div>
 
 
 <span class="k">def</span> <span class="nf">__prepare_spark_env</span><span class="p">():</span>
@@ -167,8 +167,8 @@
     <span class="n">jar_paths</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">jar_dir</span><span class="p">,</span> <span class="s2">&quot;share/lib/*.jar&quot;</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">jar_paths</span><span class="p">:</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">jar_paths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Expecting one jar: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">jar_paths</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">jar_paths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
-    <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">jar_paths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
 
 
 <div class="viewcode-block" id="is_spark_below_2_2"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.engine.is_spark_below_2_2">[docs]</a><span class="k">def</span> <span class="nf">is_spark_below_2_2</span><span class="p">():</span>
@@ -182,8 +182,8 @@
         <span class="n">parts</span> <span class="o">=</span> <span class="n">full_version</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
         <span class="n">spark_version</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">compare_version</span><span class="p">(</span><span class="n">spark_version</span><span class="p">,</span> <span class="s2">&quot;2.2&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span></div>
-    <span class="k">return</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
 
 
 <div class="viewcode-block" id="compare_version"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.engine.compare_version">[docs]</a><span class="k">def</span> <span class="nf">compare_version</span><span class="p">(</span><span class="n">version1</span><span class="p">,</span> <span class="n">version2</span><span class="p">):</span>
@@ -208,13 +208,13 @@
         <span class="k">if</span> <span class="n">v1_token</span> <span class="o">&lt;</span> <span class="n">v2_token</span><span class="p">:</span>
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">if</span> <span class="n">v1_token</span> <span class="o">&gt;</span> <span class="n">v2_token</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">1</span></div>
-    <span class="k">return</span> <span class="mi">0</span>
+            <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">0</span></div>
 
 
 <div class="viewcode-block" id="prepare_env"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.engine.prepare_env">[docs]</a><span class="k">def</span> <span class="nf">prepare_env</span><span class="p">():</span>
-    <span class="n">__prepare_spark_env</span><span class="p">()</span></div>
-    <span class="n">__prepare_analytics_zoo_env</span><span class="p">()</span>
+    <span class="n">__prepare_spark_env</span><span class="p">()</span>
+    <span class="n">__prepare_analytics_zoo_env</span><span class="p">()</span></div>
 </pre></div>
 
           </div>
@@ -237,7 +237,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
   </body>
 </html>

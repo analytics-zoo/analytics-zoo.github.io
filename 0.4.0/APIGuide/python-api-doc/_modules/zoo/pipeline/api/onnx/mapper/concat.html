@@ -80,8 +80,8 @@
     <span class="k">def</span> <span class="nf">_to_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">assert</span> <span class="s1">&#39;axis&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">onnx_attr</span><span class="p">,</span> <span class="s2">&quot;axis is a required attribute&quot;</span>
         <span class="n">axis</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">onnx_attr</span><span class="p">[</span><span class="s1">&#39;axis&#39;</span><span class="p">])</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">zvalue</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_inputs</span><span class="p">]</span></div>
-        <span class="k">return</span> <span class="n">zlayers</span><span class="o">.</span><span class="n">Merge</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;concat&quot;</span><span class="p">,</span> <span class="n">concat_axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">zvalue</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_inputs</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">zlayers</span><span class="o">.</span><span class="n">Merge</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;concat&quot;</span><span class="p">,</span> <span class="n">concat_axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)(</span><span class="n">data</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -104,7 +104,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
   </body>
 </html>
