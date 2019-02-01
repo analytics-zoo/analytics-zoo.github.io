@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.models.image.html" title="zoo.models.image package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -42,8 +45,8 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.models.common package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-models-common-zoo-model-module">zoo.models.common.zoo_model module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.models.common.zoo_model">zoo.models.common.zoo_model module</a></li>
+<li><a class="reference internal" href="#module-zoo.models.common">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -86,11 +89,47 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-models-common-zoo-model-module">
-<h2>zoo.models.common.zoo_model module<a class="headerlink" href="#zoo-models-common-zoo-model-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.models.common.zoo_model">
+<span id="zoo-models-common-zoo-model-module"></span><h2>zoo.models.common.zoo_model module<a class="headerlink" href="#module-zoo.models.common.zoo_model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.models.common.zoo_model.ZooModel">
+<em class="property">class </em><code class="descclassname">zoo.models.common.zoo_model.</code><code class="descname">ZooModel</code><span class="sig-paren">(</span><em>jvalue</em>, <em>bigdl_type</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/common/zoo_model.html#ZooModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.common.zoo_model.ZooModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.models.common.zoo_model.ZooModelCreator" title="zoo.models.common.zoo_model.ZooModelCreator"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.models.common.zoo_model.ZooModelCreator</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">bigdl.nn.layer.Container</span></code></p>
+<p>The base class for models in Analytics Zoo.</p>
+<dl class="method">
+<dt id="zoo.models.common.zoo_model.ZooModel.save_model">
+<code class="descname">save_model</code><span class="sig-paren">(</span><em>path</em>, <em>weight_path=None</em>, <em>over_write=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/common/zoo_model.html#ZooModel.save_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.common.zoo_model.ZooModel.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the model to the specified path.</p>
+<p># Arguments
+path: The path to save the model. Local file system, HDFS and Amazon S3 are supported.
+HDFS path should be like ‘hdfs://[host]:[port]/xxx’.
+Amazon S3 path should be like ‘s3a://bucket/xxx’.
+weight_path: The path to save weights. Default is None.
+over_write: Whether to overwrite the file if it already exists. Default is False.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.models.common.zoo_model.ZooModel.summary">
+<code class="descname">summary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/common/zoo_model.html#ZooModel.summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.common.zoo_model.ZooModel.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print out the summary of the model.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.models.common.zoo_model.ZooModelCreator">
+<em class="property">class </em><code class="descclassname">zoo.models.common.zoo_model.</code><code class="descname">ZooModelCreator</code><span class="sig-paren">(</span><em>jvalue</em>, <em>bigdl_type</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/common/zoo_model.html#ZooModelCreator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.common.zoo_model.ZooModelCreator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bigdl.util.common.JavaValue</span></code></p>
+<dl class="method">
+<dt id="zoo.models.common.zoo_model.ZooModelCreator.jvm_class_constructor">
+<code class="descname">jvm_class_constructor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/common/zoo_model.html#ZooModelCreator.jvm_class_constructor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.common.zoo_model.ZooModelCreator.jvm_class_constructor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.models.common">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.models.common" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -106,6 +145,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.models.image.html" title="zoo.models.image package"
              >next</a> |</li>

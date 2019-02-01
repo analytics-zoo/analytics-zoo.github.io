@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.feature.image.html" title="zoo.feature.image package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -42,8 +45,8 @@
 <li><a class="reference internal" href="#">zoo.feature package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-feature-common-module">zoo.feature.common module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.feature.common">zoo.feature.common module</a></li>
+<li><a class="reference internal" href="#module-zoo.feature">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -89,9 +92,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="zoo.feature.image.html">zoo.feature.image package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zoo.feature.image.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zoo.feature.image.html#zoo-feature-image-imagepreprocessing-module">zoo.feature.image.imagePreprocessing module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zoo.feature.image.html#zoo-feature-image-imageset-module">zoo.feature.image.imageset module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zoo.feature.image.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.feature.image.html#module-zoo.feature.image.imagePreprocessing">zoo.feature.image.imagePreprocessing module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.feature.image.html#module-zoo.feature.image.imageset">zoo.feature.image.imageset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.feature.image.html#module-zoo.feature.image">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -100,11 +103,95 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-feature-common-module">
-<h2>zoo.feature.common module<a class="headerlink" href="#zoo-feature-common-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.feature.common">
+<span id="zoo-feature-common-module"></span><h2>zoo.feature.common module<a class="headerlink" href="#module-zoo.feature.common" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.feature.common.ArrayToTensor">
+<em class="property">class </em><code class="descclassname">zoo.feature.common.</code><code class="descname">ArrayToTensor</code><span class="sig-paren">(</span><em>size</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/common.html#ArrayToTensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.common.ArrayToTensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.common.Preprocessing" title="zoo.feature.common.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.common.Preprocessing</span></code></a></p>
+<p>a Transformer that converts an Array[_] to a Tensor.
+:param size dimensions of target Tensor.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.common.BigDLAdapter">
+<em class="property">class </em><code class="descclassname">zoo.feature.common.</code><code class="descname">BigDLAdapter</code><span class="sig-paren">(</span><em>bigdl_transformer</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/common.html#BigDLAdapter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.common.BigDLAdapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.common.Preprocessing" title="zoo.feature.common.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.common.Preprocessing</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.common.ChainedPreprocessing">
+<em class="property">class </em><code class="descclassname">zoo.feature.common.</code><code class="descname">ChainedPreprocessing</code><span class="sig-paren">(</span><em>transformers</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/common.html#ChainedPreprocessing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.common.ChainedPreprocessing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.common.Preprocessing" title="zoo.feature.common.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.common.Preprocessing</span></code></a></p>
+<p>chains two Preprocessing together. The output type of the first
+Preprocessing should be the same with the input type of the second Preprocessing.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.common.FeatureLabelPreprocessing">
+<em class="property">class </em><code class="descclassname">zoo.feature.common.</code><code class="descname">FeatureLabelPreprocessing</code><span class="sig-paren">(</span><em>feature_transformer</em>, <em>label_transformer</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/common.html#FeatureLabelPreprocessing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.common.FeatureLabelPreprocessing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.common.Preprocessing" title="zoo.feature.common.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.common.Preprocessing</span></code></a></p>
+<p>construct a Transformer that convert (Feature, Label) tuple to a Sample.
+The returned Transformer is robust for the case label = null, in which the
+Sample is derived from Feature only.
+:param feature_transformer transformer for feature, transform F to Tensor[T]
+:param label_transformer transformer for label, transform L to Tensor[T]</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.common.FeatureToTupleAdapter">
+<em class="property">class </em><code class="descclassname">zoo.feature.common.</code><code class="descname">FeatureToTupleAdapter</code><span class="sig-paren">(</span><em>sample_transformer</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/common.html#FeatureToTupleAdapter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.common.FeatureToTupleAdapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.common.Preprocessing" title="zoo.feature.common.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.common.Preprocessing</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.common.MLlibVectorToTensor">
+<em class="property">class </em><code class="descclassname">zoo.feature.common.</code><code class="descname">MLlibVectorToTensor</code><span class="sig-paren">(</span><em>size</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/common.html#MLlibVectorToTensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.common.MLlibVectorToTensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.common.Preprocessing" title="zoo.feature.common.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.common.Preprocessing</span></code></a></p>
+<p>a Transformer that converts MLlib Vector to a Tensor.
+:param size dimensions of target Tensor.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.common.Preprocessing">
+<em class="property">class </em><code class="descclassname">zoo.feature.common.</code><code class="descname">Preprocessing</code><span class="sig-paren">(</span><em>bigdl_type='float'</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/common.html#Preprocessing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.common.Preprocessing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bigdl.util.common.JavaValue</span></code></p>
+<p>Preprocessing defines data transform action during feature preprocessing. Python wrapper for
+the scala Preprocessing</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.common.ScalarToTensor">
+<em class="property">class </em><code class="descclassname">zoo.feature.common.</code><code class="descname">ScalarToTensor</code><span class="sig-paren">(</span><em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/common.html#ScalarToTensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.common.ScalarToTensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.common.Preprocessing" title="zoo.feature.common.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.common.Preprocessing</span></code></a></p>
+<p>a Preprocessing that converts a number to a Tensor.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.common.SeqToTensor">
+<em class="property">class </em><code class="descclassname">zoo.feature.common.</code><code class="descname">SeqToTensor</code><span class="sig-paren">(</span><em>size=[]</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/common.html#SeqToTensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.common.SeqToTensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.common.Preprocessing" title="zoo.feature.common.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.common.Preprocessing</span></code></a></p>
+<p>a Transformer that converts an Array[_] or Seq[_] to a Tensor.
+:param size dimensions of target Tensor.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.common.TensorToSample">
+<em class="property">class </em><code class="descclassname">zoo.feature.common.</code><code class="descname">TensorToSample</code><span class="sig-paren">(</span><em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/common.html#TensorToSample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.common.TensorToSample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.common.Preprocessing" title="zoo.feature.common.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.common.Preprocessing</span></code></a></p>
+<p>a Transformer that converts Tensor to Sample.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.feature.common.ToTuple">
+<em class="property">class </em><code class="descclassname">zoo.feature.common.</code><code class="descname">ToTuple</code><span class="sig-paren">(</span><em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/feature/common.html#ToTuple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.feature.common.ToTuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.feature.common.Preprocessing" title="zoo.feature.common.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.feature.common.Preprocessing</span></code></a></p>
+<p>a Transformer that converts Feature to (Feature, None).</p>
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.feature">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.feature" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -120,6 +207,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.feature.image.html" title="zoo.feature.image package"
              >next</a> |</li>
