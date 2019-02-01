@@ -90,8 +90,8 @@
         <span class="n">sc</span> <span class="o">=</span> <span class="n">getOrCreateSparkContext</span><span class="p">(</span><span class="n">conf</span><span class="o">=</span><span class="n">conf</span><span class="p">)</span>
     <span class="n">redire_spark_logs</span><span class="p">()</span>
     <span class="n">show_bigdl_info_logs</span><span class="p">()</span>
-    <span class="n">init_engine</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">sc</span></div>
+    <span class="n">init_engine</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="n">sc</span>
 
 
 <div class="viewcode-block" id="getOrCreateSparkContext"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.nncontext.getOrCreateSparkContext">[docs]</a><span class="k">def</span> <span class="nf">getOrCreateSparkContext</span><span class="p">(</span><span class="n">conf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">appName</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -106,8 +106,8 @@
             <span class="k">if</span> <span class="n">appName</span><span class="p">:</span>
                 <span class="n">spark_conf</span><span class="o">.</span><span class="n">setAppName</span><span class="p">(</span><span class="n">appName</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">SparkContext</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">(</span><span class="n">spark_conf</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">SparkContext</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span></div>
+        <span class="k">else</span><span class="p">:</span></div>
+            <span class="k">return</span> <span class="n">SparkContext</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="check_version"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.nncontext.check_version">[docs]</a><span class="k">def</span> <span class="nf">check_version</span><span class="p">():</span>
@@ -115,8 +115,8 @@
     <span class="n">conf</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">_conf</span>
     <span class="k">if</span> <span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;spark.analytics.zoo.versionCheck&quot;</span><span class="p">,</span> <span class="s2">&quot;False&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span><span class="p">:</span>
         <span class="n">report_warn</span> <span class="o">=</span> <span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="s2">&quot;spark.analytics.zoo.versionCheck.warning&quot;</span><span class="p">,</span> <span class="s2">&quot;False&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span>
-        <span class="n">_check_spark_version</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">report_warn</span><span class="p">)</span></div>
+            <span class="s2">&quot;spark.analytics.zoo.versionCheck.warning&quot;</span><span class="p">,</span> <span class="s2">&quot;False&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;true&quot;</span></div>
+        <span class="n">_check_spark_version</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">report_warn</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_split_full_version</span><span class="p">(</span><span class="n">version</span><span class="p">):</span>
@@ -198,7 +198,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>

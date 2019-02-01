@@ -83,8 +83,8 @@
 
 <div class="viewcode-block" id="text_to_words"><a class="viewcode-back" href="../../../../zoo.examples.textclassification.html#zoo.examples.textclassification.text_classification.text_to_words">[docs]</a><span class="k">def</span> <span class="nf">text_to_words</span><span class="p">(</span><span class="n">review_text</span><span class="p">):</span>
     <span class="n">letters_only</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;[^a-zA-Z]&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">review_text</span><span class="p">)</span>
-    <span class="n">words</span> <span class="o">=</span> <span class="n">letters_only</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">words</span></div>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">letters_only</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="n">words</span>
 
 
 <div class="viewcode-block" id="analyze_texts"><a class="viewcode-back" href="../../../../zoo.examples.textclassification.html#zoo.examples.textclassification.text_classification.analyze_texts">[docs]</a><span class="k">def</span> <span class="nf">analyze_texts</span><span class="p">(</span><span class="n">data_rdd</span><span class="p">):</span>
@@ -93,30 +93,30 @@
         <span class="k">return</span> <span class="n">word</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">frequency</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">data_rdd</span><span class="o">.</span><span class="n">flatMap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">text_label</span><span class="p">:</span> <span class="n">text_to_words</span><span class="p">(</span><span class="n">text_label</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> \
         <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">word</span><span class="p">:</span> <span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">reduceByKey</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> \
-        <span class="o">.</span><span class="n">sortBy</span><span class="p">(</span><span class="k">lambda</span> <span class="n">word_frequency</span><span class="p">:</span> <span class="o">-</span> <span class="n">word_frequency</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">zipWithIndex</span><span class="p">()</span> \
-        <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">word_frequency_i</span><span class="p">:</span> <span class="n">index</span><span class="p">(</span><span class="n">word_frequency_i</span><span class="p">))</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span></div>
+        <span class="o">.</span><span class="n">sortBy</span><span class="p">(</span><span class="k">lambda</span> <span class="n">word_frequency</span><span class="p">:</span> <span class="o">-</span> <span class="n">word_frequency</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">zipWithIndex</span><span class="p">()</span> \</div>
+        <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">word_frequency_i</span><span class="p">:</span> <span class="n">index</span><span class="p">(</span><span class="n">word_frequency_i</span><span class="p">))</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="pad"><a class="viewcode-back" href="../../../../zoo.examples.textclassification.html#zoo.examples.textclassification.text_classification.pad">[docs]</a><span class="k">def</span> <span class="nf">pad</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">fill_value</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">width</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span> <span class="n">width</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">l</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">fill_value</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)))</span>
-        <span class="k">return</span> <span class="n">l</span></div>
+        <span class="n">l</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">fill_value</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)))</span></div>
+        <span class="k">return</span> <span class="n">l</span>
 
 
 <div class="viewcode-block" id="to_vec"><a class="viewcode-back" href="../../../../zoo.examples.textclassification.html#zoo.examples.textclassification.text_classification.to_vec">[docs]</a><span class="k">def</span> <span class="nf">to_vec</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">w2v_bc</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">w2v_bc</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">w2v_bc</span><span class="p">[</span><span class="n">token</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">pad</span><span class="p">([],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">)</span></div>
+    <span class="k">else</span><span class="p">:</span></div>
+        <span class="k">return</span> <span class="n">pad</span><span class="p">([],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="to_sample"><a class="viewcode-back" href="../../../../zoo.examples.textclassification.html#zoo.examples.textclassification.text_classification.to_sample">[docs]</a><span class="k">def</span> <span class="nf">to_sample</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">):</span>
     <span class="n">flatten_features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">vectors</span><span class="p">))</span>
     <span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">flatten_features</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
-        <span class="p">[</span><span class="n">sequence_len</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">Sample</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">label</span><span class="p">))</span></div>
+        <span class="p">[</span><span class="n">sequence_len</span><span class="p">,</span> <span class="n">embedding_dim</span><span class="p">])</span></div>
+    <span class="k">return</span> <span class="n">Sample</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">label</span><span class="p">))</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
@@ -227,7 +227,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>

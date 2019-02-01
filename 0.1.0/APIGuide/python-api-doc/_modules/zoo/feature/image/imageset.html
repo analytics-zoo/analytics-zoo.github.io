@@ -88,14 +88,14 @@
 <div class="viewcode-block" id="ImageSet.is_local"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.is_local">[docs]</a>    <span class="k">def</span> <span class="nf">is_local</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        whether this is a LocalImageSet</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;isLocalImageSet&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;isLocalImageSet&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ImageSet.is_distributed"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.is_distributed">[docs]</a>    <span class="k">def</span> <span class="nf">is_distributed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        whether this is a DistributedImageSet</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;isDistributedImageSet&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;isDistributedImageSet&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ImageSet.read"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.read">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_partitions</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
@@ -109,36 +109,36 @@
 <span class="sd">        :param sc SparkContext</span>
 <span class="sd">        :param min_partitions A suggestion value of the minimal splitting number for input data.</span>
 <span class="sd">        :return ImageSet</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">ImageSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;readImageSet&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="n">min_partitions</span><span class="p">))</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="n">ImageSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;readImageSet&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="n">min_partitions</span><span class="p">))</span>
 
 <div class="viewcode-block" id="ImageSet.transform"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transformer</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        transformImageSet</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;transformImageSet&quot;</span><span class="p">,</span> <span class="n">transformer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;transformImageSet&quot;</span><span class="p">,</span> <span class="n">transformer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span>
 
 <div class="viewcode-block" id="ImageSet.get_image"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.get_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">float_key</span><span class="o">=</span><span class="s2">&quot;floats&quot;</span><span class="p">,</span> <span class="n">to_chw</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get image from ImageSet</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">get_image</span><span class="p">(</span><span class="n">float_key</span><span class="p">,</span> <span class="n">to_chw</span><span class="p">)</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">get_image</span><span class="p">(</span><span class="n">float_key</span><span class="p">,</span> <span class="n">to_chw</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ImageSet.get_label"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.get_label">[docs]</a>    <span class="k">def</span> <span class="nf">get_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get label from ImageSet</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">get_label</span><span class="p">()</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">get_label</span><span class="p">()</span>
 
 <div class="viewcode-block" id="ImageSet.get_predict"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.get_predict">[docs]</a>    <span class="k">def</span> <span class="nf">get_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get prediction from ImageSet</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">get_predict</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+<span class="sd">        &quot;&quot;&quot;</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">get_predict</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ImageSet.to_image_frame"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.to_image_frame">[docs]</a>    <span class="k">def</span> <span class="nf">to_image_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;imageSetToImageFrame&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div></div>
+<div class="viewcode-block" id="ImageSet.to_image_frame"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.to_image_frame">[docs]</a>    <span class="k">def</span> <span class="nf">to_image_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span></div></div>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;imageSetToImageFrame&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="LocalImageSet"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.LocalImageSet">[docs]</a><span class="k">class</span> <span class="nc">LocalImageSet</span><span class="p">(</span><span class="n">ImageSet</span><span class="p">):</span>
@@ -164,15 +164,15 @@
 <span class="sd">        get image list from ImageSet</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tensors</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;localImageSetToImageTensor&quot;</span><span class="p">,</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">float_key</span><span class="p">,</span> <span class="n">to_chw</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">(),</span> <span class="n">tensors</span><span class="p">))</span></div>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">float_key</span><span class="p">,</span> <span class="n">to_chw</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">(),</span> <span class="n">tensors</span><span class="p">))</span>
 
 <div class="viewcode-block" id="LocalImageSet.get_label"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.LocalImageSet.get_label">[docs]</a>    <span class="k">def</span> <span class="nf">get_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get label list from ImageSet</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">labels</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;localImageSetToLabelTensor&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">(),</span> <span class="n">labels</span><span class="p">)</span></div>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;localImageSetToLabelTensor&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">(),</span> <span class="n">labels</span><span class="p">)</span>
 
 <div class="viewcode-block" id="LocalImageSet.get_predict"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.LocalImageSet.get_predict">[docs]</a>    <span class="k">def</span> <span class="nf">get_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -180,8 +180,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">predicts</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;localImageSetToPredict&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">predict</span><span class="p">:</span>
-                   <span class="p">(</span><span class="n">predict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">predict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span> <span class="k">if</span> <span class="n">predict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-                   <span class="k">else</span> <span class="p">(</span><span class="n">predict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">),</span> <span class="n">predicts</span><span class="p">)</span></div></div>
+                   <span class="p">(</span><span class="n">predict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">predict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span> <span class="k">if</span> <span class="n">predict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div></div>
+                   <span class="k">else</span> <span class="p">(</span><span class="n">predict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">),</span> <span class="n">predicts</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="DistributedImageSet"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.DistributedImageSet">[docs]</a><span class="k">class</span> <span class="nc">DistributedImageSet</span><span class="p">(</span><span class="n">ImageSet</span><span class="p">):</span>
@@ -208,16 +208,16 @@
 <span class="sd">        get image rdd from ImageSet</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tensor_rdd</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;distributedImageSetToImageTensorRdd&quot;</span><span class="p">,</span>
-                                   <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">float_key</span><span class="p">,</span> <span class="n">to_chw</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">tensor_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span></div>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">float_key</span><span class="p">,</span> <span class="n">to_chw</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">tensor_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span>
 
 <div class="viewcode-block" id="DistributedImageSet.get_label"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.DistributedImageSet.get_label">[docs]</a>    <span class="k">def</span> <span class="nf">get_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        get label rdd from ImageSet</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tensor_rdd</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;distributedImageSetToLabelTensorRdd&quot;</span><span class="p">,</span>
-                                   <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">tensor_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span></div>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">tensor_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span>
 
 <div class="viewcode-block" id="DistributedImageSet.get_predict"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.DistributedImageSet.get_predict">[docs]</a>    <span class="k">def</span> <span class="nf">get_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -225,8 +225,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">predicts</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;distributedImageSetToPredict&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">predicts</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">predict</span><span class="p">:</span>
-                            <span class="p">(</span><span class="n">predict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">predict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span> <span class="k">if</span> <span class="n">predict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-                            <span class="k">else</span> <span class="p">(</span><span class="n">predict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">))</span></div></div>
+                            <span class="p">(</span><span class="n">predict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">predict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span> <span class="k">if</span> <span class="n">predict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div></div>
+                            <span class="k">else</span> <span class="p">(</span><span class="n">predict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">))</span>
 </pre></div>
 
           </div>
@@ -249,7 +249,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>

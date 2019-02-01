@@ -93,8 +93,8 @@
         <span class="k">if</span> <span class="s2">&quot;zoo.feature.image.imageset.ImageSet&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">zoo.feature.image</span> <span class="k">import</span> <span class="n">ImageSet</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span> <span class="ow">is</span> <span class="n">ImageSet</span><span class="p">:</span>
-            <span class="n">jset</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;transformImageSet&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">ImageSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jset</span><span class="p">)</span></div>
+            <span class="n">jset</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;transformImageSet&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="n">ImageSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jset</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ChainedPreprocessing"><a class="viewcode-back" href="../../../zoo.feature.html#zoo.feature.common.ChainedPreprocessing">[docs]</a><span class="k">class</span> <span class="nc">ChainedPreprocessing</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
@@ -107,16 +107,16 @@
             <span class="k">assert</span> <span class="n">transfomer</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__bases__</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">in</span> <span class="p">[</span>
                 <span class="s2">&quot;Preprocessing&quot;</span><span class="p">,</span> <span class="s2">&quot;ImagePreprocessing&quot;</span><span class="p">],</span> \
                 <span class="nb">str</span><span class="p">(</span><span class="n">transfomer</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; should be subclass of Preprocessing &quot;</span>
-
-        <span class="nb">super</span><span class="p">(</span><span class="n">ChainedPreprocessing</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">transformers</span><span class="p">)</span></div>
+</div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ChainedPreprocessing</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">transformers</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ScalarToTensor"><a class="viewcode-back" href="../../../zoo.feature.html#zoo.feature.common.ScalarToTensor">[docs]</a><span class="k">class</span> <span class="nc">ScalarToTensor</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    a Preprocessing that converts a number to a Tensor.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ScalarToTensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ScalarToTensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="SeqToTensor"><a class="viewcode-back" href="../../../zoo.feature.html#zoo.feature.common.SeqToTensor">[docs]</a><span class="k">class</span> <span class="nc">SeqToTensor</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
@@ -124,8 +124,8 @@
 <span class="sd">    a Transformer that converts an Array[_] or Seq[_] to a Tensor.</span>
 <span class="sd">    :param size dimensions of target Tensor.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">[],</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SeqToTensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">[],</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SeqToTensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ArrayToTensor"><a class="viewcode-back" href="../../../zoo.feature.html#zoo.feature.common.ArrayToTensor">[docs]</a><span class="k">class</span> <span class="nc">ArrayToTensor</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
@@ -133,8 +133,8 @@
 <span class="sd">    a Transformer that converts an Array[_] to a Tensor.</span>
 <span class="sd">    :param size dimensions of target Tensor.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ArrayToTensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ArrayToTensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="MLlibVectorToTensor"><a class="viewcode-back" href="../../../zoo.feature.html#zoo.feature.common.MLlibVectorToTensor">[docs]</a><span class="k">class</span> <span class="nc">MLlibVectorToTensor</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
@@ -142,8 +142,8 @@
 <span class="sd">    a Transformer that converts MLlib Vector to a Tensor.</span>
 <span class="sd">    :param size dimensions of target Tensor.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MLlibVectorToTensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MLlibVectorToTensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="FeatureLabelPreprocessing"><a class="viewcode-back" href="../../../zoo.feature.html#zoo.feature.common.FeatureLabelPreprocessing">[docs]</a><span class="k">class</span> <span class="nc">FeatureLabelPreprocessing</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
@@ -155,34 +155,34 @@
 <span class="sd">    :param label_transformer transformer for label, transform L to Tensor[T]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feature_transformer</span><span class="p">,</span> <span class="n">label_transformer</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">FeatureLabelPreprocessing</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span>
-                                                        <span class="n">feature_transformer</span><span class="p">,</span> <span class="n">label_transformer</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FeatureLabelPreprocessing</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span></div>
+                                                        <span class="n">feature_transformer</span><span class="p">,</span> <span class="n">label_transformer</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="TensorToSample"><a class="viewcode-back" href="../../../zoo.feature.html#zoo.feature.common.TensorToSample">[docs]</a><span class="k">class</span> <span class="nc">TensorToSample</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">     a Transformer that converts Tensor to Sample.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">TensorToSample</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TensorToSample</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="FeatureToTupleAdapter"><a class="viewcode-back" href="../../../zoo.feature.html#zoo.feature.common.FeatureToTupleAdapter">[docs]</a><span class="k">class</span> <span class="nc">FeatureToTupleAdapter</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_transformer</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">FeatureToTupleAdapter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">sample_transformer</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_transformer</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FeatureToTupleAdapter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">sample_transformer</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="BigDLAdapter"><a class="viewcode-back" href="../../../zoo.feature.html#zoo.feature.common.BigDLAdapter">[docs]</a><span class="k">class</span> <span class="nc">BigDLAdapter</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_transformer</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">BigDLAdapter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">bigdl_transformer</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_transformer</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BigDLAdapter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">bigdl_transformer</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ToTuple"><a class="viewcode-back" href="../../../zoo.feature.html#zoo.feature.common.ToTuple">[docs]</a><span class="k">class</span> <span class="nc">ToTuple</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">     a Transformer that converts Feature to (Feature, None).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ToTuple</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ToTuple</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -205,7 +205,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>

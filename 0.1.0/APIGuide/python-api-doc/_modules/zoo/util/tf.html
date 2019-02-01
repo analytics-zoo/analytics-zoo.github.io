@@ -153,8 +153,8 @@
         <span class="s2">&quot;input_names&quot;</span><span class="p">:</span> <span class="n">new_input_names</span><span class="p">,</span>
         <span class="s2">&quot;output_names&quot;</span><span class="p">:</span> <span class="n">output_names</span>
     <span class="p">}</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s2">&quot;graph_meta.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">meta</span><span class="p">))</span></div>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s2">&quot;graph_meta.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span></div>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">meta</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="strip_unused"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.tf.strip_unused">[docs]</a><span class="k">def</span> <span class="nf">strip_unused</span><span class="p">(</span><span class="n">input_graph_def</span><span class="p">,</span> <span class="n">input_tensor_names</span><span class="p">,</span> <span class="n">output_tensor_names</span><span class="p">,</span>
@@ -221,8 +221,8 @@
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;The following input nodes were not found: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">not_found</span><span class="p">)</span>
 
     <span class="n">output_graph_def</span> <span class="o">=</span> <span class="n">graph_util</span><span class="o">.</span><span class="n">extract_sub_graph</span><span class="p">(</span><span class="n">inputs_replaced_graph_def</span><span class="p">,</span>
-                                                    <span class="n">output_node_names</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">output_graph_def</span><span class="p">,</span> <span class="n">old2new</span></div>
+                                                    <span class="n">output_node_names</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">output_graph_def</span><span class="p">,</span> <span class="n">old2new</span>
 
 
 <span class="k">def</span> <span class="nf">_append_port</span><span class="p">(</span><span class="n">input_name</span><span class="p">):</span>
@@ -252,7 +252,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
     </div>
   </body>
 </html>
