@@ -131,8 +131,8 @@
 <span class="sd">        :param running_mean: a Numpy array.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;setRunningMean&quot;</span><span class="p">,</span>
-                      <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">running_mean</span><span class="p">))</span></div>
-        <span class="k">return</span> <span class="bp">self</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">running_mean</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="BatchNormalization.set_running_std"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.normalization.BatchNormalization.set_running_std">[docs]</a>    <span class="k">def</span> <span class="nf">set_running_std</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">running_std</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -140,22 +140,22 @@
 <span class="sd">        :param running_std: a Numpy array.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;setRunningStd&quot;</span><span class="p">,</span>
-                      <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">running_std</span><span class="p">))</span></div>
-        <span class="k">return</span> <span class="bp">self</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">running_std</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="BatchNormalization.get_running_mean"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.normalization.BatchNormalization.get_running_mean">[docs]</a>    <span class="k">def</span> <span class="nf">get_running_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the running meaning of the BatchNormalization layer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;getRunningMean&quot;</span><span class="p">,</span></div>
-                             <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;getRunningMean&quot;</span><span class="p">,</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="BatchNormalization.get_running_std"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.normalization.BatchNormalization.get_running_std">[docs]</a>    <span class="k">def</span> <span class="nf">get_running_std</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the running variance of the BatchNormalization layer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;getRunningStd&quot;</span><span class="p">,</span></div></div>
-                             <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;getRunningStd&quot;</span><span class="p">,</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">()</span></div></div>
 </pre></div>
 
           </div>
@@ -178,7 +178,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
   </body>
 </html>

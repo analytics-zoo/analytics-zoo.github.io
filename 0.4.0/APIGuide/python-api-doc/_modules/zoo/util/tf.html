@@ -90,8 +90,8 @@
 
 <div class="viewcode-block" id="variable_creator_scope"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.tf.variable_creator_scope">[docs]</a><span class="nd">@tf_contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
 <span class="k">def</span> <span class="nf">variable_creator_scope</span><span class="p">():</span>
-    <span class="k">with</span> <span class="n">variable_scope</span><span class="o">.</span><span class="n">variable_creator_scope</span><span class="p">(</span><span class="n">_variable_creator</span><span class="p">):</span></div>
-        <span class="k">yield</span>
+    <span class="k">with</span> <span class="n">variable_scope</span><span class="o">.</span><span class="n">variable_creator_scope</span><span class="p">(</span><span class="n">_variable_creator</span><span class="p">):</span>
+        <span class="k">yield</span></div>
 
 
 <div class="viewcode-block" id="process_grad"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.tf.process_grad">[docs]</a><span class="k">def</span> <span class="nf">process_grad</span><span class="p">(</span><span class="n">grad</span><span class="p">):</span>
@@ -102,8 +102,8 @@
             <span class="c1"># a dense tensor. This operation is potentially expensive, but there seems</span>
             <span class="c1"># no work around</span>
             <span class="n">grad</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">unsorted_segment_sum</span><span class="p">(</span><span class="n">grad</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">grad</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span>
-                                           <span class="n">grad</span><span class="o">.</span><span class="n">dense_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
-    <span class="k">return</span> <span class="n">grad</span>
+                                           <span class="n">grad</span><span class="o">.</span><span class="n">dense_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">grad</span></div>
 
 
 <div class="viewcode-block" id="export_tf"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.tf.export_tf">[docs]</a><span class="k">def</span> <span class="nf">export_tf</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span>
@@ -251,8 +251,8 @@
         <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;grad_variables&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grad_variables</span>
         <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;grad_inputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grad_inputs</span>
 
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s2">&quot;graph_meta.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span></div>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">meta</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s2">&quot;graph_meta.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">meta</span><span class="p">))</span></div>
 
 
 <span class="k">def</span> <span class="nf">_find_temp_tensors</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">forward_ops</span><span class="p">):</span>
@@ -358,8 +358,8 @@
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;The following input nodes were not found: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">not_found</span><span class="p">)</span>
 
     <span class="n">output_graph_def</span> <span class="o">=</span> <span class="n">graph_util</span><span class="o">.</span><span class="n">extract_sub_graph</span><span class="p">(</span><span class="n">inputs_replaced_graph_def</span><span class="p">,</span>
-                                                    <span class="n">output_node_names</span><span class="p">)</span></div>
-    <span class="k">return</span> <span class="n">output_graph_def</span><span class="p">,</span> <span class="n">old2new</span>
+                                                    <span class="n">output_node_names</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output_graph_def</span><span class="p">,</span> <span class="n">old2new</span></div>
 
 
 <span class="k">def</span> <span class="nf">_append_port</span><span class="p">(</span><span class="n">input_name</span><span class="p">):</span>
@@ -389,7 +389,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
   </body>
 </html>

@@ -86,15 +86,15 @@
 <div class="viewcode-block" id="read_pascal_label_map"><a class="viewcode-back" href="../../../../../zoo.models.image.objectdetection.html#zoo.models.image.objectdetection.object_detector.read_pascal_label_map">[docs]</a><span class="k">def</span> <span class="nf">read_pascal_label_map</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    load pascal label map</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;readPascalLabelMap&quot;</span><span class="p">)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;readPascalLabelMap&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="read_coco_label_map"><a class="viewcode-back" href="../../../../../zoo.models.image.objectdetection.html#zoo.models.image.objectdetection.object_detector.read_coco_label_map">[docs]</a><span class="k">def</span> <span class="nf">read_coco_label_map</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    load coco label map</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
-    <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;readCocoLabelMap&quot;</span><span class="p">)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;readCocoLabelMap&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ObjectDetector"><a class="viewcode-back" href="../../../../../zoo.models.image.objectdetection.html#zoo.models.image.objectdetection.object_detector.ObjectDetector">[docs]</a><span class="k">class</span> <span class="nc">ObjectDetector</span><span class="p">(</span><span class="n">ImageModel</span><span class="p">):</span>
@@ -119,8 +119,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;loadObjectDetector&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">)</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">ImageModel</span><span class="o">.</span><span class="n">_do_load</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span>
-        <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">ObjectDetector</span></div></div>
-        <span class="k">return</span> <span class="n">model</span>
+        <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">ObjectDetector</span>
+        <span class="k">return</span> <span class="n">model</span></div></div>
 
 
 <div class="viewcode-block" id="ImInfo"><a class="viewcode-back" href="../../../../../zoo.models.image.objectdetection.html#zoo.models.image.objectdetection.object_detector.ImInfo">[docs]</a><span class="k">class</span> <span class="nc">ImInfo</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
@@ -128,8 +128,8 @@
 <span class="sd">    Generate imInfo</span>
 <span class="sd">    imInfo is a tensor that contains height, width, scaleInHeight, scaleInWidth</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span></div>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ImInfo</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImInfo</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="DecodeOutput"><a class="viewcode-back" href="../../../../../zoo.models.image.objectdetection.html#zoo.models.image.objectdetection.object_detector.DecodeOutput">[docs]</a><span class="k">class</span> <span class="nc">DecodeOutput</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
@@ -147,8 +147,8 @@
 <span class="sd">    3, 0.3, 20, 10, 40, 70</span>
 <span class="sd">    ```</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span></div>
-        <span class="nb">super</span><span class="p">(</span><span class="n">DecodeOutput</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DecodeOutput</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="ScaleDetection"><a class="viewcode-back" href="../../../../../zoo.models.image.objectdetection.html#zoo.models.image.objectdetection.object_detector.ScaleDetection">[docs]</a><span class="k">class</span> <span class="nc">ScaleDetection</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
@@ -158,8 +158,8 @@
 <span class="sd">    Note that in this transformer, the tensor from model output will be decoded,</span>
 <span class="sd">    just like `DecodeOutput`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span></div>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ScaleDetection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ScaleDetection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Visualizer"><a class="viewcode-back" href="../../../../../zoo.models.image.objectdetection.html#zoo.models.image.objectdetection.object_detector.Visualizer">[docs]</a><span class="k">class</span> <span class="nc">Visualizer</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
@@ -178,8 +178,8 @@
 <span class="sd">        transform ImageSet</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">jset</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span>
-                             <span class="s2">&quot;transformImageSet&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">image_set</span><span class="p">)</span></div>
-        <span class="k">return</span> <span class="n">ImageSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jset</span><span class="p">)</span>
+                             <span class="s2">&quot;transformImageSet&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">image_set</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ImageSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jset</span><span class="p">)</span></div>
 </pre></div>
 
           </div>
@@ -202,7 +202,7 @@
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2019, Intel.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
     </div>
   </body>
 </html>
