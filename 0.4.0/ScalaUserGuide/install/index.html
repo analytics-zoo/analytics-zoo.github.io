@@ -97,7 +97,25 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <ul>
 <li>Please choose the available suffix above according to your Spark platform and the BigDL version you want to use.</li>
 <li>You don't need to add the BigDL dependency to your project as it has already been packaged within Analytics Zoo.</li>
+<li>Please add below repository to your pom.xml to get zoo-core which is now hosted on OSSRH.</li>
 </ul>
+<pre><code class="xml">&lt;repository&gt;
+    &lt;id&gt;sonatype&lt;/id&gt;
+    &lt;name&gt;sonatype repository&lt;/name&gt;
+    &lt;url&gt;https://oss.sonatype.org/content/groups/public/&lt;/url&gt;
+    &lt;releases&gt;
+        &lt;enabled&gt;true&lt;/enabled&gt;
+    &lt;/releases&gt;
+    &lt;snapshots&gt;
+        &lt;enabled&gt;true&lt;/enabled&gt;
+    &lt;/snapshots&gt;
+&lt;/repository&gt;
+</code></pre>
+
+<p>SBT developers can use</p>
+<pre><code class="sbt">resolvers += &quot;ossrh repository&quot; at &quot;https://oss.sonatype.org/content/repositories/snapshots/&quot;
+</code></pre>
+
 <h2 id="download-analytics-zoo-source"><strong>Download Analytics Zoo Source</strong></h2>
 <p>Analytics Zoo source code is available at <a href="https://github.com/intel-analytics/analytics-zoo">GitHub</a></p>
 <pre><code class="bash">$ git clone https://github.com/intel-analytics/analytics-zoo.git
