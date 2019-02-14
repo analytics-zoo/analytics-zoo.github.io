@@ -45,7 +45,7 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <span class="name">QARankerParams</span><span class="params">(<span name="dataPath">dataPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="embeddingFile">embeddingFile: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="questionLength">questionLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">10</span></span>, <span name="answerLength">answerLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">40</span></span>, <span name="partitionNum">partitionNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">4</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">200</span></span>, <span name="nbEpoch">nbEpoch: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">30</span></span>, <span name="learningRate">learningRate: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.001</span></span>, <span name="model">model: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol"><span class="name"><a href="../../../../../../scala/package.html">None</a></span></span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <span class="name">QARankerParams</span><span class="params">(<span name="dataPath">dataPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="embeddingFile">embeddingFile: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="questionLength">questionLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">10</span></span>, <span name="answerLength">answerLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">40</span></span>, <span name="partitionNum">partitionNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">4</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">200</span></span>, <span name="nbEpoch">nbEpoch: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">30</span></span>, <span name="learningRate">learningRate: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.001</span></span>, <span name="model">model: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol"><span class="name"><a href="../../../../../../scala/package.html">None</a></span></span></span>, <span name="memoryType">memoryType: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;DRAM&quot;</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
@@ -89,7 +89,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.intel.analytics.zoo.examples.qaranker.QARankerParams#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(dataPath:String,embeddingFile:String,questionLength:Int,answerLength:Int,partitionNum:Int,batchSize:Int,nbEpoch:Int,learningRate:Double,model:Option[String]):com.intel.analytics.zoo.examples.qaranker.QARankerParams"></a>
+      <a id="&lt;init&gt;(dataPath:String,embeddingFile:String,questionLength:Int,answerLength:Int,partitionNum:Int,batchSize:Int,nbEpoch:Int,learningRate:Double,model:Option[String],memoryType:String):com.intel.analytics.zoo.examples.qaranker.QARankerParams"></a>
       <a id="&lt;init&gt;:QARankerParams"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -97,10 +97,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">QARankerParams</span><span class="params">(<span name="dataPath">dataPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="embeddingFile">embeddingFile: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="questionLength">questionLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">10</span></span>, <span name="answerLength">answerLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">40</span></span>, <span name="partitionNum">partitionNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">4</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">200</span></span>, <span name="nbEpoch">nbEpoch: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">30</span></span>, <span name="learningRate">learningRate: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.001</span></span>, <span name="model">model: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol"><span class="name"><a href="../../../../../../scala/package.html">None</a></span></span></span>)</span>
+        <span class="name">QARankerParams</span><span class="params">(<span name="dataPath">dataPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="embeddingFile">embeddingFile: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;./&quot;</span></span>, <span name="questionLength">questionLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">10</span></span>, <span name="answerLength">answerLength: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">40</span></span>, <span name="partitionNum">partitionNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">4</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">200</span></span>, <span name="nbEpoch">nbEpoch: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">30</span></span>, <span name="learningRate">learningRate: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.001</span></span>, <span name="model">model: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Predef.String">String</span>] = <span class="symbol"><span class="name"><a href="../../../../../../scala/package.html">None</a></span></span></span>, <span name="memoryType">memoryType: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;DRAM&quot;</span></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.examples.qaranker.QARankerParams@&lt;init&gt;(dataPath:String,embeddingFile:String,questionLength:Int,answerLength:Int,partitionNum:Int,batchSize:Int,nbEpoch:Int,learningRate:Double,model:Option[String]):com.intel.analytics.zoo.examples.qaranker.QARankerParams" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.examples.qaranker.QARankerParams@&lt;init&gt;(dataPath:String,embeddingFile:String,questionLength:Int,answerLength:Int,partitionNum:Int,batchSize:Int,nbEpoch:Int,learningRate:Double,model:Option[String],memoryType:String):com.intel.analytics.zoo.examples.qaranker.QARankerParams" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -360,6 +360,23 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.examples.qaranker.QARankerParams@learningRate:Double" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.examples.qaranker.QARankerParams#memoryType" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="memoryType:String"></a>
+      <a id="memoryType:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">memoryType</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.examples.qaranker.QARankerParams@memoryType:String" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>

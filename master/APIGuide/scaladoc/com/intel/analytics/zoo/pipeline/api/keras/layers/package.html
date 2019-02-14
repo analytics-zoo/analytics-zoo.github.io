@@ -357,7 +357,7 @@ singleton dimension, an error will be raised).</p><p>When you use this layer as 
 the argument inputShape (a Single Shape, does not include the batch dimension).</p><p>Remark: This layer is from Torch and wrapped in Keras style.
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.ConvLSTM2D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="ConvLSTM2D[T]extendsConvLSTM2D[T]withNet"></a>
+      <a id="ConvLSTM2D[T]extendsRecurrent[T]withNet"></a>
       <a id="ConvLSTM2D[T]:ConvLSTM2D[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -365,18 +365,42 @@ the argument inputShape (a Single Shape, does not include the batch dimension).<
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="ConvLSTM2D.html"><span class="name">ConvLSTM2D</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.nn.keras.ConvLSTM2D">bigdl.nn.keras.ConvLSTM2D</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.ConvLSTM2D.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
+        <a href="ConvLSTM2D.html"><span class="name">ConvLSTM2D</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.ConvLSTM2D.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@ConvLSTM2D[T]extendsConvLSTM2D[T]withNet" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@ConvLSTM2D[T]extendsRecurrent[T]withNet" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <p class="shortcomment cmt">Convolutional LSTM.</p><div class="fullcomment"><div class="comment cmt"><p>Convolutional LSTM.
-Data format currently supported for this layer is 'CHANNEL_FIRST' (dimOrdering='th').
-Border mode currently supported for this layer is 'same'.
-The convolution kernel for this layer is a square kernel with equal strides 'subsample'.
-The input of this layer should be 5D.</p><p>When using this layer as the first layer in a model, you need to provide the argument
+Note that currently only 'same' padding is supported.
+The convolution kernel for this layer is a square kernel with equal strides.
+The input of this layer should be 5D, i.e. (samples, time, channels, rows, cols), and
+'CHANNEL_FIRST' (dimOrdering='th') is expected.</p><p>When using this layer as the first layer in a model, you need to provide the argument
+inputShape (a Single Shape, does not include the batch dimension).
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.ConvLSTM3D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ConvLSTM3D[T]extendsRecurrent[T]withNet"></a>
+      <a id="ConvLSTM3D[T]:ConvLSTM3D[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="ConvLSTM3D.html"><span class="name">ConvLSTM3D</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.ConvLSTM3D.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@ConvLSTM3D[T]extendsRecurrent[T]withNet" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Convolutional LSTM for 3D input.</p><div class="fullcomment"><div class="comment cmt"><p>Convolutional LSTM for 3D input.
+Note that currently only 'same' padding is supported.
+The convolution kernel for this layer is a cubic kernel with equal strides for
+all dimensions.
+The input of this layer should be 6D, i.e. (samples, time, channels, dim1, dim2, dim3),
+and 'CHANNEL_FIRST' (dimOrdering='th') is expected.</p><p>When using this layer as the first layer in a model, you need to provide the argument
 inputShape (a Single Shape, does not include the batch dimension).
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.Convolution1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
@@ -2519,6 +2543,23 @@ inputShape (a Single Shape, does not include the batch dimension).
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@ConvLSTM2D" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.ConvLSTM3D" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ConvLSTM3D"></a>
+      <a id="ConvLSTM3D:ConvLSTM3D"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="ConvLSTM3D$.html"><span class="name">ConvLSTM3D</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@ConvLSTM3D" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
