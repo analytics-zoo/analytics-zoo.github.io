@@ -166,7 +166,7 @@ distributed_image_frame = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
 <li><code>ImageExpand</code>: Expand image, fill the blank part with the meanR, meanG, meanB</li>
 <li><code>ImageFiller</code>: Fill part of image with certain pixel value</li>
 <li><code>ImageHFlip</code>: Flip the image horizontally</li>
-<li><code>ImageRandomTransformer</code>: It is a wrapper for transformers to control the transform probability</li>
+<li><code>ImageRandomPreprocessing</code>: It is a wrapper for transformers to control the transform probability</li>
 <li><code>ImageBytesToMat</code>: Transform byte array(original image file in byte) to OpenCVMat</li>
 <li><code>ImageMatToFloats</code>: Transform OpenCVMat to float array, note that in this transformer, the mat is released.</li>
 <li><code>ImageMatToTensor</code>: Transform opencv mat to tensor, note that in this transformer, the mat is released.</li>
@@ -208,6 +208,7 @@ which can be used by the following prediction or training tasks.</p>
 </ul>
 <p><strong>Python example:</strong></p>
 <pre><code class="python">from zoo.feature.image.imagePreprocessing import *
+from zoo.feature.common import ChainedPreprocessing
 
 img_aug = ChainedPreprocessing([ImageBytesToMat(),
       ImageColorJitter(),
