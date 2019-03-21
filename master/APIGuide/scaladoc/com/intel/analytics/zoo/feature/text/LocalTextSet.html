@@ -444,6 +444,30 @@ If the TextSet hasn't been transformed from word to index, null will be returned
     </span>
       <p class="shortcomment cmt">Whether it is a LocalTextSet.</p><div class="fullcomment"><div class="comment cmt"><p>Whether it is a LocalTextSet.
 </p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.feature.text.LocalTextSet">LocalTextSet</a> → <a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.text.LocalTextSet#loadWordIndex" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="loadWordIndex(path:String):com.intel.analytics.zoo.feature.text.TextSet"></a>
+      <a id="loadWordIndex(String):TextSet"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadWordIndex</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.LocalTextSet@loadWordIndex(path:String):com.intel.analytics.zoo.feature.text.TextSet" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Load the wordIndex map which was saved after the training, so that this TextSet can
+directly use this wordIndex during inference.</p><div class="fullcomment"><div class="comment cmt"><p>Load the wordIndex map which was saved after the training, so that this TextSet can
+directly use this wordIndex during inference.
+Each separate line should be &quot;word id&quot;.</p><p>Note that after calling <code>loadWordIndex</code>, you do not need to specify any argument when calling
+<code>word2idx</code> in the preprocessing pipeline as now you are using exactly the loaded wordIndex for
+transformation.</p><p>For LocalTextSet, load txt from a local file system.
+For DistributedTextSet, load txt from a local or distributed file system (such as HDFS).
+</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The path to the text file.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.feature.text.LocalTextSet">LocalTextSet</a> → <a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -534,7 +558,7 @@ See <a href="Normalizer.html" class="extype" name="com.intel.analytics.zoo.featu
       <p class="shortcomment cmt">Randomly split into array of TextSet with provided weights.</p><div class="fullcomment"><div class="comment cmt"><p>Randomly split into array of TextSet with provided weights.
 Only available for DistributedTextSet for now.
 </p></div><dl class="paramcmts block"><dt class="param">weights</dt><dd class="cmt"><p>Array of Double indicating the split portions.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.feature.text.LocalTextSet">LocalTextSet</a> → <a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.feature.text.TextSet#saveWordIndex" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.feature.text.LocalTextSet#saveWordIndex" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="saveWordIndex(path:String):Unit"></a>
       <a id="saveWordIndex(String):Unit"></a>
       <h4 class="signature">
@@ -550,11 +574,12 @@ Only available for DistributedTextSet for now.
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">Save wordIndex map to local text file, which may be used for inference.</p><div class="fullcomment"><div class="comment cmt"><p>Save wordIndex map to local text file, which may be used for inference.
-Each line will be &quot;word id&quot;.
-</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>Local text file path.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
+      <p class="shortcomment cmt">Save wordIndex map to text file, which can be used for future inference.</p><div class="fullcomment"><div class="comment cmt"><p>Save wordIndex map to text file, which can be used for future inference.
+Each separate line will be &quot;word id&quot;.</p><p>For LocalTextSet, save txt to a local file system.
+For DistributedTextSet, save txt to a local or distributed file system (such as HDFS).
+</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The path to the text file.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.feature.text.LocalTextSet">LocalTextSet</a> → <a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.text.TextSet#setWordIndex" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="setWordIndex(map:Map[String,Int]):TextSet.this.type"></a>
+      <a id="setWordIndex(vocab:Map[String,Int]):TextSet.this.type"></a>
       <a id="setWordIndex(Map[String,Int]):LocalTextSet.this.type"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -562,14 +587,17 @@ Each line will be &quot;word id&quot;.
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">setWordIndex</span><span class="params">(<span name="map">map: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.feature.text.LocalTextSet">LocalTextSet</a>.this.type</span>
+        <span class="name">setWordIndex</span><span class="params">(<span name="vocab">vocab: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.feature.text.LocalTextSet">LocalTextSet</a>.this.type</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.LocalTextSet@setWordIndex(map:Map[String,Int]):TextSet.this.type" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.text.LocalTextSet@setWordIndex(vocab:Map[String,Int]):TextSet.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
+      <p class="shortcomment cmt">Assign a wordIndex map for this TextSet to use during word2idx.</p><div class="fullcomment"><div class="comment cmt"><p>Assign a wordIndex map for this TextSet to use during word2idx.
+If you load the wordIndex from the saved file, you are recommended to use <code>loadWordIndex</code>
+directly.
+</p></div><dl class="paramcmts block"><dt class="param">vocab</dt><dd class="cmt"><p>Map of each word (String) and its index (integer).</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.text.TextSet#shapeSequence" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="shapeSequence(len:Int,truncMode:com.intel.analytics.zoo.feature.text.TruncMode.TruncMode,padElement:Int):com.intel.analytics.zoo.feature.text.TextSet"></a>
       <a id="shapeSequence(Int,TruncMode,Int):TextSet"></a>
@@ -802,11 +830,14 @@ See <a href="Tokenizer.html" class="extype" name="com.intel.analytics.zoo.featur
       </a>
     </span>
       <p class="shortcomment cmt">Map word tokens to indices.</p><div class="fullcomment"><div class="comment cmt"><p>Map word tokens to indices.
-Result index will start from 1 and corresponds to the occurrence frequency of each word
-sorted in descending order.
-Need to tokenize first.
-See <a href="WordIndexer.html" class="extype" name="com.intel.analytics.zoo.feature.text.WordIndexer">WordIndexer</a> for more details.
+Important: Take care that this method behaves a bit differently for training and inference.</p><hr /><p>During the training, you need to generate a new wordIndex map according to the texts you are
+dealing with. Thus this method will first do the map generation and then convert words to
+indices based on the generated map.
+You can specify the following arguments which poses some constraints when generating the map.
+In the result map, index will start from 1 and corresponds to the occurrence frequency of
+each word sorted in descending order.
 After word2idx, you can get the generated wordIndex map by calling 'getWordIndex'.
+Also, you can call <code>saveWordIndex</code> to save this wordIndex map to be used in future training.
 </p></div><dl class="paramcmts block"><dt class="param">removeTopN</dt><dd class="cmt"><p>Non-negative integer. Remove the topN words with highest frequencies in
                   the case where those are treated as stopwords.
                   Default is 0, namely remove nothing.</p></dd><dt class="param">maxWordsNum</dt><dd class="cmt"><p>Integer. The maximum number of words to be taken into consideration.
@@ -815,7 +846,14 @@ After word2idx, you can get the generated wordIndex map by calling 'getWordIndex
                consideration. Default is 1, namely all words that occur will be considered.</p></dd><dt class="param">existingMap</dt><dd class="cmt"><p>Existing map of word index if any. Default is null and in this case a new
                    map with index starting from 1 will be generated.
                    If not null, then the generated map will preserve the word index in
-                   existingMap and assign subsequent indices to new words.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
+                   existingMap and assign subsequent indices to new words.
+---------------------------------------Inference--------------------------------------------
+During the inference, you are supposed to use exactly the same wordIndex map in the training
+stage instead of generating a new one.
+Thus please be aware that you do not need to specify any of the above arguments.
+You need to call <code>loadWordIndex</code> or <code>setWordIndex</code> beforehand for map loading.
+Need to tokenize first.
+See <a href="WordIndexer.html" class="extype" name="com.intel.analytics.zoo.feature.text.WordIndexer">WordIndexer</a> for more details.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></dd></dl></div>
     </li></ol>
             </div>
 

@@ -423,7 +423,8 @@ For txt file, each line should contain one record with fields separated by comma
 Each record is supposed to contain the following three fields in order:
 id1(String), id2(String) and label(Integer).</p><p>For csv file, it should be without header.
 For txt file, each line should contain one record with fields separated by comma.
-</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The path to the relations file, which can either be a local file path or HDFS path.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext.</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>Integer. A suggestion value of the minimal partition number for input
+</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The path to the relations file, which can either be a local or disrtibuted file
+            system (such as HDFS) path.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext.</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>Integer. A suggestion value of the minimal partition number for input
                      texts. Default is 1.</p></dd><dt>returns</dt><dd class="cmt"><p>RDD of <a href="Relation.html" class="extype" name="com.intel.analytics.zoo.feature.common.Relation">Relation</a>.</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.common.Relations#readParquet" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="readParquet(path:String,sqlContext:org.apache.spark.sql.SQLContext):org.apache.spark.rdd.RDD[com.intel.analytics.zoo.feature.common.Relation]"></a>

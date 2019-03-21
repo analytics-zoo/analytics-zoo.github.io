@@ -2117,7 +2117,7 @@ will be considered to be the temporal dimension.</p><p>When using this layer as 
 inputShape (a Single Shape, does not include the batch dimension).</p><p>If you apply TimeDistributed to a Dense layer, you can use:
 TimeDistributed(Dense(8), inputShape = Shape(10, 12))
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="TransformerLayer[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withNet"></a>
       <a id="TransformerLayer[T]:TransformerLayer[T]"></a>
       <h4 class="signature">
@@ -2133,7 +2133,12 @@ TimeDistributed(Dense(8), inputShape = Shape(10, 12))
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a> A self attention keras like layer
+Input is a Tensor with shape [batch, seqLen, 2].</p><div class="fullcomment"><div class="comment cmt"><p><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a> A self attention keras like layer
+Input is a Tensor with shape [batch, seqLen, 2].
+[:, :, 1] represents token id
+[:, :, 2] represents postions in the sentence
+Output is a Tensor which output the states of Transformer layer</p></div></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.UpSampling1D" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="UpSampling1D[T]extendsUpSampling1D[T]withNet"></a>
       <a id="UpSampling1D[T]:UpSampling1D[T]"></a>

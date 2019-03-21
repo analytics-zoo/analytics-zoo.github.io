@@ -51,7 +51,11 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a> A self attention keras like layer
+Input is a Tensor with shape [batch, seqLen, 2].
+[:, :, 1] represents token id
+[:, :, 2] represents postions in the sentence
+Output is a Tensor which output the states of Transformer layer</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a>, <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.Container">Container</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -90,8 +94,8 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(nLayer:Int,residPdrop:Double,attnPdrop:Double,nHead:Int,maskAttention:Boolean,embeddingLayer:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T],inputShape:com.intel.analytics.bigdl.utils.Shape)(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer[T]"></a>
+              <ol><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="&lt;init&gt;(nBlock:Int,residPdrop:Double,attnPdrop:Double,nHead:Int,maskAttention:Boolean,embeddingLayer:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T],inputShape:com.intel.analytics.bigdl.utils.Shape)(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer[T]"></a>
       <a id="&lt;init&gt;:TransformerLayer[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -99,14 +103,14 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">TransformerLayer</span><span class="params">(<span name="nLayer">nLayer: <span class="extype" name="scala.Int">Int</span></span>, <span name="residPdrop">residPdrop: <span class="extype" name="scala.Double">Double</span></span>, <span name="attnPdrop">attnPdrop: <span class="extype" name="scala.Double">Double</span></span>, <span name="nHead">nHead: <span class="extype" name="scala.Int">Int</span></span>, <span name="maskAttention">maskAttention: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="embeddingLayer">embeddingLayer: <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>, <span name="inputShape">inputShape: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span> = <span class="symbol">null</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>)</span>
+        <span class="name">TransformerLayer</span><span class="params">(<span name="nBlock">nBlock: <span class="extype" name="scala.Int">Int</span></span>, <span name="residPdrop">residPdrop: <span class="extype" name="scala.Double">Double</span></span>, <span name="attnPdrop">attnPdrop: <span class="extype" name="scala.Double">Double</span></span>, <span name="nHead">nHead: <span class="extype" name="scala.Int">Int</span></span>, <span name="maskAttention">maskAttention: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="embeddingLayer">embeddingLayer: <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>, <span name="inputShape">inputShape: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span> = <span class="symbol">null</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer@&lt;init&gt;(nLayer:Int,residPdrop:Double,attnPdrop:Double,nHead:Int,maskAttention:Boolean,embeddingLayer:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T],inputShape:com.intel.analytics.bigdl.utils.Shape)(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer[T]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer@&lt;init&gt;(nBlock:Int,residPdrop:Double,attnPdrop:Double,nHead:Int,maskAttention:Boolean,embeddingLayer:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T],inputShape:com.intel.analytics.bigdl.utils.Shape)(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer[T]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">nBlock</dt><dd class="cmt"><p>block number</p></dd><dt class="param">residPdrop</dt><dd class="cmt"><p>drop probability of projection</p></dd><dt class="param">attnPdrop</dt><dd class="cmt"><p>drop probability of attention</p></dd><dt class="param">nHead</dt><dd class="cmt"><p>head number</p></dd><dt class="param">maskAttention</dt><dd class="cmt"><p>whether unidirectional or bidirectional</p></dd><dt class="param">embeddingLayer</dt><dd class="cmt"><p>embedding layer</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape, default is null</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -251,7 +255,7 @@
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">drop probability of attention</p>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#backward" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="backward(input:A,gradOutput:B):A"></a>
       <a id="backward(Tensor[T],Tensor[T]):Tensor[T]"></a>
@@ -287,7 +291,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#block" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="block(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],embeddingSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
+      <a id="block(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],hiddenSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
       <a id="block(Variable[T],Int):Variable[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -295,10 +299,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">block</span><span class="params">(<span name="x">x: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>, <span name="embeddingSize">embeddingSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>
+        <span class="name">block</span><span class="params">(<span name="x">x: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>, <span name="hiddenSize">hiddenSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer@block(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],embeddingSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer@block(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],hiddenSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -478,7 +482,7 @@
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">embedding layer</p>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -994,7 +998,7 @@
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">input shape, default is null</p>
     </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#inputs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="inputs(first:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int),nodesWithIndex:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int)*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]"></a>
       <a id="inputs((ModuleNode[T],Int),(ModuleNode[T],Int)*):ModuleNode[T]"></a>
@@ -1249,7 +1253,7 @@
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">whether unidirectional or bidirectional</p>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#maskValue" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="maskValue:com.intel.analytics.zoo.pipeline.api.autograd.Constant[T]"></a>
       <a id="maskValue:Constant[T]"></a>
@@ -1285,7 +1289,7 @@
     </span>
       
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#mlp" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="mlp(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],embeddingSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
+      <a id="mlp(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],hiddenSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
       <a id="mlp(Variable[T],Int):Variable[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -1293,10 +1297,10 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">mlp</span><span class="params">(<span name="x">x: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>, <span name="embeddingSize">embeddingSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>
+        <span class="name">mlp</span><span class="params">(<span name="x">x: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>, <span name="hiddenSize">hiddenSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer@mlp(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],embeddingSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer@mlp(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],hiddenSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1319,7 +1323,7 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#multiHeadSelfAttention" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="multiHeadSelfAttention(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],embeddingSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
+      <a id="multiHeadSelfAttention(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],hiddenSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
       <a id="multiHeadSelfAttention(Variable[T],Int):Variable[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -1327,14 +1331,31 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">multiHeadSelfAttention</span><span class="params">(<span name="x">x: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>, <span name="embeddingSize">embeddingSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>
+        <span class="name">multiHeadSelfAttention</span><span class="params">(<span name="x">x: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>, <span name="hiddenSize">hiddenSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer@multiHeadSelfAttention(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],embeddingSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer@multiHeadSelfAttention(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],hiddenSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#nBlock" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="nBlock:Int"></a>
+      <a id="nBlock:Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">nBlock</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer@nBlock:Int" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">block number</p>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#nHead" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="nHead:Int"></a>
       <a id="nHead:Int"></a>
@@ -1351,24 +1372,7 @@
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
-    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#nLayer" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="nLayer:Int"></a>
-      <a id="nLayer:Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">nLayer</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer@nLayer:Int" title="Permalink" target="_top">
-        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
+      <p class="shortcomment cmt">head number</p>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -1623,7 +1627,7 @@
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">drop probability of projection</p>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#saveCaffe" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="saveCaffe(prototxtPath:String,modelPath:String,useV2:Boolean,overwrite:Boolean):AbstractModule.this.type"></a>
       <a id="saveCaffe(String,String,Boolean,Boolean):TransformerLayer.this.type"></a>

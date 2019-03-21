@@ -518,8 +518,9 @@ category. Each category will be a given a label according to its position in the
 ascending order sorted among all subdirectories.
 All texts will be given a label according to the subdirectory where it is located.
 Labels start from 0.
-</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The folder path to texts. Local file system and HDFS are supported.
-            If you want to read from HDFS, sc needs to be specified.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext.
+</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The folder path to texts. Local or distributed file system (such as HDFS)
+            are supported. If you want to read from a distributed file system, sc
+            needs to be specified.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext.
           If specified, texts will be read as a DistributedTextSet.
           Default is null and in this case texts will be read as a LocalTextSet.</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>Integer. A suggestion value of the minimal partition number for input
                      texts. Only need to specify this when sc is not null. Default is 1.</p></dd><dt>returns</dt><dd class="cmt"><p>TextSet.</p></dd></dl></div>
@@ -542,8 +543,9 @@ Labels start from 0.
       <p class="shortcomment cmt">Read texts with id from csv file.</p><div class="fullcomment"><div class="comment cmt"><p>Read texts with id from csv file.
 Each record is supposed to contain the following two fields in order:
 id(String) and text(String).
-</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The path to the csv file. Local file system and HDFS are supported.
-            If you want to read from HDFS, sc needs to be specified.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext.
+</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The path to the csv file. Local or distributed file system (such as HDFS)
+            are supported. If you want to read from a distributed file system, sc
+            needs to be specified.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext.
           If specified, texts will be read as a DistributedTextSet.
           Default is null and in this case texts will be read as a LocalTextSet.</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>Integer. A suggestion value of the minimal partition number for input
                      texts. Only need to specify this when sc is not null. Default is 1.</p></dd><dt>returns</dt><dd class="cmt"><p>TextSet.</p></dd></dl></div>
@@ -690,7 +692,7 @@ Schema should be the following:
 </p></div><dl class="paramcmts block"><dt class="param">words</dt><dd class="cmt"><p>Array of words.</p></dd><dt class="param">existingMap</dt><dd class="cmt"><p>Existing map of word index if any. Default is null and in this case a new
                    map with index starting from 1 will be generated.
                    If not null, then the generated map will preserve the word index in
-                   existingMap and assign subsequent indices to new words.</p></dd><dt>returns</dt><dd class="cmt"><p>WordIndex map.</p></dd></dl></div>
+                   existingMap and assign subsequent indices to new words.</p></dd><dt>returns</dt><dd class="cmt"><p>wordIndex map.</p></dd></dl></div>
     </li></ol>
             </div>
 
