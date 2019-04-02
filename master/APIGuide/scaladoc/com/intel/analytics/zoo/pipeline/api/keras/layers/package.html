@@ -241,6 +241,32 @@ Border mode currently supported for this layer is 'valid'.
 The input of this layer should be 5D.</p><p>When you use this layer as the first layer of a model, you need to provide the argument
 inputShape (a Single Shape, does not include the batch dimension).
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="BERT[T]extendsTransformerLayer[T]withNet"></a>
+      <a id="BERT[T]:BERT[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="BERT.html"><span class="name">BERT</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@BERT[T]extendsTransformerLayer[T]withNet" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"><a href="BERT.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT">BERT</a> A self attention keras like layer.</p><div class="fullcomment"><div class="comment cmt"><p><a href="BERT.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT">BERT</a> A self attention keras like layer.
+Input is a Table which consists of 4 tensors.
+1. Token id tensor: shape [batch, seqLen] with the word token indices in the vocabulary
+2. Token type id tensor: shape [batch, seqLen] with the token types in [0, 1].
+   0 menas <code>sentence A</code> and 1 means a <code>sentence B</code> (see BERT paper for more details).
+3. Position id tensor: shape [batch, seqLen] with positions in the sentence.
+4. Attention_mask tensor: shape [batch, seqLen] with indices in [0, 1].
+  It's a mask to be used if the input sequence length is smaller than seqLen in
+  the current batch.
+Output is an Activity which output the states of BERT layer</p></div></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.BatchNormalization" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="BatchNormalization[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withNet"></a>
       <a id="BatchNormalization[T]:BatchNormalization[T]"></a>
@@ -2135,7 +2161,7 @@ inputShape (a Single Shape, does not include the batch dimension).</p><p>If you 
 TimeDistributed(Dense(8), inputShape = Shape(10, 12))
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>The numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="TransformerLayer[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withNet"></a>
+      <a id="TransformerLayer[T]extendsKerasLayer[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]withNet"></a>
       <a id="TransformerLayer[T]:TransformerLayer[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -2143,10 +2169,10 @@ TimeDistributed(Dense(8), inputShape = Shape(10, 12))
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="TransformerLayer.html"><span class="name">TransformerLayer</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
+        <a href="TransformerLayer.html"><span class="name">TransformerLayer</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@TransformerLayer[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withNet" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@TransformerLayer[T]extendsKerasLayer[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]withNet" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -2480,6 +2506,23 @@ inputShape (a Single Shape, does not include the batch dimension).
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@AveragePooling3D" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="BERT"></a>
+      <a id="BERT:BERT"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="BERT$.html"><span class="name">BERT</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@BERT" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
