@@ -78,8 +78,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h2 id="build-a-seq2seq-model"><strong>Build a Seq2seq model</strong></h2>
 <p>You can call the following API in Scala and Python respectively to create a <code>Seq2seq</code>.</p>
 <p><strong>Scala</strong></p>
-<pre><code class="scala">val encoder = RNNEncoder[Float](rnnType=&quot;lstm&quot;, numLayer=3, hiddenSize=3, embedding=Embedding[Float](10, inputSize))
-val decoder = RNNDecoder[Float](rnnType=&quot;lstm&quot;, numLayer=3, hiddenSize=3, embedding=Embedding[Float](10, inputSize))
+<pre><code class="scala">val encoder = RNNEncoder[Float](rnnType=&quot;lstm&quot;, numLayers=3, hiddenSize=3, embedding=Embedding[Float](10, inputSize))
+val decoder = RNNDecoder[Float](rnnType=&quot;lstm&quot;, numLayers=3, hiddenSize=3, embedding=Embedding[Float](10, inputSize))
 val bridge = Bridge[Float](bridgeType=&quot;dense&quot;, decoderHiddenSize=3)
 val model = Seq2seq[Float](encoder, decoder, inputShape=SingleShape(List(-1)), outputShape=SingleShape(List(-1)), bridge)
 </code></pre>
