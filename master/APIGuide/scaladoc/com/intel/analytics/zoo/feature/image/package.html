@@ -83,6 +83,23 @@
       </a>
     </span>
       <p class="shortcomment cmt">Resize loading image</p>
+    </li><li name="com.intel.analytics.zoo.feature.image.ChainedImageProcessing" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ChainedImageProcessingextendsImageProcessing"></a>
+      <a id="ChainedImageProcessing:ChainedImageProcessing"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="ChainedImageProcessing.html"><span class="name">ChainedImageProcessing</span></a><span class="result"> extends <a href="ImageProcessing.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageProcessing">ImageProcessing</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.package@ChainedImageProcessingextendsImageProcessing" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A transformer chain two ImageProcessing together.</p>
     </li><li name="com.intel.analytics.zoo.feature.image.DistributedImageSet" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="DistributedImageSetextendsImageSet"></a>
       <a id="DistributedImageSet:DistributedImageSet"></a>
@@ -488,6 +505,25 @@ The patch size should be less than the image size.
       <p class="shortcomment cmt">Randomly apply the preprocessing to some of the input ImageFeatures, with probability specified.</p><div class="fullcomment"><div class="comment cmt"><p>Randomly apply the preprocessing to some of the input ImageFeatures, with probability specified.
 E.g. if prob = 0.5, the preprocessing will apply to half of the input ImageFeatures.
 </p></div></div>
+    </li><li name="com.intel.analytics.zoo.feature.image.ImageRandomSampler" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ImageRandomSamplerextendsImageProcessing"></a>
+      <a id="ImageRandomSampler:ImageRandomSampler"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="ImageRandomSampler.html"><span class="name">ImageRandomSampler</span></a><span class="result"> extends <a href="ImageProcessing.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageProcessing">ImageProcessing</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.package@ImageRandomSamplerextendsImageProcessing" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Random sample a bounding box given some constraints and crop the image
+This is used in SSD training augmentation
+</p>
     </li><li name="com.intel.analytics.zoo.feature.image.ImageResize" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="ImageResizeextendsImageProcessing"></a>
       <a id="ImageResize:ImageResize"></a>
@@ -505,6 +541,76 @@ E.g. if prob = 0.5, the preprocessing will apply to half of the input ImageFeatu
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.feature.image.ImageRoiHFlip" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ImageRoiHFlipextendsImageProcessingwithProductwithSerializable"></a>
+      <a id="ImageRoiHFlip:ImageRoiHFlip"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="ImageRoiHFlip.html"><span class="name">ImageRoiHFlip</span></a><span class="params">(<span name="normalized">normalized: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result"> extends <a href="ImageProcessing.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageProcessing">ImageProcessing</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.package@ImageRoiHFlipextendsImageProcessingwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">horizontally flip the roi</p><div class="fullcomment"><div class="comment cmt"><p>horizontally flip the roi</p></div><dl class="paramcmts block"><dt class="param">normalized</dt><dd class="cmt"><p>whether the roi is normalized, i.e. in range [0, 1]</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.image.ImageRoiNormalize" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ImageRoiNormalizeextendsImageProcessingwithProductwithSerializable"></a>
+      <a id="ImageRoiNormalize:ImageRoiNormalize"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="ImageRoiNormalize.html"><span class="name">ImageRoiNormalize</span></a><span class="params">()</span><span class="result"> extends <a href="ImageProcessing.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageProcessing">ImageProcessing</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.package@ImageRoiNormalizeextendsImageProcessingwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Normalize Roi to [0, 1]
+</p>
+    </li><li name="com.intel.analytics.zoo.feature.image.ImageRoiProject" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ImageRoiProjectextendsImageProcessingwithProductwithSerializable"></a>
+      <a id="ImageRoiProject:ImageRoiProject"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="ImageRoiProject.html"><span class="name">ImageRoiProject</span></a><span class="params">(<span name="needMeetCenterConstraint">needMeetCenterConstraint: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result"> extends <a href="ImageProcessing.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageProcessing">ImageProcessing</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.package@ImageRoiProjectextendsImageProcessingwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Project gt boxes onto the coordinate system defined by image boundary</p><div class="fullcomment"><div class="comment cmt"><p>Project gt boxes onto the coordinate system defined by image boundary</p></div><dl class="paramcmts block"><dt class="param">needMeetCenterConstraint</dt><dd class="cmt"><p>whether need to meet center constraint, i.e., the center of
+gt box need be within image boundary</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.image.ImageRoiResize" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ImageRoiResizeextendsImageProcessingwithProductwithSerializable"></a>
+      <a id="ImageRoiResize:ImageRoiResize"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="ImageRoiResize.html"><span class="name">ImageRoiResize</span></a><span class="params">(<span name="normalized">normalized: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result"> extends <a href="ImageProcessing.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageProcessing">ImageProcessing</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.package@ImageRoiResizeextendsImageProcessingwithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">resize the roi according to scale</p><div class="fullcomment"><div class="comment cmt"><p>resize the roi according to scale</p></div><dl class="paramcmts block"><dt class="param">normalized</dt><dd class="cmt"><p>whether the roi is normalized, i.e. in range [0, 1]</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.image.ImageSaturation" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="ImageSaturationextendsImageProcessing"></a>
       <a id="ImageSaturation:ImageSaturation"></a>
@@ -999,6 +1105,23 @@ Pleas notice it's a per image normalization.</p></div></div>
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.feature.image.ImageRandomSampler" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="ImageRandomSampler"></a>
+      <a id="ImageRandomSampler:ImageRandomSampler"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="ImageRandomSampler$.html"><span class="name">ImageRandomSampler</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.package@ImageRandomSampler" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="com.intel.analytics.zoo.feature.image.ImageResize" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="ImageResize"></a>
       <a id="ImageResize:ImageResize"></a>
@@ -1097,6 +1220,23 @@ Pleas notice it's a per image normalization.</p></div></div>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.package@RowToImageFeature" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.feature.image.roi" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="roi"></a>
+      <a id="roi:roi"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">package</span>
+      </span>
+      <span class="symbol">
+        <a href="roi/package.html"><span class="name">roi</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.package@roi" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
