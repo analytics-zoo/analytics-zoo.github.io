@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>InferenceModel - analytics-zoo-bigdl_0.7.2-spark_2.1.0 0.5.0-SNAPSHOT API - com.intel.analytics.zoo.pipeline.inference.InferenceModel</title>
-          <meta name="description" content="InferenceModel - analytics - zoo - bigdl 0.7.2 - spark 2.1.0 0.5.0 - SNAPSHOT API - com.intel.analytics.zoo.pipeline.inference.InferenceModel" />
-          <meta name="keywords" content="InferenceModel analytics zoo bigdl 0.7.2 spark 2.1.0 0.5.0 SNAPSHOT API com.intel.analytics.zoo.pipeline.inference.InferenceModel" />
+          <title>InferenceModel - analytics-zoo-bigdl_0.8.0-spark_2.1.0 0.5.0-SNAPSHOT API - com.intel.analytics.zoo.pipeline.inference.InferenceModel</title>
+          <meta name="description" content="InferenceModel - analytics - zoo - bigdl 0.8.0 - spark 2.1.0 0.5.0 - SNAPSHOT API - com.intel.analytics.zoo.pipeline.inference.InferenceModel" />
+          <meta name="keywords" content="InferenceModel analytics zoo bigdl 0.8.0 spark 2.1.0 0.5.0 SNAPSHOT API com.intel.analytics.zoo.pipeline.inference.InferenceModel" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -91,8 +91,8 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(supportedConcurrentNum:Int,originalModel:com.intel.analytics.zoo.pipeline.inference.AbstractModel,modelQueue:java.util.concurrent.LinkedBlockingQueue[com.intel.analytics.zoo.pipeline.inference.AbstractModel]):com.intel.analytics.zoo.pipeline.inference.InferenceModel"></a>
+              <ol><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="&lt;init&gt;(autoScalingEnabled:Boolean,concurrentNum:Int):com.intel.analytics.zoo.pipeline.inference.InferenceModel"></a>
       <a id="&lt;init&gt;:InferenceModel"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -100,10 +100,68 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">InferenceModel</span><span class="params">(<span name="supportedConcurrentNum">supportedConcurrentNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="originalModel">originalModel: <a href="AbstractModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.AbstractModel">AbstractModel</a> = <span class="symbol">null</span></span>, <span name="modelQueue">modelQueue: <span class="extype" name="java.util.concurrent.LinkedBlockingQueue">LinkedBlockingQueue</span>[<a href="AbstractModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.AbstractModel">AbstractModel</a>] = <span class="symbol">null</span></span>)</span>
+        <span class="name">InferenceModel</span><span class="params">(<span name="autoScalingEnabled">autoScalingEnabled: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="concurrentNum">concurrentNum: <span class="extype" name="scala.Int">Int</span></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@&lt;init&gt;(supportedConcurrentNum:Int,originalModel:com.intel.analytics.zoo.pipeline.inference.AbstractModel,modelQueue:java.util.concurrent.LinkedBlockingQueue[com.intel.analytics.zoo.pipeline.inference.AbstractModel]):com.intel.analytics.zoo.pipeline.inference.InferenceModel" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@&lt;init&gt;(autoScalingEnabled:Boolean,concurrentNum:Int):com.intel.analytics.zoo.pipeline.inference.InferenceModel" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">create an InferenceModel with specified autoScalingEnabled, supportedConcurrentNum
+and maxConcurrentNum
+</p><div class="fullcomment"><div class="comment cmt"><p>create an InferenceModel with specified autoScalingEnabled, supportedConcurrentNum
+and maxConcurrentNum
+</p></div><dl class="paramcmts block"><dt class="param">autoScalingEnabled</dt><dd class="cmt"><p>if auto-scaling is enabled</p></dd><dt class="param">concurrentNum</dt><dd class="cmt"><p>the concurrentNum of the InferenceModel</p></dd><dt>returns</dt><dd class="cmt"><p>a specified InferenceModel</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="&lt;init&gt;(concurrentNum:Int):com.intel.analytics.zoo.pipeline.inference.InferenceModel"></a>
+      <a id="&lt;init&gt;:InferenceModel"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">InferenceModel</span><span class="params">(<span name="concurrentNum">concurrentNum: <span class="extype" name="scala.Int">Int</span></span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@&lt;init&gt;(concurrentNum:Int):com.intel.analytics.zoo.pipeline.inference.InferenceModel" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">create an auto-scaling disabled InferenceModel with supportedConcurrentNum
+</p><div class="fullcomment"><div class="comment cmt"><p>create an auto-scaling disabled InferenceModel with supportedConcurrentNum
+</p></div><dl class="paramcmts block"><dt class="param">concurrentNum</dt><dd class="cmt"><p>the concurrentNum of the InferenceModel</p></dd><dt>returns</dt><dd class="cmt"><p>an auto-scaling disabled InferenceModel</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="&lt;init&gt;():com.intel.analytics.zoo.pipeline.inference.InferenceModel"></a>
+      <a id="&lt;init&gt;:InferenceModel"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">InferenceModel</span><span class="params">()</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@&lt;init&gt;():com.intel.analytics.zoo.pipeline.inference.InferenceModel" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">default constructor, will create a InferenceModel with auto-scaling enabled.</p><div class="fullcomment"><div class="comment cmt"><p>default constructor, will create a InferenceModel with auto-scaling enabled.
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>an auto-scaling enabled InferenceModel</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;(autoScalingEnabled:Boolean,concurrentNum:Int,originalModel:com.intel.analytics.zoo.pipeline.inference.AbstractModel,modelQueue:java.util.concurrent.LinkedBlockingQueue[com.intel.analytics.zoo.pipeline.inference.AbstractModel]):com.intel.analytics.zoo.pipeline.inference.InferenceModel"></a>
+      <a id="&lt;init&gt;:InferenceModel"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">InferenceModel</span><span class="params">(<span name="autoScalingEnabled">autoScalingEnabled: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>, <span name="concurrentNum">concurrentNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">20</span></span>, <span name="originalModel">originalModel: <a href="AbstractModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.AbstractModel">AbstractModel</a> = <span class="symbol">null</span></span>, <span name="modelQueue">modelQueue: <span class="extype" name="java.util.concurrent.LinkedBlockingQueue">LinkedBlockingQueue</span>[<a href="AbstractModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.AbstractModel">AbstractModel</a>] = <span class="symbol">null</span></span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@&lt;init&gt;(autoScalingEnabled:Boolean,concurrentNum:Int,originalModel:com.intel.analytics.zoo.pipeline.inference.AbstractModel,modelQueue:java.util.concurrent.LinkedBlockingQueue[com.intel.analytics.zoo.pipeline.inference.AbstractModel]):com.intel.analytics.zoo.pipeline.inference.InferenceModel" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -185,6 +243,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceSupportive#clearWeightBias" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clearWeightBias(model:com.intel.analytics.bigdl.Module[Float]):Unit"></a>
+      <a id="clearWeightBias(Module[Float]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clearWeightBias</span><span class="params">(<span name="model">model: <a href="../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="scala.Float">Float</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@clearWeightBias(model:com.intel.analytics.bigdl.Module[Float]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceSupportive.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceSupportive">InferenceSupportive</a></dd></dl></div>
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -548,6 +623,40 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceSupportive#makeMetaModel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="makeMetaModel(original:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,Float]):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,Float]"></a>
+      <a id="makeMetaModel(AbstractModule[Activity,Activity,Float]):AbstractModule[Activity,Activity,Float]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">makeMetaModel</span><span class="params">(<span name="original">original: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="scala.Float">Float</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="scala.Float">Float</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@makeMetaModel(original:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,Float]):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,Float]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceSupportive.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceSupportive">InferenceSupportive</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceSupportive#makeUpModel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="makeUpModel(clonedModel:com.intel.analytics.bigdl.Module[Float],weightBias:Array[com.intel.analytics.bigdl.tensor.Tensor[Float]]):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,Float]"></a>
+      <a id="makeUpModel(Module[Float],Array[Tensor[Float]]):AbstractModule[Activity,Activity,Float]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">makeUpModel</span><span class="params">(<span name="clonedModel">clonedModel: <a href="../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="weightBias">weightBias: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="scala.Float">Float</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@makeUpModel(clonedModel:com.intel.analytics.bigdl.Module[Float],weightBias:Array[com.intel.analytics.bigdl.tensor.Tensor[Float]]):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,Float]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceSupportive.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceSupportive">InferenceSupportive</a></dd></dl></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -599,6 +708,41 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#release" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="release():Unit"></a>
+      <a id="release():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">release</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@release():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">release original model and all the cloned ones in the queue
+</p>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceSupportive#releaseWeightBias" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="releaseWeightBias(model:com.intel.analytics.bigdl.Module[Float]):Unit"></a>
+      <a id="releaseWeightBias(Module[Float]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">releaseWeightBias</span><span class="params">(<span name="model">model: <a href="../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="scala.Float">Float</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@releaseWeightBias(model:com.intel.analytics.bigdl.Module[Float]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceSupportive.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceSupportive">InferenceSupportive</a></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
