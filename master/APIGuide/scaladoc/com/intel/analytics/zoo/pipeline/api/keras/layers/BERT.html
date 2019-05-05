@@ -47,7 +47,7 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">BERT</span><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
+        <span class="name">BERT</span><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
       </span>
       </h4>
       
@@ -55,14 +55,14 @@
 Input is a Table which consists of 4 tensors.
 1. Token id tensor: shape [batch, seqLen] with the word token indices in the vocabulary
 2. Token type id tensor: shape [batch, seqLen] with the token types in [0, 1].
-   0 menas <code>sentence A</code> and 1 means a <code>sentence B</code> (see BERT paper for more details).
+   0 means <code>sentence A</code> and 1 means a <code>sentence B</code> (see BERT paper for more details).
 3. Position id tensor: shape [batch, seqLen] with positions in the sentence.
 4. Attention_mask tensor: shape [batch, seqLen] with indices in [0, 1].
   It's a mask to be used if the input sequence length is smaller than seqLen in
   the current batch.
 Output is an Activity which output the states of BERT layer</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>], <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a>, <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.Container">Container</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>], <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a>, <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.Container">Container</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -97,27 +97,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
 
       <div id="template">
         <div id="allMembers">
-        <div id="constructors" class="members">
-              <h3>Instance Constructors</h3>
-              <ol><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(nBlock:Int,nHead:Int,intermediateSize:Int,hiddenPDrop:Double,attnPDrop:Double,initializerRange:Double,outputAllBlock:Boolean,embeddingLayer:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.tensor.Tensor[T],T],inputShape:com.intel.analytics.bigdl.utils.Shape)(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.keras.layers.BERT[T]"></a>
-      <a id="&lt;init&gt;:BERT[T]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">new</span>
-      </span>
-      <span class="symbol">
-        <span class="name">BERT</span><span class="params">(<span name="nBlock">nBlock: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">12</span></span>, <span name="nHead">nHead: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">12</span></span>, <span name="intermediateSize">intermediateSize: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">3072</span></span>, <span name="hiddenPDrop">hiddenPDrop: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.1</span></span>, <span name="attnPDrop">attnPDrop: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.1</span></span>, <span name="initializerRange">initializerRange: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.02</span></span>, <span name="outputAllBlock">outputAllBlock: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>, <span name="embeddingLayer">embeddingLayer: <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>]</span>, <span name="inputShape">inputShape: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>]</span>)</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.BERT@&lt;init&gt;(nBlock:Int,nHead:Int,intermediateSize:Int,hiddenPDrop:Double,attnPDrop:Double,initializerRange:Double,outputAllBlock:Boolean,embeddingLayer:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.tensor.Tensor[T],T],inputShape:com.intel.analytics.bigdl.utils.Shape)(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.keras.layers.BERT[T]" title="Permalink" target="_top">
-        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">nBlock</dt><dd class="cmt"><p>block number</p></dd><dt class="param">nHead</dt><dd class="cmt"><p>head number</p></dd><dt class="param">intermediateSize</dt><dd class="cmt"><p>The size of the &quot;intermediate&quot; (i.e., feed-forward)</p></dd><dt class="param">hiddenPDrop</dt><dd class="cmt"><p>The dropout probabilitiy for all fully connected layers</p></dd><dt class="param">attnPDrop</dt><dd class="cmt"><p>drop probability of attention</p></dd><dt class="param">initializerRange</dt><dd class="cmt"><p>weight initialization range</p></dd><dt class="param">outputAllBlock</dt><dd class="cmt"><p>whether output all blocks' output</p></dd><dt class="param">embeddingLayer</dt><dd class="cmt"><p>embedding layer</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape, default is null</p></dd></dl></div>
-    </li></ol>
-            </div>
+        
 
         
 
@@ -243,7 +223,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#attnPDrop" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="attnPDrop:Double"></a>
       <a id="attnPDrop:Double"></a>
@@ -260,7 +240,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">drop probability of attention</p><div class="fullcomment"><div class="comment cmt"><p>drop probability of attention</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <p class="shortcomment cmt">drop probability of attention</p><div class="fullcomment"><div class="comment cmt"><p>drop probability of attention</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#backward" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="backward(input:A,gradOutput:B):A"></a>
       <a id="backward(Activity,Activity):Activity"></a>
@@ -311,7 +291,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">whether unidirectional or bidirectional</p><div class="fullcomment"><div class="comment cmt"><p>whether unidirectional or bidirectional</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#block" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="block(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],hiddenSize:Int,attention_mask:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],eplision:Double):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
       <a id="block(Variable[T],Int,Variable[T],Double):Variable[T]"></a>
@@ -328,7 +308,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#build" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="build(calcInputShape:com.intel.analytics.bigdl.utils.Shape):com.intel.analytics.bigdl.utils.Shape"></a>
       <a id="build(Shape):Shape"></a>
@@ -362,7 +342,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT">BERT</a> → <a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT">BERT</a> → TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.Container#canEqual" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="canEqual(other:Any):Boolean"></a>
       <a id="canEqual(Any):Boolean"></a>
@@ -504,7 +484,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a> → KerasLayer</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer → KerasLayer</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#embeddingLayer" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="embeddingLayer:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.tensor.Tensor[T],T]"></a>
       <a id="embeddingLayer:KerasLayer[Activity,Tensor[T],T]"></a>
@@ -521,7 +501,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">embedding layer</p><div class="fullcomment"><div class="comment cmt"><p>embedding layer</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <p class="shortcomment cmt">embedding layer</p><div class="fullcomment"><div class="comment cmt"><p>embedding layer</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -765,7 +745,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT">BERT</a> → <a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT">BERT</a> → TransformerLayer</dd></dl></div>
     </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <a id="getClass():Class[_]"></a>
@@ -1054,7 +1034,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">drop probability of projection</p><div class="fullcomment"><div class="comment cmt"><p>drop probability of projection</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <p class="shortcomment cmt">The dropout probability for all fully connected layers</p><div class="fullcomment"><div class="comment cmt"><p>The dropout probability for all fully connected layers</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#initializerRange" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="initializerRange:Double"></a>
       <a id="initializerRange:Double"></a>
@@ -1071,7 +1051,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">weight initialization range</p><div class="fullcomment"><div class="comment cmt"><p>weight initialization range</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <p class="shortcomment cmt">weight initialization range</p><div class="fullcomment"><div class="comment cmt"><p>weight initialization range</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#inputShape" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="inputShape:com.intel.analytics.bigdl.utils.Shape"></a>
       <a id="inputShape:Shape"></a>
@@ -1088,7 +1068,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">input shape, default is null</p><div class="fullcomment"><div class="comment cmt"><p>input shape, default is null</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <p class="shortcomment cmt">input shape, default is null</p><div class="fullcomment"><div class="comment cmt"><p>input shape, default is null</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#inputs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="inputs(first:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int),nodesWithIndex:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int)*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]"></a>
       <a id="inputs((ModuleNode[T],Int),(ModuleNode[T],Int)*):ModuleNode[T]"></a>
@@ -1156,7 +1136,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">The size of the &quot;intermediate&quot; (i.e., conv1d)</p><div class="fullcomment"><div class="comment cmt"><p>The size of the &quot;intermediate&quot; (i.e., conv1d)</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <p class="shortcomment cmt">The size of the &quot;intermediate&quot; (i.e., feed-forward)</p><div class="fullcomment"><div class="comment cmt"><p>The size of the &quot;intermediate&quot; (i.e., feed-forward)</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#isBuilt" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isBuilt():Boolean"></a>
       <a id="isBuilt():Boolean"></a>
@@ -1343,7 +1323,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#mergeHeads" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="mergeHeads(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
       <a id="mergeHeads(Variable[T]):Variable[T]"></a>
@@ -1360,7 +1340,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#mlp" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="mlp(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],hiddenSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
       <a id="mlp(Variable[T],Int):Variable[T]"></a>
@@ -1377,7 +1357,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.Container#modules" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="modules:scala.collection.mutable.ArrayBuffer[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]]"></a>
       <a id="modules:ArrayBuffer[AbstractModule[Activity,Activity,T]]"></a>
@@ -1411,7 +1391,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#nBlock" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="nBlock:Int"></a>
       <a id="nBlock:Int"></a>
@@ -1428,7 +1408,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">block number</p><div class="fullcomment"><div class="comment cmt"><p>block number</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <p class="shortcomment cmt">block number</p><div class="fullcomment"><div class="comment cmt"><p>block number</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#nHead" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="nHead:Int"></a>
       <a id="nHead:Int"></a>
@@ -1445,7 +1425,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">head number</p><div class="fullcomment"><div class="comment cmt"><p>head number</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <p class="shortcomment cmt">head number</p><div class="fullcomment"><div class="comment cmt"><p>head number</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -1530,7 +1510,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">whether output all blocks' output</p><div class="fullcomment"><div class="comment cmt"><p>whether output all blocks' output</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <p class="shortcomment cmt">whether output all blocks' output</p><div class="fullcomment"><div class="comment cmt"><p>whether output all blocks' output</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.Container#parameters" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="parameters():(Array[com.intel.analytics.bigdl.tensor.Tensor[T]],Array[com.intel.analytics.bigdl.tensor.Tensor[T]])"></a>
       <a id="parameters():(Array[Tensor[T]],Array[Tensor[T]])"></a>
@@ -1548,6 +1528,23 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer#pooler" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="pooler(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],hiddenSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
+      <a id="pooler(Variable[T],Int):Variable[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">pooler</span><span class="params">(<span name="x">x: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>]</span>, <span name="hiddenSize">hiddenSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.BERT@pooler(x:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T],hiddenSize:Int):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#predict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="predict(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int,shareBuffer:Boolean):org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.nn.abstractnn.Activity]"></a>
       <a id="predict(RDD[Sample[T]],Int,Boolean):RDD[Activity]"></a>
@@ -1649,7 +1646,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT">BERT</a> → <a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT">BERT</a> → TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#quantize" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="quantize():com.intel.analytics.bigdl.Module[T]"></a>
       <a id="quantize():Module[T]"></a>
@@ -1870,7 +1867,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#setExtraParameter" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="setExtraParameter(extraParam:Array[com.intel.analytics.bigdl.tensor.Tensor[T]]):AbstractModule.this.type"></a>
       <a id="setExtraParameter(Array[Tensor[T]]):BERT.this.type"></a>
@@ -1989,7 +1986,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a></dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TransformerLayer</dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -2245,7 +2242,7 @@ Output is an Activity which output the states of BERT layer</p></div><div class=
 
         <div id="inheritedMembers">
         <div class="parent" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">
-              <h3>Inherited from <a href="TransformerLayer.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>]</h3>
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>]</h3>
             </div><div class="parent" name="com.intel.analytics.zoo.pipeline.api.Net">
               <h3>Inherited from <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></h3>
             </div><div class="parent" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">

@@ -464,6 +464,26 @@ class should be put into the same class folder. So each image in the path is lab
 folder it belongs.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>SparkContext</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>A suggestion value of the minimal partition number</p></dd><dt class="param">resizeH</dt><dd class="cmt"><p>height after resize, by default is -1 which will not resize the image</p></dd><dt class="param">resizeW</dt><dd class="cmt"><p>width after resize, by default is -1 which will not resize the image</p></dd><dt class="param">imageCodec</dt><dd class="cmt"><p>specifying the color type of a loaded image, same as in OpenCV.imread.
              By default is Imgcodecs.CV_LOAD_IMAGE_UNCHANGED</p></dd><dt class="param">withLabel</dt><dd class="cmt"><p>whether to treat folders in the path as image classification labels and read
                  the labels into ImageSet.</p></dd><dt>returns</dt><dd class="cmt"><p>ImageSet</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.image.ImageSet#readSequenceFiles" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="readSequenceFiles(path:String,sc:org.apache.spark.SparkContext,minPartitions:Int,classNum:Int):com.intel.analytics.zoo.feature.image.DistributedImageSet"></a>
+      <a id="readSequenceFiles(String,SparkContext,Int,Int):DistributedImageSet"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">readSequenceFiles</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="sc">sc: <span class="extype" name="org.apache.spark.SparkContext">SparkContext</span></span>, <span name="minPartitions">minPartitions: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1</span></span>, <span name="classNum">classNum: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">1000</span></span>)</span><span class="result">: <a href="DistributedImageSet.html" class="extype" name="com.intel.analytics.zoo.feature.image.DistributedImageSet">DistributedImageSet</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.image.ImageSet$@readSequenceFiles(path:String,sc:org.apache.spark.SparkContext,minPartitions:Int,classNum:Int):com.intel.analytics.zoo.feature.image.DistributedImageSet" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Read images (with labels) from Hadoop SequenceFiles as ImageSet.</p><div class="fullcomment"><div class="comment cmt"><p>Read images (with labels) from Hadoop SequenceFiles as ImageSet.
+</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>The folder path that contains sequence files.
+            Local or distributed file system (such as HDFS) are supported.</p></dd><dt class="param">sc</dt><dd class="cmt"><p>An instance of SparkContext.</p></dd><dt class="param">minPartitions</dt><dd class="cmt"><p>Integer. A suggestion value of the minimal partition number for input
+                     texts. Default is 1.</p></dd><dt class="param">classNum</dt><dd class="cmt"><p>Integer. The number of image categories. Default is 1000 for ImageNet.</p></dd><dt>returns</dt><dd class="cmt"><p>DistributedImageSet.</p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
