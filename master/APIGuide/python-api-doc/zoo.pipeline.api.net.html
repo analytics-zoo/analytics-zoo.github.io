@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>zoo.pipeline.api.keras.engine package &#8212; analytics-zoo  documentation</title>
+    <title>zoo.pipeline.api.net package &#8212; analytics-zoo  documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -16,8 +16,8 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="zoo.pipeline.api.keras.layers package" href="zoo.pipeline.api.keras.layers.html" />
-    <link rel="prev" title="zoo.pipeline.api.keras package" href="zoo.pipeline.api.keras.html" /> 
+    <link rel="next" title="zoo.pipeline.api.onnx package" href="zoo.pipeline.api.onnx.html" />
+    <link rel="prev" title="zoo.pipeline.api.keras2.layers package" href="zoo.pipeline.api.keras2.layers.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -26,40 +26,45 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="zoo.pipeline.api.keras.layers.html" title="zoo.pipeline.api.keras.layers package"
+          <a href="zoo.pipeline.api.onnx.html" title="zoo.pipeline.api.onnx package"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="zoo.pipeline.api.keras.html" title="zoo.pipeline.api.keras package"
+          <a href="zoo.pipeline.api.keras2.layers.html" title="zoo.pipeline.api.keras2.layers package"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">analytics-zoo  documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="zoo.html" >zoo package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="zoo.pipeline.html" >zoo.pipeline package</a> &#187;</li>
-          <li class="nav-item nav-item-3"><a href="zoo.pipeline.api.html" >zoo.pipeline.api package</a> &#187;</li>
-          <li class="nav-item nav-item-4"><a href="zoo.pipeline.api.keras.html" accesskey="U">zoo.pipeline.api.keras package</a> &#187;</li> 
+          <li class="nav-item nav-item-3"><a href="zoo.pipeline.api.html" accesskey="U">zoo.pipeline.api package</a> &#187;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">zoo.pipeline.api.keras.engine package</a><ul>
+<li><a class="reference internal" href="#">zoo.pipeline.api.net package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-pipeline-api-keras-engine-topology-module">zoo.pipeline.api.keras.engine.topology module</a></li>
+<li><a class="reference internal" href="#zoo-pipeline-api-net-graph-net-module">zoo.pipeline.api.net.graph_net module</a></li>
+<li><a class="reference internal" href="#zoo-pipeline-api-net-net-load-module">zoo.pipeline.api.net.net_load module</a></li>
+<li><a class="reference internal" href="#zoo-pipeline-api-net-tf-dataset-module">zoo.pipeline.api.net.tf_dataset module</a></li>
+<li><a class="reference internal" href="#zoo-pipeline-api-net-tf-optimizer-module">zoo.pipeline.api.net.tf_optimizer module</a></li>
+<li><a class="reference internal" href="#zoo-pipeline-api-net-tf-predictor-module">zoo.pipeline.api.net.tf_predictor module</a></li>
+<li><a class="reference internal" href="#zoo-pipeline-api-net-tfnet-module">zoo.pipeline.api.net.tfnet module</a></li>
+<li><a class="reference internal" href="#zoo-pipeline-api-net-utils-module">zoo.pipeline.api.net.utils module</a></li>
 <li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="zoo.pipeline.api.keras.html"
-                        title="previous chapter">zoo.pipeline.api.keras package</a></p>
+  <p class="topless"><a href="zoo.pipeline.api.keras2.layers.html"
+                        title="previous chapter">zoo.pipeline.api.keras2.layers package</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="zoo.pipeline.api.keras.layers.html"
-                        title="next chapter">zoo.pipeline.api.keras.layers package</a></p>
+  <p class="topless"><a href="zoo.pipeline.api.onnx.html"
+                        title="next chapter">zoo.pipeline.api.onnx package</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/zoo.pipeline.api.keras.engine.rst.txt"
+      <li><a href="_sources/zoo.pipeline.api.net.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -83,13 +88,31 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="zoo-pipeline-api-keras-engine-package">
-<h1>zoo.pipeline.api.keras.engine package<a class="headerlink" href="#zoo-pipeline-api-keras-engine-package" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="zoo-pipeline-api-net-package">
+<h1>zoo.pipeline.api.net package<a class="headerlink" href="#zoo-pipeline-api-net-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-pipeline-api-keras-engine-topology-module">
-<h2>zoo.pipeline.api.keras.engine.topology module<a class="headerlink" href="#zoo-pipeline-api-keras-engine-topology-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="zoo-pipeline-api-net-graph-net-module">
+<h2>zoo.pipeline.api.net.graph_net module<a class="headerlink" href="#zoo-pipeline-api-net-graph-net-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="zoo-pipeline-api-net-net-load-module">
+<h2>zoo.pipeline.api.net.net_load module<a class="headerlink" href="#zoo-pipeline-api-net-net-load-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="zoo-pipeline-api-net-tf-dataset-module">
+<h2>zoo.pipeline.api.net.tf_dataset module<a class="headerlink" href="#zoo-pipeline-api-net-tf-dataset-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="zoo-pipeline-api-net-tf-optimizer-module">
+<h2>zoo.pipeline.api.net.tf_optimizer module<a class="headerlink" href="#zoo-pipeline-api-net-tf-optimizer-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="zoo-pipeline-api-net-tf-predictor-module">
+<h2>zoo.pipeline.api.net.tf_predictor module<a class="headerlink" href="#zoo-pipeline-api-net-tf-predictor-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="zoo-pipeline-api-net-tfnet-module">
+<h2>zoo.pipeline.api.net.tfnet module<a class="headerlink" href="#zoo-pipeline-api-net-tfnet-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="zoo-pipeline-api-net-utils-module">
+<h2>zoo.pipeline.api.net.utils module<a class="headerlink" href="#zoo-pipeline-api-net-utils-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-contents">
 <h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
@@ -109,16 +132,15 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="zoo.pipeline.api.keras.layers.html" title="zoo.pipeline.api.keras.layers package"
+          <a href="zoo.pipeline.api.onnx.html" title="zoo.pipeline.api.onnx package"
              >next</a> |</li>
         <li class="right" >
-          <a href="zoo.pipeline.api.keras.html" title="zoo.pipeline.api.keras package"
+          <a href="zoo.pipeline.api.keras2.layers.html" title="zoo.pipeline.api.keras2.layers package"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">analytics-zoo  documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="zoo.html" >zoo package</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="zoo.pipeline.html" >zoo.pipeline package</a> &#187;</li>
-          <li class="nav-item nav-item-3"><a href="zoo.pipeline.api.html" >zoo.pipeline.api package</a> &#187;</li>
-          <li class="nav-item nav-item-4"><a href="zoo.pipeline.api.keras.html" >zoo.pipeline.api.keras package</a> &#187;</li> 
+          <li class="nav-item nav-item-3"><a href="zoo.pipeline.api.html" >zoo.pipeline.api package</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -166,6 +166,25 @@ on both local host and distributed spark environment.
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.estimator.Estimator#clearGradientClipping" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clearGradientClipping():Unit"></a>
+      <a id="clearGradientClipping():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clearGradientClipping</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.estimator.Estimator@clearGradientClipping():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Clear gradient clipping parameters.</p><div class="fullcomment"><div class="comment cmt"><p>Clear gradient clipping parameters. In this case, gradient clipping will not be applied.
+In order to take effect, it needs to be called before fit.
+</p></div></div>
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -280,6 +299,23 @@ on both local host and distributed spark environment.
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.estimator.Estimator#gradientClipping" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="gradientClipping:scala.collection.mutable.ArrayBuffer[com.intel.analytics.zoo.pipeline.estimator.GradientClipping]"></a>
+      <a id="gradientClipping:ArrayBuffer[GradientClipping]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">gradientClipping</span><span class="result">: <span class="extype" name="scala.collection.mutable.ArrayBuffer">ArrayBuffer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.estimator.GradientClipping">GradientClipping</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.estimator.Estimator@gradientClipping:scala.collection.mutable.ArrayBuffer[com.intel.analytics.zoo.pipeline.estimator.GradientClipping]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
     </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hashCode():Int"></a>
       <a id="hashCode():Int"></a>
@@ -382,6 +418,44 @@ on both local host and distributed spark environment.
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.estimator.Estimator#setConstantGradientClipping" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setConstantGradientClipping(min:Double,max:Double):Unit"></a>
+      <a id="setConstantGradientClipping(Double,Double):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setConstantGradientClipping</span><span class="params">(<span name="min">min: <span class="extype" name="scala.Double">Double</span></span>, <span name="max">max: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.estimator.Estimator@setConstantGradientClipping(min:Double,max:Double):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Set constant gradient clipping during the training process.</p><div class="fullcomment"><div class="comment cmt"><p>Set constant gradient clipping during the training process.
+In order to take effect, it needs to be called before fit.
+</p></div><dl class="paramcmts block"><dt class="param">min</dt><dd class="cmt"><p>The minimum value to clip by. Double.</p></dd><dt class="param">max</dt><dd class="cmt"><p>The maximum value to clip by. Double.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.estimator.Estimator#setGradientClippingByL2Norm" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setGradientClippingByL2Norm(clipNorm:Double):Unit"></a>
+      <a id="setGradientClippingByL2Norm(Double):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setGradientClippingByL2Norm</span><span class="params">(<span name="clipNorm">clipNorm: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.estimator.Estimator@setGradientClippingByL2Norm(clipNorm:Double):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Clip gradient to a maximum L2-Norm during the training process.</p><div class="fullcomment"><div class="comment cmt"><p>Clip gradient to a maximum L2-Norm during the training process.
+In order to take effect, it needs to be called before fit.
+</p></div><dl class="paramcmts block"><dt class="param">clipNorm</dt><dd class="cmt"><p>Gradient L2-Norm threshold. Double.</p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
