@@ -51,7 +51,8 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Transform image prediction output to class name labels with probabilities.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="../../../feature/image/ImageProcessing.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageProcessing">ImageProcessing</a>, <a href="../../../feature/common/Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[<span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFeature">ImageFeature</span>, <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFeature">ImageFeature</span>], <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.FeatureTransformer">FeatureTransformer</span>, <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[<span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFeature">ImageFeature</span>, <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFeature">ImageFeature</span>], <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -90,8 +91,8 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="com.intel.analytics.zoo.models.image.imageclassification.LabelOutput#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(labelMap:Map[Int,String],clses:String,probs:String,probAsInput:Boolean):com.intel.analytics.zoo.models.image.imageclassification.LabelOutput"></a>
+              <ol><li name="com.intel.analytics.zoo.models.image.imageclassification.LabelOutput#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="&lt;init&gt;(labelMap:Map[Int,String],clses:String,probs:String,probAsOutput:Boolean):com.intel.analytics.zoo.models.image.imageclassification.LabelOutput"></a>
       <a id="&lt;init&gt;:LabelOutput"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -99,14 +100,17 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">LabelOutput</span><span class="params">(<span name="labelMap">labelMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Int">Int</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="clses">clses: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="probs">probs: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="probAsInput">probAsInput: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span>
+        <span class="name">LabelOutput</span><span class="params">(<span name="labelMap">labelMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Int">Int</span>, <span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="clses">clses: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;classes&quot;</span></span>, <span name="probs">probs: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;probs&quot;</span></span>, <span name="probAsOutput">probAsOutput: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../index.html#com.intel.analytics.zoo.models.image.imageclassification.LabelOutput@&lt;init&gt;(labelMap:Map[Int,String],clses:String,probs:String,probAsInput:Boolean):com.intel.analytics.zoo.models.image.imageclassification.LabelOutput" title="Permalink" target="_top">
+      <a href="../../../../../../../index.html#com.intel.analytics.zoo.models.image.imageclassification.LabelOutput@&lt;init&gt;(labelMap:Map[Int,String],clses:String,probs:String,probAsOutput:Boolean):com.intel.analytics.zoo.models.image.imageclassification.LabelOutput" title="Permalink" target="_top">
         <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">labelMap</dt><dd class="cmt"><p>The map of class ID (Integer) and name (String).</p></dd><dt class="param">clses</dt><dd class="cmt"><p>The key to store names of class labels. Default is &quot;classes&quot;.</p></dd><dt class="param">probs</dt><dd class="cmt"><p>The key to store probabilities of each class. Default is &quot;probs&quot;.
+             The result probability array together with the corresponding class name
+             array will be sorted by probabilities in descending order.</p></dd><dt class="param">probAsOutput</dt><dd class="cmt"><p>Boolean. Whether the prediction output is a probability distribution.
+                    Default is true. If false, the output will be first applied with SoftMax.</p></dd></dl></div>
     </li></ol>
             </div>
 
