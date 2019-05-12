@@ -313,6 +313,25 @@
       <p class="shortcomment cmt">loads a openvino IR
 </p><div class="fullcomment"><div class="comment cmt"><p>loads a openvino IR
 </p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of openvino ir xml file</p></dd><dt class="param">weightPath</dt><dd class="cmt"><p>the path of openvino ir bin file</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadOpenVINOInt8" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadOpenVINOInt8(modelPath:String,weightPath:String,batchSize:Int):Unit"></a>
+      <a id="doLoadOpenVINOInt8(String,String,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">doLoadOpenVINOInt8</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="weightPath">weightPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadOpenVINOInt8(modelPath:String,weightPath:String,batchSize:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">loads a openvino IR Int8
+</p><div class="fullcomment"><div class="comment cmt"><p>loads a openvino IR Int8
+</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of openvino ir xml file</p></dd><dt class="param">weightPath</dt><dd class="cmt"><p>the path of openvino ir bin file</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadTF(modelPath:String,imageClassificationModelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit"></a>
       <a id="doLoadTF(String,String,String,Array[Int],Boolean,Array[Float],Float):Unit"></a>
@@ -500,6 +519,44 @@
     </span>
       <p class="shortcomment cmt">predicts the inference result
 </p><div class="fullcomment"><div class="comment cmt"><p>predicts the inference result
+</p></div><dl class="paramcmts block"><dt class="param">inputs</dt><dd class="cmt"><p>the input tensor with batch</p></dd><dt>returns</dt><dd class="cmt"><p>the output tensor with batch</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doPredictInt8" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doPredictInt8(inputActivity:com.intel.analytics.bigdl.nn.abstractnn.Activity):com.intel.analytics.bigdl.nn.abstractnn.Activity"></a>
+      <a id="doPredictInt8(Activity):Activity"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">doPredictInt8</span><span class="params">(<span name="inputActivity">inputActivity: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doPredictInt8(inputActivity:com.intel.analytics.bigdl.nn.abstractnn.Activity):com.intel.analytics.bigdl.nn.abstractnn.Activity" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">predicts int8 the inference result
+</p><div class="fullcomment"><div class="comment cmt"><p>predicts int8 the inference result
+</p></div><dl class="paramcmts block"><dt class="param">inputActivity</dt><dd class="cmt"><p>the input activity</p></dd><dt>returns</dt><dd class="cmt"><p>the output activity</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doPredictInt8" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doPredictInt8(inputs:java.util.List[java.util.List[com.intel.analytics.zoo.pipeline.inference.JTensor]]):java.util.List[java.util.List[com.intel.analytics.zoo.pipeline.inference.JTensor]]"></a>
+      <a id="doPredictInt8(List[List[JTensor]]):List[List[JTensor]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">doPredictInt8</span><span class="params">(<span name="inputs">inputs: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="java.util.List">List</span>[<a href="JTensor.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.JTensor">JTensor</a>]]</span>)</span><span class="result">: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="java.util.List">List</span>[<a href="JTensor.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.JTensor">JTensor</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doPredictInt8(inputs:java.util.List[java.util.List[com.intel.analytics.zoo.pipeline.inference.JTensor]]):java.util.List[java.util.List[com.intel.analytics.zoo.pipeline.inference.JTensor]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">predicts int8 the inference result
+</p><div class="fullcomment"><div class="comment cmt"><p>predicts int8 the inference result
 </p></div><dl class="paramcmts block"><dt class="param">inputs</dt><dd class="cmt"><p>the input tensor with batch</p></dd><dt>returns</dt><dd class="cmt"><p>the output tensor with batch</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doReload" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doReload(modelPath:String,weightPath:String):Unit"></a>
@@ -726,6 +783,23 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadOpenVINO(modelFilePath:String,weightFilePath:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadOpenVINOInt8" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loadOpenVINOInt8(modelFilePath:String,weightFilePath:String,batchSize:Int):Unit"></a>
+      <a id="loadOpenVINOInt8(String,String,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadOpenVINOInt8</span><span class="params">(<span name="modelFilePath">modelFilePath: <span class="extype" name="java.lang.String">String</span></span>, <span name="weightFilePath">weightFilePath: <span class="extype" name="java.lang.String">String</span></span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadOpenVINOInt8(modelFilePath:String,weightFilePath:String,batchSize:Int):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -981,6 +1055,40 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@predict(input:java.util.List[Float],shape:Int*):java.util.List[Float]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#predictInt8" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="predictInt8(inputs:Array[java.util.List[com.intel.analytics.zoo.pipeline.inference.JTensor]]):java.util.List[java.util.List[com.intel.analytics.zoo.pipeline.inference.JTensor]]"></a>
+      <a id="predictInt8(Array[List[JTensor]]):List[List[JTensor]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">predictInt8</span><span class="params">(<span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.util.List">List</span>[<a href="JTensor.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.JTensor">JTensor</a>]]</span>)</span><span class="result">: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="java.util.List">List</span>[<a href="JTensor.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.JTensor">JTensor</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@predictInt8(inputs:Array[java.util.List[com.intel.analytics.zoo.pipeline.inference.JTensor]]):java.util.List[java.util.List[com.intel.analytics.zoo.pipeline.inference.JTensor]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#predictInt8" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="predictInt8(inputs:java.util.List[java.util.List[com.intel.analytics.zoo.pipeline.inference.JTensor]]):java.util.List[java.util.List[com.intel.analytics.zoo.pipeline.inference.JTensor]]"></a>
+      <a id="predictInt8(List[List[JTensor]]):List[List[JTensor]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">predictInt8</span><span class="params">(<span name="inputs">inputs: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="java.util.List">List</span>[<a href="JTensor.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.JTensor">JTensor</a>]]</span>)</span><span class="result">: <span class="extype" name="java.util.List">List</span>[<span class="extype" name="java.util.List">List</span>[<a href="JTensor.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.JTensor">JTensor</a>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@predictInt8(inputs:java.util.List[java.util.List[com.intel.analytics.zoo.pipeline.inference.JTensor]]):java.util.List[java.util.List[com.intel.analytics.zoo.pipeline.inference.JTensor]]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
