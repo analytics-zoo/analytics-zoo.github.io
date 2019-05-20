@@ -44,6 +44,10 @@
           ]},
           {title: "Text Training", url: "#text-training", children: [
           ]},
+          {title: "Word Index Save and Load", url: "#word-index-save-and-load", children: [
+              {title: "Save word index", url: "#save-word-index" },
+              {title: "Load word index", url: "#load-word-index" },
+          ]},
           {title: "Text Prediction", url: "#text-prediction", children: [
           ]},
           {title: "Examples", url: "#examples", children: [
@@ -92,7 +96,7 @@ Each text will be a given a label according to the directory where it is located
 </code></pre>
 
 <ul>
-<li><code>path</code>: String. Folder path to texts. Local file system and HDFS are supported. If you want to read from HDFS, sc needs to be specified.</li>
+<li><code>path</code>: String. Folder path to texts. Local or distributed file system (such as HDFS) are supported. If you want to read from HDFS, sc needs to be specified.</li>
 <li><code>sc</code>: An instance of SparkContext. If specified, texts will be read as a DistributedTextSet. 
 Default is null and in this case texts will be read as a LocalTextSet. </li>
 <li><code>minPartitions</code>: Integer. A suggestion value of the minimal partition number for input texts.
@@ -103,7 +107,7 @@ Only need to specify this when sc is not null. Default is 1.</li>
 </code></pre>
 
 <ul>
-<li><code>path</code>: String. Folder path to texts. Local file system and HDFS are supported. If you want to read from HDFS, sc needs to be defined.</li>
+<li><code>path</code>: String. Folder path to texts. Local or distributed file system (such as HDFS) are supported. If you want to read from HDFS, sc needs to be defined.</li>
 <li><code>sc</code>: An instance of SparkContext. If specified, texts will be read as a DistributedTextSet. 
 Default is None and in this case texts will be read as a LocalTextSet. </li>
 <li><code>min_partitions</code>: Int. A suggestion value of the minimal partition number for input texts.
@@ -118,7 +122,7 @@ Only need to specify this when sc is not None. Default is 1.</li>
 </code></pre>
 
 <ul>
-<li><code>path</code>: String. The path to the csv file. Local file system and HDFS are supported. If you want to read from HDFS, sc needs to be specified.</li>
+<li><code>path</code>: String. The path to the csv file. Local or distributed file system (such as HDFS) are supported. If you want to read from HDFS, sc needs to be specified.</li>
 <li><code>sc</code>: An instance of SparkContext. If specified, texts will be read as a DistributedTextSet. 
 Default is null and in this case texts will be read as a LocalTextSet. </li>
 <li><code>minPartitions</code>: Integer. A suggestion value of the minimal partition number for input texts.
@@ -129,7 +133,7 @@ Only need to specify this when sc is not null. Default is 1.</li>
 </code></pre>
 
 <ul>
-<li><code>path</code>: String. The path to the csv file. Local file system and HDFS are supported. If you want to read from HDFS, sc needs to be defined.</li>
+<li><code>path</code>: String. The path to the csv file. Local or distributed file system (such as HDFS) are supported. If you want to read from HDFS, sc needs to be defined.</li>
 <li><code>sc</code>: An instance of SparkContext. If specified, texts will be read as a DistributedTextSet. 
 Default is None and in this case texts will be read as a LocalTextSet. </li>
 <li><code>min_partitions</code>: Int. A suggestion value of the minimal partition number for input texts.
@@ -176,8 +180,37 @@ Only need to specify this when sc is not None. Default is 1.</li>
 </code></pre>
 
 <hr />
+<h2 id="word-index-save-and-load"><strong>Word Index Save and Load</strong></h2>
+<h4 id="save-word-index"><strong>Save word index</strong></h4>
+<p>After training the model, you can save the word index correspondence to text file, which can be used for future inference. Each separate line will be "word id".</p>
+<p>For LocalTextSet, save txt to a local file system.</p>
+<p>For DistributedTextSet, save txt to a local or distributed file system (such as HDFS).</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">transformedTextSet.saveWordIndex(path)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<pre><code class="python">transformed_text_set.save_word_index(path)
+</code></pre>
+
+<h4 id="load-word-index"><strong>Load word index</strong></h4>
+<p>During text prediction, you can load the saved word index back, so that the prediction TextSet uses exactly the same word index as the training process. Each separate line should be "word id".</p>
+<p>For LocalTextSet, load txt to a local file system.</p>
+<p>For DistributedTextSet, load txt to a local or distributed file system (such as HDFS).</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">textSet.loadWordIndex(path)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<pre><code class="python">text_set.load_word_index(path)
+</code></pre>
+
+<hr />
 <h2 id="text-prediction"><strong>Text Prediction</strong></h2>
-<p>You can also directly input the transformed TextSet into the model for prediction and the prediction result will be stored in each TextFeature.</p>
+<p>Given a raw TextSet to do prediction, you need to first load the saved word index back as instructed <a href="#load-word-index">above</a> and go through the same transformation
+process as what you did in your training. Note that here you do not need to specify any argument when calling <code>word2idx</code> in the preprocessing pipeline as now you are using exactly
+the loaded word index.</p>
+<p>Then you can directly feed the transformed TextSet into the model for prediction and the prediction result will be stored in each TextFeature.</p>
 <p><strong>Scala</strong></p>
 <pre><code class="scala">predictionTextSet = model.predict(transformedTextSet)
 </code></pre>

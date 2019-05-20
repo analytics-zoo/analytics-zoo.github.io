@@ -88,7 +88,7 @@ relationsArray = Relations.read(path)
 </code></pre>
 
 <ul>
-<li><code>path</code>: The path to the relations file, which can either be a local file path or HDFS path (in this case sc needs to be specified).</li>
+<li><code>path</code>: The path to the relations file, which can either be a local or distributed file system (such as HDFS) path (in this case sc needs to be specified).</li>
 <li><code>sc</code>: An instance of SparkContext. If specified, return RDD of Relation. Otherwise, return array of Relation.</li>
 <li><code>minPartitions</code>: Integer. A suggestion value of the minimal partition number for input
 texts. Only takes effect when sc is specified. Default is 1.</li>
