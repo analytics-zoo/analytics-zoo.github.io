@@ -344,7 +344,7 @@
       </a>
     </span>
       
-    </li><li name="com.intel.analytics.zoo.models.recommendation.Utils#getDeepTensors" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.models.recommendation.Utils#getDeepTensors" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getDeepTensors(r:org.apache.spark.sql.Row,columnInfo:com.intel.analytics.zoo.models.recommendation.ColumnFeatureInfo):Array[com.intel.analytics.bigdl.tensor.Tensor[Float]]"></a>
       <a id="getDeepTensors(Row,ColumnFeatureInfo):Array[Tensor[Float]]"></a>
       <h4 class="signature">
@@ -360,8 +360,9 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
-    </li><li name="com.intel.analytics.zoo.models.recommendation.Utils#getNegativeSamples" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">convert a row to tensors given column feature information of WideAndDeep model.</p><div class="fullcomment"><div class="comment cmt"><p>convert a row to tensors given column feature information of WideAndDeep model.
+</p></div><dl class="paramcmts block"><dt class="param">r</dt><dd class="cmt"><p>Row of userId, itemId, features and label</p></dd><dt class="param">columnInfo</dt><dd class="cmt"><p>ColumnFeatureInfo specify information of different features</p></dd><dt>returns</dt><dd class="cmt"><p>an array of tensors as input for deep part of a WideAndDeep model</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.models.recommendation.Utils#getNegativeSamples" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getNegativeSamples(indexed:org.apache.spark.sql.DataFrame):org.apache.spark.sql.DataFrame"></a>
       <a id="getNegativeSamples(DataFrame):DataFrame"></a>
       <h4 class="signature">
@@ -377,8 +378,9 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
-    </li><li name="com.intel.analytics.zoo.models.recommendation.Utils#getWideTensor" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">generate negative samples given a dataframe of positive records, label &gt;=2.</p><div class="fullcomment"><div class="comment cmt"><p>generate negative samples given a dataframe of positive records, label &gt;=2.
+</p></div><dl class="paramcmts block"><dt class="param">indexed</dt><dd class="cmt"><p>dataframe positive of userId, itemId and label.</p></dd><dt>returns</dt><dd class="cmt"><p>a dataframe of negative samples(label=1) with the same size as indexed dataframe</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.models.recommendation.Utils#getWideTensor" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getWideTensor(r:org.apache.spark.sql.Row,columnInfo:com.intel.analytics.zoo.models.recommendation.ColumnFeatureInfo):com.intel.analytics.bigdl.tensor.Tensor[Float]"></a>
       <a id="getWideTensor(Row,ColumnFeatureInfo):Tensor[Float]"></a>
       <h4 class="signature">
@@ -394,7 +396,8 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">convert a row to tensor given column feature information of WideAndDeep model.</p><div class="fullcomment"><div class="comment cmt"><p>convert a row to tensor given column feature information of WideAndDeep model.
+</p></div><dl class="paramcmts block"><dt class="param">r</dt><dd class="cmt"><p>Row of userId, itemId, features and label</p></dd><dt class="param">columnInfo</dt><dd class="cmt"><p>ColumnFeatureInfo specify information of different features</p></dd><dt>returns</dt><dd class="cmt"><p>a tensor as input for wide part of a WideAndDeep model</p></dd></dl></div>
     </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hashCode():Int"></a>
       <a id="hashCode():Int"></a>
@@ -480,7 +483,7 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.models.recommendation.Utils#row2Sample" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="com.intel.analytics.zoo.models.recommendation.Utils#row2Sample" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="row2Sample(r:org.apache.spark.sql.Row,columnInfo:com.intel.analytics.zoo.models.recommendation.ColumnFeatureInfo,modelType:String):com.intel.analytics.bigdl.dataset.Sample[Float]"></a>
       <a id="row2Sample(Row,ColumnFeatureInfo,String):Sample[Float]"></a>
       <h4 class="signature">
@@ -496,7 +499,8 @@
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">convert a row to sample given column information of WideAndDeep model.</p><div class="fullcomment"><div class="comment cmt"><p>convert a row to sample given column information of WideAndDeep model.
+</p></div><dl class="paramcmts block"><dt class="param">r</dt><dd class="cmt"><p>Row of userId, itemId, features and label</p></dd><dt class="param">columnInfo</dt><dd class="cmt"><p>ColumnFeatureInfo specify information of different features</p></dd><dt class="param">modelType</dt><dd class="cmt"><p>support &quot;wide_n_deep&quot;, &quot;wide&quot;, &quot;deep&quot; only</p></dd><dt>returns</dt><dd class="cmt"><p>TensorSample as input for WideAndDeep model</p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>

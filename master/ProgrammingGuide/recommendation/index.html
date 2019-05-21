@@ -66,7 +66,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <p>Analytics Zoo provides two Recommender models, including Wide and Deep(WND) learning model and Neural network-based Collaborative Filtering (NCF) model. </p>
 <p><strong>Highlights</strong></p>
 <ol>
-<li>Easy-to-use models, could be fed into NNFrames or BigDL Optimizer for training.</li>
+<li>Easy-to-use Keras-Style defined models which provides compile and fit methods for training. Alternatively, they could be fed into NNFrames or BigDL Optimizer.</li>
 <li>Recommenders can handle either explict or implicit feedback, given corresponding features.</li>
 <li>It provides three user-friendly APIs to predict user item pairs, and recommend items (users) for users (items).</li>
 </ol>
@@ -86,17 +86,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <pre><code class="scala">val wideAndDeep = WideAndDeep(modelType = &quot;wide_n_deep&quot;, numClasses, columnInfo, hiddenLayers = Array(40, 20, 10))
 </code></pre>
 
-<p>Train a WND model using BigDL Optimizer.</p>
-<pre><code class="scala">val optimizer = Optimizer(
-      model = wideAndDeep,
-      sampleRDD = trainRdds,
-      criterion = ClassNLLCriterion[Float](),
-      batchSize = 8000)
-
-optimizer
-      .setOptimMethod(new Adam[Float](learningRate = 1e-2,learningRateDecay = 1e-5))
-      .setEndWhen(Trigger.maxEpoch(10))
-      .optimize()
+<p>Compile and train a WND model.</p>
+<pre><code class="scala">wideAndDeep.compile(optimizer = new Adam[Float](learningRate = 1e-2,learningRateDecay = 1e-5),
+            loss = SparseCategoricalCrossEntropy[Float](),
+            metrics = List(new Top1Accuracy[Float]()))
+wideAndDeep.fit(trainRdds, batchSize, nbEpoch, validationRdds)
 </code></pre>
 
 <p>Predict and recommend items(users) for users(items) with given features.</p>
@@ -107,19 +101,15 @@ val itemRecs = wideAndDeep.recommendForItem(validationpairFeatureRdds, 3)
 
 <p>See more details in our<a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/recommendation/WideAndDeepExample.scala">Scala example</a>.</p>
 <p><strong>Python</strong></p>
-<p>Build a WND model for recommendation. </p>
+<p>Compile and train a WND model.</p>
 <pre><code class="python">wide_n_deep = WideAndDeep(class_num, column_info, model_type=&quot;wide_n_deep&quot;, hidden_layers=(40, 20, 10))
 </code></pre>
 
 <p>Train a WND model using BigDL Optimizer </p>
-<pre><code class="python">optimizer = Optimizer(
-    model=wide_n_deep,
-    training_rdd=train_data,
-    criterion=ClassNLLCriterion(),
-    optim_method=Adam(learningrate = 0.001, learningrate_decay=0.00005),
-    end_trigger=MaxEpoch(10),
-    batch_size=batch_size)
-optimizer.optimize() 
+<pre><code class="python">wide_n_deep.compile(optimizer= Adam(learningrate = 1e-3, learningrate_decay=1e-6),
+            loss= &quot;sparse_categorical_crossentropy&quot;,
+            metrics=['accuracy'])
+wide_n_deep.fit(train_rdd, nb_epoch, batch_size, val_rdd)
 </code></pre>
 
 <p>Predict and recommend items(users) for users(items) with given features.</p>
@@ -136,17 +126,11 @@ itemRecs = wide_n_deep.recommend_for_item(valPairFeatureRdds, 3)
 <pre><code class="scala">val ncf = NeuralCF(userCount, itemCount, numClasses, userEmbed = 20, itemEmbed = 20, hiddenLayers = Array(40, 20, 10), includeMF = true, mfEmbed = 20)
 </code></pre>
 
-<p>Train a NCF model using BigDL Optimizer </p>
-<pre><code class="scala">val optimizer = Optimizer(
-      model = ncf,
-      sampleRDD = trainRdds,
-      criterion = ClassNLLCriterion[Float](),
-      batchSize = 8000)
-
-optimizer
-      .setOptimMethod(new Adam[Float](learningRate = 1e-2,learningRateDecay = 1e-5))
-      .setEndWhen(Trigger.maxEpoch(10))
-      .optimize()
+<p>Compile and train a NCF model</p>
+<pre><code class="scala">ncf.compile(optimizer = new Adam[Float](learningRate = 1e-2,learningRateDecay = 1e-5),
+    loss = SparseCategoricalCrossEntropy[Float](),
+    metrics = List(new Top1Accuracy[Float]()))
+ncf.fit(trainRdds, batchSize, nbEpoch, validationRdds)
 </code></pre>
 
 <p>Predict and recommend items(users) for users(items) with given features.</p>
@@ -161,15 +145,11 @@ val itemRecs = ncf.recommendForItem(validationpairFeatureRdds, 3)
 <pre><code class="python">ncf=NeuralCF(user_count, item_count, class_num, user_embed=20, item_embed=20, hidden_layers=(40, 20, 10), include_mf=True, mf_embed=20)
 </code></pre>
 
-<p>Train a NCF model using BigDL Optimizer </p>
-<pre><code class="python">optimizer = Optimizer(
-    model=ncf,
-    training_rdd=train_data,
-    criterion=ClassNLLCriterion(),
-    optim_method=Adam(learningrate = 0.001, learningrate_decay=0.00005),
-    end_trigger=MaxEpoch(10),
-    batch_size=batch_size)
-optimizer.optimize() 
+<p>Compile and train a NCF model</p>
+<pre><code class="python">ncf.compile(optimizer= Adam(learningrate = 1e-3, learningrate_decay=1e-6),
+    loss= &quot;sparse_categorical_crossentropy&quot;,
+    metrics=['accuracy'])
+ncf.fit(train_rdd, nb_epoch, batch_size, val_rdd)
 </code></pre>
 
 <p>Predict and recommend items(users) for users(items) with given features.</p>
