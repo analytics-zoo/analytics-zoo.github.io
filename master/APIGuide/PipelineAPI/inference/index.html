@@ -99,8 +99,24 @@ We just need to specify the model path and optionally weight path if exists wher
 <p><strong><em>loadCaffe</em></strong></p>
 <p><code>loadCaffe</code> method is to load a caffe model.</p>
 <p><strong><em>loadTF</em></strong></p>
-<p><code>loadTF</code> method is to load a tensorflow model. There are two backends to load a tensorflow model and to do the predictions: TFNet and OpenVINO. For OpenVINO backend, supported tensorflow models are listed below:</p>
-<pre><code>faster_rcnn_inception_resnet_v2_atrous_coco
+<p><code>loadTF</code> method is to load a tensorflow model. There are two backends to load a tensorflow model and to do the predictions: TFNet and OpenVINO. For OpenVINO backend, <a href="https://docs.openvinotoolkit.org/2018_R5/_docs_MO_DG_prepare_model_convert_model_Convert_Model_From_TensorFlow.html">supported tensorflow models</a> are listed below:</p>
+<pre><code>inception_v1
+inception_v2
+inception_v3
+inception_v4
+inception_resnet_v2
+mobilenet_v1
+nasnet_large
+nasnet_mobile
+resnet_v1_50
+resnet_v2_50
+resnet_v1_101
+resnet_v2_101
+resnet_v1_152
+resnet_v2_152
+vgg_16
+vgg_19
+faster_rcnn_inception_resnet_v2_atrous_coco
 faster_rcnn_inception_resnet_v2_atrous_lowproposals_coco
 faster_rcnn_inception_resnet_v2_atrous_lowproposals_oid
 faster_rcnn_inception_resnet_v2_atrous_oid
@@ -120,9 +136,14 @@ ssdlite_mobilenet_v2_coco
 </code></pre>
 <p><strong><em>loadOpenVINO</em></strong></p>
 <p><code>loadOpenVINO</code> method is to load an OpenVINO Intermediate Representation(IR).</p>
+<p><strong><em>loadOpenVINOInt8</em></strong></p>
+<p><code>loadOpenVINO</code> method is to load an OpenVINO Int8 Intermediate Representation(IR).</p>
 <p><strong>predict</strong></p>
 <p>AbstractInferenceModel provides <code>predict</code> API for prediction with loaded model.
 The predict result of<code>AbstractInferenceModel</code> is a <code>List&lt;List&lt;JTensor&gt;&gt;</code> by default.</p>
+<p><strong>predictInt8</strong></p>
+<p>AbstractInferenceModel provides <code>predictInt8</code> API for prediction with loaded int8 model.
+The predictInt8 result of<code>AbstractInferenceModel</code> is a <code>List&lt;List&lt;JTensor&gt;&gt;</code> by default.</p>
 <h2 id="examples">Examples</h2>
 <p>It's very easy to apply abstract inference model for inference with below code piece.
 You will need to write a subclass that extends AbstractinferenceModel.</p>
@@ -148,8 +169,24 @@ List&lt;List&lt;JTensor&gt;&gt; result = model.predict(inputList);
 <p><code>doLoadCaffe</code> method is to load a caffe model.</p>
 <p><strong><em>doLoadTF</em></strong></p>
 <p><code>doLoadTF</code> method is to load a tensorflow model. The model can be loaded as a <code>FloatModel</code> or an <code>OpenVINOModel</code>. There are two backends to load a tensorflow model: TFNet and OpenVINO. </p>
-<p><span id="jump">For OpenVINO backend, supported tensorflow models are listed below:</span></p>
-<pre><code>faster_rcnn_inception_resnet_v2_atrous_coco
+<p><span id="jump">For OpenVINO backend, <a href="https://docs.openvinotoolkit.org/2018_R5/_docs_MO_DG_prepare_model_convert_model_Convert_Model_From_TensorFlow.html">supported tensorflow models</a> are listed below:</span></p>
+<pre><code>inception_v1
+inception_v2
+inception_v3
+inception_v4
+inception_resnet_v2
+mobilenet_v1
+nasnet_large
+nasnet_mobile
+resnet_v1_50
+resnet_v2_50
+resnet_v1_101
+resnet_v2_101
+resnet_v1_152
+resnet_v2_152
+vgg_16
+vgg_19
+faster_rcnn_inception_resnet_v2_atrous_coco
 faster_rcnn_inception_resnet_v2_atrous_lowproposals_coco
 faster_rcnn_inception_resnet_v2_atrous_lowproposals_oid
 faster_rcnn_inception_resnet_v2_atrous_oid
@@ -169,10 +206,14 @@ ssdlite_mobilenet_v2_coco
 </code></pre>
 <p><strong><em>doLoadOpenVINO</em></strong></p>
 <p><code>doLoadOpenVINO</code> method is to load an OpenVINO Intermediate Representation(IR).</p>
+<p><strong><em>doLoadOpenVINOInt8</em></strong></p>
+<p><code>doLoadOpenVINOInt8</code> method is to load an OpenVINO Int8 Intermediate Representation(IR).</p>
 <p><strong><em>doReload</em></strong></p>
 <p><code>doReload</code> method is to reload the bigdl, analytics-zoo model.</p>
 <p><strong><em>doPredict</em></strong></p>
 <p><code>doPredict</code> method is to do the prediction.</p>
+<p><strong><em>doPredictInt8</em></strong></p>
+<p><code>doPredict</code> method is to do the prediction with Int8 model. If model doesn't support predictInt8, will throw RuntimeException with <code>does not support predictInt8</code> message.</p>
 <p><strong>InferenceSupportive</strong></p>
 <p><code>InferenceSupportive</code> is a trait containing several methods for type transformation, which transfer a model input 
 to a valid data type, thus supporting future inference model prediction tasks.</p>
@@ -182,7 +223,7 @@ to <a href="https://github.com/intel-analytics/analytics-zoo/blob/88afc2d921bb50
 <p><strong>AbstractModel</strong></p>
 <p><code>AbstractModel</code> is an abstract class to provide APIs for basic functions - <code>predict</code> interface for prediction, <code>copy</code> interface for coping the model into the queue of AbstractModels, <code>release</code> interface for releasing the model and <code>isReleased</code> interface for checking the state of model release.  </p>
 <p><strong>FloatModel</strong></p>
-<p><code>FloatModel</code> is an extending class of <code>AbstractModel</code> and achieves all <code>AbstractModel</code> interfaces.</p>
+<p><code>FloatModel</code> is an extending class of <code>AbstractModel</code> and achieves all <code>AbstractModel</code> interfaces. </p>
 <p><strong>OpenVINOModel</strong></p>
 <p><code>OpenVINOModel</code> is an extending class of <code>AbstractModel</code>. It achieves all <code>AbstractModel</code> functions.</p>
 <p><strong>InferenceModelFactory</strong></p>
