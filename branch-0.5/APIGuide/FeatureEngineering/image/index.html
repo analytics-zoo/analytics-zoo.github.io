@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Image - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Load Image", url: "#load-image", children: [
+              {title: "Load to Data Frame", url: "#load-to-data-frame" },
+              {title: "ImageSet", url: "#imageset" },
+          ]},
+          {title: "Image Transformer", url: "#image-transformer", children: [
+          ]},
+          {title: "3D Image Support", url: "#3d-image-support", children: [
+              {title: "Create ImageSet for 3D Images", url: "#create-imageset-for-3d-images" },
+              {title: "3D Image Transformers", url: "#3d-image-transformers" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Image</strong></h1>
+    <hr>
+    <p>Analytics Zoo provides a series of Image APIs for end-to-end image processing pipeline, including image loading, pre-processing, inference/training and some utilities on different formats.</p>
+<h2 id="load-image">Load Image</h2>
+<p>Analytics Zoo provides APIs to read image to different formats:</p>
+<h3 id="load-to-data-frame">Load to Data Frame</h3>
+<p>Scala:</p>
+<pre><code class="scala">package com.intel.analytics.zoo.pipeline.nnframes
+
+object NNImageReader {
+  def readImages(path: String, sc: SparkContext, minPartitions: Int = 1, resizeH: Int = -1, resizeW: Int = -1): DataFrame
+}
+</code></pre>
+
+<p>Read the directory of images from the local or remote source, return DataFrame with a single column "image" of images.</p>
+<ul>
+<li>path: Directory to the input data files, the path can be comma separated paths as the list of inputs. Wildcards path are supported similarly to sc.binaryFiles(path).</li>
+<li>sc: SparkContext to be used.</li>
+<li>minPartitions: Number of the DataFrame partitions, if omitted uses defaultParallelism instead</li>
+<li>resizeH: height after resize, by default is -1 which will not resize the image</li>
+<li>resizeW: width after resize, by default is -1 which will not resize the image</li>
+</ul>
+<p>Python:</p>
+<pre><code class="python">class zoo.pipeline.nnframes.NNImageReader
+    static readImages(path, sc=None, minPartitions=1, resizeH=-1, resizeW=-1, bigdl_type=&quot;float&quot;)
+</code></pre>
+
+<h3 id="imageset">ImageSet</h3>
+<p><code>ImageSet</code> is a collection of <code>ImageFeature</code>. It can be a <code>DistributedImageSet</code> for distributed image RDD or
+ <code>LocalImageSet</code> for local image array.
+You can read image data as <code>ImageSet</code> from local/distributed image path, or you can directly construct a ImageSet from RDD[ImageFeature] or Array[ImageFeature].</p>
+<p><strong>Scala APIs:</strong></p>
+<pre><code class="scala">object com.intel.analytics.zoo.feature.image.ImageSet
+</code></pre>
+
+<pre><code>def array(data: Array[ImageFeature]): LocalImageSet
+</code></pre>
+
+<p>Create LocalImageSet from array of ImeageFeature</p>
+<ul>
+<li>data: array of ImageFeature</li>
+</ul>
+<pre><code>def rdd(data: RDD[ImageFeature]): DistributedImageSet
+</code></pre>
+
+<p>Create DistributedImageSet from rdd of ImageFeature</p>
+<ul>
+<li>data: array of ImageFeature</li>
+</ul>
+<pre><code>  def read(path: String, sc: SparkContext = null, minPartitions: Int = 1, resizeH: Int = -1, resizeW: Int = -1): ImageSet
+</code></pre>
+
+<p>Read images as Image Set.
+If sc is defined, read image as DistributedImageSet from local file system or HDFS.
+If sc is null, Read image as LocalImageSet from local file system</p>
+<ul>
+<li>path: path to read images. If sc is defined, path can be local or HDFS. Wildcard character are supported. If sc is null, path is local directory/image file/image file with wildcard character</li>
+<li>sc: SparkContext</li>
+<li>minPartitions: A suggestion value of the minimal splitting number for input data.</li>
+<li>resizeH: height after resize, by default is -1 which will not resize the image</li>
+<li>resizeW: width after resize, by default is -1 which will not resize the image</li>
+</ul>
+<p>Example:</p>
+<pre><code>// create LocalImageSet from an image folder
+val localImageSet = ImageSet.read(&quot;/tmp/image/&quot;)
+
+// create DistributedImageSet from an image folder
+val distributedImageSet2 = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
+</code></pre>
+
+<p><strong>Python APIs:</strong></p>
+<pre><code>class zoo.feature.image.ImageSet
+</code></pre>
+
+<pre><code>read(path, sc=None, min_partitions=1, resize_height=-1, resize_width=-1, bigdl_type=&quot;float&quot;)
+</code></pre>
+
+<p>Read images as Image Set.
+If sc is defined, read image as DistributedImageSet from local file system or HDFS.
+If sc is null, Read image as LocalImageSet from local file system</p>
+<ul>
+<li>path: path to read images. If sc is defined, path can be local or HDFS. Wildcard character are supported. If sc is null, path is local directory/image file/image file with wildcard character</li>
+<li>sc: SparkContext</li>
+<li>min_partitions: A suggestion value of the minimal splitting number for input data.</li>
+<li>resize_height height after resize, by default is -1 which will not resize the image</li>
+<li>resize_width width after resize, by default is -1 which will not resize the image</li>
+</ul>
+<p>Python example:</p>
+<pre><code class="python"># create LocalImageSet from an image folder
+local_image_set2 = ImageSet.read(&quot;/tmp/image/&quot;)
+
+# create DistributedImageSet from an image folder
+distributed_image_set = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
+</code></pre>
+
+<h2 id="image-transformer">Image Transformer</h2>
+<p>Analytics Zoo provides many pre-defined image processing transformers built on top of OpenCV. After create these transformers, call <code>transform</code> with ImageSet to get transformed ImageSet. Or pass the transformer to NNEstimator/NNClassifier to preprocess before training. </p>
+<p><strong>Scala APIs:</strong></p>
+<pre><code>package com.intel.analytics.zoo.feature.image
+
+object ImageBrightness
+
+def apply(deltaLow: Double, deltaHigh: Double): ImageBrightness
+</code></pre>
+
+<p>Adjust the image brightness.</p>
+<ul>
+<li>deltaLow: low bound of brightness parameter</li>
+<li>deltaHigh: high bound of brightness parameter</li>
+</ul>
+<p>Example:</p>
+<pre><code>val transformer = ImageBrightness(0.0, 32.0)
+val transformed = imageSet.transform(transformer)
+</code></pre>
+
+<p><strong>Python APIs:</strong></p>
+<pre><code>class zoo.feature.image.imagePreprocessing.ImageBrightness
+
+def __init__(delta_low, delta_high, bigdl_type=&quot;float&quot;)
+</code></pre>
+
+<p>Adjust the image brightness.</p>
+<ul>
+<li>delta_low: low bound of brightness parameter</li>
+<li>delta_high: high bound of brightness parameter</li>
+</ul>
+<p>Example:</p>
+<pre><code>transformer = ImageBrightness(0.0, 32.0)
+transformed = imageSet.transform(transformer)
+</code></pre>
+
+<p><strong>Scala APIs:</strong></p>
+<pre><code>package com.intel.analytics.zoo.feature.image
+
+object ImageBytesToMat
+
+def apply(byteKey: String = ImageFeature.bytes,
+          imageCodec: Int = Imgcodecs.CV_LOAD_IMAGE_UNCHANGED): ImageBytesToMat
+</code></pre>
+
+<p>Transform byte array(original image file in byte) to OpenCVMat</p>
+<ul>
+<li>byteKey: key that maps byte array. Default value is ImageFeature.bytes</li>
+<li>imageCodec: specifying the color type of a loaded image, same as in OpenCV.imread.
+              1. CV_LOAD_IMAGE_ANYDEPTH - If set, return 16-bit/32-bit image when the input has the corresponding depth, otherwise convert it to 8-bit.
+              2. CV_LOAD_IMAGE_COLOR - If set, always convert image to the color one
+              3. CV_LOAD_IMAGE_GRAYSCALE - If set, always convert image to the grayscale one
+              4. &gt;0 Return a 3-channel color image.
+              Note The alpha channel is stripped from the output image. Use negative value if you need the alpha channel.
+              5. =0 Return a grayscale image.
+              6. &lt;0 Return the loaded image as is (with alpha channel).
+              Default value is Imgcodecs.CV_LOAD_IMAGE_UNCHANGED.</li>
+</ul>
+<p>Example:</p>
+<pre><code>val imageSet = ImageSet.read(path, sc)
+imageSet -&gt; ImageBytesToMat()
+</code></pre>
+
+<h2 id="3d-image-support">3D Image Support</h2>
+<h3 id="create-imageset-for-3d-images">Create ImageSet for 3D Images</h3>
+<p>For 3D images, you can still use ImageSet as the collection of ImageFeature3D. You can create ImageSet for 3D images in the similar way as for 2D images. Since we do not provide 3D image reader in analytics zoo, before create ImageSet, we suppose you already read 3D images to tensor(scala) or numpy array(python).</p>
+<p>Scala example:</p>
+<pre><code class="scala">val image = ImageFeature3D(tensor)
+
+// create local imageset for 3D images
+val arr = Array[ImageFeature](image)
+val localImageSet = ImageSet.array(arr)
+
+// create distributed imageset for 3D images
+val rdd = sc.parallelize(Seq[ImageFeature](image))
+val imageSet = ImageSet.rdd(rdd)
+</code></pre>
+
+<p>Python example:</p>
+<pre><code class="python">
+# get image numpy array
+img_np =
+
+# create local imageset for 3D images
+local_imageset = LocalImageSet(image_list=[img_np])
+
+# create distributed imageset for 3D images
+rdd = sc.parallelize([img_np])
+dist_imageSet = DistributedImageSet(image_rdd=rdd)
+</code></pre>
+
+<h3 id="3d-image-transformers">3D Image Transformers</h3>
+<p>Analytics zoo also provides several image transformers for 3D Images.
+The usage is similar as 2D image transformers. After create these transformers, call <code>transform</code> with ImageSet to get transformed ImageSet.</p>
+<p>Currently we support three kinds of 3D image transformers: Crop, Rotation and Affine Transformation.</p>
+<h4 id="crop-transformers">Crop transformers</h4>
+<h5 id="crop3d">Crop3D</h5>
+<p>Scala:</p>
+<pre><code class="scala">import com.intel.analytics.zoo.feature.image3d.Crop3D
+
+// create Crop3D transformer
+val cropper = Crop3D(start, patchSize)
+val outputImageSet = imageset.transform(cropper)
+</code></pre>
+
+<p>Crop a patch from a 3D image from 'start' of patch size. The patch size should be less than the image size.
+   * start: start point array(depth, height, width) for cropping
+   * patchSize: patch size array(depth, height, width)</p>
+<p>Python:</p>
+<pre><code class="python">from zoo.feature.image3d.transformation import Crop3D
+
+crop = Crop3D(start, patch_size)
+transformed_image = crop(image_set)
+</code></pre>
+
+<ul>
+<li>start: start point list[]depth, height, width] for cropping</li>
+<li>patch_size: patch size list[]depth, height, width]</li>
+</ul>
+<h5 id="randomcrop3d">RandomCrop3D</h5>
+<p>Scala:</p>
+<pre><code class="scala">import com.intel.analytics.zoo.feature.image3d.RandomCrop3D
+
+// create Crop3D transformer
+val cropper = RandomCrop3D(cropDepth, cropHeight, cropWidth)
+val outputImageSet = imageset.transform(cropper)
+</code></pre>
+
+<p>Crop a random patch from an 3D image with specified patch size. The patch size should be less than the image size.
+<em> cropDepth: depth after crop
+</em> cropHeight: height after crop
+* cropWidth: width after crop</p>
+<p>Python:</p>
+<pre><code class="python">from zoo.feature.image3d.transformation import RandomCrop3D
+
+crop = RandomCrop3D(crop_depth, crop_height, crop_width)
+transformed_image = crop(image_set)
+</code></pre>
+
+<ul>
+<li>crop_depth: depth after crop</li>
+<li>crop_height: height after crop</li>
+<li>crop_width: width after crop</li>
+</ul>
+<h5 id="centercrop3d">CenterCrop3D</h5>
+<p>Scala:</p>
+<pre><code class="scala">import com.intel.analytics.zoo.feature.image3d.CenterCrop3D
+
+// create Crop3D transformer
+val cropper = CenterCrop3D(cropDepth, cropHeight, cropWidth)
+val outputImageSet = imageset.transform(cropper)
+</code></pre>
+
+<p>Crop a <code>cropDepth</code> x <code>cropWidth</code> x <code>cropHeight</code> patch from center of image. The patch size should be less than the image size.
+<em> cropDepth: depth after crop
+</em> cropHeight: height after crop
+* cropWidth: width after crop</p>
+<p>Python:</p>
+<pre><code class="python">from zoo.feature.image3d.transformation import CenterCrop3D
+
+crop = CenterCrop3D(crop_depth, crop_height, crop_width)
+transformed_image = crop(image_set)
+</code></pre>
+
+<ul>
+<li>crop_depth: depth after crop</li>
+<li>crop_height: height after crop</li>
+<li>crop_width: width after crop</li>
+</ul>
+<h4 id="rotation">Rotation</h4>
+<p>Scala:</p>
+<pre><code class="scala">import com.intel.analytics.zoo.feature.image3d.Rotate3D
+
+// create Crop3D transformer
+val rotAngles = Array[Double](yaw, pitch, roll)
+val rot = Rotate3D(rotAngles)
+val outputImageSet = imageset.transform(rot)
+</code></pre>
+
+<p>Rotate a 3D image with specified angles.
+* rotationAngles: the angles for rotation.
+   Which are the yaw(a counterclockwise rotation angle about the z-axis),
+   pitch(a counterclockwise rotation angle about the y-axis),
+   and roll(a counterclockwise rotation angle about the x-axis).</p>
+<p>Python:</p>
+<pre><code class="python">from zoo.feature.image3d.transformation import Rotate3D
+
+rot = Rotate3D(rotation_angles)
+transformed_image = rot(image_set)
+</code></pre>
+
+<h4 id="affine-transformation">Affine Transformation</h4>
+<p>Scala:</p>
+<pre><code class="scala">import com.intel.analytics.zoo.feature.image3d.AffineTransform3D
+import com.intel.analytics.bigdl.tensor.Tensor
+
+// create Crop3D transformer
+val matArray = Array[Double](1, 0, 0, 0, 1.5, 1.2, 0, 1.3, 1.4)
+val matTensor = Tensor[Double](matArray, Array[Int](3, 3))
+val trans = Tensor[Double](3)
+trans(1) = 0
+trans(2) = 1.8
+trans(3) = 1.1
+val aff = AffineTransform3D(mat=matTensor, translation = trans, clampMode = &quot;clamp&quot;, padVal = 0)
+val outputImageSet = imageset.transform(aff)
+</code></pre>
+
+<p>Affine transformer implements affine transformation on a given tensor.
+To avoid defects in resampling, the mapping is from destination to source.
+dst(z,y,x) = src(f(z),f(y),f(x)) where f: dst -&gt; src</p>
+<ul>
+<li>mat: [Tensor[Double], dim: DxHxW] defines affine transformation from dst to src.</li>
+<li>translation: [Tensor[Double], dim: 3, default: (0,0,0)] defines translation in each axis.</li>
+<li>clampMode: [String, (default: "clamp",'padding')] defines how to handle interpolation off the input image.</li>
+<li>padVal: [Double, default: 0] defines padding value when clampMode="padding". Setting this value when clampMode="clamp" will cause an error.</li>
+</ul>
+<p>Python:</p>
+<pre><code class="python">from zoo.feature.image3d.transformation import AffineTransform3D
+
+affine = AffineTransform3D(affine_mat, translation, clamp_mode, pad_val)
+transformed_image = affine(image_set)
+</code></pre>
+
+<ul>
+<li>affine_mat: numpy array in 3x3 shape.Define affine transformation from dst to src.</li>
+<li>translation: numpy array in 3 dimension.Default value is np.zero(3). Define translation in each axis.</li>
+<li>clamp_mode: str, default value is "clamp". Define how to handle interpolation off the input image.</li>
+<li>pad_val: float, default is 0.0. Define padding value when clampMode="padding". Setting this value when clampMode="clamp" will cause an error.</li>
+</ul>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
