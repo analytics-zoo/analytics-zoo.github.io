@@ -90,11 +90,17 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><code>predictOutput</code>: JList[JList[JTensor]] or <a href="https://github.com/intel-analytics/BigDL/tree/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/tensor">Tensor</a> for Scale and Java, Numpy for Python. Prediction result.</li>
 </ul>
 <p><strong>OpenVINO requirements:</strong></p>
+<p><a href="https://software.intel.com/en-us/openvino-toolkit/documentation/system-requirements">System requirements</a>:</p>
+<pre><code>Ubuntu 16.04.3 LTS (64 bit)
+Windows 10 (64 bit)
+CentOS 7.4 (64 bit)
+macOS 10.13, 10.14 (64 bit)
+</code></pre>
+<p>Python requirements:</p>
 <pre><code>tensorflow&gt;=1.2.0
 networkx&gt;=1.11
 numpy&gt;=1.12.0
 protobuf==3.6.1
-onnx&gt;=1.1.2
 </code></pre>
 <p><strong>Java</strong></p>
 <p>Write a subclass that extends <code>AbstractInferenceModel</code>, implement or override methods. Then, load model with corresponding <code>load</code> methods (load Analytics Zoo, caffe, OpenVINO and TensorFlow model with <code>load</code>, <code>loadCaffe</code>, <code>doLoadOpenVINO</code> and <code>loadTF</code>), and do prediction with <code>predict</code> method. </p>
