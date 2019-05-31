@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Sequence to Sequence - Analytics Zoo</title>
+        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../../../extra.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+            ga('send', 'pageview');
+        </script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../..">Analytics Zoo</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../../..">Overview</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Releases <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../release-download/">Download</a>
+</li>
+                                    
+<li >
+    <a href="../../../release-docs/">Documentation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Python</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../PythonUserGuide/install/">Install</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/run/">Run</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/examples/">Examples</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/python-faq/">FAQ</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Scala</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ScalaUserGuide/install/">Install</a>
+</li>
+            
+<li >
+    <a href="../../../ScalaUserGuide/run/">Run</a>
+</li>
+            
+<li >
+    <a href="../../../ScalaUserGuide/examples/">Examples</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Programming Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Pipeline APIs</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/nnframes/">DataFrame and ML Pipeline</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/autograd/">Autograd</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/transferlearning/">Transfer Learning</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/inference/">Model Serving</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">TFPark API</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/tensorflow/">TFPark</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-models/">Text Models</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/bert-classifier/">BERT Classifier</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Feature Engineering</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/workingwithimages/">Working with Images</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/workingwithtexts/">Working with Texts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Built-in Models</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/object-detection/">Object Detection API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/image-classification/">Image Classification API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-classification/">Text Classification API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/recommendation/">Recommendation API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/anomaly-detection/">Anomaly Detection API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-matching/">Text Matching API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/seq2seq/">Sequence to Sequence API</a>
+</li>
+    </ul>
+  </li>
+                                    
+<li >
+    <a href="../../../ProgrammingGuide/usercases-overview/">Reference Use Cases</a>
+</li>
+                                    
+<li >
+    <a href="../../../ProgrammingGuide/run-on-dataproc/">Run on Google Cloud Dataproc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">White Paper <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../wp-bigdl/">BigDL</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">API Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Pipeline APIs</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../PipelineAPI/nnframes/">NNFrames</a>
+</li>
+            
+<li >
+    <a href="../../PipelineAPI/math/">Autograd-Math</a>
+</li>
+            
+<li >
+    <a href="../../PipelineAPI/variable/">Autograd-Variable</a>
+</li>
+            
+<li >
+    <a href="../../PipelineAPI/net/">Net</a>
+</li>
+            
+<li >
+    <a href="../../PipelineAPI/inference/">Inference</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">TFPark API</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../TFPark/model/">KerasModel</a>
+</li>
+            
+<li >
+    <a href="../../TFPark/estimator/">TFEstimator</a>
+</li>
+            
+<li >
+    <a href="../../TFPark/text-models/">Text Models</a>
+</li>
+            
+<li >
+    <a href="../../TFPark/bert-classifier/">BERT Classifier</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Feature Engineering</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../FeatureEngineering/featureset/">FeatureSet</a>
+</li>
+            
+<li >
+    <a href="../../FeatureEngineering/relation/">Relation</a>
+</li>
+            
+<li >
+    <a href="../../FeatureEngineering/image/">Image</a>
+</li>
+            
+<li >
+    <a href="../../FeatureEngineering/text/">Text</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Models</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../object-detection/">Object Detection</a>
+</li>
+            
+<li >
+    <a href="../image-classification/">Image Classification</a>
+</li>
+            
+<li >
+    <a href="../text-classification/">Text Classification</a>
+</li>
+            
+<li >
+    <a href="../recommendation/">Recommendation</a>
+</li>
+            
+<li >
+    <a href="../anomaly-detection/">Anomaly Detection</a>
+</li>
+            
+<li >
+    <a href="../text-matching/">Text Matching</a>
+</li>
+            
+<li class="active">
+    <a href="./">Sequence to Sequence</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Keras-Style API Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../KerasStyleAPIGuide/keras-api-python/">Python Guide</a>
+</li>
+                                    
+<li >
+    <a href="../../../KerasStyleAPIGuide/keras-api-scala/">Scala Guide</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Layers</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/activation/">Activation</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/initialization/">Initialization</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/core/">Core Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/convolutional/">Convolutional Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/pooling/">Pooling Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/recurrent/">Recurrent Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/normalization/">Normalization Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/embedding/">Embedding Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/dropout/">Dropout Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/advanced-activation/">Advanced Activations</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/wrappers/">Layer Wrappers</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Optimization</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Optimization/training/">Train, evaluate or predict a model</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Optimization/optimizers/">Optimizers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Optimization/objectives/">Objectives</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../../powered-by/">Powered by</a>
+                            </li>
+                            <li >
+                                <a href="../../../presentations/">Presentations</a>
+                            </li>
+                            <li >
+                                <a href="../../../known-issues/">FAQ and Known Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../text-matching/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../../../KerasStyleAPIGuide/keras-api-python/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/intel-analytics/analytics-zoo/edit/master/docs/APIGuide/Models/seq2seq.md">Edit on Fork on GitHub </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#build-a-seq2seq-model">Build a Seq2seq Model</a></li>
+            <li><a href="#build-an-encoder">Build an Encoder</a></li>
+            <li><a href="#build-a-decoder">Build a Decoder</a></li>
+            <li><a href="#build-a-bridge">Build a Bridge</a></li>
+            <li><a href="#build-a-seq2seq">Build a Seq2seq</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>Analytics Zoo provides Seq2seq model which is a general-purpose encoder-decoder framework that can be used for Chatbot, Machine Translation and more.
+The model could be fed into NNFrames or BigDL Optimizer directly for training.</p>
+<hr />
+<h2 id="build-a-seq2seq-model"><strong>Build a Seq2seq Model</strong></h2>
+<p>Before build Seq2seq Model, you need build <code>Encoder</code>, <code>Decoder</code>. And <code>Bridge</code> if you want to do some transformation before passing encoder states to decoder.</p>
+<h3 id="build-an-encoder"><strong>Build an Encoder</strong></h3>
+<p>Currently we only support <code>RNNEncoder</code> which enables you to put RNN layers into encoder.
+You can call the following API in Scala and Python respectively to create a <code>RNNEncoder</code>.</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">val encoder = RNNEncoder(rnnType, numLayer, hiddenSize, embedding)
+</code></pre>
+
+<ul>
+<li><code>rnnType</code> style of recurrent unit, one of [SimpleRNN, LSTM, GRU]</li>
+<li><code>numLayers</code> number of layers used in encoder</li>
+<li><code>hiddenSize</code> hidden size of encoder</li>
+<li><code>embedding</code> embedding layer in encoder, default is <code>null</code></li>
+</ul>
+<p>You can also define RNN layers yourself</p>
+<pre><code class="scala">val encoder = RNNEncoder(rnns, embedding, inputShape)
+</code></pre>
+
+<ul>
+<li><code>rnns</code> rnn layers used for encoder, support stacked rnn layers</li>
+<li><code>embedding</code> embedding layer in encoder, default is <code>null</code></li>
+</ul>
+<p><strong>Python</strong></p>
+<pre><code class="python">encoder = RNNEncoder.initialize(rnn_type, nlayers, hidden_size, embedding)
+</code></pre>
+
+<ul>
+<li><code>rnn_type</code> style of recurrent unit, one of [SimpleRNN, LSTM, GRU]</li>
+<li><code>nlayers</code> number of layers used in encoder</li>
+<li><code>hidden_size</code> hidden size of encoder</li>
+<li><code>embedding</code> embedding layer in encoder, default is <code>None</code></li>
+</ul>
+<p>Or</p>
+<pre><code class="python">encoder = RNNEncoder(rnns, embedding, input_shape)
+</code></pre>
+
+<ul>
+<li><code>rnns</code> rnn layers used for encoder, support stacked rnn layers</li>
+<li><code>embedding</code> embedding layer in encoder, default is <code>None</code></li>
+</ul>
+<h3 id="build-a-decoder"><strong>Build a Decoder</strong></h3>
+<p>Similar to Encoder, we only support <code>RNNDecoder</code> and API is pretty much the same with <code>RNNEncoder</code></p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">val decoder = RNNDecoder(rnnType, numLayers, hiddenSize, embedding)
+</code></pre>
+
+<ul>
+<li><code>rnnType</code> style of recurrent unit, one of [SimpleRNN, LSTM, GRU]</li>
+<li><code>numLayers</code> number of layers used in decoder</li>
+<li><code>hiddenSize</code> hidden size of decoder</li>
+<li><code>embedding</code> embedding layer in decoder, default is <code>null</code></li>
+</ul>
+<p>You can also define RNN layers yourself</p>
+<pre><code class="scala">val decoder = RNNDecoder(rnns, embedding, inputShape)
+</code></pre>
+
+<ul>
+<li><code>rnns</code> rnn layers used for decoder, support stacked rnn layers</li>
+<li><code>embedding</code> embedding layer in decoder, default is <code>null</code></li>
+</ul>
+<p><strong>Python</strong></p>
+<pre><code class="python">encoder = RNNDecoder.initialize(rnn_type, nlayers, hidden_size, embedding):
+</code></pre>
+
+<ul>
+<li><code>rnn_type</code> style of recurrent unit, one of [SimpleRNN, LSTM, GRU]</li>
+<li><code>nlayers</code> number of layers used in decoder</li>
+<li><code>hidden_size</code> hidden size of decoder</li>
+<li><code>embedding</code> embedding layer in decoder, default is <code>None</code></li>
+</ul>
+<p>Or</p>
+<pre><code class="python">decoder = RNNDecoder(rnns, embedding, input_shape)
+</code></pre>
+
+<ul>
+<li><code>rnns</code> rnn layers used for decoder, support stacked rnn layers</li>
+<li><code>embedding</code> embedding layer in decoder, default is <code>None</code></li>
+</ul>
+<h3 id="build-a-bridge"><strong>Build a Bridge</strong></h3>
+<p>By default, encoder states are directly fed into decoder. In this case, you don't need build a <code>Bridge</code>. But if you want to do some transformation before feed encoder states to decoder,
+please use following API to create a <code>Bridge</code>.</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">val bridge = Bridge(bridgeType, decoderHiddenSize)
+</code></pre>
+
+<ul>
+<li><code>bridgeType</code> currently only support "dense | densenonlinear"</li>
+<li><code>decoderHiddenSize</code> hidden size of decoder</li>
+</ul>
+<p>You can also specify various keras layers as a <code>Bridge</code></p>
+<pre><code class="scala">val bridge = Bridge(bridge)
+</code></pre>
+
+<ul>
+<li><code>bridge</code> keras layers used to do the transformation</li>
+</ul>
+<p><strong>Python</strong></p>
+<pre><code class="python">bridge = Bridge.initialize(bridge_type, decoder_hidden_size)
+</code></pre>
+
+<ul>
+<li><code>bridge_type</code>: currently only support "dense | densenonlinear"</li>
+<li><code>decoder_hidden_size</code>: hidden size of decoder</li>
+</ul>
+<p>Or</p>
+<pre><code class="python">bridge = Bridge.initialize_from_keras_layer(bridge)
+</code></pre>
+
+<ul>
+<li><code>bridge</code> keras layers used to do the transformation</li>
+</ul>
+<h3 id="build-a-seq2seq"><strong>Build a Seq2seq</strong></h3>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">val seq2seq = Seq2seq(encoder,
+    decoder,
+    inputShape,
+    outputShape,
+    bridge,
+    generator)
+</code></pre>
+
+<ul>
+<li><code>encoder</code> an encoder object</li>
+<li><code>decoder</code> a decoder object</li>
+<li><code>inputShape</code> shape of encoder input, for variable length, please input -1</li>
+<li><code>outputShape</code> shape of decoder input, for variable length, please input -1</li>
+<li><code>bridge</code> connect encoder and decoder, you can input <code>null</code></li>
+<li><code>generator</code> Feeding decoder output to generator to generate final result, <code>null</code> is supported</li>
+</ul>
+<p>See <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/chatbot">here</a> for the Scala example that trains the Seq2seq model and uses the model to do prediction.</p>
+<p><strong>Python</strong></p>
+<pre><code class="python">seq2seq = Seq2seq(encoder, decoder, input_shape, output_shape, bridge,
+                 generator)
+</code></pre>
+
+<ul>
+<li><code>encoder</code> an encoder object</li>
+<li><code>decoder</code> a decoder object</li>
+<li><code>input_shape</code> shape of encoder input, for variable length, please input -1</li>
+<li><code>output_shape</code> shape of decoder input, for variable length, please input -1</li>
+<li><code>bridge</code> connect encoder and decoder, you can input <code>null</code></li>
+<li><code>generator</code> Feeding decoder output to generator to generate final result, <code>None</code> is supported</li>
+</ul></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../../../js/base.js" defer></script>
+        <script src="../../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Pooling - Analytics Zoo</title>
+        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../../../extra.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+            ga('send', 'pageview');
+        </script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../..">Analytics Zoo</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../../..">Overview</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Releases <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../release-download/">Download</a>
+</li>
+                                    
+<li >
+    <a href="../../../release-docs/">Documentation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Python</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../PythonUserGuide/install/">Install</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/run/">Run</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/examples/">Examples</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/python-faq/">FAQ</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Scala</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ScalaUserGuide/install/">Install</a>
+</li>
+            
+<li >
+    <a href="../../../ScalaUserGuide/run/">Run</a>
+</li>
+            
+<li >
+    <a href="../../../ScalaUserGuide/examples/">Examples</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Programming Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Pipeline APIs</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/nnframes/">DataFrame and ML Pipeline</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/autograd/">Autograd</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/transferlearning/">Transfer Learning</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/inference/">Model Serving</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">TFPark API</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/tensorflow/">TFPark</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-models/">Text Models</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/bert-classifier/">BERT Classifier</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Feature Engineering</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/workingwithimages/">Working with Images</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/workingwithtexts/">Working with Texts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Built-in Models</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/object-detection/">Object Detection API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/image-classification/">Image Classification API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-classification/">Text Classification API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/recommendation/">Recommendation API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/anomaly-detection/">Anomaly Detection API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-matching/">Text Matching API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/seq2seq/">Sequence to Sequence API</a>
+</li>
+    </ul>
+  </li>
+                                    
+<li >
+    <a href="../../../ProgrammingGuide/usercases-overview/">Reference Use Cases</a>
+</li>
+                                    
+<li >
+    <a href="../../../ProgrammingGuide/run-on-dataproc/">Run on Google Cloud Dataproc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">White Paper <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../wp-bigdl/">BigDL</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">API Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Pipeline APIs</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../APIGuide/PipelineAPI/nnframes/">NNFrames</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/PipelineAPI/math/">Autograd-Math</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/PipelineAPI/variable/">Autograd-Variable</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/PipelineAPI/net/">Net</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/PipelineAPI/inference/">Inference</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">TFPark API</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../APIGuide/TFPark/model/">KerasModel</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/TFPark/estimator/">TFEstimator</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/TFPark/text-models/">Text Models</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/TFPark/bert-classifier/">BERT Classifier</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Feature Engineering</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../APIGuide/FeatureEngineering/featureset/">FeatureSet</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/FeatureEngineering/relation/">Relation</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/FeatureEngineering/image/">Image</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/FeatureEngineering/text/">Text</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Models</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../APIGuide/Models/object-detection/">Object Detection</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/Models/image-classification/">Image Classification</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/Models/text-classification/">Text Classification</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/Models/recommendation/">Recommendation</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/Models/anomaly-detection/">Anomaly Detection</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/Models/text-matching/">Text Matching</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/Models/seq2seq/">Sequence to Sequence</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Keras-Style API Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../KerasStyleAPIGuide/keras-api-python/">Python Guide</a>
+</li>
+                                    
+<li >
+    <a href="../../../KerasStyleAPIGuide/keras-api-scala/">Scala Guide</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Layers</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/activation/">Activation</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/initialization/">Initialization</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/core/">Core Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/convolutional/">Convolutional Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/pooling/">Pooling Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/recurrent/">Recurrent Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/normalization/">Normalization Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/embedding/">Embedding Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/dropout/">Dropout Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/advanced-activation/">Advanced Activations</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/wrappers/">Layer Wrappers</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Optimization</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Optimization/training/">Train, evaluate or predict a model</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Optimization/optimizers/">Optimizers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Optimization/objectives/">Objectives</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../../powered-by/">Powered by</a>
+                            </li>
+                            <li >
+                                <a href="../../../presentations/">Presentations</a>
+                            </li>
+                            <li >
+                                <a href="../../../known-issues/">FAQ and Known Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li>
+                                <a href="https://github.com/intel-analytics/analytics-zoo/edit/master/docs/Keras2StyleAPIGuide/Layers/pooling.md">Edit on Fork on GitHub </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#maxpooling1d">MaxPooling1D</a></li>
+        <li class="main "><a href="#averagepooling1d">AveragePooling1D</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="maxpooling1d"><strong>MaxPooling1D</strong></h2>
+<p>Max pooling operation for temporal data.</p>
+<p>Input shape:</p>
+<p>3D tensor with shape: <code>(batch_size, steps, features)</code>.</p>
+<p>Output shape:</p>
+<p>3D tensor with shape: <code>(batch_size, downsampled_steps, features)</code>.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">MaxPooling1D(poolSize = 2, strides = -1, padding = &quot;valid&quot;, inputShape = null)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">MaxPooling1D(pool_size=2, strides=None, padding=&quot;valid&quot;, input_shape=None, name=None)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>pool_size</code>: Integer, size of the max pooling windows. Default is 2.</li>
+<li><code>strides</code>: Integer, or None. Factor by which to downscale.
+            E.g. 2 will halve the input.
+            If None, it will be set to -1, which will be default to pool_size.</li>
+<li><code>padding</code>: One of <code>"valid"</code> or <code>"same"</code> (case-insensitive).</li>
+<li><code>input_shape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a shape object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+</ul>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala">import com.intel.analytics.bigdl.tensor.Tensor
+import com.intel.analytics.bigdl.utils.Shape
+import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
+import com.intel.analytics.zoo.pipeline.api.keras2.layers.MaxPooling1D
+
+val seq = Sequential[Float]()
+val layer = MaxPooling1D[Float](poolSize = 3, inputShape = Shape(4, 5))
+seq.add(layer)
+val input = Tensor[Float](3, 4, 5).randn()
+val output = seq.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="scala">input: com.intel.analytics.bigdl.tensor.Tensor[Float] =
+(1,.,.) =
+1.8663151   -0.23868443 -0.00667114 0.57754266  -1.1602311  
+1.453712    0.1588971   0.71542656  1.6594391   0.04762305  
+2.6128695   -0.4991936  0.37722582  0.07411593  1.8921419   
+0.85887206  0.99118704  0.717694    0.5889265   1.4998609   
+
+(2,.,.) =
+-2.3484302  -0.40476575 0.29646426  0.6123499   -2.3566647  
+-0.27840275 -0.0931928  -1.0732254  -0.28036273 -0.19488569 
+0.4438278   -0.13150546 -0.8513687  0.5319984   1.4565476   
+-1.8620179  -0.19861892 -0.14878958 1.4498321   0.016972434 
+
+(3,.,.) =
+-1.6097814  1.1128851   -1.7357148  -0.3583554  -0.6089424  
+2.1183956   0.6400526   0.26053894  -2.5416205  -0.9832211  
+0.2170545   0.28168106  -0.009057811    1.7110301   1.0579157   
+-0.46720266 -0.87794846 0.2708433   -1.6016585  0.23714945  
+
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 3x4x5]
+</code></pre>
+
+<p>Output is:</p>
+<pre><code class="scala">output: 
+(1,.,.) =
+2.6128695   0.1588971   0.71542656  1.6594391   1.8921419   
+
+(2,.,.) =
+0.4438278   -0.0931928  0.29646426  0.6123499   1.4565476   
+
+(3,.,.) =
+2.1183956   1.1128851   0.26053894  1.7110301   1.0579157   
+
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 3x1x5]
+</code></pre>
+
+<p><strong>Python example:</strong></p>
+<pre><code class="python">import numpy as np
+from zoo.pipeline.api.keras.models import Sequential
+from zoo.pipeline.api.keras2.layers import MaxPooling1D
+
+model = Sequential()
+model.add(MaxPooling1D(pool_size=3, input_shape=(4, 5)))
+input = np.random.random([3, 4, 5])
+output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="python">[[[0.65224256 0.20913976 0.37685946 0.57730155 0.66970161]
+  [0.26367096 0.94933166 0.09015655 0.15487805 0.74161953]
+  [0.55753943 0.6805039  0.42343199 0.25051912 0.59142363]
+  [0.77773199 0.57204293 0.22107977 0.54485067 0.00167209]]
+
+ [[0.12947324 0.13329145 0.95614414 0.85027407 0.5055782 ]
+  [0.40469384 0.46683239 0.57578244 0.67001174 0.53348182]
+  [0.2170539  0.51992802 0.31005515 0.67494018 0.74330305]
+  [0.48408556 0.26271    0.32412418 0.08973007 0.01880989]]
+
+ [[0.80010078 0.54220073 0.653223   0.29034995 0.11341325]
+  [0.66065103 0.49484952 0.83346121 0.47914374 0.81174956]
+  [0.29151878 0.61798409 0.74534208 0.92317947 0.54144718]
+  [0.26080681 0.41200147 0.79630472 0.6739419  0.435016  ]]]
+</code></pre>
+
+<p>Output is:</p>
+<pre><code class="python">[[[0.65224254 0.94933164 0.423432   0.57730156 0.7416195 ]]
+
+ [[0.40469384 0.51992804 0.95614415 0.8502741  0.74330306]]
+
+ [[0.8001008  0.6179841  0.8334612  0.92317945 0.8117496 ]]]
+</code></pre>
+
+<hr />
+<h2 id="averagepooling1d"><strong>AveragePooling1D</strong></h2>
+<p>Average pooling for temporal data.</p>
+<p>Input shape:</p>
+<p>3D tensor with shape: <code>(batch_size, steps, features)</code>.</p>
+<p>Output shape:</p>
+<p>3D tensor with shape: <code>(batch_size, downsampled_steps, features)</code>.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">AveragePooling1D(poolSize = 2, strides = -1, padding = &quot;valid&quot;, inputShape = null)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">AveragePooling1D(pool_size=2, strides=None, padding=&quot;valid&quot;, input_shape=None, name=None)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>pool_size</code>: Integer, size of the average pooling windows. Default is 2.</li>
+<li><code>strides</code>: Integer, or None. Factor by which to downscale.
+            E.g. 2 will halve the input.
+            If None, it will be set to -1, which will be default to pool_size.</li>
+<li><code>padding</code>: One of <code>"valid"</code> or <code>"same"</code> (case-insensitive).</li>
+<li><code>input_shape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a shape object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+</ul>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala">import com.intel.analytics.bigdl.tensor.Tensor
+import com.intel.analytics.bigdl.utils.Shape
+import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
+import com.intel.analytics.zoo.pipeline.api.keras2.layers.AveragePooling1D
+
+ val seq = Sequential[Float]()
+val layer = AveragePooling1D[Float](poolSize = 3, inputShape = Shape(4, 5))
+seq.add(layer)
+val input = Tensor[Float](3, 4, 5).randn()
+val output = seq.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="scala">input: com.intel.analytics.bigdl.tensor.Tensor[Float] =
+(1,.,.) =
+1.7240005   -0.06335294 0.6269808   0.24385877  0.014416845 
+-0.7663384  0.58187956  0.35314906  0.60641724  -0.2761965  
+1.0691774   -0.671351   0.7121989   0.7686876   0.14512675  
+-0.83099926 -0.31942126 -0.8608722  1.3061627   0.67469263  
+
+(2,.,.) =
+0.32662675  -0.8206316  -2.312093   -1.2558469  0.0048087407    
+-0.46804208 -0.008146223    -1.3610557  -0.29545167 -0.9627323  
+-0.04214055 0.073838815 0.018005485 0.22931503  -0.6118381  
+0.23300731  0.059008796 -0.58128744 -0.49869594 0.6242729   
+
+(3,.,.) =
+0.60912937  0.6315228   -0.23742959 -1.1818335  0.11456228  
+-0.4489492  0.2996443   -0.9002065  -0.53337836 -0.019300539    
+0.2350515   -1.0584278  -0.051998064    -1.2586755  0.17742781  
+1.3912749   -0.97213763 1.573626    0.36101308  0.11868247  
+
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 3x4x5]
+</code></pre>
+
+<p>Output is:</p>
+<pre><code class="scala">output: 
+(1,.,.) =
+0.67561316  -0.050941467    0.56410956  0.53965455  -0.03888431 
+
+(2,.,.) =
+-0.06118529 -0.25164634 -1.218381   -0.44066116 -0.5232539  
+
+(3,.,.) =
+0.1317439   -0.04242025 -0.3965447  -0.9912958  0.09089652  
+
+[com.intel.analytics.bigdl.tensor.DenseTensor of size 3x1x5]
+</code></pre>
+
+<p><strong>Python example:</strong></p>
+<pre><code class="python">import numpy as np
+from zoo.pipeline.api.keras.models import Sequential
+from zoo.pipeline.api.keras2.layers import AveragePooling1D
+
+model = Sequential()
+model.add(AveragePooling1D(pool_size=3, input_shape=(4, 5)))
+input = np.random.random([3, 4, 5])
+output = model.forward(input)
+</code></pre>
+
+<p>Input is:</p>
+<pre><code class="python">[[[0.52804108 0.69499686 0.42818504 0.2107447  0.39879583]
+  [0.01134639 0.74244503 0.71352988 0.4656967  0.56990969]
+  [0.60781477 0.34275853 0.09997229 0.15758047 0.38226729]
+  [0.8884477  0.57125125 0.19161781 0.70570558 0.38504297]]
+
+ [[0.68505125 0.10344407 0.26294358 0.84476828 0.37145984]
+  [0.5073895  0.17534648 0.88501456 0.12600059 0.43856957]
+  [0.74562707 0.25003322 0.34860707 0.16645732 0.04184937]
+  [0.5352171  0.85188837 0.64421649 0.51544795 0.7619103 ]]
+
+ [[0.08110649 0.84742271 0.08083711 0.43689189 0.21256946]
+  [0.24837393 0.53503375 0.41418659 0.34652157 0.00923598]
+  [0.89420575 0.60971584 0.7718259  0.06192155 0.09029334]
+  [0.72170843 0.0589505  0.78960517 0.9543299  0.2462495 ]]]
+</code></pre>
+
+<p>Output is:</p>
+<pre><code class="python">[[[0.38240075 0.5934002  0.41389573 0.2780073  0.4503243 ]]
+
+ [[0.6460226  0.17627458 0.49885502 0.3790754  0.2839596 ]]
+
+ [[0.40789542 0.66405743 0.4222832  0.2817783  0.10403293]]]
+</code></pre></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../../../js/base.js" defer></script>
+        <script src="../../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

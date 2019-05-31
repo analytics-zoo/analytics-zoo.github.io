@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Text Models - Analytics Zoo</title>
+        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../../../extra.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+            ga('send', 'pageview');
+        </script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../..">Analytics Zoo</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../../..">Overview</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Releases <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../release-download/">Download</a>
+</li>
+                                    
+<li >
+    <a href="../../../release-docs/">Documentation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Python</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../PythonUserGuide/install/">Install</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/run/">Run</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/examples/">Examples</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/python-faq/">FAQ</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Scala</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ScalaUserGuide/install/">Install</a>
+</li>
+            
+<li >
+    <a href="../../../ScalaUserGuide/run/">Run</a>
+</li>
+            
+<li >
+    <a href="../../../ScalaUserGuide/examples/">Examples</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Programming Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Pipeline APIs</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/nnframes/">DataFrame and ML Pipeline</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/autograd/">Autograd</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/transferlearning/">Transfer Learning</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/inference/">Model Serving</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">TFPark API</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/tensorflow/">TFPark</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-models/">Text Models</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/bert-classifier/">BERT Classifier</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Feature Engineering</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/workingwithimages/">Working with Images</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/workingwithtexts/">Working with Texts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Built-in Models</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/object-detection/">Object Detection API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/image-classification/">Image Classification API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-classification/">Text Classification API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/recommendation/">Recommendation API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/anomaly-detection/">Anomaly Detection API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-matching/">Text Matching API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/seq2seq/">Sequence to Sequence API</a>
+</li>
+    </ul>
+  </li>
+                                    
+<li >
+    <a href="../../../ProgrammingGuide/usercases-overview/">Reference Use Cases</a>
+</li>
+                                    
+<li >
+    <a href="../../../ProgrammingGuide/run-on-dataproc/">Run on Google Cloud Dataproc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">White Paper <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../wp-bigdl/">BigDL</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">API Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Pipeline APIs</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../PipelineAPI/nnframes/">NNFrames</a>
+</li>
+            
+<li >
+    <a href="../../PipelineAPI/math/">Autograd-Math</a>
+</li>
+            
+<li >
+    <a href="../../PipelineAPI/variable/">Autograd-Variable</a>
+</li>
+            
+<li >
+    <a href="../../PipelineAPI/net/">Net</a>
+</li>
+            
+<li >
+    <a href="../../PipelineAPI/inference/">Inference</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">TFPark API</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../model/">KerasModel</a>
+</li>
+            
+<li >
+    <a href="../estimator/">TFEstimator</a>
+</li>
+            
+<li class="active">
+    <a href="./">Text Models</a>
+</li>
+            
+<li >
+    <a href="../bert-classifier/">BERT Classifier</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Feature Engineering</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../FeatureEngineering/featureset/">FeatureSet</a>
+</li>
+            
+<li >
+    <a href="../../FeatureEngineering/relation/">Relation</a>
+</li>
+            
+<li >
+    <a href="../../FeatureEngineering/image/">Image</a>
+</li>
+            
+<li >
+    <a href="../../FeatureEngineering/text/">Text</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Models</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../Models/object-detection/">Object Detection</a>
+</li>
+            
+<li >
+    <a href="../../Models/image-classification/">Image Classification</a>
+</li>
+            
+<li >
+    <a href="../../Models/text-classification/">Text Classification</a>
+</li>
+            
+<li >
+    <a href="../../Models/recommendation/">Recommendation</a>
+</li>
+            
+<li >
+    <a href="../../Models/anomaly-detection/">Anomaly Detection</a>
+</li>
+            
+<li >
+    <a href="../../Models/text-matching/">Text Matching</a>
+</li>
+            
+<li >
+    <a href="../../Models/seq2seq/">Sequence to Sequence</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Keras-Style API Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../KerasStyleAPIGuide/keras-api-python/">Python Guide</a>
+</li>
+                                    
+<li >
+    <a href="../../../KerasStyleAPIGuide/keras-api-scala/">Scala Guide</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Layers</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/activation/">Activation</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/initialization/">Initialization</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/core/">Core Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/convolutional/">Convolutional Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/pooling/">Pooling Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/recurrent/">Recurrent Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/normalization/">Normalization Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/embedding/">Embedding Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/dropout/">Dropout Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/advanced-activation/">Advanced Activations</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/wrappers/">Layer Wrappers</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Optimization</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Optimization/training/">Train, evaluate or predict a model</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Optimization/optimizers/">Optimizers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Optimization/objectives/">Objectives</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../../powered-by/">Powered by</a>
+                            </li>
+                            <li >
+                                <a href="../../../presentations/">Presentations</a>
+                            </li>
+                            <li >
+                                <a href="../../../known-issues/">FAQ and Known Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../estimator/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../bert-classifier/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/intel-analytics/analytics-zoo/edit/master/docs/APIGuide/TFPark/text-models.md">Edit on Fork on GitHub </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#intent-extraction">Intent Extraction</a></li>
+        <li class="main "><a href="#named-entity-recognition">Named Entity Recognition</a></li>
+        <li class="main "><a href="#pos-tagging">POS Tagging</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>There are a number of built-in <strong>compiled</strong> text models in Analytics Zoo TFPark for Natural Language Processing (NLP) tasks based on <a href="../TFPark/model/">KerasModel</a>.</p>
+<p>After constructing a text model, you can directly call <a href="../TFPark/model/#fit">fit</a>, <a href="../TFPark/model/#evaluate">evaluate</a> or <a href="../TFPark/model/#predict">predict</a> 
+in a distributed fashion. 
+See <a href="../../ProgrammingGuide/text-models/">here</a> for more instructions.</p>
+<p><strong>Remarks</strong>:</p>
+<ul>
+<li>You need to install <strong>tensorflow==1.10</strong> on your driver node.</li>
+<li>Your operating system (OS) is required to be one of the following 64-bit systems:
+<strong>Ubuntu 16.04 or later</strong>, <strong>macOS 10.12.6 or later</strong> and <strong>Windows 7 or later</strong>.</li>
+<li>To run on other systems, you need to manually compile the TensorFlow source code. Instructions can
+  be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</li>
+</ul>
+<hr />
+<h2 id="intent-extraction"><strong>Intent Extraction</strong></h2>
+<p>This is a multi-task model used for joint intent extraction and slot filling.</p>
+<p>This model has two inputs:</p>
+<ul>
+<li>word indices of shape (batch, sequence_length)</li>
+<li>character indices of shape (batch, sequence_length, word_length)</li>
+</ul>
+<p>This model has two outputs:</p>
+<ul>
+<li>intent labels of shape (batch, num_intents)</li>
+<li>entity tags of shape (batch, sequence_length, num_entities)</li>
+</ul>
+<pre><code class="python">from zoo.tfpark.text.keras import IntentEntity
+
+model = IntentEntity(num_intents, num_entities, word_vocab_size, char_vocab_size, word_length=12, word_emb_dim=100, char_emb_dim=30, char_lstm_dim=30, tagger_lstm_dim=100, dropout=0.2, optimizer=None)
+</code></pre>
+
+<ul>
+<li><code>num_intents</code>: Positive int. The number of intent classes to be classified.</li>
+<li><code>num_entities</code>: Positive int. The number of slot labels to be classified.</li>
+<li><code>word_vocab_size</code>: Positive int. The size of the word dictionary.</li>
+<li><code>char_vocab_size</code>: Positive int. The size of the character dictionary.</li>
+<li><code>word_length</code>: Positive int. The max word length in characters. Default is 12.</li>
+<li><code>word_emb_dim</code>: Positive int. The dimension of word embeddings. Default is 100.</li>
+<li><code>char_emb_dim</code>: Positive int. The dimension of character embeddings. Default is 30.</li>
+<li><code>char_lstm_dim</code>: Positive int. The hidden size of character feature Bi-LSTM layer. Default is 30.</li>
+<li><code>tagger_lstm_dim</code>: Positive int. The hidden size of tagger Bi-LSTM layers. Default is 100.</li>
+<li><code>dropout</code>: Dropout rate. Default is 0.2.</li>
+<li><code>optimizer</code>: Optimizer to train the model. If not specified, it will by default to be tf.train.AdamOptimizer().</li>
+</ul>
+<p><strong>Model Save and Load</strong></p>
+<p>Save the <code>IntentEntity</code> model to a single HDF5 file.</p>
+<pre><code class="python">model.save_model(path)
+</code></pre>
+
+<p>Load an existing <code>IntentEntity</code> model (with weights) from HDF5 file.</p>
+<pre><code class="python">from zoo.tfpark.text.keras import IntentEntity
+
+model = IntentEntity.load_model(path)
+</code></pre>
+
+<hr />
+<h2 id="named-entity-recognition"><strong>Named Entity Recognition</strong></h2>
+<p>This model is used for named entity recognition using Bidirectional LSTM with
+Conditional Random Field (CRF) sequence classifier.</p>
+<p>This model has two inputs:</p>
+<ul>
+<li>word indices of shape (batch, sequence_length)</li>
+<li>character indices of shape (batch, sequence_length, word_length)</li>
+</ul>
+<p>This model outputs entity tags of shape (batch, sequence_length, num_entities).</p>
+<pre><code class="python">from zoo.tfpark.text.keras import NER
+
+model = NER(num_entities, word_vocab_size, char_vocab_size, word_length=12, word_emb_dim=100, char_emb_dim=30, tagger_lstm_dim=100, dropout=0.5, crf_mode='reg', optimizer=None)
+</code></pre>
+
+<ul>
+<li><code>num_entities</code>: Positive int. The number of entity labels to be classified.</li>
+<li><code>word_vocab_size</code>: Positive int. The size of the word dictionary.</li>
+<li><code>char_vocab_size</code>: Positive int. The size of the character dictionary.</li>
+<li><code>word_length</code>: Positive int. The max word length in characters. Default is 12.</li>
+<li><code>word_emb_dim</code>: Positive int. The dimension of word embeddings. Default is 100.</li>
+<li><code>char_emb_dim</code>: Positive int. The dimension of character embeddings. Default is 30.</li>
+<li><code>tagger_lstm_dim</code>: Positive int. The hidden size of tagger Bi-LSTM layers. Default is 100.</li>
+<li><code>dropout</code>: Dropout rate. Default is 0.5.</li>
+<li><code>crf_mode</code>: String. CRF operation mode. Either 'reg' or 'pad'. Default is 'reg'. 
+                     'reg' for regular full sequence learning (all sequences have equal length). 
+                     'pad' for supplied sequence lengths (useful for padded sequences). 
+                     For 'pad' mode, a third input for sequence_length (batch, 1) is needed.</li>
+<li><code>optimizer</code>: Optimizer to train the model. If not specified, it will by default to be tf.keras.optimizers.Adam(0.001, clipnorm=5.).</li>
+</ul>
+<p><strong>Model Save and Load</strong></p>
+<p>Save the <code>NER</code> model to a single HDF5 file.</p>
+<pre><code class="python">model.save_model(path)
+</code></pre>
+
+<p>Load an existing <code>NER</code> model (with weights) from HDF5 file.</p>
+<pre><code class="python">from zoo.tfpark.text.keras import NER
+
+model = NER.load_model(path)
+</code></pre>
+
+<hr />
+<h2 id="pos-tagging"><strong>POS Tagging</strong></h2>
+<p>This model is used as Part-Of-Speech(POS)-tagger and chunker for sentence tagging, which contains three
+Bidirectional LSTM layers.</p>
+<p>This model can have one or two input(s):</p>
+<ul>
+<li>word indices of shape (batch, sequence_length)</li>
+<li>character indices of shape (batch, sequence_length, word_length) (if char_vocab_size is not None)</li>
+</ul>
+<p>This model has two outputs:</p>
+<ul>
+<li>pos tags of shape (batch, sequence_length, num_pos_labels)</li>
+<li>chunk tags of shape (batch, sequence_length, num_chunk_labels)</li>
+</ul>
+<pre><code class="python">from zoo.tfpark.text.keras import SequenceTagger
+
+model = NER(num_pos_labels, num_chunk_labels, word_vocab_size, char_vocab_size=None, word_length=12, feature_size=100, dropout=0.2, classifier='softmax', optimizer=None)
+</code></pre>
+
+<ul>
+<li><code>num_pos_labels</code>: Positive int. The number of pos labels to be classified.</li>
+<li><code>num_chunk_labels</code>: Positive int. The number of chunk labels to be classified.</li>
+<li><code>word_vocab_size</code>: Positive int. The size of the word dictionary.</li>
+<li><code>char_vocab_size</code>: Positive int. The size of the character dictionary.
+Default is None and in this case only one input, namely word indices is expected.</li>
+<li><code>word_length</code>: Positive int. The max word length in characters. Default is 12.</li>
+<li><code>feature_size</code>: Positive int. The size of Embedding and Bi-LSTM layers. Default is 100.</li>
+<li><code>dropout</code>: Dropout rate. Default is 0.5.</li>
+<li><code>classifier</code>: String. The classification layer used for tagging chunks. 
+Either 'softmax' or 'crf' (Conditional Random Field). Default is 'softmax'.</li>
+<li><code>optimizer</code>: Optimizer to train the model. If not specified, it will by default to be tf.train.AdamOptimizer().</li>
+</ul>
+<p><strong>Model Save and Load</strong></p>
+<p>Save the <code>SequenceTagger</code> model to a single HDF5 file.</p>
+<pre><code class="python">model.save_model(path)
+</code></pre>
+
+<p>Load an existing <code>SequenceTagger</code> model (with weights) from HDF5 file.</p>
+<pre><code class="python">from zoo.tfpark.text.keras import SequenceTagger
+
+model = SequenceTagger.load_model(path)
+</code></pre></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../../../js/base.js" defer></script>
+        <script src="../../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

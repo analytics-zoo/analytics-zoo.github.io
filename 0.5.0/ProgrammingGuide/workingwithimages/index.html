@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Working with Images - Analytics Zoo</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../../extra.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+            ga('send', 'pageview');
+        </script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">Analytics Zoo</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../..">Overview</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Releases <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../release-download/">Download</a>
+</li>
+                                    
+<li >
+    <a href="../../release-docs/">Documentation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Python</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../PythonUserGuide/install/">Install</a>
+</li>
+            
+<li >
+    <a href="../../PythonUserGuide/run/">Run</a>
+</li>
+            
+<li >
+    <a href="../../PythonUserGuide/examples/">Examples</a>
+</li>
+            
+<li >
+    <a href="../../PythonUserGuide/python-faq/">FAQ</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Scala</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../ScalaUserGuide/install/">Install</a>
+</li>
+            
+<li >
+    <a href="../../ScalaUserGuide/run/">Run</a>
+</li>
+            
+<li >
+    <a href="../../ScalaUserGuide/examples/">Examples</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Programming Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Pipeline APIs</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../nnframes/">DataFrame and ML Pipeline</a>
+</li>
+            
+<li >
+    <a href="../autograd/">Autograd</a>
+</li>
+            
+<li >
+    <a href="../transferlearning/">Transfer Learning</a>
+</li>
+            
+<li >
+    <a href="../inference/">Model Serving</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">TFPark API</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../tensorflow/">TFPark</a>
+</li>
+            
+<li >
+    <a href="../text-models/">Text Models</a>
+</li>
+            
+<li >
+    <a href="../bert-classifier/">BERT Classifier</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Feature Engineering</a>
+    <ul class="dropdown-menu">
+            
+<li class="active">
+    <a href="./">Working with Images</a>
+</li>
+            
+<li >
+    <a href="../workingwithtexts/">Working with Texts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Built-in Models</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../object-detection/">Object Detection API</a>
+</li>
+            
+<li >
+    <a href="../image-classification/">Image Classification API</a>
+</li>
+            
+<li >
+    <a href="../text-classification/">Text Classification API</a>
+</li>
+            
+<li >
+    <a href="../recommendation/">Recommendation API</a>
+</li>
+            
+<li >
+    <a href="../anomaly-detection/">Anomaly Detection API</a>
+</li>
+            
+<li >
+    <a href="../text-matching/">Text Matching API</a>
+</li>
+            
+<li >
+    <a href="../seq2seq/">Sequence to Sequence API</a>
+</li>
+    </ul>
+  </li>
+                                    
+<li >
+    <a href="../usercases-overview/">Reference Use Cases</a>
+</li>
+                                    
+<li >
+    <a href="../run-on-dataproc/">Run on Google Cloud Dataproc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">White Paper <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../wp-bigdl/">BigDL</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">API Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Pipeline APIs</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../APIGuide/PipelineAPI/nnframes/">NNFrames</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/PipelineAPI/math/">Autograd-Math</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/PipelineAPI/variable/">Autograd-Variable</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/PipelineAPI/net/">Net</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/PipelineAPI/inference/">Inference</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">TFPark API</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../APIGuide/TFPark/model/">KerasModel</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/TFPark/estimator/">TFEstimator</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/TFPark/text-models/">Text Models</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/TFPark/bert-classifier/">BERT Classifier</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Feature Engineering</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../APIGuide/FeatureEngineering/featureset/">FeatureSet</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/FeatureEngineering/relation/">Relation</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/FeatureEngineering/image/">Image</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/FeatureEngineering/text/">Text</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Models</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../APIGuide/Models/object-detection/">Object Detection</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/Models/image-classification/">Image Classification</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/Models/text-classification/">Text Classification</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/Models/recommendation/">Recommendation</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/Models/anomaly-detection/">Anomaly Detection</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/Models/text-matching/">Text Matching</a>
+</li>
+            
+<li >
+    <a href="../../APIGuide/Models/seq2seq/">Sequence to Sequence</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Keras-Style API Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../KerasStyleAPIGuide/keras-api-python/">Python Guide</a>
+</li>
+                                    
+<li >
+    <a href="../../KerasStyleAPIGuide/keras-api-scala/">Scala Guide</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Layers</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Layers/activation/">Activation</a>
+</li>
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Layers/initialization/">Initialization</a>
+</li>
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Layers/core/">Core Layers</a>
+</li>
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Layers/convolutional/">Convolutional Layers</a>
+</li>
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Layers/pooling/">Pooling Layers</a>
+</li>
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Layers/recurrent/">Recurrent Layers</a>
+</li>
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Layers/normalization/">Normalization Layers</a>
+</li>
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Layers/embedding/">Embedding Layers</a>
+</li>
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Layers/dropout/">Dropout Layers</a>
+</li>
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Layers/advanced-activation/">Advanced Activations</a>
+</li>
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Layers/wrappers/">Layer Wrappers</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Optimization</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Optimization/training/">Train, evaluate or predict a model</a>
+</li>
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Optimization/optimizers/">Optimizers</a>
+</li>
+            
+<li >
+    <a href="../../KerasStyleAPIGuide/Optimization/objectives/">Objectives</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../powered-by/">Powered by</a>
+                            </li>
+                            <li >
+                                <a href="../../presentations/">Presentations</a>
+                            </li>
+                            <li >
+                                <a href="../../known-issues/">FAQ and Known Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../bert-classifier/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../workingwithtexts/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/intel-analytics/analytics-zoo/edit/master/docs/ProgrammingGuide/workingwithimages.md">Edit on Fork on GitHub </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#load-image">Load Image</a></li>
+            <li><a href="#load-to-data-frame">Load to Data Frame</a></li>
+            <li><a href="#load-to-imageset">Load to ImageSet</a></li>
+        <li class="main "><a href="#image-transformer">Image Transformer</a></li>
+        <li class="main "><a href="#build-image-transformation-pipeline">Build Image Transformation Pipeline</a></li>
+        <li class="main "><a href="#image-train">Image Train</a></li>
+            <li><a href="#train-with-image-dataframe">Train with Image DataFrame</a></li>
+            <li><a href="#train-with-imageset">Train with ImageSet</a></li>
+        <li class="main "><a href="#image-predict">Image Predict</a></li>
+            <li><a href="#predict-with-image-dataframe">Predict with Image DataFrame</a></li>
+            <li><a href="#predict-with-imageset">Predict with ImageSet</a></li>
+        <li class="main "><a href="#3d-image-support">3D Image Support</a></li>
+        <li class="main "><a href="#caching-images-in-persistent-memory">Caching Images in Persistent Memory</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>Analytics Zoo provides supports for end-to-end image processing pipeline, including image loading, pre-processing, inference/training and some utilities on different formats.</p>
+<h2 id="load-image">Load Image</h2>
+<p>Analytics Zoo provides APIs to read image to different formats:</p>
+<h3 id="load-to-data-frame">Load to Data Frame</h3>
+<p>Analytics Zoo can process image data as Spark Data Frame.
+<code>NNImageReader</code> is the primary DataFrame-based image loading interface to read images into DataFrame.</p>
+<p>Scala example:</p>
+<pre><code class="scala">import com.intel.analytics.zoo.common.NNContext
+import com.intel.analytics.zoo.pipeline.nnframes.NNImageReader
+
+val sc = NNContext.initNNContext(&quot;app&quot;)
+val imageDF1 = NNImageReader.readImages(&quot;/tmp&quot;, sc)
+val imageDF2 = NNImageReader.readImages(&quot;/tmp/*.jpg&quot;, sc)
+val imageDF3 = NNImageReader.readImages(&quot;/tmp/a.jpg, /tmp/b.jpg&quot;, sc)
+
+</code></pre>
+
+<p>Python:</p>
+<pre><code class="python">from zoo.common.nncontext import *
+from zoo.pipeline.nnframes import *
+
+sc = init_nncontext(&quot;app&quot;)
+imageDF1 = NNImageReader.readImages(&quot;/tmp&quot;, sc)
+imageDF2 = NNImageReader.readImages(&quot;/tmp/*.jpg&quot;, sc)
+imageDF3 = NNImageReader.readImages(&quot;/tmp/a.jpg, /tmp/b.jpg&quot;, sc)
+</code></pre>
+
+<p>The output DataFrame contains a sinlge column named "image". The schema of "image" column can be
+accessed from <code>com.intel.analytics.zoo.pipeline.nnframes.DLImageSchema.byteSchema</code>.
+Each record in "image" column represents one image record, in the format of
+Row(origin, height, width, num of channels, mode, data), where origin contains the URI for the image file,
+and <code>data</code> holds the original file bytes for the image file. <code>mode</code> represents the OpenCV-compatible
+type: CV_8UC3, CV_8UC1 in most cases.</p>
+<pre><code class="scala">  val byteSchema = StructType(
+    StructField(&quot;origin&quot;, StringType, true) ::
+      StructField(&quot;height&quot;, IntegerType, false) ::
+      StructField(&quot;width&quot;, IntegerType, false) ::
+      StructField(&quot;nChannels&quot;, IntegerType, false) ::
+      // OpenCV-compatible type: CV_8UC3, CV_32FC3 in most cases
+      StructField(&quot;mode&quot;, IntegerType, false) ::
+      // Bytes in OpenCV-compatible order: row-wise BGR in most cases
+      StructField(&quot;data&quot;, BinaryType, false) :: Nil)
+</code></pre>
+
+<p>After loading the image, user can compose the preprocess steps with the <code>Preprocessing</code> defined
+in <code>com.intel.analytics.zoo.feature.image</code>.</p>
+<h3 id="load-to-imageset">Load to ImageSet</h3>
+<p><code>ImageSet</code> is a collection of <code>ImageFeature</code>. It can be a <code>DistributedImageSet</code> for distributed image RDD or
+ <code>LocalImageSet</code> for local image array.
+You can read image data as <code>ImageSet</code> from local/distributed image path, or you can directly construct a ImageSet from RDD[ImageFeature] or Array[ImageFeature].</p>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala">// create LocalImageSet from an image folder
+val localImageSet = ImageSet.read(&quot;/tmp/image/&quot;)
+
+// create DistributedImageSet from an image folder
+val distributedImageSet2 = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
+</code></pre>
+
+<p><strong>Python example:</strong></p>
+<pre><code class="python"># create LocalImageSet from an image folder
+local_image_frame2 = ImageSet.read(&quot;/tmp/image/&quot;)
+
+# create DistributedImageSet from an image folder
+distributed_image_frame = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
+</code></pre>
+
+<h2 id="image-transformer">Image Transformer</h2>
+<p>Analytics Zoo has many pre-defined image processing transformers built on top of OpenCV:</p>
+<ul>
+<li><code>ImageBrightness</code>: Adjust the image brightness.</li>
+<li><code>ImageHue</code>: Adjust the image hue.</li>
+<li><code>ImageSaturation</code>: Adjust the image Saturation.</li>
+<li><code>ImageContrast</code>: Adjust the image Contrast.</li>
+<li><code>ImageChannelOrder</code>: Random change the channel order of an image</li>
+<li><code>ImageColorJitter</code>: Random adjust brightness, contrast, hue, saturation</li>
+<li><code>ImageResize</code>: Resize image</li>
+<li><code>ImageAspectScale</code>: Resize the image, keep the aspect ratio. scale according to the short edge</li>
+<li><code>ImageRandomAspectScale</code>: Resize the image by randomly choosing a scale</li>
+<li><code>ImageChannelNormalize</code>: Image channel normalize</li>
+<li><code>ImagePixelNormalizer</code>: Pixel level normalizer</li>
+<li><code>ImageCenterCrop</code>: Crop a <code>cropWidth</code> x <code>cropHeight</code> patch from center of image.</li>
+<li><code>ImageRandomCrop</code>: Random crop a <code>cropWidth</code> x <code>cropHeight</code> patch from an image.</li>
+<li><code>ImageFixedCrop</code>: Crop a fixed area of image</li>
+<li><code>ImageDetectionCrop</code>: Crop from object detections, each image should has a tensor detection,</li>
+<li><code>ImageExpand</code>: Expand image, fill the blank part with the meanR, meanG, meanB</li>
+<li><code>ImageFiller</code>: Fill part of image with certain pixel value</li>
+<li><code>ImageHFlip</code>: Flip the image horizontally</li>
+<li><code>ImageRandomPreprocessing</code>: It is a wrapper for transformers to control the transform probability</li>
+<li><code>ImageBytesToMat</code>: Transform byte array(original image file in byte) to OpenCVMat</li>
+<li><code>ImageMatToFloats</code>: Transform OpenCVMat to float array, note that in this transformer, the mat is released.</li>
+<li><code>ImageMatToTensor</code>: Transform opencv mat to tensor, note that in this transformer, the mat is released.</li>
+<li><code>ImageSetToSample</code>: Transforms tensors that map inputKeys and targetKeys to sample, note that in this transformer, the mat has been released.</li>
+</ul>
+<p>More examples can be found <a href="../../APIGuide/FeatureEngineering/image/">here</a></p>
+<p>You can also define your own Transformer by extending <code>ImageProcessing</code>,
+and override the function <code>transformMat</code> to do the actual transformation to <code>ImageFeature</code>.</p>
+<h2 id="build-image-transformation-pipeline"><strong>Build Image Transformation Pipeline</strong></h2>
+<p>You can easily build the image transformation pipeline by chaining transformers.</p>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala">import com.intel.analytics.bigdl.numeric.NumericFloat
+import com.intel.analytics.zoo.feature.image._
+
+
+val imgAug = ImageBytesToMat() -&gt; ImageResize(256, 256)-&gt; ImageCenterCrop(224, 224) -&gt;
+             ImageChannelNormalize(123, 117, 104) -&gt;
+             ImageMatToTensor[Float]() -&gt;
+             ImageSetToSample[Float]()
+</code></pre>
+
+<p>In the above example, the transformations will perform sequentially.</p>
+<p>Assume you have an ImageSet containing original bytes array,</p>
+<ul>
+<li>
+<p><code>ImageBytesToMat</code> will transform the bytes array to <code>OpenCVMat</code>.</p>
+</li>
+<li>
+<p><code>ImageColorJitter</code>, <code>ImageExpand</code>, <code>ImageResize</code>, <code>ImageHFlip</code> and <code>ImageChannelNormalize</code> will transform over <code>OpenCVMat</code>,
+note that <code>OpenCVMat</code> is overwrite by default.</p>
+</li>
+<li>
+<p><code>ImageMatToTensor</code> transform <code>OpenCVMat</code> to <code>Tensor</code>, and <code>OpenCVMat</code> is released in this step.</p>
+</li>
+<li>
+<p><code>ImageSetToSample</code> transform the tensors that map inputKeys and targetKeys to sample,
+which can be used by the following prediction or training tasks.</p>
+</li>
+</ul>
+<p><strong>Python example:</strong></p>
+<pre><code class="python">from zoo.feature.image.imagePreprocessing import *
+from zoo.feature.common import ChainedPreprocessing
+
+img_aug = ChainedPreprocessing([ImageBytesToMat(),
+      ImageColorJitter(),
+      ImageExpand(),
+      ImageResize(300, 300, -1),
+      ImageHFlip(),
+      ImageChannelNormalize(123.0, 117.0, 104.0),
+      ImageMatToTensor(),
+      ImageSetToSample()])
+</code></pre>
+
+<h2 id="image-train"><strong>Image Train</strong></h2>
+<h3 id="train-with-image-dataframe">Train with Image DataFrame</h3>
+<p>You can use NNEstimator/NNCLassifier to train Zoo Keras/BigDL model with Image DataFrame. You can pass in image preprocessing to NNEstimator/NNClassifier to do image preprocessing before training. Then call <code>fit</code> method to let Analytics Zoo train the model</p>
+<p>For detail APIs, please refer to: <a href="../../APIGuide/PipelineAPI/nnframes/">NNFrames</a></p>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala">val batchsize = 128
+val nEpochs = 10
+val featureTransformer = RowToImageFeature() -&gt; ImageResize(256, 256) -&gt;
+                                   ImageCenterCrop(224, 224) -&gt;
+                                   ImageChannelNormalize(123, 117, 104) -&gt;
+                                   ImageMatToTensor() -&gt;
+                                   ImageFeatureToTensor()
+val classifier = NNClassifier(model, CrossEntropyCriterion[Float](), featureTransformer)
+        .setFeaturesCol(&quot;image&quot;)
+        .setLearningRate(0.003)
+        .setBatchSize(batchsize)
+        .setMaxEpoch(nEpochs)
+        .setValidation(Trigger.everyEpoch, valDf, Array(new Top1Accuracy()), batchsize)
+val trainedModel = classifier.fit(trainDf)
+</code></pre>
+
+<p><strong>Python example:</strong></p>
+<pre><code class="python">batchsize = 128
+nEpochs = 10
+featureTransformer = ChainedPreprocessing([RowToImageFeature(), ImageResize(256, 256),
+                                   ImageCenterCrop(224, 224),
+                                   ImageChannelNormalize(123, 117, 104),
+                                   ImageMatToTensor(),
+                                   ImageFeatureToTensor()])
+classifier = NNClassifier(model, CrossEntropyCriterion(), featureTransformer)\
+        .setFeaturesCol(&quot;image&quot;)\
+        .setLearningRate(0.003)\
+        .setBatchSize(batchsize)\
+        .setMaxEpoch(nEpochs)\
+        .setValidation(EveryEpoch(), valDf, [Top1Accuracy()], batch_size)
+trainedModel = classifier.fit(trainDf)
+</code></pre>
+
+<h3 id="train-with-imageset">Train with ImageSet</h3>
+<p>You can train Zoo Keras model with ImageSet. Just call <code>fit</code> method to let Analytics Zoo train the model.</p>
+<p><strong>Python example:</strong></p>
+<pre><code class="python">from zoo.common.nncontext import *
+from zoo.feature.common import *
+from zoo.feature.image.imagePreprocessing import *
+from zoo.pipeline.api.keras.layers import Dense, Input, Flatten
+from zoo.pipeline.api.keras.models import *
+from zoo.pipeline.api.net import *
+from bigdl.optim.optimizer import *
+
+sc = init_nncontext(&quot;train keras&quot;)
+img_path=&quot;/tmp/image&quot;
+image_set = ImageSet.read(img_path,sc, min_partitions=1)
+transformer = ChainedPreprocessing(
+        [ImageResize(256, 256), ImageCenterCrop(224, 224),
+         ImageChannelNormalize(123.0, 117.0, 104.0), ImageMatToTensor(),
+         ImageSetToSample()])
+image_data = transformer(image_set)
+labels = np.array([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])
+label_rdd = sc.parallelize(labels, 1)
+samples = image_data.get_image().zip(label_rdd).map(
+        lambda tuple: Sample.from_ndarray(tuple[0], tuple[1]))
+# create model
+model_path=&quot;/tmp/bigdl_inception-v1_imagenet_0.4.0.model&quot;
+full_model = Net.load_bigdl(model_path)
+# create a new model by remove layers after pool5/drop_7x7_s1
+model = full_model.new_graph([&quot;pool5/drop_7x7_s1&quot;])
+# freeze layers from input to pool4/3x3_s2 inclusive
+model.freeze_up_to([&quot;pool4/3x3_s2&quot;])
+
+inputNode = Input(name=&quot;input&quot;, shape=(3, 224, 224))
+inception = model.to_keras()(inputNode)
+flatten = Flatten()(inception)
+logits = Dense(2)(flatten)
+lrModel = Model(inputNode, logits)
+
+batchsize = 4
+nEpochs = 10
+lrModel.compile(optimizer=Adam(learningrate=1e-4),
+                  loss='categorical_crossentropy',
+                  metrics=['accuracy'])
+lrModel.fit(x = samples, batch_size=batchsize, nb_epoch=nEpochs)
+</code></pre>
+
+<h2 id="image-predict"><strong>Image Predict</strong></h2>
+<h3 id="predict-with-image-dataframe">Predict with Image DataFrame</h3>
+<p>After training with <em>NNEstimator/NNCLassifier</em>, you'll get a trained <em>NNModel/NNClassifierModel</em> . You can call <code>transform</code> to predict Image DataFrame with this <em>NNModel/NNClassifierModel</em> . Or you can load pre-trained <em>Analytics-Zoo/BigDL/Caffe/Torch/Tensorflow</em>  model and create <em>NNModel/NNClassifierModel</em> with this model. Then call to <code>transform</code> to Image DataFrame.</p>
+<p>After prediction, there is a new column <code>prediction</code> in the prediction image dataframe.</p>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala"> val batchsize = 128
+ val nEpochs = 10
+ val featureTransformer = RowToImageFeature() -&gt; ImageResize(256, 256) -&gt;
+                                    ImageCenterCrop(224, 224) -&gt;
+                                    ImageChannelNormalize(123, 117, 104) -&gt;
+                                    ImageMatToTensor() -&gt;
+                                    ImageFeatureToTensor()
+ val classifier = NNClassifier(model, CrossEntropyCriterion[Float](), featureTransformer)
+         .setFeaturesCol(&quot;image&quot;)
+         .setLearningRate(0.003)
+         .setBatchSize(batchsize)
+         .setMaxEpoch(nEpochs)
+         .setValidation(Trigger.everyEpoch, valDf, Array(new Top1Accuracy()), batchsize)
+ val trainedModel = classifier.fit(trainDf)
+ // predict with trained model
+ val predictions = trainedModel.transform(testDf)
+ predictions.select(col(&quot;image&quot;), col(&quot;label&quot;), col(&quot;prediction&quot;)).show(false)
+
+ // predict with loaded pre-trained model
+ val model = Module.loadModule[Float](modelPath)
+ val dlmodel = NNClassifierModel(model, featureTransformer)
+         .setBatchSize(batchsize)
+         .setFeaturesCol(&quot;image&quot;)
+         .setPredictionCol(&quot;prediction&quot;) 
+ val resultDF = dlmodel.transform(testDf)
+</code></pre>
+
+<p><strong>Python example:</strong></p>
+<pre><code class="python"> batchsize = 128
+ nEpochs = 10
+ featureTransformer = ChainedPreprocessing([RowToImageFeature(), ImageResize(256, 256),
+                                    ImageCenterCrop(224, 224),
+                                    ImageChannelNormalize(123, 117, 104),
+                                    ImageMatToTensor(),
+                                    ImageFeatureToTensor()])
+ classifier = NNClassifier(model, CrossEntropyCriterion(), featureTransformer)\
+         .setFeaturesCol(&quot;image&quot;)\
+         .setLearningRate(0.003)\
+         .setBatchSize(batchsize)\
+         .setMaxEpoch(nEpochs)\
+         .setValidation(EveryEpoch(), valDf, [Top1Accuracy()], batch_size)
+trainedModel = classifier.fit(trainDf)
+# predict with trained model
+predictions = trainedModel.transform(testDf)
+predictions.select(&quot;image&quot;, &quot;label&quot;,&quot;prediction&quot;).show(False)
+
+# predict with loaded pre-trained model
+model = Model.loadModel(model_path)
+dlmodel = NNClassifierModel(model, featureTransformer)\
+         .setBatchSize(batchsize)\
+         .setFeaturesCol(&quot;image&quot;)\
+         .setPredictionCol(&quot;prediction&quot;) 
+resultDF = dlmodel.transform(testDf)
+</code></pre>
+
+<h3 id="predict-with-imageset">Predict with ImageSet</h3>
+<p>After training Zoo Keras model, you can call <code>predict</code> to predict ImageSet.
+Or you can load pre-trained Analytics-Zoo/BigDL model. Then call to <code>predictImageSet</code> to predict ImageSet.</p>
+<h4 id="predict-with-trained-zoo-keras-model">Predict with trained Zoo Keras Model</h4>
+<p><strong>Python example:</strong></p>
+<pre><code class="python">from zoo.common.nncontext import *
+from zoo.feature.common import *
+from zoo.feature.image.imagePreprocessing import *
+from zoo.pipeline.api.keras.layers import Dense, Input, Flatten
+from zoo.pipeline.api.keras.models import *
+from zoo.pipeline.api.net import *
+from bigdl.optim.optimizer import *
+
+sc = init_nncontext(&quot;train keras&quot;)
+img_path=&quot;/tmp/image&quot;
+image_set = ImageSet.read(img_path,sc, min_partitions=1)
+transformer = ChainedPreprocessing(
+        [ImageResize(256, 256), ImageCenterCrop(224, 224),
+         ImageChannelNormalize(123.0, 117.0, 104.0), ImageMatToTensor(),
+         ImageSetToSample()])
+image_data = transformer(image_set)
+labels = np.array([1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])
+label_rdd = sc.parallelize(labels, 1)
+samples = image_data.get_image().zip(label_rdd).map(
+        lambda tuple: Sample.from_ndarray(tuple[0], tuple[1]))
+# create model
+model_path=&quot;/tmp/bigdl_inception-v1_imagenet_0.4.0.model&quot;
+full_model = Net.load_bigdl(model_path)
+# create a new model by remove layers after pool5/drop_7x7_s1
+model = full_model.new_graph([&quot;pool5/drop_7x7_s1&quot;])
+# freeze layers from input to pool4/3x3_s2 inclusive
+model.freeze_up_to([&quot;pool4/3x3_s2&quot;])
+
+inputNode = Input(name=&quot;input&quot;, shape=(3, 224, 224))
+inception = model.to_keras()(inputNode)
+flatten = Flatten()(inception)
+logits = Dense(2)(flatten)
+lrModel = Model(inputNode, logits)
+
+batchsize = 4
+nEpochs = 10
+lrModel.compile(optimizer=Adam(learningrate=1e-4),
+                  loss='categorical_crossentropy',
+                  metrics=['accuracy'])
+lrModel.fit(x = samples, batch_size=batchsize, nb_epoch=nEpochs)
+prediction = lrModel.predict(samples)
+result = prediction.collect()
+</code></pre>
+
+<h4 id="predict-with-loaded-model">Predict with loaded Model</h4>
+<p>You can load pre-trained Analytics-Zoo/BigDL model. Then call to <code>predictImageSet</code> to predict ImageSet.</p>
+<p>For details, you can check guide of <a href="../image-classification/">image classificaion</a> or <a href="../object-detection/">object detection</a></p>
+<h2 id="3d-image-support">3D Image Support</h2>
+<p>For 3D images, we can support above operations based on ImageSet. For details, please refer to <a href="../../APIGuide/FeatureEngineering/image/">image API guide</a></p>
+<h2 id="caching-images-in-persistent-memory">Caching Images in Persistent Memory</h2>
+<p>Here is a scala <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/inception/README.md">example</a> to train Inception V1 with ImageNet-2012 dataset. If you set the option <code>memoryType</code> to <code>PMEM</code>, the data will be cached in Intel Optane DC Persistent Memory; please refer to the guide <a href="https://github.com/memkind/memkind#run-requirements">here</a> on how to set up the system environment.</p>
+<p>In the InceptionV1 example, we use an new dataset called <a href="../../APIGuide/FeatureEngineering/featureset/">FeatureSet</a> to cache the data. Only scala API is currently available.</p>
+<p><strong>Scala example:</strong></p>
+<p><code>scala
+ val rawData = readFromSeqFiles(path, sc, classNumber)
+ val featureSet = FeatureSet.rdd(rawData, memoryType = PMEM)</code>
+ <code>readFromSeqFiles</code> read the Sequence File into <code>RDD[ByteRecord]</code>, then <code>FeatureSet.rdd(rawData, memoryType = PMEM)</code> will cache the data to Intel Optane DC Persistent Memory.</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

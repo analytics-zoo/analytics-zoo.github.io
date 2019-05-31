@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Objectives - Analytics Zoo</title>
+        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../../../extra.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+            ga('send', 'pageview');
+        </script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../..">Analytics Zoo</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../../..">Overview</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Releases <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../release-download/">Download</a>
+</li>
+                                    
+<li >
+    <a href="../../../release-docs/">Documentation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Python</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../PythonUserGuide/install/">Install</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/run/">Run</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/examples/">Examples</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/python-faq/">FAQ</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Scala</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ScalaUserGuide/install/">Install</a>
+</li>
+            
+<li >
+    <a href="../../../ScalaUserGuide/run/">Run</a>
+</li>
+            
+<li >
+    <a href="../../../ScalaUserGuide/examples/">Examples</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Programming Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Pipeline APIs</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/nnframes/">DataFrame and ML Pipeline</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/autograd/">Autograd</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/transferlearning/">Transfer Learning</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/inference/">Model Serving</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">TFPark API</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/tensorflow/">TFPark</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-models/">Text Models</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/bert-classifier/">BERT Classifier</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Feature Engineering</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/workingwithimages/">Working with Images</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/workingwithtexts/">Working with Texts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Built-in Models</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/object-detection/">Object Detection API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/image-classification/">Image Classification API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-classification/">Text Classification API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/recommendation/">Recommendation API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/anomaly-detection/">Anomaly Detection API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-matching/">Text Matching API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/seq2seq/">Sequence to Sequence API</a>
+</li>
+    </ul>
+  </li>
+                                    
+<li >
+    <a href="../../../ProgrammingGuide/usercases-overview/">Reference Use Cases</a>
+</li>
+                                    
+<li >
+    <a href="../../../ProgrammingGuide/run-on-dataproc/">Run on Google Cloud Dataproc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">White Paper <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../wp-bigdl/">BigDL</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">API Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Pipeline APIs</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../APIGuide/PipelineAPI/nnframes/">NNFrames</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/PipelineAPI/math/">Autograd-Math</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/PipelineAPI/variable/">Autograd-Variable</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/PipelineAPI/net/">Net</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/PipelineAPI/inference/">Inference</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">TFPark API</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../APIGuide/TFPark/model/">KerasModel</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/TFPark/estimator/">TFEstimator</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/TFPark/text-models/">Text Models</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/TFPark/bert-classifier/">BERT Classifier</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Feature Engineering</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../APIGuide/FeatureEngineering/featureset/">FeatureSet</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/FeatureEngineering/relation/">Relation</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/FeatureEngineering/image/">Image</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/FeatureEngineering/text/">Text</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Models</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../APIGuide/Models/object-detection/">Object Detection</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/Models/image-classification/">Image Classification</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/Models/text-classification/">Text Classification</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/Models/recommendation/">Recommendation</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/Models/anomaly-detection/">Anomaly Detection</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/Models/text-matching/">Text Matching</a>
+</li>
+            
+<li >
+    <a href="../../../APIGuide/Models/seq2seq/">Sequence to Sequence</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Keras-Style API Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../keras-api-python/">Python Guide</a>
+</li>
+                                    
+<li >
+    <a href="../../keras-api-scala/">Scala Guide</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Layers</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../Layers/activation/">Activation</a>
+</li>
+            
+<li >
+    <a href="../../Layers/initialization/">Initialization</a>
+</li>
+            
+<li >
+    <a href="../../Layers/core/">Core Layers</a>
+</li>
+            
+<li >
+    <a href="../../Layers/convolutional/">Convolutional Layers</a>
+</li>
+            
+<li >
+    <a href="../../Layers/pooling/">Pooling Layers</a>
+</li>
+            
+<li >
+    <a href="../../Layers/recurrent/">Recurrent Layers</a>
+</li>
+            
+<li >
+    <a href="../../Layers/normalization/">Normalization Layers</a>
+</li>
+            
+<li >
+    <a href="../../Layers/embedding/">Embedding Layers</a>
+</li>
+            
+<li >
+    <a href="../../Layers/dropout/">Dropout Layers</a>
+</li>
+            
+<li >
+    <a href="../../Layers/advanced-activation/">Advanced Activations</a>
+</li>
+            
+<li >
+    <a href="../../Layers/wrappers/">Layer Wrappers</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Optimization</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../training/">Train, evaluate or predict a model</a>
+</li>
+            
+<li >
+    <a href="../optimizers/">Optimizers</a>
+</li>
+            
+<li class="active">
+    <a href="./">Objectives</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../../powered-by/">Powered by</a>
+                            </li>
+                            <li >
+                                <a href="../../../presentations/">Presentations</a>
+                            </li>
+                            <li >
+                                <a href="../../../known-issues/">FAQ and Known Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../optimizers/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../../../powered-by/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/intel-analytics/analytics-zoo/edit/master/docs/KerasStyleAPIGuide/Optimization/objectives.md">Edit on Fork on GitHub </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#usage-of-objectives">Usage of objectives</a></li>
+        <li class="main "><a href="#available-objectives">Available objectives</a></li>
+            <li><a href="#meansquarederror">MeanSquaredError</a></li>
+            <li><a href="#meanabsoluteerror">MeanAbsoluteError</a></li>
+            <li><a href="#binarycrossentropy">BinaryCrossEntropy</a></li>
+            <li><a href="#sparsecategoricalcrossentropy">SparseCategoricalCrossEntropy</a></li>
+            <li><a href="#meanabsolutepercentageerror">MeanAbsolutePercentageError</a></li>
+            <li><a href="#meansquaredlogarithmicerror">MeanSquaredLogarithmicError</a></li>
+            <li><a href="#categoricalcrossentropy">CategoricalCrossEntropy</a></li>
+            <li><a href="#hinge">Hinge</a></li>
+            <li><a href="#rankhinge">RankHinge</a></li>
+            <li><a href="#squaredhinge">SquaredHinge</a></li>
+            <li><a href="#poisson">Poisson</a></li>
+            <li><a href="#cosineproximity">CosineProximity</a></li>
+            <li><a href="#kullbackleiblerdivergence">KullbackLeiblerDivergence</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="usage-of-objectives">Usage of objectives</h2>
+<p>An objective function (or loss function, or optimization score function) is one of the two parameters required to compile a model:</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">model.compile(loss = &quot;mean_squared_error&quot;, optimizer = &quot;sgd&quot;)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">model.compile(loss='mean_squared_error', optimizer='sgd')
+</code></pre>
+
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">model.compile(loss = MeanSquaredError(sizeAverage = true), optimizer = &quot;sgd&quot;)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">model.compile(loss=MeanSquaredError(size_average=True), optimizer='sgd')
+</code></pre>
+
+<hr />
+<h2 id="available-objectives">Available objectives</h2>
+<h3 id="meansquarederror">MeanSquaredError</h3>
+<p>The mean squared error criterion e.g. input: a, target: b, total elements: n</p>
+<pre><code>loss(a, b) = 1/n * sum(|a_i - b_i|^2)
+</code></pre>
+
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = MeanSquaredError(sizeAverage = true)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>sizeAverage</code> a boolean indicating whether to divide the sum of squared error by n. 
+                 Default: true</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = MeanSquaredError(size_average=True)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>size_average</code> a boolean indicating whether to divide the sum of squared error by n. 
+                 Default: True</li>
+</ul>
+<h3 id="meanabsoluteerror">MeanAbsoluteError</h3>
+<p>Measures the mean absolute value of the element-wise difference between input and target</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = MeanAbsoluteError(sizeAverage = true)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>sizeAverage</code> a boolean indicating whether to divide the sum of squared error by n. 
+                 Default: true</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = MeanAbsoluteError(size_average=True)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>size_average</code> a boolean indicating whether to divide the sum of squared error by n. 
+                 Default: True</li>
+</ul>
+<h3 id="binarycrossentropy">BinaryCrossEntropy</h3>
+<p>Also known as logloss. </p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = BinaryCrossEntropy(weights = null, sizeAverage = true)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>weights</code> A tensor assigning weight to each of the classes</li>
+<li><code>sizeAverage</code> whether to divide the sequence length. Default is true.</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = BinaryCrossEntropy(weights=None, size_average=True)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>weights</code> A tensor assigning weight to each of the classes</li>
+<li><code>size_average</code> whether to divide the sequence length. Default is True.</li>
+</ul>
+<h3 id="sparsecategoricalcrossentropy">SparseCategoricalCrossEntropy</h3>
+<p>A loss often used in multi-class classification problems with SoftMax as the last layer of the neural network. By default, input(y_pred) is supposed to be probabilities of each class, and target(y_true) is supposed to be the class label starting from 0.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = SparseCategoricalCrossEntropy(logProbAsInput = false, zeroBasedLabel = true, weights = null, sizeAverage = true, paddingValue = -1)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>logProbAsInput</code> Boolean. Whether to accept log-probabilities or probabilities as input. Default is false and inputs should be probabilities.</li>
+<li><code>zeroBasedLabel</code> Boolean. Whether target labels start from 0. Default is true. If false, labels start from 1.</li>
+<li><code>weights</code> Tensor. Weights of each class if you have an unbalanced training set. Default is null.</li>
+<li><code>sizeAverage</code> Boolean. Whether losses are averaged over observations for each mini-batch. Default is true. If false, the losses are instead summed for each mini-batch.</li>
+<li><code>paddingValue</code> Integer. If the target is set to this value, the training process will skip this sample. In other words, the forward process will return zero output and the backward process will also return zero gradInput. Default is -1.</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = SparseCategoricalCrossEntropy(log_prob_as_input=False, zero_based_label=True, weights=None, size_average=True, padding_value=-1)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>log_prob_as_input</code> Boolean. Whether to accept log-probabilities or probabilities as input. Default is false and inputs should be probabilities.</li>
+<li><code>zero_based_label</code> Boolean. Whether target labels start from 0. Default is true. If false, labels start from 1.</li>
+<li><code>weights</code> A Numpy array. Weights of each class if you have an unbalanced training set. Default is None.</li>
+<li><code>size_average</code> Boolean. Whether losses are averaged over observations for each mini-batch. Default is True. If False, the losses are instead summed for each mini-batch.</li>
+<li><code>padding_value</code> Integer. If the target is set to this value, the training process will skip this sample. In other words, the forward process will return zero output and the backward process will also return zero gradInput. Default is -1.</li>
+</ul>
+<h3 id="meanabsolutepercentageerror">MeanAbsolutePercentageError</h3>
+<p>Compute mean absolute percentage error for intput and target</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = MeanAbsolutePercentageError()
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>sizeAverage</code> a boolean indicating whether to divide the sum of squared error by n. 
+                 Default: true</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = MeanAbsolutePercentageError()
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>size_average</code> a boolean indicating whether to divide the sum of squared error by n. 
+                 Default: True</li>
+</ul>
+<h3 id="meansquaredlogarithmicerror">MeanSquaredLogarithmicError</h3>
+<p>Compute mean squared logarithmic error for input and target</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = MeanSquaredLogarithmicError()
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = MeanSquaredLogarithmicError()
+</code></pre>
+
+<h3 id="categoricalcrossentropy">CategoricalCrossEntropy</h3>
+<p>This is same with cross entropy criterion, except the target tensor is a
+one-hot tensor.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = CategoricalCrossEntropy()
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = CategoricalCrossEntropy()
+</code></pre>
+
+<h3 id="hinge">Hinge</h3>
+<p>Creates a criterion that optimizes a two-class classification hinge loss (margin-based loss) between input x (a Tensor of dimension 1) and output y.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = Hinge(margin = 1.0, sizeAverage = true)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>margin</code> if unspecified, is by default 1.</li>
+<li><code>sizeAverage</code> whether to average the loss, is by default true</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = Hinge(margin=1.0, size_average=True)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>margin</code> if unspecified, is by default 1.</li>
+<li><code>size_average</code> whether to average the loss, is by default True</li>
+</ul>
+<h3 id="rankhinge">RankHinge</h3>
+<p>Hinge loss for pairwise ranking problems.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = RankHinge(margin = 1.0)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>margin</code> if unspecified, is by default 1.</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = RankHinge(margin=1.0)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>margin</code> if unspecified, is by default 1.</li>
+</ul>
+<h3 id="squaredhinge">SquaredHinge</h3>
+<p>Creates a criterion that optimizes a two-class classification squared hinge loss (margin-based loss) between input x (a Tensor of dimension 1) and output y.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = SquaredHinge(margin = 1.0, sizeAverage = true)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>margin</code> if unspecified, is by default 1.</li>
+<li><code>sizeAverage</code> whether to average the loss, is by default true</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = SquaredHinge(margin=1.0, size_average=True)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>margin</code> if unspecified, is by default 1.</li>
+<li><code>size_average</code> whether to average the loss, is by default True</li>
+</ul>
+<h3 id="poisson">Poisson</h3>
+<p>Compute Poisson error for intput and target</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = Poisson()
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = Poisson()
+</code></pre>
+
+<h3 id="cosineproximity">CosineProximity</h3>
+<p>Computes the negative of the mean cosine proximity between predictions and targets.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = CosineProximity()
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = CosineProximity()
+</code></pre>
+
+<h3 id="kullbackleiblerdivergence">KullbackLeiblerDivergence</h3>
+<p>Loss calculated as:</p>
+<pre><code>y_true = K.clip(y_true, K.epsilon(), 1)
+y_pred = K.clip(y_pred, K.epsilon(), 1)
+</code></pre>
+
+<p>and output K.sum(y_true * K.log(y_true / y_pred), axis=-1)</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = KullbackLeiblerDivergence()
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = KullbackLeiblerDivergence()
+</code></pre></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../../../js/base.js" defer></script>
+        <script src="../../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

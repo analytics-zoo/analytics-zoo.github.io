@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Autograd-Math - Analytics Zoo</title>
+        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../../../extra.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+            ga('send', 'pageview');
+        </script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../..">Analytics Zoo</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../../..">Overview</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Releases <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../release-download/">Download</a>
+</li>
+                                    
+<li >
+    <a href="../../../release-docs/">Documentation</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Python</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../PythonUserGuide/install/">Install</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/run/">Run</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/examples/">Examples</a>
+</li>
+            
+<li >
+    <a href="../../../PythonUserGuide/python-faq/">FAQ</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Scala</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ScalaUserGuide/install/">Install</a>
+</li>
+            
+<li >
+    <a href="../../../ScalaUserGuide/run/">Run</a>
+</li>
+            
+<li >
+    <a href="../../../ScalaUserGuide/examples/">Examples</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Programming Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Pipeline APIs</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/nnframes/">DataFrame and ML Pipeline</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/autograd/">Autograd</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/transferlearning/">Transfer Learning</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/inference/">Model Serving</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">TFPark API</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/tensorflow/">TFPark</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-models/">Text Models</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/bert-classifier/">BERT Classifier</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Feature Engineering</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/workingwithimages/">Working with Images</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/workingwithtexts/">Working with Texts</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Built-in Models</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../ProgrammingGuide/object-detection/">Object Detection API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/image-classification/">Image Classification API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-classification/">Text Classification API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/recommendation/">Recommendation API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/anomaly-detection/">Anomaly Detection API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/text-matching/">Text Matching API</a>
+</li>
+            
+<li >
+    <a href="../../../ProgrammingGuide/seq2seq/">Sequence to Sequence API</a>
+</li>
+    </ul>
+  </li>
+                                    
+<li >
+    <a href="../../../ProgrammingGuide/usercases-overview/">Reference Use Cases</a>
+</li>
+                                    
+<li >
+    <a href="../../../ProgrammingGuide/run-on-dataproc/">Run on Google Cloud Dataproc</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">White Paper <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../wp-bigdl/">BigDL</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown active">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">API Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Pipeline APIs</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../nnframes/">NNFrames</a>
+</li>
+            
+<li class="active">
+    <a href="./">Autograd-Math</a>
+</li>
+            
+<li >
+    <a href="../variable/">Autograd-Variable</a>
+</li>
+            
+<li >
+    <a href="../net/">Net</a>
+</li>
+            
+<li >
+    <a href="../inference/">Inference</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">TFPark API</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../TFPark/model/">KerasModel</a>
+</li>
+            
+<li >
+    <a href="../../TFPark/estimator/">TFEstimator</a>
+</li>
+            
+<li >
+    <a href="../../TFPark/text-models/">Text Models</a>
+</li>
+            
+<li >
+    <a href="../../TFPark/bert-classifier/">BERT Classifier</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Feature Engineering</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../FeatureEngineering/featureset/">FeatureSet</a>
+</li>
+            
+<li >
+    <a href="../../FeatureEngineering/relation/">Relation</a>
+</li>
+            
+<li >
+    <a href="../../FeatureEngineering/image/">Image</a>
+</li>
+            
+<li >
+    <a href="../../FeatureEngineering/text/">Text</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Models</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../Models/object-detection/">Object Detection</a>
+</li>
+            
+<li >
+    <a href="../../Models/image-classification/">Image Classification</a>
+</li>
+            
+<li >
+    <a href="../../Models/text-classification/">Text Classification</a>
+</li>
+            
+<li >
+    <a href="../../Models/recommendation/">Recommendation</a>
+</li>
+            
+<li >
+    <a href="../../Models/anomaly-detection/">Anomaly Detection</a>
+</li>
+            
+<li >
+    <a href="../../Models/text-matching/">Text Matching</a>
+</li>
+            
+<li >
+    <a href="../../Models/seq2seq/">Sequence to Sequence</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Keras-Style API Guide <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../../../KerasStyleAPIGuide/keras-api-python/">Python Guide</a>
+</li>
+                                    
+<li >
+    <a href="../../../KerasStyleAPIGuide/keras-api-scala/">Scala Guide</a>
+</li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Layers</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/activation/">Activation</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/initialization/">Initialization</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/core/">Core Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/convolutional/">Convolutional Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/pooling/">Pooling Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/recurrent/">Recurrent Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/normalization/">Normalization Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/embedding/">Embedding Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/dropout/">Dropout Layers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/advanced-activation/">Advanced Activations</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Layers/wrappers/">Layer Wrappers</a>
+</li>
+    </ul>
+  </li>
+                                    
+  <li class="dropdown-submenu">
+    <a href="#">Optimization</a>
+    <ul class="dropdown-menu">
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Optimization/training/">Train, evaluate or predict a model</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Optimization/optimizers/">Optimizers</a>
+</li>
+            
+<li >
+    <a href="../../../KerasStyleAPIGuide/Optimization/objectives/">Objectives</a>
+</li>
+    </ul>
+  </li>
+                                </ul>
+                            </li>
+                            <li >
+                                <a href="../../../powered-by/">Powered by</a>
+                            </li>
+                            <li >
+                                <a href="../../../presentations/">Presentations</a>
+                            </li>
+                            <li >
+                                <a href="../../../known-issues/">FAQ and Known Issues</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li >
+                                <a rel="next" href="../nnframes/">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="../variable/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/intel-analytics/analytics-zoo/edit/master/docs/APIGuide/PipelineAPI/math.md">Edit on Fork on GitHub </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#mean">mean</a></li>
+        <li class="main "><a href="#abs">abs</a></li>
+        <li class="main "><a href="#sum">sum</a></li>
+        <li class="main "><a href="#clip">clip</a></li>
+        <li class="main "><a href="#square">square</a></li>
+        <li class="main "><a href="#sqrt">sqrt</a></li>
+        <li class="main "><a href="#maximum">maximum</a></li>
+        <li class="main "><a href="#log">log</a></li>
+        <li class="main "><a href="#exp">exp</a></li>
+        <li class="main "><a href="#pow">pow</a></li>
+        <li class="main "><a href="#softsign">softsign</a></li>
+        <li class="main "><a href="#softplus">softplus</a></li>
+        <li class="main "><a href="#stack">stack</a></li>
+        <li class="main "><a href="#expand_dims">expand_dims</a></li>
+        <li class="main "><a href="#contiguous">contiguous</a></li>
+        <li class="main "><a href="#mm">mm</a></li>
+        <li class="main "><a href="#batch_dot">batch_dot</a></li>
+        <li class="main "><a href="#l2_normalize">l2_normalize</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="mean">mean</h2>
+<p>Mean of a <code>Variable</code>, alongside the specified axis.
+- <code>axis</code> axis to compute the mean. 0-based indexed.
+- <code>keepDims</code> A boolean, whether to keep the dimensions or not.
+   If <code>keepDims</code> is <code>False</code>, the rank of the <code>Variable</code> is reduced
+   by 1. If <code>keepDims</code> is <code>True</code>,
+   the reduced dimensions are retained with length 1.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">mean(x: Variable[T], axis: Int = 0, keepDims: Boolean = false)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">mean(x, axis=0, keepDims=False):
+</code></pre>
+
+<h2 id="abs">abs</h2>
+<p>Element-wise absolute value.
+- <code>x</code> A <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">abs(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">abs(x):
+</code></pre>
+
+<h2 id="sum">sum</h2>
+<p>Sum of the values in a <code>Variable</code>, alongside the specified axis.
+- <code>axis</code> axis to compute the mean. 0-based indexed.
+- <code>keepDims</code> A boolean, whether to keep the dimensions or not.
+   If <code>keepDims</code> is <code>False</code>, the rank of the <code>Variable</code> is reduced
+   by 1. If <code>keepDims</code> is <code>True</code>,
+   the reduced dimensions are retained with length 1.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">sum(x: Variable[T], axis: Int = 0, keepDims: Boolean = false)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">sum(x, axis=0, keepDims=False):
+</code></pre>
+
+<h2 id="clip">clip</h2>
+<p>Element-wise value clipping.
+- <code>x</code> A <code>Variable</code>.
+- <code>min</code> Double
+- <code>max</code> Double</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">clip(x: Variable[T], min: Double, max: Double)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">clip(x, min, max)
+</code></pre>
+
+<h2 id="square">square</h2>
+<p>Element-wise square.
+- <code>x</code> A <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">square(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">square(x):
+</code></pre>
+
+<h2 id="sqrt">sqrt</h2>
+<p>Element-wise square root.
+- <code>x</code> A <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">sqrt(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">sqrt(x):
+</code></pre>
+
+<h2 id="maximum">maximum</h2>
+<p>Element-wise maximum of two <code>Variables</code>.
+- <code>x</code> A <code>Variable</code>.
+- <code>y</code> A <code>Variable</code> or Double.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">maximum(x: Variable[T], y: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">maximum(x, y):
+</code></pre>
+
+<h2 id="log">log</h2>
+<p>Element-wise log.
+- <code>x</code> A <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">log(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">log(x):
+</code></pre>
+
+<h2 id="exp">exp</h2>
+<p>Element-wise exponential.
+- <code>x</code> A <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">exp(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">exp(x):
+</code></pre>
+
+<h2 id="pow">pow</h2>
+<p>Element-wise exponentiation.
+- <code>x</code> A <code>Variable</code>.
+- <code>a</code> Double.   </p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">pow(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">pow(x):
+</code></pre>
+
+<h2 id="softsign">softsign</h2>
+<p>Softsign of a <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">softsign(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">softsign(x):
+</code></pre>
+
+<h2 id="softplus">softplus</h2>
+<p>Softplus of a <code>Variable</code>.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">softplus(x: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">softplus(x):
+</code></pre>
+
+<h2 id="stack">stack</h2>
+<p>Stacks a list of rank <code>R</code> tensors into a rank <code>R+1</code> tensor.
+   You should start from 1 as dim 0 is for batch.
+   - inputs: List of variables (tensors)
+   - axis: xis along which to perform stacking.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">def stack[T: ClassTag](inputs: List[Variable[T]], axis: Int = 1)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">def stack(inputs, axis=1)
+</code></pre>
+
+<h2 id="expand_dims">expand_dims</h2>
+<p>Adds a 1-sized dimension at index "axis".</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">def expandDims[T: ClassTag](x: Variable[T], axis: Int)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">expand_dims(x, axis)
+</code></pre>
+
+<h2 id="contiguous">contiguous</h2>
+<p>Turn the output and grad to be contiguous for the input Variable</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">def contiguous[T: ClassTag](input: Variable[T])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">def contiguous(x)
+</code></pre>
+
+<h2 id="mm">mm</h2>
+<p>Module to perform matrix multiplication on two mini-batch inputs, producing a mini-batch.
+- <code>x</code> A variable.
+- <code>y</code> A variable.
+- <code>axes</code> Axes along which to perform multiplication.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">def mm[T: ClassTag](x: Variable[T], y: Variable[T], axes: List[Int])
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">def mm(x, y, axes)
+</code></pre>
+
+<h2 id="batch_dot">batch_dot</h2>
+<p>Operator that computes a dot product between samples in two tensors.
+- <code>x</code> Shape should only be [batch, xx]
+- <code>y</code> Shape should only be [batch, xx]
+- <code>axes</code> Integer or tuple of integers, axis or axes along which to take the dot product.
+- <code>normalize</code> Whether to L2-normalize samples along the
+              dot product axis before taking the dot product.
+              If set to True, then the output of the dot product
+              is the cosine proximity between the two samples.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">def batchDot[T: ClassTag](x: Variable[T], y: Variable[T], axes: List[Int], normalize: Boolean = false)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">def batch_dot(x, y, axes=1, normalize=False)
+</code></pre>
+
+<h2 id="l2_normalize">l2_normalize</h2>
+<p>Normalizes a tensor wrt the L2 norm alongside the specified axis.
+- <code>x</code> A variable.
+- <code>axis</code> Axis along which to perform normalization.</p>
+<p><strong>Scala example</strong></p>
+<pre><code class="scala">def l2Normalize[T: ClassTag](x: Variable[T], axis: Int)
+</code></pre>
+
+<p><strong>Python example</strong></p>
+<pre><code class="python">def l2_normalize(x, axis)
+</code></pre></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../../../js/base.js" defer></script>
+        <script src="../../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
