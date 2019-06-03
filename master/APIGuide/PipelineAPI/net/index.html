@@ -247,15 +247,36 @@ TFOptimizer or TFPredictor.</p>
 be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</p>
 <h3 id="methods">Methods</h3>
 <h4 id="from_rdd">from_rdd</h4>
-<p>Create a TFDataset from a rdd, each element of the rdd must be a list of numpy.ndarray.</p>
+<p>Create a TFDataset from a rdd.</p>
+<p>For training and evaluation, both <code>features</code> and <code>labels</code> arguments should be specified.
+The element of the rdd should be a tuple of two, (features, labels), each has the
+same structure of numpy.ndarrays of the argument <code>features</code>, <code>labels</code>.</p>
+<p>E.g. if <code>features</code> is [(tf.float32, [10]), (tf.float32, [20])],
+and <code>labels</code> is {"label1":(tf.float32, [10]), "label2": (tf.float32, [20])}
+then a valid element of the rdd could be</p>
+<pre><code>    (
+    [np.zeros(dtype=float, shape=(10,), np.zeros(dtype=float, shape=(10,)))],
+     {"label1": np.zeros(dtype=float, shape=(10,)),
+      "label2":np.zeros(dtype=float, shape=(10,))))}
+    )
+</code></pre>
+<p>If <code>labels</code> is not specified,
+then the above element should be changed to</p>
+<pre><code>    [np.zeros(dtype=float, shape=(10,), np.zeros(dtype=float, shape=(10,)))]
+</code></pre>
+<p>For inference, <code>labels</code> can be not specified.
+The element of the rdd should be some ndarrays of the same structure of the <code>features</code>
+argument.</p>
+<p>A note on the legacy api: if you are using <code>names</code>, <code>shapes</code>, <code>types</code> arguments,
+each element of the rdd should be a list of numpy.ndarray.</p>
 <p><strong>Python</strong></p>
 <pre><code class="python">from_rdd(rdd, features, labels=None, batch_size=-1, batch_per_thread=-1, hard_code_batch_size=False, val_rdd=None)
 </code></pre>
 
 <p><strong>Arguments</strong></p>
 <ul>
-<li><strong>rdd</strong>: a rdd of list of numpy.ndarray each representing a tensor to feed into
-        tensorflow graph on each iteration</li>
+<li><strong>rdd</strong>: a rdd containing the numpy.ndarrays to be used 
+           for training/evaluation/inference</li>
 <li>
 <p><strong>features</strong>: the structure of input features, should one the following:</p>
 <ul>
