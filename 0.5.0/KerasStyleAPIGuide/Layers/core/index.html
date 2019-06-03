@@ -1,490 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Core Layers - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
         
-        
-        
-        <link rel="shortcut icon" href="../../../img/favicon.ico">
-        <title>Core Layers - Analytics Zoo</title>
-        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-        <link href="../../../extra.css" rel="stylesheet">
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        var pageToc = [
+          {title: "Masking", url: "#masking", children: [
+          ]},
+          {title: "SparseDense", url: "#sparsedense", children: [
+          ]},
+          {title: "Merge", url: "#merge", children: [
+          ]},
+          {title: "MaxoutDense", url: "#maxoutdense", children: [
+          ]},
+          {title: "Squeeze", url: "#squeeze", children: [
+          ]},
+          {title: "BinaryThreshold", url: "#binarythreshold", children: [
+          ]},
+          {title: "Sqrt", url: "#sqrt", children: [
+          ]},
+          {title: "Mul", url: "#mul", children: [
+          ]},
+          {title: "MulConstant", url: "#mulconstant", children: [
+          ]},
+          {title: "Scale", url: "#scale", children: [
+          ]},
+          {title: "Log", url: "#log", children: [
+          ]},
+          {title: "Identity", url: "#identity", children: [
+          ]},
+          {title: "Select", url: "#select", children: [
+          ]},
+          {title: "Dense", url: "#dense", children: [
+          ]},
+          {title: "Negative", url: "#negative", children: [
+          ]},
+          {title: "CAdd", url: "#cadd", children: [
+          ]},
+          {title: "RepeatVector", url: "#repeatvector", children: [
+          ]},
+          {title: "GaussianSampler", url: "#gaussiansampler", children: [
+          ]},
+          {title: "Exp", url: "#exp", children: [
+          ]},
+          {title: "Square", url: "#square", children: [
+          ]},
+          {title: "Power", url: "#power", children: [
+          ]},
+          {title: "AddConstant", url: "#addconstant", children: [
+          ]},
+          {title: "Narrow", url: "#narrow", children: [
+          ]},
+          {title: "Permute", url: "#permute", children: [
+          ]},
+          {title: "ResizeBilinear", url: "#resizebilinear", children: [
+          ]},
+        ];
 
-        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../../js/bootstrap-3.0.3.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-            ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
-            ga('send', 'pageview');
-        </script> 
-    </head>
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
 
-    <body>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
 
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
 
-                <!-- Collapsed navigation -->
-                <div class="navbar-header">
-                    <!-- Expander button -->
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="../../..">Analytics Zoo</a>
-                </div>
 
-                <!-- Expanded navigation -->
-                <div class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li >
-                                <a href="../../..">Overview</a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Releases <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../../../release-download/">Download</a>
-</li>
-                                    
-<li >
-    <a href="../../../release-docs/">Documentation</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Python</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../PythonUserGuide/install/">Install</a>
-</li>
-            
-<li >
-    <a href="../../../PythonUserGuide/run/">Run</a>
-</li>
-            
-<li >
-    <a href="../../../PythonUserGuide/examples/">Examples</a>
-</li>
-            
-<li >
-    <a href="../../../PythonUserGuide/python-faq/">FAQ</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Scala</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../ScalaUserGuide/install/">Install</a>
-</li>
-            
-<li >
-    <a href="../../../ScalaUserGuide/run/">Run</a>
-</li>
-            
-<li >
-    <a href="../../../ScalaUserGuide/examples/">Examples</a>
-</li>
-    </ul>
-  </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Programming Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Pipeline APIs</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../ProgrammingGuide/nnframes/">DataFrame and ML Pipeline</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/autograd/">Autograd</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/transferlearning/">Transfer Learning</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/inference/">Model Serving</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">TFPark API</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../ProgrammingGuide/tensorflow/">TFPark</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/text-models/">Text Models</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/bert-classifier/">BERT Classifier</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Feature Engineering</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../ProgrammingGuide/workingwithimages/">Working with Images</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/workingwithtexts/">Working with Texts</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Built-in Models</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../ProgrammingGuide/object-detection/">Object Detection API</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/image-classification/">Image Classification API</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/text-classification/">Text Classification API</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/recommendation/">Recommendation API</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/anomaly-detection/">Anomaly Detection API</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/text-matching/">Text Matching API</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/seq2seq/">Sequence to Sequence API</a>
-</li>
-    </ul>
-  </li>
-                                    
-<li >
-    <a href="../../../ProgrammingGuide/usercases-overview/">Reference Use Cases</a>
-</li>
-                                    
-<li >
-    <a href="../../../ProgrammingGuide/run-on-dataproc/">Run on Google Cloud Dataproc</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">White Paper <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../../../wp-bigdl/">BigDL</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">API Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Pipeline APIs</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../APIGuide/PipelineAPI/nnframes/">NNFrames</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/PipelineAPI/math/">Autograd-Math</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/PipelineAPI/variable/">Autograd-Variable</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/PipelineAPI/net/">Net</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/PipelineAPI/inference/">Inference</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">TFPark API</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../APIGuide/TFPark/model/">KerasModel</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/TFPark/estimator/">TFEstimator</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/TFPark/text-models/">Text Models</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/TFPark/bert-classifier/">BERT Classifier</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Feature Engineering</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../APIGuide/FeatureEngineering/featureset/">FeatureSet</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/FeatureEngineering/relation/">Relation</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/FeatureEngineering/image/">Image</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/FeatureEngineering/text/">Text</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Models</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../APIGuide/Models/object-detection/">Object Detection</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/Models/image-classification/">Image Classification</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/Models/text-classification/">Text Classification</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/Models/recommendation/">Recommendation</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/Models/anomaly-detection/">Anomaly Detection</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/Models/text-matching/">Text Matching</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/Models/seq2seq/">Sequence to Sequence</a>
-</li>
-    </ul>
-  </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown active">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Keras-Style API Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../../keras-api-python/">Python Guide</a>
-</li>
-                                    
-<li >
-    <a href="../../keras-api-scala/">Scala Guide</a>
-</li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Layers</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../activation/">Activation</a>
-</li>
-            
-<li >
-    <a href="../initialization/">Initialization</a>
-</li>
-            
-<li class="active">
-    <a href="./">Core Layers</a>
-</li>
-            
-<li >
-    <a href="../convolutional/">Convolutional Layers</a>
-</li>
-            
-<li >
-    <a href="../pooling/">Pooling Layers</a>
-</li>
-            
-<li >
-    <a href="../recurrent/">Recurrent Layers</a>
-</li>
-            
-<li >
-    <a href="../normalization/">Normalization Layers</a>
-</li>
-            
-<li >
-    <a href="../embedding/">Embedding Layers</a>
-</li>
-            
-<li >
-    <a href="../dropout/">Dropout Layers</a>
-</li>
-            
-<li >
-    <a href="../advanced-activation/">Advanced Activations</a>
-</li>
-            
-<li >
-    <a href="../wrappers/">Layer Wrappers</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Optimization</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../Optimization/training/">Train, evaluate or predict a model</a>
-</li>
-            
-<li >
-    <a href="../../Optimization/optimizers/">Optimizers</a>
-</li>
-            
-<li >
-    <a href="../../Optimization/objectives/">Objectives</a>
-</li>
-    </ul>
-  </li>
-                                </ul>
-                            </li>
-                            <li >
-                                <a href="../../../powered-by/">Powered by</a>
-                            </li>
-                            <li >
-                                <a href="../../../presentations/">Presentations</a>
-                            </li>
-                            <li >
-                                <a href="../../../known-issues/">FAQ and Known Issues</a>
-                            </li>
-                        </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                            <li >
-                                <a rel="next" href="../initialization/">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li >
-                                <a rel="prev" href="../convolutional/">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://github.com/intel-analytics/analytics-zoo/edit/master/docs/KerasStyleAPIGuide/Layers/core.md">Edit on Fork on GitHub </a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#masking">Masking</a></li>
-        <li class="main "><a href="#sparsedense">SparseDense</a></li>
-        <li class="main "><a href="#merge">Merge</a></li>
-        <li class="main "><a href="#maxoutdense">MaxoutDense</a></li>
-        <li class="main "><a href="#squeeze">Squeeze</a></li>
-        <li class="main "><a href="#binarythreshold">BinaryThreshold</a></li>
-        <li class="main "><a href="#sqrt">Sqrt</a></li>
-        <li class="main "><a href="#mul">Mul</a></li>
-        <li class="main "><a href="#mulconstant">MulConstant</a></li>
-        <li class="main "><a href="#scale">Scale</a></li>
-        <li class="main "><a href="#log">Log</a></li>
-        <li class="main "><a href="#identity">Identity</a></li>
-        <li class="main "><a href="#select">Select</a></li>
-        <li class="main "><a href="#dense">Dense</a></li>
-        <li class="main "><a href="#negative">Negative</a></li>
-        <li class="main "><a href="#cadd">CAdd</a></li>
-        <li class="main "><a href="#repeatvector">RepeatVector</a></li>
-        <li class="main "><a href="#gaussiansampler">GaussianSampler</a></li>
-        <li class="main "><a href="#exp">Exp</a></li>
-        <li class="main "><a href="#square">Square</a></li>
-        <li class="main "><a href="#power">Power</a></li>
-        <li class="main "><a href="#addconstant">AddConstant</a></li>
-        <li class="main "><a href="#narrow">Narrow</a></li>
-        <li class="main "><a href="#permute">Permute</a></li>
-        <li class="main "><a href="#resizebilinear">ResizeBilinear</a></li>
-    </ul>
-</div></div>
-                <div class="col-md-9" role="main">
-
-<h2 id="masking"><strong>Masking</strong></h2>
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Core Layers</strong></h1>
+    <hr>
+    <h2 id="masking"><strong>Masking</strong></h2>
 <p>Use a mask value to skip timesteps for a sequence.</p>
 <p><strong>Scala:</strong></p>
 <pre><code class="scala">Masking(maskValue = 0.0, inputShape = null)
@@ -497,7 +122,7 @@
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>maskValue</code>: Mask value. For each timestep in the input (the second dimension), if all the values in the input at that timestep are equal to 'maskValue', then the timestep will be masked (skipped) in all downstream layers.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -792,7 +417,7 @@ Reshape(targetShape, inputShape = null)
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>targetShape</code>: The target shape that you desire to have. Batch dimension should be excluded.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.Reshape
@@ -900,7 +525,7 @@ output = model.forward(input)
 <li><code>layers</code>: A list of layer instances. Must be more than one layer.</li>
 <li><code>mode</code>: Merge mode. String, must be one of: 'sum', 'mul', 'concat', 'ave', 'cos', 'dot', 'max'. Default is 'sum'.</li>
 <li><code>concatAxis</code>: Integer, axis to use when concatenating layers. Only specify this when merge mode is 'concat'. Default is -1, meaning the last axis of the input.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>MultiShape</code></a> object. For Python API, it should be a list of shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>MultiShape</code></a> object. For Python API, it should be a list of shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.InputLayer
@@ -1018,7 +643,7 @@ output = model.forward(input)
 <li><code>wRegularizer</code>: An instance of <a href="https://bigdl-project.github.io/master/#APIGuide/Regularizers/">Regularizer</a>, (eg. L1 or L2 regularization), applied to the input weights matrices. Default is null.</li>
 <li><code>bRegularizer</code>: An instance of <a href="https://bigdl-project.github.io/master/#APIGuide/Regularizers/">Regularizer</a>, applied to the bias. Default is null.</li>
 <li><code>bias</code>: Whether to include a bias (i.e. make the layer affine rather than linear). Default is true.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.MaxoutDense
@@ -1084,7 +709,7 @@ output = model.forward(input)
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>dims</code>: The dimension(s) to squeeze. 0-based index. Cannot squeeze the batch dimension. The selected dimensions must be singleton, i.e. having size 1. Default is null, and in this case all the non-batch singleton dimensions will be deleted.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.Squeeze
@@ -1160,7 +785,7 @@ output = model.forward(input)
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>value</code>: The threshold value to compare with. Default is 1e-6.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.BinaryThreshold
@@ -1286,7 +911,7 @@ output = model.forward(input)
 
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.Sqrt
@@ -1348,7 +973,7 @@ output = model.forward(input)
 
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 <li><code>name</code>: String to set the name of the layer. If not specified, its name will by default to be a generated string.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
@@ -1438,7 +1063,7 @@ output = model.forward(input)
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>constant</code>: The scalar constant to be multiplied.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.MulConstant
@@ -1529,7 +1154,7 @@ output = model.forward(input)
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>size</code>: Size of the weight and bias.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.Scale
@@ -1592,7 +1217,7 @@ output = model.forward(input)
 
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.Log
@@ -1689,7 +1314,7 @@ output = model.forward(input)
 
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.Identity
@@ -1815,7 +1440,7 @@ output = model.forward(input)
 <ul>
 <li><code>dim</code>: The dimension to select. 0-based index. Cannot select the batch dimension. -1 means the last dimension of the input.</li>
 <li><code>index</code>: The index of the dimension to be selected. 0-based index. -1 means the last dimension of the input.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -1887,7 +1512,7 @@ output = model.forward(input)
 <li><code>wRegularizer</code>: An instance of <a href="https://bigdl-project.github.io/master/#APIGuide/Regularizers/">Regularizer</a>, applied to the input weights matrices. Default is null.</li>
 <li><code>bRegularizer</code>: An instance of <a href="https://bigdl-project.github.io/master/#APIGuide/Regularizers/">Regularizer</a>, applied to the bias. Default is null.</li>
 <li><code>bias</code>: Whether to include a bias (i.e. make the layer affine rather than linear). Default is true.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -1950,7 +1575,7 @@ output = model.forward(input)
 
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -2030,7 +1655,7 @@ output = model.forward(input)
 <ul>
 <li><code>size</code>: the size of the bias</li>
 <li><code>bRegularizer</code>: An instance of <a href="https://bigdl-project.github.io/master/#APIGuide/Regularizers/">Regularizer</a>, applied to the bias. Default is null.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -2107,7 +1732,7 @@ The output of thi layer should be 3D, i.e. (num_samples, n, features).</p>
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>n</code>: Repetition factor. Integer.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 <li><code>name</code>: String to set the name of the layer. If not specified, its name will by default to be a generated string.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
@@ -2187,7 +1812,7 @@ output = model.forward(input)
 
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>MultiShape</code></a> object that consists of two identical Single Shape. For Python API, it should be a list of two identical shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>MultiShape</code></a> object that consists of two identical Single Shape. For Python API, it should be a list of two identical shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -2282,7 +1907,7 @@ output = model.forward(input)
 
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>MultiShape</code></a> object that consists of two identical Single Shape. For Python API, it should be a list of two identical shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>MultiShape</code></a> object that consists of two identical Single Shape. For Python API, it should be a list of two identical shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -2409,7 +2034,7 @@ output = model.forward(input)
 
 <p><strong>Parameters:</strong></p>
 <ul>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>MultiShape</code></a> object that consists of two identical Single Shape. For Python API, it should be a list of two identical shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>MultiShape</code></a> object that consists of two identical Single Shape. For Python API, it should be a list of two identical shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -2538,7 +2163,7 @@ output = model.forward(input)
 <li><code>power</code>: The exponent</li>
 <li><code>scale</code>: The scale parameter. Default is 1.</li>
 <li><code>shift</code>: The shift parameter. Default is 0.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -2618,7 +2243,7 @@ output = model.forward(input)
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>constant</code>: The scalar constant to be added.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -2712,7 +2337,7 @@ output = model.forward(input)
 <li><code>offset</code>: Non-negative integer. The start index on the given dimension. 0-based index.</li>
 <li><code>length</code>: The length to narrow. Default is 1.
             Can use a negative length such as -1 in the case where input size is unknown.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -2820,7 +2445,7 @@ output = model.forward(input)
 <ul>
 <li><code>dims</code>: Int array. Permutation pattern, does not include the batch dimension.
           Indexing starts at 1.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -2924,7 +2549,7 @@ output = model.forward(input)
 <li><code>outputWidth</code>: output width</li>
 <li><code>alignCorners</code>: align corner or not</li>
 <li><code>dimOrdering</code>: Format of input data. Either DataFormat.NCHW (dimOrdering='th') or DataFormat.NHWC (dimOrdering='tf'). Default is NCHW.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -3027,83 +2652,14 @@ output = model.forward(input)
 
         [[0.12074634, 0.6571231 , 0.752728  ],
          [0.86969995, 0.6700518 , 0.36353552]]]], dtype=float32)
-</code></pre></div>
-        </div>
+</code></pre>
 
-        <footer class="col-md-12">
-            <hr>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script>
-            var base_url = "../../..",
-                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
-        </script>
-        <script src="../../../js/base.js" defer></script>
-        <script src="../../../search/main.js" defer></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
-                <form role="form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
+  <br>
 </div>
 
-    </body>
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
 </html>

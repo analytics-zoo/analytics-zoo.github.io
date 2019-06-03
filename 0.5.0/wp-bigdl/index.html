@@ -1,490 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>BigDL - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
         
-        
-        
-        <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>BigDL - Analytics Zoo</title>
-        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-        <link href="../extra.css" rel="stylesheet">
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        var pageToc = [
+          {title: "BigDL: A Distributed Deep Learning Framework for Big Data", url: "#bigdl-a-distributed-deep-learning-framework-for-big-data", children: [
+          ]},
+          {title: "Abstract", url: "#abstract", children: [
+          ]},
+          {title: "1. Introduction", url: "#1-introduction", children: [
+          ]},
+          {title: "2. Programming Model", url: "#2-programming-model", children: [
+              {title: "2.1. Spark", url: "#21-spark" },
+              {title: "2.2. Data transformation", url: "#22-data-transformation" },
+              {title: "2.3. Model Construction", url: "#23-model-construction" },
+              {title: "2.4. Model training", url: "#24-model-training" },
+              {title: "2.5. Model Inference", url: "#25-model-inference" },
+              {title: "2.6. Spark DataFrame and ML Pipeline", url: "#26-spark-dataframe-and-ml-pipeline" },
+          ]},
+          {title: "3. Execution Model", url: "#3-execution-model", children: [
+              {title: "3.1. Data-parallel training", url: "#31-data-parallel-training" },
+              {title: "3.2. Parameter synchronization", url: "#32-parameter-synchronization" },
+              {title: "3.3. Task scheduling", url: "#33-task-scheduling" },
+              {title: "3.4. Model quantization", url: "#34-model-quantization" },
+              {title: "3.5. Local execution", url: "#35-local-execution" },
+          ]},
+          {title: "4. Applications", url: "#4-applications", children: [
+              {title: "4.1. Model Inference: image feature extraction", url: "#41-model-inference-image-feature-extraction" },
+              {title: "4.2. Distributed training: precipitation nowcasting", url: "#42-distributed-training-precipitation-nowcasting" },
+              {title: "4.3. Transfer learning: image-similarity based house recommendations", url: "#43-transfer-learning-image-similarity-based-house-recommendations" },
+          ]},
+          {title: "5.Related Work", url: "#5related-work", children: [
+          ]},
+          {title: "6. Summary", url: "#6-summary", children: [
+          ]},
+          {title: "7. Acknowledgement", url: "#7-acknowledgement", children: [
+          ]},
+          {title: "8. Reference", url: "#8-reference", children: [
+          ]},
+        ];
 
-        <script src="../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-            ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
-            ga('send', 'pageview');
-        </script> 
-    </head>
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
 
-    <body>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
 
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
 
-                <!-- Collapsed navigation -->
-                <div class="navbar-header">
-                    <!-- Expander button -->
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="..">Analytics Zoo</a>
-                </div>
 
-                <!-- Expanded navigation -->
-                <div class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li >
-                                <a href="..">Overview</a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Releases <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../release-download/">Download</a>
-</li>
-                                    
-<li >
-    <a href="../release-docs/">Documentation</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Python</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../PythonUserGuide/install/">Install</a>
-</li>
-            
-<li >
-    <a href="../PythonUserGuide/run/">Run</a>
-</li>
-            
-<li >
-    <a href="../PythonUserGuide/examples/">Examples</a>
-</li>
-            
-<li >
-    <a href="../PythonUserGuide/python-faq/">FAQ</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Scala</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../ScalaUserGuide/install/">Install</a>
-</li>
-            
-<li >
-    <a href="../ScalaUserGuide/run/">Run</a>
-</li>
-            
-<li >
-    <a href="../ScalaUserGuide/examples/">Examples</a>
-</li>
-    </ul>
-  </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Programming Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Pipeline APIs</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../ProgrammingGuide/nnframes/">DataFrame and ML Pipeline</a>
-</li>
-            
-<li >
-    <a href="../ProgrammingGuide/autograd/">Autograd</a>
-</li>
-            
-<li >
-    <a href="../ProgrammingGuide/transferlearning/">Transfer Learning</a>
-</li>
-            
-<li >
-    <a href="../ProgrammingGuide/inference/">Model Serving</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">TFPark API</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../ProgrammingGuide/tensorflow/">TFPark</a>
-</li>
-            
-<li >
-    <a href="../ProgrammingGuide/text-models/">Text Models</a>
-</li>
-            
-<li >
-    <a href="../ProgrammingGuide/bert-classifier/">BERT Classifier</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Feature Engineering</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../ProgrammingGuide/workingwithimages/">Working with Images</a>
-</li>
-            
-<li >
-    <a href="../ProgrammingGuide/workingwithtexts/">Working with Texts</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Built-in Models</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../ProgrammingGuide/object-detection/">Object Detection API</a>
-</li>
-            
-<li >
-    <a href="../ProgrammingGuide/image-classification/">Image Classification API</a>
-</li>
-            
-<li >
-    <a href="../ProgrammingGuide/text-classification/">Text Classification API</a>
-</li>
-            
-<li >
-    <a href="../ProgrammingGuide/recommendation/">Recommendation API</a>
-</li>
-            
-<li >
-    <a href="../ProgrammingGuide/anomaly-detection/">Anomaly Detection API</a>
-</li>
-            
-<li >
-    <a href="../ProgrammingGuide/text-matching/">Text Matching API</a>
-</li>
-            
-<li >
-    <a href="../ProgrammingGuide/seq2seq/">Sequence to Sequence API</a>
-</li>
-    </ul>
-  </li>
-                                    
-<li >
-    <a href="../ProgrammingGuide/usercases-overview/">Reference Use Cases</a>
-</li>
-                                    
-<li >
-    <a href="../ProgrammingGuide/run-on-dataproc/">Run on Google Cloud Dataproc</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown active">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">White Paper <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li class="active">
-    <a href="./">BigDL</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">API Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Pipeline APIs</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../APIGuide/PipelineAPI/nnframes/">NNFrames</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/PipelineAPI/math/">Autograd-Math</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/PipelineAPI/variable/">Autograd-Variable</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/PipelineAPI/net/">Net</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/PipelineAPI/inference/">Inference</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">TFPark API</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../APIGuide/TFPark/model/">KerasModel</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/TFPark/estimator/">TFEstimator</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/TFPark/text-models/">Text Models</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/TFPark/bert-classifier/">BERT Classifier</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Feature Engineering</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../APIGuide/FeatureEngineering/featureset/">FeatureSet</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/FeatureEngineering/relation/">Relation</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/FeatureEngineering/image/">Image</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/FeatureEngineering/text/">Text</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Models</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../APIGuide/Models/object-detection/">Object Detection</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/Models/image-classification/">Image Classification</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/Models/text-classification/">Text Classification</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/Models/recommendation/">Recommendation</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/Models/anomaly-detection/">Anomaly Detection</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/Models/text-matching/">Text Matching</a>
-</li>
-            
-<li >
-    <a href="../APIGuide/Models/seq2seq/">Sequence to Sequence</a>
-</li>
-    </ul>
-  </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Keras-Style API Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../KerasStyleAPIGuide/keras-api-python/">Python Guide</a>
-</li>
-                                    
-<li >
-    <a href="../KerasStyleAPIGuide/keras-api-scala/">Scala Guide</a>
-</li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Layers</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Layers/activation/">Activation</a>
-</li>
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Layers/initialization/">Initialization</a>
-</li>
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Layers/core/">Core Layers</a>
-</li>
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Layers/convolutional/">Convolutional Layers</a>
-</li>
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Layers/pooling/">Pooling Layers</a>
-</li>
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Layers/recurrent/">Recurrent Layers</a>
-</li>
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Layers/normalization/">Normalization Layers</a>
-</li>
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Layers/embedding/">Embedding Layers</a>
-</li>
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Layers/dropout/">Dropout Layers</a>
-</li>
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Layers/advanced-activation/">Advanced Activations</a>
-</li>
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Layers/wrappers/">Layer Wrappers</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Optimization</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Optimization/training/">Train, evaluate or predict a model</a>
-</li>
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Optimization/optimizers/">Optimizers</a>
-</li>
-            
-<li >
-    <a href="../KerasStyleAPIGuide/Optimization/objectives/">Objectives</a>
-</li>
-    </ul>
-  </li>
-                                </ul>
-                            </li>
-                            <li >
-                                <a href="../powered-by/">Powered by</a>
-                            </li>
-                            <li >
-                                <a href="../presentations/">Presentations</a>
-                            </li>
-                            <li >
-                                <a href="../known-issues/">FAQ and Known Issues</a>
-                            </li>
-                        </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                            <li >
-                                <a rel="next" href="../ProgrammingGuide/run-on-dataproc/">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li >
-                                <a rel="prev" href="../APIGuide/PipelineAPI/nnframes/">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://github.com/intel-analytics/analytics-zoo/edit/master/docs/wp-bigdl.md">Edit on Fork on GitHub </a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#bigdl-a-distributed-deep-learning-framework-for-big-data">BigDL: A Distributed Deep Learning Framework for Big Data</a></li>
-        <li class="main "><a href="#abstract">Abstract</a></li>
-        <li class="main "><a href="#1-introduction">1. Introduction</a></li>
-        <li class="main "><a href="#2-programming-model">2. Programming Model</a></li>
-            <li><a href="#21-spark">2.1. Spark</a></li>
-            <li><a href="#22-data-transformation">2.2. Data transformation</a></li>
-            <li><a href="#23-model-construction">2.3. Model Construction</a></li>
-            <li><a href="#24-model-training">2.4. Model training</a></li>
-            <li><a href="#25-model-inference">2.5. Model Inference</a></li>
-            <li><a href="#26-spark-dataframe-and-ml-pipeline">2.6. Spark DataFrame and ML Pipeline</a></li>
-        <li class="main "><a href="#3-execution-model">3. Execution Model</a></li>
-            <li><a href="#31-data-parallel-training">3.1. Data-parallel training</a></li>
-            <li><a href="#32-parameter-synchronization">3.2. Parameter synchronization</a></li>
-            <li><a href="#33-task-scheduling">3.3. Task scheduling</a></li>
-            <li><a href="#34-model-quantization">3.4. Model quantization</a></li>
-            <li><a href="#35-local-execution">3.5. Local execution</a></li>
-        <li class="main "><a href="#4-applications">4. Applications</a></li>
-            <li><a href="#41-model-inference-image-feature-extraction">4.1. Model Inference: image feature extraction</a></li>
-            <li><a href="#42-distributed-training-precipitation-nowcasting">4.2. Distributed training: precipitation nowcasting</a></li>
-            <li><a href="#43-transfer-learning-image-similarity-based-house-recommendations">4.3. Transfer learning: image-similarity based house recommendations</a></li>
-        <li class="main "><a href="#5related-work">5.Related Work</a></li>
-        <li class="main "><a href="#6-summary">6. Summary</a></li>
-        <li class="main "><a href="#7-acknowledgement">7. Acknowledgement</a></li>
-        <li class="main "><a href="#8-reference">8. Reference</a></li>
-    </ul>
-</div></div>
-                <div class="col-md-9" role="main">
-
-<hr />
-<h2 id="bigdl-a-distributed-deep-learning-framework-for-big-data"><strong>BigDL: A Distributed Deep Learning Framework for Big Data</strong></h2>
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>BigDL</strong></h1>
+    <hr>
+    <h2 id="bigdl-a-distributed-deep-learning-framework-for-big-data"><strong>BigDL: A Distributed Deep Learning Framework for Big Data</strong></h2>
 <p>Jason (Jinquan) Dai<sup>1</sup>, Yiheng Wang<sup>1</sup>, Xin Qiu<sup>1</sup>, Ding Ding<sup>1</sup>, Yao Zhang<sup>2 ǂ</sup>, Yanzhang Wang<sup>1</sup>, Xianyan Jia<sup>2 ǂ</sup>, Cherry (Li) Zhang<sup>1</sup>, Yan Wan<sup>3 ǂ</sup>, Zhichao Li<sup>1</sup>, Jiao Wang<sup>1</sup>, Shengsheng Huang<sup>1</sup>, Zhongyuan Wu<sup>1</sup>, Yang Wang<sup>1</sup>, Yuhao Yang<sup>1</sup>, Bowen She<sup>1</sup>, Dongjie Shi<sup>1</sup>, Qi Lu<sup>1</sup>, Kai Huang<sup>1</sup>, Guoqiong Song<sup>1</sup></p>
 <p><sup>1</sup>Intel Corporation,    <sup>2</sup>Tencent Inc.,    <sup>3</sup>Alibaba Group</p>
 <p><sup>ǂ</sup>Work was done when the author worked at Intel</p>
@@ -755,83 +364,14 @@
 <p>[54]    Deep Learning Pipelines. https://github.com/databricks/spark-deep-learning</p>
 <p>[55]    CaffeOnSpark. https://github.com/yahoo/CaffeOnSpark</p>
 <p>[56]    TensorFlowOnSpark. https://github.com/yahoo/TensorFlowOnSpark</p>
-<p>[57]    Philipp Moritz, et al.  “SparkNet: Training Deep Networks in Spark”, ICLR 2016.</p></div>
-        </div>
+<p>[57]    Philipp Moritz, et al.  “SparkNet: Training Deep Networks in Spark”, ICLR 2016.</p>
 
-        <footer class="col-md-12">
-            <hr>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script>
-            var base_url = "..",
-                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
-        </script>
-        <script src="../js/base.js" defer></script>
-        <script src="../search/main.js" defer></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
-                <form role="form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
+  <br>
 </div>
 
-    </body>
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
 </html>

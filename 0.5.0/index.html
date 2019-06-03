@@ -1,474 +1,405 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="None">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="None">
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="./extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+      <script src="/js/elasticlunr.min.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '.';
+      var is_top_frame = (window === window.parent);
         
+        var pageToc = [
+          {title: "Analytics Zoo", url: "#analytics-zoo", children: [
+              {title: "What is Analytics Zoo?", url: "#what-is-analytics-zoo" },
+              {title: "How to use Analytics Zoo?", url: "#how-to-use-analytics-zoo" },
+              {title: "Overview", url: "#overview" },
+              {title: "Distributed TensorFlow and Keras on Spark/BigDL", url: "#distributed-tensorflow-and-keras-on-sparkbigdl" },
+              {title: "High level abstractions and APIs", url: "#high-level-abstractions-and-apis" },
+              {title: "Built-in deep learning models", url: "#built-in-deep-learning-models" },
+              {title: "Reference use cases", url: "#reference-use-cases" },
+              {title: "Docker images and builders", url: "#docker-images-and-builders" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<nav class="navbar wm-page-top-frame">
+  <div class="container-fluid wm-top-container">
+    
+    <div class="wm-top-tool pull-right wm-vcenter">
+      <form class="dropdown wm-vcentered" id="wm-search-form" action="./search.html">
         
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <title>Analytics Zoo</title>
-        <link href="css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-        <link href="extra.css" rel="stylesheet">
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        <button id="wm-search-show" class="btn btn-sm btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>                                                                           
 
-        <script src="js/jquery-1.10.2.min.js" defer></script>
-        <script src="js/bootstrap-3.0.3.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-            ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
-            ga('send', 'pageview');
-        </script> 
-    </head>
-
-    <body class="homepage">
-
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
-
-                <!-- Collapsed navigation -->
-                <div class="navbar-header">
-                    <!-- Expander button -->
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href=".">Analytics Zoo</a>
-                </div>
-
-                <!-- Expanded navigation -->
-                <div class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li class="active">
-                                <a href=".">Overview</a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Releases <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="release-download/">Download</a>
-</li>
-                                    
-<li >
-    <a href="release-docs/">Documentation</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Python</a>
-    <ul class="dropdown-menu">
+        <div class="input-group input-group-sm wm-top-search">
+          <input type="text" name="q" class="form-control" id="mkdocs-search-query" placeholder="Search">
+          <span class="input-group-btn" role="search">
             
-<li >
-    <a href="PythonUserGuide/install/">Install</a>
-</li>
-            
-<li >
-    <a href="PythonUserGuide/run/">Run</a>
-</li>
-            
-<li >
-    <a href="PythonUserGuide/examples/">Examples</a>
-</li>
-            
-<li >
-    <a href="PythonUserGuide/python-faq/">FAQ</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Scala</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="ScalaUserGuide/install/">Install</a>
-</li>
-            
-<li >
-    <a href="ScalaUserGuide/run/">Run</a>
-</li>
-            
-<li >
-    <a href="ScalaUserGuide/examples/">Examples</a>
-</li>
-    </ul>
-  </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Programming Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Pipeline APIs</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="ProgrammingGuide/nnframes/">DataFrame and ML Pipeline</a>
-</li>
-            
-<li >
-    <a href="ProgrammingGuide/autograd/">Autograd</a>
-</li>
-            
-<li >
-    <a href="ProgrammingGuide/transferlearning/">Transfer Learning</a>
-</li>
-            
-<li >
-    <a href="ProgrammingGuide/inference/">Model Serving</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">TFPark API</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="ProgrammingGuide/tensorflow/">TFPark</a>
-</li>
-            
-<li >
-    <a href="ProgrammingGuide/text-models/">Text Models</a>
-</li>
-            
-<li >
-    <a href="ProgrammingGuide/bert-classifier/">BERT Classifier</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Feature Engineering</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="ProgrammingGuide/workingwithimages/">Working with Images</a>
-</li>
-            
-<li >
-    <a href="ProgrammingGuide/workingwithtexts/">Working with Texts</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Built-in Models</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="ProgrammingGuide/object-detection/">Object Detection API</a>
-</li>
-            
-<li >
-    <a href="ProgrammingGuide/image-classification/">Image Classification API</a>
-</li>
-            
-<li >
-    <a href="ProgrammingGuide/text-classification/">Text Classification API</a>
-</li>
-            
-<li >
-    <a href="ProgrammingGuide/recommendation/">Recommendation API</a>
-</li>
-            
-<li >
-    <a href="ProgrammingGuide/anomaly-detection/">Anomaly Detection API</a>
-</li>
-            
-<li >
-    <a href="ProgrammingGuide/text-matching/">Text Matching API</a>
-</li>
-            
-<li >
-    <a href="ProgrammingGuide/seq2seq/">Sequence to Sequence API</a>
-</li>
-    </ul>
-  </li>
-                                    
-<li >
-    <a href="ProgrammingGuide/usercases-overview/">Reference Use Cases</a>
-</li>
-                                    
-<li >
-    <a href="ProgrammingGuide/run-on-dataproc/">Run on Google Cloud Dataproc</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">White Paper <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="wp-bigdl/">BigDL</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">API Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Pipeline APIs</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="APIGuide/PipelineAPI/nnframes/">NNFrames</a>
-</li>
-            
-<li >
-    <a href="APIGuide/PipelineAPI/math/">Autograd-Math</a>
-</li>
-            
-<li >
-    <a href="APIGuide/PipelineAPI/variable/">Autograd-Variable</a>
-</li>
-            
-<li >
-    <a href="APIGuide/PipelineAPI/net/">Net</a>
-</li>
-            
-<li >
-    <a href="APIGuide/PipelineAPI/inference/">Inference</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">TFPark API</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="APIGuide/TFPark/model/">KerasModel</a>
-</li>
-            
-<li >
-    <a href="APIGuide/TFPark/estimator/">TFEstimator</a>
-</li>
-            
-<li >
-    <a href="APIGuide/TFPark/text-models/">Text Models</a>
-</li>
-            
-<li >
-    <a href="APIGuide/TFPark/bert-classifier/">BERT Classifier</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Feature Engineering</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="APIGuide/FeatureEngineering/featureset/">FeatureSet</a>
-</li>
-            
-<li >
-    <a href="APIGuide/FeatureEngineering/relation/">Relation</a>
-</li>
-            
-<li >
-    <a href="APIGuide/FeatureEngineering/image/">Image</a>
-</li>
-            
-<li >
-    <a href="APIGuide/FeatureEngineering/text/">Text</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Models</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="APIGuide/Models/object-detection/">Object Detection</a>
-</li>
-            
-<li >
-    <a href="APIGuide/Models/image-classification/">Image Classification</a>
-</li>
-            
-<li >
-    <a href="APIGuide/Models/text-classification/">Text Classification</a>
-</li>
-            
-<li >
-    <a href="APIGuide/Models/recommendation/">Recommendation</a>
-</li>
-            
-<li >
-    <a href="APIGuide/Models/anomaly-detection/">Anomaly Detection</a>
-</li>
-            
-<li >
-    <a href="APIGuide/Models/text-matching/">Text Matching</a>
-</li>
-            
-<li >
-    <a href="APIGuide/Models/seq2seq/">Sequence to Sequence</a>
-</li>
-    </ul>
-  </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Keras-Style API Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="KerasStyleAPIGuide/keras-api-python/">Python Guide</a>
-</li>
-                                    
-<li >
-    <a href="KerasStyleAPIGuide/keras-api-scala/">Scala Guide</a>
-</li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Layers</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="KerasStyleAPIGuide/Layers/activation/">Activation</a>
-</li>
-            
-<li >
-    <a href="KerasStyleAPIGuide/Layers/initialization/">Initialization</a>
-</li>
-            
-<li >
-    <a href="KerasStyleAPIGuide/Layers/core/">Core Layers</a>
-</li>
-            
-<li >
-    <a href="KerasStyleAPIGuide/Layers/convolutional/">Convolutional Layers</a>
-</li>
-            
-<li >
-    <a href="KerasStyleAPIGuide/Layers/pooling/">Pooling Layers</a>
-</li>
-            
-<li >
-    <a href="KerasStyleAPIGuide/Layers/recurrent/">Recurrent Layers</a>
-</li>
-            
-<li >
-    <a href="KerasStyleAPIGuide/Layers/normalization/">Normalization Layers</a>
-</li>
-            
-<li >
-    <a href="KerasStyleAPIGuide/Layers/embedding/">Embedding Layers</a>
-</li>
-            
-<li >
-    <a href="KerasStyleAPIGuide/Layers/dropout/">Dropout Layers</a>
-</li>
-            
-<li >
-    <a href="KerasStyleAPIGuide/Layers/advanced-activation/">Advanced Activations</a>
-</li>
-            
-<li >
-    <a href="KerasStyleAPIGuide/Layers/wrappers/">Layer Wrappers</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Optimization</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="KerasStyleAPIGuide/Optimization/training/">Train, evaluate or predict a model</a>
-</li>
-            
-<li >
-    <a href="KerasStyleAPIGuide/Optimization/optimizers/">Optimizers</a>
-</li>
-            
-<li >
-    <a href="KerasStyleAPIGuide/Optimization/objectives/">Objectives</a>
-</li>
-    </ul>
-  </li>
-                                </ul>
-                            </li>
-                            <li >
-                                <a href="powered-by/">Powered by</a>
-                            </li>
-                            <li >
-                                <a href="presentations/">Presentations</a>
-                            </li>
-                            <li >
-                                <a href="known-issues/">FAQ and Known Issues</a>
-                            </li>
-                        </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                            <li class="disabled">
-                                <a rel="next" >
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li >
-                                <a rel="prev" href="release-download/">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://github.com/intel-analytics/analytics-zoo/edit/master/docs/index.md">Edit on Fork on GitHub </a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
+            <button class="btn btn-default dropdown-toggle collapse" data-toggle="dropdown" type="button"><span class="caret"></span></button>
+            <ul id="mkdocs-search-results" class="dropdown-menu dropdown-menu-right"></ul>
+            <button id="wm-search-go" class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </span>
         </div>
+      </form>
+    </div>
 
-        <div class="container">
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#analytics-zoo">Analytics Zoo</a></li>
-            <li><a href="#what-is-analytics-zoo">What is Analytics Zoo?</a></li>
-            <li><a href="#how-to-use-analytics-zoo">How to use Analytics Zoo?</a></li>
-            <li><a href="#overview">Overview</a></li>
-            <li><a href="#distributed-tensorflow-and-keras-on-sparkbigdl">Distributed TensorFlow and Keras on Spark/BigDL</a></li>
-            <li><a href="#high-level-abstractions-and-apis">High level abstractions and APIs</a></li>
-            <li><a href="#built-in-deep-learning-models">Built-in deep learning models</a></li>
-            <li><a href="#reference-use-cases">Reference use cases</a></li>
-            <li><a href="#docker-images-and-builders">Docker images and builders</a></li>
+    
+    <div class="wm-top-tool wm-vcenter pull-right wm-small-left">
+      <button id="wm-toc-button" type="button" class="btn btn-sm btn-default wm-vcentered"><i class="fa fa-th-list" aria-hidden="true"></i></button>
+    </div>
+
+    
+    
+    
+
+    
+    <div>
+      <div class="wm-top-title">
+        <a href="" class="wm-top-brand wm-top-link wm-vcenter ">
+            <!--img class="wm-top-logo" src="/img/bigdl_logo.png"/-->
+	    <span tilte="name">Analytics-Zoo</span>
+        </a>
+      </div>
+      
+      <div class="wm-top-title">
+          <select id="versions" class="wm-top-link wm-top-more wm-top-version-select" onchange="javascript:switchVersion(this)">
+          </select>
+      </div>
+      
+    </div>
+  </div>
+</nav>
+
+  <div id="main-content" class="wm-page-top-frame">
+    
+<nav class="wm-toc-pane">
+  
+    <ul class="wm-toctree wm-toc-repo">
+      <li class="wm-toc-li wm-toc-lev1">
+      <a class="wm-article-link wm-toc-text wm-toc-repolink" href="https://github.com/intel-analytics/analytics-zoo">
+        <img class="wm-top-logo" src="/img/github.ico"/>
+        Fork on GitHub 
+      </a>
+      </li>
     </ul>
-</div></div>
-                <div class="col-md-9" role="main">
+  <ul class="wm-toctree">
+        <li class="wm-toc-li wm-toc-lev1 "><a href="." class="wm-article-link wm-toc-text">Overview</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Releases</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="release-download/" class="wm-article-link wm-toc-text">Download</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="release-docs/" class="wm-article-link wm-toc-text">Documentation</a>
+</li>
+  </ul>
+</li>
 
-<h1 id="analytics-zoo"><font size="6">Analytics Zoo</font></h1>
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">User Guide</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Python</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="PythonUserGuide/install/" class="wm-article-link wm-toc-text">Install</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="PythonUserGuide/run/" class="wm-article-link wm-toc-text">Run</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="PythonUserGuide/examples/" class="wm-article-link wm-toc-text">Examples</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="PythonUserGuide/python-faq/" class="wm-article-link wm-toc-text">FAQ</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Scala</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ScalaUserGuide/install/" class="wm-article-link wm-toc-text">Install</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ScalaUserGuide/run/" class="wm-article-link wm-toc-text">Run</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ScalaUserGuide/examples/" class="wm-article-link wm-toc-text">Examples</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Programming Guide</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Pipeline APIs</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/nnframes/" class="wm-article-link wm-toc-text">DataFrame and ML Pipeline</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/autograd/" class="wm-article-link wm-toc-text">Autograd</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/transferlearning/" class="wm-article-link wm-toc-text">Transfer Learning</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/inference/" class="wm-article-link wm-toc-text">Model Serving</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">TFPark API</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/tensorflow/" class="wm-article-link wm-toc-text">TFPark</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/text-models/" class="wm-article-link wm-toc-text">Text Models</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/bert-classifier/" class="wm-article-link wm-toc-text">BERT Classifier</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Feature Engineering</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/workingwithimages/" class="wm-article-link wm-toc-text">Working with Images</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/workingwithtexts/" class="wm-article-link wm-toc-text">Working with Texts</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Built-in Models</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/object-detection/" class="wm-article-link wm-toc-text">Object Detection API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/image-classification/" class="wm-article-link wm-toc-text">Image Classification API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/text-classification/" class="wm-article-link wm-toc-text">Text Classification API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/recommendation/" class="wm-article-link wm-toc-text">Recommendation API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/anomaly-detection/" class="wm-article-link wm-toc-text">Anomaly Detection API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/text-matching/" class="wm-article-link wm-toc-text">Text Matching API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/seq2seq/" class="wm-article-link wm-toc-text">Sequence to Sequence API</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="ProgrammingGuide/usercases-overview/" class="wm-article-link wm-toc-text">Reference Use Cases</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="ProgrammingGuide/run-on-dataproc/" class="wm-article-link wm-toc-text">Run on Google Cloud Dataproc</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">White Paper</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="wp-bigdl/" class="wm-article-link wm-toc-text">BigDL</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">API Guide</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Pipeline APIs</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/PipelineAPI/nnframes/" class="wm-article-link wm-toc-text">NNFrames</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/PipelineAPI/math/" class="wm-article-link wm-toc-text">Autograd-Math</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/PipelineAPI/variable/" class="wm-article-link wm-toc-text">Autograd-Variable</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/PipelineAPI/net/" class="wm-article-link wm-toc-text">Net</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/PipelineAPI/inference/" class="wm-article-link wm-toc-text">Inference</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">TFPark API</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/TFPark/model/" class="wm-article-link wm-toc-text">KerasModel</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/TFPark/estimator/" class="wm-article-link wm-toc-text">TFEstimator</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/TFPark/text-models/" class="wm-article-link wm-toc-text">Text Models</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/TFPark/bert-classifier/" class="wm-article-link wm-toc-text">BERT Classifier</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Feature Engineering</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/FeatureEngineering/featureset/" class="wm-article-link wm-toc-text">FeatureSet</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/FeatureEngineering/relation/" class="wm-article-link wm-toc-text">Relation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/FeatureEngineering/image/" class="wm-article-link wm-toc-text">Image</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/FeatureEngineering/text/" class="wm-article-link wm-toc-text">Text</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Models</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/object-detection/" class="wm-article-link wm-toc-text">Object Detection</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/image-classification/" class="wm-article-link wm-toc-text">Image Classification</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/text-classification/" class="wm-article-link wm-toc-text">Text Classification</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/recommendation/" class="wm-article-link wm-toc-text">Recommendation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/anomaly-detection/" class="wm-article-link wm-toc-text">Anomaly Detection</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/text-matching/" class="wm-article-link wm-toc-text">Text Matching</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/seq2seq/" class="wm-article-link wm-toc-text">Sequence to Sequence</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Keras-Style API Guide</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="KerasStyleAPIGuide/keras-api-python/" class="wm-article-link wm-toc-text">Python Guide</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="KerasStyleAPIGuide/keras-api-scala/" class="wm-article-link wm-toc-text">Scala Guide</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Layers</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/activation/" class="wm-article-link wm-toc-text">Activation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/initialization/" class="wm-article-link wm-toc-text">Initialization</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/core/" class="wm-article-link wm-toc-text">Core Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/convolutional/" class="wm-article-link wm-toc-text">Convolutional Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/pooling/" class="wm-article-link wm-toc-text">Pooling Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/recurrent/" class="wm-article-link wm-toc-text">Recurrent Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/normalization/" class="wm-article-link wm-toc-text">Normalization Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/embedding/" class="wm-article-link wm-toc-text">Embedding Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/dropout/" class="wm-article-link wm-toc-text">Dropout Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/advanced-activation/" class="wm-article-link wm-toc-text">Advanced Activations</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/wrappers/" class="wm-article-link wm-toc-text">Layer Wrappers</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Optimization</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Optimization/training/" class="wm-article-link wm-toc-text">Train, evaluate or predict a model</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Optimization/optimizers/" class="wm-article-link wm-toc-text">Optimizers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Optimization/objectives/" class="wm-article-link wm-toc-text">Objectives</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 "><a href="powered-by/" class="wm-article-link wm-toc-text">Powered by</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="presentations/" class="wm-article-link wm-toc-text">Presentations</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="known-issues/" class="wm-article-link wm-toc-text">FAQ and Known Issues</a>
+</li>
+  </ul>
+</nav>
+
+    <div class="wm-content-pane">
+      <iframe class="wm-article" name="article"></iframe>
+    </div>
+  </div>
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Overview</strong></h1>
+    <hr>
+    <h1 id="analytics-zoo"><font size="6">Analytics Zoo</font></h1>
 <p><em>A unified analytics + AI platform for <strong>distributed TensorFlow, Keras and BigDL on Apache Spark</strong></em></p>
 <hr />
 <h2 id="what-is-analytics-zoo">What is Analytics Zoo?</h2>
@@ -886,88 +817,18 @@ sudo docker run -it --rm --net=host \
     -e RUNTIME_EXECUTOR_MEMORY=20g \
     -e RUNTIME_TOTAL_EXECUTOR_CORES=4 \
     intelanalytics/analytics-zoo:latest
-</code></pre></div>
-        </div>
+</code></pre>
 
-        <footer class="col-md-12">
-            <hr>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script>
-            var base_url = ".",
-                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
-        </script>
-        <script src="js/base.js" defer></script>
-        <script src="search/main.js" defer></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
-                <form role="form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
+  <br>
 </div>
 
-    </body>
-</html>
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
 
+</body>
+</html>
 <!--
-MkDocs version : 1.0.4
-Build Date UTC : 2019-06-03 00:34:14
+MkDocs version : 0.16.3
+Build Date UTC : 2019-06-03 01:16:28
 -->

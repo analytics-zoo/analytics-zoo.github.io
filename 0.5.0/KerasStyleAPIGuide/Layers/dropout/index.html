@@ -1,470 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Dropout Layers - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
         
-        
-        
-        <link rel="shortcut icon" href="../../../img/favicon.ico">
-        <title>Dropout Layers - Analytics Zoo</title>
-        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../../../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-        <link href="../../../extra.css" rel="stylesheet">
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        var pageToc = [
+          {title: "SpatialDropout3D", url: "#spatialdropout3d", children: [
+          ]},
+          {title: "Dropout", url: "#dropout", children: [
+          ]},
+          {title: "GaussianDropout", url: "#gaussiandropout", children: [
+          ]},
+          {title: "SpatialDropout2D", url: "#spatialdropout2d", children: [
+          ]},
+          {title: "GaussianNoise", url: "#gaussiannoise", children: [
+          ]},
+        ];
 
-        <script src="../../../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../../../js/bootstrap-3.0.3.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-            ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
-            ga('send', 'pageview');
-        </script> 
-    </head>
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
 
-    <body>
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
 
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
 
-                <!-- Collapsed navigation -->
-                <div class="navbar-header">
-                    <!-- Expander button -->
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="../../..">Analytics Zoo</a>
-                </div>
 
-                <!-- Expanded navigation -->
-                <div class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li >
-                                <a href="../../..">Overview</a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Releases <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../../../release-download/">Download</a>
-</li>
-                                    
-<li >
-    <a href="../../../release-docs/">Documentation</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Python</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../PythonUserGuide/install/">Install</a>
-</li>
-            
-<li >
-    <a href="../../../PythonUserGuide/run/">Run</a>
-</li>
-            
-<li >
-    <a href="../../../PythonUserGuide/examples/">Examples</a>
-</li>
-            
-<li >
-    <a href="../../../PythonUserGuide/python-faq/">FAQ</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Scala</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../ScalaUserGuide/install/">Install</a>
-</li>
-            
-<li >
-    <a href="../../../ScalaUserGuide/run/">Run</a>
-</li>
-            
-<li >
-    <a href="../../../ScalaUserGuide/examples/">Examples</a>
-</li>
-    </ul>
-  </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Programming Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Pipeline APIs</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../ProgrammingGuide/nnframes/">DataFrame and ML Pipeline</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/autograd/">Autograd</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/transferlearning/">Transfer Learning</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/inference/">Model Serving</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">TFPark API</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../ProgrammingGuide/tensorflow/">TFPark</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/text-models/">Text Models</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/bert-classifier/">BERT Classifier</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Feature Engineering</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../ProgrammingGuide/workingwithimages/">Working with Images</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/workingwithtexts/">Working with Texts</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Built-in Models</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../ProgrammingGuide/object-detection/">Object Detection API</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/image-classification/">Image Classification API</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/text-classification/">Text Classification API</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/recommendation/">Recommendation API</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/anomaly-detection/">Anomaly Detection API</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/text-matching/">Text Matching API</a>
-</li>
-            
-<li >
-    <a href="../../../ProgrammingGuide/seq2seq/">Sequence to Sequence API</a>
-</li>
-    </ul>
-  </li>
-                                    
-<li >
-    <a href="../../../ProgrammingGuide/usercases-overview/">Reference Use Cases</a>
-</li>
-                                    
-<li >
-    <a href="../../../ProgrammingGuide/run-on-dataproc/">Run on Google Cloud Dataproc</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">White Paper <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../../../wp-bigdl/">BigDL</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">API Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Pipeline APIs</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../APIGuide/PipelineAPI/nnframes/">NNFrames</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/PipelineAPI/math/">Autograd-Math</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/PipelineAPI/variable/">Autograd-Variable</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/PipelineAPI/net/">Net</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/PipelineAPI/inference/">Inference</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">TFPark API</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../APIGuide/TFPark/model/">KerasModel</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/TFPark/estimator/">TFEstimator</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/TFPark/text-models/">Text Models</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/TFPark/bert-classifier/">BERT Classifier</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Feature Engineering</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../APIGuide/FeatureEngineering/featureset/">FeatureSet</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/FeatureEngineering/relation/">Relation</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/FeatureEngineering/image/">Image</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/FeatureEngineering/text/">Text</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Models</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../../APIGuide/Models/object-detection/">Object Detection</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/Models/image-classification/">Image Classification</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/Models/text-classification/">Text Classification</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/Models/recommendation/">Recommendation</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/Models/anomaly-detection/">Anomaly Detection</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/Models/text-matching/">Text Matching</a>
-</li>
-            
-<li >
-    <a href="../../../APIGuide/Models/seq2seq/">Sequence to Sequence</a>
-</li>
-    </ul>
-  </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown active">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Keras-Style API Guide <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../../keras-api-python/">Python Guide</a>
-</li>
-                                    
-<li >
-    <a href="../../keras-api-scala/">Scala Guide</a>
-</li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Layers</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../activation/">Activation</a>
-</li>
-            
-<li >
-    <a href="../initialization/">Initialization</a>
-</li>
-            
-<li >
-    <a href="../core/">Core Layers</a>
-</li>
-            
-<li >
-    <a href="../convolutional/">Convolutional Layers</a>
-</li>
-            
-<li >
-    <a href="../pooling/">Pooling Layers</a>
-</li>
-            
-<li >
-    <a href="../recurrent/">Recurrent Layers</a>
-</li>
-            
-<li >
-    <a href="../normalization/">Normalization Layers</a>
-</li>
-            
-<li >
-    <a href="../embedding/">Embedding Layers</a>
-</li>
-            
-<li class="active">
-    <a href="./">Dropout Layers</a>
-</li>
-            
-<li >
-    <a href="../advanced-activation/">Advanced Activations</a>
-</li>
-            
-<li >
-    <a href="../wrappers/">Layer Wrappers</a>
-</li>
-    </ul>
-  </li>
-                                    
-  <li class="dropdown-submenu">
-    <a href="#">Optimization</a>
-    <ul class="dropdown-menu">
-            
-<li >
-    <a href="../../Optimization/training/">Train, evaluate or predict a model</a>
-</li>
-            
-<li >
-    <a href="../../Optimization/optimizers/">Optimizers</a>
-</li>
-            
-<li >
-    <a href="../../Optimization/objectives/">Objectives</a>
-</li>
-    </ul>
-  </li>
-                                </ul>
-                            </li>
-                            <li >
-                                <a href="../../../powered-by/">Powered by</a>
-                            </li>
-                            <li >
-                                <a href="../../../presentations/">Presentations</a>
-                            </li>
-                            <li >
-                                <a href="../../../known-issues/">FAQ and Known Issues</a>
-                            </li>
-                        </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                            <li >
-                                <a rel="next" href="../embedding/">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li >
-                                <a rel="prev" href="../advanced-activation/">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://github.com/intel-analytics/analytics-zoo/edit/master/docs/KerasStyleAPIGuide/Layers/dropout.md">Edit on Fork on GitHub </a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#spatialdropout3d">SpatialDropout3D</a></li>
-        <li class="main "><a href="#dropout">Dropout</a></li>
-        <li class="main "><a href="#gaussiandropout">GaussianDropout</a></li>
-        <li class="main "><a href="#spatialdropout2d">SpatialDropout2D</a></li>
-        <li class="main "><a href="#gaussiannoise">GaussianNoise</a></li>
-    </ul>
-</div></div>
-                <div class="col-md-9" role="main">
-
-<h2 id="spatialdropout3d"><strong>SpatialDropout3D</strong></h2>
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Dropout Layers</strong></h1>
+    <hr>
+    <h2 id="spatialdropout3d"><strong>SpatialDropout3D</strong></h2>
 <p>Spatial 3D version of Dropout.</p>
 <p>This version performs the same functionalities as Dropout, however it drops entire 3D feature maps instead of individual elements. If adjacent voxels within feature maps are strongly correlated (as is normally the case in early convolution layers) then regular dropout will not regularize the activations and will otherwise just result in an effective learning rate decrease. In this case, SpatialDropout3D will help promote independence between feature maps and should be used instead.</p>
 <p>The input is 5D tensor with shape: (batch_size, channels, dim1, dim2, dim3)</p>
@@ -480,7 +85,7 @@
 <ul>
 <li><code>p</code>: Fraction of the input units to drop. Between 0 and 1.</li>
 <li><code>dimOrdering</code>: Format of input data. Either 'th' (Channel First) or 'tf' (Channel Last). Default is 'th'.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -653,7 +258,7 @@ output = model.forward(input)
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>p</code>: Fraction of the input units to drop. Between 0 and 1.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -743,7 +348,7 @@ output = model.forward(input)
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>p</code>: Drop probability (as with 'Dropout'). The multiplicative noise will have standard deviation 'sqrt(p/(1-p))'.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 <li><code>name</code>: String to set the name of the layer. If not specified, its name will by default to be a generated string.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
@@ -842,7 +447,7 @@ output = model.forward(input)
 <ul>
 <li><code>p</code>: Fraction of the input units to drop. Between 0 and 1.</li>
 <li><code>dimOrdering</code>: Format of input data. Either 'th' (Channel First) or 'tf' (Channel Last). Default is 'th'.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -972,7 +577,7 @@ output = model.forward(input)
 <p><strong>Parameters:</strong></p>
 <ul>
 <li><code>sigma</code>: Standard deviation of the noise distribution.</li>
-<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
+<li><code>inputShape</code>: Only need to specify this argument when you use this layer as the first layer of a model. For Scala API, it should be a <a href="../../keras-api-scala/#shape"><code>Shape</code></a> object. For Python API, it should be a shape tuple. Batch dimension should be excluded.</li>
 </ul>
 <p><strong>Scala example:</strong></p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
@@ -1046,83 +651,14 @@ output = model.forward(input)
         [ 0.9232183 ,  0.33405185,  0.6043875 ,  0.54677534],
         [ 1.4350419 , -1.4409285 , -0.31246042,  0.5502143 ]]],
       dtype=float32)
-</code></pre></div>
-        </div>
+</code></pre>
 
-        <footer class="col-md-12">
-            <hr>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script>
-            var base_url = "../../..",
-                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
-        </script>
-        <script src="../../../js/base.js" defer></script>
-        <script src="../../../search/main.js" defer></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
-                <form role="form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
+  <br>
 </div>
 
-    </body>
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
 </html>
