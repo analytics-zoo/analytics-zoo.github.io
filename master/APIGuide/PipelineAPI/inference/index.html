@@ -255,7 +255,7 @@ model.load_openvino(modelPath, weightPath)
 
 <h3 id="predictint8-and-loadtfascalibratedopenvino"><strong>predictInt8</strong> and <strong>loadTFAsCalibratedOpenVINO</strong></h3>
 <p>Do prediction with int8 optimized model. Powered by <a href="https://en.wikichip.org/wiki/x86/avx512vnni">VNNI</a> and <a href="https://www.intel.ai/intel-deep-learning-boost/">Intel Deep Learning Boost</a>. Currently, this API is only for OpenVINO. For Analytics Zoo model, int8 optimized model can directly make prediction with <code>predict</code> method.</p>
-<p>To load an OpenVINO int8 optimized model from TensorFlow, we build <code>loadTFAsCalibratedOpenVINO</code> methods with 4 more parameters than <code>loadOpenVINOModelForTF</code>.</p>
+<p>To load an OpenVINO int8 optimized model from TensorFlow, we build <code>loadTFAsCalibratedOpenVINO</code> methods with 4 more parameters than <code>loadOpenVINOModelForTF</code>. Note that in this step, we need to prepare <code>validation images</code> and <code>OpenCV 4.0 libs</code> for int8 optimization. For more details, please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/vnni/openvino">this example</a>.</p>
 <ul>
 <li><code>networkType</code>: String. Type of an inferred network, "C" to calibrate Classification, "OD" to calibrate Object Detection, "RawC" to collect only statistics for Classification, "RawOD" to collect only statistics for Object Detection.</li>
 <li><code>validationFilePath</code>: String. Path to a file with validation images path and target labels.</li>
@@ -268,6 +268,10 @@ model.load_openvino(modelPath, weightPath)
 
 <p><strong>Scala</strong></p>
 <pre><code class="scala">val predictOutput = model.doPredictInt8(predictInput)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<pre><code class="python">predict_output = model.predict_int8(predict_input)
 </code></pre>
 
 <h2 id="supportive-classes"><strong>Supportive classes</strong></h2>
