@@ -1847,8 +1847,8 @@ e.g. inputShape=Shape(3, 128, 128) for 128x128 RGB pictures.</p><p>Remark: This 
 The input of this layer should be 3D, i.e. (batch, time steps, input dim).</p><p>When you use this layer as the first layer of a model, you need to provide the argument
 inputShape (a Single Shape, does not include the batch dimension).
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.SoftMax" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="SoftMax[T]extendsSoftMax[T]"></a>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.SoftMax" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="SoftMax[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withIdentityOutputShapewithNet"></a>
       <a id="SoftMax[T]:SoftMax[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -1856,14 +1856,20 @@ inputShape (a Single Shape, does not include the batch dimension).
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <a href="SoftMax.html"><span class="name">SoftMax</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.nn.keras.SoftMax">bigdl.nn.keras.SoftMax</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.SoftMax.T">T</span>]</span>
+        <a href="SoftMax.html"><span class="name">SoftMax</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.SoftMax.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.SoftMax.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.SoftMax.T">T</span>] with <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.IdentityOutputShape">IdentityOutputShape</span> with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@SoftMax[T]extendsSoftMax[T]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@SoftMax[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withIdentityOutputShapewithNet" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt">Applies the SoftMax function to an n-dimensional input Tensor, rescaling them so that the
+elements of the n-dimensional output Tensor lie in the range (0, 1) and sum to 1.</p><div class="fullcomment"><div class="comment cmt"><p>Applies the SoftMax function to an n-dimensional input Tensor, rescaling them so that the
+elements of the n-dimensional output Tensor lie in the range (0, 1) and sum to 1.
+Softmax is defined as: f_i(x) = exp(x_i - shift) / sum_j exp(x_j - shift)
+where shift = max_i(x_i).
+Currently only support apply softmax normalization to the last dim.
+</p></div></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.SoftShrink" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="SoftShrink[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withIdentityOutputShapewithNet"></a>
       <a id="SoftShrink[T]:SoftShrink[T]"></a>
