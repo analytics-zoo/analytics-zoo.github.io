@@ -41,6 +41,11 @@
           ]},
           {title: "Predict", url: "#predict", children: [
           ]},
+          {title: "Visualization", url: "#visualization", children: [
+              {title: "Enable training metrics", url: "#enable-training-metrics" },
+              {title: "Validation with tensorboard", url: "#validation-with-tensorboard" },
+              {title: "Reading metrics with build-in API", url: "#reading-metrics-with-build-in-api" },
+          ]},
         ];
 
     </script>
@@ -197,6 +202,64 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
         When distributed is False the total batch size is batch_per_thread * numOfCores.</li>
 <li><code>zero_based_label</code>: Boolean. Whether result labels start from 0.
                       Default is True. If False, result labels start from 1.</li>
+</ul>
+<h2 id="visualization"><strong>Visualization</strong></h2>
+<p>We use tensorbroad-compatible tevent file to store the training and validation metrics. Then you could use tensorboard to visualize the training, or use analytics-zoo build-in API to read the metrics.</p>
+<h3 id="enable-training-metrics"><strong>Enable training metrics</strong></h3>
+<p>The training metrics will be saved to <code>logDir/appName/training</code>, and validation metrics will be saved to <code>logDir/appName/validation</code></p>
+<p><strong>scala</strong></p>
+<pre><code class="scala">setTensorBoard(logDir, appName)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>logDir</code>: The base directory path to store training and validation logs.</li>
+<li><code>appName</code>: The name of the application.</li>
+</ul>
+<p><strong>python</strong></p>
+<pre><code class="python">set_tensorboard(log_dir, app_name)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>log_dir</code>: The base directory path to store training and validation logs.</li>
+<li><code>app_name</code>: The name of the application.</li>
+</ul>
+<h3 id="validation-with-tensorboard"><strong>Validation with tensorboard</strong></h3>
+<p>TODO: add link</p>
+<h3 id="reading-metrics-with-build-in-api"><strong>Reading metrics with build-in API</strong></h3>
+<p>To get scalar metrics with build-in API, you can use following API. </p>
+<p><strong>scala</strong></p>
+<pre><code class="scala">getTrainSummary(tag)
+</code></pre>
+
+<p>Get training metrics by tag. Parameters:  </p>
+<ul>
+<li><code>tag</code>: The string variable represents the parameter you want to return supported tags are "LearningRate", "Loss", "Throughput".</li>
+</ul>
+<p><strong>scala</strong></p>
+<pre><code class="scala">getValidationSummary(tag)
+</code></pre>
+
+<p>Get validation metrics by tag. Parameters:  </p>
+<ul>
+<li><code>tag</code>: The string variable represents the parameter you want to return supported tags are 'AUC', 'Accuracy', 'BinaryAccuracy', 'CategoricalAccuracy', 'HitRatio', 'Loss', 'MAE', 'NDCG', 'SparseCategoricalAccuracy', 'TFValidationMethod', 'Top1Accuracy', 'Top5Accuracy', 'TreeNNAccuracy'.</li>
+</ul>
+<p><strong>python</strong></p>
+<pre><code class="python">get_train_summary(tag)
+</code></pre>
+
+<p>Get training metrics by tag. Parameters:  </p>
+<ul>
+<li><code>tag</code>: The string variable represents the parameter you want to return supported tags are "LearningRate", "Loss", "Throughput".</li>
+</ul>
+<p><strong>python</strong></p>
+<pre><code class="python">get_validation_summary(tag)
+</code></pre>
+
+<p>Get validation metrics by tag. Parameters:  </p>
+<ul>
+<li><code>tag</code>: The string variable represents the parameter you want to return supported tags are 'AUC', 'Accuracy', 'BinaryAccuracy', 'CategoricalAccuracy', 'HitRatio', 'Loss', 'MAE', 'NDCG', 'SparseCategoricalAccuracy', 'TFValidationMethod', 'Top1Accuracy', 'Top5Accuracy', 'TreeNNAccuracy'.</li>
 </ul>
 
   <br>
