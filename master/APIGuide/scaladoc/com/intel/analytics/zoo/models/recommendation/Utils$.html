@@ -483,6 +483,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.models.recommendation.Utils#prePadding" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="prePadding(maxLength:Int):scala.collection.mutable.WrappedArray[Float]=&gt;Array[Float]"></a>
+      <a id="prePadding(Int):(WrappedArray[Float])⇒Array[Float]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">prePadding</span><span class="params">(<span name="maxLength">maxLength: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: (<span class="extype" name="scala.collection.mutable.WrappedArray">WrappedArray</span>[<span class="extype" name="java.lang.Float">Float</span>]) ⇒ <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.recommendation.Utils$@prePadding(maxLength:Int):scala.collection.mutable.WrappedArray[Float]=&gt;Array[Float]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="com.intel.analytics.zoo.models.recommendation.Utils#row2Sample" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="row2Sample(r:org.apache.spark.sql.Row,columnInfo:com.intel.analytics.zoo.models.recommendation.ColumnFeatureInfo,modelType:String):com.intel.analytics.bigdl.dataset.Sample[Float]"></a>
       <a id="row2Sample(Row,ColumnFeatureInfo,String):Sample[Float]"></a>
@@ -501,6 +518,58 @@
     </span>
       <p class="shortcomment cmt">convert a row to sample given column information of WideAndDeep model.</p><div class="fullcomment"><div class="comment cmt"><p>convert a row to sample given column information of WideAndDeep model.
 </p></div><dl class="paramcmts block"><dt class="param">r</dt><dd class="cmt"><p>Row of userId, itemId, features and label</p></dd><dt class="param">columnInfo</dt><dd class="cmt"><p>ColumnFeatureInfo specify information of different features</p></dd><dt class="param">modelType</dt><dd class="cmt"><p>support &quot;wide_n_deep&quot;, &quot;wide&quot;, &quot;deep&quot; only</p></dd><dt>returns</dt><dd class="cmt"><p>TensorSample as input for WideAndDeep model</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.models.recommendation.Utils#row2SampleSequential" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="row2SampleSequential(r:org.apache.spark.sql.Row,columnInfo:com.intel.analytics.zoo.models.recommendation.ColumnFeatureInfo,modelType:String):com.intel.analytics.bigdl.dataset.Sample[Float]"></a>
+      <a id="row2SampleSequential(Row,ColumnFeatureInfo,String):Sample[Float]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">row2SampleSequential</span><span class="params">(<span name="r">r: <span class="extype" name="org.apache.spark.sql.Row">Row</span></span>, <span name="columnInfo">columnInfo: <a href="ColumnFeatureInfo.html" class="extype" name="com.intel.analytics.zoo.models.recommendation.ColumnFeatureInfo">ColumnFeatureInfo</a></span>, <span name="modelType">modelType: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="scala.Float">Float</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.recommendation.Utils$@row2SampleSequential(r:org.apache.spark.sql.Row,columnInfo:com.intel.analytics.zoo.models.recommendation.ColumnFeatureInfo,modelType:String):com.intel.analytics.bigdl.dataset.Sample[Float]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">convert a row to sample given column information of WideAndDeep Sequential model.</p><div class="fullcomment"><div class="comment cmt"><p>convert a row to sample given column information of WideAndDeep Sequential model.
+</p></div><dl class="paramcmts block"><dt class="param">r</dt><dd class="cmt"><p>Row of userId, itemId, features and label</p></dd><dt class="param">columnInfo</dt><dd class="cmt"><p>ColumnFeatureInfo specify information of different features</p></dd><dt class="param">modelType</dt><dd class="cmt"><p>support &quot;wide_n_deep&quot;, &quot;wide&quot;, &quot;deep&quot; only</p></dd><dt>returns</dt><dd class="cmt"><p>TensorSample as input for WideAndDeep Sequential model</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.models.recommendation.Utils#rows2sample" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="rows2sample(r:org.apache.spark.sql.Row,sessionLength:Int,includeHistory:Boolean,historyLength:Int):com.intel.analytics.bigdl.dataset.Sample[Float]"></a>
+      <a id="rows2sample(Row,Int,Boolean,Int):Sample[Float]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">rows2sample</span><span class="params">(<span name="r">r: <span class="extype" name="org.apache.spark.sql.Row">Row</span></span>, <span name="sessionLength">sessionLength: <span class="extype" name="scala.Int">Int</span></span>, <span name="includeHistory">includeHistory: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="historyLength">historyLength: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="scala.Float">Float</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.recommendation.Utils$@rows2sample(r:org.apache.spark.sql.Row,sessionLength:Int,includeHistory:Boolean,historyLength:Int):com.intel.analytics.bigdl.dataset.Sample[Float]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.models.recommendation.Utils#slideSession" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="slideSession(df:org.apache.spark.sql.DataFrame,sessionLength:Int):org.apache.spark.sql.DataFrame"></a>
+      <a id="slideSession(DataFrame,Int):DataFrame"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">slideSession</span><span class="params">(<span name="df">df: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>, <span name="sessionLength">sessionLength: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.models.recommendation.Utils$@slideSession(df:org.apache.spark.sql.DataFrame,sessionLength:Int):org.apache.spark.sql.DataFrame" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
