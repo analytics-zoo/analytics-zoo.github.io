@@ -35,7 +35,7 @@
         var pageToc = [
           {title: "Run after pip install", url: "#run-after-pip-install", children: [
           ]},
-          {title: "**Run on yarn after pip install", url: "#run-on-yarn-after-pip-install", children: [
+          {title: "Run on yarn after pip install", url: "#run-on-yarn-after-pip-install", children: [
           ]},
           {title: "Run without pip install", url: "#run-without-pip-install", children: [
               {title: "Run with pyspark", url: "#run-with-pyspark" },
@@ -118,12 +118,11 @@ sc = init_nncontext()
 export BIGDL_PACKAGES=...
 </code></pre>
 
-<h2 id="run-on-yarn-after-pip-install">**Run on yarn after pip install</h2>
-<p>Start python and then execute the following code:
-Caveat: You should use <code>init_spark_on_yarn</code> rather than <code>init_nncontext()</code> here.
-- Create a SparkContext on Yarn</p>
-<pre><code class="python">
-from zoo import init_spark_on_yarn
+<hr />
+<h2 id="run-on-yarn-after-pip-install"><strong>Run on yarn after pip install</strong></h2>
+<p>You should use <code>init_spark_on_yarn</code> rather than <code>init_nncontext()</code> here to create a SparkContext on Yarn.</p>
+<p>Start python and then execute the following code:</p>
+<pre><code class="python">from zoo import init_spark_on_yarn
 
 sc = init_spark_on_yarn(
     hadoop_conf=&quot;path to the yarn configuration folder&quot;,
@@ -134,7 +133,6 @@ sc = init_spark_on_yarn(
     driver_memory=&quot;2g&quot;,
     driver_cores=4,
     extra_executor_memory_for_ray=&quot;10g&quot;)
-
 </code></pre>
 
 <hr />

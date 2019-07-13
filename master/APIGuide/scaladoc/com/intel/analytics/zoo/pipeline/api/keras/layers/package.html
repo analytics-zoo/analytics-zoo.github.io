@@ -1152,6 +1152,29 @@ inputShape (a Single Shape, does not include the batch dimension).</p><p>Remark:
 The input of this layer should be 3D, i.e. (batch, time steps, input dim).</p><p>When you use this layer as the first layer of a model, you need to provide the argument
 inputShape (a Single Shape, does not include the batch dimension).
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LayerNorm" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="LayerNorm[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withNet"></a>
+      <a id="LayerNorm[T]:LayerNorm[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="LayerNorm.html"><span class="name">LayerNorm</span></a><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LayerNorm.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LayerNorm.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LayerNorm.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@LayerNorm[T]extendsKerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]withNet" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Normalization layer used in Bert.</p><div class="fullcomment"><div class="comment cmt"><p>Normalization layer used in Bert.
+u = AutoGrad.mean(x, sizes.size - 1, true)
+t = x - u
+s = AutoGrad.mean(AutoGrad.square(x - u), sizes.size -1, true)
+y = (x - u) / AutoGrad.sqrt(s + e)
+y * weight + bias
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type. Only support float/double now</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LayerWrapperByForward" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
       <a id="LayerWrapperByForward[T]extendsKerasLayer[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]withNet"></a>
       <a id="LayerWrapperByForward[T]:LayerWrapperByForward[T]"></a>
@@ -3272,6 +3295,23 @@ inputShape (a Single Shape, does not include the batch dimension).
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@LSTM" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LayerNorm" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="LayerNorm"></a>
+      <a id="LayerNorm:LayerNorm"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="LayerNorm$.html"><span class="name">LayerNorm</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.package@LayerNorm" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
