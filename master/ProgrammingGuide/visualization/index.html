@@ -71,10 +71,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <hr>
     <h1 id="visualization"><em>Visualization</em></h1>
 <hr />
-<h2 id="generating-summary"><strong>Generating Summary</strong></h2>
+<h2 id="generating-summary">Generating Summary</h2>
 <p>To enable visualization support, you need first properly configure to collect statistics summary in different stages of training. It should be done before the training starts. See examples below: </p>
-<h3 id="generating-summary-in-nnestimator"><strong>Generating summary in NNEstimator</strong></h3>
-<p><strong><em>*scala</em></strong>*</p>
+<h3 id="generating-summary-in-nnestimator">Generating summary in NNEstimator</h3>
+<p><strong>scala</strong></p>
 <pre><code class="scala">val estimator = NNEstimator(...)
 ...
 val logdir = &quot;mylogdir&quot;
@@ -87,7 +87,7 @@ estimator.setValidationSummary(validationSummary)
 val nnModel = estimator.fit(...)
 </code></pre>
 
-<p><strong><em>*python</em></strong>*</p>
+<p><strong>python</strong></p>
 <pre><code class="python">from bigdl.optim.optimizer import TrainSummary, ValidationSummary
 
 estimator = NNEstimator(...)
@@ -102,8 +102,8 @@ estimator.set_val_summary(val_summary)
 nnModel = estimator.fit(...)
 </code></pre>
 
-<h3 id="generating-summary-in-keras-api"><strong>Generating summary in Keras API</strong></h3>
-<p><strong><em>*scala</em></strong>*</p>
+<h3 id="generating-summary-in-keras-api">Generating summary in Keras API</h3>
+<p><strong>scala</strong></p>
 <pre><code class="scala">val model = [...new keras model]
 ...
 val logdir = &quot;mylogdir&quot;
@@ -113,7 +113,7 @@ model.setTensorBoard(logdir, appName)
 model.fit(...)
 </code></pre>
 
-<p><strong><em>*python</em></strong>*</p>
+<p><strong>python</strong></p>
 <pre><code class="python">model = [...new keras model]
 ...
 log_dir = 'mylogdir'
@@ -128,27 +128,23 @@ model.fit(...)
 <p>If logdir is absolute path started with <code>/</code>, like <code>/user/logdir/inpcetion_log</code>, the log will be stored in your local file system;  </p>
 <p>If logdir is URI started with <code>hdfs://[host:port]/</code>, like <code>hdfs://172.168.0.101:8020/user/logdir/inpcetion_log</code>, the log will be stored to HDFS;  </p>
 <hr />
-<h1 id="visualizing-training-with-tensorboard"><strong>Visualizing training with TensorBoard</strong></h1>
+<h1 id="visualizing-training-with-tensorboard">Visualizing training with TensorBoard</h1>
 <p>With the summary info generated, we can then use <a href="https://pypi.python.org/pypi/tensorboard">TensorBoard</a> to visualize the behaviors of the training program.  </p>
-<h3 id="installing-tensorboard"><strong><em>Installing TensorBoard</em></strong></h3>
+<h3 id="installing-tensorboard"><em>Installing TensorBoard</em></h3>
 <p>Prerequisites:</p>
 <ol>
 <li>Python verison: 2.7, 3.4, 3.5, or 3.6</li>
 <li>Pip version &gt;= 9.0.1</li>
 <li>tensorflow 1.13.1</li>
 </ol>
-<h3 id="launching-tensorboard"><strong><em>Launching TensorBoard</em></strong></h3>
-<ul>
-<li><strong><em>*Loading from  local directory</em></strong>*</li>
-</ul>
+<h3 id="launching-tensorboard"><em>Launching TensorBoard</em></h3>
+<h4 id="loading-from-local-directory">Loading from local directory</h4>
 <p>You can launch TensorBoard using the command below:</p>
 <pre><code class="bash">tensorboard --logdir=[logdir path]
 </code></pre>
 
 <p>After that, navigate to the TensorBoard dashboard using a browser. You can find the URL in the console output after TensorBoard is successfully launched; by default the URL is http://your_node:6006</p>
-<ul>
-<li><strong><em>*Loading from HDFS</em></strong>*</li>
-</ul>
+<h4 id="loading-from-hdfs">Loading from HDFS</h4>
 <p>If the logdir is a HDFS folder, you need to configure the HDFS environment before running <code>tensorboard</code>.<br />
 Prerequisites:
 1. JDK &gt;= 1.8, Orcale JDK recommended 
@@ -168,7 +164,7 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${JAVA_HOME}/jre/lib/amd64/server
 <pre><code>CLASSPATH=$(${HADOOP_HOME}/bin/hadoop classpath --glob) tensorboard --logdir=hdfs://[ip:port]/[hdfs path]
 </code></pre>
 
-<h3 id="visualizations-in-tensorboard"><strong><em>Visualizations in TensorBoard</em></strong></h3>
+<h3 id="visualizations-in-tensorboard"><em>Visualizations in TensorBoard</em></h3>
 <p>Within the TensorBoard dashboard, you will be able to read the visualizations of each run, including the “Loss” and “Throughput” curves under the SCALARS tab (as illustrated below):
 <img alt="Scalar" src="../../Image/tensorboard-scalar.png" /></p>
 <p>And “weights”, “bias”, “gradientWeights” and “gradientBias” under the DISTRIBUTIONS and HISTOGRAMS tabs (as illustrated below):
@@ -176,12 +172,12 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${JAVA_HOME}/jre/lib/amd64/server
 <img alt="histogram2" src="../../Image/tensorboard-histo2.png" />
 As getting DISTRIBUTIONS and HISTOGRAMS may affect the training performance, so we don't enable this option by default. For example you want to fetch this parameters every 20 iteartions, you should call <code>trainSummary.setSummaryTrigger("Parameters", Trigger.severalIteration(20))</code>(<code>set_summary_trigger</code> in python API) before calling <code>setTrainSummary</code>.</p>
 <hr />
-<h2 id="retrieving-summary-from-build-in-api"><strong>Retrieving summary from build-in API</strong></h2>
+<h2 id="retrieving-summary-from-build-in-api">Retrieving summary from build-in API</h2>
 <p>You can use provided API to retrieve the summaries into readable format, and export them to other tools for further analysis or visualization.</p>
 <ul>
 <li><em><strong>Example: Reading summary info in NNestimator</strong></em> </li>
 </ul>
-<p><strong><em>*scala</em></strong>*</p>
+<p><strong>scala</strong></p>
 <pre><code class="scala">val estimator = NNEstimator(...)
 ...
 val logdir = &quot;mylogdir&quot;
@@ -196,7 +192,7 @@ val trainLoss = trainSummary.readScalar(&quot;Loss&quot;)
 val valLoss = validationSummary.readScalar(&quot;Loss&quot;)
 </code></pre>
 
-<p><strong><em>*python</em></strong>*</p>
+<p><strong>python</strong></p>
 <pre><code class="python">from bigdl.optim.optimizer import TrainSummary, ValidationSummary
 
 estimator = NNEstimator(...)
@@ -215,12 +211,12 @@ val_loss = np.array(val_summary.read_scalar('Loss'))
 <ul>
 <li><em><strong>Example: Reading summary info in keras API</strong></em></li>
 </ul>
-<p><strong><em>*scala</em></strong>*</p>
+<p><strong>scala</strong></p>
 <pre><code class="scala">val trainLoss = model.getTrainSummary(&quot;loss&quot;)
 val valLoss = model.getValidationSummary(&quot;loss&quot;)
 </code></pre>
 
-<p><strong><em>*python</em></strong>*</p>
+<p><strong>python</strong></p>
 <pre><code class="python">train_loss = model.get_train_summary('loss')
 val_loss = model.get_validation_summary('loss')
 </code></pre>
@@ -228,7 +224,7 @@ val_loss = model.get_validation_summary('loss')
 <p>If your training job has finished and existed, but a new program wants retrieving summary with <code>readScalar</code>(<code>read_scalar</code> in python) API. 
 You can re-create the TrainingSummary and ValidationSummary with the same <code>logDir</code> and <code>appName</code> in your new job. </p>
 <hr />
-<h2 id="visualizing-training-with-jupyter-notebook"><strong>Visualizing training with Jupyter notebook</strong></h2>
+<h2 id="visualizing-training-with-jupyter-notebook">Visualizing training with Jupyter notebook</h2>
 <p>If you're using Jupyter notebook, you can also draw the training curves using popular plotting tools (e.g. matplotlib) and show the plots inline. </p>
 <p>First, retrieve the summaries as instructed in <a href="#retrieving-summary-from-build-in-api">Retrieve Summary</a>. The retrieved summary is a list of tuples. Each tuple is a recorded event in format (iteration count, recorded value, timestamp). You can convert it to numpy array or dataframe to plot it. See example below:  </p>
 <ul>
