@@ -123,6 +123,38 @@ model.set_tensorboard(log_dir, app_name)
 model.fit(...)
 </code></pre>
 
+<h3 id="generating-summary-in-kerasmodel">Generating summary in KerasModel</h3>
+<p><strong>python</strong></p>
+<pre><code class="python">import tensorflow as tf
+from zoo.tfpark import KerasModel
+from bigdl.optim.optimizer import TrainSummary, ValidationSummary
+
+model = [...new keras model]
+model = KerasModel(model)
+...
+log_dir = 'mylogdir'
+app_name = 'keras_model'
+model.set_train_summary(TrainSummary(log_dir, app_name))
+model.set_val_summary(ValidationSummary(log_dir, app_name))
+...
+model.fit(...)
+</code></pre>
+
+<h3 id="generating-summary-in-tfestimator">Generating summary in TFEstimator</h3>
+<p><strong>python</strong></p>
+<pre><code class="python">from zoo.tfpark.estimator import TFEstimator
+from bigdl.optim.optimizer import TrainSummary, ValidationSummary
+
+estimator = TFEstimator(...)
+...
+log_dir = 'mylogdir'
+app_name = 'estimator'
+estimator.set_train_summary(TrainSummary(log_dir, app_name))
+estimator.set_val_summary(ValidationSummary(log_dir, app_name))
+...
+estimator.train(...)
+</code></pre>
+
 <p><strong>Notice</strong>:  </p>
 <p>If logdir is relative path, like <code>logdir/inpcetion_log</code>, the log will be stored in your local file system;  </p>
 <p>If logdir is absolute path started with <code>/</code>, like <code>/user/logdir/inpcetion_log</code>, the log will be stored in your local file system;  </p>
