@@ -295,6 +295,25 @@
 </p><div class="fullcomment"><div class="comment cmt"><p>loads a caffe model
 </p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the prototxt file</p></dd><dt class="param">weightPath</dt><dd class="cmt"><p>the path of the caffemodel file</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadOpenVINO" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadOpenVINO(modelBytes:Array[Byte],weightBytes:Array[Byte],batchSize:Int):Unit"></a>
+      <a id="doLoadOpenVINO(Array[Byte],Array[Byte],Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">doLoadOpenVINO</span><span class="params">(<span name="modelBytes">modelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="weightBytes">weightBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadOpenVINO(modelBytes:Array[Byte],weightBytes:Array[Byte],batchSize:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">loads a openvino IR
+</p><div class="fullcomment"><div class="comment cmt"><p>loads a openvino IR
+</p></div><dl class="paramcmts block"><dt class="param">modelBytes</dt><dd class="cmt"><p>the bytes of openvino ir xml file</p></dd><dt class="param">weightBytes</dt><dd class="cmt"><p>the bytes of openvino ir bin file</p></dd><dt class="param">batchSize</dt><dd class="cmt"><p>the batchsize of openvino ir</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadOpenVINO" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadOpenVINO(modelPath:String,weightPath:String,batchSize:Int):Unit"></a>
       <a id="doLoadOpenVINO(String,String,Int):Unit"></a>
       <h4 class="signature">
@@ -313,6 +332,48 @@
       <p class="shortcomment cmt">loads a openvino IR
 </p><div class="fullcomment"><div class="comment cmt"><p>loads a openvino IR
 </p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of openvino ir xml file</p></dd><dt class="param">weightPath</dt><dd class="cmt"><p>the path of openvino ir bin file</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTF(savedModelBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit"></a>
+      <a id="doLoadTF(Array[Byte],Array[Int],Boolean,Array[Float],Float,String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">doLoadTF</span><span class="params">(<span name="savedModelBytes">savedModelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="input">input: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(savedModelBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">load TF model as OpenVINO IR
+</p><div class="fullcomment"><div class="comment cmt"><p>load TF model as OpenVINO IR
+</p></div><dl class="paramcmts block"><dt class="param">savedModelBytes</dt><dd class="cmt"><p>the bytes of the tensorflow saved model tar</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape that should be fed to an input node(s) of the model</p></dd><dt class="param">ifReverseInputChannels</dt><dd class="cmt"><p>the boolean value of if need reverse input channels.
+                              switch the input channels order from RGB to BGR (or vice versa).</p></dd><dt class="param">meanValues</dt><dd class="cmt"><p>all input values coming from original network inputs
+                              will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd><dt class="param">input</dt><dd class="cmt"><p>the name of the input operation of the given model</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTF(savedModelDir:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit"></a>
+      <a id="doLoadTF(String,Array[Int],Boolean,Array[Float],Float,String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">doLoadTF</span><span class="params">(<span name="savedModelDir">savedModelDir: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="input">input: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(savedModelDir:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">load TF model as OpenVINO IR
+</p><div class="fullcomment"><div class="comment cmt"><p>load TF model as OpenVINO IR
+</p></div><dl class="paramcmts block"><dt class="param">savedModelDir</dt><dd class="cmt"><p>the dir path of the tensorflow saved model</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape that should be fed to an input node(s) of the model</p></dd><dt class="param">ifReverseInputChannels</dt><dd class="cmt"><p>the boolean value of if need reverse input channels.
+                              switch the input channels order from RGB to BGR (or vice versa).</p></dd><dt class="param">meanValues</dt><dd class="cmt"><p>all input values coming from original network inputs
+                              will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd><dt class="param">input</dt><dd class="cmt"><p>the name of the input operation of the given model</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadTF(modelBytes:Array[Byte],imageClassificationModelType:String,checkpointBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit"></a>
       <a id="doLoadTF(Array[Byte],String,Array[Byte],Array[Int],Boolean,Array[Float],Float):Unit"></a>
@@ -735,6 +796,40 @@
     </span>
       
     </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadOpenVINO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loadOpenVINO(modelBytes:Array[Byte],weightBytes:Array[Byte]):Unit"></a>
+      <a id="loadOpenVINO(Array[Byte],Array[Byte]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadOpenVINO</span><span class="params">(<span name="modelBytes">modelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="weightBytes">weightBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadOpenVINO(modelBytes:Array[Byte],weightBytes:Array[Byte]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadOpenVINO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loadOpenVINO(modelBytes:Array[Byte],weightBytes:Array[Byte],batchSize:Int):Unit"></a>
+      <a id="loadOpenVINO(Array[Byte],Array[Byte],Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadOpenVINO</span><span class="params">(<span name="modelBytes">modelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="weightBytes">weightBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadOpenVINO(modelBytes:Array[Byte],weightBytes:Array[Byte],batchSize:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadOpenVINO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="loadOpenVINO(modelFilePath:String,weightFilePath:String):Unit"></a>
       <a id="loadOpenVINO(String,String):Unit"></a>
       <h4 class="signature">
@@ -764,6 +859,40 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadOpenVINO(modelFilePath:String,weightFilePath:String,batchSize:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTF" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loadTF(savedModelBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit"></a>
+      <a id="loadTF(Array[Byte],Array[Int],Boolean,Array[Float],Float,String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadTF</span><span class="params">(<span name="savedModelBytes">savedModelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="input">input: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTF(savedModelBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTF" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loadTF(savedModelDir:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit"></a>
+      <a id="loadTF(String,Array[Int],Boolean,Array[Float],Float,String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadTF</span><span class="params">(<span name="savedModelDir">savedModelDir: <span class="extype" name="java.lang.String">String</span></span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="input">input: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTF(savedModelDir:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
