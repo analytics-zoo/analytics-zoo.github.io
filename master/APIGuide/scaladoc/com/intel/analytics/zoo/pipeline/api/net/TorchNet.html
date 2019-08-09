@@ -47,14 +47,14 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">TorchNet</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>], <span class="extype" name="scala.Float">Float</span>] with <a href="../Predictable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Predictable">Predictable</a>[<span class="extype" name="scala.Float">Float</span>]</span>
+        <span class="name">TorchNet</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="scala.Float">Float</span>] with <a href="../Predictable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Predictable">Predictable</a>[<span class="extype" name="scala.Float">Float</span>]</span>
       </span>
       </h4>
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.net.TorchNet">TorchNet</a> wraps a TorchScript model as a single layer.
 </p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a href="../Predictable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Predictable">Predictable</a>[<span class="extype" name="scala.Float">Float</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>], <span class="extype" name="scala.Float">Float</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><a href="../Predictable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Predictable">Predictable</a>[<span class="extype" name="scala.Float">Float</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="scala.Float">Float</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -150,14 +150,14 @@
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#accGradParameters" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="accGradParameters(input:A,gradOutput:B):Unit"></a>
-      <a id="accGradParameters(Tensor[Float],Tensor[Float]):Unit"></a>
+      <a id="accGradParameters(Activity,Activity):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">accGradParameters</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">accGradParameters</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.TorchNet@accGradParameters(input:A,gradOutput:B):Unit" title="Permalink" target="_top">
@@ -201,14 +201,14 @@
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#backward" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="backward(input:A,gradOutput:B):A"></a>
-      <a id="backward(Tensor[Float],Tensor[Float]):Tensor[Float]"></a>
+      <a id="backward(Activity,Activity):Activity"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">backward</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>
+        <span class="name">backward</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.TorchNet@backward(input:A,gradOutput:B):A" title="Permalink" target="_top">
@@ -252,14 +252,14 @@
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#clone" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone(deepCopy:Boolean):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]"></a>
-      <a id="clone(Boolean):AbstractModule[Tensor[Float],Tensor[Float],Float]"></a>
+      <a id="clone(Boolean):AbstractModule[Activity,Activity,Float]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">clone</span><span class="params">(<span name="deepCopy">deepCopy: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>], <span class="extype" name="scala.Float">Float</span>]</span>
+        <span class="name">clone</span><span class="params">(<span name="deepCopy">deepCopy: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="scala.Float">Float</span>]</span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.TorchNet@clone(deepCopy:Boolean):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]" title="Permalink" target="_top">
@@ -462,14 +462,14 @@
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.net.TorchNet">TorchNet</a> → AnyRef</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#forward" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="forward(input:A):B"></a>
-      <a id="forward(Tensor[Float]):Tensor[Float]"></a>
+      <a id="forward(Activity):Activity"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier">final </span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">forward</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>
+        <span class="name">forward</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.TorchNet@forward(input:A):B" title="Permalink" target="_top">
@@ -734,14 +734,14 @@
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#gradInput" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="gradInput:A"></a>
-      <a id="gradInput:Tensor[Float]"></a>
+      <a id="gradInput:Activity"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">var</span>
       </span>
       <span class="symbol">
-        <span class="name">gradInput</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>
+        <span class="name">gradInput</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.TorchNet@gradInput:A" title="Permalink" target="_top">
@@ -936,6 +936,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.net.TorchNet#logger" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="logger:org.slf4j.Logger"></a>
+      <a id="logger:Logger"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logger</span><span class="result">: <span class="extype" name="org.slf4j.Logger">Logger</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.TorchNet@logger:org.slf4j.Logger" title="Permalink" target="_top">
+        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="com.intel.analytics.zoo.pipeline.api.net.TorchNet#module" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="module:com.intel.analytics.bigdl.Module[Float]"></a>
       <a id="module:Module[Float]"></a>
@@ -1025,14 +1042,14 @@ mark the model as transient and reload TorchNet from byteArray on executors
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#output" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="output:B"></a>
-      <a id="output:Tensor[Float]"></a>
+      <a id="output:Activity"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">var</span>
       </span>
       <span class="symbol">
-        <span class="name">output</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>
+        <span class="name">output</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.TorchNet@output:B" title="Permalink" target="_top">
@@ -1777,35 +1794,35 @@ and the total batchSize is batchPerThread * rdd.getNumPartitions.</p></div><dl c
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.net.TorchNet#updateGradInput" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="updateGradInput(input:com.intel.analytics.bigdl.tensor.Tensor[Float],gradOutput:com.intel.analytics.bigdl.tensor.Tensor[Float]):com.intel.analytics.bigdl.tensor.Tensor[Float]"></a>
-      <a id="updateGradInput(Tensor[Float],Tensor[Float]):Tensor[Float]"></a>
+      <a id="updateGradInput(input:com.intel.analytics.bigdl.nn.abstractnn.Activity,gradOutput:com.intel.analytics.bigdl.nn.abstractnn.Activity):com.intel.analytics.bigdl.nn.abstractnn.Activity"></a>
+      <a id="updateGradInput(Activity,Activity):Activity"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">updateGradInput</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>
+        <span class="name">updateGradInput</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.TorchNet@updateGradInput(input:com.intel.analytics.bigdl.tensor.Tensor[Float],gradOutput:com.intel.analytics.bigdl.tensor.Tensor[Float]):com.intel.analytics.bigdl.tensor.Tensor[Float]" title="Permalink" target="_top">
+      <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.TorchNet@updateGradInput(input:com.intel.analytics.bigdl.nn.abstractnn.Activity,gradOutput:com.intel.analytics.bigdl.nn.abstractnn.Activity):com.intel.analytics.bigdl.nn.abstractnn.Activity" title="Permalink" target="_top">
         <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.net.TorchNet">TorchNet</a> → AbstractModule</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.api.net.TorchNet#updateOutput" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="updateOutput(input:com.intel.analytics.bigdl.tensor.Tensor[Float]):com.intel.analytics.bigdl.tensor.Tensor[Float]"></a>
-      <a id="updateOutput(Tensor[Float]):Tensor[Float]"></a>
+      <a id="updateOutput(input:com.intel.analytics.bigdl.nn.abstractnn.Activity):com.intel.analytics.bigdl.nn.abstractnn.Activity"></a>
+      <a id="updateOutput(Activity):Activity"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">updateOutput</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>
+        <span class="name">updateOutput</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.TorchNet@updateOutput(input:com.intel.analytics.bigdl.tensor.Tensor[Float]):com.intel.analytics.bigdl.tensor.Tensor[Float]" title="Permalink" target="_top">
+      <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.TorchNet@updateOutput(input:com.intel.analytics.bigdl.nn.abstractnn.Activity):com.intel.analytics.bigdl.nn.abstractnn.Activity" title="Permalink" target="_top">
         <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1948,7 +1965,7 @@ and the total batchSize is batchPerThread * rdd.getNumPartitions.</p></div><dl c
         <div class="parent" name="com.intel.analytics.zoo.pipeline.api.Predictable">
               <h3>Inherited from <a href="../Predictable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Predictable">Predictable</a>[<span class="extype" name="scala.Float">Float</span>]</h3>
             </div><div class="parent" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">
-              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>], <span class="extype" name="scala.Float">Float</span>]</h3>
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="scala.Float">Float</span>]</h3>
             </div><div class="parent" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">
               <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span></h3>
             </div><div class="parent" name="scala.Serializable">

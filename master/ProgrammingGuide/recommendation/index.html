@@ -37,6 +37,8 @@
           ]},
           {title: "Neural network-based Collaborative Filtering", url: "#neural-network-based-collaborative-filtering", children: [
           ]},
+          {title: "Session Recommender Model", url: "#session-recommender-model", children: [
+          ]},
         ];
 
     </script>
@@ -78,6 +80,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>NCF.
     <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/recommendation/NeuralCFexample.scala">Scala example</a>
     <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation-ncf/ncf-explicit-feedback.ipynb">Python notebook</a></li>
+<li>Session Recommender model.
+    <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/recommendation/SessionRecExp.scala">Scala example</a></li>
 </ol>
 <hr />
 <h2 id="wide-and-deep">Wide and Deep</h2>
@@ -88,8 +92,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
 <p>Compile and train a WND model.</p>
 <pre><code class="scala">wideAndDeep.compile(optimizer = new Adam[Float](learningRate = 1e-2,learningRateDecay = 1e-5),
-            loss = SparseCategoricalCrossEntropy[Float](),
-            metrics = List(new Top1Accuracy[Float]()))
+                    loss = SparseCategoricalCrossEntropy[Float](),
+                    metrics = List(new Top1Accuracy[Float]()))
 wideAndDeep.fit(trainRdds, batchSize, nbEpoch, validationRdds)
 </code></pre>
 
@@ -107,8 +111,8 @@ val itemRecs = wideAndDeep.recommendForItem(validationpairFeatureRdds, 3)
 
 <p>Train a WND model using BigDL Optimizer </p>
 <pre><code class="python">wide_n_deep.compile(optimizer= Adam(learningrate = 1e-3, learningrate_decay=1e-6),
-            loss= &quot;sparse_categorical_crossentropy&quot;,
-            metrics=['accuracy'])
+                    loss= &quot;sparse_categorical_crossentropy&quot;,
+                    metrics=['accuracy'])
 wide_n_deep.fit(train_rdd, nb_epoch, batch_size, val_rdd)
 </code></pre>
 
@@ -128,8 +132,8 @@ itemRecs = wide_n_deep.recommend_for_item(valPairFeatureRdds, 3)
 
 <p>Compile and train a NCF model</p>
 <pre><code class="scala">ncf.compile(optimizer = new Adam[Float](learningRate = 1e-2,learningRateDecay = 1e-5),
-    loss = SparseCategoricalCrossEntropy[Float](),
-    metrics = List(new Top1Accuracy[Float]()))
+            loss = SparseCategoricalCrossEntropy[Float](),
+            metrics = List(new Top1Accuracy[Float]()))
 ncf.fit(trainRdds, batchSize, nbEpoch, validationRdds)
 </code></pre>
 
@@ -147,8 +151,8 @@ val itemRecs = ncf.recommendForItem(validationpairFeatureRdds, 3)
 
 <p>Compile and train a NCF model</p>
 <pre><code class="python">ncf.compile(optimizer= Adam(learningrate = 1e-3, learningrate_decay=1e-6),
-    loss= &quot;sparse_categorical_crossentropy&quot;,
-    metrics=['accuracy'])
+            loss= &quot;sparse_categorical_crossentropy&quot;,
+            metrics=['accuracy'])
 ncf.fit(train_rdd, nb_epoch, batch_size, val_rdd)
 </code></pre>
 
@@ -159,6 +163,42 @@ itemRecs = ncf.recommend_for_item(valPairFeatureRdds, 3)
 </code></pre>
 
 <p>See more details in our <a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/recommendation-ncf/ncf-explicit-feedback.ipynb">Python notebook</a>.</p>
+<hr />
+<h2 id="session-recommender-model">Session Recommender Model</h2>
+<p><strong>Scala</strong></p>
+<p>Build a Session Recommender model for recommendation. </p>
+<pre><code class="scala">val sessionRecommender = SessionRecommender(itemCount, itemEmbed, sessionLength, includeHistory, mlpHiddenLayers, historyLength)
+
+Compile and train a Session Recommender model
+```scala
+sessionRecommender.compile(optimizer = new RMSprop[Float](learningRate = 1e-2,learningRateDecay = 1e-5),
+                           loss = SparseCategoricalCrossEntropy[Float](),
+                           metrics = List(new Top1Accuracy[Float]()))
+sessionRecommender.fit(trainRdds, batchSize, nbEpoch, validationRdds)
+</code></pre>
+
+<p>Predict and recommend items(users) for users(items) with given features.</p>
+<pre><code class="scala">val results = sessionRecommender.predict(testRdd)
+val recommendations = model.recommendForSession(testRdd, 3, false)
+</code></pre>
+
+<p>See more details in our<a href="../../APIGuide/Models/recommendation/">Recommender API</a> and <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/recommendation/SessionRecExp.scala">Scala example</a></p>
+<p><strong>Python</strong></p>
+<p>Build a Session Recommender model for recommendation. </p>
+<pre><code class="python">session_recommender=SessionRecommender(item_count, item_embed, rnn_hidden_layers=[40, 20], session_length=10, include_history=True, mlp_hidden_layers=[40, 20], history_length=5)
+</code></pre>
+
+<p>Compile and train a NCF model</p>
+<pre><code class="python">session_recommender.compile(optimizer= RMSprop(learningrate = 1e-3, learningrate_decay=1e-6),
+                            loss= &quot;sparse_categorical_crossentropy&quot;,
+                            metrics=['top5Accuracy'])
+session_recommender.fit(train, batch_size=4, nb_epoch=1, validation_data=test)
+</code></pre>
+
+<p>Predict and recommend items(users) for users(items) with given features.</p>
+<pre><code class="python">results1 = session_recommender.predict(test)
+recommendations1 = session_recommender.recommend_for_session(rdd, 3, zero_based_label=False)
+</code></pre>
 
   <br>
 </div>

@@ -37,6 +37,8 @@
           ]},
           {title: "Neural network-based Collaborative Filtering", url: "#neural-network-based-collaborative-filtering", children: [
           ]},
+          {title: "Session Recommender", url: "#session-recommender", children: [
+          ]},
           {title: "Prediction and Recommendation", url: "#prediction-and-recommendation", children: [
           ]},
           {title: "Model Save", url: "#model-save", children: [
@@ -72,8 +74,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Recommendation</strong></h1>
     <hr>
-    <p>Analytics Zoo provides two Recommenders, including Wide and Deep (WND) model and Neural network-based Collaborative Filtering (NCF) model. Easy-to-use Keras-Style defined models which provides compile and fit methods for training. Alternatively, they could be fed into NNFrames or BigDL Optimizer.</p>
-<p>Recommenders can handle models with either explict or implicit feedback, given corresponding features.</p>
+    <p>Analytics Zoo provides three Recommenders, including Wide and Deep (WND) model, Neural network-based Collaborative Filtering (NCF) model and Session Recommender model. Easy-to-use Keras-Style defined models which provides compile and fit methods for training. Alternatively, they could be fed into NNFrames or BigDL Optimizer.</p>
+<p>WND and NCF recommenders can handle either explict or implicit feedback, given corresponding features.</p>
 <p>We also provide three user-friendly APIs to predict user item pairs, and recommend items (users) for users (items). See <a href="#prediction-and-recommendation">here</a> for more details.</p>
 <hr />
 <h2 id="wide-and-deep">Wide and Deep</h2>
@@ -136,6 +138,37 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 <p>See <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/apps/recommendation/ncf-explicit-feedback.ipynb">here</a> for the Python notebook that trains the NeuralCF model on MovieLens 1M dataset and uses the model to do prediction and recommendation.</p>
 <hr />
+<h2 id="session-recommender">Session Recommender</h2>
+<p>Session Recommender (<a href="https://arxiv.org/pdf/1511.06939.pdf">Hidasi, 2015</a>) uses an RNN-based approach for session-based recommendations. The model is enhanced in NetEase (<a href="https://ieeexplore.ieee.org/document/7498326">Wu, 2016</a>) by adding multiple layers to model users' purchase history. In Analytics Zoo, <code>includeHistory</code>(Boolean) is provided for users to build a <code>SessionRecommender</code> model with or without history. </p>
+<p>After training the model, users can use the model to <a href="#prediction-and-recommendation">do prediction and recommendation</a>.</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">val sessionRecommender = SessionRecommender(itemCount, itemEmbed, sessionLength, includeHistory, mlpHiddenLayers, historyLength)
+</code></pre>
+
+<ul>
+<li><code>itemCount</code>L: The number of distinct items. Positive integer.</li>
+<li><code>itemEmbed</code>: The output size of embedding layer. Positive integer.</li>
+<li><code>mlpHiddenLayers</code>: Units of hidden layers for the mlp model. Array of positive integers.</li>
+<li><code>sessionLength</code>: The max number of items in the sequence of a session</li>
+<li><code>rnnHiddenLayers</code>: Units of hidden layers for the mlp model. Array of positive integers.</li>
+<li><code>includeHistory</code>: Whether to include purchase history. Boolean. Default is true.</li>
+<li><code>historyLength</code>: The max number of items in the sequence of historical purchase</li>
+</ul>
+<p>See <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/recommendation/SessionRecExp.scala">here</a> for the Scala example that trains the SessionRecommender model on an ecommerce dataset provided by OfficeDepot and uses the model to do prediction and recommendation.</p>
+<p><strong>Python</strong></p>
+<pre><code class="python">session_recommender=SessionRecommender(item_count, item_embed, rnn_hidden_layers=[40, 20], session_length=10, include_history=True, mlp_hidden_layers=[40, 20], history_length=5)
+</code></pre>
+
+<ul>
+<li><code>item_ount</code>: The number of distinct items. Positive integer.</li>
+<li><code>item_embed</code>: The output size of embedding layer. Positive integer.
+*<code>rnn_hidden_layers</code>: Units of hidden layers for the mlp model. Array of positive integers.</li>
+<li><code>session_length</code>: The max number of items in the sequence of a session</li>
+<li><code>include_history</code>: Whether to include purchase history. Boolean. Default is true.</li>
+<li><code>mlp_hidden_layers</code>: Units of hidden layers for the mlp model. Array of positive integers.</li>
+<li><code>history_length</code>: The max number of items in the sequence of historical purchase</li>
+</ul>
+<hr />
 <h2 id="prediction-and-recommendation">Prediction and Recommendation</h2>
 <p><strong><em>Predict for user-item pairs</em></strong></p>
 <p>Give prediction for each pair of user and item. Return RDD of <a href="#useritemprediction">UserItemPrediction</a>.</p>
@@ -152,7 +185,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><code>featureRdd</code>: RDD of <a href="#useritemfeature">UserItemFeature</a>.</li>
 </ul>
 <p><strong><em>Recommend for users</em></strong></p>
-<p>Recommend a number of items for each user. Return RDD of <a href="#useritemprediction">UserItemPrediction</a>.</p>
+<p>Recommend a number of items for each user. Return RDD of <a href="#useritemprediction">UserItemPrediction</a>. Only works for WND and NCF.</p>
 <p><strong>Scala</strong></p>
 <pre><code class="scala">recommendForUser(featureRdd, maxItems)
 </code></pre>
@@ -167,7 +200,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><code>maxItems</code>: The number of items to be recommended to each user. Positive integer.</li>
 </ul>
 <p><strong><em>Recommend for items</em></strong></p>
-<p>Recommend a number of users for each item. Return RDD of <a href="#useritemprediction">UserItemPrediction</a>.</p>
+<p>Recommend a number of users for each item. Return RDD of <a href="#useritemprediction">UserItemPrediction</a>. Only works for WND and NCF.</p>
 <p><strong>Scala</strong></p>
 <pre><code class="scala">recommendForItem(featureRdd, maxUsers)
 </code></pre>
@@ -181,6 +214,22 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><code>featureRdd</code>: RDD of <a href="#useritemfeature">UserItemFeature</a>.</li>
 <li><code>maxUsers</code>: The number of users to be recommended to each item. Positive integer.</li>
 </ul>
+<p><strong><em>Recommend for sessions</em></strong></p>
+<p>Recommend a number of items for each sequence. Return corresponding recommendations, each of which contains a sequence of(item, probability). Only works for Session Recommender</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">recommendForSession(sessions, maxItems, zeroBasedLabel)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<pre><code class="python">recommend_for_session(sessions, max_items, zero_based_label)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>sessions</code>: RDD or Array of samples.</li>
+<li><code>maxItems</code>: Number of items to be recommended to each user. Positive integer.</li>
+<li><code>zeroBasedLabel</code>: True if data starts from 0, False if data starts from 1</li>
+</ul>
 <hr />
 <h2 id="model-save">Model Save</h2>
 <p>After building and training a WideAndDeep or NeuralCF model, you can save it for future use.</p>
@@ -188,6 +237,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <pre><code class="scala">wideAndDeep.saveModel(path, weightPath = null, overWrite = false)
 
 ncf.saveModel(path, weightPath = null, overWrite = false)
+
+sessionRecommender.saveModel(path, weightPath = null, overWrite = false)
 </code></pre>
 
 <ul>
@@ -199,6 +250,8 @@ ncf.saveModel(path, weightPath = null, overWrite = false)
 <pre><code class="python">wide_and_deep.save_model(path, weight_path=None, over_write=False)
 
 ncf.save_model(path, weight_path=None, over_write=False)
+
+session_recommender.save_model(path, weight_path=None, over_write=False)
 </code></pre>
 
 <ul>
@@ -213,6 +266,8 @@ ncf.save_model(path, weight_path=None, over_write=False)
 <pre><code class="scala">WideAndDeep.loadModel[Float](path, weightPath = null)
 
 NeuralCF.loadModel[Float](path, weightPath = null)
+
+SessionRecommender.loadModel[Float](path, weightPath = null)
 </code></pre>
 
 <ul>
@@ -223,6 +278,8 @@ NeuralCF.loadModel[Float](path, weightPath = null)
 <pre><code class="python">WideAndDeep.load_model(path, weight_path=None)
 
 NeuralCF.load_model(path, weight_path=None)
+
+SessionRecommender.load_model(path, weight_path=None)
 </code></pre>
 
 <ul>
