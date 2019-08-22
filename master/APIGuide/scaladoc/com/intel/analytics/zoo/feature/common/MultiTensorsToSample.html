@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>FeatureLabelPreprocessing - analytics-zoo-bigdl_0.9.0-spark_2.1.0 0.6.0-SNAPSHOT API - com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing</title>
-          <meta name="description" content="FeatureLabelPreprocessing - analytics - zoo - bigdl 0.9.0 - spark 2.1.0 0.6.0 - SNAPSHOT API - com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing" />
-          <meta name="keywords" content="FeatureLabelPreprocessing analytics zoo bigdl 0.9.0 spark 2.1.0 0.6.0 SNAPSHOT API com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing" />
+          <title>MultiTensorsToSample - analytics-zoo-bigdl_0.9.0-spark_2.1.0 0.6.0-SNAPSHOT API - com.intel.analytics.zoo.feature.common.MultiTensorsToSample</title>
+          <meta name="description" content="MultiTensorsToSample - analytics - zoo - bigdl 0.9.0 - spark 2.1.0 0.6.0 - SNAPSHOT API - com.intel.analytics.zoo.feature.common.MultiTensorsToSample" />
+          <meta name="keywords" content="MultiTensorsToSample analytics zoo bigdl 0.9.0 spark 2.1.0 0.6.0 SNAPSHOT API com.intel.analytics.zoo.feature.common.MultiTensorsToSample" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -16,7 +16,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../../../../../../index.html';
-            var hash = 'com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing';
+            var hash = 'com.intel.analytics.zoo.feature.common.MultiTensorsToSample';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -28,14 +28,14 @@
         </head>
         <body class="type">
       <div id="definition">
-        <a href="FeatureLabelPreprocessing$.html" title="See companion object"><img alt="Class/Object" src="../../../../../../lib/class_to_object_big.png" /></a>
+        <a href="MultiTensorsToSample$.html" title="See companion object"><img alt="Class/Object" src="../../../../../../lib/class_to_object_big.png" /></a>
         <p id="owner"><a href="../../../../../package.html" class="extype" name="com">com</a>.<a href="../../../../package.html" class="extype" name="com.intel">intel</a>.<a href="../../../package.html" class="extype" name="com.intel.analytics">analytics</a>.<a href="../../package.html" class="extype" name="com.intel.analytics.zoo">zoo</a>.<a href="../package.html" class="extype" name="com.intel.analytics.zoo.feature">feature</a>.<a href="package.html" class="extype" name="com.intel.analytics.zoo.feature.common">common</a></p>
-        <h1><a href="FeatureLabelPreprocessing$.html" title="See companion object">FeatureLabelPreprocessing</a></h1><h3><span class="morelinks"><div>
+        <h1><a href="MultiTensorsToSample$.html" title="See companion object">MultiTensorsToSample</a></h1><h3><span class="morelinks"><div>
             Related Docs:
-            <a href="FeatureLabelPreprocessing$.html" title="See companion object">object FeatureLabelPreprocessing</a>
+            <a href="MultiTensorsToSample$.html" title="See companion object">object MultiTensorsToSample</a>
             | <a href="package.html" class="extype" name="com.intel.analytics.zoo.feature.common">package common</a>
           </div></span></h3><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -47,15 +47,14 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">FeatureLabelPreprocessing</span><span class="tparams">[<span name="F">F</span>, <span name="X">X</span>, <span name="L">L</span>, <span name="T">T</span>]</span><span class="result"> extends <a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[(<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.F">F</span>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.L">L</span>]), <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.T">T</span>]]</span>
+        <span class="name">MultiTensorsToSample</span><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]], <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]]</span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>construct a Preprocessing that convert (Feature, Label) tuple to a Sample.
-The returned Preprocessing is robust for the case label = None, in which the
-Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt class="tparam">F</dt><dd class="cmt"><p>data type from feature column, E.g. Array[_] or Vector</p></dd><dt class="tparam">L</dt><dd class="cmt"><p>data type from label column, E.g. Float, Double, Array[_] or Vector</p></dd></dl><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>a Preprocessing that converts multiple tensors to Sample.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[(<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.F">F</span>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.L">L</span>]), <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.T">T</span>]], <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[(<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.F">F</span>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.L">L</span>]), <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.T">T</span>]], <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]], <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]], <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]], <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]], <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -73,7 +72,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing"><span>FeatureLabelPreprocessing</span></li><li class="in" name="com.intel.analytics.zoo.feature.common.Preprocessing"><span>Preprocessing</span></li><li class="in" name="com.intel.analytics.bigdl.dataset.Transformer"><span>Transformer</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample"><span>MultiTensorsToSample</span></li><li class="in" name="com.intel.analytics.zoo.feature.common.Preprocessing"><span>Preprocessing</span></li><li class="in" name="com.intel.analytics.bigdl.dataset.Transformer"><span>Transformer</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -90,7 +89,27 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
 
       <div id="template">
         <div id="allMembers">
-        
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;()(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.feature.common.MultiTensorsToSample[T]"></a>
+      <a id="&lt;init&gt;:MultiTensorsToSample[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">MultiTensorsToSample</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]</span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@&lt;init&gt;()(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.feature.common.MultiTensorsToSample[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
 
         
 
@@ -110,7 +129,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@!=(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -127,41 +146,41 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@##():Int" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@##():Int" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.common.Preprocessing#-&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="-&gt;[C](other:com.intel.analytics.zoo.feature.common.Preprocessing[B,C]):com.intel.analytics.zoo.feature.common.Preprocessing[A,C]"></a>
-      <a id="-&gt;[C](Preprocessing[Sample[T],C]):Preprocessing[(F,Option[L]),C]"></a>
+      <a id="-&gt;[C](Preprocessing[Sample[T],C]):Preprocessing[Array[Tensor[T]],C]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span title="gt4s: $minus$greater" class="name">-&gt;</span><span class="tparams">[<span name="C">C</span>]</span><span class="params">(<span name="other">other: <a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing.-&gt;.C">C</span>]</span>)</span><span class="result">: <a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[(<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.F">F</span>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.L">L</span>]), <span class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing.-&gt;.C">C</span>]</span>
+        <span title="gt4s: $minus$greater" class="name">-&gt;</span><span class="tparams">[<span name="C">C</span>]</span><span class="params">(<span name="other">other: <a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing.-&gt;.C">C</span>]</span>)</span><span class="result">: <a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]], <span class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing.-&gt;.C">C</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@-&gt;[C](other:com.intel.analytics.zoo.feature.common.Preprocessing[B,C]):com.intel.analytics.zoo.feature.common.Preprocessing[A,C]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@-&gt;[C](other:com.intel.analytics.zoo.feature.common.Preprocessing[B,C]):com.intel.analytics.zoo.feature.common.Preprocessing[A,C]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a></dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.dataset.Transformer#-&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="-&gt;[C](other:com.intel.analytics.bigdl.dataset.Transformer[B,C]):com.intel.analytics.bigdl.dataset.Transformer[A,C]"></a>
-      <a id="-&gt;[C](Transformer[Sample[T],C]):Transformer[(F,Option[L]),C]"></a>
+      <a id="-&gt;[C](Transformer[Sample[T],C]):Transformer[Array[Tensor[T]],C]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span title="gt4s: $minus$greater" class="name">-&gt;</span><span class="tparams">[<span name="C">C</span>]</span><span class="params">(<span name="other">other: <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer.-&gt;.C">C</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[(<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.F">F</span>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.L">L</span>]), <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer.-&gt;.C">C</span>]</span>
+        <span title="gt4s: $minus$greater" class="name">-&gt;</span><span class="tparams">[<span name="C">C</span>]</span><span class="params">(<span name="other">other: <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer.-&gt;.C">C</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]], <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer.-&gt;.C">C</span>]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@-&gt;[C](other:com.intel.analytics.bigdl.dataset.Transformer[B,C]):com.intel.analytics.bigdl.dataset.Transformer[A,C]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@-&gt;[C](other:com.intel.analytics.bigdl.dataset.Transformer[B,C]):com.intel.analytics.bigdl.dataset.Transformer[A,C]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -178,28 +197,28 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@==(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@==(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="apply(prev:Iterator[(F,Option[L])]):Iterator[com.intel.analytics.bigdl.dataset.Sample[T]]"></a>
-      <a id="apply(Iterator[(F,Option[L])]):Iterator[Sample[T]]"></a>
+    </li><li name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="apply(prev:Iterator[Array[com.intel.analytics.bigdl.tensor.Tensor[T]]]):Iterator[com.intel.analytics.bigdl.dataset.Sample[T]]"></a>
+      <a id="apply(Iterator[Array[Tensor[T]]]):Iterator[Sample[T]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="params">(<span name="prev">prev: <a href="../../../../../../scala/package.html#Iterator[+A]=Iterator[A]" class="extmbr" name="scala.Iterator">Iterator</a>[(<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.F">F</span>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.L">L</span>])]</span>)</span><span class="result">: <a href="../../../../../../scala/package.html#Iterator[+A]=Iterator[A]" class="extmbr" name="scala.Iterator">Iterator</a>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.T">T</span>]]</span>
+        <span class="name">apply</span><span class="params">(<span name="prev">prev: <a href="../../../../../../scala/package.html#Iterator[+A]=Iterator[A]" class="extmbr" name="scala.Iterator">Iterator</a>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]]]</span>)</span><span class="result">: <a href="../../../../../../scala/package.html#Iterator[+A]=Iterator[A]" class="extmbr" name="scala.Iterator">Iterator</a>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@apply(prev:Iterator[(F,Option[L])]):Iterator[com.intel.analytics.bigdl.dataset.Sample[T]]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@apply(prev:Iterator[Array[com.intel.analytics.bigdl.tensor.Tensor[T]]]):Iterator[com.intel.analytics.bigdl.dataset.Sample[T]]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing">FeatureLabelPreprocessing</a> → Transformer</dd></dl></div>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample">MultiTensorsToSample</a> → Transformer</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.common.Preprocessing#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="apply(textSet:com.intel.analytics.zoo.feature.text.TextSet):com.intel.analytics.zoo.feature.text.TextSet"></a>
       <a id="apply(TextSet):TextSet"></a>
@@ -212,7 +231,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">apply</span><span class="params">(<span name="textSet">textSet: <a href="../text/TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></span>)</span><span class="result">: <a href="../text/TextSet.html" class="extype" name="com.intel.analytics.zoo.feature.text.TextSet">TextSet</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@apply(textSet:com.intel.analytics.zoo.feature.text.TextSet):com.intel.analytics.zoo.feature.text.TextSet" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@apply(textSet:com.intel.analytics.zoo.feature.text.TextSet):com.intel.analytics.zoo.feature.text.TextSet" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -229,24 +248,24 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">apply</span><span class="params">(<span name="imageSet">imageSet: <a href="../image/ImageSet.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageSet">ImageSet</a></span>)</span><span class="result">: <a href="../image/ImageSet.html" class="extype" name="com.intel.analytics.zoo.feature.image.ImageSet">ImageSet</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@apply(imageSet:com.intel.analytics.zoo.feature.image.ImageSet):com.intel.analytics.zoo.feature.image.ImageSet" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@apply(imageSet:com.intel.analytics.zoo.feature.image.ImageSet):com.intel.analytics.zoo.feature.image.ImageSet" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a></dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.dataset.Transformer#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="apply(dataset:org.apache.spark.rdd.RDD[A])(implicitevidence:scala.reflect.ClassTag[B]):org.apache.spark.rdd.RDD[B]"></a>
-      <a id="apply(RDD[(F,Option[L])])(ClassTag[Sample[T]]):RDD[Sample[T]]"></a>
+      <a id="apply(RDD[Array[Tensor[T]]])(ClassTag[Sample[T]]):RDD[Sample[T]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[(<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.F">F</span>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.L">L</span>])]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="evidence">evidence: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.T">T</span>]]</span>
+        <span class="name">apply</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]]]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="evidence">evidence: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@apply(dataset:org.apache.spark.rdd.RDD[A])(implicitevidence:scala.reflect.ClassTag[B]):org.apache.spark.rdd.RDD[B]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@apply(dataset:org.apache.spark.rdd.RDD[A])(implicitevidence:scala.reflect.ClassTag[B]):org.apache.spark.rdd.RDD[B]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -263,7 +282,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@asInstanceOf[T0]:T0" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -280,7 +299,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@clone():Object" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@clone():Object" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -293,34 +312,34 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         </dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.common.Preprocessing#clonePreprocessing" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clonePreprocessing():com.intel.analytics.zoo.feature.common.Preprocessing[A,B]"></a>
-      <a id="clonePreprocessing():Preprocessing[(F,Option[L]),Sample[T]]"></a>
+      <a id="clonePreprocessing():Preprocessing[Array[Tensor[T]],Sample[T]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">clonePreprocessing</span><span class="params">()</span><span class="result">: <a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[(<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.F">F</span>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.L">L</span>]), <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.T">T</span>]]</span>
+        <span class="name">clonePreprocessing</span><span class="params">()</span><span class="result">: <a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]], <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@clonePreprocessing():com.intel.analytics.zoo.feature.common.Preprocessing[A,B]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@clonePreprocessing():com.intel.analytics.zoo.feature.common.Preprocessing[A,B]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a></dd></dl></div>
     </li><li name="com.intel.analytics.bigdl.dataset.Transformer#cloneTransformer" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="cloneTransformer():com.intel.analytics.bigdl.dataset.Transformer[A,B]"></a>
-      <a id="cloneTransformer():Transformer[(F,Option[L]),Sample[T]]"></a>
+      <a id="cloneTransformer():Transformer[Array[Tensor[T]],Sample[T]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">cloneTransformer</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[(<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.F">F</span>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.L">L</span>]), <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.T">T</span>]]</span>
+        <span class="name">cloneTransformer</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]], <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@cloneTransformer():com.intel.analytics.bigdl.dataset.Transformer[A,B]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@cloneTransformer():com.intel.analytics.bigdl.dataset.Transformer[A,B]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -337,7 +356,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -354,7 +373,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@equals(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -371,7 +390,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@finalize():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@finalize():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -394,7 +413,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@getClass():Class[_]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@getClass():Class[_]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -411,7 +430,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@hashCode():Int" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@hashCode():Int" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -428,7 +447,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -445,7 +464,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -462,7 +481,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@notify():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@notify():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -479,7 +498,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@notifyAll():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@notifyAll():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -496,7 +515,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -513,7 +532,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@toString():String" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@toString():String" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -530,7 +549,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@wait():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@wait():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -553,7 +572,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -576,7 +595,7 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing@wait(x$1:Long):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.MultiTensorsToSample@wait(x$1:Long):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -597,9 +616,9 @@ Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt cl
 
         <div id="inheritedMembers">
         <div class="parent" name="com.intel.analytics.zoo.feature.common.Preprocessing">
-              <h3>Inherited from <a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[(<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.F">F</span>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.L">L</span>]), <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.T">T</span>]]</h3>
+              <h3>Inherited from <a href="Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]], <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]]</h3>
             </div><div class="parent" name="com.intel.analytics.bigdl.dataset.Transformer">
-              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[(<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.F">F</span>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.L">L</span>]), <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.FeatureLabelPreprocessing.T">T</span>]]</h3>
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]], <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample.T">T</span>]]</h3>
             </div><div class="parent" name="scala.Serializable">
               <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
             </div><div class="parent" name="java.io.Serializable">

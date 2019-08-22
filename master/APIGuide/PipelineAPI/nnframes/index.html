@@ -112,7 +112,13 @@ extra data types that DataFrame does not support currently.</p>
    will extract the data from feature and label columns (only Scalar, Array[_] or Vector data
    type are supported) and convert each feature/label to Tensor according to the specified Tensor
    size.</p>
-<p><strong>3.</strong> <code>NNEstimator(model, criterion, featurePreprocessing: Preprocessing[F, Tensor[T]],
+<p><strong>3.</strong> <code>NNEstimator(model, criterion, featureSize: Array[Array[Int]], labelSize: Array[Int])</code></p>
+<p>This is the interface for multi-input model. It takes model, criterion, featureSize(Array of
+   Int Array) and labelSize(Array of Int). <code>NNEstimator</code>
+   will extract the data from feature and label columns (only Scalar, Array[_] or Vector data
+   type are supported) and convert each feature/label to Tensor according to the specified Tensor
+   size.</p>
+<p><strong>4.</strong> <code>NNEstimator(model, criterion, featurePreprocessing: Preprocessing[F, Tensor[T]],
 labelPreprocessing: Preprocessing[F, Tensor[T]])</code></p>
 <p>Takes model, criterion, featurePreprocessing and labelPreprocessing.  <code>NNEstimator</code>
    will extract the data from feature and label columns and convert each feature/label to Tensor
@@ -166,6 +172,55 @@ nnModel = estimator.fit(df)
 res = nnModel.transform(df)
 </code></pre>
 
+<p><strong><em>Example with multi-inputs Model.</em></strong>
+This example trains a model with 3 inputs. And users can
+use VectorAssembler from Spark MLlib to combine different fields. With the specified sizes for
+each model input, NNEstiamtor and NNClassifer will split the input features data and send
+tensors to corresponding inputs.</p>
+<pre><code class="python">sparkConf = init_spark_conf().setAppName(&quot;testNNClassifer&quot;).setMaster('local[1]')
+sc = init_nncontext(sparkConf)
+spark = SparkSession\
+    .builder\
+    .getOrCreate()
+
+df = spark.createDataFrame(
+    [(1, 35, 109.0, Vectors.dense([2.0, 5.0, 0.5, 0.5]), 1.0),
+     (2, 58, 2998.0, Vectors.dense([4.0, 10.0, 0.5, 0.5]), 2.0),
+     (3, 18, 123.0, Vectors.dense([3.0, 15.0, 0.5, 0.5]), 1.0)],
+    [&quot;user&quot;, &quot;age&quot;, &quot;income&quot;, &quot;history&quot;, &quot;label&quot;])
+
+assembler = VectorAssembler(
+    inputCols=[&quot;user&quot;, &quot;age&quot;, &quot;income&quot;, &quot;history&quot;],
+    outputCol=&quot;features&quot;)
+
+df = assembler.transform(df)
+
+x1 = ZLayer.Input(shape=(1,))
+x2 = ZLayer.Input(shape=(2,))
+x3 = ZLayer.Input(shape=(2, 2,))
+
+user_embedding = ZLayer.Embedding(5, 10)(x1)
+flatten = ZLayer.Flatten()(user_embedding)
+dense1 = ZLayer.Dense(2)(x2)
+gru = ZLayer.LSTM(4, input_shape=(2, 2))(x3)
+
+merged = ZLayer.merge([flatten, dense1, gru], mode=&quot;concat&quot;)
+zy = ZLayer.Dense(2)(merged)
+
+zmodel = ZModel([x1, x2, x3], zy)
+criterion = ClassNLLCriterion()
+classifier = NNClassifier(zmodel, criterion, [[1], [2], [2, 2]]) \
+    .setOptimMethod(Adam()) \
+    .setLearningRate(0.1)\
+    .setBatchSize(2) \
+    .setMaxEpoch(10)
+
+nnClassifierModel = classifier.fit(df)
+print(nnClassifierModel.getBatchSize())
+res = nnClassifierModel.transform(df).collect()
+
+</code></pre>
+
 <hr />
 <h2 id="nnmodel">NNModel</h2>
 <p><strong>Scala:</strong></p>
@@ -190,7 +245,8 @@ and use it as a transformer in your Spark ML pipeline to predict the results for
 <p><strong>2.</strong> <code>NNModel(model, featureSize: Array[Int])</code></p>
 <p>Takes model and featureSize(Array of Int). <code>NNModel</code> will extract the data from feature
    column (only Scalar, Array[_] or Vector data type are supported) and convert each feature
-   to Tensor according to the specified Tensor size.</p>
+   to Tensor according to the specified Tensor size. User can also set featureSize as
+   Array[Array[Int]] for multi-inputs model.</p>
 <p><strong>3.</strong> <code>NNModel(model, featurePreprocessing: Preprocessing[F, Tensor[T]])</code></p>
 <p>Takes model and featurePreprocessing. <code>NNModel</code> will extract the data from feature column
    and convert each feature to Tensor with the featurePreprocessing. This constructor provides
@@ -226,7 +282,8 @@ DoubleType.</p>
 <p><strong>2.</strong> <code>NNClassifier(model, criterion, featureSize: Array[Int])</code></p>
 <p>Takes model, criterion, featureSize(Array of Int). <code>NNClassifier</code>
    will extract the data from feature and label columns and convert each feature to Tensor
-   according to the specified Tensor size. <code>ScalarToTensor</code> is used to convert the label column.</p>
+   according to the specified Tensor size. <code>ScalarToTensor</code> is used to convert the label column.
+   User can also set featureSize as Array[Array[Int]] for multi-inputs model.</p>
 <p><strong>3.</strong> <code>NNClassifier(model, criterion, featurePreprocessing: Preprocessing[F, Tensor[T]])</code></p>
 <p>Takes model, criterion and featurePreprocessing.  <code>NNClassifier</code>
    will extract the data from feature and label columns and convert each feature to Tensor
@@ -299,7 +356,8 @@ Both label and prediction column will have the datatype of Double.</p>
 <p><strong>2.</strong> <code>NNClassifierModel(model, featureSize: Array[Int])</code></p>
 <p>Takes model and featureSize(Array of Int). <code>NNClassifierModel</code> will extract the data from feature
    column (only Scalar, Array[_] or Vector data type are supported) and convert each feature
-   to Tensor according to the specified Tensor size.</p>
+   to Tensor according to the specified Tensor size. User can also set featureSize as
+   Array[Array[Int]] for multi-inputs model.</p>
 <p><strong>3.</strong> <code>NNClassifierModel(model, featurePreprocessing: Preprocessing[F, Tensor[T]])</code></p>
 <p>Takes model and featurePreprocessing. <code>NNClassifierModel</code> will extract the data from feature
    column and convert each feature to Tensor with the featurePreprocessing. This constructor provides
