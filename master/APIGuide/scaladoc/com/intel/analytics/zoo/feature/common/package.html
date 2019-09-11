@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>common - analytics-zoo-bigdl_0.9.0-spark_2.1.0 0.6.0-SNAPSHOT API - com.intel.analytics.zoo.feature.common</title>
-          <meta name="description" content="common - analytics - zoo - bigdl 0.9.0 - spark 2.1.0 0.6.0 - SNAPSHOT API - com.intel.analytics.zoo.feature.common" />
-          <meta name="keywords" content="common analytics zoo bigdl 0.9.0 spark 2.1.0 0.6.0 SNAPSHOT API com.intel.analytics.zoo.feature.common" />
+          <title>common - analytics-zoo-bigdl_0.9.1-spark_2.1.0 0.6.0-SNAPSHOT API - com.intel.analytics.zoo.feature.common</title>
+          <meta name="description" content="common - analytics - zoo - bigdl 0.9.1 - spark 2.1.0 0.6.0 - SNAPSHOT API - com.intel.analytics.zoo.feature.common" />
+          <meta name="keywords" content="common analytics zoo bigdl 0.9.1 spark 2.1.0 0.6.0 SNAPSHOT API com.intel.analytics.zoo.feature.common" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -140,6 +140,24 @@ Preprocessing should be the same with the input type of the second Preprocessing
       <p class="shortcomment cmt">construct a Preprocessing that convert (Feature, Label) tuple to a Sample.</p><div class="fullcomment"><div class="comment cmt"><p>construct a Preprocessing that convert (Feature, Label) tuple to a Sample.
 The returned Preprocessing is robust for the case label = None, in which the
 Sample is derived from Feature only.</p></div><dl class="paramcmts block"><dt class="tparam">F</dt><dd class="cmt"><p>data type from feature column, E.g. Array[_] or Vector</p></dd><dt class="tparam">L</dt><dd class="cmt"><p>data type from label column, E.g. Float, Double, Array[_] or Vector</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.common.MTSampleToMiniBatch" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="MTSampleToMiniBatch[A,T]extendsTransformer[A,com.intel.analytics.bigdl.dataset.MiniBatch[T]]"></a>
+      <a id="MTSampleToMiniBatch[A,T]:MTSampleToMiniBatch[A,T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="MTSampleToMiniBatch.html"><span class="name">MTSampleToMiniBatch</span></a><span class="tparams">[<span name="A">A</span>, <span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MTSampleToMiniBatch.A">A</span>, <span class="extype" name="com.intel.analytics.bigdl.dataset.MiniBatch">MiniBatch</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.MTSampleToMiniBatch.T">T</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.package@MTSampleToMiniBatch[A,T]extendsTransformer[A,com.intel.analytics.bigdl.dataset.MiniBatch[T]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Convert a sequence of <span class="extype" name="Sample">Sample</span> to a sequence of <span class="extype" name="MiniBatch">MiniBatch</span>
+through function toMiniBatch using multi thread.</p>
     </li><li name="com.intel.analytics.zoo.feature.common.MultiTensorsToSample" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="MultiTensorsToSample[T]extendsPreprocessing[Array[com.intel.analytics.bigdl.tensor.Tensor[T]],com.intel.analytics.bigdl.dataset.Sample[T]]"></a>
       <a id="MultiTensorsToSample[T]:MultiTensorsToSample[T]"></a>
@@ -411,6 +429,23 @@ Tensor.</p>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.package@MLlibVectorToTensor" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.feature.common.MTSampleToMiniBatch" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="MTSampleToMiniBatch"></a>
+      <a id="MTSampleToMiniBatch:MTSampleToMiniBatch"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="MTSampleToMiniBatch$.html"><span class="name">MTSampleToMiniBatch</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.feature.common.package@MTSampleToMiniBatch" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
