@@ -415,6 +415,30 @@ currently they are not thread-safe.
       </a>
     </span>
       <p class="shortcomment cmt">BigDL criterion</p>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#dataCacheLevel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="dataCacheLevel:org.apache.spark.ml.param.Param[com.intel.analytics.zoo.feature.pmem.MemoryType]"></a>
+      <a id="dataCacheLevel:Param[MemoryType]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">dataCacheLevel</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<a href="../../feature/pmem/MemoryType.html" class="extype" name="com.intel.analytics.zoo.feature.pmem.MemoryType">MemoryType</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@dataCacheLevel:org.apache.spark.ml.param.Param[com.intel.analytics.zoo.feature.pmem.MemoryType]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">How to cache the training data, options are defined in com.intel.analytics.zoo.feature.pmem.</p><div class="fullcomment"><div class="comment cmt"><p>How to cache the training data, options are defined in com.intel.analytics.zoo.feature.pmem.
+If it's DRAM, will cache dataset into dynamic random-access memory
+If it's PMEM, will cache dataset into Intel Optane DC Persistent Memory
+If it's DISK_AND_DRAM(numSlice: Int), will cache dataset into disk, and only hold 1/n
+     of the data into memory during the training. After going through the 1/n, we will
+     release the current cache, and load another 1/n into memory.
+By default, DRAM is used.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
     </li><li name="org.apache.spark.ml.param.Params#defaultCopy" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="defaultCopy[T&lt;:org.apache.spark.ml.param.Params](extra:org.apache.spark.ml.param.ParamMap):T"></a>
       <a id="defaultCopy[T&lt;:Params](ParamMap):T"></a>
@@ -749,6 +773,23 @@ currently they are not thread-safe.
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#getDataCacheLevel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getDataCacheLevel:com.intel.analytics.zoo.feature.pmem.MemoryType"></a>
+      <a id="getDataCacheLevel:MemoryType"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getDataCacheLevel</span><span class="result">: <a href="../../feature/pmem/MemoryType.html" class="extype" name="com.intel.analytics.zoo.feature.pmem.MemoryType">MemoryType</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getDataCacheLevel:com.intel.analytics.zoo.feature.pmem.MemoryType" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
     </li><li name="org.apache.spark.ml.param.Params#getDefault" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getDefault[T](param:org.apache.spark.ml.param.Param[T]):Option[T]"></a>
       <a id="getDefault[T](Param[T]):Option[T]"></a>
@@ -1717,6 +1758,23 @@ default is 1.
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setConstantGradientClipping(min:Float,max:Float):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setDataCacheLevel" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setDataCacheLevel(value:com.intel.analytics.zoo.feature.pmem.MemoryType):NNEstimator.this.type"></a>
+      <a id="setDataCacheLevel(MemoryType):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setDataCacheLevel</span><span class="params">(<span name="value">value: <a href="../../feature/pmem/MemoryType.html" class="extype" name="com.intel.analytics.zoo.feature.pmem.MemoryType">MemoryType</a></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setDataCacheLevel(value:com.intel.analytics.zoo.feature.pmem.MemoryType):NNEstimator.this.type" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
