@@ -160,7 +160,7 @@ export ANALYTICS_ZOO_HOME=the dist directory of Analytics Zoo
 in <code>spark-submit/pyspark</code>, you can add these customized properties into ${ANALYTICS_ZOO_HOME}/conf/spark-analytics-zoo.conf.</p>
 <hr />
 <h4 id="run-with-pyspark"><strong><em>Run with pyspark</em></strong></h4>
-<pre><code class="bash">${ANALYTICS_ZOO_HOME}/bin/pyspark-with-zoo.sh --master local[*]
+<pre><code class="bash">${ANALYTICS_ZOO_HOME}/bin/pyspark-shell-with-zoo.sh --master local[*]
 </code></pre>
 
 <ul>
@@ -176,7 +176,7 @@ in <code>spark-submit/pyspark</code>, you can add these customized properties in
 (e.g., numpy) used by the program to be installed on each node in the Spark cluster. You can try
 running the Analytics Zoo <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/objectdetection">Object Detection Python example</a>
 as follows:</p>
-<pre><code class="bash">${ANALTICS_ZOO_HOME}/bin/spark-submit-with-zoo.sh --master local[*] predict.py model_path image_path output_path
+<pre><code class="bash">${ANALTICS_ZOO_HOME}/bin/spark-submit-python-with-zoo.sh --master local[*] predict.py model_path image_path output_path
 </code></pre>
 
 <hr />
@@ -217,7 +217,7 @@ you can run Python programs using Analytics Zoo using the following command.</p>
 export ANALYTICS_ZOO_HOME=the folder where you extract the downloaded Analytics Zoo zip package
 export VENV_HOME=the parent directory of venv.zip and venv folder
 
-PYSPARK_PYTHON=${VENV_HOME}/venv.zip/venv/bin/python ${ANALYTICS_ZOO_HOME}/bin/spark-submit-with-zoo.sh \
+PYSPARK_PYTHON=${VENV_HOME}/venv.zip/venv/bin/python ${ANALYTICS_ZOO_HOME}/bin/spark-submit-python-with-zoo.sh \
     --conf spark.yarn.appMasterEnv.PYSPARK_PYTHON=venv.zip/venv/bin/python \
     --master yarn-cluster \
     --executor-memory 10g \
@@ -235,7 +235,7 @@ PYSPARK_PYTHON=${VENV_HOME}/venv.zip/venv/bin/python ${ANALYTICS_ZOO_HOME}/bin/s
 export ANALYTICS_ZOO_HOME=the folder where you extract the downloaded Analytics Zoo zip package
 export VENV_HOME=the parent directory of venv.zip and venv folder
 
-PYSPARK_DRIVER_PYTHON=${VENV_HOME}/venv/bin/python PYSPARK_PYTHON=venv.zip/venv/bin/python ${ANALYTICS_ZOO_HOME}/bin/spark-submit-with-zoo.sh \
+PYSPARK_DRIVER_PYTHON=${VENV_HOME}/venv/bin/python PYSPARK_PYTHON=venv.zip/venv/bin/python ${ANALYTICS_ZOO_HOME}/bin/spark-submit-python-with-zoo.sh \
     --master yarn \
     --deploy-mode client \
     --executor-memory 10g \
