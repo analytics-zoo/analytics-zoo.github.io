@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Run on Google Cloud Dataproc - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Deploy Analytics Zoo with BigDL on Dataproc", url: "#deploy-analytics-zoo-with-bigdl-on-dataproc", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Run on Google Cloud Dataproc</strong></h1>
+    <hr>
+    <h2 id="deploy-analytics-zoo-with-bigdl-on-dataproc"><strong>Deploy Analytics Zoo with BigDL on Dataproc</strong></h2>
+<p>Before using Analytics Zoo and BigDL on Google Dataproc, you need setup a project and create a cluster on Dataproc 
+(you may refer to <a href="https://cloud.google.com/dataproc/docs/how-to">https://cloud.google.com/sdk/docs/how-to</a> 
+for more instructions). 
+Now you can create a Cloud Dataproc cluster using the Google Cloud SDK's (https://cloud.google.com/sdk/docs/) 
+<code>gcloud</code> command-line tool.</p>
+<p>Note:
+ The actual version of the initialization script with Zoo support is still under review here: [https://github.com/GoogleCloudPlatform/dataproc-initialization-actions/pull/469]).
+ So at the time of writing you should download and place the updated version of this script somewhere accessible for you 
+ (into your own Google Storage bucket, for example) and set appropriate location for <code>--initialization-actions</code>.</p>
+<p>You can use use this initialization action to create a new Dataproc cluster with Analytics Zoo and BigDL pre-installed 
+in it.</p>
+<p>By default, it will automatically download only BigDL 0.7.2 for Dataproc 1.3 (Spark 2.3 and Scala 2.11.8).
+So you must specify to download Analytics Zoo instead (which includes BigDL) with: <code>bigdl-download-url</code> 
+property in metadata:</p>
+<pre><code class="bash">gcloud dataproc clusters create &lt;CLUSTER_NAME&gt; \
+    --image-version 1.3 \
+    --initialization-actions gs://dataproc-initialization-actions/bigdl/bigdl.sh \
+    --initialization-action-timeout 10m \
+    --metadata 'bigdl-download-url=https://repo1.maven.org/maven2/com/intel/analytics/zoo/analytics-zoo-bigdl_0.7.2-spark_2.3.1/0.4.0/analytics-zoo-bigdl_0.7.2-spark_2.3.1-0.4.0-dist-all.zip'
+</code></pre>
+
+<p>To download a different version of Zoo or one targeted to a different version of Spark/Scala, 
+find the download URL from the <a href="https://analytics-zoo.github.io/0.4.0/#release-download/">Analytics Zoo releases page</a> 
+or <a href="https://repo1.maven.org/maven2/com/intel/analytics/zoo/">maven repository</a>, 
+and set the metadata key "bigdl-download-url" 
+.</p>
+<p>More information please refer https://github.com/GoogleCloudPlatform/dataproc-initialization-actions/tree/master/bigdl</p>
+<p>Once the cluster is provisioned, you will be able to see the cluster running in the Google Cloud Platform Console. Now you can SSH to the master node.</p>
+<p>Cloud Dataproc support various way to SSH to the master, here we use SSH from Google Cloud SDK.
+E.g.,</p>
+<pre><code class="bash">gcloud compute --project &lt;PROJECT_ID&gt; ssh --zone &lt;ZONE&gt; &lt;CLUSTER_NAME&gt;
+</code></pre>
+
+<p>Google cloud SDK will perform the authentication for you and open an SSH client (Eg Putty).</p>
+<p>You should be able to find Analytics Zoo and BigDL located under /opt/intel-bigdl. 
+Now you can run jobs with Zoo and BigDL on Google Dataproc 
+as usual with <code>gcloud dataproc jobs submit spark</code>.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
