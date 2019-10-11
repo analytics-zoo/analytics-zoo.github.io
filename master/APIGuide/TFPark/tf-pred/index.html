@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>FeatureSet - Analytics Zoo</title>
+    <title>TFPredictor - Analytics Zoo</title>
     <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/css/base.css" rel="stylesheet">
@@ -57,25 +57,27 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
 <div class="container-fluid wm-page-content">
     
-    <h1><strong>FeatureSet</strong></h1>
+    <h1><strong>TFPredictor</strong></h1>
     <hr>
-    <p>A FeatureSet can be used to represent an input pipeline as a collection of elements which is used in the model optimization process. You can use FeatureSet to switch the memory type between <code>DRAM</code> 
-and <code>PMEM</code> in consideration of the hardware optimization.
-* <code>DRAM</code> is the default mode which would cached the training data in main memory.
-* <code>PMEM</code> mode would try to cache the training data in AEP rather than main memory. You should install the AEP hardware and <a href="https://github.com/memkind/memkind">memkind library</a> before switching
- to this option. </p>
-<ul>
-<li>The FeatureSet can be accessed in a random data sample sequence. In the training process, the data sequence is a looped endless sequence. While in the validation process, the data sequence is a limited length sequence. User can use the data() method to get the data sequence.</li>
-<li>You can use FeatureSet.rdd() function to create a FeatureSet.</li>
-</ul>
-<p>Scala example:</p>
-<pre><code class="scala">   import com.intel.analytics.zoo.feature.FeatureSet
-   val featureSet = FeatureSet.rdd(rawRDD, memoryType = DRAM)
-   // featureSet -&gt; feature transformer -&gt; batch and sample transformer
-   model.fit(featureSet)
+    <p>TFPredictor takes a list of TensorFlow tensors as the model outputs and feed all the elements in
+ TFDatasets to produce those outputs and returns a Spark RDD with each of its elements representing the
+ model prediction for the corresponding input elements.</p>
+<p><strong>Note</strong>: This feature currently requires <strong>tensorflow 1.10</strong> and OS is one of the following 64-bit systems.
+ <strong>Ubuntu 16.04 or later</strong>, <strong>macOS 10.12.6 or later</strong> and <strong>Windows 7 or later</strong>.</p>
+<p>To run on other system may require you to manually compile the TensorFlow source code. Instructions can
+ be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</p>
+<p><strong>Python</strong></p>
+<pre><code class="python">logist = ...
+predictor = TFPredictor.from_outputs(sess, [logits])
+predictions_rdd = predictor.predict()
 </code></pre>
 
-<p>Take a look at <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/inception">InceptionV1 example</a> for more details.</p>
+<p>For Keras model:</p>
+<pre><code class="python">model = Model(inputs=..., outputs=...)
+model.load_weights(&quot;/tmp/mnist_keras.h5&quot;)
+predictor = TFPredictor.from_keras(model, dataset)
+predictions_rdd = predictor.predict()
+</code></pre>
 
   <br>
 </div>

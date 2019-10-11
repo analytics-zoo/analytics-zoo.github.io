@@ -16,7 +16,7 @@
     <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/highlight.css">
-    <link href="../../../extra.css" rel="stylesheet">
+    <link href="../../extra.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -29,7 +29,7 @@
     
     <base target="_top">
     <script>
-      var base_url = '../../..';
+      var base_url = '../..';
       var is_top_frame = false;
         
         var pageToc = [
@@ -69,10 +69,10 @@ across yarn cluster,meaning python user would be able to run <code>Analytics-Zoo
 in a pythonic way on yarn without <code>spark-submit</code> or installing Analytics-Zoo or Ray across all cluster nodes.</p>
 <h2 id="here-are-the-steps-to-run-rayonspark">Here are the steps to run RayOnSpark:</h2>
 <p>1) You should install <a href="https://docs.conda.io/projects/conda/en/latest/commands/install.html">Conda</a> and create a conda-env named "ray36"</p>
-<p>2) Install some essential dependencies inthe conda env</p>
+<p>2) Install some essential dependencies in the conda env.</p>
 <pre><code>pip install analytics-zoo
 pip install pyspark==2.4.0 # 2.4.3 is OK as well.
-pip install ray
+pip install ray==0.6.6
 pip install conda-pack
 pip install psutil
 pip install aiohttp
@@ -150,6 +150,10 @@ print([ray.get(actor.ip.remote()) for actor in actors])
 ray_ctx.stop()
 
 </code></pre>
+
+<ul>
+<li>NOTE: This was test on Ray 0.6.6. Ideally, we can upgrade to the latest version once the following issue is addressed.(https://github.com/ray-project/ray/issues/5223)</li>
+</ul>
 
   <br>
 </div>
