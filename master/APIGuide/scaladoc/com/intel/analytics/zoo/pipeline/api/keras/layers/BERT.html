@@ -51,16 +51,18 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT">BERT</a> A self attention keras like layer.
-Input is a Table which consists of 4 tensors.
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT">BERT</a> A self attention Keras-style layer.</p><p>Input is a Table which consists of 4 tensors.
 1. Token id tensor: shape [batch, seqLen] with the word token indices in the vocabulary
 2. Token type id tensor: shape [batch, seqLen] with the token types in [0, 1].
-   0 means <code>sentence A</code> and 1 means a <code>sentence B</code> (see BERT paper for more details).
+0 means <code>sentence A</code> and 1 means a <code>sentence B</code> (see BERT paper for more details).
 3. Position id tensor: shape [batch, seqLen] with positions in the sentence.
 4. Attention_mask tensor: shape [batch, seqLen] with indices in [0, 1].
-  It's a mask to be used if the input sequence length is smaller than seqLen in
-  the current batch.
-Output is an Activity which output the states of BERT layer</p></div><div class="toggleContainer block">
+It's a mask to be used if the input sequence length is smaller than seqLen in
+the current batch.</p><p>Output is a Table as well.
+1. The states of BERT layer.
+2. The pooled output which processes the hidden state of the last layer with regard to the first
+token of the sequence. This would be useful for segment-level tasks.
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.TransformerLayer">TransformerLayer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>], <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a>, <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.Container">Container</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.BERT.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>

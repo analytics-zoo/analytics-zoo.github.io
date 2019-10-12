@@ -59,23 +59,40 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>FeatureSet</strong></h1>
     <hr>
-    <p>A FeatureSet can be used to represent an input pipeline as a collection of elements which is used in the model optimization process. You can use FeatureSet to switch the memory type between <code>DRAM</code> 
+    <p>A FeatureSet can be used to represent an input pipeline as a collection of elements which is used in the model optimization process. You can use FeatureSet to switch the memory type between <code>DRAM</code>, <code>DISK_AND_DRAM(numSlice)</code> 
 and <code>PMEM</code> in consideration of the hardware optimization.
-* <code>DRAM</code> is the default mode which would cached the training data in main memory.
-* <code>PMEM</code> mode would try to cache the training data in AEP rather than main memory. You should install the AEP hardware and <a href="https://github.com/memkind/memkind">memkind library</a> before switching
- to this option. </p>
-<ul>
-<li>The FeatureSet can be accessed in a random data sample sequence. In the training process, the data sequence is a looped endless sequence. While in the validation process, the data sequence is a limited length sequence. User can use the data() method to get the data sequence.</li>
-<li>You can use FeatureSet.rdd() function to create a FeatureSet.</li>
-</ul>
+<em> <code>DRAM</code> is the default mode which would cached the training data in main memory.
+</em> <code>DISK_AND_DRAM(numSlice)</code> mode will cache training data in disk, and only hold 1/numSlice of data in main memory. After going through the 1/numSlice, we will release the current cache, and load another 1/numSlice into memory.
+* <code>PMEM</code> mode would try to cache the training data in persistent memory rather than main memory. You should install the Intel Optane DC Persistent Memory hardware to AD mode before switching to this option. </p>
 <p>Scala example:</p>
-<pre><code class="scala">   import com.intel.analytics.zoo.feature.FeatureSet
-   val featureSet = FeatureSet.rdd(rawRDD, memoryType = DRAM)
-   // featureSet -&gt; feature transformer -&gt; batch and sample transformer
-   model.fit(featureSet)
+<p>In scala, user can create a DRAM or DISK_AND_DRAM FeatureSet from any RDD. 
+But PMEM FeatureSet only support RDD of ByteRecord, Sample or ImageFeature.</p>
+<pre><code class="scala">import com.intel.analytics.zoo.feature.FeatureSet
+import com.intel.analytics.zoo.feature.pmem.{DRAM, DISK_AND_DRAM, PMEM}
+// DRAM featureSet
+val dramSet = FeatureSet.rdd(rawRDD, memoryType = DRAM)
+// DISK_AND_DRAM featureSet
+val diskSet = FeatureSet.rdd(rawRDD, memoryType = DISK_AND_DRAM(10))
+// PMEM featureSet
+val pmemSet = FeatureSet.rdd(rawRDD, memoryType = PMEM)
+// Add your transformer: featureSet -&gt; feature transformer -&gt; batch and sample transformer
+val dataSet = ...
 </code></pre>
 
-<p>Take a look at <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/inception">InceptionV1 example</a> for more details.</p>
+<p>Take a look at <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/inception">InceptionV1 example scala version</a> for more details.</p>
+<p>Python example:
+In python, user can create FeatureSet from RDD, ImageSet, and ImageFrame.</p>
+<pre><code class="python">from zoo.feature.common import FeatureSet
+dramSet = FeatureSet.rdd(rawRDD, memory_type = &quot;DRAM&quot;)
+# DISK_AND_DRAM featureSet
+diskSet = FeatureSet.rdd(rawRDD, memoryType = &quot;10&quot;)
+#PMEM featureSet
+pmemSet = FeatureSet.rdd(rawRDD, memoryType = &quot;PMEM&quot;)
+#Add your transformer: featureSet -&gt; feature transformer -&gt; batch and sample transformer
+dataSet = ...
+</code></pre>
+
+<p>Take a look at <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/examples/inception/inception.py">InceptionV1 example python version</a> for more details.</p>
 
   <br>
 </div>
