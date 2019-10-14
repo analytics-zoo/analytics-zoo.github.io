@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Estimator - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Estimator", url: "#estimator", children: [
+              {title: "Creating an Estimator", url: "#creating-an-estimator" },
+              {title: "Training", url: "#training" },
+              {title: "Evaluation", url: "#evaluation" },
+              {title: "Other Important API", url: "#other-important-api" },
+              {title: "Examples", url: "#examples" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Estimator</strong></h1>
+    <hr>
+    <h2 id="estimator">Estimator</h2>
+<p><code>Estimator</code> supports the training and evaluation of BigDL models, Keras-like models and PyTorch models. It wraps a model, and provide a uniform training, evaluation, or prediction operation on both localhost and distributed spark environment.</p>
+<h3 id="creating-an-estimator">Creating an Estimator</h3>
+<p>In summary, you need to supply three parameters to create an Estimator: 1)a model, 2) optimMethod
+(s), 3) model directory, as shown below:</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">val estimator = Estimator[T: ClassTag](
+      model: Module[T], 
+      optimMethods: Map[String, OptimMethod[T]] = Map(), 
+      modelDir: Option[String] = None)
+</code></pre>
+
+<p><code>T</code>: the numeric type(Float/Double).<br />
+<code>model</code>: the model will be optimized.<br />
+<code>optimMethods</code>: the methods to optimize the model. Submodule names and optimMethod pairs.<br />
+<code>modelDir</code>(Optional): model checkpoint directory, and related summary directory.</p>
+<pre><code class="scala">val estimator = Estimator[T: ClassTag](
+      model: Module[T],
+      optimMethod: OptimMethod[T],
+      modelDir: Option[String] = None)
+
+</code></pre>
+
+<p><code>T</code>: the numeric type(Float/Double).<br />
+<code>model</code>: the model will be optimized.<br />
+<code>optimMethod</code>: the method to optimize the model.<br />
+<code>modelDir</code>(Optional): model checkpoint directory, and related summary directory.</p>
+<p><strong>Python:</strong></p>
+<pre><code class="python">estimator = Estimator(model, optim_methods, model_dir)
+
+</code></pre>
+
+<p><code>model</code>: the model will be optimized.<br />
+<code>optim_methods</code>: the methods to optimize the model. Both single optimMethod and Dict(submodule 
+name, optimMethod) are supported.<br />
+<code>model_dir</code>(Optional): model checkpoint directory, and related summary directory.</p>
+<h3 id="training">Training</h3>
+<p>Train the model with provided trainSet and criterion. The training will end when the endTrigger is 
+triggered. During the training, if the checkPointTrigger is defined and triggered, the model will be saved to modelDir. And if validationSet and validationMethod are defined, the model will be evaluated at the checkpoint.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">estimator.train(trainSet: FeatureSet[MiniBatch[T]],
+            criterion: Criterion[T],
+            endTrigger: Option[Trigger] = None,
+            checkPointTrigger: Option[Trigger] = None,
+            validationSet: FeatureSet[MiniBatch[T]] = null,
+            validationMethod: Array[ValidationMethod[T]] = null)
+</code></pre>
+
+<p><code>trainSet</code>: training dataset in type of FeatureSet[MiniBatch].<br />
+<code>criterion</code>: loss function.<br />
+<code>endTrigger</code>: when to finish the training.<br />
+<code>checkPointTrigger</code>: how often to save a checkpoint and evaluate the model.<br />
+<code>validationSet</code>: validation dataset in type of FeatureSet[MiniBatch].<br />
+<code>validationMethod</code>: a set of validationMethod.</p>
+<p><strong>Python:</strong></p>
+<h5 id="train-samples">Train Samples</h5>
+<pre><code class="python">estimator.train(train_set, criterion, end_trigger, checkpoint_trigger,
+              validation_set, validation_method, batch_size)
+</code></pre>
+
+<p><code>train_set</code>: training dataset in type of FeatureSet[Sample[T]].<br />
+<code>criterion</code>: loss function.<br />
+<code>end_trigger</code>: when to finish the training.<br />
+<code>checkpoint_trigger</code>: how often to save a checkpoint and evaluate the model.<br />
+<code>validation_set</code>: validation dataset in type of FeatureSet[Sample[T]].<br />
+<code>validation_method</code>: a set of validationMethod.<br />
+<code>batch_size</code>: mini batch size.</p>
+<h5 id="train-imagefeatures">Train ImageFeatures</h5>
+<pre><code class="python">estimator.train_imagefeature(self, train_set, criterion, end_trigger, checkpoint_trigger,
+                           validation_set, validation_method, batch_size)
+</code></pre>
+
+<p><code>train_set</code>: training dataset in type of FeatureSet[ImageFeature].<br />
+<code>criterion</code>: loss function.<br />
+<code>end_trigger</code>: when to finish the training.<br />
+<code>checkpoint_trigger</code>: how often to save a checkpoint and evaluate the model.<br />
+<code>validation_set</code>: validation dataset in type of FeatureSet[ImageFeature].<br />
+<code>validation_method</code>: a set of validationMethod.<br />
+<code>batch_size</code>: mini batch size.</p>
+<h3 id="evaluation">Evaluation</h3>
+<p>Evaluate the model on the validationSet with the validationMethods.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">estimator.evaluate(validationSet: FeatureSet[MiniBatch[T]],
+                   validationMethod: Array[ValidationMethod[T]])
+</code></pre>
+
+<p><code>validationSet</code>: validation dataset in type of FeatureSet.<br />
+<code>validationMethod</code>: a set of validationMethod.</p>
+<p><strong>Python:</strong></p>
+<h5 id="evaluate-samples">Evaluate Samples</h5>
+<pre><code class="python">estimator.evaluate(validation_set, validation_method, batch_size)
+</code></pre>
+
+<p><code>validation_set</code>: validation dataset in type of FeatureSet[Sample[T]].<br />
+<code>validation_method</code>: a set of validationMethod.<br />
+<code>batch_size</code>: mini batch size.</p>
+<h5 id="train-imagefeatures_1">Train ImageFeatures</h5>
+<pre><code class="python">estimator.evaluate_imagefeature(validation_set, validation_method, batch_size)
+</code></pre>
+
+<p><code>validation_set</code>: validation dataset in type of FeatureSet[ImageFeature].<br />
+<code>validation_method</code>: a set of validationMethod.<br />
+<code>batch_size</code>: mini batch size.</p>
+<h3 id="other-important-api">Other Important API</h3>
+<h4 id="setconstantgradientclipping">setConstantGradientClipping</h4>
+<p>Set constant gradient clipping during the training process. In order to take effect, it needs to 
+be called before fit.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">estimator.setConstantGradientClipping(min: Double, max: Double)
+</code></pre>
+
+<p><code>min</code>: The minimum value to clip by. Double.<br />
+<code>max</code>: The maximum value to clip by. Double.</p>
+<p><strong>Python:</strong></p>
+<pre><code class="python">estimator.set_constant_gradient_clipping(min, max)
+</code></pre>
+
+<p><code>min</code>: The minimum value to clip by. Double.<br />
+<code>max</code>: The maximum value to clip by. Double.</p>
+<h4 id="setgradientclippingbyl2norm">setGradientClippingByL2Norm</h4>
+<p>Set clip gradient to a maximum L2-Norm during the training process. In order to take effect, it 
+needs to be called before fit.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">estimator.setGradientClippingByL2Norm(clipNorm: Double)
+</code></pre>
+
+<p><code>clipNorm</code>: Gradient L2-Norm threshold. Double.</p>
+<p><strong>Python:</strong></p>
+<pre><code class="python">estimator.set_l2_norm_gradient_clipping(clip_norm)
+</code></pre>
+
+<p><code>clip_norm</code>: Gradient L2-Norm threshold. Double.</p>
+<h4 id="cleargradientclipping">clearGradientClipping</h4>
+<p>Clear gradient clipping parameters. In this case, gradient clipping will not be applied. In order
+ to take effect, it needs to be called before fit.</p>
+<p><strong>Scala:</strong>
+ <code>scala
+ estimator.clearGradientClipping()</code></p>
+<p><strong>Python:</strong>
+ <code>python
+estimator.clear_gradient_clipping()</code></p>
+<h3 id="examples">Examples</h3>
+<p>Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/inception/Train.scala">Inception(Scala)</a> or <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/examples/inception/inception.py">Inception(Python)</a> for 
+more information</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
