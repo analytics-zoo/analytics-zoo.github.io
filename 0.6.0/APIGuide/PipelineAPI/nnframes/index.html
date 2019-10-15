@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>NNFrames - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "NNEstimator", url: "#nnestimator", children: [
+          ]},
+          {title: "NNModel", url: "#nnmodel", children: [
+          ]},
+          {title: "NNClassifier", url: "#nnclassifier", children: [
+          ]},
+          {title: "NNClassifierModel", url: "#nnclassifiermodel", children: [
+          ]},
+          {title: "Hyperparameter setting", url: "#hyperparameter-setting", children: [
+          ]},
+          {title: "Prepare the data and start the training process", url: "#prepare-the-data-and-start-the-training-process", children: [
+          ]},
+          {title: "Make prediction on chosen data", url: "#make-prediction-on-chosen-data", children: [
+          ]},
+          {title: "NNImageReader", url: "#nnimagereader", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>NNFrames</strong></h1>
+    <hr>
+    <h2 id="nnestimator">NNEstimator</h2>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">val estimator = NNEstimator(model, criterion)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">estimator = NNEstimator(model, criterion)
+</code></pre>
+
+<p><code>NNEstimator</code> extends <code>org.apache.spark.ml.Estimator</code> and supports training a BigDL
+model with Spark DataFrame data. It can be integrated into a standard Spark ML Pipeline
+to allow users to combine the components of BigDL and Spark MLlib.</p>
+<p><code>NNEstimator</code> supports different feature and label data types through <code>Preprocessing</code>.
+During fit (training), NNEstimator will extract feature and label data from input DataFrame and use
+the <code>Preprocessing</code> to convert data for the model, typically converts the feature and label
+to Tensors or converts the (feature, option[Label]) tuple to a BigDL <code>Sample</code>. </p>
+<p>Each<code>Preprocessing</code> conducts a data conversion step in the preprocessing phase, multiple
+<code>Preprocessing</code> can be combined into a <code>ChainedPreprocessing</code>. Some pre-defined 
+<code>Preprocessing</code> for popular data types like Image, Array or Vector are provided in package
+<code>com.intel.analytics.zoo.feature</code>, while user can also develop customized <code>Preprocessing</code>.</p>
+<p>NNEstimator and NNClassifier also supports setting the caching level for the training data.
+Options are "DRAM", "PMEM" or "DISK_AND_DRAM". If DISK_AND_DRAM(numSlice) is used, only 1/numSlice
+data will be loaded into memory during training time. By default, DRAM mode is used and all data
+are cached in memory.</p>
+<p>By default, <code>SeqToTensor</code> is used to convert an array or Vector to a 1-dimension Tensor.
+Using the <code>Preprocessing</code> allows <code>NNEstimator</code> to cache only the raw data and decrease the 
+memory consumption during feature conversion and training, it also enables the model to digest
+extra data types that DataFrame does not support currently.</p>
+<p>More concrete examples are available in package <code>com.intel.analytics.zoo.examples.nnframes</code></p>
+<p><code>NNEstimator</code> can be created with various parameters for different scenarios.</p>
+<p><strong>1.</strong> <code>NNEstimator(model, criterion)</code></p>
+<p>Takes only model and criterion and use <code>SeqToTensor</code> as feature and label
+   <code>Preprocessing</code>. <code>NNEstimator</code> will extract the data from feature and label columns (
+   only Scalar, Array[_] or Vector data type are supported) and convert each feature/label to
+   1-dimension Tensor. The tensors will be combined into BigDL <code>Sample</code> and send to model for
+   training.</p>
+<p><strong>2.</strong> <code>NNEstimator(model, criterion, featureSize: Array[Int], labelSize: Array[Int])</code></p>
+<p>Takes model, criterion, featureSize(Array of Int) and labelSize(Array of Int). <code>NNEstimator</code>
+   will extract the data from feature and label columns (only Scalar, Array[_] or Vector data
+   type are supported) and convert each feature/label to Tensor according to the specified Tensor
+   size.</p>
+<p><strong>3.</strong> <code>NNEstimator(model, criterion, featureSize: Array[Array[Int]], labelSize: Array[Int])</code></p>
+<p>This is the interface for multi-input model. It takes model, criterion, featureSize(Array of
+   Int Array) and labelSize(Array of Int). <code>NNEstimator</code>
+   will extract the data from feature and label columns (only Scalar, Array[_] or Vector data
+   type are supported) and convert each feature/label to Tensor according to the specified Tensor
+   size.</p>
+<p><strong>4.</strong> <code>NNEstimator(model, criterion, featurePreprocessing: Preprocessing[F, Tensor[T]],
+labelPreprocessing: Preprocessing[F, Tensor[T]])</code></p>
+<p>Takes model, criterion, featurePreprocessing and labelPreprocessing.  <code>NNEstimator</code>
+   will extract the data from feature and label columns and convert each feature/label to Tensor
+   with the featurePreprocessing and labelPreprocessing. This constructor provides more flexibility
+   in supporting extra data types.</p>
+<p>Meanwhile, for advanced use cases (e.g. model with multiple input tensor), <code>NNEstimator</code> supports:
+<code>setSamplePreprocessing(value: Preprocessing[(Any, Option[Any]), Sample[T]])</code> to directly compose
+Sample according to user-specified Preprocessing.</p>
+<p><strong>Scala Example:</strong></p>
+<pre><code class="scala">import com.intel.analytics.bigdl.nn._
+import com.intel.analytics.zoo.pipeline.nnframes.NNEstimator
+import com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric.NumericFloat
+
+val model = Sequential().add(Linear(2, 2))
+val criterion = MSECriterion()
+val estimator = NNEstimator(model, criterion)
+  .setLearningRate(0.2)
+  .setMaxEpoch(40)
+val data = sc.parallelize(Seq(
+  (Array(2.0, 1.0), Array(1.0, 2.0)),
+  (Array(1.0, 2.0), Array(2.0, 1.0)),
+  (Array(2.0, 1.0), Array(1.0, 2.0)),
+  (Array(1.0, 2.0), Array(2.0, 1.0))))
+val df = sqlContext.createDataFrame(data).toDF(&quot;features&quot;, &quot;label&quot;)
+val nnModel = estimator.fit(df)
+nnModel.transform(df).show(false)
+</code></pre>
+
+<p><strong>Python Example:</strong></p>
+<pre><code class="python">from bigdl.nn.layer import *
+from bigdl.nn.criterion import *
+from bigdl.util.common import *
+from zoo.pipeline.nnframes.nn_classifier import *
+from zoo.feature.common import *
+
+data = self.sc.parallelize([
+    ((2.0, 1.0), (1.0, 2.0)),
+    ((1.0, 2.0), (2.0, 1.0)),
+    ((2.0, 1.0), (1.0, 2.0)),
+    ((1.0, 2.0), (2.0, 1.0))])
+
+schema = StructType([
+    StructField(&quot;features&quot;, ArrayType(DoubleType(), False), False),
+    StructField(&quot;label&quot;, ArrayType(DoubleType(), False), False)])
+df = self.sqlContext.createDataFrame(data, schema)
+model = Sequential().add(Linear(2, 2))
+criterion = MSECriterion()
+estimator = NNEstimator(model, criterion, SeqToTensor([2]), ArrayToTensor([2]))\
+    .setBatchSize(4).setLearningRate(0.2).setMaxEpoch(40) \
+nnModel = estimator.fit(df)
+res = nnModel.transform(df)
+</code></pre>
+
+<p><strong><em>Example with multi-inputs Model.</em></strong>
+This example trains a model with 3 inputs. And users can
+use VectorAssembler from Spark MLlib to combine different fields. With the specified sizes for
+each model input, NNEstiamtor and NNClassifer will split the input features data and send
+tensors to corresponding inputs.</p>
+<pre><code class="python">sparkConf = init_spark_conf().setAppName(&quot;testNNClassifer&quot;).setMaster('local[1]')
+sc = init_nncontext(sparkConf)
+spark = SparkSession\
+    .builder\
+    .getOrCreate()
+
+df = spark.createDataFrame(
+    [(1, 35, 109.0, Vectors.dense([2.0, 5.0, 0.5, 0.5]), 1.0),
+     (2, 58, 2998.0, Vectors.dense([4.0, 10.0, 0.5, 0.5]), 2.0),
+     (3, 18, 123.0, Vectors.dense([3.0, 15.0, 0.5, 0.5]), 1.0)],
+    [&quot;user&quot;, &quot;age&quot;, &quot;income&quot;, &quot;history&quot;, &quot;label&quot;])
+
+assembler = VectorAssembler(
+    inputCols=[&quot;user&quot;, &quot;age&quot;, &quot;income&quot;, &quot;history&quot;],
+    outputCol=&quot;features&quot;)
+
+df = assembler.transform(df)
+
+x1 = ZLayer.Input(shape=(1,))
+x2 = ZLayer.Input(shape=(2,))
+x3 = ZLayer.Input(shape=(2, 2,))
+
+user_embedding = ZLayer.Embedding(5, 10)(x1)
+flatten = ZLayer.Flatten()(user_embedding)
+dense1 = ZLayer.Dense(2)(x2)
+gru = ZLayer.LSTM(4, input_shape=(2, 2))(x3)
+
+merged = ZLayer.merge([flatten, dense1, gru], mode=&quot;concat&quot;)
+zy = ZLayer.Dense(2)(merged)
+
+zmodel = ZModel([x1, x2, x3], zy)
+criterion = ClassNLLCriterion()
+classifier = NNClassifier(zmodel, criterion, [[1], [2], [2, 2]]) \
+    .setOptimMethod(Adam()) \
+    .setLearningRate(0.1)\
+    .setBatchSize(2) \
+    .setMaxEpoch(10)
+
+nnClassifierModel = classifier.fit(df)
+print(nnClassifierModel.getBatchSize())
+res = nnClassifierModel.transform(df).collect()
+
+</code></pre>
+
+<hr />
+<h2 id="nnmodel">NNModel</h2>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">val nnModel = NNModel(bigDLModel)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">nn_model = NNModel(bigDLModel)
+</code></pre>
+
+<p><code>NNModel</code> extends Spark's ML
+<a href="https://spark.apache.org/docs/2.1.1/ml-pipeline.html#transformers">Transformer</a>. User can invoke
+<code>fit</code> in <code>NNEstimator</code> to get a <code>NNModel</code>, or directly compose a <code>NNModel</code> from BigDLModel.
+It enables users to wrap a pre-trained BigDL Model into a NNModel,
+and use it as a transformer in your Spark ML pipeline to predict the results for <code>DataFrame
+(DataSet)</code>. </p>
+<p><code>NNModel</code> can be created with various parameters for different scenarios.</p>
+<p><strong>1.</strong> <code>NNModel(model)</code></p>
+<p>Takes only model and use <code>SeqToTensor</code> as feature Preprocessing. <code>NNModel</code> will extract the
+   data from feature column (only Scalar, Array[_] or Vector data type are supported) and
+   convert each feature to 1-dimension Tensor. The tensors will be sent to model for inference.</p>
+<p><strong>2.</strong> <code>NNModel(model, featureSize: Array[Int])</code></p>
+<p>Takes model and featureSize(Array of Int). <code>NNModel</code> will extract the data from feature
+   column (only Scalar, Array[_] or Vector data type are supported) and convert each feature
+   to Tensor according to the specified Tensor size. User can also set featureSize as
+   Array[Array[Int]] for multi-inputs model.</p>
+<p><strong>3.</strong> <code>NNModel(model, featurePreprocessing: Preprocessing[F, Tensor[T]])</code></p>
+<p>Takes model and featurePreprocessing. <code>NNModel</code> will extract the data from feature column
+   and convert each feature to Tensor with the featurePreprocessing. This constructor provides
+   more flexibility in supporting extra data types.</p>
+<p>Meanwhile, for advanced use cases (e.g. model with multiple input tensor), <code>NNModel</code> supports:
+<code>setSamplePreprocessing(value: Preprocessing[Any, Sample[T]])</code>to directly compose
+Sample according to user-specified Preprocessing.</p>
+<hr />
+<h2 id="nnclassifier">NNClassifier</h2>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">val classifer =  NNClassifer(model, criterion)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">classifier = NNClassifer(model, criterion)
+</code></pre>
+
+<p><code>NNClassifier</code> is a specialized <code>NNEstimator</code> that simplifies the data format for
+classification tasks where the label space is discrete. It only supports label column of
+DoubleType, and the fitted <code>NNClassifierModel</code> will have the prediction column of 
+DoubleType.</p>
+<ul>
+<li><code>model</code> BigDL module to be optimized in the fit() method</li>
+<li><code>criterion</code> the criterion used to compute the loss and the gradient</li>
+</ul>
+<p><code>NNClassifier</code> can be created with various parameters for different scenarios.</p>
+<p><strong>1.</strong> <code>NNClassifier(model, criterion)</code></p>
+<p>Takes only model and criterion and use <code>SeqToTensor</code> as feature and label
+   Preprocessing. <code>NNClassifier</code> will extract the data from feature and label columns (
+   only Scalar, Array[_] or Vector data type are supported) and convert each feature/label to
+   1-dimension Tensor. The tensors will be combined into BigDL samples and send to model for
+   training.</p>
+<p><strong>2.</strong> <code>NNClassifier(model, criterion, featureSize: Array[Int])</code></p>
+<p>Takes model, criterion, featureSize(Array of Int). <code>NNClassifier</code>
+   will extract the data from feature and label columns and convert each feature to Tensor
+   according to the specified Tensor size. <code>ScalarToTensor</code> is used to convert the label column.
+   User can also set featureSize as Array[Array[Int]] for multi-inputs model.</p>
+<p><strong>3.</strong> <code>NNClassifier(model, criterion, featurePreprocessing: Preprocessing[F, Tensor[T]])</code></p>
+<p>Takes model, criterion and featurePreprocessing.  <code>NNClassifier</code>
+   will extract the data from feature and label columns and convert each feature to Tensor
+   with the featurePreprocessing. This constructor provides more flexibility
+   in supporting extra data types.</p>
+<p>Meanwhile, for advanced use cases (e.g. model with multiple input tensor), <code>NNClassifier</code> supports:
+<code>setSamplePreprocessing(value: Preprocessing[(Any, Option[Any]), Sample[T]])</code> to directly compose
+Sample with user-specified Preprocessing.</p>
+<p><strong>Scala example:</strong></p>
+<pre><code class="scala">import com.intel.analytics.bigdl.nn._
+import com.intel.analytics.zoo.pipeline.nnframes.NNClassifier
+import com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric.NumericFloat
+
+val model = Sequential().add(Linear(2, 2))
+val criterion = MSECriterion()
+val estimator = NNClassifier(model, criterion)
+  .setLearningRate(0.2)
+  .setMaxEpoch(40)
+val data = sc.parallelize(Seq(
+  (Array(0.0, 1.0), 1.0),
+  (Array(1.0, 0.0), 2.0),
+  (Array(0.0, 1.0), 1.0),
+  (Array(1.0, 0.0), 2.0)))
+val df = sqlContext.createDataFrame(data).toDF(&quot;features&quot;, &quot;label&quot;)
+val dlModel = estimator.fit(df)
+dlModel.transform(df).show(false)
+</code></pre>
+
+<p><strong>Python Example:</strong></p>
+<pre><code class="python">from bigdl.nn.layer import *
+from bigdl.nn.criterion import *
+from bigdl.util.common import *
+from bigdl.dlframes.dl_classifier import *
+from pyspark.sql.types import *
+
+#Logistic Regression with BigDL layers and Analytics zoo NNClassifier
+model = Sequential().add(Linear(2, 2)).add(LogSoftMax())
+criterion = ClassNLLCriterion()
+estimator = NNClassifier(model, criterion, [2]).setBatchSize(4).setMaxEpoch(10)
+data = sc.parallelize([
+    ((0.0, 1.0), [1.0]),
+    ((1.0, 0.0), [2.0]),
+    ((0.0, 1.0), [1.0]),
+    ((1.0, 0.0), [2.0])])
+
+schema = StructType([
+    StructField(&quot;features&quot;, ArrayType(DoubleType(), False), False),
+    StructField(&quot;label&quot;, ArrayType(DoubleType(), False), False)])
+df = sqlContext.createDataFrame(data, schema)
+dlModel = estimator.fit(df)
+dlModel.transform(df).show(False)
+</code></pre>
+
+<h2 id="nnclassifiermodel">NNClassifierModel</h2>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">val nnClassifierModel = NNClassifierModel(model, featureSize)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">nn_classifier_model = NNClassifierModel(model)
+</code></pre>
+
+<p>NNClassifierModel is a specialized <code>NNModel</code> for classification tasks.
+Both label and prediction column will have the datatype of Double.</p>
+<p><code>NNClassifierModel</code> can be created with various parameters for different scenarios.</p>
+<p><strong>1.</strong> <code>NNClassifierModel(model)</code></p>
+<p>Takes only model and use <code>SeqToTensor</code> as feature Preprocessing. <code>NNClassifierModel</code> will
+   extract the data from feature column (only Scalar, Array[_] or Vector data type are supported)
+   and convert each feature to 1-dimension Tensor. The tensors will be sent to model for inference.</p>
+<p><strong>2.</strong> <code>NNClassifierModel(model, featureSize: Array[Int])</code></p>
+<p>Takes model and featureSize(Array of Int). <code>NNClassifierModel</code> will extract the data from feature
+   column (only Scalar, Array[_] or Vector data type are supported) and convert each feature
+   to Tensor according to the specified Tensor size. User can also set featureSize as
+   Array[Array[Int]] for multi-inputs model.</p>
+<p><strong>3.</strong> <code>NNClassifierModel(model, featurePreprocessing: Preprocessing[F, Tensor[T]])</code></p>
+<p>Takes model and featurePreprocessing. <code>NNClassifierModel</code> will extract the data from feature
+   column and convert each feature to Tensor with the featurePreprocessing. This constructor provides
+   more flexibility in supporting extra data types.</p>
+<p>Meanwhile, for advanced use cases (e.g. model with multiple input tensor), <code>NNClassifierModel</code>
+supports: <code>setSamplePreprocessing(value: Preprocessing[Any, Sample[T]])</code>to directly compose
+Sample according to user-specified Preprocessing.</p>
+<hr />
+<h2 id="hyperparameter-setting">Hyperparameter setting</h2>
+<p>Prior to the commencement of the training process, you can modify the optimization algorithm, batch 
+size, the epoch number of your training, and learning rate to meet your goal or
+<code>NNEstimator</code>/<code>NNClassifier</code> will use the default value.</p>
+<p>Continue the codes above, NNEstimator and NNClassifier can be set in the same way.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">//for esitmator
+estimator.setBatchSize(4).setMaxEpoch(10).setLearningRate(0.01).setOptimMethod(new Adam())
+//for classifier
+classifier.setBatchSize(4).setMaxEpoch(10).setLearningRate(0.01).setOptimMethod(new Adam())
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python"># for esitmator
+estimator.setBatchSize(4).setMaxEpoch(10).setLearningRate(0.01).setOptimMethod(Adam())
+# for classifier
+classifier.setBatchSize(4).setMaxEpoch(10).setLearningRate(0.01).setOptimMethod(Adam())
+
+</code></pre>
+
+<h2 id="prepare-the-data-and-start-the-training-process">Prepare the data and start the training process</h2>
+<p>NNEstimator/NNCLassifer supports training with Spark's
+<a href="https://spark.apache.org/docs/latest/sql-programming-guide.html#datasets-and-dataframes">DataFrame/DataSet</a></p>
+<p>Suppose <code>df</code> is the training data, simple call <code>fit</code> method and let Analytics Zoo train the model
+for you.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">//get a NNClassifierModel
+val nnClassifierModel = classifier.fit(df)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python"># get a NNClassifierModel
+nnClassifierModel = classifier.fit(df)
+</code></pre>
+
+<p>User may also set validation DataFrame and validation frequency through <code>setValidation</code> method.
+Train summay and validation summary can also be configured to log the training process for
+visualization in Tensorboard. See <a href="../../../ProgrammingGuide/visualization/">Visualization</a> for the details.</p>
+<h2 id="make-prediction-on-chosen-data">Make prediction on chosen data</h2>
+<p>Since <code>NNModel</code>/<code>NNClassifierModel</code> inherits from Spark's <code>Transformer</code> abstract class, simply call 
+<code>transform</code> method on <code>NNModel</code>/<code>NNClassifierModel</code> to make prediction.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">nnModel.transform(df).show(false)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">nnModel.transform(df).show(false)
+</code></pre>
+
+<p>For the complete examples of NNFrames, please refer to:
+<a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/nnframes">Scala examples</a>
+<a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/nnframes">Python examples</a></p>
+<h2 id="nnimagereader">NNImageReader</h2>
+<p><code>NNImageReader</code> is the primary DataFrame-based image loading interface, defining API to read images
+into DataFrame.</p>
+<p>Scala:</p>
+<pre><code class="scala">    val imageDF = NNImageReader.readImages(imageDirectory, sc)
+</code></pre>
+
+<p>Python:</p>
+<pre><code class="python">    image_frame = NNImageReader.readImages(image_path, self.sc)
+</code></pre>
+
+<p>The output DataFrame contains a sinlge column named "image". The schema of "image" column can be
+accessed from <code>com.intel.analytics.zoo.pipeline.nnframes.DLImageSchema.byteSchema</code>.
+Each record in "image" column represents one image record, in the format of
+Row(origin, height, width, num of channels, mode, data), where origin contains the URI for the image file,
+and <code>data</code> holds the original file bytes for the image file. <code>mode</code> represents the OpenCV-compatible
+type: CV_8UC3, CV_8UC1 in most cases.</p>
+<pre><code class="scala">  val byteSchema = StructType(
+    StructField(&quot;origin&quot;, StringType, true) ::
+      StructField(&quot;height&quot;, IntegerType, false) ::
+      StructField(&quot;width&quot;, IntegerType, false) ::
+      StructField(&quot;nChannels&quot;, IntegerType, false) ::
+      // OpenCV-compatible type: CV_8UC3, CV_32FC3 in most cases
+      StructField(&quot;mode&quot;, IntegerType, false) ::
+      // Bytes in OpenCV-compatible order: row-wise BGR in most cases
+      StructField(&quot;data&quot;, BinaryType, false) :: Nil)
+</code></pre>
+
+<p>After loading the image, user can compose the preprocess steps with the <code>Preprocessing</code> defined
+in <code>com.intel.analytics.zoo.feature.image</code>.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

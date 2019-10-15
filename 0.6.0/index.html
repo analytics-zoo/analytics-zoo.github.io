@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="None">
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="./extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+      <script src="/js/elasticlunr.min.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '.';
+      var is_top_frame = (window === window.parent);
+        
+        var pageToc = [
+          {title: "Analytics Zoo", url: "#analytics-zoo", children: [
+              {title: "What is Analytics Zoo?", url: "#what-is-analytics-zoo" },
+              {title: "How to use Analytics Zoo?", url: "#how-to-use-analytics-zoo" },
+              {title: "Overview", url: "#overview" },
+              {title: "Distributed TensorFlow and Keras on Spark/BigDL", url: "#distributed-tensorflow-and-keras-on-sparkbigdl" },
+              {title: "High level abstractions and APIs", url: "#high-level-abstractions-and-apis" },
+              {title: "Built-in deep learning models", url: "#built-in-deep-learning-models" },
+              {title: "Reference use cases", url: "#reference-use-cases" },
+              {title: "Docker images and builders", url: "#docker-images-and-builders" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<nav class="navbar wm-page-top-frame">
+  <div class="container-fluid wm-top-container">
+    
+    <div class="wm-top-tool pull-right wm-vcenter">
+      <form class="dropdown wm-vcentered" id="wm-search-form" action="./search.html">
+        
+        <button id="wm-search-show" class="btn btn-sm btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>                                                                           
+
+        <div class="input-group input-group-sm wm-top-search">
+          <input type="text" name="q" class="form-control" id="mkdocs-search-query" placeholder="Search">
+          <span class="input-group-btn" role="search">
+            
+            <button class="btn btn-default dropdown-toggle collapse" data-toggle="dropdown" type="button"><span class="caret"></span></button>
+            <ul id="mkdocs-search-results" class="dropdown-menu dropdown-menu-right"></ul>
+            <button id="wm-search-go" class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </span>
+        </div>
+      </form>
+    </div>
+
+    
+    <div class="wm-top-tool wm-vcenter pull-right wm-small-left">
+      <button id="wm-toc-button" type="button" class="btn btn-sm btn-default wm-vcentered"><i class="fa fa-th-list" aria-hidden="true"></i></button>
+    </div>
+
+    
+    
+    
+
+    
+    <div>
+      <div class="wm-top-title">
+        <a href="" class="wm-top-brand wm-top-link wm-vcenter ">
+            <!--img class="wm-top-logo" src="/img/bigdl_logo.png"/-->
+	    <span tilte="name">Analytics-Zoo</span>
+        </a>
+      </div>
+      
+      <div class="wm-top-title">
+          <select id="versions" class="wm-top-link wm-top-more wm-top-version-select" onchange="javascript:switchVersion(this)">
+          </select>
+      </div>
+      
+    </div>
+  </div>
+</nav>
+
+  <div id="main-content" class="wm-page-top-frame">
+    
+<nav class="wm-toc-pane">
+  
+    <ul class="wm-toctree wm-toc-repo">
+      <li class="wm-toc-li wm-toc-lev1">
+      <a class="wm-article-link wm-toc-text wm-toc-repolink" href="https://github.com/intel-analytics/analytics-zoo">
+        <img class="wm-top-logo" src="/img/github.ico"/>
+        Fork on GitHub 
+      </a>
+      </li>
+    </ul>
+  <ul class="wm-toctree">
+        <li class="wm-toc-li wm-toc-lev1 "><a href="." class="wm-article-link wm-toc-text">Overview</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Releases</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="release-download/" class="wm-article-link wm-toc-text">Download</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="release-docs/" class="wm-article-link wm-toc-text">Documentation</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">User Guide</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Python</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="PythonUserGuide/install/" class="wm-article-link wm-toc-text">Install</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="PythonUserGuide/run/" class="wm-article-link wm-toc-text">Run</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="PythonUserGuide/examples/" class="wm-article-link wm-toc-text">Examples</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="PythonUserGuide/python-faq/" class="wm-article-link wm-toc-text">FAQ</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Scala</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ScalaUserGuide/install/" class="wm-article-link wm-toc-text">Install</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ScalaUserGuide/run/" class="wm-article-link wm-toc-text">Run</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ScalaUserGuide/examples/" class="wm-article-link wm-toc-text">Examples</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Developer Guide</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="DeveloperGuide/python/" class="wm-article-link wm-toc-text">For Python Developers</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Programming Guide</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Pipeline APIs</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/nnframes/" class="wm-article-link wm-toc-text">DataFrame and ML Pipeline</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/autograd/" class="wm-article-link wm-toc-text">Autograd</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/transferlearning/" class="wm-article-link wm-toc-text">Transfer Learning</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/inference/" class="wm-article-link wm-toc-text">Model Serving</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">TFPark API</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/tensorflow/" class="wm-article-link wm-toc-text">TFPark</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/text-models/" class="wm-article-link wm-toc-text">Text Models</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/bert-classifier/" class="wm-article-link wm-toc-text">BERT Classifier</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="ProgrammingGuide/pytorch/" class="wm-article-link wm-toc-text">PyTorch</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Ray</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/rayonspark/" class="wm-article-link wm-toc-text">RayOnSpark</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Feature Engineering</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/workingwithimages/" class="wm-article-link wm-toc-text">Working with Images</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/workingwithtexts/" class="wm-article-link wm-toc-text">Working with Texts</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Built-in Models</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/object-detection/" class="wm-article-link wm-toc-text">Object Detection API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/image-classification/" class="wm-article-link wm-toc-text">Image Classification API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/text-classification/" class="wm-article-link wm-toc-text">Text Classification API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/recommendation/" class="wm-article-link wm-toc-text">Recommendation API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/anomaly-detection/" class="wm-article-link wm-toc-text">Anomaly Detection API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/text-matching/" class="wm-article-link wm-toc-text">Text Matching API</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ProgrammingGuide/seq2seq/" class="wm-article-link wm-toc-text">Sequence to Sequence API</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="ProgrammingGuide/visualization/" class="wm-article-link wm-toc-text">Visualization</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="ProgrammingGuide/usercases-overview/" class="wm-article-link wm-toc-text">Reference Use Cases</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="ProgrammingGuide/run-on-dataproc/" class="wm-article-link wm-toc-text">Run on Google Cloud Dataproc</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">White Paper</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="wp-bigdl/" class="wm-article-link wm-toc-text">BigDL</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">API Guide</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Pipeline APIs</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/PipelineAPI/nnframes/" class="wm-article-link wm-toc-text">NNFrames</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/PipelineAPI/math/" class="wm-article-link wm-toc-text">Autograd-Math</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/PipelineAPI/variable/" class="wm-article-link wm-toc-text">Autograd-Variable</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/PipelineAPI/net/" class="wm-article-link wm-toc-text">Net</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/PipelineAPI/inference/" class="wm-article-link wm-toc-text">Inference</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/PipelineAPI/estimator/" class="wm-article-link wm-toc-text">Estimator</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">TFPark API</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/TFPark/model/" class="wm-article-link wm-toc-text">KerasModel</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/TFPark/estimator/" class="wm-article-link wm-toc-text">TFEstimator</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/TFPark/tf-optimizer/" class="wm-article-link wm-toc-text">TFOptimizer</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/TFPark/tf-pred/" class="wm-article-link wm-toc-text">TFPredictor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/TFPark/tf-dataset/" class="wm-article-link wm-toc-text">TFDataset</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/TFPark/text-models/" class="wm-article-link wm-toc-text">Text Models</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/TFPark/bert-classifier/" class="wm-article-link wm-toc-text">BERT Classifier</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Feature Engineering</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/FeatureEngineering/featureset/" class="wm-article-link wm-toc-text">FeatureSet</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/FeatureEngineering/relation/" class="wm-article-link wm-toc-text">Relation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/FeatureEngineering/image/" class="wm-article-link wm-toc-text">Image</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/FeatureEngineering/text/" class="wm-article-link wm-toc-text">Text</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Models</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/object-detection/" class="wm-article-link wm-toc-text">Object Detection</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/image-classification/" class="wm-article-link wm-toc-text">Image Classification</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/text-classification/" class="wm-article-link wm-toc-text">Text Classification</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/recommendation/" class="wm-article-link wm-toc-text">Recommendation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/anomaly-detection/" class="wm-article-link wm-toc-text">Anomaly Detection</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/text-matching/" class="wm-article-link wm-toc-text">Text Matching</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="APIGuide/Models/seq2seq/" class="wm-article-link wm-toc-text">Sequence to Sequence</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Keras-Style API Guide</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="KerasStyleAPIGuide/keras-api-python/" class="wm-article-link wm-toc-text">Python Guide</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="KerasStyleAPIGuide/keras-api-scala/" class="wm-article-link wm-toc-text">Scala Guide</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Layers</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/activation/" class="wm-article-link wm-toc-text">Activation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/initialization/" class="wm-article-link wm-toc-text">Initialization</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/core/" class="wm-article-link wm-toc-text">Core Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/convolutional/" class="wm-article-link wm-toc-text">Convolutional Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/pooling/" class="wm-article-link wm-toc-text">Pooling Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/recurrent/" class="wm-article-link wm-toc-text">Recurrent Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/normalization/" class="wm-article-link wm-toc-text">Normalization Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/embedding/" class="wm-article-link wm-toc-text">Embedding Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/dropout/" class="wm-article-link wm-toc-text">Dropout Layers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/advanced-activation/" class="wm-article-link wm-toc-text">Advanced Activations</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/wrappers/" class="wm-article-link wm-toc-text">Layer Wrappers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Layers/self-attention/" class="wm-article-link wm-toc-text">Self Attention Layers</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Optimization</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Optimization/training/" class="wm-article-link wm-toc-text">Train, evaluate or predict a model</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Optimization/optimizers/" class="wm-article-link wm-toc-text">Optimizers</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="KerasStyleAPIGuide/Optimization/objectives/" class="wm-article-link wm-toc-text">Objectives</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 "><a href="powered-by/" class="wm-article-link wm-toc-text">Powered by</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="presentations/" class="wm-article-link wm-toc-text">Presentations</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="known-issues/" class="wm-article-link wm-toc-text">FAQ and Known Issues</a>
+</li>
+  </ul>
+</nav>
+
+    <div class="wm-content-pane">
+      <iframe class="wm-article" name="article"></iframe>
+    </div>
+  </div>
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Overview</strong></h1>
+    <hr>
+    <h1 id="analytics-zoo"><font size="6">Analytics Zoo</font></h1>
+<p><em>A unified analytics + AI platform for <strong>distributed TensorFlow, Keras and BigDL on Apache Spark</strong></em></p>
+<hr />
+<h2 id="what-is-analytics-zoo">What is Analytics Zoo?</h2>
+<p><strong>Analytics Zoo</strong> provides a unified analytics + AI platform that seamlessly unites <em><strong>Spark, TensorFlow, Keras and BigDL</strong></em> programs into an integrated pipeline; the entire pipeline can then transparently scale out to a large Hadoop/Spark cluster for distributed training or inference. </p>
+<ul>
+<li><em>Data wrangling and analysis using PySpark</em></li>
+<li><em>Deep learning model development using TensorFlow or Keras</em></li>
+<li><em>Distributed training/inference on Spark and BigDL</em></li>
+<li><em>All within a single unified pipeline and in a user-transparent fashion!</em></li>
+</ul>
+<p>In addition, Analytics Zoo also provides a rich set of analytics and AI support for the end-to-end pipeline, including:</p>
+<ul>
+<li><em>Easy-to-use abstractions and APIs</em> (e.g., transfer learning support, autograd operations, Spark DataFrame and ML pipeline support, online model serving API, etc.) </li>
+<li><em>Common feature engineering operations</em> (for image, text, 3D image, etc.)</li>
+<li><em>Built-in deep learning models</em> (e.g., object detection, image classification, text classification, recommendation, anomaly detection, text matching, sequence to sequence etc.)</li>
+<li><em>Reference use cases</em> (e.g., anomaly detection, sentiment analysis, fraud detection, image similarity, etc.)</li>
+</ul>
+<h2 id="how-to-use-analytics-zoo">How to use Analytics Zoo?</h2>
+<ul>
+<li>
+<p>To get started, please refer to the <a href="https://analytics-zoo.github.io/master/#PythonUserGuide/install/">Python install guide</a> or <a href="https://analytics-zoo.github.io/master/#ScalaUserGuide/install/">Scala install guide</a>.</p>
+</li>
+<li>
+<p>For running distributed TensorFlow on Spark and BigDL, please refer to the quick start <a href="#distributed-tensorflow-and-keras-on-sparkbigdl">here</a> and the details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/tensorflow/">here</a>.</p>
+</li>
+<li>
+<p>For more information, You may refer to the <a href="https://analytics-zoo.github.io/master/">Analytics Zoo document website</a>.</p>
+</li>
+<li>
+<p>For additional questions and discussions, you can join the <a href="https://groups.google.com/forum/#!forum/bigdl-user-group">Google User Group</a> (or subscribe to the <a href="mailto:bigdl-user-group+subscribe@googlegroups.com">Mail List</a>).</p>
+</li>
+</ul>
+<hr />
+<h2 id="overview">Overview</h2>
+<ul>
+<li>
+<p><a href="#distributed-tensorflow-and-keras-on-sparkbigdl">Distributed TensorFlow and Keras on Spark/BigDL</a></p>
+<ul>
+<li>Data wrangling and analysis using PySpark</li>
+<li>Deep learning model development using TensorFlow or Keras</li>
+<li>Distributed training/inference on Spark and BigDL</li>
+<li>All within a single unified pipeline and in a user-transparent fashion!</li>
+</ul>
+</li>
+<li>
+<p><a href="#high-level-abstractions-and-apis">High level abstractions and APIs</a></p>
+<ul>
+<li><a href="#transfer-learning">Transfer learning</a>: customize pretrained model for <em>feature extraction or fine-tuning</em></li>
+<li><a href="#autograd"><code>autograd</code></a>: build custom layer/loss using <em>auto differentiation operations</em> </li>
+<li><a href="#nnframes"><code>nnframes</code></a>: native deep learning support in <em>Spark DataFrames and ML Pipelines</em></li>
+<li><a href="#model-serving">Model serving</a>: productionize <em>model serving and inference</em> using <a href="https://en.wikipedia.org/wiki/Plain_old_Java_object">POJO</a> APIs</li>
+</ul>
+</li>
+<li>
+<p><a href="#built-in-deep-learning-models">Built-in deep learning models</a></p>
+<ul>
+<li><a href="#object-detection-api">Object detection API</a>: high-level API and pretrained models (e.g., SSD and Faster-RCNN) for <em>object detection</em></li>
+<li><a href="#image-classification-api">Image classification API</a>: high-level API and pretrained models (e.g., VGG, Inception, ResNet, MobileNet, etc.) for <em>image classification</em></li>
+<li><a href="#text-classification-api">Text classification API</a>: high-level API and pre-defined models (using CNN, LSTM, etc.) for <em>text classification</em></li>
+<li><a href="#recommendation-api">Recommendation API</a>: high-level API and pre-defined models (e.g., Neural Collaborative Filtering, Wide and Deep Learning, etc.) for <em>recommendation</em></li>
+<li><a href="#anomaly-detection-api">Anomaly detection API</a>: high-level API and pre-defined models based on LSTM for <em>anomaly detection</em></li>
+<li><a href="#text-matching-api">Text matching API</a>: high-level API and pre-defined KNRM model for <em>text matching</em></li>
+<li><a href="#sequence-to-sequence-api">Sequence to sequence API</a>: high-level API and pre-defined models for <em>sequence to sequence</em></li>
+</ul>
+</li>
+<li>
+<p><a href="#reference-use-cases">Reference use cases</a>: a collection of end-to-end <em>reference use cases</em> (e.g., anomaly detection, sentiment analysis, fraud detection, image augmentation, object detection, variational autoencoder, etc.)</p>
+</li>
+<li>
+<p><a href="#docker-images-and-builders">Docker images and builders</a></p>
+<ul>
+<li><a href="#analytics-zoo-in-docker">Analytics-Zoo in Docker</a></li>
+<li><a href="#how-to-build-it">How to build it</a></li>
+<li><a href="#how-to-use-the-image">How to use the image</a></li>
+<li><a href="#notice">Notice</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="distributed-tensorflow-and-keras-on-sparkbigdl"><em>Distributed TensorFlow and Keras on Spark/BigDL</em></h2>
+<p>To make it easy to build and productionize the deep learning applications for Big Data, Analytics Zoo provides a unified analytics + AI platform that seamlessly unites Spark, TensorFlow, Keras and BigDL programs into an integrated pipeline (as illustrated below), which can then transparently run on a large-scale Hadoop/Spark clusters for distributed training and inference. (Please see more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/tensorflow/">here</a>).</p>
+<p>1.Data wrangling and analysis using PySpark</p>
+<pre><code class="python">   from zoo import init_nncontext
+   from zoo.pipeline.api.net import TFDataset
+
+   sc = init_nncontext()
+
+   #Each record in the train_rdd consists of a list of NumPy ndrrays
+   train_rdd = sc.parallelize(file_list)
+     .map(lambda x: read_image_and_label(x))
+     .map(lambda image_label: decode_to_ndarrays(image_label))
+
+   #TFDataset represents a distributed set of elements,
+   #in which each element contains one or more TensorFlow Tensor objects. 
+   dataset = TFDataset.from_rdd(train_rdd,
+                                names=[&quot;features&quot;, &quot;labels&quot;],
+                                shapes=[[28, 28, 1], [1]],
+                                types=[tf.float32, tf.int32],
+                                batch_size=BATCH_SIZE)
+</code></pre>
+
+<p>2.Deep learning model development using TensorFlow</p>
+<pre><code class="python">   import tensorflow as tf
+
+   slim = tf.contrib.slim
+
+   images, labels = dataset.tensors
+   labels = tf.squeeze(labels)
+   with slim.arg_scope(lenet.lenet_arg_scope()):
+        logits, end_points = lenet.lenet(images, num_classes=10, is_training=True)
+
+   loss = tf.reduce_mean(tf.losses.sparse_softmax_cross_entropy(logits=logits, labels=labels))
+</code></pre>
+
+<p>3.Distributed training on Spark and BigDL</p>
+<pre><code class="python">   from zoo.tfpark import TFOptimizer
+   from bigdl.optim.optimizer import MaxIteration, Adam, MaxEpoch, TrainSummary
+
+   optimizer = TFOptimizer.from_loss(loss, Adam(1e-3))
+   optimizer.set_train_summary(TrainSummary(&quot;/tmp/az_lenet&quot;, &quot;lenet&quot;))
+   optimizer.optimize(end_trigger=MaxEpoch(5))
+</code></pre>
+
+<p>4.Alternatively, using Keras APIs for model development and distributed training</p>
+<pre><code class="python">   from zoo.pipeline.api.keras.models import *
+   from zoo.pipeline.api.keras.layers import *
+
+   model = Sequential()
+   model.add(Reshape((1, 28, 28), input_shape=(28, 28, 1)))
+   model.add(Convolution2D(6, 5, 5, activation=&quot;tanh&quot;, name=&quot;conv1_5x5&quot;))
+   model.add(MaxPooling2D())
+   model.add(Convolution2D(12, 5, 5, activation=&quot;tanh&quot;, name=&quot;conv2_5x5&quot;))
+   model.add(MaxPooling2D())
+   model.add(Flatten())
+   model.add(Dense(100, activation=&quot;tanh&quot;, name=&quot;fc1&quot;))
+   model.add(Dense(class_num, activation=&quot;softmax&quot;, name=&quot;fc2&quot;))
+
+   model.compile(loss='sparse_categorical_crossentropy',
+                 optimizer='adam')
+   model.fit(train_rdd, batch_size=BATCH_SIZE, nb_epoch=5)
+</code></pre>
+
+<h2 id="high-level-abstractions-and-apis"><em>High level abstractions and APIs</em></h2>
+<p>Analytics Zoo provides a set of easy-to-use, high level abstractions and APIs that natively transfer learning, autograd and custom layer/loss, Spark DataFrames and ML Pipelines, online model serving, etc. etc.</p>
+<h3 id="transfer-learning"><em>Transfer learning</em></h3>
+<p>Using the high level transfer learning APIs, you can easily customize pretrained models for <em>feature extraction or fine-tuning</em>. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/transferlearning/">here</a>)</p>
+<p>1.Load an existing model (pretrained in Caffe)</p>
+<pre><code class="python">   from zoo.pipeline.api.net import *
+   full_model = Net.load_caffe(def_path, model_path)
+</code></pre>
+
+<p>2.Remove the last few layers</p>
+<pre><code class="python">   # create a new model by removing layers after pool5/drop_7x7_s1
+   model = full_model.new_graph([&quot;pool5/drop_7x7_s1&quot;])
+</code></pre>
+
+<p>3.Freeze the first few layers</p>
+<pre><code class="python">   # freeze layers from input to pool4/3x3_s2 inclusive
+   model.freeze_up_to([&quot;pool4/3x3_s2&quot;])
+</code></pre>
+
+<p>4.Add a few new layers</p>
+<pre><code class="python">   from zoo.pipeline.api.keras.layers import *
+   from zoo.pipeline.api.keras.models import *
+   inputs = Input(name=&quot;input&quot;, shape=(3, 224, 224))
+   inception = model.to_keras()(inputs)
+   flatten = Flatten()(inception)
+   logits = Dense(2)(flatten)
+   newModel = Model(inputs, logits)
+</code></pre>
+
+<h3 id="autograd"><em><code>autograd</code></em></h3>
+<p><code>autograd</code> provides automatic differentiation for math operations, so that you can easily build your own <em>custom loss and layer</em> (in both Python and Scala), as illustrated below. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/autograd/">here</a>)</p>
+<p>1.Define model using Keras-style API and <code>autograd</code> </p>
+<pre><code class="python">   import zoo.pipeline.api.autograd as A
+   from zoo.pipeline.api.keras.layers import *
+   from zoo.pipeline.api.keras.models import *
+
+   input = Input(shape=[2, 20])
+   features = TimeDistributed(layer=Dense(30))(input)
+   f1 = features.index_select(1, 0)
+   f2 = features.index_select(1, 1)
+   diff = A.abs(f1 - f2)
+   model = Model(input, diff)
+</code></pre>
+
+<p>2.Optionally define custom loss function using <code>autograd</code></p>
+<pre><code class="python">   def mean_absolute_error(y_true, y_pred):
+       return mean(abs(y_true - y_pred), axis=1)
+</code></pre>
+
+<p>3.Train model with <em>custom loss function</em></p>
+<pre><code class="python">   model.compile(optimizer=SGD(), loss=mean_absolute_error)
+   model.fit(x=..., y=...)
+</code></pre>
+
+<h3 id="nnframes"><em><code>nnframes</code></em></h3>
+<p><code>nnframes</code> provides <em>native deep learning support in Spark DataFrames and ML Pipelines</em>, so that you can easily build complex deep learning pipelines in just a few lines, as illustrated below. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/nnframes/">here</a>)</p>
+<p>1.Initialize <em>NNContext</em> and load images into <em>DataFrames</em> using <code>NNImageReader</code></p>
+<pre><code class="python">   from zoo.common.nncontext import *
+   from zoo.pipeline.nnframes import *
+   from zoo.feature.image import *
+   sc = init_nncontext()
+   imageDF = NNImageReader.readImages(image_path, sc)
+</code></pre>
+
+<p>2.Process loaded data using <em>DataFrames transformations</em></p>
+<pre><code class="python">   getName = udf(lambda row: ...)
+   getLabel = udf(lambda name: ...)
+   df = imageDF.withColumn(&quot;name&quot;, getName(col(&quot;image&quot;))).withColumn(&quot;label&quot;, getLabel(col('name')))
+</code></pre>
+
+<p>3.Processing image using built-in <em>feature engineering operations</em></p>
+<pre><code>   transformer = RowToImageFeature() -&gt; ImageResize(64, 64) -&gt; ImageChannelNormalize(123.0, 117.0, 104.0) \
+                 -&gt; ImageMatToTensor() -&gt; ImageFeatureToTensor())
+</code></pre>
+
+<p>4.Define model using <em>Keras-style APIs</em></p>
+<pre><code class="python">   from zoo.pipeline.api.keras.layers import *
+   from zoo.pipeline.api.keras.models import *
+   model = Sequential().add(Convolution2D(32, 3, 3, activation='relu', input_shape=(1, 28, 28))) \
+                   .add(MaxPooling2D(pool_size=(2, 2))).add(Flatten()).add(Dense(10, activation='softmax')))
+</code></pre>
+
+<p>5.Train model using <em>Spark ML Pipelines</em></p>
+<pre><code class="python">   classifier = NNClassifier(model, CrossEntropyCriterion(),transformer).setLearningRate(0.003) \
+                   .setBatchSize(40).setMaxEpoch(1).setFeaturesCol(&quot;image&quot;).setCachingSample(False)
+   nnModel = classifier.fit(df)
+</code></pre>
+
+<h3 id="model-serving"><em>Model Serving</em></h3>
+<p>Using the <a href="https://en.wikipedia.org/wiki/Plain_old_Java_object">POJO</a> model serving API, you can productionize model serving and inference in any Java based frameworks (e.g., <a href="https://spring.io">Spring Framework</a>, Apache <a href="http://storm.apache.org">Storm</a>, <a href="http://kafka.apache.org">Kafka</a> or <a href="http://flink.apache.org">Flink</a>, etc.), as illustrated below:</p>
+<pre><code class="python">import com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel;
+import com.intel.analytics.zoo.pipeline.inference.JTensor;
+
+public class TextClassificationModel extends AbstractInferenceModel {
+    public TextClassificationModel() {
+        super();
+    }
+}
+
+TextClassificationModel model = new TextClassificationModel();
+model.load(modelPath, weightPath);
+
+List&lt;JTensor&gt; inputs = preprocess(...);
+List&lt;List&lt;JTensor&gt;&gt; result = model.predict(inputs);
+...
+</code></pre>
+
+<h2 id="built-in-deep-learning-models"><em>Built-in deep learning models</em></h2>
+<p>Analytics Zoo provides several built-in deep learning models that you can use for a variety of problem types, such as <em>object detection</em>, <em>image classification</em>, <em>text classification</em>, <em>recommendation</em>, <em>anomaly detection</em>, <em>text matching</em>, <em>sequence to sequence</em>,  etc.</p>
+<h3 id="object-detection-api"><em>Object detection API</em></h3>
+<p>Using <em>Analytics Zoo Object Detection API</em> (including a set of pretrained detection models such as SSD and Faster-RCNN), you can easily build your object detection applications (e.g., localizing and identifying multiple objects in images and videos), as illustrated below. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/object-detection/">here</a>)</p>
+<p>1.Download object detection models in Analytics Zoo</p>
+<p>You can download a collection of detection models (pretrained on the PSCAL VOC dataset and COCO dataset) from <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/object-detection/#download-link">detection model zoo</a>.</p>
+<p>2.Use <em>Object Detection API</em> for off-the-shell inference</p>
+<pre><code class="python">   from zoo.models.image.objectdetection import *
+   model = ObjectDetector.load_model(model_path)
+   image_set = ImageSet.read(img_path, sc)
+   output = model.predict_image_set(image_set)
+</code></pre>
+
+<h3 id="image-classification-api"><em>Image classification API</em></h3>
+<p>Using <em>Analytics Zoo Image Classification API</em> (including a set of pretrained detection models such as VGG, Inception, ResNet, MobileNet,  etc.), you can easily build your image classification applications, as illustrated below. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/image-classification/">here</a>)</p>
+<p>1.Download image classification models in Analytics Zoo</p>
+<p>You can download a collection of image classification models (pretrained on the ImageNet dataset) from <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/image-classification/#download-link">image classification model zoo</a>.</p>
+<p>2.Use <em>Image classification API</em> for off-the-shell inference</p>
+<pre><code class="python">   from zoo.models.image.imageclassification import *
+   model = ImageClassifier.load_model(model_path)
+   image_set = ImageSet.read(img_path, sc)
+   output = model.predict_image_set(image_set)
+</code></pre>
+
+<h3 id="text-classification-api"><em>Text classification API</em></h3>
+<p><em>Analytics Zoo Text Classification API</em> provides a set of pre-defined models (using CNN, LSTM, etc.) for text classifications. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/text-classification/">here</a>)</p>
+<h3 id="recommendation-api"><em>Recommendation API</em></h3>
+<p><em>Analytics Zoo Recommendation API</em> provides a set of pre-defined models (such as Neural Collaborative Filtering, Wide and Deep Learning, etc.) for recommendations. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/recommendation/">here</a>)</p>
+<h3 id="anomaly-detection-api"><em>Anomaly detection API</em></h3>
+<p><em>Analytics Zoo Anomaly Detection API</em> provides a set of pre-defined models based on LSTM to detect anomalies for time series data. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/anomaly-detection/">here</a>)</p>
+<h3 id="text-matching-api"><em>Text matching API</em></h3>
+<p><em>Analytics Zoo Text Matching API</em> provides pre-defined KNRM model for ranking or classification. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/text-matching/">here</a>)</p>
+<h3 id="sequence-to-sequence-api"><em>Sequence to sequence API</em></h3>
+<p><em>Analytics Zoo Sequence to Sequence API</em> provides a set of pre-defined models based on Recurrent neural network for sequence to sequence problems. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/seq2seq/">here</a>)</p>
+<h2 id="reference-use-cases"><em>Reference use cases</em></h2>
+<p>Analytics Zoo provides a collection of end-to-end reference use cases, including <em>time series anomaly detection</em>, <em>sentiment analysis</em>, <em>fraud detection</em>, <em>image similarity</em>, etc. (See more details <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/usercases-overview/">here</a>)</p>
+<h2 id="docker-images-and-builders"><em>Docker images and builders</em></h2>
+<h3 id="analytics-zoo-in-docker"><em>Analytics-Zoo in Docker</em></h3>
+<p><strong>By default, the Analytics-Zoo image has installed below packages:</strong>
+- git
+- maven
+- Oracle jdk 1.8.0_152 (in /opt/jdk1.8.0_152)
+- python 2.7.6
+- pip
+- numpy
+- scipy
+- pandas
+- scikit-learn
+- matplotlib
+- seaborn
+- jupyter
+- wordcloud
+- moviepy
+- requests
+- tensorflow_
+- spark-${SPARK_VERSION} (in /opt/work/spark-${SPARK_VERSION})
+- Analytics-Zoo distribution (in /opt/work/analytics-zoo-${ANALYTICS_ZOO_VERSION})
+- Analytics-Zoo source code (in /opt/work/analytics-zoo)</p>
+<p><strong>The work dir for Analytics-Zoo is /opt/work.</strong>
+- download-analytics-zoo.sh is used for downloading Analytics-Zoo distributions.
+- start-notebook.sh is used for starting the jupyter notebook. You can specify the environment settings and spark settings to start a specified jupyter notebook.
+- analytics-Zoo-${ANALYTICS_ZOO_VERSION} is the Analytics-Zoo home of Analytics-Zoo distribution.
+- analytics-zoo-SPARK_x.x-x.x.x-dist.zip is the zip file of Analytics-Zoo distribution.
+- spark-${SPARK_VERSION} is the Spark home.
+- analytics-zoo is cloned from https://github.com/intel-analytics/analytics-zoo, contains apps, examples using analytics-zoo.</p>
+<h3 id="how-to-build-it"><em>How to build it</em></h3>
+<p><strong>By default, you can build a Analytics-Zoo:default image with latest nightly-build Analytics-Zoo distributions:</strong></p>
+<pre><code class="bash">sudo docker build --rm -t intelanalytics/analytics-zoo:default .
+</code></pre>
+
+<p><strong>If you need http and https proxy to build the image:</strong></p>
+<pre><code class="bash">sudo docker build \
+    --build-arg http_proxy=http://your-proxy-host:your-proxy-port \
+    --build-arg https_proxy=https://your-proxy-host:your-proxy-port \
+    --rm -t intelanalytics/analytics-zoo:default .
+</code></pre>
+
+<p><strong>You can also specify the ANALYTICS_ZOO_VERSION and SPARK_VERSION to build a specific Analytics-Zoo image:</strong></p>
+<pre><code class="bash">sudo docker build \
+    --build-arg http_proxy=http://your-proxy-host:your-proxy-port \
+    --build-arg https_proxy=https://your-proxy-host:your-proxy-port \
+    --build-arg ANALYTICS_ZOO_VERSION=0.3.0 \
+    --build-arg BIGDL_VERSION=0.6.0 \
+    --build-arg SPARK_VERSION=2.3.1 \
+    --rm -t intelanalytics/analytics-zoo:0.3.0-bigdl_0.6.0-spark_2.3.1 .
+</code></pre>
+
+<h3 id="how-to-use-the-image"><em>How to use the image</em></h3>
+<p><strong>To start a notebook directly with a specified port(e.g. 12345). You can view the notebook on http://[host-ip]:12345</strong></p>
+<pre><code class="bash">sudo docker run -it --rm -p 12345:12345 \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    intelanalytics/analytics-zoo:default
+
+sudo docker run -it --rm --net=host \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    intelanalytics/analytics-zoo:default
+
+sudo docker run -it --rm -p 12345:12345 \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    intelanalytics/analytics-zoo:0.3.0-bigdl_0.6.0-spark_2.3.1
+
+sudo docker run -it --rm --net=host \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    intelanalytics/analytics-zoo:0.3.0-bigdl_0.6.0-spark_2.3.1
+</code></pre>
+
+<p><strong>If you need http and https proxy in your environment:</strong></p>
+<pre><code class="bash">sudo docker run -it --rm -p 12345:12345 \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    -e http_proxy=http://your-proxy-host:your-proxy-port \
+    -e https_proxy=https://your-proxy-host:your-proxy-port \
+    intelanalytics/analytics-zoo:default
+
+sudo docker run -it --rm --net=host \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    -e http_proxy=http://your-proxy-host:your-proxy-port \
+    -e https_proxy=https://your-proxy-host:your-proxy-port \
+    intelanalytics/analytics-zoo:default
+
+sudo docker run -it --rm -p 12345:12345 \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    -e http_proxy=http://your-proxy-host:your-proxy-port \
+    -e https_proxy=https://your-proxy-host:your-proxy-port \
+    intelanalytics/analytics-zoo:0.3.0-bigdl_0.6.0-spark_2.3.1
+
+sudo docker run -it --rm --net=host \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    -e http_proxy=http://your-proxy-host:your-proxy-port \
+    -e https_proxy=https://your-proxy-host:your-proxy-port \
+    intelanalytics/analytics-zoo:0.3.0-bigdl_0.6.0-spark_2.3.1
+</code></pre>
+
+<p><strong>You can also start the container first</strong></p>
+<pre><code class="bash">sudo docker run -it --rm --net=host \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    intelanalytics/analytics-zoo:default bash
+</code></pre>
+
+<p><strong>In the container, after setting proxy and ports, you can start the Notebook by:</strong></p>
+<pre><code class="bash">/opt/work/start-notebook.sh
+</code></pre>
+
+<h3 id="notice"><em>Notice</em></h3>
+<p><strong>If you need nightly build version of Analytics-Zoo, please pull the image form Dockerhub with:</strong></p>
+<pre><code class="bash">sudo docker pull intelanalytics/analytics-zoo:latest
+</code></pre>
+
+<p><strong>Please follow the readme in each app folder to test the jupyter notebooks !!!</strong></p>
+<p><strong>With 0.3+ version of Anaytics-Zoo Docker image, you can specify the runtime conf of spark</strong></p>
+<pre><code class="bash">sudo docker run -itd --net=host \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;1234qwer&quot; \
+    -e http_proxy=http://your-proxy-host:your-proxy-port  \
+    -e https_proxy=https://your-proxy-host:your-proxy-port  \
+    -e RUNTIME_DRIVER_CORES=4 \
+    -e RUNTIME_DRIVER_MEMORY=20g \
+    -e RUNTIME_EXECUTOR_CORES=4 \
+    -e RUNTIME_EXECUTOR_MEMORY=20g \
+    -e RUNTIME_TOTAL_EXECUTOR_CORES=4 \
+    intelanalytics/analytics-zoo:latest
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
+<!--
+MkDocs version : 0.16.3
+Build Date UTC : 2019-10-15 07:18:18
+-->
