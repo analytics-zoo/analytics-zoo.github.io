@@ -97,23 +97,25 @@ sc = init_nncontext()
 <li>We've tested this package with pip 9.0.1. <code>pip install --upgrade pip</code> if necessary.</li>
 <li>Pip install supports <strong>Mac</strong> and <strong>Linux</strong> platforms.</li>
 <li>You need to install Java <strong>&gt;= JDK8</strong> before running Analytics Zoo, which is required by <code>pyspark</code>.</li>
-<li><code>pyspark==2.4.3</code>, <code>bigdl==0.9.0</code> and their dependencies will automatically be installed if they haven't been detected in the current Python environment.</li>
+<li><code>pyspark==2.4.3</code>, <code>bigdl==0.9.1</code>, <code>conda-pack==0.3.1</code> and their dependencies will automatically be installed if they haven't been detected in the current Python environment.</li>
 </ol>
 <hr />
 <h2 id="install-from-pip-for-yarn-cluster"><strong>Install from pip for yarn cluster</strong></h2>
 <p>You only need to following these steps on your driver node and we only support yarn-client mode for now.</p>
-<p>1) Install <a href="https://docs.conda.io/projects/conda/en/latest/commands/install.html">Conda</a> and create a conda-env (i.e in the name of "zoo").</p>
-<p>2) Install Analytics-Zoo into the created conda-env.</p>
-<pre><code>source activate zoo
-pip install analytics-zoo
+<p>1) Install <a href="https://docs.conda.io/projects/conda/en/latest/commands/install.html">Conda</a> in your environment.</p>
+<p>2) Create a new conda environment (with name "zoo" for example):</p>
+<pre><code>conda create -n zoo python=3.6
+source activate zoo
 </code></pre>
 
-<p>3) Download JDK8 and set the environment variable: JAVA_HOME (recommended).</p>
-<ul>
-<li>You can also install JDK via conda without setting the JAVA_HOME manually:
-   <code>conda install -c anaconda openjdk=8.0.152</code></li>
-</ul>
-<p>4) Start python and then execute the following code to create a SparkContext on Yarn for verification.</p>
+<p>3) Install Analytics-Zoo into the created conda-env.</p>
+<pre><code>pip install analytics-zoo
+</code></pre>
+
+<p>4) Download JDK8 and set the environment variable: JAVA_HOME (recommended).</p>
+<p>You can also install JDK via conda without setting the JAVA_HOME manually:</p>
+<p><code>conda install -c anaconda openjdk=8.0.152</code></p>
+<p>5) Start <code>python</code> and then execute the following code to create a SparkContext on Yarn for verification:</p>
 <pre><code class="python">from zoo import init_spark_on_yarn
 
 sc = init_spark_on_yarn(

@@ -33,9 +33,9 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Run Ray on Spark", url: "#run-ray-on-spark", children: [
+          {title: "Introduction", url: "#introduction", children: [
           ]},
-          {title: "Here are the steps to run RayOnSpark:", url: "#here-are-the-steps-to-run-rayonspark", children: [
+          {title: "Steps to run RayOnSpark", url: "#steps-to-run-rayonspark", children: [
           ]},
         ];
 
@@ -63,40 +63,42 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>RayOnSpark</strong></h1>
     <hr>
-    <h2 id="run-ray-on-spark">Run Ray on Spark</h2>
-<p>AnalyticsZoo has already provided a mechanism to deploy Python dependencies and Ray services automatically
-across yarn cluster,meaning python user would be able to run <code>Analytics-Zoo</code> or <code>Ray</code>
-in a pythonic way on yarn without <code>spark-submit</code> or installing Analytics-Zoo or Ray across all cluster nodes.</p>
-<h2 id="here-are-the-steps-to-run-rayonspark">Here are the steps to run RayOnSpark:</h2>
-<p>1) You should install <a href="https://docs.conda.io/projects/conda/en/latest/commands/install.html">Conda</a> and create a conda-env named "ray36"</p>
-<p>2) Install some essential dependencies in the conda env.</p>
+    <h3 id="introduction"><strong>Introduction</strong></h3>
+<p><a href="https://github.com/ray-project/ray">Ray</a> is a distributed framework for emerging AI applications open-sourced by <a href="https://rise.cs.berkeley.edu">UC Berkeley RISELab</a>. 
+It implements a unified interface, distributed scheduler, and distributed and fault-tolerant store to address the new and demanding systems requirements for advanced AI technologies. </p>
+<p>Ray allows users to easily and efficiently to run many emerging AI applications, such as deep reinforcement learning using RLlib, scalable hyperparameter search using Ray Tune, automatic program synthesis using AutoPandas, etc.</p>
+<p>Analytics Zoo provides a mechanism to deploy Python dependencies and Ray services automatically
+across yarn cluster, meaning python users would be able to run <code>analytics-zoo</code> or <code>ray</code>
+in a pythonic way on yarn without <code>spark-submit</code> or installing analytics-zoo or ray across all cluster nodes.</p>
+<hr />
+<h3 id="steps-to-run-rayonspark"><strong>Steps to run RayOnSpark</strong></h3>
+<p>1) Install <a href="https://docs.conda.io/projects/conda/en/latest/commands/install.html">Conda</a> in your environment.</p>
+<p>2) Create a new conda environment (with name "py36" for example):</p>
+<pre><code>conda create -n py36 python=3.6
+source activate py36
+</code></pre>
+
+<p>3) Install essential dependencies in the created conda environment:</p>
 <pre><code>pip install analytics-zoo
-pip install pyspark==2.4.0 # 2.4.3 is OK as well.
 pip install ray==0.6.6
-pip install conda-pack
 pip install psutil
 pip install aiohttp
 pip install setproctitle
 </code></pre>
 
-<p>3) Download JDK8 and set the environment variable: JAVA_HOME (recommended).
-   - You can also install JDK via conda without setting the JAVA_HOME manually:
-   <code>conda install -c anaconda openjdk=8.0.152</code></p>
-<p>4) Start python and then execute the following example</p>
+<p>4) Download JDK8 and set the environment variable: JAVA_HOME (recommended).</p>
+<p>You can also install JDK via conda without setting the JAVA_HOME manually:</p>
+<p><code>conda install -c anaconda openjdk=8.0.152</code></p>
+<p>5) Start <code>python</code> and then execute the following example.</p>
 <ul>
-<li>Create a SparkContext on Yarn</li>
+<li>Create a SparkContext on yarn:</li>
 </ul>
-<pre><code class="python">import ray
-
-from zoo import init_spark_on_yarn
-from zoo.ray.util.raycontext import RayContext
-
-slave_num = 2
+<pre><code class="python">from zoo import init_spark_on_yarn
 
 sc = init_spark_on_yarn(
-    hadoop_conf=&quot;/opt/work/almaren-yarn-config/&quot;,
-    conda_name=&quot;ray36&quot;,
-    num_executor=slave_num,
+    hadoop_conf=&quot;path to the yarn configuration folder&quot;,
+    conda_name=&quot;py36&quot;, # The name of the created conda-env
+    num_executor=2,
     executor_cores=4,
     executor_memory=&quot;8g&quot;,
     driver_memory=&quot;2g&quot;,
@@ -105,39 +107,34 @@ sc = init_spark_on_yarn(
 </code></pre>
 
 <ul>
-<li>[Optional] If you don't have a yarn cluster, this can also be test locally by creating <code>SparkContext</code>
-with <code>init_spark_on_local</code></li>
+<li>[Optional] If you don't have a yarn cluster, this can also be tested locally by creating <code>SparkContext</code>
+with <code>init_spark_on_local</code>:</li>
 </ul>
-<pre><code class="Python">from zoo import init_spark_on_local
-sc = init_spark_on_local(cores=4)
+<pre><code class="python">from zoo import init_spark_on_local
 
+sc = init_spark_on_local(cores=4)
 </code></pre>
 
 <ul>
 <li>
-<p>Once the SparkContext created, we can write more logic here either training Analytics-Zoo model
-or launching ray on spark.</p>
+<p>Once the SparkContext is created, we can write more logic here such as training an Analytics Zoo model
+or launching ray on Spark.</p>
 </li>
 <li>
-<p>The following code would launch a ray cluster on top of the SparkContext configuration and also verify with a simple Ray example.</p>
+<p>Run the following simple example to launch a ray cluster on top of the SparkContext configurations and verify if RayOnSpark can work smoothly.</p>
 </li>
 </ul>
-<pre><code class="python">
-ray_ctx = RayContext(sc=sc,
-                       object_store_memory=&quot;5g&quot;)
-ray_ctx.init()
+<pre><code class="python">import ray
+from zoo.ray.util.raycontext import RayContext
 
+ray_ctx = RayContext(sc=sc, object_store_memory=&quot;5g&quot;)
+ray_ctx.init()
 
 @ray.remote
 class TestRay():
     def hostname(self):
         import socket
         return socket.gethostname()
-
-    def check_cv2(self):
-        # conda install -c conda-forge opencv==3.4.2
-        import cv2
-        return cv2.__version__
 
     def ip(self):
         import ray.services as rservices
@@ -148,11 +145,10 @@ actors = [TestRay.remote() for i in range(0, slave_num)]
 print([ray.get(actor.hostname.remote()) for actor in actors])
 print([ray.get(actor.ip.remote()) for actor in actors])
 ray_ctx.stop()
-
 </code></pre>
 
 <ul>
-<li>NOTE: This was test on Ray 0.6.6. Ideally, we can upgrade to the latest version once the following issue is addressed.(https://github.com/ray-project/ray/issues/5223)</li>
+<li><strong>NOTE:</strong> This has been tested on Ray 0.6.6. Ideally, we can upgrade to the latest version once <a href="https://github.com/ray-project/ray/issues/5223">this issue</a> is addressed.</li>
 </ul>
 
   <br>
