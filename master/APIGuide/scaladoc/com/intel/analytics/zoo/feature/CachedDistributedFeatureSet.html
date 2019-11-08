@@ -89,7 +89,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.intel.analytics.zoo.feature.CachedDistributedFeatureSet#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(buffer:org.apache.spark.rdd.RDD[com.intel.analytics.zoo.feature.common.ArrayLike[T]])(implicitevidence$5:scala.reflect.ClassTag[T]):com.intel.analytics.zoo.feature.CachedDistributedFeatureSet[T]"></a>
+      <a id="&lt;init&gt;(buffer:org.apache.spark.rdd.RDD[com.intel.analytics.zoo.feature.common.ArrayLike[T]],sequentialOrder:Boolean,shouldShuffle:Boolean)(implicitevidence$5:scala.reflect.ClassTag[T]):com.intel.analytics.zoo.feature.CachedDistributedFeatureSet[T]"></a>
       <a id="&lt;init&gt;:CachedDistributedFeatureSet[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -97,10 +97,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">CachedDistributedFeatureSet</span><span class="params">(<span name="buffer">buffer: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.ArrayLike">ArrayLike</span>[<span class="extype" name="com.intel.analytics.zoo.feature.CachedDistributedFeatureSet.T">T</span>]]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.feature.CachedDistributedFeatureSet.T">T</span>]</span>)</span>
+        <span class="name">CachedDistributedFeatureSet</span><span class="params">(<span name="buffer">buffer: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.zoo.feature.common.ArrayLike">ArrayLike</span>[<span class="extype" name="com.intel.analytics.zoo.feature.CachedDistributedFeatureSet.T">T</span>]]</span>, <span name="sequentialOrder">sequentialOrder: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>, <span name="shouldShuffle">shouldShuffle: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.feature.CachedDistributedFeatureSet.T">T</span>]</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.CachedDistributedFeatureSet@&lt;init&gt;(buffer:org.apache.spark.rdd.RDD[com.intel.analytics.zoo.feature.common.ArrayLike[T]])(implicitevidence$5:scala.reflect.ClassTag[T]):com.intel.analytics.zoo.feature.CachedDistributedFeatureSet[T]" title="Permalink" target="_top">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.CachedDistributedFeatureSet@&lt;init&gt;(buffer:org.apache.spark.rdd.RDD[com.intel.analytics.zoo.feature.common.ArrayLike[T]],sequentialOrder:Boolean,shouldShuffle:Boolean)(implicitevidence$5:scala.reflect.ClassTag[T]):com.intel.analytics.zoo.feature.CachedDistributedFeatureSet[T]" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -370,18 +370,18 @@
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.CachedDistributedFeatureSet#indexes" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="indexes:org.apache.spark.rdd.RDD[Array[Int]]"></a>
-      <a id="indexes:RDD[Array[Int]]"></a>
+      <a id="indexes:org.apache.spark.rdd.RDD[(Array[Int],java.util.concurrent.atomic.AtomicInteger)]"></a>
+      <a id="indexes:RDD[(Array[Int],AtomicInteger)]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">var</span>
       </span>
       <span class="symbol">
-        <span class="name">indexes</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]]</span>
+        <span class="name">indexes</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[(<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>], <span class="extype" name="java.util.concurrent.atomic.AtomicInteger">AtomicInteger</span>)]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.CachedDistributedFeatureSet@indexes:org.apache.spark.rdd.RDD[Array[Int]]" title="Permalink" target="_top">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.CachedDistributedFeatureSet@indexes:org.apache.spark.rdd.RDD[(Array[Int],java.util.concurrent.atomic.AtomicInteger)]" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -489,6 +489,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="DistributedFeatureSet.html" class="extype" name="com.intel.analytics.zoo.feature.DistributedFeatureSet">DistributedFeatureSet</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.CachedDistributedFeatureSet#offsets" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="offsets:org.apache.spark.rdd.RDD[java.util.concurrent.atomic.AtomicInteger]"></a>
+      <a id="offsets:RDD[AtomicInteger]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">offsets</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="java.util.concurrent.atomic.AtomicInteger">AtomicInteger</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.CachedDistributedFeatureSet@offsets:org.apache.spark.rdd.RDD[java.util.concurrent.atomic.AtomicInteger]" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
     </li><li name="com.intel.analytics.zoo.feature.DistributedFeatureSet#originFeatureSet" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="originFeatureSet:com.intel.analytics.zoo.feature.DistributedFeatureSet[Any]"></a>
       <a id="originFeatureSet:DistributedFeatureSet[Any]"></a>
