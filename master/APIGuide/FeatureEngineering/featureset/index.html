@@ -61,8 +61,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <hr>
     <p>A FeatureSet can be used to represent an input pipeline as a collection of elements which is used in the model optimization process. You can use FeatureSet to switch the memory type between <code>DRAM</code>, <code>DISK_AND_DRAM(numSlice)</code> 
 and <code>PMEM</code> in consideration of the hardware optimization.
-* <code>DRAM</code> is the default mode which would cached the training data in main memory.
-* <code>DISK_AND_DRAM(numSlice)</code> mode will cache training data in disk, and only hold 1/numSlice of data in main memory. After going through the 1/numSlice, we will release the current cache, and load another 1/numSlice into memory.
+<em> <code>DRAM</code> is the default mode which would cached the training data in main memory.
+</em> <code>DISK_AND_DRAM(numSlice)</code> mode will cache training data in disk, and only hold 1/numSlice of data in main memory. After going through the 1/numSlice, we will release the current cache, and load another 1/numSlice into memory.
 * <code>PMEM</code> mode would try to cache the training data in persistent memory rather than main memory. You should install the Intel Optane DC Persistent Memory hardware to AD mode before switching to this option. </p>
 <p>Scala example:</p>
 <p>In scala, user can create a DRAM or DISK_AND_DRAM FeatureSet from any RDD. 
