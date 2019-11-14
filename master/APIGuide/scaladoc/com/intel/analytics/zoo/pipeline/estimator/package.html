@@ -85,6 +85,23 @@
       <p class="shortcomment cmt">Abstract interface for Estimator.</p><div class="fullcomment"><div class="comment cmt"><p>Abstract interface for Estimator.
 Estimator is a class to train and evaluate BigDL models.
 </p></div></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.estimator.EstimateSupportive" visbl="pub" data-isabs="true" fullComment="no" group="Ungrouped">
+      <a id="EstimateSupportiveextendsInferenceSupportive"></a>
+      <a id="EstimateSupportive:EstimateSupportive"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <a href="EstimateSupportive.html"><span class="name">EstimateSupportive</span></a><span class="result"> extends <a href="../inference/InferenceSupportive.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceSupportive">InferenceSupportive</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.estimator.package@EstimateSupportiveextendsInferenceSupportive" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">EstimateSupportive trait to provide some AOP methods as utils</p>
     </li><li name="com.intel.analytics.zoo.pipeline.estimator.Estimator" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="Estimator[T]extendsAbstractEstimator[T]"></a>
       <a id="Estimator[T]:Estimator[T]"></a>
@@ -104,6 +121,24 @@ Estimator is a class to train and evaluate BigDL models.
       <p class="shortcomment cmt">Estimator class for training and evaluation BigDL models.</p><div class="fullcomment"><div class="comment cmt"><p>Estimator class for training and evaluation BigDL models.</p><p>Estimator wraps a model, and provide an uniform training, evaluation or prediction operation
 on both local host and distributed spark environment.
 </p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>tensor numeric type</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.estimator.LocalEstimator" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="LocalEstimatorextendsEstimateSupportivewithProductwithSerializable"></a>
+      <a id="LocalEstimator:LocalEstimator"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">case class</span>
+      </span>
+      <span class="symbol">
+        <a href="LocalEstimator.html"><span class="name">LocalEstimator</span></a><span class="params">(<span name="model">model: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="scala.Float">Float</span>]</span>, <span name="criterion">criterion: <a href="../../../bigdl/package.html#Criterion[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractCriterion[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Criterion">Criterion</a>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="optmizeMethod">optmizeMethod: <span class="extype" name="com.intel.analytics.bigdl.optim.OptimMethod">OptimMethod</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="validations">validations: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="scala.Float">Float</span>]]</span>, <span name="threadNum">threadNum: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result"> extends <a href="EstimateSupportive.html" class="extype" name="com.intel.analytics.zoo.pipeline.estimator.EstimateSupportive">EstimateSupportive</a> with <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.estimator.package@LocalEstimatorextendsEstimateSupportivewithProductwithSerializable" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">This is a pojo style local Estimator, will fit, train, evaluate on pojo data set.</p><div class="fullcomment"><div class="comment cmt"><p>This is a pojo style local Estimator, will fit, train, evaluate on pojo data set.
+</p></div><dl class="paramcmts block"><dt class="param">model</dt><dd class="cmt"><p>the model defined as AbstractModule</p></dd><dt class="param">criterion</dt><dd class="cmt"><p>the criterion for loss</p></dd><dt class="param">optmizeMethod</dt><dd class="cmt"><p>the optimize method</p></dd><dt class="param">validations</dt><dd class="cmt"><p>the validation metrics</p></dd><dt class="param">threadNum</dt><dd class="cmt"><p>the number of threads</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -111,7 +146,24 @@ on both local host and distributed spark environment.
 
         <div id="values" class="values members">
               <h3>Value Members</h3>
-              <ol><li name="com.intel.analytics.zoo.pipeline.estimator.Estimator" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="com.intel.analytics.zoo.pipeline.estimator.EstimateSupportive" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="EstimateSupportive"></a>
+      <a id="EstimateSupportive:EstimateSupportive"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">object</span>
+      </span>
+      <span class="symbol">
+        <a href="EstimateSupportive$.html"><span class="name">EstimateSupportive</span></a>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.estimator.package@EstimateSupportive" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.estimator.Estimator" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="Estimator"></a>
       <a id="Estimator:Estimator"></a>
       <h4 class="signature">

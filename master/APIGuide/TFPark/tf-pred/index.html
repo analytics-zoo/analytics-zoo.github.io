@@ -62,10 +62,14 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <p>TFPredictor takes a list of TensorFlow tensors as the model outputs and feed all the elements in
  TFDatasets to produce those outputs and returns a Spark RDD with each of its elements representing the
  model prediction for the corresponding input elements.</p>
-<p><strong>Note</strong>: This feature currently requires <strong>tensorflow 1.10</strong> and OS is one of the following 64-bit systems.
- <strong>Ubuntu 16.04 or later</strong>, <strong>macOS 10.12.6 or later</strong> and <strong>Windows 7 or later</strong>.</p>
-<p>To run on other system may require you to manually compile the TensorFlow source code. Instructions can
- be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</p>
+<p><strong>Remarks</strong>:</p>
+<ul>
+<li>You need to install <strong>tensorflow==1.10</strong> on your driver node.</li>
+<li>Your operating system (OS) is required to be one of the following 64-bit systems:
+<strong>Ubuntu 16.04 or later</strong> and <strong>macOS 10.12.6 or later</strong>.</li>
+<li>To run on other systems, you need to manually compile the TensorFlow source code. Instructions can
+  be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</li>
+</ul>
 <p><strong>Python</strong></p>
 <pre><code class="python">logist = ...
 predictor = TFPredictor.from_outputs(sess, [logits])

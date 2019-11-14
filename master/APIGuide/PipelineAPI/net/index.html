@@ -189,10 +189,14 @@ model = Net.load_tensorflow(model_def, inputs, outputs, byte_order = &quot;littl
 <p>TFNet cannot be trained, so it can only be used for inference or as a feature extractor for fine tuning a model.
 When used as feature extractor, there should not be any trainable layers before TFNet, as all the gradient
 from TFNet is set to zero.</p>
-<p><strong>Note</strong>: This feature currently supports <strong>tensorflow 1.10</strong> and requires the OS to be one of the following 64-bit systems.
-<strong>Ubuntu 16.04 or later</strong>, <strong>macOS 10.12.6 or later</strong> and <strong>Windows 7 or later</strong>.</p>
-<p>To run on other system may require you to manually compile the TensorFlow source code. Instructions can
-be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</p>
+<p><strong>Remarks</strong>:</p>
+<ul>
+<li>You need to install <strong>tensorflow==1.10</strong> on your driver node.</li>
+<li>Your operating system (OS) is required to be one of the following 64-bit systems:
+<strong>Ubuntu 16.04 or later</strong> and <strong>macOS 10.12.6 or later</strong>.</li>
+<li>To run on other systems, you need to manually compile the TensorFlow source code. Instructions can
+  be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</li>
+</ul>
 <h3 id="export-tensorflow-model-to-frozen-inference-graph">Export TensorFlow model to frozen inference graph</h3>
 <p>Analytics-zoo provides a useful utility function, <code>export_tf</code>, to export a TensorFlow model
 to frozen inference graph.</p>

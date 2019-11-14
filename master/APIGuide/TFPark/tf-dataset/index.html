@@ -67,10 +67,14 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 TFDatasets can be created using a RDD and each of its records is a list of numpy.ndarray representing
 the tensors to be feed into TensorFlow graph on each iteration. TFDatasets must be used with the
 TFOptimizer or TFPredictor.</p>
-<p><strong>Note</strong>: This feature currently requires <strong>tensorflow 1.10</strong> and OS is one of the following 64-bit systems.
-<strong>Ubuntu 16.04 or later</strong>, <strong>macOS 10.12.6 or later</strong> and <strong>Windows 7 or later</strong>.</p>
-<p>To run on other system may require you to manually compile the TensorFlow source code. Instructions can
-be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</p>
+<p><strong>Remarks</strong>:</p>
+<ul>
+<li>You need to install <strong>tensorflow==1.10</strong> on your driver node.</li>
+<li>Your operating system (OS) is required to be one of the following 64-bit systems:
+<strong>Ubuntu 16.04 or later</strong> and <strong>macOS 10.12.6 or later</strong>.</li>
+<li>To run on other systems, you need to manually compile the TensorFlow source code. Instructions can
+  be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</li>
+</ul>
 <h3 id="methods">Methods</h3>
 <h4 id="from_rdd">from_rdd</h4>
 <p>Create a TFDataset from a rdd.</p>
