@@ -91,7 +91,7 @@ pip install setproctitle
 <p><code>conda install -c anaconda openjdk=8.0.152</code></p>
 <p>5) Start <code>python</code> and then execute the following example.</p>
 <ul>
-<li>Create a SparkContext on yarn:</li>
+<li>Create a SparkContext on yarn, only <strong>yarn-client mode</strong> is supported for now:</li>
 </ul>
 <pre><code class="python">from zoo import init_spark_on_yarn
 
@@ -107,7 +107,7 @@ sc = init_spark_on_yarn(
 </code></pre>
 
 <ul>
-<li>[Optional] If you don't have a yarn cluster, this can also be tested locally by creating <code>SparkContext</code>
+<li>[Optional] If you don't have a yarn cluster, this can also be tested locally by creating a SparkContext
 with <code>init_spark_on_local</code>:</li>
 </ul>
 <pre><code class="python">from zoo import init_spark_on_local
