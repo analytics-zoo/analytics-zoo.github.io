@@ -39,6 +39,8 @@
           ]},
           {title: "Examples", url: "#examples", children: [
           ]},
+          {title: "Training Best Practise", url: "#training-best-practise", children: [
+          ]},
         ];
 
     </script>
@@ -212,6 +214,9 @@ if __name__ == '__main__':
 </code></pre>
 
 <p>More Pytorch examples (ResNet, Lenet etc.) are available <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/pytorch">here</a>.</p>
+<h1 id="training-best-practise">Training Best Practise</h1>
+<p>As pytorch's <code>backward()</code> is serialized per device, see <a href="https://github.com/pytorch/pytorch/issues/18333">pytorch issue #18333</a> and <a href="https://github.com/pytorch/pytorch/issues/17566">pytorch issue #17566</a> for details, the performance of default distributed training mode(multi models on each executor) will be very bad. In order to reach the best performance, TorchNet's training should only create one model in each executor, and use multi OMP threads to speedup the single model's training.</p>
+<p>We recommend you use <a href="../../APIGuide/PipelineAPI/estimator/">Estimator</a>, <a href="../../APIGuide/PipelineAPI/nnframes/#nnestimator">NNEstimator</a> or <a href="../../APIGuide/PipelineAPI/nnframes/#nnclassifier">NNClassifier</a> for pytorch model training, and export environment <code>export ZOO_NUM_MKLTHREADS=all</code>, when Estimator, NNEstimator and NNClassifier detect TorchNet model, they will optimize training using single model multi OMP threads automatically. Here is a <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/examples/pytorch/train/resnet_finetune/">ResNet50 finetune example</a>.</p>
 
   <br>
 </div>
