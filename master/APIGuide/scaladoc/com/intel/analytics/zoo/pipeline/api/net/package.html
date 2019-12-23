@@ -263,23 +263,6 @@ calculate the layer's output.</p><p>This subgraph should not contain any tensorf
 must be numeric types</p><p>When used with other layers for training, there should be no trainable layer
 before this one, as the gradInput of this layer is always zero.
 </p></div></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.api.net.TFOptimizer" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="TFOptimizerextendsAnyRef"></a>
-      <a id="TFOptimizer:TFOptimizer"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">class</span>
-      </span>
-      <span class="symbol">
-        <a href="TFOptimizer.html"><span class="name">TFOptimizer</span></a><span class="result"> extends <a href="../../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.package@TFOptimizerextendsAnyRef" title="Permalink" target="_top">
-        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="com.intel.analytics.zoo.pipeline.api.net.TFResourceManager" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="TFResourceManagerextendsSerializable"></a>
       <a id="TFResourceManager:TFResourceManager"></a>
@@ -357,27 +340,10 @@ before this one, as the gradInput of this layer is always zero.
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a href="TrainMeta.html"><span class="name">TrainMeta</span></a><span class="params">(<span name="inputNames">inputNames: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="outputNames">outputNames: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="variables">variables: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="gradVariables">gradVariables: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="defaultTensorValues">defaultTensorValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <a href="TrainMeta.html"><span class="name">TrainMeta</span></a><span class="params">(<span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="inputTypes">inputTypes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="metricTensors">metricTensors: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="batchSizeTensor">batchSizeTensor: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="lossTensor">lossTensor: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="variables">variables: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="variableTypes">variableTypes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="variableAssignPlaceholders">variableAssignPlaceholders: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="assignVariableOp">assignVariableOp: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="extraVariables">extraVariables: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="extraVariableTypes">extraVariableTypes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="extraVariableAssignPlaceholders">extraVariableAssignPlaceholders: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="assignExtraVariableOp">assignExtraVariableOp: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="gradVariables">gradVariables: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="restoreOp">restoreOp: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="restorePathPlaceholder">restorePathPlaceholder: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="saveOp">saveOp: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="savePathPlaceholder">savePathPlaceholder: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="updateOp">updateOp: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="defaultTensorValue">defaultTensorValue: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.package@TrainMetaextendsProductwithSerializable" title="Permalink" target="_top">
-        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.pipeline.api.net.TrainMeta2" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="TrainMeta2extendsProductwithSerializable"></a>
-      <a id="TrainMeta2:TrainMeta2"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">case class</span>
-      </span>
-      <span class="symbol">
-        <a href="TrainMeta2.html"><span class="name">TrainMeta2</span></a><span class="params">(<span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="inputTypes">inputTypes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="variables">variables: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="variableTypes">variableTypes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="variableAssignPlaceholders">variableAssignPlaceholders: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="assignVariableOp">assignVariableOp: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="extraVariables">extraVariables: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="extraVariableTypes">extraVariableTypes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="extraVariableAssignPlaceholders">extraVariableAssignPlaceholders: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="assignExtraVariableOp">assignExtraVariableOp: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="gradVariables">gradVariables: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="restoreOp">restoreOp: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="restorePathPlaceholder">restorePathPlaceholder: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="saveOp">saveOp: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="savePathPlaceholder">savePathPlaceholder: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="updateOp">updateOp: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="defaultTensorValue">defaultTensorValue: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.package@TrainMeta2extendsProductwithSerializable" title="Permalink" target="_top">
         <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -504,23 +470,6 @@ before this one, as the gradInput of this layer is always zero.
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.package@TFTrainingHelper" title="Permalink" target="_top">
-        <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.pipeline.api.net.TFTrainingHelper2" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="TFTrainingHelper2"></a>
-      <a id="TFTrainingHelper2:TFTrainingHelper2"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">object</span>
-      </span>
-      <span class="symbol">
-        <a href="TFTrainingHelper2$.html"><span class="name">TFTrainingHelper2</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.net.package@TFTrainingHelper2" title="Permalink" target="_top">
         <img src="../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
