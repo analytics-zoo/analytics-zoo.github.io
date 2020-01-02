@@ -62,7 +62,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>TFDataset</strong></h1>
     <hr>
-    <h2 id="tfdataset">TFDataset</h2>
+    <h1 id="tfdataset">TFDataset</h1>
 <p>TFDatset represents a distributed collection of elements to be feed into TensorFlow graph.
 TFDatasets can be created using a RDD and each of its records is a list of numpy.ndarray representing
 the tensors to be feed into TensorFlow graph on each iteration. TFDatasets must be used with the
@@ -75,8 +75,8 @@ TFOptimizer or TFPredictor.</p>
 <li>To run on other systems, you need to manually compile the TensorFlow source code. Instructions can
   be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</li>
 </ul>
-<h3 id="methods">Methods</h3>
-<h4 id="from_rdd"><strong>from_rdd</strong></h4>
+<h2 id="methods">Methods</h2>
+<h3 id="from_rdd"><strong>from_rdd</strong></h3>
 <p>Create a TFDataset from a rdd.</p>
 <p>For training and evaluation, both <code>features</code> and <code>labels</code> arguments should be specified.
 The element of the rdd should be a tuple of two, (features, labels), each has the
@@ -129,7 +129,7 @@ each element of the rdd should be a list of numpy.ndarray.</p>
         it is None.</li>
 <li><strong>val_rdd</strong>: validation data with the same structure of rdd</li>
 </ul>
-<h4 id="from_ndarrays"><strong>from_ndarrays</strong></h4>
+<h3 id="from_ndarrays"><strong>from_ndarrays</strong></h3>
 <p>Create a TFDataset from a nested structure of numpy ndarrays. Each element
 in the resulting TFDataset has the same structure of the argument tensors and
 is created by indexing on the first dimension of each ndarray in the tensors
@@ -151,7 +151,7 @@ argument.</p>
         it is None.</li>
 <li><strong>val_tensors</strong>: the numpy ndarrays used for validation during training</li>
 </ul>
-<h4 id="from_image_set"><strong>from_image_set</strong></h4>
+<h3 id="from_image_set"><strong>from_image_set</strong></h3>
 <p>Create a TFDataset from a ImagetSet. Each ImageFeature in the ImageSet should
 already has the "sample" field, i.e. the result of ImageSetToSample transformer</p>
 <p><strong>Python</strong></p>
@@ -174,7 +174,7 @@ already has the "sample" field, i.e. the result of ImageSetToSample transformer<
         it is None.</li>
 <li><strong>validation_image_set</strong>: the ImageSet used for validation during training</li>
 </ul>
-<h4 id="from_text_set"><strong>from_text_set</strong></h4>
+<h3 id="from_text_set"><strong>from_text_set</strong></h3>
 <p>Create a TFDataset from a TextSet. The TextSet must be transformed to Sample, i.e.
 the result of TextFeatureToSample transformer.</p>
 <p><strong>Python</strong></p>
@@ -199,7 +199,7 @@ the result of TextFeatureToSample transformer.</p>
         it is None.</li>
 <li><strong>validation_image_set</strong>: The TextSet used for validation during training</li>
 </ul>
-<h4 id="from_feature_set"><strong>from_feature_set</strong></h4>
+<h3 id="from_feature_set"><strong>from_feature_set</strong></h3>
 <p>Create a TFDataset from a FeatureSet. Currently, the element in this Feature set must be a
 ImageFeature that has a sample field, i.e. the result of ImageSetToSample transformer</p>
 <p><strong>Python</strong></p>
@@ -224,7 +224,7 @@ ImageFeature that has a sample field, i.e. the result of ImageSetToSample transf
         it is None.</li>
 <li><strong>validation_dataset</strong>: The FeatureSet used for validation during training</li>
 </ul>
-<h4 id="from_string_rdd"><strong>from_string_rdd</strong></h4>
+<h3 id="from_string_rdd"><strong>from_string_rdd</strong></h3>
 <p>Create a TFDataset from a RDD of strings. Each element is the RDD should be a single string.
 The returning TFDataset's feature_tensors has only one Tensor. the type of the Tensor
 is tf.string, and the shape is (None,). The returning don't have label_tensors. If the
@@ -245,7 +245,7 @@ dataset is used for training, the label should be encoded in the string.</p>
         it is None.</li>
 <li><strong>validation_string_rdd</strong>: the RDD of strings to be used in validation</li>
 </ul>
-<h4 id="from_bytes_rdd"><strong>from_bytes_rdd</strong></h4>
+<h3 id="from_bytes_rdd"><strong>from_bytes_rdd</strong></h3>
 <p>Create a TFDataset from a RDD of bytes. Each element is the RDD should be a bytes object.
 The returning TFDataset's feature_tensors has only one Tensor. the type of the Tensor
 is tf.string, and the shape is (None,). The returning don't have label_tensors. If the

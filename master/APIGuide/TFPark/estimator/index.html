@@ -33,11 +33,8 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Methods", url: "#methods", children: [
-              {title: "__init__", url: "#9595init9595" },
-              {title: "train", url: "#train" },
-              {title: "evaluate", url: "#evaluate" },
-              {title: "predict", url: "#predict" },
+          {title: "TFEstimator", url: "#tfestimator", children: [
+              {title: "Methods", url: "#methods" },
           ]},
         ];
 
@@ -65,7 +62,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>TFEstimator</strong></h1>
     <hr>
-    <p>TFEstimator wraps a model defined by <code>model_fn</code>. The <code>model_fn</code> is almost identical to TensorFlow's <code>model_fn</code>
+    <h1 id="tfestimator">TFEstimator</h1>
+<p>TFEstimator wraps a model defined by <code>model_fn</code>. The <code>model_fn</code> is almost identical to TensorFlow's <code>model_fn</code>
 except users are required to return a <code>TFEstimator</code> object. Users do not need to construct backward graph
 (calling <code>optimizer.minimize(...)</code>) but set a <code>loss</code> tensor in <code>TFEstimator</code>.</p>
 <p><strong>Remarks</strong>:</p>

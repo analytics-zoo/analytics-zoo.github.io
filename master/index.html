@@ -519,9 +519,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
    #TFDataset represents a distributed set of elements,
    #in which each element contains one or more TensorFlow Tensor objects. 
    dataset = TFDataset.from_rdd(train_rdd,
-                                names=[&quot;features&quot;, &quot;labels&quot;],
-                                shapes=[[28, 28, 1], [1]],
-                                types=[tf.float32, tf.int32],
+                                features=(tf.float32, [28, 28, 1]),
+                                labels=(tf.int32, [1]),
                                 batch_size=BATCH_SIZE)
 </code></pre>
 
@@ -855,5 +854,5 @@ sudo docker run -it --rm --net=host \
 </html>
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2019-12-23 17:42:48
+Build Date UTC : 2020-01-02 08:25:35
 -->
