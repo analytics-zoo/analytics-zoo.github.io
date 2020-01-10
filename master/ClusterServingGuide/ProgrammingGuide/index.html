@@ -35,6 +35,7 @@
         var pageToc = [
           {title: "Programming Guide", url: "#programming-guide", children: [
               {title: "Quick Start", url: "#quick-start" },
+              {title: "Workflow Overview", url: "#workflow-overview" },
               {title: "Deploy your Own Cluster Serving", url: "#deploy-your-own-cluster-serving" },
               {title: "Optional Operations", url: "#optional-operations" },
           ]},
@@ -66,41 +67,52 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <hr>
     <h1 id="programming-guide">Programming Guide</h1>
 <p>Analytics Zoo Cluster Serving is a lightweight distributed, real-time serving solution that supports a wide range of deep learning models (such as TensorFlow, PyTorch, Caffe, BigDL and OpenVINO models). It provides a simple pub/sub API, so that the users can easily send their inference requests to the input queue (using a simple Python API); Cluster Serving will then automatically manage the scale-out and real-time model inference across a large cluster (using distributed streaming frameworks such as Apache Spark Streaming, Apache Flink, etc.) </p>
-<p>(Note currently only image classification models are supported).</p>
+<p>The overall architecture of Analytics Zoo Cluster Serving solution is illustrated as below: </p>
+<p><img alt="overview" src="../cluster_serving_overview.jpg" /></p>
+<p>Note: currently only <strong>image classification</strong> models are supported.</p>
 <p>This page contains the guide for you to run Analytics Zoo Cluster Serving, including following:</p>
 <ul>
 <li>
-<p><a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#quick-start">Quick Start</a></p>
+<p><a href="#Quick-Start">Quick Start</a></p>
 </li>
 <li>
-<p><a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#deploy-your-own-cluster-serving">Deploy Your Own Cluster Serving</a></p>
+<p><a href="#Workflow-Overview">Workflow Overview</a> </p>
 </li>
 <li>
-<p><a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#1-installation">Installation</a></p>
+<p><a href="#Deploy-Your-Own-Cluster-Serving">Deploy Your Own Cluster Serving</a></p>
 </li>
 <li>
-<p><a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#2-configuration">Configuration</a> </p>
+<p><a href="#1-Installation">Installation</a></p>
 </li>
 <li>
-<p><a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#3-launching-service">Launching Service</a></p>
+<p><a href="#2-Configuration">Configuration</a> </p>
 </li>
 <li>
-<p><a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#4-model-inference">Model inference</a></p>
+<p><a href="#3-Launching-Service">Launching Service</a></p>
 </li>
 <li>
-<p><a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#optional-operations">Optional Operations</a></p>
+<p><a href="#4-Model-inference">Model inference</a></p>
+</li>
+<li>
+<p><a href="#Optional-Operations">Optional Operations</a></p>
 <ul>
 <li>
-<p><a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#update-model-or-change-config">Update Model or Config</a></p>
+<p><a href="#Update-Model-or-Configurations">Update Model or Configurations</a></p>
 </li>
 <li>
-<p><a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#logs-and-visualization">Logs and Visualization</a></p>
+<p><a href="#Logs-and-Visualization">Logs and Visualization</a></p>
 </li>
 </ul>
 </li>
 </ul>
 <h2 id="quick-start">Quick Start</h2>
-<p>This section provides a quick start example for you to run Analytics Zoo Cluster Serving. To simplify the examples, we use docker to run Cluster Serving in these examples. If you do not have docker installed, <a href="https://docs.docker.com/install/">install docker</a> first.</p>
+<p>This section provides a quick start example for you to run Analytics Zoo Cluster Serving. To simplify the example, we use docker to run Cluster Serving. If you do not have docker installed, <a href="https://docs.docker.com/install/">install docker</a> first. The quick start example contains all the necessary components so the first time users can get it up and running within minutes:</p>
+<ul>
+<li>A docker image for Analytics Zoo Cluster Serving (with all dependencies installed)</li>
+<li>A sample configuration file</li>
+<li>A sample trained TensorFlow model, and sample data for inference</li>
+<li>A sample Python client program</li>
+</ul>
 <p>Use one command to run Cluster Serving container.</p>
 <pre><code>docker run -itd --name cluster-serving --net=host analytics-zoo/cluster-serving:0.7.0-spark_2.4.3
 </code></pre>
@@ -113,7 +125,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
                  -- graph_meta.json
 </code></pre>
 
-<p>Start Cluster Serving using <code>cluster-serving-start</code>. Then, run python program <code>python quick_start.py</code> to push data into queue and get inference result. </p>
+<p>Start Cluster Serving using <code>cluster-serving-start</code>. </p>
+<p>Run python program <code>python quick_start.py</code> to push data into queue and get inference result. </p>
 <p>Then you can see the inference output in console. </p>
 <pre><code>image: fish1.jpeg, classification-result: class: 1's prob: 0.9974158
 image: cat1.jpeg, classification-result: class: 287's prob: 0.52377725
@@ -121,8 +134,23 @@ image: dog1.jpeg, classification-result: class: 207's prob: 0.9226527
 </code></pre>
 
 <p>Wow! You made it!</p>
-<p>Note that the Cluster Serving quick start example will run on your local node only. Check the <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#deploy-your-own-cluster-serving">Deploy Your Own Cluster Serving</a> section for how to configure and run Cluster Serving in a distributed fashion.</p>
-<p>For more details, you could also see the log and performance by go to <code>localhost:6006</code> in your browser and refer to <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#logs-and-visualization">Log and Visualization</a>, or view the source code of <code>quick_start.py</code> <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/serving/quick_start.py">here</a>, or refer to <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/APIGuide.md">API Guide</a>.</p>
+<p>Note that the Cluster Serving quick start example will run on your local node only. Check the <a href="#Deploy-Your-Own-Cluster-Serving">Deploy Your Own Cluster Serving</a> section for how to configure and run Cluster Serving in a distributed fashion.</p>
+<p>For more details, you could also see the log and performance by go to <code>localhost:6006</code> in your browser and refer to <a href="#Logs-and-Visualization">Logs and Visualization</a>, or view the source code of <code>quick_start.py</code> <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/serving/quick_start.py">here</a>, or refer to <a href="../APIGuide/">API Guide</a>.</p>
+<h2 id="workflow-overview">Workflow Overview</h2>
+<p>The figure below illustrates the simple 3-step "Prepare-Launch-Inference" workflow for Cluster Serving.</p>
+<p><img alt="steps" src="../cluster_serving_steps.jpg" /></p>
+<h4 id="1-install-and-prepare-cluster-serving-environment-on-a-local-node">1. Install and prepare Cluster Serving environment on a local node:</h4>
+<ul>
+<li>Copy a previously trained model to the local node; currently TensorFlow, PyTorch, Caffe, BigDL and OpenVINO models are supported.</li>
+<li>Install Analytics Zoo on the local node (e.g., using a single pip install command)</li>
+<li>Configure Cluster Server on the local node, including the file path to the trained model and the address of the cluster (such as Apache Hadoop YARN cluster, Spark Cluster, K8s cluster, etc.).
+Please note that you only need to deploy the Cluster Serving solution on a single local node, and NO modifications are needed for the (YARN or K8s) cluster. </li>
+</ul>
+<h4 id="2-launch-the-cluster-serving-service">2. Launch the Cluster Serving service</h4>
+<p>You can launch the Cluster Serving service by running the startup script on the local node. Under the hood, Cluster Serving will automatically deploy the trained model and serve the model inference requests across the cluster in a distributed fashion. You may monitor its runtime status (such as inference throughput) using TensorBoard. </p>
+<h4 id="3-distributed-real-time-streaming-inference">3. Distributed, real-time (streaming) inference</h4>
+<p>Cluster Serving provides a simple pub/sub API to the users, so that you can easily send the inference requests to an input queue (currently Redis Streams is used) using a simple Python API.</p>
+<p>Cluster Serving will then read the requests from the Redis stream, run the distributed real-time inference across the cluster (using Spark Streaming or Flink), and return the results back through Redis. As a result, you may get the inference results again using a simple Python API.</p>
 <h2 id="deploy-your-own-cluster-serving">Deploy your Own Cluster Serving</h2>
 <h3 id="1-installation">1. Installation</h3>
 <p>It is recommended to install Cluster Serving by pulling the pre-built Docker image to your local node, which have packaged all the required dependencies. Alternatively, you may also manually install Cluster Serving (through either pip or direct downloading) as well as Redis and TensorBoard (for visualizing the serving status) on the local node.</p>
@@ -134,17 +162,22 @@ image: dog1.jpeg, classification-result: class: 207's prob: 0.9226527
 <pre><code>docker run zoo-cluster-serving
 </code></pre>
 
-<p>Go inside the container and finish following operations.</p>
+<p>Go inside the container and continue to <a href="#2-Configuration">Configuration</a>.</p>
 <h4 id="manual-installation">Manual installation</h4>
-<p>For Not Docker user, first, install <a href="https://redis.io/download">Redis</a> and <a href="https://pypi.org/project/tensorboard/">TensorBoard</a> (for visualizing the serving status) and add <code>$REDIS_HOME</code> variable to your environment if you want Cluster Serving to help you start and stop it.</p>
-<p>Install Analytics Zoo by download release or pip.</p>
+<p>Non-Docker users need to install <a href="https://redis.io/topics/quickstart">Redis</a> and <a href="https://www.tensorflow.org/tensorboard/get_started">TensorBoard</a>.</p>
+<p>Please follow the installation instructions on Redis website. Make sure the environment variable <code>$REDIS_HOME</code> is set to the path where you install Redis, so that Cluster Serving can start or shutdown it. </p>
+<p>Cluster Sering use TensorBoard to visualize the serving status. Use <code>pip install tensorboard</code> to install TensorBoard.</p>
+<p>Install Analytics Zoo by Download Release or Pip.</p>
 <h5 id="download-release">Download Release</h5>
-<p>Download Analytics Zoo from <a href="https://analytics-zoo.github.io/master/#release-download/">release page</a> on the local node, go to <code>analytics-zoo/scripts/cluster-serving</code>, run <code>cluster-serving-init</code>.</p>
+<p>Download Analytics Zoo from <a href="https://analytics-zoo.github.io/master/#release-download/">release page</a> on the local node. </p>
+<p>Unzip the file and go into directory <code>analytics-zoo</code>, run <code>export ANALYTICS_ZOO_HOME=$(pwd)</code> to set <code>$ANALYTICS_ZOO_HOME</code> variable.</p>
+<p>Run <code>source analytics-zoo/bin/analytics-zoo-env.sh</code> to set environment.</p>
+<p>Go to <code>analytics-zoo/scripts/cluster-serving</code>, run <code>cluster-serving-init</code>.</p>
 <h5 id="pip">Pip</h5>
 <p><code>pip install analytics-zoo</code>. And go to any directory, run <code>cluster-serving-init</code>.</p>
 <h3 id="2-configuration">2. Configuration</h3>
-<h4 id="21-how-to-config">2.1 How to Config</h4>
-<p>After <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#1-installation">installation</a>, you will see a config file <code>config.yaml</code> your current working directory. Your Cluster Serving configuration can all be set by modifying it. See an example of <code>config.yaml</code> below</p>
+<h4 id="how-to-config">How to Config</h4>
+<p>After <a href="#1-Installation">Installation</a>, you will see a config file <code>config.yaml</code> in your current working directory. This file contains all the configurations that you can customize for your Cluster Serving. See an example of <code>config.yaml</code> below.</p>
 <pre><code>## Analytics Zoo Cluster Serving Config Example
 
 model:
@@ -175,8 +208,8 @@ spark:
   total_executor_cores:
 </code></pre>
 
-<h4 id="22-preparing-model">2.2 Preparing Model</h4>
-<p>Currently Analytics Zoo Cluster Serving supports Tensorflow, Caffe, Pytorch, BigDL, OpenVINO models. (Note currently only image classification models are supported).</p>
+<h4 id="preparing-model">Preparing Model</h4>
+<p>Currently Analytics Zoo Cluster Serving supports TensorFlow, Caffe, PyTorch, BigDL, OpenVINO models. Note that currently only <strong>image classification</strong> models are supported.</p>
 <p>You need to put your model file into a directory and the directory could have layout like following according to model type, note that only one model is allowed in your directory.</p>
 <p><strong>Tensorflow</strong></p>
 <pre><code>|-- model
@@ -207,15 +240,15 @@ spark:
 </code></pre>
 
 <p>Put the model in any of your local directory, and set <code>model:/path/to/dir</code>.</p>
-<h4 id="23-other-configuration">2.3 Other Configuration</h4>
+<h4 id="other-configuration">Other Configuration</h4>
 <p>The field <code>input</code> contains your input data configuration.</p>
 <ul>
-<li>src: the queue you subscribe for your input data, e.g. a default config of Redis on local machine is <code>localhost:6379</code>, note that please use the host address in your network instead of localhost or 127.0.0.1 when you run serving in cluster, make sure other nodes in cluster could also recognize this address.</li>
-<li>image_shape: the shape of your input data, e.g. a default config for pretrained imagenet is <code>3,224,224</code>, you should use the same shape of data which trained your model, in Tensorflow the format is usually HWC and in other models the format is usually CHW.</li>
+<li>src: the queue you subscribe for your input data, e.g. a default config of Redis on local machine is <code>localhost:6379</code>. Note that please use the host address in your network instead of localhost or 127.0.0.1 when you run serving in cluster, and make sure other nodes in cluster could also recognize this address.</li>
+<li>image_shape: the shape of your input data, e.g. a default config for pretrained imagenet is <code>3,224,224</code>. You should use the same shape of data which trained your model. In TensorFlow the format is usually HWC and in other models the format is usually CHW.</li>
 </ul>
 <p>The field <code>params</code> contains your inference parameter configuration.</p>
 <ul>
-<li>batch_size: the batch size you use for model inference, we recommend this value to be not small than 4 and not larger than 512. In general, using larger batch size means higher throughput, but also increase the latency between batches accordingly.</li>
+<li>batch_size: the batch size you use for model inference. We recommend this value to be not smaller than 4 and not larger than 512. In general, using larger batch size means higher throughput, but also increase the latency between batches accordingly.</li>
 <li>top_n: the top N classes in the prediction result. <strong>note:</strong> if the top-N number is larger than model output size of the the final layer, it would just return all the outputs.</li>
 </ul>
 <p>The field <code>spark</code> contains your spark configuration.</p>
@@ -235,9 +268,9 @@ spark:
 <pre><code>cluster-serving-start
 </code></pre>
 
-<p>This command will start Redis and Tensorboard if they are not running. Note that you need to provide <code>REDIS_HOME</code> environment variable as mentioned in <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#1-installation">Installation</a>, if you need this feature.</p>
+<p>This command will start Redis and TensorBoard if they are not running. Note that you need to provide <code>REDIS_HOME</code> environment variable as mentioned in <a href="#1-Installation">Installation</a>.</p>
 <h4 id="stop">Stop</h4>
-<p>You can use following command to stop Cluster Serving, data in Redis and Tensorboard service will persist.</p>
+<p>You can use following command to stop Cluster Serving. Data in Redis and TensorBoard service will persist.</p>
 <pre><code>cluster-serving-stop
 </code></pre>
 
@@ -247,13 +280,13 @@ spark:
 </code></pre>
 
 <h4 id="shut-down">Shut Down</h4>
-<p>You can use following command to shutdown Cluster Serving, this operation will stop all running services related to Cluster Serving, specifically, Redis and Tensorboard, note that your data in Redis will be removed when you shutdown. </p>
+<p>You can use following command to shutdown Cluster Serving. This operation will stop all running services related to Cluster Serving, specifically, Redis and TensorBoard. Note that your data in Redis will be removed when you shutdown. </p>
 <pre><code>cluster-serving-shutdown
 </code></pre>
 
-<p>If you are using docker, you could also run <code>docker rm</code> to stop them.</p>
+<p>If you are using Docker, you could also run <code>docker rm</code> to shutdown Cluster Serving.</p>
 <h3 id="4-model-inference">4. Model Inference</h3>
-<p>We support Python API for conducting inference with Data Pipeline in Cluster Serving. We provide basic usage here, for more details, please see <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/APIGuide.md">API Guide</a>.</p>
+<p>We support Python API for conducting inference with Data Pipeline in Cluster Serving. We provide basic usage here, for more details, please see <a href="../APIGuide/">API Guide</a>.</p>
 <h4 id="input-and-output-api">Input and Output API</h4>
 <p>To input data to queue, you need a <code>InputQueue</code> instance, and using <code>enqueue</code> method by giving an image path or image ndarray. See following example.</p>
 <pre><code>from zoo.serving.client import InputQueue
@@ -265,7 +298,7 @@ image2 = cv2.imread('path/to/image2')
 input_api.enqueue_image('my-image2', image2)
 </code></pre>
 
-<p>To get data from queue, you need a <code>OutputQueue</code> instance, and using <code>query</code> or <code>dequeue</code> method. <code>query</code> method takes image uri as parameter and return the corresponding result, <code>dequeue</code> takes no parameter and just return all results and also delete them in data queue. See following example.</p>
+<p>To get data from queue, you need a <code>OutputQueue</code> instance, and using <code>query</code> or <code>dequeue</code> method. The <code>query</code> method takes image uri as parameter and returns the corresponding result. The <code>dequeue</code> method takes no parameter and just returns all results and also delete them in data queue. See following example.</p>
 <pre><code>from zoo.serving.client import OutputQueue
 output_api = OutputQueue()
 img1_result = output_api.query('img1')
@@ -273,7 +306,7 @@ all_result = output_api.dequeue() # the output queue is empty after this code
 </code></pre>
 
 <h4 id="output-format">Output Format</h4>
-<p>Consider the code above, in <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ClusterServingGuide/ProgrammingGuide.md#input-and-output-api">Input and Output API</a> Section.</p>
+<p>Consider the code above, in <a href="#Input-and-Output-API">Input and Output API</a> Section.</p>
 <pre><code>img1_result = output_api.query('img1')
 </code></pre>
 
@@ -287,21 +320,20 @@ result_class_prob_map = json.loads(img1_result)
 </code></pre>
 
 <h2 id="optional-operations">Optional Operations</h2>
-<h3 id="update-model-or-config">Update Model or Config</h3>
-<p>To update your model, you could replace your model file in your model directory, and restart Cluster Serving by <code>cluster-serving-restart</code>. Note that you could also change your config in <code>config.yaml</code> and restart serving.</p>
+<h3 id="update-model-or-configurations">Update Model or Configurations</h3>
+<p>To update your model, you could replace your model file in your model directory, and restart Cluster Serving by <code>cluster-serving-restart</code>. Note that you could also change your configurations in <code>config.yaml</code> and restart serving.</p>
 <h3 id="logs-and-visualization">Logs and Visualization</h3>
 <h4 id="logs">Logs</h4>
 <p>We use log to save Cluster Serving information and error. To see log, please refer to <code>cluster-serving.log</code>.</p>
 <h4 id="visualization">Visualization</h4>
-<p>We integrate Tensorboard into Cluster Serving. </p>
-<p>Tensorboard service is started with Cluster Serving, once your serving is run, you can go to <code>localhost:6006</code> to see visualization of your serving.</p>
-<p>Analytics Zoo Cluster Serving provides 2 attributes in Tensorboard so far, <code>Serving Throughput</code>, <code>Total Records Number</code>.</p>
+<p>TensorBoard is integrated into Cluster Serving. TensorBoard service is started with Cluster Serving. Once your serving starts, you can go to <code>localhost:6006</code> to see visualization of your serving.</p>
+<p>Analytics Zoo Cluster Serving provides 2 attributes in Tensorboard so far, <code>Serving Throughput</code> and <code>Total Records Number</code>.</p>
 <ul>
 <li>
-<p><code>Serving Throughput</code>: The overall throughput, including preprocessing and postprocessing of your serving, the line should be relatively stable after first few records. If this number has a drop and remains lower than previous, you might have lost the connection of some nodes in your cluster.</p>
+<p><code>Serving Throughput</code>: The overall throughput, including preprocessing and postprocessing of your serving. The line should be relatively stable after first few records. If this number has a drop and remains lower than previous, you might have lost the connection of some nodes in your cluster.</p>
 </li>
 <li>
-<p><code>Total Records Number</code>: The total number of records that serving gets so far.</p>
+<p><code>Total Records Number</code>: The total number of records that Cluster Serving gets so far.</p>
 </li>
 </ul>
 <p>See example of visualization:</p>
