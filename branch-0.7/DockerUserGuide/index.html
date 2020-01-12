@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Build & Use Docker Image - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Use Analtyics Zoo with Docker Image", url: "#use-analtyics-zoo-with-docker-image", children: [
+              {title: "Analytics-Zoo in Docker", url: "#analytics-zoo-in-docker" },
+              {title: "How to build it", url: "#how-to-build-it" },
+              {title: "How to use the image", url: "#how-to-use-the-image" },
+              {title: "Notice", url: "#notice" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Build & Use Docker Image</strong></h1>
+    <hr>
+    <h2 id="use-analtyics-zoo-with-docker-image"><strong>Use Analtyics Zoo with Docker Image</strong></h2>
+<h3 id="analytics-zoo-in-docker">Analytics-Zoo in Docker</h3>
+<p><strong>By default, the Analytics-Zoo image has installed below packages:</strong>
+- git
+- maven
+- Oracle jdk 1.8.0_152 (in /opt/jdk1.8.0_152)
+- python 2.7.6
+- pip
+- numpy
+- scipy
+- pandas
+- scikit-learn
+- matplotlib
+- seaborn
+- jupyter
+- wordcloud
+- moviepy
+- requests
+- tensorflow_
+- spark-${SPARK_VERSION} (in /opt/work/spark-${SPARK_VERSION})
+- Analytics-Zoo distribution (in /opt/work/analytics-zoo-${ANALYTICS_ZOO_VERSION})
+- Analytics-Zoo source code (in /opt/work/analytics-zoo)</p>
+<p><strong>The work dir for Analytics-Zoo is /opt/work.</strong>
+- download-analytics-zoo.sh is used for downloading Analytics-Zoo distributions.
+- start-notebook.sh is used for starting the jupyter notebook. You can specify the environment settings and spark settings to start a specified jupyter notebook.
+- analytics-Zoo-${ANALYTICS_ZOO_VERSION} is the Analytics-Zoo home of Analytics-Zoo distribution.
+- analytics-zoo-SPARK_x.x-x.x.x-dist.zip is the zip file of Analytics-Zoo distribution.
+- spark-${SPARK_VERSION} is the Spark home.
+- analytics-zoo is cloned from https://github.com/intel-analytics/analytics-zoo, contains apps, examples using analytics-zoo.</p>
+<h3 id="how-to-build-it">How to build it</h3>
+<p><strong>By default, you can build a Analytics-Zoo:default image with latest nightly-build Analytics-Zoo distributions:</strong></p>
+<pre><code class="bash">sudo docker build --rm -t intelanalytics/analytics-zoo:default .
+</code></pre>
+
+<p><strong>If you need http and https proxy to build the image:</strong></p>
+<pre><code class="bash">sudo docker build \
+    --build-arg http_proxy=http://your-proxy-host:your-proxy-port \
+    --build-arg https_proxy=https://your-proxy-host:your-proxy-port \
+    --rm -t intelanalytics/analytics-zoo:default .
+</code></pre>
+
+<p><strong>You can also specify the ANALYTICS_ZOO_VERSION and SPARK_VERSION to build a specific Analytics-Zoo image:</strong></p>
+<pre><code class="bash">sudo docker build \
+    --build-arg http_proxy=http://your-proxy-host:your-proxy-port \
+    --build-arg https_proxy=https://your-proxy-host:your-proxy-port \
+    --build-arg ANALYTICS_ZOO_VERSION=0.3.0 \
+    --build-arg BIGDL_VERSION=0.6.0 \
+    --build-arg SPARK_VERSION=2.3.1 \
+    --rm -t intelanalytics/analytics-zoo:0.3.0-bigdl_0.6.0-spark_2.3.1 .
+</code></pre>
+
+<h3 id="how-to-use-the-image">How to use the image</h3>
+<p><strong>To start a notebook directly with a specified port(e.g. 12345). You can view the notebook on http://[host-ip]:12345</strong></p>
+<pre><code class="bash">sudo docker run -it --rm -p 12345:12345 \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    intelanalytics/analytics-zoo:default
+
+sudo docker run -it --rm --net=host \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    intelanalytics/analytics-zoo:default
+
+sudo docker run -it --rm -p 12345:12345 \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    intelanalytics/analytics-zoo:0.3.0-bigdl_0.6.0-spark_2.3.1
+
+sudo docker run -it --rm --net=host \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    intelanalytics/analytics-zoo:0.3.0-bigdl_0.6.0-spark_2.3.1
+</code></pre>
+
+<p><strong>If you need http and https proxy in your environment:</strong></p>
+<pre><code class="bash">sudo docker run -it --rm -p 12345:12345 \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    -e http_proxy=http://your-proxy-host:your-proxy-port \
+    -e https_proxy=https://your-proxy-host:your-proxy-port \
+    intelanalytics/analytics-zoo:default
+
+sudo docker run -it --rm --net=host \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    -e http_proxy=http://your-proxy-host:your-proxy-port \
+    -e https_proxy=https://your-proxy-host:your-proxy-port \
+    intelanalytics/analytics-zoo:default
+
+sudo docker run -it --rm -p 12345:12345 \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    -e http_proxy=http://your-proxy-host:your-proxy-port \
+    -e https_proxy=https://your-proxy-host:your-proxy-port \
+    intelanalytics/analytics-zoo:0.3.0-bigdl_0.6.0-spark_2.3.1
+
+sudo docker run -it --rm --net=host \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    -e http_proxy=http://your-proxy-host:your-proxy-port \
+    -e https_proxy=https://your-proxy-host:your-proxy-port \
+    intelanalytics/analytics-zoo:0.3.0-bigdl_0.6.0-spark_2.3.1
+</code></pre>
+
+<p><strong>You can also start the container first</strong></p>
+<pre><code class="bash">sudo docker run -it --rm --net=host \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;your-token&quot; \
+    intelanalytics/analytics-zoo:default bash
+</code></pre>
+
+<p><strong>In the container, after setting proxy and ports, you can start the Notebook by:</strong></p>
+<pre><code class="bash">/opt/work/start-notebook.sh
+</code></pre>
+
+<h3 id="notice">Notice</h3>
+<p><strong>If you need nightly build version of Analytics-Zoo, please pull the image form Dockerhub with:</strong></p>
+<pre><code class="bash">sudo docker pull intelanalytics/analytics-zoo:latest
+</code></pre>
+
+<p><strong>Please follow the readme in each app folder to test the jupyter notebooks !!!</strong></p>
+<p><strong>With 0.3+ version of Anaytics-Zoo Docker image, you can specify the runtime conf of spark</strong></p>
+<pre><code class="bash">sudo docker run -itd --net=host \
+    -e NotebookPort=12345 \
+    -e NotebookToken=&quot;1234qwer&quot; \
+    -e http_proxy=http://your-proxy-host:your-proxy-port  \
+    -e https_proxy=https://your-proxy-host:your-proxy-port  \
+    -e RUNTIME_DRIVER_CORES=4 \
+    -e RUNTIME_DRIVER_MEMORY=20g \
+    -e RUNTIME_EXECUTOR_CORES=4 \
+    -e RUNTIME_EXECUTOR_MEMORY=20g \
+    -e RUNTIME_TOTAL_EXECUTOR_CORES=4 \
+    intelanalytics/analytics-zoo:latest
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Scala Guide - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Introduction", url: "#introduction", children: [
+          ]},
+          {title: "Shape", url: "#shape", children: [
+          ]},
+          {title: "Define a model", url: "#define-a-model", children: [
+          ]},
+          {title: "Sequential API", url: "#sequential-api", children: [
+          ]},
+          {title: "Functional API", url: "#functional-api", children: [
+          ]},
+          {title: "Layers", url: "#layers", children: [
+          ]},
+          {title: "LeNet Example", url: "#lenet-example", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Scala Guide</strong></h1>
+    <hr>
+    <h2 id="introduction"><strong>Introduction</strong></h2>
+<p>We provide <strong>Keras-Style API</strong> based on <a href="https://faroit.github.io/keras-docs/1.2.2/"><strong>Keras 1.2.2</strong></a> in Analytics Zoo for the sake of user-friendliness. Users, especially those familiar with Keras, can easily use our API to create an Analytics Zoo model and train, evaluate or tune it in a distributed fashion.</p>
+<p>To define a model in Scala using the Keras-Style API, now one just need to import the following packages:</p>
+<pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers._
+import com.intel.analytics.zoo.pipeline.api.keras.models._
+import com.intel.analytics.bigdl.utils.Shape
+</code></pre>
+
+<p>One of the highlighted features with regard to the new API is <strong>shape inference</strong>. Users only need to specify the input shape (a <a href="#shape"><code>Shape</code></a> object <strong>excluding</strong> batch dimension, for example, <code>inputShape=Shape(3, 4)</code> for 3D input) for the first layer of a model and for the remaining layers, the input dimension will be automatically inferred.</p>
+<hr />
+<h2 id="shape"><strong>Shape</strong></h2>
+<p>Input and output shapes of a model in the Keras-Style API are described by the <code>Shape</code> object in Scala, which can be classified into <code>SingleShape</code> and <code>MultiShape</code>.</p>
+<p><code>SingleShape</code> is just a list of Int indicating shape dimensions while <code>MultiShape</code> is essentially a list of <code>Shape</code>.</p>
+<p>Example code to create a shape:</p>
+<pre><code class="scala">// create a SingleShape
+val shape1 = Shape(3, 4)
+// create a MultiShape consisting of two SingleShape
+val shape2 = Shape(List(Shape(1, 2, 3), Shape(4, 5, 6)))
+</code></pre>
+
+<p>You can use method <code>toSingle()</code> to cast a <code>Shape</code> to a <code>SingleShape</code>. Similarly, use <code>toMulti()</code> to cast a <code>Shape</code> to a <code>MultiShape</code>.</p>
+<hr />
+<h2 id="define-a-model"><strong>Define a model</strong></h2>
+<p>You can define a model either using <a href="#sequential-api">Sequential API</a> or <a href="#functional-api">Functional API</a>. Remember to specify the input shape for the first layer.</p>
+<p>After creating a model, you can call the following <strong>methods</strong>:</p>
+<pre><code class="scala">getInputShape()
+</code></pre>
+
+<pre><code class="scala">getOutputShape()
+</code></pre>
+
+<ul>
+<li>Return the input or output shape of a model, which is a <a href="#shape"><code>Shape</code></a> object. For <code>SingleShape</code>, the first entry is <code>-1</code> representing the batch dimension. For a model with multiple inputs or outputs, it will return a <code>MultiShape</code>.</li>
+</ul>
+<pre><code class="scala">setName(name)
+</code></pre>
+
+<ul>
+<li>Set the name of the model.</li>
+</ul>
+<hr />
+<h2 id="sequential-api"><strong>Sequential API</strong></h2>
+<p>The model is described as a linear stack of layers in the Sequential API. Layers can be added into the <code>Sequential</code> container one by one and the order of the layers in the model will be the same as the insertion order.</p>
+<p>To create a sequential container:</p>
+<pre><code class="scala">Sequential()
+</code></pre>
+
+<p>Example code to create a sequential model:</p>
+<pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.{Dense, Activation}
+import com.intel.analytics.zoo.pipeline.api.keras.models.Sequential
+import com.intel.analytics.bigdl.utils.Shape
+
+val model = Sequential[Float]()
+model.add(Dense[Float](32, inputShape = Shape(128)))
+model.add(Activation[Float](&quot;relu&quot;))
+</code></pre>
+
+<hr />
+<h2 id="functional-api"><strong>Functional API</strong></h2>
+<p>The model is described as a graph in the Functional API. It is more convenient than the Sequential API when defining some complex model (for example, a model with multiple outputs).</p>
+<p>To create an input node:</p>
+<pre><code class="scala">Input(inputShape = null, name = null)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>inputShape</code>: A <a href="#shape"><code>Shape</code></a> object indicating the shape of the input node, not including batch.</li>
+<li><code>name</code>: String to set the name of the input node. If not specified, its name will by default to be a generated string.</li>
+</ul>
+<p>To create a graph container:</p>
+<pre><code class="scala">Model(input, output)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>input</code>: An input node or an array of input nodes.</li>
+<li><code>output</code>: An output node or an array of output nodes.</li>
+</ul>
+<p>To merge a list of input <strong>nodes</strong> (<strong>NOT</strong> layers), following some merge mode in the Functional API:</p>
+<pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.Merge.merge
+
+merge(inputs, mode = &quot;sum&quot;, concatAxis = -1) // This will return an output NODE.
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>inputs</code>: A list of node instances. Must be more than one node.</li>
+<li><code>mode</code>: Merge mode. String, must be one of: 'sum', 'mul', 'concat', 'ave', 'cos', 'dot', 'max'. Default is 'sum'.</li>
+<li><code>concatAxis</code>: Int, axis to use when concatenating nodes. Only specify this when merge mode is 'concat'. Default is -1, meaning the last axis of the input.</li>
+</ul>
+<p>Example code to create a graph model:</p>
+<pre><code class="scala">import com.intel.analytics.zoo.pipeline.api.keras.layers.{Dense, Input}
+import com.intel.analytics.zoo.pipeline.api.keras.layers.Merge.merge
+import com.intel.analytics.zoo.pipeline.api.keras.models.Model
+import com.intel.analytics.bigdl.utils.Shape
+
+// instantiate input nodes
+val input1 = Input[Float](inputShape = Shape(8))
+val input2 = Input[Float](inputShape = Shape(6))
+// call inputs() with an input node and get an output node
+val dense1 = Dense[Float](10).inputs(input1)
+val dense2 = Dense[Float](10).inputs(input2)
+// merge two nodes following some merge mode
+val output = merge(inputs = List(dense1, dense2), mode = &quot;sum&quot;)
+// create a graph container
+val model = Model[Float](Array(input1, input2), output)
+</code></pre>
+
+<hr />
+<h2 id="layers"><strong>Layers</strong></h2>
+<p>See <a href="../Layers/core/">here</a> for all the available layers for the Keras-Style API.</p>
+<p>To set the name of a layer, call the method <code>setName(name)</code> of the layer.</p>
+<hr />
+<h2 id="lenet-example"><strong>LeNet Example</strong></h2>
+<p>Here we adopt our Keras-Style API to define a LeNet CNN model to be trained on the MNIST dataset:</p>
+<pre><code class="scala">import com.intel.analytics.bigdl.numeric.NumericFloat
+import com.intel.analytics.zoo.pipeline.api.keras.layers._
+import com.intel.analytics.zoo.pipeline.api.keras.models._
+import com.intel.analytics.bigdl.utils.Shape
+
+val model = Sequential()
+model.add(Reshape(Array(1, 28, 28), inputShape = Shape(28, 28, 1)))
+model.add(Convolution2D(6, 5, 5, activation = &quot;tanh&quot;).setName(&quot;conv1_5x5&quot;))
+model.add(MaxPooling2D())
+model.add(Convolution2D(12, 5, 5, activation = &quot;tanh&quot;).setName(&quot;conv2_5x5&quot;))
+model.add(MaxPooling2D())
+model.add(Flatten())
+model.add(Dense(100, activation = &quot;tanh&quot;).setName(&quot;fc1&quot;))
+model.add(Dense(10, activation = &quot;softmax&quot;).setName(&quot;fc2&quot;))
+
+model.getInputShape().toSingle().toArray // Array(-1, 28, 28, 1)
+model.getOutputShape().toSingle().toArray // Array(-1, 10)
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
