@@ -35,7 +35,7 @@
         var pageToc = [
           {title: "Run after pip install", url: "#run-after-pip-install", children: [
           ]},
-          {title: "Run on yarn after pip install", url: "#run-on-yarn-after-pip-install", children: [
+          {title: "Run on Yarn after pip install", url: "#run-on-yarn-after-pip-install", children: [
           ]},
           {title: "Run without pip install", url: "#run-without-pip-install", children: [
               {title: "Run with pyspark", url: "#run-with-pyspark" },
@@ -71,8 +71,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Run</strong></h1>
     <hr>
-    <p>You need to first <a href="../install/">install</a> analytics-zoo, either <a href="../install/#install-from-pip">from pip</a> or <a href="../install/#install-without-pip">without pip</a>.</p>
-<p><strong>NOTE</strong>: Only <strong>Python 2.7</strong>, <strong>Python 3.5</strong> and <strong>Python 3.6</strong> are supported for now.</p>
+    <p>You need to first <a href="../install/">install</a> analytics-zoo, either <a href="../install/#install-from-pip-for-local-usage">from pip</a> or <a href="../install/#install-without-pip">without pip</a>.</p>
+<p><strong>NOTE</strong>: Only <strong>Python 3.5</strong> and <strong>Python 3.6</strong> are supported for now. We have removed our support and test for Python 2.7 due to its end of life.</p>
 <hr />
 <h2 id="run-after-pip-install"><strong>Run after pip install</strong></h2>
 <p><strong>Important:</strong></p>
@@ -119,7 +119,7 @@ export BIGDL_PACKAGES=...
 </code></pre>
 
 <hr />
-<h2 id="run-on-yarn-after-pip-install"><strong>Run on yarn after pip install</strong></h2>
+<h2 id="run-on-yarn-after-pip-install"><strong>Run on Yarn after pip install</strong></h2>
 <p>You should use <code>init_spark_on_yarn</code> rather than <code>init_nncontext()</code> here to create a SparkContext on Yarn.</p>
 <p>Start python and then execute the following code:</p>
 <pre><code class="python">from zoo import init_spark_on_yarn
