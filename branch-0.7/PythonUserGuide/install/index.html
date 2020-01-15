@@ -35,7 +35,7 @@
         var pageToc = [
           {title: "Install from pip for local usage", url: "#install-from-pip-for-local-usage", children: [
           ]},
-          {title: "Install from pip for yarn cluster", url: "#install-from-pip-for-yarn-cluster", children: [
+          {title: "Install from pip for Yarn cluster", url: "#install-from-pip-for-yarn-cluster", children: [
           ]},
           {title: "Install without pip", url: "#install-without-pip", children: [
               {title: "For Spark standalone cluster", url: "#for-spark-standalone-cluster" },
@@ -67,17 +67,17 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>Install</strong></h1>
     <hr>
-    <p>For Python users, Analytics Zoo can be installed either <a href="#install-from-pip">from pip</a> or <a href="#install-without-pip">without pip</a>.</p>
-<p><strong>NOTE</strong>: Only <strong>Python 2.7</strong>, <strong>Python 3.5</strong> and <strong>Python 3.6</strong> are supported for now.</p>
+    <p>For Python users, Analytics Zoo can be installed either <a href="#install-from-pip-for-local-usage">from pip</a> or <a href="#install-without-pip">without pip</a>.</p>
+<p><strong>NOTE</strong>: Only <strong>Python 3.5</strong> and <strong>Python 3.6</strong> are supported for now. We have removed our support and test for Python 2.7 due to its end of life.</p>
 <hr />
 <h2 id="install-from-pip-for-local-usage"><strong>Install from pip for local usage</strong></h2>
 <p>You can use the following command to install the latest release version of <strong>analytics-zoo</strong> via pip easily:</p>
-<pre><code class="bash">pip install analytics-zoo     # for Python 2.7
-pip3 install analytics-zoo    # for Python 3.5 and Python 3.6
+<pre><code class="bash">pip install analytics-zoo
 </code></pre>
 
 <ul>
-<li>Note that you might need to add <code>sudo</code> if you don't have the permission for installation.</li>
+<li>You are strongly recommended to use Python 3.5 or 3.6. You might need to run <code>pip3 install analytics-zoo</code> instead.</li>
+<li>You might need to add <code>sudo</code> if you don't have the permission for installation.</li>
 </ul>
 <p><strong>Important:</strong></p>
 <ol>
@@ -100,7 +100,7 @@ sc = init_nncontext()
 <li><code>bigdl==0.10.0</code>, <code>pyspark==2.4.3</code>, <code>conda-pack==0.3.1</code> and their dependencies will be automatically installed if they haven't been detected in the current Python environment.</li>
 </ol>
 <hr />
-<h2 id="install-from-pip-for-yarn-cluster"><strong>Install from pip for yarn cluster</strong></h2>
+<h2 id="install-from-pip-for-yarn-cluster"><strong>Install from pip for Yarn cluster</strong></h2>
 <p>You only need to following these steps on your driver node and we only support <strong>yarn-client mode</strong> for now.</p>
 <p>1) Install <a href="https://docs.conda.io/projects/conda/en/latest/commands/install.html">Conda</a> in your environment.</p>
 <p>2) Create a new conda environment (with name "zoo" for example):</p>
