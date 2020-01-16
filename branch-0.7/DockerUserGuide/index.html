@@ -67,33 +67,37 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <hr>
     <h2 id="use-analtyics-zoo-with-docker-image"><strong>Use Analtyics Zoo with Docker Image</strong></h2>
 <h3 id="analytics-zoo-in-docker">Analytics-Zoo in Docker</h3>
-<p><strong>By default, the Analytics-Zoo image has installed below packages:</strong>
-- git
-- maven
-- Oracle jdk 1.8.0_152 (in /opt/jdk1.8.0_152)
-- python 2.7.6
-- pip
-- numpy
-- scipy
-- pandas
-- scikit-learn
-- matplotlib
-- seaborn
-- jupyter
-- wordcloud
-- moviepy
-- requests
-- tensorflow_
-- spark-${SPARK_VERSION} (in /opt/work/spark-${SPARK_VERSION})
-- Analytics-Zoo distribution (in /opt/work/analytics-zoo-${ANALYTICS_ZOO_VERSION})
-- Analytics-Zoo source code (in /opt/work/analytics-zoo)</p>
-<p><strong>The work dir for Analytics-Zoo is /opt/work.</strong>
-- download-analytics-zoo.sh is used for downloading Analytics-Zoo distributions.
-- start-notebook.sh is used for starting the jupyter notebook. You can specify the environment settings and spark settings to start a specified jupyter notebook.
-- analytics-Zoo-${ANALYTICS_ZOO_VERSION} is the Analytics-Zoo home of Analytics-Zoo distribution.
-- analytics-zoo-SPARK_x.x-x.x.x-dist.zip is the zip file of Analytics-Zoo distribution.
-- spark-${SPARK_VERSION} is the Spark home.
-- analytics-zoo is cloned from https://github.com/intel-analytics/analytics-zoo, contains apps, examples using analytics-zoo.</p>
+<p><strong>By default, the Analytics-Zoo image has installed below packages:</strong></p>
+<ul>
+<li>git</li>
+<li>maven</li>
+<li>Oracle jdk 1.8.0_152 (in /opt/jdk1.8.0_152)</li>
+<li>python 3.6.9</li>
+<li>pip</li>
+<li>numpy</li>
+<li>scipy</li>
+<li>pandas</li>
+<li>scikit-learn</li>
+<li>matplotlib</li>
+<li>seaborn</li>
+<li>jupyter</li>
+<li>wordcloud</li>
+<li>moviepy</li>
+<li>requests</li>
+<li>tensorflow_</li>
+<li>spark-${SPARK_VERSION} (in /opt/work/spark-${SPARK_VERSION})</li>
+<li>Analytics-Zoo distribution (in /opt/work/analytics-zoo-${ANALYTICS_ZOO_VERSION})</li>
+<li>Analytics-Zoo source code (in /opt/work/analytics-zoo)</li>
+</ul>
+<p><strong>The work dir for Analytics-Zoo is /opt/work.</strong></p>
+<ul>
+<li>download-analytics-zoo.sh is used for downloading Analytics-Zoo distributions.</li>
+<li>start-notebook.sh is used for starting the jupyter notebook. You can specify the environment settings and spark settings to start a specified jupyter notebook.</li>
+<li>analytics-Zoo-${ANALYTICS_ZOO_VERSION} is the Analytics-Zoo home of Analytics-Zoo distribution.</li>
+<li>analytics-zoo-SPARK_x.x-x.x.x-dist.zip is the zip file of Analytics-Zoo distribution.</li>
+<li>spark-${SPARK_VERSION} is the Spark home.</li>
+<li>analytics-zoo is cloned from https://github.com/intel-analytics/analytics-zoo, contains apps, examples using analytics-zoo.</li>
+</ul>
 <h3 id="how-to-build-it">How to build it</h3>
 <p><strong>By default, you can build a Analytics-Zoo:default image with latest nightly-build Analytics-Zoo distributions:</strong></p>
 <pre><code class="bash">sudo docker build --rm -t intelanalytics/analytics-zoo:default .
