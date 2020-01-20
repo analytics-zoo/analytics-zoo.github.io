@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.tfpark.gan.html" title="zoo.tfpark.gan package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -42,9 +45,9 @@
 <li><a class="reference internal" href="#">zoo.tfpark package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-tfpark-estimator-module">zoo.tfpark.estimator module</a></li>
-<li><a class="reference internal" href="#zoo-tfpark-model-module">zoo.tfpark.model module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.tfpark.estimator">zoo.tfpark.estimator module</a></li>
+<li><a class="reference internal" href="#module-zoo.tfpark.model">zoo.tfpark.model module</a></li>
+<li><a class="reference internal" href="#module-zoo.tfpark">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,9 +93,9 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="zoo.tfpark.gan.html">zoo.tfpark.gan package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zoo.tfpark.gan.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zoo.tfpark.gan.html#zoo-tfpark-gan-common-module">zoo.tfpark.gan.common module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zoo.tfpark.gan.html#zoo-tfpark-gan-gan-estimator-module">zoo.tfpark.gan.gan_estimator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zoo.tfpark.gan.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.tfpark.gan.html#module-zoo.tfpark.gan.common">zoo.tfpark.gan.common module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.tfpark.gan.html#module-zoo.tfpark.gan.gan_estimator">zoo.tfpark.gan.gan_estimator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.tfpark.gan.html#module-zoo.tfpark.gan">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zoo.tfpark.text.html">zoo.tfpark.text package</a><ul>
@@ -117,7 +120,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="zoo.tfpark.text.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.tfpark.text.html#module-zoo.tfpark.text">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -126,14 +129,368 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-tfpark-estimator-module">
-<h2>zoo.tfpark.estimator module<a class="headerlink" href="#zoo-tfpark-estimator-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.tfpark.estimator">
+<span id="zoo-tfpark-estimator-module"></span><h2>zoo.tfpark.estimator module<a class="headerlink" href="#module-zoo.tfpark.estimator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.tfpark.estimator.TFEstimator">
+<em class="property">class </em><code class="descclassname">zoo.tfpark.estimator.</code><code class="descname">TFEstimator</code><span class="sig-paren">(</span><em>model_fn</em>, <em>optimizer=None</em>, <em>model_dir=None</em>, <em>config=None</em>, <em>params=None</em>, <em>warm_start_from=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/estimator.html#TFEstimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.estimator.TFEstimator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="zoo.tfpark.estimator.TFEstimator.clear_gradient_clipping">
+<code class="descname">clear_gradient_clipping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/estimator.html#TFEstimator.clear_gradient_clipping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.estimator.TFEstimator.clear_gradient_clipping" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.estimator.TFEstimator.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>input_fn</em>, <em>eval_methods</em>, <em>steps=None</em>, <em>checkpoint_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/estimator.html#TFEstimator.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.estimator.TFEstimator.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates the model given evaluation data <cite>input_fn</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_fn</strong> – A function that constructs the input data for evaluation. The</td>
+</tr>
+</tbody>
+</table>
+<p>function should construct and return one of the following:
+* A <cite>TFDataset</cite> object, each elements of which is a tuple <cite>(features, labels)</cite>.
+* A <cite>tf.data.Dataset</cite> object: Outputs of <cite>Dataset</cite> object must be a tuple
+<cite>(features, labels)</cite> with same constraints as below.
+* A tuple <cite>(features, labels)</cite>: Where <cite>features</cite> is a <cite>tf.Tensor</cite> or a dictionary
+of string feature name to <cite>Tensor</cite> and <cite>labels</cite> is a <cite>Tensor</cite> or a
+dictionary of string label name to <cite>Tensor</cite>. Both <cite>features</cite> and
+<cite>labels</cite> are consumed by <cite>model_fn</cite>. They should satisfy the expectation
+of <cite>model_fn</cite> from inputs.
+:param eval_methods: a list of strings to specify the evaluation metrics to
+be used in this model
+:param steps: Number of steps for which to evaluate model.
+:param checkpoint_path: Path of a specific checkpoint to evaluate. If <cite>None</cite>, the
+latest checkpoint in <cite>model_dir</cite> is used.  If there are no checkpoints
+in <cite>model_dir</cite>, evaluation is run with newly initialized <cite>Variables</cite>
+instead of ones restored from checkpoint.</p>
+<p>Returns:
+A dict containing the evaluation metrics specified in <cite>model_fn</cite> keyed by
+name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.estimator.TFEstimator.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>input_fn</em>, <em>checkpoint_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/estimator.html#TFEstimator.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.estimator.TFEstimator.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Outputs predictions for given features.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_fn</strong> – A function that constructs the features.</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>A <cite>TFDataset</cite> object, each elements of which is a tuple <cite>(features, None)</cite>.</li>
+<li>A <cite>tf.data.Dataset</cite> object: Outputs of <cite>Dataset</cite> object must have</li>
+</ul>
+<p>same constraints as below.
+* features: A <cite>tf.Tensor</cite> or a dictionary of string feature name to
+<cite>Tensor</cite>. features are consumed by <cite>model_fn</cite>. They should satisfy
+the expectation of <cite>model_fn</cite> from inputs.
+* A tuple, in which case the first item is extracted as features.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>checkpoint_path</strong> – Path of a specific checkpoint to predict. If <cite>None</cite>, the</td>
+</tr>
+</tbody>
+</table>
+<p>latest checkpoint in <cite>model_dir</cite> is used.  If there are no checkpoints
+in <cite>model_dir</cite>, prediction is run with newly initialized <cite>Variables</cite>
+instead of ones restored from checkpoint.</p>
+<p>Return:
+Evaluated values of <cite>predictions</cite> tensors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.estimator.TFEstimator.set_constant_gradient_clipping">
+<code class="descname">set_constant_gradient_clipping</code><span class="sig-paren">(</span><em>min</em>, <em>max</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/estimator.html#TFEstimator.set_constant_gradient_clipping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.estimator.TFEstimator.set_constant_gradient_clipping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure constant clipping settings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>min_value</strong> – the minimum value to clip by</li>
+<li><strong>max_value</strong> – the maxmimum value to clip by</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.estimator.TFEstimator.set_gradient_clipping_by_l2_norm">
+<code class="descname">set_gradient_clipping_by_l2_norm</code><span class="sig-paren">(</span><em>clip_norm</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/estimator.html#TFEstimator.set_gradient_clipping_by_l2_norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.estimator.TFEstimator.set_gradient_clipping_by_l2_norm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure L2 norm clipping settings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>clip_norm</strong> – gradient L2-Norm threshold</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.estimator.TFEstimator.set_optimizer">
+<code class="descname">set_optimizer</code><span class="sig-paren">(</span><em>optimizer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/estimator.html#TFEstimator.set_optimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.estimator.TFEstimator.set_optimizer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.estimator.TFEstimator.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>input_fn</em>, <em>steps=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/estimator.html#TFEstimator.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.estimator.TFEstimator.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trains a model given training data <cite>input_fn</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>input_fn</strong> – A function that constructs the input data for evaluation. The</td>
+</tr>
+</tbody>
+</table>
+<p>function should construct and return one of the following:
+* A <cite>TFDataset</cite> object, each elements of which is a tuple <cite>(features, labels)</cite>.
+* A <cite>tf.data.Dataset</cite> object: Outputs of <cite>Dataset</cite> object must be a tuple
+<cite>(features, labels)</cite> with same constraints as below.
+* A tuple <cite>(features, labels)</cite>: Where <cite>features</cite> is a <cite>tf.Tensor</cite> or a dictionary
+of string feature name to <cite>Tensor</cite> and <cite>labels</cite> is a <cite>Tensor</cite> or a
+dictionary of string label name to <cite>Tensor</cite>. Both <cite>features</cite> and
+<cite>labels</cite> are consumed by <cite>model_fn</cite>. They should satisfy the expectation
+of <cite>model_fn</cite> from inputs.
+:param steps: Number of steps for which to train the model.</p>
+<p>Returns:
+<cite>self</cite>, for chaining.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.tfpark.estimator.TFEstimatorSpec">
+<em class="property">class </em><code class="descclassname">zoo.tfpark.estimator.</code><code class="descname">TFEstimatorSpec</code><span class="sig-paren">(</span><em>mode</em>, <em>predictions=None</em>, <em>loss=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/estimator.html#TFEstimatorSpec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.estimator.TFEstimatorSpec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.tfpark.estimator.add_train_op">
+<code class="descclassname">zoo.tfpark.estimator.</code><code class="descname">add_train_op</code><span class="sig-paren">(</span><em>model_fn</em>, <em>features</em>, <em>labels</em>, <em>mode</em>, <em>params</em>, <em>config</em>, <em>optimizer</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/estimator.html#add_train_op"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.estimator.add_train_op" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
-<div class="section" id="zoo-tfpark-model-module">
-<h2>zoo.tfpark.model module<a class="headerlink" href="#zoo-tfpark-model-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.tfpark.model">
+<span id="zoo-tfpark-model-module"></span><h2>zoo.tfpark.model module<a class="headerlink" href="#module-zoo.tfpark.model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.tfpark.model.KerasModel">
+<em class="property">class </em><code class="descclassname">zoo.tfpark.model.</code><code class="descname">KerasModel</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="zoo.tfpark.model.KerasModel.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>x=None</em>, <em>y=None</em>, <em>batch_per_thread=None</em>, <em>distributed=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate a model on a given dataset</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> – Input data. It could be:</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>a TFDataset object</li>
+<li>A Numpy array (or array-like), or a list of arrays</li>
+</ul>
+<p>(in case the model has multiple inputs).
+- A dict mapping input names to the corresponding array/tensors,
+if the model has named inputs.
+:param y: Target data. Like the input data <cite>x</cite>,
+It should be consistent with <cite>x</cite> (you cannot have Numpy inputs and
+tensor targets, or inversely). If <cite>x</cite> is a TFDataset, <cite>y</cite> should
+not be specified (since targets will be obtained from <cite>x</cite>).
+:param batch_per_thread:
+The default value is 1.
+When distributed is True,the total batch size is batch_per_thread * rdd.getNumPartitions.
+When distributed is False the total batch size is batch_per_thread * numOfCores.
+:param distributed: Boolean. Whether to do prediction in distributed mode or local mode.
+Default is True. In local mode, x must be a Numpy array.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.model.KerasModel.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>x=None</em>, <em>y=None</em>, <em>batch_size=None</em>, <em>epochs=1</em>, <em>validation_split=0.0</em>, <em>validation_data=None</em>, <em>distributed=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train the model for a fixed num of epochs</p>
+<p>Arguments:
+:param x: Input data. It could be:
+- a TFDataset object
+- A Numpy array (or array-like), or a list of arrays
+(in case the model has multiple inputs).
+- A dict mapping input names to the corresponding array/tensors,
+if the model has named inputs.
+:param y: Target data. Like the input data <cite>x</cite>,
+It should be consistent with <cite>x</cite> (you cannot have Numpy inputs and
+tensor targets, or inversely). If <cite>x</cite> is a TFDataset, <cite>y</cite> should
+not be specified (since targets will be obtained from <cite>x</cite>).
+:param batch_size: Integer or <cite>None</cite>.
+Number of samples per gradient update.
+If <cite>x</cite> is a TFDataset, you do not need to specify batch_size.
+:param epochs: Integer. Number of epochs to train the model.
+An epoch is an iteration over the entire <cite>x</cite> and <cite>y</cite>
+data provided.
+:param validation_split: Float between 0 and 1.
+Fraction of the training data to be used as validation data.
+The model will set apart this fraction of the training data,
+will not train on it, and will evaluate
+the loss and any model metrics
+on this data at the end of each epoch.
+:param validation_data: Data on which to evaluate
+the loss and any model metrics at the end of each epoch.
+The model will not be trained on this data.
+<cite>validation_data</cite> will override <cite>validation_split</cite>.
+<cite>validation_data</cite> could be:
+- tuple <cite>(x_val, y_val)</cite> of Numpy arrays or tensors
+- <cite>TFDataset</cite>
+:param distributed: Boolean. Whether to do prediction in distributed mode or local mode.
+Default is True. In local mode, x must be a Numpy array.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.model.KerasModel.get_weights">
+<code class="descname">get_weights</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.get_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.get_weights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.tfpark.model.KerasModel.load_model">
+<em class="property">static </em><code class="descname">load_model</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an existing keras model (with weights) from HDF5 file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – String. The path to the pre-defined model.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">KerasModel.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.model.KerasModel.load_weights">
+<code class="descname">load_weights</code><span class="sig-paren">(</span><em>filepath</em>, <em>by_name=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.load_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.load_weights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.tfpark.model.KerasModel.metrics_names">
+<code class="descname">metrics_names</code><a class="headerlink" href="#zoo.tfpark.model.KerasModel.metrics_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.model.KerasModel.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em>, <em>batch_per_thread=None</em>, <em>distributed=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a model to do prediction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> – Input data. It could be:</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>a TFDataset object</li>
+<li>A Numpy array (or array-like), or a list of arrays</li>
+</ul>
+<p>(in case the model has multiple inputs).
+- A dict mapping input names to the corresponding array/tensors,
+if the model has named inputs.
+:param batch_per_thread:
+The default value is 1.
+When distributed is True,the total batch size is batch_per_thread * rdd.getNumPartitions.
+When distributed is False the total batch size is batch_per_thread * numOfCores.
+:param distributed: Boolean. Whether to do prediction in distributed mode or local mode.
+Default is True. In local mode, x must be a Numpy array.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.model.KerasModel.predict_on_batch">
+<code class="descname">predict_on_batch</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.predict_on_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.predict_on_batch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.model.KerasModel.save_model">
+<code class="descname">save_model</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.save_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the model to a single HDF5 file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – String. The path to save the model.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.model.KerasModel.save_weights">
+<code class="descname">save_weights</code><span class="sig-paren">(</span><em>filepath</em>, <em>overwrite=True</em>, <em>save_format=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.save_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.save_weights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.model.KerasModel.set_train_summary">
+<code class="descname">set_train_summary</code><span class="sig-paren">(</span><em>summary</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.set_train_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.set_train_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set training summary for visualization.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>summary</strong> – bigdl.optim.optimizer.TrainSummary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.model.KerasModel.set_val_summary">
+<code class="descname">set_val_summary</code><span class="sig-paren">(</span><em>summary</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.set_val_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.set_val_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set validation summary for visualization.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>summary</strong> – bigdl.optim.optimizer.ValidationSummary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.model.KerasModel.set_weights">
+<code class="descname">set_weights</code><span class="sig-paren">(</span><em>weights</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.set_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.set_weights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.model.KerasModel.test_on_batch">
+<code class="descname">test_on_batch</code><span class="sig-paren">(</span><em>x</em>, <em>y=None</em>, <em>sample_weight=None</em>, <em>reset_metrics=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.test_on_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.test_on_batch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.tfpark.model.KerasModel.train_on_batch">
+<code class="descname">train_on_batch</code><span class="sig-paren">(</span><em>x</em>, <em>y=None</em>, <em>sample_weight=None</em>, <em>class_weight=None</em>, <em>reset_metrics=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/model.html#KerasModel.train_on_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.model.KerasModel.train_on_batch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.tfpark">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.tfpark" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -149,6 +506,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.tfpark.gan.html" title="zoo.tfpark.gan package"
              >next</a> |</li>

@@ -1,0 +1,299 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.examples.ray.parameter_server.model &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.examples.ray.parameter_server.model</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is adapted from https://github.com/ray-project/ray/blob</span>
+<span class="c1"># /master/examples/parameter_server/model.py</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># Most of the tensorflow code is adapted from Tensorflow&#39;s tutorial on using</span>
+<span class="c1"># CNNs to train MNIST</span>
+<span class="c1"># https://www.tensorflow.org/get_started/mnist/pros#build-a-multilayer-convolutional-network.  # noqa: E501</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow.examples.tutorials.mnist</span> <span class="k">import</span> <span class="n">input_data</span>
+
+<span class="kn">import</span> <span class="nn">ray</span>
+<span class="kn">import</span> <span class="nn">ray.experimental.tf_utils</span>
+
+
+<div class="viewcode-block" id="download_mnist_retry"><a class="viewcode-back" href="../../../../../zoo.examples.ray.parameter_server.html#zoo.examples.ray.parameter_server.model.download_mnist_retry">[docs]</a><span class="k">def</span> <span class="nf">download_mnist_retry</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_num_retries</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_num_retries</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">input_data</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span>
+                <span class="s2">&quot;MNIST_data&quot;</span><span class="p">,</span> <span class="n">one_hot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">tf</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">AlreadyExistsError</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Failed to download MNIST.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SimpleCNN"><a class="viewcode-back" href="../../../../../zoo.examples.ray.parameter_server.html#zoo.examples.ray.parameter_server.model.SimpleCNN">[docs]</a><span class="k">class</span> <span class="nc">SimpleCNN</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span><span class="o">.</span><span class="n">as_default</span><span class="p">():</span>
+
+            <span class="c1"># Create the model</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">784</span><span class="p">])</span>
+
+            <span class="c1"># Define loss and optimizer</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+
+            <span class="c1"># Build the graph for the deep net</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_conv</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span> <span class="o">=</span> <span class="n">deepnn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+            <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">):</span>
+                <span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax_cross_entropy_with_logits</span><span class="p">(</span>
+                    <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_</span><span class="p">,</span> <span class="n">logits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_conv</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">cross_entropy</span><span class="p">)</span>
+
+            <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;adam_optimizer&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">train_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">)</span>
+
+            <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;accuracy&quot;</span><span class="p">):</span>
+                <span class="n">correct_prediction</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span>
+                    <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_conv</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="n">correct_prediction</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">correct_prediction</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">correct_prediction</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span>
+                <span class="n">config</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">(</span>
+                    <span class="n">intra_op_parallelism_threads</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                    <span class="n">inter_op_parallelism_threads</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
+
+            <span class="c1"># Helper values.</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">tf_utils</span><span class="o">.</span><span class="n">TensorFlowVariables</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sess</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">grads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">compute_gradients</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grads_placeholder</span> <span class="o">=</span> <span class="p">[(</span><span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span>
+                <span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">grad</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()),</span> <span class="n">grad</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">grad</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grads</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apply_grads_placeholder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">grads_placeholder</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SimpleCNN.compute_update"><a class="viewcode-back" href="../../../../../zoo.examples.ray.parameter_server.html#zoo.examples.ray.parameter_server.model.SimpleCNN.compute_update">[docs]</a>    <span class="k">def</span> <span class="nf">compute_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="c1"># TODO(rkn): Computing the weights before and after the training step</span>
+        <span class="c1"># and taking the diff is awful.</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weights</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_step</span><span class="p">,</span>
+            <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span><span class="p">:</span> <span class="mf">0.5</span>
+            <span class="p">})</span>
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_weights</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">new_weights</span><span class="p">,</span> <span class="n">weights</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="SimpleCNN.compute_gradients"><a class="viewcode-back" href="../../../../../zoo.examples.ray.parameter_server.html#zoo.examples.ray.parameter_server.model.SimpleCNN.compute_gradients">[docs]</a>    <span class="k">def</span> <span class="nf">compute_gradients</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">grad</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">grad</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grads</span><span class="p">],</span>
+            <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span><span class="p">:</span> <span class="mf">0.5</span>
+            <span class="p">})</span></div>
+
+<div class="viewcode-block" id="SimpleCNN.apply_gradients"><a class="viewcode-back" href="../../../../../zoo.examples.ray.parameter_server.html#zoo.examples.ray.parameter_server.model.SimpleCNN.apply_gradients">[docs]</a>    <span class="k">def</span> <span class="nf">apply_gradients</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gradients</span><span class="p">):</span>
+        <span class="n">feed_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grads_placeholder</span><span class="p">)):</span>
+            <span class="n">feed_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">grads_placeholder</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">gradients</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apply_grads_placeholder</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">feed_dict</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimpleCNN.compute_accuracy"><a class="viewcode-back" href="../../../../../zoo.examples.ray.parameter_server.html#zoo.examples.ray.parameter_server.model.SimpleCNN.compute_accuracy">[docs]</a>    <span class="k">def</span> <span class="nf">compute_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span><span class="p">,</span>
+            <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y_</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span><span class="p">:</span> <span class="mf">1.0</span>
+            <span class="p">})</span></div>
+
+<div class="viewcode-block" id="SimpleCNN.set_weights"><a class="viewcode-back" href="../../../../../zoo.examples.ray.parameter_server.html#zoo.examples.ray.parameter_server.model.SimpleCNN.set_weights">[docs]</a>    <span class="k">def</span> <span class="nf">set_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable_names</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">set_weights</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">variable_names</span><span class="p">,</span> <span class="n">weights</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="SimpleCNN.get_weights"><a class="viewcode-back" href="../../../../../zoo.examples.ray.parameter_server.html#zoo.examples.ray.parameter_server.model.SimpleCNN.get_weights">[docs]</a>    <span class="k">def</span> <span class="nf">get_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="o">.</span><span class="n">get_weights</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="nb">list</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div></div>
+
+
+<div class="viewcode-block" id="deepnn"><a class="viewcode-back" href="../../../../../zoo.examples.ray.parameter_server.html#zoo.examples.ray.parameter_server.model.deepnn">[docs]</a><span class="k">def</span> <span class="nf">deepnn</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;deepnn builds the graph for a deep net for classifying digits.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        x: an input tensor with the dimensions (N_examples, 784), where 784 is</span>
+<span class="sd">            the number of pixels in a standard MNIST image.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple (y, keep_prob). y is a tensor of shape (N_examples, 10), with</span>
+<span class="sd">            values equal to the logits of classifying the digit into one of 10</span>
+<span class="sd">            classes (the digits 0-9). keep_prob is a scalar placeholder for the</span>
+<span class="sd">            probability of dropout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Reshape to use within a convolutional neural net.</span>
+    <span class="c1"># Last dimension is for &quot;features&quot; - there is only one here, since images</span>
+    <span class="c1"># are grayscale -- it would be 3 for an RGB image, 4 for RGBA, etc.</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;reshape&quot;</span><span class="p">):</span>
+        <span class="n">x_image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># First convolutional layer - maps one grayscale image to 32 feature maps.</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;conv1&quot;</span><span class="p">):</span>
+        <span class="n">W_conv1</span> <span class="o">=</span> <span class="n">weight_variable</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">])</span>
+        <span class="n">b_conv1</span> <span class="o">=</span> <span class="n">bias_variable</span><span class="p">([</span><span class="mi">32</span><span class="p">])</span>
+        <span class="n">h_conv1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">conv2d</span><span class="p">(</span><span class="n">x_image</span><span class="p">,</span> <span class="n">W_conv1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b_conv1</span><span class="p">)</span>
+
+    <span class="c1"># Pooling layer - downsamples by 2X.</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;pool1&quot;</span><span class="p">):</span>
+        <span class="n">h_pool1</span> <span class="o">=</span> <span class="n">max_pool_2x2</span><span class="p">(</span><span class="n">h_conv1</span><span class="p">)</span>
+
+    <span class="c1"># Second convolutional layer -- maps 32 feature maps to 64.</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;conv2&quot;</span><span class="p">):</span>
+        <span class="n">W_conv2</span> <span class="o">=</span> <span class="n">weight_variable</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">])</span>
+        <span class="n">b_conv2</span> <span class="o">=</span> <span class="n">bias_variable</span><span class="p">([</span><span class="mi">64</span><span class="p">])</span>
+        <span class="n">h_conv2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">conv2d</span><span class="p">(</span><span class="n">h_pool1</span><span class="p">,</span> <span class="n">W_conv2</span><span class="p">)</span> <span class="o">+</span> <span class="n">b_conv2</span><span class="p">)</span>
+
+    <span class="c1"># Second pooling layer.</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;pool2&quot;</span><span class="p">):</span>
+        <span class="n">h_pool2</span> <span class="o">=</span> <span class="n">max_pool_2x2</span><span class="p">(</span><span class="n">h_conv2</span><span class="p">)</span>
+
+    <span class="c1"># Fully connected layer 1 -- after 2 round of downsampling, our 28x28 image</span>
+    <span class="c1"># is down to 7x7x64 feature maps -- maps this to 1024 features.</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;fc1&quot;</span><span class="p">):</span>
+        <span class="n">W_fc1</span> <span class="o">=</span> <span class="n">weight_variable</span><span class="p">([</span><span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">1024</span><span class="p">])</span>
+        <span class="n">b_fc1</span> <span class="o">=</span> <span class="n">bias_variable</span><span class="p">([</span><span class="mi">1024</span><span class="p">])</span>
+
+        <span class="n">h_pool2_flat</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">h_pool2</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">*</span> <span class="mi">64</span><span class="p">])</span>
+        <span class="n">h_fc1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">h_pool2_flat</span><span class="p">,</span> <span class="n">W_fc1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b_fc1</span><span class="p">)</span>
+
+    <span class="c1"># Dropout - controls the complexity of the model, prevents co-adaptation of</span>
+    <span class="c1"># features.</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;dropout&quot;</span><span class="p">):</span>
+        <span class="n">keep_prob</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">h_fc1_drop</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">h_fc1</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">)</span>
+
+    <span class="c1"># Map the 1024 features to 10 classes, one for each digit</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">name_scope</span><span class="p">(</span><span class="s2">&quot;fc2&quot;</span><span class="p">):</span>
+        <span class="n">W_fc2</span> <span class="o">=</span> <span class="n">weight_variable</span><span class="p">([</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+        <span class="n">b_fc2</span> <span class="o">=</span> <span class="n">bias_variable</span><span class="p">([</span><span class="mi">10</span><span class="p">])</span>
+
+        <span class="n">y_conv</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">h_fc1_drop</span><span class="p">,</span> <span class="n">W_fc2</span><span class="p">)</span> <span class="o">+</span> <span class="n">b_fc2</span>
+    <span class="k">return</span> <span class="n">y_conv</span><span class="p">,</span> <span class="n">keep_prob</span></div>
+
+
+<div class="viewcode-block" id="conv2d"><a class="viewcode-back" href="../../../../../zoo.examples.ray.parameter_server.html#zoo.examples.ray.parameter_server.model.conv2d">[docs]</a><span class="k">def</span> <span class="nf">conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;conv2d returns a 2d convolution layer with full stride.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="max_pool_2x2"><a class="viewcode-back" href="../../../../../zoo.examples.ray.parameter_server.html#zoo.examples.ray.parameter_server.model.max_pool_2x2">[docs]</a><span class="k">def</span> <span class="nf">max_pool_2x2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;max_pool_2x2 downsamples a feature map by 2X.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">max_pool</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">ksize</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">strides</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;SAME&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="weight_variable"><a class="viewcode-back" href="../../../../../zoo.examples.ray.parameter_server.html#zoo.examples.ray.parameter_server.model.weight_variable">[docs]</a><span class="k">def</span> <span class="nf">weight_variable</span><span class="p">(</span><span class="n">shape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;weight_variable generates a weight variable of a given shape.&quot;&quot;&quot;</span>
+    <span class="n">initial</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="bias_variable"><a class="viewcode-back" href="../../../../../zoo.examples.ray.parameter_server.html#zoo.examples.ray.parameter_server.model.bias_variable">[docs]</a><span class="k">def</span> <span class="nf">bias_variable</span><span class="p">(</span><span class="n">shape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;bias_variable generates a bias variable of a given shape.&quot;&quot;&quot;</span>
+    <span class="n">initial</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>
