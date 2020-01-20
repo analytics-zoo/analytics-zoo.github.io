@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>TFEstimator - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "TFEstimator", url: "#tfestimator", children: [
+              {title: "Methods", url: "#methods" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>TFEstimator</strong></h1>
+    <hr>
+    <h1 id="tfestimator">TFEstimator</h1>
+<p>TFEstimator wraps a model defined by <code>model_fn</code>. The <code>model_fn</code> is almost identical to TensorFlow's <code>model_fn</code>
+except users are required to return a <code>TFEstimator</code> object. Users do not need to construct backward graph
+(calling <code>optimizer.minimize(...)</code>) but set a <code>loss</code> tensor in <code>TFEstimator</code>.</p>
+<p><strong>Remarks</strong>:</p>
+<ul>
+<li>You need to install <strong>tensorflow==1.15.0</strong> on your driver node.</li>
+<li>Your operating system (OS) is required to be one of the following 64-bit systems:
+<strong>Ubuntu 16.04 or later</strong> and <strong>macOS 10.12.6 or later</strong>.</li>
+<li>To run on other systems, you need to manually compile the TensorFlow source code. Instructions can
+  be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</li>
+</ul>
+<p><strong>Create a TFEstimator</strong>:</p>
+<pre><code class="python">import tensorflow as tf
+from zoo.tfpark.estimator import TFEstimator, TFEstimatorSpec
+def model_fn(features, labels, mode):
+
+    hidden = tf.layers.dense(features, 32, activation=tf.nn.relu)
+
+    logits = tf.layers.dense(hidden, 10)
+
+    if mode == tf.estimator.ModeKeys.EVAL or mode == tf.estimator.ModeKeys.TRAIN:
+        loss = tf.reduce_mean(
+            tf.losses.sparse_softmax_cross_entropy(logits=logits, labels=labels))
+        return TFEstimatorSpec(mode, predictions=logits, loss=loss)
+    else:
+        return TFEstimatorSpec(mode, predictions=logits)
+
+estimator = TFEstimator(model_fn, tf.train.AdamOptimizer(), model_dir=&quot;/tmp/estimator&quot;)
+</code></pre>
+
+<h2 id="methods">Methods</h2>
+<h3 id="9595init9595">__init__</h3>
+<pre><code class="python">TFEstimator(model_fn, optimizer=None, model_dir=None, config=None, params=None, warm_start_from=None)
+</code></pre>
+
+<h4 id="arguments">Arguments</h4>
+<ul>
+<li><strong>model_fn</strong>: Model function. Follows the signature:<pre><code>    * Args:
+
+        * `features`: This is the first item returned from the `input_fn`
+            passed to `train`, `evaluate`, and `predict`. This should be a
+            single `tf.Tensor` or `dict` of same.
+        * `labels`: This is the second item returned from the `input_fn`
+            passed to `train`, `evaluate`, and `predict`. This should be a
+            single `tf.Tensor` or `dict` of same (for multi-head models).
+            If mode is `tf.estimator.ModeKeys.PREDICT`, `labels=None` will
+            be passed. If the `model_fn`'s signature does not accept
+            `mode`, the `model_fn` must still be able to handle
+            `labels=None`.
+        * `mode`: Optional. Specifies if this training, evaluation or
+            prediction. See `tf.estimator.ModeKeys`.
+        * `params`: Optional `dict` of hyperparameters.  Will receive what
+            is passed to Estimator in `params` parameter. This allows
+            to configure Estimators from hyper parameter tuning.
+        * `config`: Optional `estimator.RunConfig` object. Will receive what
+            is passed to Estimator as its `config` parameter, or a default
+            value. Allows setting up things in your `model_fn` based on
+            configuration such as `num_ps_replicas`, or `model_dir`.
+
+    * Returns:
+        `zoo.tfpark.estimator.TFEstimatorSpec`
+</code></pre>
+<ul>
+<li><strong>optimizer</strong>: the tf.train.Optimizer to be used in training,
+                     e.g. tf.train.AdamOptimizer()</li>
+<li><strong>model_dir</strong>: Directory to save model parameters, graph and etc. This can
+        also be used to load checkpoints from the directory into an estimator to
+        continue training a previously saved model. If <code>PathLike</code> object, the
+        path will be resolved. If <code>None</code>, the model_dir in <code>config</code> will be used
+        if set. If both are set, they must be same. If both are <code>None</code>, a
+        temporary directory will be used.</li>
+<li><strong>config</strong>: <code>estimator.RunConfig</code> configuration object.</li>
+<li><strong>params</strong>: <code>dict</code> of hyper parameters that will be passed into <code>model_fn</code>.
+          Keys are names of parameters, values are basic python types.</li>
+<li><strong>warm_start_from</strong>: Optional string filepath to a checkpoint or SavedModel to
+                   warm-start from, or a <code>tf.estimator.WarmStartSettings</code>
+                   object to fully configure warm-starting.  If the string
+                   filepath is provided instead of a
+                   <code>tf.estimator.WarmStartSettings</code>, then all variables are
+                   warm-started, and it is assumed that vocabularies
+                   and <code>tf.Tensor</code> names are unchanged.</li>
+</ul>
+</li>
+</ul>
+<h3 id="train">train</h3>
+<pre><code class="python">train(input_fn, steps=None)
+</code></pre>
+
+<h4 id="arguments_1">Arguments</h4>
+<ul>
+<li><strong>input_fn</strong>: A function that constructs the input data for evaluation. The
+            function should construct and return one of the following:<pre><code>    * A `TFDataset` object, each elements of which is a tuple `(features, labels)`.
+    * A `tf.data.Dataset` object: Outputs of `Dataset` object must be a tuple
+    `(features, labels)` with same constraints as below.
+    * A tuple `(features, labels)`: Where `features` is a `tf.Tensor` or a dictionary
+    of string feature name to `Tensor` and `labels` is a `Tensor` or a
+    dictionary of string label name to `Tensor`. Both `features` and
+    `labels` are consumed by `model_fn`. They should satisfy the expectation
+    of `model_fn` from inputs.
+</code></pre>
+<ul>
+<li><strong>steps</strong>: Number of steps for which to train the model.</li>
+</ul>
+</li>
+</ul>
+<h3 id="evaluate">evaluate</h3>
+<pre><code class="python">evaluate(input_fn, eval_methods, steps=None, checkpoint_path=None)
+</code></pre>
+
+<h4 id="arguments_2">Arguments</h4>
+<ul>
+<li><strong>input_fn</strong>: A function that constructs the input data for evaluation. The
+            function should construct and return one of the following:<pre><code>    * A `TFDataset` object, each elements of which is a tuple `(features, labels)`.
+    * A `tf.data.Dataset` object: Outputs of `Dataset` object must be a tuple
+    `(features, labels)` with same constraints as below.
+    * A tuple `(features, labels)`: Where `features` is a `tf.Tensor` or a dictionary
+    of string feature name to `Tensor` and `labels` is a `Tensor` or a
+    dictionary of string label name to `Tensor`. Both `features` and
+    `labels` are consumed by `model_fn`. They should satisfy the expectation
+    of `model_fn` from inputs.
+</code></pre>
+<ul>
+<li><strong>eval_methods</strong>: a list of strings to specify the evaluation metrics to
+                be used in this model</li>
+<li><strong>steps</strong>: Number of steps for which to evaluate model.</li>
+<li><strong>checkpoint_path</strong>: Path of a specific checkpoint to evaluate. If <code>None</code>, the
+        latest checkpoint in <code>model_dir</code> is used.  If there are no checkpoints
+        in <code>model_dir</code>, evaluation is run with newly initialized <code>Variables</code>
+        instead of ones restored from checkpoint.</li>
+</ul>
+</li>
+</ul>
+<h3 id="predict">predict</h3>
+<pre><code class="python">predict(input_fn, checkpoint_path=None)
+</code></pre>
+
+<h4 id="arguments_3">Arguments</h4>
+<ul>
+<li>
+<p><strong>input_fn</strong>: A function that constructs the features.</p>
+<pre><code>      * A `TFDataset` object, each elements of which is a tuple `(features, None)`.
+      * A `tf.data.Dataset` object: Outputs of `Dataset` object must have
+        same constraints as below.
+      * features: A `tf.Tensor` or a dictionary of string feature name to
+        `Tensor`. features are consumed by `model_fn`. They should satisfy
+        the expectation of `model_fn` from inputs.
+      * A tuple, in which case the first item is extracted as features.
+</code></pre>
+</li>
+<li>
+<p><strong>checkpoint_path</strong>: Path of a specific checkpoint to predict. If <code>None</code>, the
+            latest checkpoint in <code>model_dir</code> is used.  If there are no checkpoints
+            in <code>model_dir</code>, prediction is run with newly initialized <code>Variables</code>
+            instead of ones restored from checkpoint.</p>
+</li>
+</ul>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
