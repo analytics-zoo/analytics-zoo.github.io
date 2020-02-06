@@ -87,7 +87,7 @@ models on Spark and BigDL. Users can define their model using <code>tf.keras</co
 TFDatasets can be created from numpy.ndarrays, an rdd of numpy.ndarrays as well as ImageSet, TextSet and FeatureSet.
 It acts as an interface connecting RDD data to TensorFlow models.</p>
 <pre><code class="python">from zoo import init_nncontext
-from zoo.pipeline.api.net import TFDataset
+from zoo.tfpark import TFDataset
 from tensorflow as tf
 
 sc = init_nncontext()
@@ -227,7 +227,7 @@ model prediction for the corresponding input elements.</p>
 <h2 id="training">Training</h2>
 <p>1.Data wrangling and analysis using PySpark</p>
 <pre><code class="python">from zoo import init_nncontext
-from zoo.pipeline.api.net import TFDataset
+from zoo.tfpark import TFDataset
 from tensorflow as tf
 
 sc = init_nncontext()
@@ -306,7 +306,7 @@ saver.save(optimizer.sess, &quot;/tmp/lenet/&quot;)
 <h3 id="inference">Inference</h3>
 <p>1.Data processing using PySpark</p>
 <pre><code class="python">from zoo import init_nncontext
-from zoo.pipeline.api.net import TFDataset
+from zoo.tfpark import TFDataset
 from tensorflow as tf
 
 sc = init_nncontext()
