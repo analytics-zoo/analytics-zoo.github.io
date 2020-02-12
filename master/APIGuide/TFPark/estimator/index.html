@@ -64,8 +64,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <hr>
     <h1 id="tfestimator">TFEstimator</h1>
 <p>TFEstimator wraps a model defined by <code>model_fn</code>. The <code>model_fn</code> is almost identical to TensorFlow's <code>model_fn</code>
-except users are required to return a <code>TFEstimator</code> object. Users do not need to construct backward graph
-(calling <code>optimizer.minimize(...)</code>) but set a <code>loss</code> tensor in <code>TFEstimator</code>.</p>
+except users are required to use ZooOptimizer, which takes a <code>tf.train.Optimzer</code> as input, to derive a train_op.</p>
 <p><strong>Remarks</strong>:</p>
 <ul>
 <li>You need to install <strong>tensorflow==1.15.0</strong> on your driver node.</li>
@@ -74,9 +73,9 @@ except users are required to return a <code>TFEstimator</code> object. Users do 
 <li>To run on other systems, you need to manually compile the TensorFlow source code. Instructions can
   be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</li>
 </ul>
-<p><strong>Create a TFEstimator</strong>:</p>
+<p><strong>Create a TFEstimator from a model_fn</strong>:</p>
 <pre><code class="python">import tensorflow as tf
-from zoo.tfpark.estimator import TFEstimator, TFEstimatorSpec
+from zoo.tfpark import TFEstimator, ZooOptimizer
 def model_fn(features, labels, mode):
 
     hidden = tf.layers.dense(features, 32, activation=tf.nn.relu)
@@ -86,16 +85,30 @@ def model_fn(features, labels, mode):
     if mode == tf.estimator.ModeKeys.EVAL or mode == tf.estimator.ModeKeys.TRAIN:
         loss = tf.reduce_mean(
             tf.losses.sparse_softmax_cross_entropy(logits=logits, labels=labels))
-        return TFEstimatorSpec(mode, predictions=logits, loss=loss)
+        train_op = ZooOptimizer(tf.train.AdamOptimizer()).minimize(loss)
+        return tf.estimator.EstimatorSpec(mode, train_op=train_op, predictions=logits, loss=loss)
     else:
-        return TFEstimatorSpec(mode, predictions=logits)
+        return tf.estimator.EstimatorSpec(mode, predictions=logits)
 
-estimator = TFEstimator(model_fn, tf.train.AdamOptimizer(), model_dir=&quot;/tmp/estimator&quot;)
+estimator = TFEstimator.from_model_fn(model_fn, model_dir=&quot;/tmp/estimator&quot;)
+</code></pre>
+
+<p><strong>Create a TFEstimator from a pre-made estimator</strong>:</p>
+<pre><code class="python">import tensorflow as tf
+linear = tf.estimator.LinearClassifier(feature_columns=feature_columns,
+                                           optimizer=ZooOptimizer(tf.train.FtrlOptimizer(0.2)))
+estimator = TFEstimator(linear)
 </code></pre>
 
 <h2 id="methods">Methods</h2>
 <h3 id="9595init9595">__init__</h3>
-<pre><code class="python">TFEstimator(model_fn, optimizer=None, model_dir=None, config=None, params=None, warm_start_from=None)
+<p>Create a TFEstimator from a tf.estimator.Estimator</p>
+<pre><code class="python">TFEstimator(estimator)
+</code></pre>
+
+<h3 id="from_model_fn">from_model_fn</h3>
+<p>Create a TFEstimator from a model_fn</p>
+<pre><code class="python">TFEstimator.from_model_fn(model_fn, model_dir=None, config=None, params=None, warm_start_from=None)
 </code></pre>
 
 <h4 id="arguments">Arguments</h4>
@@ -123,11 +136,11 @@ estimator = TFEstimator(model_fn, tf.train.AdamOptimizer(), model_dir=&quot;/tmp
             configuration such as `num_ps_replicas`, or `model_dir`.
 
     * Returns:
-        `zoo.tfpark.estimator.TFEstimatorSpec`
+        `tf.estimator.EstimatorSpec`
+    For the train_op in tf.estimator.EstimatorSpec, it derive from and only from
+                `zoo.tfpark.ZooOptimizer`
 </code></pre>
 <ul>
-<li><strong>optimizer</strong>: the tf.train.Optimizer to be used in training,
-                     e.g. tf.train.AdamOptimizer()</li>
 <li><strong>model_dir</strong>: Directory to save model parameters, graph and etc. This can
         also be used to load checkpoints from the directory into an estimator to
         continue training a previously saved model. If <code>PathLike</code> object, the
