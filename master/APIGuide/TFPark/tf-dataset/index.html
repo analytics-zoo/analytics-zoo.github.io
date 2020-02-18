@@ -266,6 +266,62 @@ dataset is used for training, the label should be encoded in the bytes.</p>
         it is None.</li>
 <li><strong>validation_string_rdd</strong>: the RDD of bytes to be used in validation</li>
 </ul>
+<h3 id="from_tf_data_dataset"><strong>from_tf_data_dataset</strong></h3>
+<p>Create a TFDataset from a tf.data.Dataset.</p>
+<p>The recommended way to create the dataset is to reading files in a shared file
+system (e.g. HDFS) that is accessible from every executor of this Spark Application.</p>
+<p>If the dataset is created by reading files in the local file system, then the
+files must exist in every executor in the exact same path. The path should be
+absolute path and relative path is not supported.</p>
+<p>A few kinds of dataset is not supported for now:
+1. dataset created from tf.data.Dataset.from_generators
+2. dataset with Dataset.batch operation.
+3. dataset with Dataset.repeat operation
+4. dataset contains tf.py_func, tf.py_function or tf.numpy_function</p>
+<p><strong>Python</strong></p>
+<pre><code class="python">from_tf_data_dataset(dataset, batch_size=-1, batch_per_thread=-1, hard_code_batch_size=False, validation_dataset=None)
+</code></pre>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>dataset</strong>: the tf.data.Dataset</li>
+<li><strong>batch_size</strong>: the batch size, used for training, should be a multiple of
+        total core num</li>
+<li><strong>batch_per_thread</strong>: the batch size for each thread, used for inference or evaluation</li>
+<li><strong>hard_code_batch_size</strong>: whether to hard code the batch_size into tensorflow graph,
+        if True, the static size of the first dimension of the resulting tensors is
+        batch_size/total_core_num (training) or batch_per_thread for inference; if False,
+        it is None.</li>
+<li><strong>validation_dataset</strong>: the dataset used for validation</li>
+</ul>
+<h3 id="from_dataframe"><strong>from_dataframe</strong></h3>
+<p>Create a TFDataset from a pyspark.sql.DataFrame.</p>
+<p><strong>Python</strong></p>
+<pre><code class="python">from_dataframe(df, feature_cols, labels_cols=None, batch_size=-1, batch_per_thread=-1, hard_code_batch_size=False, validation_df=None)
+</code></pre>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>df</strong>: the DataFrame for the dataset</li>
+<li><strong>feature_cols</strong>: a list of string, indicating which columns are used as features.
+                    Currently supported types are FloatType, DoubleType, IntegerType,
+                    LongType, ArrayType (value should be numbers), DenseVector
+                    and SparseVector. For ArrayType, DenseVector and SparseVector,
+                    the element of the same column are assume to have the same size. </li>
+<li><strong>label_cols</strong>: a list of string, indicating which columns are used as labels.
+                    Currently supported types are FloatType, DoubleType, IntegerType,
+                    LongType, ArrayType (value should be numbers), DenseVector
+                    and SparseVector. For ArrayType, DenseVector and SparseVector,
+                    the element of the same column are assume to have the same size.</li>
+<li><strong>batch_size</strong>: the batch size, used for training, should be a multiple of
+        total core num</li>
+<li><strong>batch_per_thread</strong>: the batch size for each thread, used for inference or evaluation</li>
+<li><strong>hard_code_batch_size</strong>: whether to hard code the batch_size into tensorflow graph,
+        if True, the static size of the first dimension of the resulting tensors is
+        batch_size/total_core_num (training) or batch_per_thread for inference; if False,
+        it is None.</li>
+<li><strong>validation_df</strong>: the DataFrame used for validation</li>
+</ul>
 
   <br>
 </div>
