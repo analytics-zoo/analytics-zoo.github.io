@@ -11,12 +11,12 @@
     
     <link rel="shortcut icon" href="/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>TFPark - Analytics Zoo</title>
+    <title>TFPark Overview - Analytics Zoo</title>
     <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/highlight.css">
-    <link href="../../extra.css" rel="stylesheet">
+    <link href="../../../extra.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -29,7 +29,7 @@
     
     <base target="_top">
     <script>
-      var base_url = '../..';
+      var base_url = '../../..';
       var is_top_frame = false;
         
         var pageToc = [
@@ -68,7 +68,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
 <div class="container-fluid wm-page-content">
     
-    <h1><strong>TFPark</strong></h1>
+    <h1><strong>TFPark Overview</strong></h1>
     <hr>
     <p>Analytics-Zoo provides a set APIs for running TensorFlow model on Spark in a distributed fashion.</p>
 <p><strong>Remarks</strong>:</p>
@@ -105,7 +105,7 @@ dataset = TFDataset.from_rdd(train_rdd,
                              batch_size=BATCH_SIZE)
 </code></pre>
 
-<p>More on TFDataset API <a href="../../APIGuide/TFPark/tf-dataset/">API Guide</a></p>
+<p>More on TFDataset API <a href="../../../APIGuide/TFPark/tf-dataset/">API Guide</a></p>
 <h2 id="kerasmodel">KerasModel</h2>
 <p>KerasModel enables user to use <code>tf.keras</code> API to define TensorFlow models and perform training or evaluation on top
 of Spark and BigDL in a distributed fashion.</p>
@@ -148,7 +148,7 @@ evaluation_results = model.evaluate(eval_dataset)
 predictions = model.predict(pred_dataset)
 </code></pre>
 
-<p>More on KerasModel API <a href="../../APIGuide/TFPark/model/">API Guide</a></p>
+<p>More on KerasModel API <a href="../../../APIGuide/TFPark/model/">API Guide</a></p>
 <h2 id="tfestimator">TFEstimator</h2>
 <p>TFEstimator wraps a model defined by <code>model_fn</code>. The <code>model_fn</code> is almost identical to TensorFlow's <code>model_fn</code>
 except users are required to use ZooOptimizer, which takes a <code>tf.train.Optimzer</code> as input, to derive a train_op.</p>
@@ -214,7 +214,7 @@ evaluation_result = estimator.evaluate(input_fn, [&quot;acc&quot;])
 predictions = estimator.predict(input_fn)
 </code></pre>
 
-<p>More on TFEstimator API <a href="../../APIGuide/TFPark/estimator/">API Guide</a></p>
+<p>More on TFEstimator API <a href="../../../APIGuide/TFPark/estimator/">API Guide</a></p>
 <h1 id="low-level-api">Low level API</h1>
 <h2 id="concepts">Concepts</h2>
 <ul>
@@ -376,7 +376,7 @@ It implements the standard BigDL layer API, and can be used with other Analytics
 to construct more complex models for training or inference using the standard Analytics-Zoo/BigDL API. </p>
 <p>You can think of <code>TFDatasets</code>, <code>TFOptimizer</code>, <code>TFPredictor</code> as a set API for training/testing TensorFlow models
 on Spark/BigDL, while <code>TFNet</code> as an Analytics-Zoo/BigDL layer initialized using TensorFlow graph.</p>
-<p>For more information on TFNet, please refer to the <a href="../../APIGuide/PipelineAPI/net/##TFNet">API Guide</a></p>
+<p>For more information on TFNet, please refer to the <a href="../../../APIGuide/PipelineAPI/net/##TFNet">API Guide</a></p>
 
   <br>
 </div>

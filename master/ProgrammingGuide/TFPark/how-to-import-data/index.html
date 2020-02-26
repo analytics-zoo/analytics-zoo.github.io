@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>How To Import Data - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "TFDataset", url: "#tfdataset", children: [
+              {title: "Introduction", url: "#introduction" },
+              {title: "Basics", url: "#basics" },
+              {title: "Working with in-memory ndarray", url: "#working-with-in-memory-ndarray" },
+              {title: "Working with data files including (csv files, text files and TFRecord files)", url: "#working-with-data-files-including-csv-files-text-files-and-tfrecord-files" },
+              {title: "Working with Analytics Zoo Feature Engineering tools", url: "#working-with-analytics-zoo-feature-engineering-tools" },
+              {title: "Working with RDD or Spark DataFrame data", url: "#working-with-rdd-or-spark-dataframe-data" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>How To Import Data</strong></h1>
+    <hr>
+    <h2 id="tfdataset">TFDataset</h2>
+<h3 id="introduction">Introduction</h3>
+<p><strong>TFDatasets</strong> is the main entrance point in TFPark for importing and manipulating data.
+It represents a distributed collection of elements (backed by a RDD) to be fed into a
+TensorFlow graph for training, evaluation or inference. It provides a rich set of tools
+to import data from various data sources and work as a unified interface to interact with
+other components of TFPark.</p>
+<p>This guide will walk you through some common cases of importing data and you can find detailed description
+of TFDataset's API in <a href="../../../APIGuide/TFPark/tf-dataset/">Analytics-Zoo API Guide</a>.</p>
+<h3 id="basics">Basics</h3>
+<p><code>TFDataset</code>'s job is to take in dataset, distribute the data across the Spark cluster and transform each data
+record into the format that is compatible with TFPark.</p>
+<p>Here are a few common features that every TFDataset share:</p>
+<ol>
+<li>
+<p><code>TFDataset</code> will automatically stack consecutive records into batches. The <code>batch_size</code> argument (for training)
+or <code>batch_per_thread</code> argument (for inference or evaluation) should be set when creating TFDataset.
+The <code>batch_size</code> here is used for training and it means the total batch size in distributed training.
+In other words, it equals to the total number of records processed in one iteration in the
+whole cluster. <code>batch_size</code> should be a multiple of the total number of cores that is allocated for this Spark application
+so that we can distributed the workload evenly across the cluster. You may need to adjust your other training
+hyper-parameters when <code>batch_size</code> is changed. <code>batch_per_thread</code> is used for inference or evaluation
+and it means the number of records process in one iteration in one partition. <code>batch_per_thread</code> is argument for tuning
+performance and it does not affect the correctness or accuracy of the prediction or evaluation. Too small <code>batch_per_thread</code>
+might slow down the prediction/evaluation.</p>
+</li>
+<li>
+<p>For training, <code>TFDataset</code> can optionally takes a validation data source for validation at the the end of each epoch.
+The validation data source should has the same structure of the main data source used for training.</p>
+</li>
+</ol>
+<pre><code class="python">import numpy as np
+from zoo.tfpark import TFDataset
+feature_data = np.random.randn(100, 28, 28, 1)
+label_data = np.random.randint(0, 10, size=(100,))
+val_feature_data = np.random.randn(100, 28, 28, 1)
+val_label_data = np.random.randint(0, 10, size=(100,))
+dataset = TFDataset.from_ndarrays((feature_data, label_data), batch_size=32, val_tensors=(val_feature_data, val_label_data))
+</code></pre>
+
+<h3 id="working-with-in-memory-ndarray">Working with in-memory ndarray</h3>
+<p>If your input data is quite small, the simplest way to create <code>TFDataset</code> to convert them to ndarrays and use
+<code>TFDataset.from_ndarrays()</code></p>
+<p>E.g.</p>
+<pre><code class="python">import numpy as np
+from zoo.tfpark import TFDataset
+feature_data = np.random.randn(100, 28, 28, 1)
+label_data = np.random.randint(0, 10, size=(100,))
+dataset = TFDataset.from_ndarrays((feature_data, label_data), batch_size=32)
+</code></pre>
+
+<h3 id="working-with-data-files-including-csv-files-text-files-and-tfrecord-files">Working with data files including (csv files, text files and TFRecord files)</h3>
+<p>TFDataset support reading the records in tf.data.Dataset, so you can use tf.data.Dataset to read and process your data
+files and pass it to TFDataset. TFDataset will automatically ship the dataset to different Spark executors, shard the
+data and batch the records for further consumption.</p>
+<p>If you data files is already in HDFS, you should configure you dataset with the path with the following pattern
+<code>"hdfs://namenode:port/path/to/file.txt"</code> and TFDataset will directly access that file in HDFS in each executor.
+<code>HDFS_HDFS_HOME</code> environment may needs to be set to the location where hadoop is installed for both Spark driver
+and Spark executor. More information on the environment variable can be found <a href="https://github.com/tensorflow/examples/blob/master/community/en/docs/deploy/hadoop.md">here</a>.</p>
+<p>If you data files are in local file system, you can either upload it to a HDFS cluster and use the above approach or
+copy all the data files on each executor in exact the same location.</p>
+<p>More information on <code>tf.data.Dataset</code> can be found <a href="https://www.tensorflow.org/guide/data">here</a>.</p>
+<p>E.g.</p>
+<pre><code class="python">ds = tf.data.TextLineDataset(&quot;hdfs://path/to/data.csv&quot;)
+ds = ds.map(lambda line: tf.parse_csv(line, COLUMNS))
+ds = ds.map(lamdda data: extract_features_labels(data))
+dataset = TFDataset.from_tf_data_dataset(dataset, batch_size=32)
+</code></pre>
+
+<h3 id="working-with-analytics-zoo-feature-engineering-tools">Working with Analytics Zoo Feature Engineering tools</h3>
+<p>Analytics Zoo provides a rich set of tools to build complex data engineering pipelines on top Spark, including
+<code>ImageSet</code>, <code>TextSet</code> and <code>FeatureSet</code>. TFPark also support using those tools for manipulating data. Specifically,
+you can use <code>TFDataset.from_image_set</code>, <code>TFDataset.from_text_set</code> and <code>TFDataset.from_feature_set</code> for importing
+data pipeline written in those tools. Details for these api can be found in <a href="../../../APIGuide/TFPark/tf-dataset/">Analytics-Zoo API Guide</a>.
+More information on Analytics Zoo's Feature Engineering tools can be found <a href="../../../APIGuide/FeatureEngineering/featureset/">here</a>.</p>
+<h3 id="working-with-rdd-or-spark-dataframe-data">Working with RDD or Spark DataFrame data</h3>
+<p>If the about approach does not match your use cases, you can always transform your data into RDD or DataFrame using
+Spark's data processing capability.</p>
+<p>For rdd, we assume each record contains a tuple of numpy.ndarrays or a tuple of list/dict of numpy.ndarrays. The first
+element of the tuple, will be interpreted as feature and the second (optional) will be interpreted as label. Each record
+should has the same structure. Details for these api can be found in <a href="../../../APIGuide/TFPark/tf-dataset/">Analytics-Zoo API Guide</a>.</p>
+<p>e.g.</p>
+<pre><code class="python">image_rdd = sc.parallelize(np.random.randn(100, 28, 28, 1))
+labels_rdd = sc.parallelize(np.random.randint(0, 10, size=(100,)))
+rdd = image_rdd.zip(labels_rdd)
+dataset = TFDataset.from_rdd(rdd,
+                             features=(tf.float32, [28, 28, 1]),
+                             labels=(tf.int32, []),
+                             batch_size=32)
+</code></pre>
+
+<p>For dataframe, you should which columns are features and which columns are labels (optional). And currently only numerical
+types and vectors are supported. Details for these api can be found in <a href="../../../APIGuide/TFPark/tf-dataset/">Analytics-Zoo API Guide</a>.</p>
+<p>e.g.</p>
+<pre><code class="python">rdd = self.sc.range(0, 1000)
+df = rdd.map(lambda x: (DenseVector(np.random.rand(20).astype(np.float)),
+                                x % 10)).toDF([&quot;feature&quot;, &quot;label&quot;])
+dataset = TFDataset.from_dataframe(train_df,
+                                   feature_cols=[&quot;feature&quot;],
+                                   labels_cols=[&quot;label&quot;],
+                                   batch_size=32)
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
