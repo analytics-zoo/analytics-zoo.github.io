@@ -41,7 +41,7 @@
               {title: "Run with pyspark", url: "#run-with-pyspark" },
               {title: "Run with spark-submit", url: "#run-with-spark-submit" },
               {title: "Run with Jupyter Notebook", url: "#run-with-jupyter-notebook" },
-              {title: "Run with virtual environment on Yarn", url: "#run-with-virtual-environment-on-yarn" },
+              {title: "Run with conda environment on Yarn", url: "#run-with-conda-environment-on-yarn" },
           ]},
           {title: "Example code", url: "#example-code", children: [
           ]},
@@ -206,43 +206,46 @@ your browser. You can find the exact URL in the console output when you started 
 the dashboard URL is http://your_node:8888/</p>
 <p>Try to run the <a href="#example-code">example code</a> for verification.</p>
 <hr />
-<h4 id="run-with-virtual-environment-on-yarn"><strong><em>Run with virtual environment on Yarn</em></strong></h4>
-<p>If you have already created Analytics Zoo dependency virtual environment according to Yarn cluster guide <a href="../install/#for-yarn-cluster">here</a>,
+<h4 id="run-with-conda-environment-on-yarn"><strong><em>Run with conda environment on Yarn</em></strong></h4>
+<p>If you have already created Analytics Zoo dependency conda environment package according to Yarn cluster guide <a href="../install/#for-yarn-cluster">here</a>,
 you can run Python programs using Analytics Zoo using the following command.</p>
 <p>Here we use Analytics Zoo <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/objectdetection">Object Detection Python example</a> for illustration.</p>
 <ul>
-<li>Yarn cluster mode</li>
+<li>Yarn cluster mode (with conda package name "environment.tar.gz" for example)</li>
 </ul>
 <pre><code class="bash">export SPARK_HOME=the root directory of Spark
 export ANALYTICS_ZOO_HOME=the folder where you extract the downloaded Analytics Zoo zip package
-export VENV_HOME=the parent directory of venv.zip and venv folder
+export ENV_HOME=the parent directory of your conda environment package
 
-PYSPARK_PYTHON=${VENV_HOME}/venv.zip/venv/bin/python ${ANALYTICS_ZOO_HOME}/bin/spark-submit-python-with-zoo.sh \
-    --conf spark.yarn.appMasterEnv.PYSPARK_PYTHON=venv.zip/venv/bin/python \
+PYSPARK_PYTHON=./environment/bin/python ${ANALYTICS_ZOO_HOME}/bin/spark-submit-python-with-zoo.sh \
+    --conf spark.yarn.appMasterEnv.PYSPARK_PYTHON=./environment/bin/python \
     --master yarn-cluster \
     --executor-memory 10g \
     --driver-memory 10g \
     --executor-cores 8 \
     --num-executors 2 \
-    --archives ${VENV_HOME}/venv.zip \
+    --archives ${ENV_HOME}/environment.tar.gz#environment \
     predict.py model_path image_path output_path
 </code></pre>
 
 <ul>
-<li>Yarn client mode</li>
+<li>Yarn client mode (with conda package name "environment.tar.gz" for example)</li>
 </ul>
 <pre><code class="bash">export SPARK_HOME=the root directory of Spark
 export ANALYTICS_ZOO_HOME=the folder where you extract the downloaded Analytics Zoo zip package
-export VENV_HOME=the parent directory of venv.zip and venv folder
+export ENV_HOME=the parent directory of your conda environment package
 
-PYSPARK_DRIVER_PYTHON=${VENV_HOME}/venv/bin/python PYSPARK_PYTHON=venv.zip/venv/bin/python ${ANALYTICS_ZOO_HOME}/bin/spark-submit-python-with-zoo.sh \
+mkdir ${ENV_HOME}/environment
+tar -xzf ${ENV_HOME}/environment.tar.gz -C ${ENV_HOME}/environment
+
+PYSPARK_DRIVER_PYTHON=${ENV_HOME}/environment/bin/python PYSPARK_PYTHON=./environment/bin/python ${ANALYTICS_ZOO_HOME}/bin/spark-submit-python-with-zoo.sh \
     --master yarn \
     --deploy-mode client \
     --executor-memory 10g \
     --driver-memory 10g \
     --executor-cores 16 \
     --num-executors 2 \
-    --archives ${VENV_HOME}/venv.zip \
+    --archives ${ENV_HOME}/environment.tar.gz#environment \
     predict.py model_path image_path output_path
 </code></pre>
 

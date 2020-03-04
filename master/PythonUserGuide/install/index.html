@@ -158,48 +158,25 @@ Alternatively, you can also build the Analytics Zoo from <a href="../../ScalaUse
 </ul>
 <h4 id="for-yarn-cluster"><strong><em>For Yarn cluster</em></strong></h4>
 <p>You can run Analytics Zoo Python programs on Yarn clusters without changes to the cluster (i.e., no need to pre-install any Python dependency).</p>
-<p>You can first package all the required dependencies into a virtual environment on the local node (where you will run the spark-submit command),
-and then directly use spark-submit to run the Analytics Zoo Python program on the Yarn cluster using that virtual environment.</p>
-<p>Follow the steps below to create the virtual environment: </p>
-<ul>
-<li>Make sure you already installed such libraries (python-setuptools, python-dev, gcc, make, zip, pip) for creating the virtual environment. If not, please install them first.
-On Ubuntu, you can run these commands to install:</li>
-</ul>
-<pre><code>apt-get update
-apt-get install -y python-setuptools python-dev
-apt-get install -y gcc make
-apt-get install -y zip
-easy_install pip
+<p>You can first package all the required dependencies into a conda environment on the local node (where you will run the spark-submit command),
+and then directly use spark-submit to run the Analytics Zoo Python program on the Yarn cluster using that conda environment.</p>
+<p>Follow the steps below to create the conda environment:</p>
+<p>1) Install <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html">Conda</a> in your environment.</p>
+<p>2) Create a new conda environment (with name "environment" for example):</p>
+<pre><code>conda create -n environment python=3.6 pip=20.0.2 setuptools=45.2.0 conda-pack==0.3.1
+conda activate environment
 </code></pre>
 
-<ul>
-<li>
-<p>Create the virtualenv package for dependencies.</p>
-<ul>
-<li>
-<p><code>export ANALYTICS_ZOO_HOME=the folder where you extract the downloaded Analytics Zoo zip package</code></p>
-</li>
-<li>
-<p>Run <code>${ANALYTICS_ZOO_HOME}/bin/python_package.sh</code> to create the dependency virtual environment according to the dependencies listed in <code>requirements.txt</code>. You can add your own dependencies into this file if you wish. The current requirements only contain those needed for running Analytics Zoo Python examples and models.</p>
-</li>
-<li>
-<p>After running this script, there will be <code>venv.zip</code> and <code>venv</code> directory generated in current directory. You can use them to submit your Python jobs. Please refer to <a href="../run/#run-with-virtual-environment-on-yarn">here</a> for the commands to submit an Analytics Zoo Python job with the created virtual environment in Yarn cluster.</p>
-</li>
-</ul>
-</li>
-</ul>
-<p><strong>FAQ</strong></p>
-<p>In case you encounter the following errors when you create the environment package using the above command:</p>
-<ol>
-<li>virtualenv ImportError: No module named urllib3<ul>
-<li>Using python in anaconda to create virtualenv may cause this problem. Try using python default in your system instead of installing virtualenv in anaconda.</li>
-</ul>
-</li>
-<li>AttributeError: 'module' object has no attribute 'sslwrap'<ul>
-<li>Try upgrading <code>gevent</code> with <code>pip install --upgrade gevent</code>.</li>
-</ul>
-</li>
-</ol>
+<p>3) Install python dependencies into the created conda environment.
+Install the dependencies according to the dependencies listed in <code>requirements.txt</code>. You can add your own dependencies into this file if you wish. The current requirements only contain those needed for running Analytics Zoo Python examples and models.</p>
+<pre><code>pip install -r ${ANALYTICS_ZOO_HOME}/bin/requirements.txt
+</code></pre>
+
+<p>4) Create conda package for the created conda environment</p>
+<pre><code>conda pack -o environment.tar.gz
+</code></pre>
+
+<p>Then you can find the conda package file under the current directory.</p>
 
   <br>
 </div>
