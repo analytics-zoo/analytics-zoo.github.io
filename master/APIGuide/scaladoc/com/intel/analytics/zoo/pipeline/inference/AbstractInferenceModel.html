@@ -274,7 +274,7 @@
     </span>
       <p class="shortcomment cmt">loads a bigdl, analytics-zoo model
 </p><div class="fullcomment"><div class="comment cmt"><p>loads a bigdl, analytics-zoo model
-</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the file path of the model</p></dd><dt class="param">weightPath</dt><dd class="cmt"><p>the file path of the weights</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the file path of the model</p></dd><dt class="param">weightPath</dt><dd class="cmt"><p>the file path of the weights</p></dd><dt class="param">blas</dt><dd class="cmt"><p>whether MKLBLAS or MKLDNN</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadCaffe" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadCaffe(modelPath:String,weightPath:String,blas:Boolean):Unit"></a>
       <a id="doLoadCaffe(String,String,Boolean):Unit"></a>
@@ -293,7 +293,7 @@
     </span>
       <p class="shortcomment cmt">loads a caffe model
 </p><div class="fullcomment"><div class="comment cmt"><p>loads a caffe model
-</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the prototxt file</p></dd><dt class="param">weightPath</dt><dd class="cmt"><p>the path of the caffemodel file</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the prototxt file</p></dd><dt class="param">weightPath</dt><dd class="cmt"><p>the path of the caffemodel file</p></dd><dt class="param">blas</dt><dd class="cmt"><p>whether MKLBLAS or MKLDNN</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadOpenVINO" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadOpenVINO(modelBytes:Array[Byte],weightBytes:Array[Byte],batchSize:Int):Unit"></a>
       <a id="doLoadOpenVINO(Array[Byte],Array[Byte],Int):Unit"></a>
@@ -370,295 +370,123 @@
       <p class="shortcomment cmt">load a Torch model as TorchNet
 </p><div class="fullcomment"><div class="comment cmt"><p>load a Torch model as TorchNet
 </p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the torch script</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTF(savedModelBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit"></a>
-      <a id="doLoadTF(Array[Byte],Array[Int],Boolean,Array[Float],Float,String):Unit"></a>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTensorflow" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTensorflow(modelBytes:Array[Byte],modelType:String,inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit"></a>
+      <a id="doLoadTensorflow(Array[Byte],String,Array[String],Array[String],Int,Int,Boolean):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">doLoadTF</span><span class="params">(<span name="savedModelBytes">savedModelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="input">input: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">doLoadTensorflow</span><span class="params">(<span name="modelBytes">modelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="modelType">modelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="intraOpParallelismThreads">intraOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="interOpParallelismThreads">interOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="usePerSessionThreads">usePerSessionThreads: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(savedModelBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTensorflow(modelBytes:Array[Byte],modelType:String,inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">load TF model as OpenVINO IR
-</p><div class="fullcomment"><div class="comment cmt"><p>load TF model as OpenVINO IR
-</p></div><dl class="paramcmts block"><dt class="param">savedModelBytes</dt><dd class="cmt"><p>the bytes of the tensorflow saved model tar</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape that should be fed to an input node(s) of the model</p></dd><dt class="param">ifReverseInputChannels</dt><dd class="cmt"><p>the boolean value of if need reverse input channels.
-                              switch the input channels order from RGB to BGR (or vice versa).</p></dd><dt class="param">meanValues</dt><dd class="cmt"><p>all input values coming from original network inputs
-                              will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd><dt class="param">input</dt><dd class="cmt"><p>the name of the input operation of the given model</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTF(savedModelDir:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit"></a>
-      <a id="doLoadTF(String,Array[Int],Boolean,Array[Float],Float,String):Unit"></a>
+      <p class="shortcomment cmt">loads a tensorflow model as TFNet
+</p><div class="fullcomment"><div class="comment cmt"><p>loads a tensorflow model as TFNet
+</p></div><dl class="paramcmts block"><dt class="param">modelBytes</dt><dd class="cmt"><p>the bytes of the tensorflow model tar</p></dd><dt class="param">modelType</dt><dd class="cmt"><p>the type of the tensorflow model file:
+                                 &quot;frozenModel&quot; or &quot;savedModel&quot;</p></dd><dt class="param">inputs</dt><dd class="cmt"><p>the inputs of the model</p></dd><dt class="param">outputs</dt><dd class="cmt"><p>the outputs of the model</p></dd><dt class="param">intraOpParallelismThreads</dt><dd class="cmt"><p>the num of intraOpParallelismThreads</p></dd><dt class="param">interOpParallelismThreads</dt><dd class="cmt"><p>the num of interOpParallelismThreads</p></dd><dt class="param">usePerSessionThreads</dt><dd class="cmt"><p>whether to perSessionThreads</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTensorflow" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTensorflow(modelBytes:Array[Byte],modelType:String,inputs:Array[String],outputs:Array[String]):Unit"></a>
+      <a id="doLoadTensorflow(Array[Byte],String,Array[String],Array[String]):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">doLoadTF</span><span class="params">(<span name="savedModelDir">savedModelDir: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="input">input: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">doLoadTensorflow</span><span class="params">(<span name="modelBytes">modelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="modelType">modelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(savedModelDir:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTensorflow(modelBytes:Array[Byte],modelType:String,inputs:Array[String],outputs:Array[String]):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">load TF model as OpenVINO IR
-</p><div class="fullcomment"><div class="comment cmt"><p>load TF model as OpenVINO IR
-</p></div><dl class="paramcmts block"><dt class="param">savedModelDir</dt><dd class="cmt"><p>the dir path of the tensorflow saved model</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape that should be fed to an input node(s) of the model</p></dd><dt class="param">ifReverseInputChannels</dt><dd class="cmt"><p>the boolean value of if need reverse input channels.
-                              switch the input channels order from RGB to BGR (or vice versa).</p></dd><dt class="param">meanValues</dt><dd class="cmt"><p>all input values coming from original network inputs
-                              will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd><dt class="param">input</dt><dd class="cmt"><p>the name of the input operation of the given model</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTF(modelBytes:Array[Byte],imageClassificationModelType:String,checkpointBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit"></a>
-      <a id="doLoadTF(Array[Byte],String,Array[Byte],Array[Int],Boolean,Array[Float],Float):Unit"></a>
+      <p class="shortcomment cmt">loads a tensorflow model as TFNet
+</p><div class="fullcomment"><div class="comment cmt"><p>loads a tensorflow model as TFNet
+</p></div><dl class="paramcmts block"><dt class="param">modelBytes</dt><dd class="cmt"><p>the bytes of the tensorflow model tar</p></dd><dt class="param">modelType</dt><dd class="cmt"><p>the type of the tensorflow model file: &quot;frozenModel&quot; or &quot;savedModel&quot;</p></dd><dt class="param">inputs</dt><dd class="cmt"><p>the inputs of the model</p></dd><dt class="param">outputs</dt><dd class="cmt"><p>the outputs of the model</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTensorflow" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTensorflow(modelPath:String,modelType:String,inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit"></a>
+      <a id="doLoadTensorflow(String,String,Array[String],Array[String],Int,Int,Boolean):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">doLoadTF</span><span class="params">(<span name="modelBytes">modelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="imageClassificationModelType">imageClassificationModelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkpointBytes">checkpointBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">doLoadTensorflow</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="modelType">modelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="intraOpParallelismThreads">intraOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="interOpParallelismThreads">interOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="usePerSessionThreads">usePerSessionThreads: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelBytes:Array[Byte],imageClassificationModelType:String,checkpointBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTensorflow(modelPath:String,modelType:String,inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">load TF model as OpenVINO IR
-</p><div class="fullcomment"><div class="comment cmt"><p>load TF model as OpenVINO IR
-</p></div><dl class="paramcmts block"><dt class="param">modelBytes</dt><dd class="cmt"><p>the bytes of the tensorflow model</p></dd><dt class="param">imageClassificationModelType</dt><dd class="cmt"><p>the type of the tensorflow model</p></dd><dt class="param">checkpointBytes</dt><dd class="cmt"><p>the bytes of the tensorflow checkpoint file</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape that should be fed to an input node(s) of the model</p></dd><dt class="param">ifReverseInputChannels</dt><dd class="cmt"><p>the boolean value of if need reverse input channels.
-                              switch the input channels order from RGB to BGR (or vice versa).</p></dd><dt class="param">meanValues</dt><dd class="cmt"><p>all input values coming from original network inputs
-                              will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTF(modelPath:String,imageClassificationModelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit"></a>
-      <a id="doLoadTF(String,String,String,Array[Int],Boolean,Array[Float],Float):Unit"></a>
+      <p class="shortcomment cmt">loads a tensorflow model as TFNet
+</p><div class="fullcomment"><div class="comment cmt"><p>loads a tensorflow model as TFNet
+</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow:
+                                 frozen model file or saved model dir</p></dd><dt class="param">modelType</dt><dd class="cmt"><p>the type of the tensorflow model file:
+                                 &quot;frozenModel&quot; or &quot;savedModel&quot;</p></dd><dt class="param">inputs</dt><dd class="cmt"><p>the inputs of the model</p></dd><dt class="param">outputs</dt><dd class="cmt"><p>the outputs of the model</p></dd><dt class="param">intraOpParallelismThreads</dt><dd class="cmt"><p>the num of intraOpParallelismThreads</p></dd><dt class="param">interOpParallelismThreads</dt><dd class="cmt"><p>the num of interOpParallelismThreads</p></dd><dt class="param">usePerSessionThreads</dt><dd class="cmt"><p>whether to perSessionThreads</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTensorflow" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTensorflow(modelPath:String,modelType:String,inputs:Array[String],outputs:Array[String]):Unit"></a>
+      <a id="doLoadTensorflow(String,String,Array[String],Array[String]):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="imageClassificationModelType">imageClassificationModelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkpointPath">checkpointPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">doLoadTensorflow</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="modelType">modelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelPath:String,imageClassificationModelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTensorflow(modelPath:String,modelType:String,inputs:Array[String],outputs:Array[String]):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">load TF model as OpenVINO IR
-</p><div class="fullcomment"><div class="comment cmt"><p>load TF model as OpenVINO IR
-</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow model</p></dd><dt class="param">imageClassificationModelType</dt><dd class="cmt"><p>the type of the tensorflow model</p></dd><dt class="param">checkpointPath</dt><dd class="cmt"><p>the path of the tensorflow checkpoint file</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape that should be fed to an input node(s) of the model</p></dd><dt class="param">ifReverseInputChannels</dt><dd class="cmt"><p>the boolean value of if need reverse input channels.
-                              switch the input channels order from RGB to BGR (or vice versa).</p></dd><dt class="param">meanValues</dt><dd class="cmt"><p>all input values coming from original network inputs
-                              will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTF(modelPath:String,objectDetectionModelType:String,pipelineConfigPath:String,extensionsConfigPath:String):Unit"></a>
-      <a id="doLoadTF(String,String,String,String):Unit"></a>
+      <p class="shortcomment cmt">loads a tensorflow model as TFNet
+</p><div class="fullcomment"><div class="comment cmt"><p>loads a tensorflow model as TFNet
+</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow frozen model file or saved model dir</p></dd><dt class="param">modelType</dt><dd class="cmt"><p>the type of the tensorflow model file: &quot;frozenModel&quot; or &quot;savedModel&quot;</p></dd><dt class="param">inputs</dt><dd class="cmt"><p>the inputs of the model</p></dd><dt class="param">outputs</dt><dd class="cmt"><p>the outputs of the model</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTensorflow" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTensorflow(modelPath:String,modelType:String,intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit"></a>
+      <a id="doLoadTensorflow(String,String,Int,Int,Boolean):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="objectDetectionModelType">objectDetectionModelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="pipelineConfigPath">pipelineConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="extensionsConfigPath">extensionsConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">doLoadTensorflow</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="modelType">modelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="intraOpParallelismThreads">intraOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="interOpParallelismThreads">interOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="usePerSessionThreads">usePerSessionThreads: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelPath:String,objectDetectionModelType:String,pipelineConfigPath:String,extensionsConfigPath:String):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTensorflow(modelPath:String,modelType:String,intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">loads a TF model as OpenVINO
-</p><div class="fullcomment"><div class="comment cmt"><p>loads a TF model as OpenVINO
-</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow model</p></dd><dt class="param">objectDetectionModelType</dt><dd class="cmt"><p>the type of the tensorflow model,
-                            please refer to <a href="ModelType$.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.ModelType">ModelType</a>
-                            e.g. faster_rcnn_resnet101_coco, mask_rcnn_inception_v2_coco,
-                            rfcn_resnet101_coco, ssd_inception_v2_coco</p></dd><dt class="param">pipelineConfigPath</dt><dd class="cmt"><p>the path of the pipeline configure file</p></dd><dt class="param">extensionsConfigPath</dt><dd class="cmt"><p>the path of the extensions configure file</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTF(modelPath:String,pipelineConfigPath:String,extensionsConfigPath:String):Unit"></a>
-      <a id="doLoadTF(String,String,String):Unit"></a>
+      <p class="shortcomment cmt">loads a tensorflow model as TFNet
+</p><div class="fullcomment"><div class="comment cmt"><p>loads a tensorflow model as TFNet
+</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow frozen model</p></dd><dt class="param">modelType</dt><dd class="cmt"><p>the type of the tensorflow model file: &quot;frozenModel&quot;</p></dd><dt class="param">intraOpParallelismThreads</dt><dd class="cmt"><p>the num of intraOpParallelismThreads</p></dd><dt class="param">interOpParallelismThreads</dt><dd class="cmt"><p>the num of interOpParallelismThreads</p></dd><dt class="param">usePerSessionThreads</dt><dd class="cmt"><p>whether to perSessionThreads</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTensorflow" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTensorflow(modelPath:String,modelType:String):Unit"></a>
+      <a id="doLoadTensorflow(String,String):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="pipelineConfigPath">pipelineConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="extensionsConfigPath">extensionsConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">doLoadTensorflow</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="modelType">modelType: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelPath:String,pipelineConfigPath:String,extensionsConfigPath:String):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTensorflow(modelPath:String,modelType:String):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">loads a TF model as OpenVINO
-</p><div class="fullcomment"><div class="comment cmt"><p>loads a TF model as OpenVINO
-</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow model</p></dd><dt class="param">pipelineConfigPath</dt><dd class="cmt"><p>the path of the pipeline configure file</p></dd><dt class="param">extensionsConfigPath</dt><dd class="cmt"><p>the path of the extensions configure file</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTF(modelPath:String,objectDetectionModelType:String):Unit"></a>
-      <a id="doLoadTF(String,String):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="objectDetectionModelType">objectDetectionModelType: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelPath:String,objectDetectionModelType:String):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">loads a TF model as OpenVINO
-</p><div class="fullcomment"><div class="comment cmt"><p>loads a TF model as OpenVINO
-</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow model</p></dd><dt class="param">objectDetectionModelType</dt><dd class="cmt"><p>the type of the tensorflow model,
-                 please refer to <a href="ModelType$.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.ModelType">ModelType</a>
-                 e.g. faster_rcnn_resnet101_coco, mask_rcnn_inception_v2_coco,
-                 rfcn_resnet101_coco, ssd_inception_v2_coco</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTF(savedModelBytes:Array[Byte],inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit"></a>
-      <a id="doLoadTF(Array[Byte],Array[String],Array[String],Int,Int,Boolean):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">doLoadTF</span><span class="params">(<span name="savedModelBytes">savedModelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="intraOpParallelismThreads">intraOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="interOpParallelismThreads">interOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="usePerSessionThreads">usePerSessionThreads: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(savedModelBytes:Array[Byte],inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">loads a TF saved model as TFNet
-</p><div class="fullcomment"><div class="comment cmt"><p>loads a TF saved model as TFNet
-</p></div><dl class="paramcmts block"><dt class="param">savedModelBytes</dt><dd class="cmt"><p>the bytes of the tensorflow saved model tar</p></dd><dt class="param">inputs</dt><dd class="cmt"><p>the inputs of the model</p></dd><dt class="param">outputs</dt><dd class="cmt"><p>the outputs of the model</p></dd><dt class="param">intraOpParallelismThreads</dt><dd class="cmt"><p>the num of intraOpParallelismThreads</p></dd><dt class="param">interOpParallelismThreads</dt><dd class="cmt"><p>the num of interOpParallelismThreads</p></dd><dt class="param">usePerSessionThreads</dt><dd class="cmt"><p>whether to perSessionThreads</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTF(savedModelBytes:Array[Byte],inputs:Array[String],outputs:Array[String]):Unit"></a>
-      <a id="doLoadTF(Array[Byte],Array[String],Array[String]):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">doLoadTF</span><span class="params">(<span name="savedModelBytes">savedModelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(savedModelBytes:Array[Byte],inputs:Array[String],outputs:Array[String]):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">loads a TF saved model as TFNet
-</p><div class="fullcomment"><div class="comment cmt"><p>loads a TF saved model as TFNet
-</p></div><dl class="paramcmts block"><dt class="param">savedModelBytes</dt><dd class="cmt"><p>the bytes of the tensorflow saved model tar</p></dd><dt class="param">inputs</dt><dd class="cmt"><p>the inputs of the model</p></dd><dt class="param">outputs</dt><dd class="cmt"><p>the outputs of the model</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTF(modelPath:String,inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit"></a>
-      <a id="doLoadTF(String,Array[String],Array[String],Int,Int,Boolean):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="intraOpParallelismThreads">intraOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="interOpParallelismThreads">interOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="usePerSessionThreads">usePerSessionThreads: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelPath:String,inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">loads a TF saved model as TFNet
-</p><div class="fullcomment"><div class="comment cmt"><p>loads a TF saved model as TFNet
-</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow saved model dir</p></dd><dt class="param">inputs</dt><dd class="cmt"><p>the inputs of the model</p></dd><dt class="param">outputs</dt><dd class="cmt"><p>the outputs of the model</p></dd><dt class="param">intraOpParallelismThreads</dt><dd class="cmt"><p>the num of intraOpParallelismThreads</p></dd><dt class="param">interOpParallelismThreads</dt><dd class="cmt"><p>the num of interOpParallelismThreads</p></dd><dt class="param">usePerSessionThreads</dt><dd class="cmt"><p>whether to perSessionThreads</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTF(modelPath:String,inputs:Array[String],outputs:Array[String]):Unit"></a>
-      <a id="doLoadTF(String,Array[String],Array[String]):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelPath:String,inputs:Array[String],outputs:Array[String]):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">loads a TF saved model as TFNet
-</p><div class="fullcomment"><div class="comment cmt"><p>loads a TF saved model as TFNet
-</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow saved model dir</p></dd><dt class="param">inputs</dt><dd class="cmt"><p>the inputs of the model</p></dd><dt class="param">outputs</dt><dd class="cmt"><p>the outputs of the model</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTF(modelPath:String,intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit"></a>
-      <a id="doLoadTF(String,Int,Int,Boolean):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="intraOpParallelismThreads">intraOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="interOpParallelismThreads">interOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="usePerSessionThreads">usePerSessionThreads: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelPath:String,intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">loads a TF frozen model as TFNet
-</p><div class="fullcomment"><div class="comment cmt"><p>loads a TF frozen model as TFNet
-</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow frozen model</p></dd><dt class="param">intraOpParallelismThreads</dt><dd class="cmt"><p>the num of intraOpParallelismThreads</p></dd><dt class="param">interOpParallelismThreads</dt><dd class="cmt"><p>the num of interOpParallelismThreads</p></dd><dt class="param">usePerSessionThreads</dt><dd class="cmt"><p>whether to perSessionThreads</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTF(modelPath:String):Unit"></a>
-      <a id="doLoadTF(String):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelPath:String):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">loads a TF frozen model as TFNet
-</p><div class="fullcomment"><div class="comment cmt"><p>loads a TF frozen model as TFNet
-</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow frozen model file</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTFAsCalibratedOpenVINO" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTFAsCalibratedOpenVINO(modelPath:String,modelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,networkType:String,validationFilePath:String,subset:Int,opencvLibPath:String):Unit"></a>
-      <a id="doLoadTFAsCalibratedOpenVINO(String,String,String,Array[Int],Boolean,Array[Float],Float,String,String,Int,String):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">doLoadTFAsCalibratedOpenVINO</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="modelType">modelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkpointPath">checkpointPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="networkType">networkType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="validationFilePath">validationFilePath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="subset">subset: <span class="extype" name="scala.Int">Int</span></span>, <span name="opencvLibPath">opencvLibPath: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTFAsCalibratedOpenVINO(modelPath:String,modelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,networkType:String,validationFilePath:String,subset:Int,opencvLibPath:String):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">load TF model as Calibrated OpenVINO IR
-</p><div class="fullcomment"><div class="comment cmt"><p>load TF model as Calibrated OpenVINO IR
-</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow model</p></dd><dt class="param">modelType</dt><dd class="cmt"><p>the type of the tensorflow model</p></dd><dt class="param">checkpointPath</dt><dd class="cmt"><p>the path of the tensorflow checkpoint file</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape that should be fed to an input node(s) of the model</p></dd><dt class="param">ifReverseInputChannels</dt><dd class="cmt"><p>the boolean value of if need reverse input channels.
-                              switch the input channels order from RGB to BGR (or vice versa).</p></dd><dt class="param">meanValues</dt><dd class="cmt"><p>all input values coming from original network inputs
-                              will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd><dt class="param">networkType</dt><dd class="cmt"><p>Type of an inferred network,
-                              &quot;C&quot; to calibrate Classification,
-                              &quot;OD&quot; to calibrate Object Detection,
-                              &quot;RawC&quot; to collect only statistics for Classification,
-                              &quot;RawOD&quot; to collect only statistics for Object Detection</p></dd><dt class="param">validationFilePath</dt><dd class="cmt"><p>Path to a file with validation images</p></dd><dt class="param">subset</dt><dd class="cmt"><p>Number of pictures from the whole validation set
-                              to create the calibration dataset.</p></dd><dt class="param">opencvLibPath</dt><dd class="cmt"><p>the lib path whwere libopencv_imgcodecs.so.4.0,
-                              libopencv_core.so.4.0
-                              and libopencv_imgproc.so.4.0 can be found</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
+      <p class="shortcomment cmt">loads a tensorflow model as TFNet
+</p><div class="fullcomment"><div class="comment cmt"><p>loads a tensorflow model as TFNet
+</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow frozen model</p></dd><dt class="param">modelType</dt><dd class="cmt"><p>the type of the tensorflow model file: &quot;frozenModel&quot;</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doPredict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doPredict(inputActivity:com.intel.analytics.bigdl.nn.abstractnn.Activity):com.intel.analytics.bigdl.nn.abstractnn.Activity"></a>
       <a id="doPredict(Activity):Activity"></a>
@@ -1166,108 +994,6 @@
       </a>
     </span>
       
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTF" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="loadTF(savedModelBytes:Array[Byte],inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit"></a>
-      <a id="loadTF(Array[Byte],Array[String],Array[String],Int,Int,Boolean):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">loadTF</span><span class="params">(<span name="savedModelBytes">savedModelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>, <span name="intraOpParallelismThreads">intraOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="interOpParallelismThreads">interOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="usePerSessionThreads">usePerSessionThreads: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTF(savedModelBytes:Array[Byte],inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTF" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="loadTF(savedModelBytes:Array[Byte],inputs:Array[String],outputs:Array[String]):Unit"></a>
-      <a id="loadTF(Array[Byte],Array[String],Array[String]):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">loadTF</span><span class="params">(<span name="savedModelBytes">savedModelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTF(savedModelBytes:Array[Byte],inputs:Array[String],outputs:Array[String]):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTF" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="loadTF(modelPath:String,inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit"></a>
-      <a id="loadTF(String,Array[String],Array[String],Int,Int,Boolean):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">loadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="java.lang.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>, <span name="intraOpParallelismThreads">intraOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="interOpParallelismThreads">interOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="usePerSessionThreads">usePerSessionThreads: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTF(modelPath:String,inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTF" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="loadTF(modelPath:String,inputs:Array[String],outputs:Array[String]):Unit"></a>
-      <a id="loadTF(String,Array[String],Array[String]):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">loadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="java.lang.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTF(modelPath:String,inputs:Array[String],outputs:Array[String]):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTF" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="loadTF(modelPath:String,intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit"></a>
-      <a id="loadTF(String,Int,Int,Boolean):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">loadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="java.lang.String">String</span></span>, <span name="intraOpParallelismThreads">intraOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="interOpParallelismThreads">interOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="usePerSessionThreads">usePerSessionThreads: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTF(modelPath:String,intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTF" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="loadTF(modelPath:String):Unit"></a>
-      <a id="loadTF(String):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">loadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTF(modelPath:String):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTFAsCalibratedOpenVINO" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="loadTFAsCalibratedOpenVINO(modelPath:String,modelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,networkType:String,validationFilePath:String,subset:Int,opencvLibPath:String):Unit"></a>
       <a id="loadTFAsCalibratedOpenVINO(String,String,String,Array[Int],Boolean,Array[Float],Float,String,String,Int,String):Unit"></a>
@@ -1281,6 +1007,108 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTFAsCalibratedOpenVINO(modelPath:String,modelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,networkType:String,validationFilePath:String,subset:Int,opencvLibPath:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTensorflow" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loadTensorflow(savedModelBytes:Array[Byte],modelType:String,inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit"></a>
+      <a id="loadTensorflow(Array[Byte],String,Array[String],Array[String],Int,Int,Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadTensorflow</span><span class="params">(<span name="savedModelBytes">savedModelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="modelType">modelType: <span class="extype" name="java.lang.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>, <span name="intraOpParallelismThreads">intraOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="interOpParallelismThreads">interOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="usePerSessionThreads">usePerSessionThreads: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTensorflow(savedModelBytes:Array[Byte],modelType:String,inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTensorflow" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loadTensorflow(savedModelBytes:Array[Byte],modelType:String,inputs:Array[String],outputs:Array[String]):Unit"></a>
+      <a id="loadTensorflow(Array[Byte],String,Array[String],Array[String]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadTensorflow</span><span class="params">(<span name="savedModelBytes">savedModelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="modelType">modelType: <span class="extype" name="java.lang.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTensorflow(savedModelBytes:Array[Byte],modelType:String,inputs:Array[String],outputs:Array[String]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTensorflow" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loadTensorflow(modelPath:String,modelType:String,inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit"></a>
+      <a id="loadTensorflow(String,String,Array[String],Array[String],Int,Int,Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadTensorflow</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="java.lang.String">String</span></span>, <span name="modelType">modelType: <span class="extype" name="java.lang.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>, <span name="intraOpParallelismThreads">intraOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="interOpParallelismThreads">interOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="usePerSessionThreads">usePerSessionThreads: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTensorflow(modelPath:String,modelType:String,inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTensorflow" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loadTensorflow(modelPath:String,modelType:String,inputs:Array[String],outputs:Array[String]):Unit"></a>
+      <a id="loadTensorflow(String,String,Array[String],Array[String]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadTensorflow</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="java.lang.String">String</span></span>, <span name="modelType">modelType: <span class="extype" name="java.lang.String">String</span></span>, <span name="inputs">inputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>, <span name="outputs">outputs: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="java.lang.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTensorflow(modelPath:String,modelType:String,inputs:Array[String],outputs:Array[String]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTensorflow" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loadTensorflow(modelPath:String,modelType:String,intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit"></a>
+      <a id="loadTensorflow(String,String,Int,Int,Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadTensorflow</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="java.lang.String">String</span></span>, <span name="modelType">modelType: <span class="extype" name="java.lang.String">String</span></span>, <span name="intraOpParallelismThreads">intraOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="interOpParallelismThreads">interOpParallelismThreads: <span class="extype" name="scala.Int">Int</span></span>, <span name="usePerSessionThreads">usePerSessionThreads: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTensorflow(modelPath:String,modelType:String,intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel#loadTensorflow" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loadTensorflow(modelPath:String,modelType:String):Unit"></a>
+      <a id="loadTensorflow(String,String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadTensorflow</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="java.lang.String">String</span></span>, <span name="modelType">modelType: <span class="extype" name="java.lang.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@loadTensorflow(modelPath:String,modelType:String):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1718,7 +1546,206 @@
 
         <div id="values" class="values members">
               <h3>Deprecated Value Members</h3>
-              <ol><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doPredict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+              <ol><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTF(savedModelBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit"></a>
+      <a id="doLoadTF(Array[Byte],Array[Int],Boolean,Array[Float],Float,String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="savedModelBytes">savedModelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="input">input: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(savedModelBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">load TF model as OpenVINO IR
+</p><div class="fullcomment"><div class="comment cmt"><p>load TF model as OpenVINO IR
+</p></div><dl class="paramcmts block"><dt class="param">savedModelBytes</dt><dd class="cmt"><p>the bytes of the tensorflow saved model tar</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape that should be fed to an input node(s) of the model</p></dd><dt class="param">ifReverseInputChannels</dt><dd class="cmt"><p>the boolean value of if need reverse input channels.
+                              switch the input channels order from RGB to BGR (or vice versa).</p></dd><dt class="param">meanValues</dt><dd class="cmt"><p>all input values coming from original network inputs
+                              will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd><dt class="param">input</dt><dd class="cmt"><p>the name of the input operation of the given model</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTF(savedModelDir:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit"></a>
+      <a id="doLoadTF(String,Array[Int],Boolean,Array[Float],Float,String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="savedModelDir">savedModelDir: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="input">input: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(savedModelDir:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">load TF model as OpenVINO IR
+</p><div class="fullcomment"><div class="comment cmt"><p>load TF model as OpenVINO IR
+</p></div><dl class="paramcmts block"><dt class="param">savedModelDir</dt><dd class="cmt"><p>the dir path of the tensorflow saved model</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape that should be fed to an input node(s) of the model</p></dd><dt class="param">ifReverseInputChannels</dt><dd class="cmt"><p>the boolean value of if need reverse input channels.
+                              switch the input channels order from RGB to BGR (or vice versa).</p></dd><dt class="param">meanValues</dt><dd class="cmt"><p>all input values coming from original network inputs
+                              will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd><dt class="param">input</dt><dd class="cmt"><p>the name of the input operation of the given model</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTF(modelBytes:Array[Byte],imageClassificationModelType:String,checkpointBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit"></a>
+      <a id="doLoadTF(Array[Byte],String,Array[Byte],Array[Int],Boolean,Array[Float],Float):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="modelBytes">modelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="imageClassificationModelType">imageClassificationModelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkpointBytes">checkpointBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelBytes:Array[Byte],imageClassificationModelType:String,checkpointBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">load TF model as OpenVINO IR
+</p><div class="fullcomment"><div class="comment cmt"><p>load TF model as OpenVINO IR
+</p></div><dl class="paramcmts block"><dt class="param">modelBytes</dt><dd class="cmt"><p>the bytes of the tensorflow model</p></dd><dt class="param">imageClassificationModelType</dt><dd class="cmt"><p>the type of the tensorflow model</p></dd><dt class="param">checkpointBytes</dt><dd class="cmt"><p>the bytes of the tensorflow checkpoint file</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape that should be fed to an input node(s) of the model</p></dd><dt class="param">ifReverseInputChannels</dt><dd class="cmt"><p>the boolean value of if need reverse input channels.
+                              switch the input channels order from RGB to BGR (or vice versa).</p></dd><dt class="param">meanValues</dt><dd class="cmt"><p>all input values coming from original network inputs
+                              will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTF(modelPath:String,imageClassificationModelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit"></a>
+      <a id="doLoadTF(String,String,String,Array[Int],Boolean,Array[Float],Float):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="imageClassificationModelType">imageClassificationModelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkpointPath">checkpointPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelPath:String,imageClassificationModelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">load TF model as OpenVINO IR
+</p><div class="fullcomment"><div class="comment cmt"><p>load TF model as OpenVINO IR
+</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow model</p></dd><dt class="param">imageClassificationModelType</dt><dd class="cmt"><p>the type of the tensorflow model</p></dd><dt class="param">checkpointPath</dt><dd class="cmt"><p>the path of the tensorflow checkpoint file</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape that should be fed to an input node(s) of the model</p></dd><dt class="param">ifReverseInputChannels</dt><dd class="cmt"><p>the boolean value of if need reverse input channels.
+                              switch the input channels order from RGB to BGR (or vice versa).</p></dd><dt class="param">meanValues</dt><dd class="cmt"><p>all input values coming from original network inputs
+                              will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTF(modelPath:String,objectDetectionModelType:String,pipelineConfigPath:String,extensionsConfigPath:String):Unit"></a>
+      <a id="doLoadTF(String,String,String,String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="objectDetectionModelType">objectDetectionModelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="pipelineConfigPath">pipelineConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="extensionsConfigPath">extensionsConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelPath:String,objectDetectionModelType:String,pipelineConfigPath:String,extensionsConfigPath:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">loads a TF model as OpenVINO
+</p><div class="fullcomment"><div class="comment cmt"><p>loads a TF model as OpenVINO
+</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow model</p></dd><dt class="param">objectDetectionModelType</dt><dd class="cmt"><p>the type of the tensorflow model,
+                            please refer to <a href="ModelType$.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.ModelType">ModelType</a>
+                            e.g. faster_rcnn_resnet101_coco, mask_rcnn_inception_v2_coco,
+                            rfcn_resnet101_coco, ssd_inception_v2_coco</p></dd><dt class="param">pipelineConfigPath</dt><dd class="cmt"><p>the path of the pipeline configure file</p></dd><dt class="param">extensionsConfigPath</dt><dd class="cmt"><p>the path of the extensions configure file</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTF(modelPath:String,pipelineConfigPath:String,extensionsConfigPath:String):Unit"></a>
+      <a id="doLoadTF(String,String,String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="pipelineConfigPath">pipelineConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="extensionsConfigPath">extensionsConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelPath:String,pipelineConfigPath:String,extensionsConfigPath:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">loads a TF model as OpenVINO
+</p><div class="fullcomment"><div class="comment cmt"><p>loads a TF model as OpenVINO
+</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow model</p></dd><dt class="param">pipelineConfigPath</dt><dd class="cmt"><p>the path of the pipeline configure file</p></dd><dt class="param">extensionsConfigPath</dt><dd class="cmt"><p>the path of the extensions configure file</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTF(modelPath:String,objectDetectionModelType:String):Unit"></a>
+      <a id="doLoadTF(String,String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="objectDetectionModelType">objectDetectionModelType: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTF(modelPath:String,objectDetectionModelType:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">loads a TF model as OpenVINO
+</p><div class="fullcomment"><div class="comment cmt"><p>loads a TF model as OpenVINO
+</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow model</p></dd><dt class="param">objectDetectionModelType</dt><dd class="cmt"><p>the type of the tensorflow model,
+                 please refer to <a href="ModelType$.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.ModelType">ModelType</a>
+                 e.g. faster_rcnn_resnet101_coco, mask_rcnn_inception_v2_coco,
+                 rfcn_resnet101_coco, ssd_inception_v2_coco</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTFAsCalibratedOpenVINO" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadTFAsCalibratedOpenVINO(modelPath:String,modelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,networkType:String,validationFilePath:String,subset:Int,opencvLibPath:String):Unit"></a>
+      <a id="doLoadTFAsCalibratedOpenVINO(String,String,String,Array[Int],Boolean,Array[Float],Float,String,String,Int,String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTFAsCalibratedOpenVINO</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="modelType">modelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkpointPath">checkpointPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="networkType">networkType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="validationFilePath">validationFilePath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="subset">subset: <span class="extype" name="scala.Int">Int</span></span>, <span name="opencvLibPath">opencvLibPath: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel@doLoadTFAsCalibratedOpenVINO(modelPath:String,modelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,networkType:String,validationFilePath:String,subset:Int,opencvLibPath:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">load TF model as Calibrated OpenVINO IR
+</p><div class="fullcomment"><div class="comment cmt"><p>load TF model as Calibrated OpenVINO IR
+</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow model</p></dd><dt class="param">modelType</dt><dd class="cmt"><p>the type of the tensorflow model</p></dd><dt class="param">checkpointPath</dt><dd class="cmt"><p>the path of the tensorflow checkpoint file</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape that should be fed to an input node(s) of the model</p></dd><dt class="param">ifReverseInputChannels</dt><dd class="cmt"><p>the boolean value of if need reverse input channels.
+                              switch the input channels order from RGB to BGR (or vice versa).</p></dd><dt class="param">meanValues</dt><dd class="cmt"><p>all input values coming from original network inputs
+                              will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd><dt class="param">networkType</dt><dd class="cmt"><p>Type of an inferred network,
+                              &quot;C&quot; to calibrate Classification,
+                              &quot;OD&quot; to calibrate Object Detection,
+                              &quot;RawC&quot; to collect only statistics for Classification,
+                              &quot;RawOD&quot; to collect only statistics for Object Detection</p></dd><dt class="param">validationFilePath</dt><dd class="cmt"><p>Path to a file with validation images</p></dd><dt class="param">subset</dt><dd class="cmt"><p>Number of pictures from the whole validation set
+                              to create the calibration dataset.</p></dd><dt class="param">opencvLibPath</dt><dd class="cmt"><p>the lib path whwere libopencv_imgcodecs.so.4.0,
+                              libopencv_core.so.4.0
+                              and libopencv_imgproc.so.4.0 can be found</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="InferenceModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.inference.InferenceModel">InferenceModel</a></dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doPredict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doPredict(input:java.util.List[Float],shape:java.util.List[Integer]):java.util.List[Float]"></a>
       <a id="doPredict(List[Float],List[Integer]):List[Float]"></a>
       <h4 class="signature">
