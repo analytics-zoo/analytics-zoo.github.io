@@ -74,7 +74,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><strong>Basic usage of Inference Model:</strong></p>
 <ol>
 <li>Directly use InferenceModel or write a subclass extends <code>InferenceModel</code> (<code>AbstractInferenceModel</code> in Java).</li>
-<li>Load pre-trained models with corresponding <code>load</code> methods, e.g, <code>doLoad</code> for Analytics Zoo, and <code>doLoadTF</code> for TensorFlow.</li>
+<li>Load pre-trained models with corresponding <code>load</code> methods, e.g, <code>doLoadBigDL</code> for Analytics Zoo, and <code>doLoadTensorflow</code> for TensorFlow.</li>
 <li>Do prediction with <code>predict</code> method.</li>
 </ol>
 <p><strong>Supported models:</strong></p>
@@ -102,7 +102,7 @@ numpy&gt;=1.12.0
 protobuf==3.6.1
 </code></pre>
 <p><strong>Java</strong></p>
-<p>Write a subclass that extends <code>AbstractInferenceModel</code>, implement or override methods. Then, load model with corresponding <code>load</code> methods (load Analytics Zoo, caffe, OpenVINO and TensorFlow model with <code>load</code>, <code>loadCaffe</code>, <code>doLoadOpenVINO</code> and <code>loadTF</code>), and do prediction with <code>predict</code> method. </p>
+<p>Write a subclass that extends <code>AbstractInferenceModel</code>, implement or override methods. Then, load model with corresponding <code>load</code> methods (load Analytics Zoo, caffe, OpenVINO and TensorFlow model with <code>loadBigDL</code>, <code>loadCaffe</code>, <code>loadOpenVINO</code> and <code>loadTensorflow</code>), and do prediction with <code>predict</code> method. </p>
 <pre><code class="java">import com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel;
 import com.intel.analytics.zoo.pipeline.inference.JTensor;
 
@@ -113,18 +113,18 @@ public class ExtendedInferenceModel extends AbstractInferenceModel {
 }
 ExtendedInferenceModel model = new ExtendedInferenceModel();
 // Load Analytics Zoo model
-model.load(modelPath, weightPath);
+model.loadBigDL(modelPath, weightPath);
 // Predict
 List&lt;List&lt;JTensor&gt;&gt; result = model.predict(inputList);
 </code></pre>
 
 <p><strong>Scala</strong></p>
-<p>New an instance of <code>InferenceModel</code>, and load model with corresponding <code>load</code> methods (load Analytics Zoo, caffe, OpenVINO and TensorFlow model with <code>doLoad</code>, <code>doLoadCaffe</code>, <code>doLoadOpenVINO</code> and <code>doLoadTF</code>), then do prediction with <code>predict</code> method.</p>
+<p>New an instance of <code>InferenceModel</code>, and load model with corresponding <code>load</code> methods (load Analytics Zoo, caffe, OpenVINO and TensorFlow model with <code>doLoadBigDL</code>, <code>doLoadCaffe</code>, <code>doLoadOpenVINO</code> and <code>doLoadTensorflow</code>), then do prediction with <code>predict</code> method.</p>
 <pre><code class="scala">import com.intel.analytics.zoo.pipeline.inference.InferenceModel
 
 val model = new InferenceModel()
 // Load Analytics Zoo model
-model.doLoad(modelPath, weightPath)
+model.doLoadBigDL(modelPath, weightPath)
 // Predict
 val result = model.doPredict(inputList)
 </code></pre>
@@ -138,18 +138,18 @@ class ExtendedInferenceModel extends InferenceModel {
 
 val model = new ExtendedInferenceModel()
 // Load Analytics Zoo model
-model.doLoad(modelPath, weightPath)
+model.doLoadBigDL(modelPath, weightPath)
 // Predict
 val result = model.doPredict(inputList)
 </code></pre>
 
 <p><strong>Python</strong></p>
-<p>New an instance of <code>InferenceModel</code>, and load Zoo model with corresponding <code>load</code> methods (load Analytics Zoo, caffe, OpenVINO and TensorFlow model with <code>load</code>, <code>load_caffe</code>, <code>load_openvino</code> and <code>load_tf</code>), then do prediction with <code>predict</code> method.</p>
+<p>New an instance of <code>InferenceModel</code>, and load Zoo model with corresponding <code>load</code> methods (load Analytics Zoo, caffe, OpenVINO and TensorFlow model with <code>load_bigdl</code>, <code>load_caffe</code>, <code>load_openvino</code> and <code>load_tensorflow</code>), then do prediction with <code>predict</code> method.</p>
 <pre><code class="python">from zoo.pipeline.inference import InferenceModel
 
 model = InferenceModel()
 # Load Analytics Zoo model
-model.load(model_path, weight_path)
+model.load_bigdl(model_path, weight_path)
 # Predict
 result = model.predict(input_list)
 </code></pre>
@@ -164,7 +164,7 @@ class ExtendedInferenceModel(InferenceModel):
 
 model = ExtendedInferenceModel()
 # Load Analytics Zoo model
-model.load(model_path, weight_path)
+model.load_bigdl(model_path, weight_path)
 # Predict
 result = model.predict(input_list)
 </code></pre>

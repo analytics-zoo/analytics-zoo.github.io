@@ -285,19 +285,19 @@ and maxConcurrentNum
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoad" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoad(modelPath:String,weightPath:String,blas:Boolean):Unit"></a>
-      <a id="doLoad(String,String,Boolean):Unit"></a>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadBigDL" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoadBigDL(modelPath:String,weightPath:String,blas:Boolean):Unit"></a>
+      <a id="doLoadBigDL(String,String,Boolean):Unit"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">doLoad</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="weightPath">weightPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">null</span></span>, <span name="blas">blas: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">doLoadBigDL</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="weightPath">weightPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">null</span></span>, <span name="blas">blas: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@doLoad(modelPath:String,weightPath:String,blas:Boolean):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@doLoadBigDL(modelPath:String,weightPath:String,blas:Boolean):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1064,7 +1064,29 @@ and maxConcurrentNum
 
         <div id="values" class="values members">
               <h3>Deprecated Value Members</h3>
-              <ol><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+              <ol><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoad" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doLoad(modelPath:String,weightPath:String,blas:Boolean):Unit"></a>
+      <a id="doLoad(String,String,Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: this method is deprecated, use doLoadBigDL() instead">doLoad</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="weightPath">weightPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">null</span></span>, <span name="blas">blas: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@doLoad(modelPath:String,weightPath:String,blas:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">loads a bigdl, analytics-zoo model
+</p><div class="fullcomment"><div class="comment cmt"><p>loads a bigdl, analytics-zoo model
+</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the file path of the model</p></dd><dt class="param">weightPath</dt><dd class="cmt"><p>the file path of the weights</p></dd><dt class="param">blas</dt><dd class="cmt"><p>whether MKLBLAS or MKLDNN</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p>this method is deprecated, use doLoadBigDL() instead</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadTF(savedModelBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit"></a>
       <a id="doLoadTF(Array[Byte],Array[Int],Boolean,Array[Float],Float,String):Unit"></a>
       <h4 class="signature">
@@ -1073,7 +1095,7 @@ and maxConcurrentNum
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="savedModelBytes">savedModelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="input">input: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method is deprecated">doLoadTF</span><span class="params">(<span name="savedModelBytes">savedModelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="input">input: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@doLoadTF(savedModelBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit" title="Permalink" target="_top">
@@ -1087,7 +1109,7 @@ and maxConcurrentNum
                               will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd><dt class="param">input</dt><dd class="cmt"><p>the name of the input operation of the given model</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@deprecated</span>
               
-        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method is deprecated</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadTF(savedModelDir:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit"></a>
       <a id="doLoadTF(String,Array[Int],Boolean,Array[Float],Float,String):Unit"></a>
@@ -1097,7 +1119,7 @@ and maxConcurrentNum
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="savedModelDir">savedModelDir: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="input">input: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method is deprecated">doLoadTF</span><span class="params">(<span name="savedModelDir">savedModelDir: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="input">input: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@doLoadTF(savedModelDir:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,input:String):Unit" title="Permalink" target="_top">
@@ -1111,7 +1133,7 @@ and maxConcurrentNum
                               will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd><dt class="param">input</dt><dd class="cmt"><p>the name of the input operation of the given model</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@deprecated</span>
               
-        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method is deprecated</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadTF(modelBytes:Array[Byte],imageClassificationModelType:String,checkpointBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit"></a>
       <a id="doLoadTF(Array[Byte],String,Array[Byte],Array[Int],Boolean,Array[Float],Float):Unit"></a>
@@ -1121,7 +1143,7 @@ and maxConcurrentNum
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="modelBytes">modelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="imageClassificationModelType">imageClassificationModelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkpointBytes">checkpointBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method is deprecated">doLoadTF</span><span class="params">(<span name="modelBytes">modelBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="imageClassificationModelType">imageClassificationModelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkpointBytes">checkpointBytes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Byte">Byte</span>]</span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@doLoadTF(modelBytes:Array[Byte],imageClassificationModelType:String,checkpointBytes:Array[Byte],inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit" title="Permalink" target="_top">
@@ -1135,7 +1157,7 @@ and maxConcurrentNum
                               will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@deprecated</span>
               
-        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method is deprecated</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadTF(modelPath:String,imageClassificationModelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit"></a>
       <a id="doLoadTF(String,String,String,Array[Int],Boolean,Array[Float],Float):Unit"></a>
@@ -1145,7 +1167,7 @@ and maxConcurrentNum
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="imageClassificationModelType">imageClassificationModelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkpointPath">checkpointPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method is deprecated">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="imageClassificationModelType">imageClassificationModelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkpointPath">checkpointPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@doLoadTF(modelPath:String,imageClassificationModelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float):Unit" title="Permalink" target="_top">
@@ -1159,7 +1181,7 @@ and maxConcurrentNum
                               will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@deprecated</span>
               
-        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method is deprecated</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadTF(modelPath:String,objectDetectionModelType:String,pipelineConfigPath:String,extensionsConfigPath:String):Unit"></a>
       <a id="doLoadTF(String,String,String,String):Unit"></a>
@@ -1169,7 +1191,7 @@ and maxConcurrentNum
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="objectDetectionModelType">objectDetectionModelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="pipelineConfigPath">pipelineConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="extensionsConfigPath">extensionsConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method is deprecated">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="objectDetectionModelType">objectDetectionModelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="pipelineConfigPath">pipelineConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="extensionsConfigPath">extensionsConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@doLoadTF(modelPath:String,objectDetectionModelType:String,pipelineConfigPath:String,extensionsConfigPath:String):Unit" title="Permalink" target="_top">
@@ -1184,7 +1206,7 @@ and maxConcurrentNum
                             rfcn_resnet101_coco, ssd_inception_v2_coco</p></dd><dt class="param">pipelineConfigPath</dt><dd class="cmt"><p>the path of the pipeline configure file</p></dd><dt class="param">extensionsConfigPath</dt><dd class="cmt"><p>the path of the extensions configure file</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@deprecated</span>
               
-        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method is deprecated</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadTF(modelPath:String,pipelineConfigPath:String,extensionsConfigPath:String):Unit"></a>
       <a id="doLoadTF(String,String,String):Unit"></a>
@@ -1194,7 +1216,7 @@ and maxConcurrentNum
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="pipelineConfigPath">pipelineConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="extensionsConfigPath">extensionsConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method is deprecated">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="pipelineConfigPath">pipelineConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="extensionsConfigPath">extensionsConfigPath: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@doLoadTF(modelPath:String,pipelineConfigPath:String,extensionsConfigPath:String):Unit" title="Permalink" target="_top">
@@ -1206,7 +1228,7 @@ and maxConcurrentNum
 </p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow model</p></dd><dt class="param">pipelineConfigPath</dt><dd class="cmt"><p>the path of the pipeline configure file</p></dd><dt class="param">extensionsConfigPath</dt><dd class="cmt"><p>the path of the extensions configure file</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@deprecated</span>
               
-        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method is deprecated</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadTF(modelPath:String,objectDetectionModelType:String):Unit"></a>
       <a id="doLoadTF(String,String):Unit"></a>
@@ -1216,7 +1238,7 @@ and maxConcurrentNum
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="objectDetectionModelType">objectDetectionModelType: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method is deprecated">doLoadTF</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="objectDetectionModelType">objectDetectionModelType: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@doLoadTF(modelPath:String,objectDetectionModelType:String):Unit" title="Permalink" target="_top">
@@ -1231,38 +1253,7 @@ and maxConcurrentNum
                  rfcn_resnet101_coco, ssd_inception_v2_coco</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
                 <span class="name">@deprecated</span>
               
-        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTFAsCalibratedOpenVINO" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="doLoadTFAsCalibratedOpenVINO(modelPath:String,modelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,networkType:String,validationFilePath:String,subset:Int,opencvLibPath:String):Unit"></a>
-      <a id="doLoadTFAsCalibratedOpenVINO(String,String,String,Array[Int],Boolean,Array[Float],Float,String,String,Int,String):Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name deprecated" title="Deprecated: (Since version 0.8.0) this method will be deprecated">doLoadTFAsCalibratedOpenVINO</span><span class="params">(<span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="modelType">modelType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="checkpointPath">checkpointPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="inputShape">inputShape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>, <span name="ifReverseInputChannels">ifReverseInputChannels: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="meanValues">meanValues: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="scale">scale: <span class="extype" name="scala.Float">Float</span></span>, <span name="networkType">networkType: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="validationFilePath">validationFilePath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="subset">subset: <span class="extype" name="scala.Int">Int</span></span>, <span name="opencvLibPath">opencvLibPath: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.inference.InferenceModel@doLoadTFAsCalibratedOpenVINO(modelPath:String,modelType:String,checkpointPath:String,inputShape:Array[Int],ifReverseInputChannels:Boolean,meanValues:Array[Float],scale:Float,networkType:String,validationFilePath:String,subset:Int,opencvLibPath:String):Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">load TF model as Calibrated OpenVINO IR
-</p><div class="fullcomment"><div class="comment cmt"><p>load TF model as Calibrated OpenVINO IR
-</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the tensorflow model</p></dd><dt class="param">modelType</dt><dd class="cmt"><p>the type of the tensorflow model</p></dd><dt class="param">checkpointPath</dt><dd class="cmt"><p>the path of the tensorflow checkpoint file</p></dd><dt class="param">inputShape</dt><dd class="cmt"><p>input shape that should be fed to an input node(s) of the model</p></dd><dt class="param">ifReverseInputChannels</dt><dd class="cmt"><p>the boolean value of if need reverse input channels.
-                              switch the input channels order from RGB to BGR (or vice versa).</p></dd><dt class="param">meanValues</dt><dd class="cmt"><p>all input values coming from original network inputs
-                              will be divided by this value.</p></dd><dt class="param">scale</dt><dd class="cmt"><p>the scale value, to be used for the input image per channel.</p></dd><dt class="param">networkType</dt><dd class="cmt"><p>Type of an inferred network,
-                              &quot;C&quot; to calibrate Classification,
-                              &quot;OD&quot; to calibrate Object Detection,
-                              &quot;RawC&quot; to collect only statistics for Classification,
-                              &quot;RawOD&quot; to collect only statistics for Object Detection</p></dd><dt class="param">validationFilePath</dt><dd class="cmt"><p>Path to a file with validation images</p></dd><dt class="param">subset</dt><dd class="cmt"><p>Number of pictures from the whole validation set
-                              to create the calibration dataset.</p></dd><dt class="param">opencvLibPath</dt><dd class="cmt"><p>the lib path whwere libopencv_imgcodecs.so.4.0,
-                              libopencv_core.so.4.0
-                              and libopencv_imgproc.so.4.0 can be found</p></dd></dl><dl class="attributes block"> <dt>Annotations</dt><dd>
-                <span class="name">@deprecated</span>
-              
-        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method will be deprecated</p></dd></dl></div>
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.8.0)</i> this method is deprecated</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doPredict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doPredict(input:java.util.List[Float],shape:java.util.List[Integer]):java.util.List[Float]"></a>
       <a id="doPredict(List[Float],List[Integer]):List[Float]"></a>

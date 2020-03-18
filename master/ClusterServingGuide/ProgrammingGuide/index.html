@@ -73,34 +73,34 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>This page contains the guide for you to run Analytics Zoo Cluster Serving, including following:</p>
 <ul>
 <li>
-<p><a href="#Quick-Start">Quick Start</a></p>
+<p><a href="#quick-start">Quick Start</a></p>
 </li>
 <li>
-<p><a href="#Workflow-Overview">Workflow Overview</a> </p>
+<p><a href="#workflow-overview">Workflow Overview</a> </p>
 </li>
 <li>
-<p><a href="#Deploy-Your-Own-Cluster-Serving">Deploy Your Own Cluster Serving</a></p>
+<p><a href="#deploy-your-own-cluster-serving">Deploy Your Own Cluster Serving</a></p>
 </li>
 <li>
-<p><a href="#1-Installation">Installation</a></p>
+<p><a href="#1-installation">Installation</a></p>
 </li>
 <li>
-<p><a href="#2-Configuration">Configuration</a> </p>
+<p><a href="#2-configuration">Configuration</a> </p>
 </li>
 <li>
-<p><a href="#3-Launching-Service">Launching Service</a></p>
+<p><a href="#3-launching-service">Launching Service</a></p>
 </li>
 <li>
-<p><a href="#4-Model-inference">Model inference</a></p>
+<p><a href="#4-model-inference">Model inference</a></p>
 </li>
 <li>
-<p><a href="#Optional-Operations">Optional Operations</a></p>
+<p><a href="#optional-operations">Optional Operations</a></p>
 <ul>
 <li>
-<p><a href="#Update-Model-or-Configurations">Update Model or Configurations</a></p>
+<p><a href="#update-model-or-configurations">Update Model or Configurations</a></p>
 </li>
 <li>
-<p><a href="#Logs-and-Visualization">Logs and Visualization</a></p>
+<p><a href="#logs-and-visualization">Logs and Visualization</a></p>
 </li>
 </ul>
 </li>
@@ -134,8 +134,8 @@ image: dog1.jpeg, classification-result: class: 207's prob: 0.9226527
 </code></pre>
 
 <p>Wow! You made it!</p>
-<p>Note that the Cluster Serving quick start example will run on your local node only. Check the <a href="#Deploy-Your-Own-Cluster-Serving">Deploy Your Own Cluster Serving</a> section for how to configure and run Cluster Serving in a distributed fashion.</p>
-<p>For more details, you could also see the log and performance by go to <code>localhost:6006</code> in your browser and refer to <a href="#Logs-and-Visualization">Logs and Visualization</a>, or view the source code of <code>quick_start.py</code> <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/serving/quick_start.py">here</a>, or refer to <a href="../APIGuide/">API Guide</a>.</p>
+<p>Note that the Cluster Serving quick start example will run on your local node only. Check the <a href="#deploy-your-own-cluster-serving">Deploy Your Own Cluster Serving</a> section for how to configure and run Cluster Serving in a distributed fashion.</p>
+<p>For more details, you could also see the log and performance by go to <code>localhost:6006</code> in your browser and refer to <a href="#logs-and-visualization">Logs and Visualization</a>, or view the source code of <code>quick_start.py</code> <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/serving/quick_start.py">here</a>, or refer to <a href="../APIGuide/">API Guide</a>.</p>
 <h2 id="workflow-overview">Workflow Overview</h2>
 <p>The figure below illustrates the simple 3-step "Prepare-Launch-Inference" workflow for Cluster Serving.</p>
 <p><img alt="steps" src="../cluster_serving_steps.jpg" /></p>
@@ -188,7 +188,7 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 <p>Run <code>export OMP_NUM_THREADS=all</code> if you want to use all cores on your machine to do inference in parallel manner.</p>
 <h3 id="2-configuration">2. Configuration</h3>
 <h4 id="how-to-config">How to Config</h4>
-<p>After <a href="#1-Installation">Installation</a>, you will see a config file <code>config.yaml</code> in your current working directory. This file contains all the configurations that you can customize for your Cluster Serving. See an example of <code>config.yaml</code> below.</p>
+<p>After <a href="#1-installation">Installation</a>, you will see a config file <code>config.yaml</code> in your current working directory. This file contains all the configurations that you can customize for your Cluster Serving. See an example of <code>config.yaml</code> below.</p>
 <pre><code>## Analytics Zoo Cluster Serving Config Example
 
 model:
@@ -279,7 +279,7 @@ spark:
 <pre><code>cluster-serving-start
 </code></pre>
 
-<p>This command will start Redis and TensorBoard if they are not running. Note that you need to provide <code>REDIS_HOME</code> environment variable as mentioned in <a href="#1-Installation">Installation</a>.</p>
+<p>This command will start Redis and TensorBoard if they are not running. Note that you need to provide <code>REDIS_HOME</code> environment variable as mentioned in <a href="#1-installation">Installation</a>.</p>
 <h4 id="stop">Stop</h4>
 <p>You can use following command to stop Cluster Serving. Data in Redis and TensorBoard service will persist.</p>
 <pre><code>cluster-serving-stop
@@ -318,7 +318,7 @@ all_result = output_api.dequeue() # the output queue is empty after this code
 </code></pre>
 
 <h4 id="output-format">Output Format</h4>
-<p>Consider the code above, in <a href="#Input-and-Output-API">Input and Output API</a> Section.</p>
+<p>Consider the code above, in <a href="#input-and-output-api">Input and Output API</a> Section.</p>
 <pre><code>img1_result = output_api.query('img1')
 </code></pre>
 

@@ -1,0 +1,186 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.automl.feature package &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="zoo.automl.model package" href="zoo.automl.model.html" />
+    <link rel="prev" title="zoo.automl.common package" href="zoo.automl.common.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="zoo.automl.model.html" title="zoo.automl.model package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="zoo.automl.common.html" title="zoo.automl.common package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="zoo.html" >zoo package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="zoo.automl.html" accesskey="U">zoo.automl package</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">zoo.automl.feature package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.feature.abstract">zoo.automl.feature.abstract module</a></li>
+<li><a class="reference internal" href="#zoo-automl-feature-time-sequence-module">zoo.automl.feature.time_sequence module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.feature">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="zoo.automl.common.html"
+                        title="previous chapter">zoo.automl.common package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="zoo.automl.model.html"
+                        title="next chapter">zoo.automl.model package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/zoo.automl.feature.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="zoo-automl-feature-package">
+<h1>zoo.automl.feature package<a class="headerlink" href="#zoo-automl-feature-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-zoo.automl.feature.abstract">
+<span id="zoo-automl-feature-abstract-module"></span><h2>zoo.automl.feature.abstract module<a class="headerlink" href="#module-zoo.automl.feature.abstract" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer">
+<em class="property">class </em><code class="descclassname">zoo.automl.feature.abstract.</code><code class="descname">BaseFeatureTransformer</code><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Abstract Base class for Feature transformers.</p>
+<dl class="attribute">
+<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.check_optional_config">
+<code class="descname">check_optional_config</code><em class="property"> = False</em><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.check_optional_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>input_df</em>, <em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>fit data with the input dataframe
+Will refit the scalars to this data if any.
+:param input_df: input to be fitted
+:param config: the config
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.restore">
+<code class="descname">restore</code><span class="sig-paren">(</span><em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore variables from file
+:param file_path: file contain saved parameters.
+i.e. some parameters are obtained during training,
+not in trial config, e.g. scaler fit params)
+:param config: the trial config
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>save the feature tools internal variables.
+Some of the variables are derived after fit_transform, so only saving config is not enough.
+:param: file_path : the file to be saved
+:param: config: the trial config
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>input_df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>transform the data with fitted
+:param input_df: input dataframe
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="zoo-automl-feature-time-sequence-module">
+<h2>zoo.automl.feature.time_sequence module<a class="headerlink" href="#zoo-automl-feature-time-sequence-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-zoo.automl.feature">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.automl.feature" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="zoo.automl.model.html" title="zoo.automl.model package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="zoo.automl.common.html" title="zoo.automl.common package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="zoo.html" >zoo package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="zoo.automl.html" >zoo.automl package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>
