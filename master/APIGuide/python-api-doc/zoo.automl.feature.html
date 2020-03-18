@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.automl.model.html" title="zoo.automl.model package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -45,9 +42,9 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.automl.feature package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.feature.abstract">zoo.automl.feature.abstract module</a></li>
+<li><a class="reference internal" href="#zoo-automl-feature-abstract-module">zoo.automl.feature.abstract module</a></li>
 <li><a class="reference internal" href="#zoo-automl-feature-time-sequence-module">zoo.automl.feature.time_sequence module</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.feature">Module contents</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,65 +87,14 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.feature.abstract">
-<span id="zoo-automl-feature-abstract-module"></span><h2>zoo.automl.feature.abstract module<a class="headerlink" href="#module-zoo.automl.feature.abstract" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer">
-<em class="property">class </em><code class="descclassname">zoo.automl.feature.abstract.</code><code class="descname">BaseFeatureTransformer</code><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
-<p>Abstract Base class for Feature transformers.</p>
-<dl class="attribute">
-<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.check_optional_config">
-<code class="descname">check_optional_config</code><em class="property"> = False</em><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.check_optional_config" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.fit_transform">
-<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>input_df</em>, <em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.fit_transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>fit data with the input dataframe
-Will refit the scalars to this data if any.
-:param input_df: input to be fitted
-:param config: the config
-:return:</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.restore">
-<code class="descname">restore</code><span class="sig-paren">(</span><em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.restore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore variables from file
-:param file_path: file contain saved parameters.
-i.e. some parameters are obtained during training,
-not in trial config, e.g. scaler fit params)
-:param config: the trial config
-:return:</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>save the feature tools internal variables.
-Some of the variables are derived after fit_transform, so only saving config is not enough.
-:param: file_path : the file to be saved
-:param: config: the trial config
-:return:</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.transform">
-<code class="descname">transform</code><span class="sig-paren">(</span><em>input_df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.transform" title="Permalink to this definition">¶</a></dt>
-<dd><p>transform the data with fitted
-:param input_df: input dataframe
-:return:</p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="zoo-automl-feature-abstract-module">
+<h2>zoo.automl.feature.abstract module<a class="headerlink" href="#zoo-automl-feature-abstract-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="zoo-automl-feature-time-sequence-module">
 <h2>zoo.automl.feature.time_sequence module<a class="headerlink" href="#zoo-automl-feature-time-sequence-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.feature">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.automl.feature" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -164,9 +110,6 @@ Some of the variables are derived after fit_transform, so only saving config is 
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.automl.model.html" title="zoo.automl.model package"
              >next</a> |</li>
