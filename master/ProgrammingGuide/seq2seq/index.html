@@ -114,13 +114,13 @@ seq2seq = Seq2seq(encoder, decoder, input_shape=[2, 4], output_shape=[2, 4], bri
 <code>feature</code> is expected to be a sequence(eg. batch x seqLen x feature) and <code>label</code> is also a sequence(eg. batch x seqLen x feature).</p>
 <p><strong>Scala</strong></p>
 <pre><code class="scala">import com.intel.analytics.bigdl.optim._
-import com.intel.analytics.bigdl.nn.{TimeDistributedMaskCriterion, ClassNLLCriterion}
+import com.intel.analytics.bigdl.nn.{TimeDistributedMaskCriterion, ZooClassNLLCriterion}
 
 val optimizer = Optimizer(
 model,
 trainSet,
 TimeDistributedMaskCriterion(
-  ClassNLLCriterion(paddingValue = padId),
+  ZooClassNLLCriterion(paddingValue = padId),
   paddingValue = padId
 ),
 batchSize = 128)
@@ -135,7 +135,7 @@ optimizer
 <pre><code class="scala">model.compile(
 optimizer = optimMethod,
 loss = TimeDistributedMaskCriterion(
-  ClassNLLCriterion(paddingValue = padId),
+  ZooClassNLLCriterion(paddingValue = padId),
   paddingValue = padId
 ))
 
@@ -150,7 +150,7 @@ model.fit(
 optimizer = Optimizer(
     model=seq2seq,
     training_rdd=train_rdd,
-    criterion=TimeDistributedMaskCriterion(ClassNLLCriterion()),
+    criterion=TimeDistributedMaskCriterion(ZooClassNLLCriterion()),
     end_trigger=MaxEpoch(20),
     batch_size=128,
     optim_method=Adagrad(learningrate=0.01, learningrate_decay=0.001))
