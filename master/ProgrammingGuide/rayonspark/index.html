@@ -72,7 +72,7 @@ across yarn cluster, meaning python users would be able to run <code>analytics-z
 in a pythonic way on yarn without <code>spark-submit</code> or installing analytics-zoo or ray across all cluster nodes.</p>
 <hr />
 <h3 id="steps-to-run-rayonspark"><strong>Steps to run RayOnSpark</strong></h3>
-<p><strong>NOTE:</strong> We have been tested on Ray 0.6.6. You may refer to <a href="https://github.com/ray-project/ray/issues/5223">this issue</a> if you encounter errors when using latest versions of ray.</p>
+<p><strong>NOTE:</strong> We have been tested on Ray 0.7.2 and you are highly recommended to use this Ray version.</p>
 <p>1) Install <a href="https://docs.conda.io/projects/conda/en/latest/commands/install.html">Conda</a> in your environment.</p>
 <p>2) Create a new conda environment (with name "zoo" for example):</p>
 <pre><code>conda create -n zoo python=3.6
@@ -83,7 +83,7 @@ source activate zoo
 <pre><code>pip install analytics-zoo[ray]
 </code></pre>
 
-<p>Note that the essential dependencies (including <code>ray&gt;=0.6.6</code>, <code>psutil</code>, <code>aiohttp</code>, <code>setproctitle</code>) will be installed by specifying the extras key <code>[ray]</code> when you pip install analytics-zoo.</p>
+<p>Note that the essential dependencies (including <code>ray==0.7.2</code>, <code>psutil</code>, <code>aiohttp</code>, <code>setproctitle</code>) will be installed by specifying the extras key <code>[ray]</code> when you pip install analytics-zoo.</p>
 <p>4) Download JDK8 and set the environment variable: JAVA_HOME (recommended).</p>
 <p>You can also install JDK via conda without setting the JAVA_HOME manually:</p>
 <p><code>conda install -c anaconda openjdk=8.0.152</code></p>
