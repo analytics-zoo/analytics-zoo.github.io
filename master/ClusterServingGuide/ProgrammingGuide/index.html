@@ -194,16 +194,22 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 model:
   # model path must be set
   path: /opt/work/model
+  # the inputs of the tensorflow model, separated by &quot;,&quot;
+  inputs:
+  # the outputs of the tensorflow model, separated by &quot;,&quot;
+  outputs:
 data:
   # default, localhost:6379
   src:
   # default, 3,224,224
   image_shape:
+  # default, topN(1)
+  filter:
 params:
   # default, 4
   batch_size:
-  # default, 1
-  top_n:
+  # default: OFF
+  performance_mode:
 spark:
   # default, local[*], change this to spark://, yarn, k8s:// etc if you want to run on cluster
   master: local[*]
@@ -223,11 +229,23 @@ spark:
 <p>Currently Analytics Zoo Cluster Serving supports TensorFlow, Caffe, PyTorch, BigDL, OpenVINO models. Note that currently only <strong>image classification</strong> models are supported.</p>
 <p>You need to put your model file into a directory and the directory could have layout like following according to model type, note that only one model is allowed in your directory.</p>
 <p><strong>Tensorflow</strong></p>
+<p><strong><em>Tensorflow checkpoint</em></strong>
+Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/tensorflow/freeze_checkpoint">freeze checkpoint example</a></p>
+<p><strong><em>Tensorflow frozen model</em></strong></p>
 <pre><code>|-- model
    |-- frozen_graph.pb
    |-- graph_meta.json
 </code></pre>
 
+<p><strong><em>Tensorflow saved model</em></strong></p>
+<pre><code>|-- model
+   |-- saved_model.pb
+   |-- variables
+       |-- variables.data-00000-of-00001
+       |-- variables.index
+</code></pre>
+
+<p>Note: you can specify model inputs and outputs in the config.yaml file. If the inputs or outputs are not provided,  the signature "serving_default" will be used to find input and output tensors.</p>
 <p><strong>Caffe</strong></p>
 <pre><code>|-- model
    |-- xx.prototxt
@@ -252,15 +270,16 @@ spark:
 
 <p>Put the model in any of your local directory, and set <code>model:/path/to/dir</code>.</p>
 <h4 id="other-configuration">Other Configuration</h4>
-<p>The field <code>input</code> contains your input data configuration.</p>
+<p>The field <code>data</code> contains your input data configuration.</p>
 <ul>
 <li>src: the queue you subscribe for your input data, e.g. a default config of Redis on local machine is <code>localhost:6379</code>. Note that please use the host address in your network instead of localhost or 127.0.0.1 when you run serving in cluster, and make sure other nodes in cluster could also recognize this address.</li>
 <li>image_shape: the shape of your input data, e.g. a default config for pretrained imagenet is <code>3,224,224</code>. You should use the same shape of data which trained your model. In TensorFlow the format is usually HWC and in other models the format is usually CHW.</li>
+<li>filter: the top N classes in the prediction result. <strong>note:</strong> if the top-N number is larger than model output size of the the final layer, it would just return all the outputs.</li>
 </ul>
 <p>The field <code>params</code> contains your inference parameter configuration.</p>
 <ul>
 <li>batch_size: the batch size you use for model inference. We recommend this value to be not smaller than 4 and not larger than 512. In general, using larger batch size means higher throughput, but also increase the latency between batches accordingly.</li>
-<li>top_n: the top N classes in the prediction result. <strong>note:</strong> if the top-N number is larger than model output size of the the final layer, it would just return all the outputs.</li>
+<li>performance_mode: The performance mode will utilize your CPU resource to achieve better inference performance on a single node. <strong>Note:</strong> numactl and net-tools should be installed in your system, and spark master should be <code>local[*]</code> in the config.yaml file.</li>
 </ul>
 <p>The field <code>spark</code> contains your spark configuration.</p>
 <ul>
