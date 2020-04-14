@@ -69,15 +69,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <ol>
 <li>A FeatureTransformer and A Model are instantiated. A SearchEngine is then instantiated and configured with the FeatureTransformer and Model, along with search presets, specifying how parameters are searched, the reward metric, and etc. </li>
 <li>The SearchEngine runs the search procedure. It will generate several trials at a time and distribute the trials in a cluster. Each trail runs feature engineering and the model fitting process with a different combination of hyper parameters and obtain the target metric. It may take a while if the search presets generate many trails or model fitting takes a long time.</li>
-<li>
-<p>After all trials completed, the best configuration and fitted model are retrieved according to the target metric. They are used to generate the result FeatureTransformer and Model, which are in turn used to compose a Pipeline.  The Pipeline can then be saved to file and loaded later for inference and resume/incremental training. </p>
-</li>
-<li>
-<p><em>zoo.automl.feature.abstract.BaseFeatureTransformer</em> - abstract interface of feature transformer</p>
-</li>
-<li><em>zoo.automl.model.abstract.BaseModel</em> - abstract interface of model</li>
-<li><em>zoo.automl.search.abstract.SearchEngine</em> - abstract interface of hyper paramter optimization engine.</li>
-<li><em>zoo.automl.pipeline.abstract.Pipeline</em> - abstract interface of pipeline, which is composed by a series of feature transfomers and models.</li>
+<li>After all trials completed, the best configuration and fitted model are retrieved according to the target metric. They are used to generate the result FeatureTransformer and Model, which are in turn used to compose a Pipeline.  The Pipeline can then be saved to file and loaded later for inference and resume/incremental training. </li>
 </ol>
 
   <br>
