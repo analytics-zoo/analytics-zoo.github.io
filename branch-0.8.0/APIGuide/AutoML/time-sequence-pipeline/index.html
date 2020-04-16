@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>TimeSequencePipeline - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "TimeSequencePipeline", url: "#timesequencepipeline", children: [
+              {title: "Methods", url: "#methods" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>TimeSequencePipeline</strong></h1>
+    <hr>
+    <h1 id="timesequencepipeline">TimeSequencePipeline</h1>
+<p><code>TimeSequencePipeline</code> integrates feature engineering and time sequence model into a data analysis pipeline.
+You can get an <code>TimeSequencePipeline</code> object after calling <code>TimeSequencePredictor.fit()</code> or <code>load_ts_pipeline</code>.</p>
+<h2 id="methods">Methods</h2>
+<h3 id="load_ts_pipeline">load_ts_pipeline</h3>
+<pre><code class="python">ts_pipeline = load_ts_pipeline(file)
+</code></pre>
+
+<h4 id="arguments">Arguments</h4>
+<ul>
+<li><strong>file</strong>: saved ts pipeline file.</li>
+</ul>
+<h3 id="describe">describe</h3>
+<p>Since you may get your <code>ts_pipeline</code> from a saved file which is a result pipeline of <code>TimeSeqencePredictor</code>. You can use
+<code>describe</code> method to get the initialization info for the <code>TimeSeqencePredictor</code>, including <code>future_seq_len</code>, <code>dt_col</code>, <code>target_col</code>, <code>extra_features_col</code>, <code>drop_missing</code>.</p>
+<pre><code class="python">ts_pipeline.describe()
+</code></pre>
+
+<h3 id="fit">fit</h3>
+<p>Used for incremental fitting. Note that <code>fit</code> in <code>TimeSequencePipeline</code> doesn`t run in distributed mode.</p>
+<pre><code class="python">ts_pipeline.fit(input_df, validation_df=None, mc=False, epoch_num=20)
+</code></pre>
+
+<h4 id="arguments_1">Arguments</h4>
+<ul>
+<li>
+<p><strong>input_df</strong>: Input time series data frame. It should have the same datetime column, target column, 
+                extra features columns (if there are) name with the names you got from <code>ts_pipeline.describe()</code>. </p>
+</li>
+<li>
+<p><strong>validation_df</strong>: The validation data frame. It should have the same columns with <code>input_df</code>.</p>
+</li>
+<li>
+<p><strong>mc</strong>: Boolean. Whether to use Monte Carlo Dropout to predict with uncertainty. Default is False.
+          You can refer to the paper <a href="https://arxiv.org/abs/1709.01907">here</a> for more details about Monte Carlo Dropout. </p>
+</li>
+<li>
+<p><strong>epoch_num</strong>: Integer. Number of epochs to run incremental fitting.</p>
+</li>
+</ul>
+<h3 id="evaluate">evaluate</h3>
+<pre><code class="python">ts_pipeline.evaluate(input_df,
+                     metrics=[&quot;mse&quot;],
+                     multioutput=`raw_values`)
+</code></pre>
+
+<h4 id="arguments_2">Arguments</h4>
+<ul>
+<li>
+<p><strong>input_df</strong>: Input data frame. It should have the same column names as the data frame you used to train your <code>TimeSequencePredictor</code>. 
+                And you can get the information with <code>pipeline.describe()</code> </p>
+</li>
+<li>
+<p><strong>metrics</strong>: The metrics you want to use for evaluation. The available metrics are 
+               <code>me</code>, <code>mae</code>, <code>mse</code>, <code>rmse</code>, <code>msle</code>, <code>r2</code>, <code>mpe</code>, <code>mape</code>, <code>mspe</code>, <code>smape</code>, <code>mdape</code> and <code>smdape</code>.</p>
+</li>
+<li>
+<p><strong>multioutput</strong>: string in [<code>raw_values</code>, <code>uniform_average</code>]</p>
+<pre><code>        - `raw_values` : Returns a full set of errors.
+        - `uniform_average` : Errors of all outputs are averaged with uniform weight.
+</code></pre>
+</li>
+</ul>
+<h3 id="predict">predict</h3>
+<pre><code class="python">ts_pipeline.predict(input_df)
+</code></pre>
+
+<h4 id="arguments_3">Arguments</h4>
+<ul>
+<li><strong>input_df</strong>: Input data frame to do prediction.It should have the same column names as the data frame you used to train your <code>TimeSequencePredictor</code>. 
+                And you can get the information with <code>pipeline.describe()</code> <pre><code>    - a TFDataset object
+    - A Numpy array (or array-like), or a list of arrays
+       (in case the model has multiple inputs).
+    - A dict mapping input names to the corresponding array/tensors,
+</code></pre>
+</li>
+</ul>
+<h3 id="save">save</h3>
+<pre><code class="python">ts_pipeline.save(ppl_file=&quot;my.ppl&quot;)
+</code></pre>
+
+<h4 id="arguments_4">Arguments</h4>
+<ul>
+<li><strong>ppl_file</strong>: The file name you want to save your pipeline.</li>
+</ul>
+<h3 id="config_save">config_save</h3>
+<pre><code class="python">ts_pipeline.config_save(config_file==&quot;my.json&quot;)
+</code></pre>
+
+<h4 id="arguments_5">Arguments</h4>
+<ul>
+<li><strong>config_file</strong>: The config file name that you want to save all the pipeline configs in.</li>
+</ul>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
