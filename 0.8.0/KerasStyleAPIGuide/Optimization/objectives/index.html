@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Objectives - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Usage of objectives", url: "#usage-of-objectives", children: [
+          ]},
+          {title: "Available objectives", url: "#available-objectives", children: [
+              {title: "MeanSquaredError", url: "#meansquarederror" },
+              {title: "MeanAbsoluteError", url: "#meanabsoluteerror" },
+              {title: "BinaryCrossEntropy", url: "#binarycrossentropy" },
+              {title: "SparseCategoricalCrossEntropy", url: "#sparsecategoricalcrossentropy" },
+              {title: "MeanAbsolutePercentageError", url: "#meanabsolutepercentageerror" },
+              {title: "MeanSquaredLogarithmicError", url: "#meansquaredlogarithmicerror" },
+              {title: "CategoricalCrossEntropy", url: "#categoricalcrossentropy" },
+              {title: "Hinge", url: "#hinge" },
+              {title: "RankHinge", url: "#rankhinge" },
+              {title: "SquaredHinge", url: "#squaredhinge" },
+              {title: "Poisson", url: "#poisson" },
+              {title: "CosineProximity", url: "#cosineproximity" },
+              {title: "KullbackLeiblerDivergence", url: "#kullbackleiblerdivergence" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Objectives</strong></h1>
+    <hr>
+    <h2 id="usage-of-objectives">Usage of objectives</h2>
+<p>An objective function (or loss function, or optimization score function) is one of the two parameters required to compile a model:</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">model.compile(loss = &quot;mean_squared_error&quot;, optimizer = &quot;sgd&quot;)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">model.compile(loss='mean_squared_error', optimizer='sgd')
+</code></pre>
+
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">model.compile(loss = MeanSquaredError(sizeAverage = true), optimizer = &quot;sgd&quot;)
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">model.compile(loss=MeanSquaredError(size_average=True), optimizer='sgd')
+</code></pre>
+
+<hr />
+<h2 id="available-objectives">Available objectives</h2>
+<h3 id="meansquarederror">MeanSquaredError</h3>
+<p>The mean squared error criterion e.g. input: a, target: b, total elements: n</p>
+<pre><code>loss(a, b) = 1/n * sum(|a_i - b_i|^2)
+</code></pre>
+
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = MeanSquaredError(sizeAverage = true)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>sizeAverage</code> a boolean indicating whether to divide the sum of squared error by n. 
+                 Default: true</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = MeanSquaredError(size_average=True)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>size_average</code> a boolean indicating whether to divide the sum of squared error by n. 
+                 Default: True</li>
+</ul>
+<h3 id="meanabsoluteerror">MeanAbsoluteError</h3>
+<p>Measures the mean absolute value of the element-wise difference between input and target</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = MeanAbsoluteError(sizeAverage = true)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>sizeAverage</code> a boolean indicating whether to divide the sum of squared error by n. 
+                 Default: true</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = MeanAbsoluteError(size_average=True)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>size_average</code> a boolean indicating whether to divide the sum of squared error by n. 
+                 Default: True</li>
+</ul>
+<h3 id="binarycrossentropy">BinaryCrossEntropy</h3>
+<p>Also known as logloss. </p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = BinaryCrossEntropy(weights = null, sizeAverage = true)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>weights</code> A tensor assigning weight to each of the classes</li>
+<li><code>sizeAverage</code> whether to divide the sequence length. Default is true.</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = BinaryCrossEntropy(weights=None, size_average=True)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>weights</code> A tensor assigning weight to each of the classes</li>
+<li><code>size_average</code> whether to divide the sequence length. Default is True.</li>
+</ul>
+<h3 id="sparsecategoricalcrossentropy">SparseCategoricalCrossEntropy</h3>
+<p>A loss often used in multi-class classification problems with SoftMax as the last layer of the neural network. By default, input(y_pred) is supposed to be probabilities of each class, and target(y_true) is supposed to be the class label starting from 0.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = SparseCategoricalCrossEntropy(logProbAsInput = false, zeroBasedLabel = true, weights = null, sizeAverage = true, paddingValue = -1)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>logProbAsInput</code> Boolean. Whether to accept log-probabilities or probabilities as input. Default is false and inputs should be probabilities.</li>
+<li><code>zeroBasedLabel</code> Boolean. Whether target labels start from 0. Default is true. If false, labels start from 1.</li>
+<li><code>weights</code> Tensor. Weights of each class if you have an unbalanced training set. Default is null.</li>
+<li><code>sizeAverage</code> Boolean. Whether losses are averaged over observations for each mini-batch. Default is true. If false, the losses are instead summed for each mini-batch.</li>
+<li><code>paddingValue</code> Integer. If the target is set to this value, the training process will skip this sample. In other words, the forward process will return zero output and the backward process will also return zero gradInput. Default is -1.</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = SparseCategoricalCrossEntropy(log_prob_as_input=False, zero_based_label=True, weights=None, size_average=True, padding_value=-1)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>log_prob_as_input</code> Boolean. Whether to accept log-probabilities or probabilities as input. Default is false and inputs should be probabilities.</li>
+<li><code>zero_based_label</code> Boolean. Whether target labels start from 0. Default is true. If false, labels start from 1.</li>
+<li><code>weights</code> A Numpy array. Weights of each class if you have an unbalanced training set. Default is None.</li>
+<li><code>size_average</code> Boolean. Whether losses are averaged over observations for each mini-batch. Default is True. If False, the losses are instead summed for each mini-batch.</li>
+<li><code>padding_value</code> Integer. If the target is set to this value, the training process will skip this sample. In other words, the forward process will return zero output and the backward process will also return zero gradInput. Default is -1.</li>
+</ul>
+<h3 id="meanabsolutepercentageerror">MeanAbsolutePercentageError</h3>
+<p>Compute mean absolute percentage error for intput and target</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = MeanAbsolutePercentageError()
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>sizeAverage</code> a boolean indicating whether to divide the sum of squared error by n. 
+                 Default: true</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = MeanAbsolutePercentageError()
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>size_average</code> a boolean indicating whether to divide the sum of squared error by n. 
+                 Default: True</li>
+</ul>
+<h3 id="meansquaredlogarithmicerror">MeanSquaredLogarithmicError</h3>
+<p>Compute mean squared logarithmic error for input and target</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = MeanSquaredLogarithmicError()
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = MeanSquaredLogarithmicError()
+</code></pre>
+
+<h3 id="categoricalcrossentropy">CategoricalCrossEntropy</h3>
+<p>This is same with cross entropy criterion, except the target tensor is a
+one-hot tensor.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = CategoricalCrossEntropy()
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = CategoricalCrossEntropy()
+</code></pre>
+
+<h3 id="hinge">Hinge</h3>
+<p>Creates a criterion that optimizes a two-class classification hinge loss (margin-based loss) between input x (a Tensor of dimension 1) and output y.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = Hinge(margin = 1.0, sizeAverage = true)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>margin</code> if unspecified, is by default 1.</li>
+<li><code>sizeAverage</code> whether to average the loss, is by default true</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = Hinge(margin=1.0, size_average=True)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>margin</code> if unspecified, is by default 1.</li>
+<li><code>size_average</code> whether to average the loss, is by default True</li>
+</ul>
+<h3 id="rankhinge">RankHinge</h3>
+<p>Hinge loss for pairwise ranking problems.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = RankHinge(margin = 1.0)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>margin</code> if unspecified, is by default 1.</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = RankHinge(margin=1.0)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>margin</code> if unspecified, is by default 1.</li>
+</ul>
+<h3 id="squaredhinge">SquaredHinge</h3>
+<p>Creates a criterion that optimizes a two-class classification squared hinge loss (margin-based loss) between input x (a Tensor of dimension 1) and output y.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = SquaredHinge(margin = 1.0, sizeAverage = true)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>margin</code> if unspecified, is by default 1.</li>
+<li><code>sizeAverage</code> whether to average the loss, is by default true</li>
+</ul>
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = SquaredHinge(margin=1.0, size_average=True)
+</code></pre>
+
+<p>Parameters:</p>
+<ul>
+<li><code>margin</code> if unspecified, is by default 1.</li>
+<li><code>size_average</code> whether to average the loss, is by default True</li>
+</ul>
+<h3 id="poisson">Poisson</h3>
+<p>Compute Poisson error for intput and target</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = Poisson()
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = Poisson()
+</code></pre>
+
+<h3 id="cosineproximity">CosineProximity</h3>
+<p>Computes the negative of the mean cosine proximity between predictions and targets.</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = CosineProximity()
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = CosineProximity()
+</code></pre>
+
+<h3 id="kullbackleiblerdivergence">KullbackLeiblerDivergence</h3>
+<p>Loss calculated as:</p>
+<pre><code>y_true = K.clip(y_true, K.epsilon(), 1)
+y_pred = K.clip(y_pred, K.epsilon(), 1)
+</code></pre>
+
+<p>and output K.sum(y_true * K.log(y_true / y_pred), axis=-1)</p>
+<p><strong>Scala:</strong></p>
+<pre><code class="scala">loss = KullbackLeiblerDivergence()
+</code></pre>
+
+<p><strong>Python:</strong></p>
+<pre><code class="python">loss = KullbackLeiblerDivergence()
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Cluster Serving - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "API Guide", url: "#api-guide", children: [
+              {title: "Python", url: "#python" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Cluster Serving</strong></h1>
+    <hr>
+    <h1 id="api-guide">API Guide</h1>
+<h2 id="python">Python</h2>
+<h3 id="class-inputqueue">class InputQueue</h3>
+<p>The class <code>Input</code> defines methods allowing you to input data into Cluster Serving <a href="">Input Pipeline</a>.</p>
+<h4 id="init"><strong>init</strong></h4>
+<p><a href="">view source</a></p>
+<pre><code>__init__()
+</code></pre>
+
+<p>sets up a connection with configuration in your Cluster Serving <a href="">configuration file</a> <code>config.yaml</code>.</p>
+<p><em>return</em>: None</p>
+<h4 id="enqueue_image">enqueue_image</h4>
+<p><a href="">view source</a></p>
+<pre><code>enqueue_image(uri, img)
+</code></pre>
+
+<p>puts image <code>img</code> with identification <code>uri</code> into Pipeline with JPG encoding. <code>img</code> can be either a string (which represents the file path of the image), or an ndarray of the image (which should be returned by cv2.imread() of opencv-python package)</p>
+<p><em>return</em>: None</p>
+<p><code>uri</code>: a string, unique identification of your image</p>
+<p><code>img</code>: path or <code>ndarray</code> of your image, could be loaded by <code>cv2.imread()</code> of opencv-python package.</p>
+<p><em>Example</em></p>
+<pre><code>from zoo.serving.client import InputQueue
+input_api = InputQueue()
+input_api.enqueue_image('my-image1', 'path/to/image1')
+
+import cv2
+image2 = cv2.imread('path/to/image2')
+input_api.enqueue_image('my-image2', image2)
+</code></pre>
+
+<h3 id="class-outputqueue">class OutputQueue</h3>
+<p>The class <code>Output</code> defines methods allowing you to get result from Cluster Serving <a href="">Output Pipeline</a>.</p>
+<h4 id="init_1"><strong>init</strong></h4>
+<p><a href="">view source</a></p>
+<pre><code>__init__()
+</code></pre>
+
+<p>sets up a connection with configuration in your Cluster Serving <a href="">configuration file</a> <code>config.yaml</code>.</p>
+<h4 id="query">query</h4>
+<p><a href="">view source</a></p>
+<pre><code>query(uri)
+</code></pre>
+
+<p>query result in output Pipeline by key <code>uri</code></p>
+<p><em>return</em>: string type, the output of your prediction, which can be parsed to a dict by json. </p>
+<p>Format: </p>
+<pre><code>{
+    &quot;class_1&quot;: &quot;probability_1&quot;,
+    &quot;class_2&quot;: &quot;probability_2&quot;,
+    ...,
+    &quot;class_n&quot;: &quot;probability_n&quot;
+}
+</code></pre>
+
+<p>where <code>n</code> is <code>top_n</code> in your serving config, the result is sorted by output probability.</p>
+<p><em>Example</em></p>
+<pre><code>from zoo.serving.client import OutputQueue
+import json
+output_api = OutputQueue()
+d = output_api.query('my-image') 
+
+tmp_dict = json.loads(d)
+for class_idx in tmp_dict.keys():
+    output += &quot;class: &quot; + class_idx + &quot;'s prob: &quot; + tmp_dict[class_idx]
+print(output)
+</code></pre>
+
+<h4 id="dequeue">dequeue</h4>
+<p><a href="">view source</a></p>
+<pre><code>dequeue()
+</code></pre>
+
+<p>gets all result of your model prediction and dequeue them from OutputQueue</p>
+<p><em>return</em>: dict(), with keys the <code>uri</code> of your <a href="">enqueue</a>, string type, and values the output of your prediction, string type, which can be parsed by json. </p>
+<p>Format: </p>
+<pre><code>{
+  &quot;image1&quot;: {
+      &quot;class_1&quot;: &quot;probability_1&quot;,
+      &quot;class_2&quot;: &quot;probability_2&quot;,
+      ...,
+      &quot;class_n&quot;: &quot;probability_n&quot;
+  }, 
+  &quot;image2&quot;: {
+      &quot;class_1&quot;: &quot;probability_1&quot;,
+      &quot;class_2&quot;: &quot;probability_2&quot;,
+      ...,
+      &quot;class_n&quot;: &quot;probability_n&quot;
+  }
+  ...
+}
+</code></pre>
+
+<p>where <code>n</code> is <code>top_n</code> in your serving config, the result is sorted by output probability.</p>
+<p><em>Example</em></p>
+<pre><code>from zoo.serving.client import OutputQueue
+import json
+output_api = OutputQueue()
+d = output_api.dequeue()
+
+for k in d.keys():
+    output = &quot;image: &quot; + k + &quot;, classification-result:&quot;
+    tmp_dict = json.loads(result[k])
+    for class_idx in tmp_dict.keys():
+        output += &quot;class: &quot; + class_idx + &quot;'s prob: &quot; + tmp_dict[class_idx]
+    print(output)
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

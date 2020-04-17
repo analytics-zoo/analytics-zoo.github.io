@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Model Serving - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Load and predict with pre-trained model", url: "#load-and-predict-with-pre-trained-model", children: [
+          ]},
+          {title: "Examples", url: "#examples", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Model Serving</strong></h1>
+    <hr>
+    <p>Inference Model is a package in Analytics Zoo aiming to provide high-level APIs to speed-up development. It allows user to conveniently use pre-trained models from Analytics Zoo, Caffe, Tensorflow and OpenVINO Intermediate Representation(IR). Inference Model provides Java, Scala and Python interfaces.</p>
+<p><strong>Highlights</strong></p>
+<ol>
+<li>Easy-to-use APIs for loading and prediction with deep learning models of Analytics Zoo, Caffe, Tensorflow and OpenVINO Intermediate Representation(IR).</li>
+<li>Support transformation of various input data type, thus supporting future prediction tasks.</li>
+<li>Transparently support the OpenVINO toolkit, which deliver a significant boost for inference speed (<a href="https://software.intel.com/en-us/blogs/2018/05/15/accelerate-computer-vision-from-edge-to-cloud-with-openvino-toolkit">up to 19.9x</a>).</li>
+</ol>
+<h2 id="load-and-predict-with-pre-trained-model"><strong>Load and predict with pre-trained model</strong></h2>
+<p><strong>Basic usage of Inference Model:</strong></p>
+<ol>
+<li>Directly use InferenceModel or write a subclass extends <code>InferenceModel</code> (<code>AbstractInferenceModel</code> in Java).</li>
+<li>Load pre-trained models with corresponding <code>load</code> methods, e.g, <code>doLoadBigDL</code> for Analytics Zoo, and <code>doLoadTensorflow</code> for TensorFlow.</li>
+<li>Do prediction with <code>predict</code> method.</li>
+</ol>
+<p><strong>Supported models:</strong></p>
+<ol>
+<li><a href="https://analytics-zoo.github.io/master/##built-in-deep-learning-models">Analytics Zoo Models</a></li>
+<li><a href="https://github.com/BVLC/caffe/wiki/Model-Zoo">Caffe Models</a></li>
+<li><a href="https://github.com/tensorflow/models">TensorFlow Models</a></li>
+<li><a href="https://software.intel.com/en-us/openvino-toolkit/documentation/pretrained-models">OpenVINO models</a></li>
+</ol>
+<p><strong>Predict input and output</strong></p>
+<ul>
+<li><code>predictInput</code>: JList[JList[JTensor]] or <a href="https://github.com/intel-analytics/BigDL/tree/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/tensor">Tensor</a> for Scale and Java, Numpy for Python. Input data for prediction. <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/zoo/src/main/java/com/intel/analytics/zoo/pipeline/inference/JTensor.java">JTensor</a> is a 1D List, with Array[Int] shape.</li>
+<li><code>predictOutput</code>: JList[JList[JTensor]] or <a href="https://github.com/intel-analytics/BigDL/tree/master/spark/dl/src/main/scala/com/intel/analytics/bigdl/tensor">Tensor</a> for Scale and Java, Numpy for Python. Prediction result.</li>
+</ul>
+<p><strong>OpenVINO requirements:</strong></p>
+<p><a href="https://software.intel.com/en-us/openvino-toolkit/documentation/system-requirements">System requirements</a>:</p>
+<pre><code>Ubuntu 18.04 LTS (64 bit)
+CentOS 7.4 (64 bit)
+macOS 10.13, 10.14 (64 bit)
+</code></pre>
+<p>Python requirements:</p>
+<pre><code>tensorflow&gt;=1.2.0
+networkx&gt;=1.11
+numpy&gt;=1.12.0
+protobuf==3.6.1
+</code></pre>
+<p><strong>Java</strong></p>
+<p>Write a subclass that extends <code>AbstractInferenceModel</code>, implement or override methods. Then, load model with corresponding <code>load</code> methods (load Analytics Zoo, caffe, OpenVINO and TensorFlow model with <code>loadBigDL</code>, <code>loadCaffe</code>, <code>loadOpenVINO</code> and <code>loadTensorflow</code>), and do prediction with <code>predict</code> method. </p>
+<pre><code class="java">import com.intel.analytics.zoo.pipeline.inference.AbstractInferenceModel;
+import com.intel.analytics.zoo.pipeline.inference.JTensor;
+
+public class ExtendedInferenceModel extends AbstractInferenceModel {
+    public ExtendedInferenceModel() {
+        super();
+    }
+}
+ExtendedInferenceModel model = new ExtendedInferenceModel();
+// Load Analytics Zoo model
+model.loadBigDL(modelPath, weightPath);
+// Predict
+List&lt;List&lt;JTensor&gt;&gt; result = model.predict(inputList);
+</code></pre>
+
+<p><strong>Scala</strong></p>
+<p>New an instance of <code>InferenceModel</code>, and load model with corresponding <code>load</code> methods (load Analytics Zoo, caffe, OpenVINO and TensorFlow model with <code>doLoadBigDL</code>, <code>doLoadCaffe</code>, <code>doLoadOpenVINO</code> and <code>doLoadTensorflow</code>), then do prediction with <code>predict</code> method.</p>
+<pre><code class="scala">import com.intel.analytics.zoo.pipeline.inference.InferenceModel
+
+val model = new InferenceModel()
+// Load Analytics Zoo model
+model.doLoadBigDL(modelPath, weightPath)
+// Predict
+val result = model.doPredict(inputList)
+</code></pre>
+
+<p>In some cases, you may want to write a subclass that extends <code>InferenceModel</code>, implement or override methods. Then, load model with corresponding <code>load</code> methods, and do prediction with <code>predict</code> method.</p>
+<pre><code class="scala">import com.intel.analytics.zoo.pipeline.inference.InferenceModel
+
+class ExtendedInferenceModel extends InferenceModel {
+
+}
+
+val model = new ExtendedInferenceModel()
+// Load Analytics Zoo model
+model.doLoadBigDL(modelPath, weightPath)
+// Predict
+val result = model.doPredict(inputList)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<p>New an instance of <code>InferenceModel</code>, and load Zoo model with corresponding <code>load</code> methods (load Analytics Zoo, caffe, OpenVINO and TensorFlow model with <code>load_bigdl</code>, <code>load_caffe</code>, <code>load_openvino</code> and <code>load_tensorflow</code>), then do prediction with <code>predict</code> method.</p>
+<pre><code class="python">from zoo.pipeline.inference import InferenceModel
+
+model = InferenceModel()
+# Load Analytics Zoo model
+model.load_bigdl(model_path, weight_path)
+# Predict
+result = model.predict(input_list)
+</code></pre>
+
+<p>In some cases, you may want to write a subclass that extends <code>InferenceModel</code>, implement or override methods. Then, load model with corresponding <code>load</code> methods, and do prediction with <code>predict</code> method.</p>
+<pre><code class="python">from zoo.pipeline.inference import InferenceModel
+
+class ExtendedInferenceModel(InferenceModel):
+
+    def __init__(self):
+        pass
+
+model = ExtendedInferenceModel()
+# Load Analytics Zoo model
+model.load_bigdl(model_path, weight_path)
+# Predict
+result = model.predict(input_list)
+</code></pre>
+
+<h2 id="examples"><strong>Examples</strong></h2>
+<p>We provide examples based on InferenceModel.</p>
+<p>See <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/apps/model-inference-examples">here</a> for the Java example.</p>
+<p>See <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/streaming/textclassification">here</a> for the Scala example.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
