@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Network Traffic - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Network Traffic Forecasting", url: "#network-traffic-forecasting", children: [
+          ]},
+          {title: "Using Bulit-in Models", url: "#using-bulit-in-models", children: [
+          ]},
+          {title: "Using AutoTS", url: "#using-autots", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Network Traffic</strong></h1>
+    <hr>
+    <h2 id="network-traffic-forecasting">Network Traffic Forecasting</h2>
+<p>Time series forecasting has many applications in telco. Accurate forecast of telco KPIs (e.g. traffic, utilizations, user experience, etc.) for communication networks ( 2G/3G/4G/5G/wired) can help predict network failures, allocate resource, or save energy. Time series forecasting can also be used for log and metric analysis for data center IT operations for telco. Metrics to be analyzed can be hardware or VM utilizations, database metrics or servce quality indicators. </p>
+<p>In <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/zouwu/use-case/network_traffic">network traffic reference use case</a>, we demonstrate a time series forecasting use case using a public telco dataset, i.e. the aggregated network traffic traces at the transit link of WIDE to the upstream ISP (<a href="http://mawi.wide.ad.jp/~agurim/dataset/">dataset link</a>). In particular, we used aggregated traffic metrics (e.g. total bytes, average MBps) in the past to forecast the traffic in the furture. </p>
+<hr />
+<h2 id="using-bulit-in-models">Using Bulit-in Models</h2>
+<p>In this <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/zouwu/use-case/network_traffic/network_traffic_model_forecasting.ipynb">notebook</a>, we demostrate how to use built-in forecaster models to do univariant forecasting (predict only 1 series), and multivariant forecasting (predicts more than 1 series at the same time).</p>
+<hr />
+<h2 id="using-autots">Using AutoTS</h2>
+<p>In this <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/zouwu/use-case/network_traffic/network_traffic_autots_forecasting.ipynb">notebook</a>, we demostrate how to use AutoTS to build a time series forcasting pipeline. </p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

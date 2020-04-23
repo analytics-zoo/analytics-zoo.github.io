@@ -1,0 +1,636 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>AbstractFeatureSet - analytics-zoo-bigdl_0.10.0-spark_2.4.3 0.8.1-SNAPSHOT API - com.intel.analytics.zoo.feature.AbstractFeatureSet</title>
+          <meta name="description" content="AbstractFeatureSet - analytics - zoo - bigdl 0.10.0 - spark 2.4.3 0.8.1 - SNAPSHOT API - com.intel.analytics.zoo.feature.AbstractFeatureSet" />
+          <meta name="keywords" content="AbstractFeatureSet analytics zoo bigdl 0.10.0 spark 2.4.3 0.8.1 SNAPSHOT API com.intel.analytics.zoo.feature.AbstractFeatureSet" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../../index.html';
+            var hash = 'com.intel.analytics.zoo.feature.AbstractFeatureSet';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <img alt="Trait" src="../../../../../lib/trait_big.png" />
+        <p id="owner"><a href="../../../../package.html" class="extype" name="com">com</a>.<a href="../../../package.html" class="extype" name="com.intel">intel</a>.<a href="../../package.html" class="extype" name="com.intel.analytics">analytics</a>.<a href="../package.html" class="extype" name="com.intel.analytics.zoo">zoo</a>.<a href="package.html" class="extype" name="com.intel.analytics.zoo.feature">feature</a></p>
+        <h1>AbstractFeatureSet</h1><h3><span class="morelinks"><div>Related Doc:
+            <a href="package.html" class="extype" name="com.intel.analytics.zoo.feature">package feature</a>
+          </div></span></h3><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">trait</span>
+      </span>
+      <span class="symbol">
+        <span class="name">AbstractFeatureSet</span><span class="tparams">[<span name="D">D</span>, <span name="DataSequence">DataSequence</span>]</span><span class="result"> extends <span class="extype" name="com.intel.analytics.bigdl.dataset.AbstractDataSet">AbstractDataSet</span>[<span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.D">D</span>, <span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.DataSequence">DataSequence</span>]</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>A set of data which is used in the model optimization process. The FeatureSet can be access in
+a random data sample sequence. In the training process, the data sequence is a looped endless
+sequence. While in the validation process, the data sequence is a limited length sequence.
+User can use the data() method to get the data sequence.</p><p>The sequence of the data is not fixed. It can be changed by the shuffle() method.
+</p></div><dl class="paramcmts block"><dt class="tparam">D</dt><dd class="cmt"><p>Data type</p></dd><dt class="tparam">DataSequence</dt><dd class="cmt"><p>Represent a sequence of data</p></dd></dl><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="com.intel.analytics.bigdl.dataset.AbstractDataSet">AbstractDataSet</span>[<span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.D">D</span>, <span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.DataSequence">DataSequence</span>], <a href="../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
+        </div><div class="toggleContainer block">
+            <span class="toggle">Known Subclasses</span>
+            <div class="subClasses hiddenContent"><a href="CachedDistributedFeatureSet.html" class="extype" name="com.intel.analytics.zoo.feature.CachedDistributedFeatureSet">CachedDistributedFeatureSet</a>, <a href="DiskFeatureSet.html" class="extype" name="com.intel.analytics.zoo.feature.DiskFeatureSet">DiskFeatureSet</a>, <a href="DistributedFeatureSet.html" class="extype" name="com.intel.analytics.zoo.feature.DistributedFeatureSet">DistributedFeatureSet</a>, <a href="PythonLoaderFeatureSet.html" class="extype" name="com.intel.analytics.zoo.feature.PythonLoaderFeatureSet">PythonLoaderFeatureSet</a>, <a href="../tfpark/TFDataFeatureSet.html" class="extype" name="com.intel.analytics.zoo.tfpark.TFDataFeatureSet">TFDataFeatureSet</a></div>
+          </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By Inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="com.intel.analytics.zoo.feature.AbstractFeatureSet"><span>AbstractFeatureSet</span></li><li class="in" name="com.intel.analytics.bigdl.dataset.AbstractDataSet"><span>AbstractDataSet</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show All</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Abstract Value Members</h3>
+              <ol><li name="com.intel.analytics.zoo.feature.AbstractFeatureSet#data" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="data(train:Boolean):DataSequence"></a>
+      <a id="data(Boolean):DataSequence"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">data</span><span class="params">(<span name="train">train: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.DataSequence">DataSequence</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@data(train:Boolean):DataSequence" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Get a sequence of data
+</p><div class="fullcomment"><div class="comment cmt"><p>Get a sequence of data
+</p></div><dl class="paramcmts block"><dt class="param">train</dt><dd class="cmt"><p>if the data is used in train. If yes, the data sequence is a looped endless
+             sequence, or it has a limited length.</p></dd><dt>returns</dt><dd class="cmt"><p>data sequence</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet">AbstractFeatureSet</a> → AbstractDataSet</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.AbstractFeatureSet#shuffle" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="shuffle():Unit"></a>
+      <a id="shuffle():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">shuffle</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@shuffle():Unit" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Change the order of the data sequence from the data set
+</p><div class="fullcomment"><div class="comment cmt"><p>Change the order of the data sequence from the data set
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet">AbstractFeatureSet</a> → AbstractDataSet</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.AbstractFeatureSet#size" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="size():Long"></a>
+      <a id="size():Long"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">size</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@size():Long" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Total size of the data set</p><div class="fullcomment"><div class="comment cmt"><p>Total size of the data set</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet">AbstractFeatureSet</a> → AbstractDataSet</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.AbstractFeatureSet#toDataSet" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="toDataSet():com.intel.analytics.bigdl.DataSet[D]"></a>
+      <a id="toDataSet():DataSet[D]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toDataSet</span><span class="params">()</span><span class="result">: <a href="../../bigdl/package.html#DataSet[D]=com.intel.analytics.bigdl.dataset.AbstractDataSet[D,_]" class="extmbr" name="com.intel.analytics.bigdl.DataSet">DataSet</a>[<span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.D">D</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@toDataSet():com.intel.analytics.bigdl.DataSet[D]" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Convert FeatureSet to com.intel.analytics.bigdl.DataSet</p><div class="fullcomment"><div class="comment cmt"><p>Convert FeatureSet to com.intel.analytics.bigdl.DataSet</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>DataSet[D]</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.AbstractFeatureSet#transform" visbl="pub" data-isabs="true" fullComment="yes" group="Ungrouped">
+      <a id="transform[C](transformer:com.intel.analytics.bigdl.dataset.Transformer[D,C])(implicitevidence$1:scala.reflect.ClassTag[C]):com.intel.analytics.zoo.feature.FeatureSet[C]"></a>
+      <a id="transform[C](Transformer[D,C])(ClassTag[C]):FeatureSet[C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">abstract </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">transform</span><span class="tparams">[<span name="C">C</span>]</span><span class="params">(<span name="transformer">transformer: <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[<span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.D">D</span>, <span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.transform.C">C</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.transform.C">C</span>]</span>)</span><span class="result">: <a href="package.html#FeatureSet[D]=com.intel.analytics.zoo.feature.AbstractFeatureSet[D,_]" class="extmbr" name="com.intel.analytics.zoo.feature.FeatureSet">FeatureSet</a>[<span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.transform.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@transform[C](transformer:com.intel.analytics.bigdl.dataset.Transformer[D,C])(implicitevidence$1:scala.reflect.ClassTag[C]):com.intel.analytics.zoo.feature.FeatureSet[C]" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Helper function to transform the data type in the data set.</p><div class="fullcomment"><div class="comment cmt"><p>Helper function to transform the data type in the data set.</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet">AbstractFeatureSet</a> → AbstractDataSet</dd></dl></div>
+    </li></ol>
+            </div>
+
+        <div id="values" class="values members">
+              <h3>Concrete Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@##():Int" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.feature.AbstractFeatureSet#-&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="-&gt;[C](transformer:com.intel.analytics.bigdl.dataset.Transformer[D,C])(implicitevidence$2:scala.reflect.ClassTag[C]):com.intel.analytics.zoo.feature.FeatureSet[C]"></a>
+      <a id="-&gt;[C](Transformer[D,C])(ClassTag[C]):FeatureSet[C]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $minus$greater" class="name">-&gt;</span><span class="tparams">[<span name="C">C</span>]</span><span class="params">(<span name="transformer">transformer: <span class="extype" name="com.intel.analytics.bigdl.dataset.Transformer">Transformer</span>[<span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.D">D</span>, <span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.-&gt;.C">C</span>]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.-&gt;.C">C</span>]</span>)</span><span class="result">: <a href="package.html#FeatureSet[D]=com.intel.analytics.zoo.feature.AbstractFeatureSet[D,_]" class="extmbr" name="com.intel.analytics.zoo.feature.FeatureSet">FeatureSet</a>[<span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.-&gt;.C">C</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@-&gt;[C](transformer:com.intel.analytics.bigdl.dataset.Transformer[D,C])(implicitevidence$2:scala.reflect.ClassTag[C]):com.intel.analytics.zoo.feature.FeatureSet[C]" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Helper function to transform the data type in the data set.</p><div class="fullcomment"><div class="comment cmt"><p>Helper function to transform the data type in the data set.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet">AbstractFeatureSet</a> → AbstractDataSet</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@clone():Object" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.dataset.AbstractDataSet#toDistributed" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toDistributed():com.intel.analytics.bigdl.dataset.DistributedDataSet[D]"></a>
+      <a id="toDistributed():DistributedDataSet[D]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toDistributed</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.dataset.DistributedDataSet">DistributedDataSet</span>[<span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.D">D</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@toDistributed():com.intel.analytics.bigdl.dataset.DistributedDataSet[D]" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractDataSet</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.dataset.AbstractDataSet#toLocal" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toLocal():com.intel.analytics.bigdl.dataset.LocalDataSet[D]"></a>
+      <a id="toLocal():LocalDataSet[D]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toLocal</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.dataset.LocalDataSet">LocalDataSet</span>[<span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.D">D</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@toLocal():com.intel.analytics.bigdl.dataset.LocalDataSet[D]" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractDataSet</dd></dl></div>
+    </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@toString():String" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.feature.AbstractFeatureSet@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="com.intel.analytics.bigdl.dataset.AbstractDataSet">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.dataset.AbstractDataSet">AbstractDataSet</span>[<span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.D">D</span>, <span class="extype" name="com.intel.analytics.zoo.feature.AbstractFeatureSet.DataSequence">DataSequence</span>]</h3>
+            </div><div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <a href="../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

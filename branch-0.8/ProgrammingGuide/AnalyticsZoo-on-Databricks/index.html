@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Run on Databricks - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Prerequisites", url: "#prerequisites", children: [
+          ]},
+          {title: "Installing Analytics Zoo libraries", url: "#installing-analytics-zoo-libraries", children: [
+          ]},
+          {title: "Setting Spark configuration", url: "#setting-spark-configuration", children: [
+          ]},
+          {title: "Running Analytics Zoo notebook on Databricks", url: "#running-analytics-zoo-notebook-on-databricks", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Run on Databricks</strong></h1>
+    <hr>
+    <p>Databricks is a fast Apache Spark based big data analysis platform. Analytics Zoo program can run easily on Databricks spark cluster for distributed training or inference. This guide will introduce how to prepare Analytics Zoo environment as well as starting an Analytics Zoo notebook on Databricks.</p>
+<ul>
+<li><a href="#Prerequisites">Prerequisites</a></li>
+<li><a href="#Installing-Analytics-Zoo-libraries">Installing Analytics Zoo libraries</a></li>
+<li><a href="#Setting-Spark-configuration">Setting Spark configuration</a></li>
+<li><a href="#Running-Analytics-Zoo-notebook-on-Databricks">Running Analytics Zoo notebook on Databricks</a></li>
+</ul>
+<h3 id="prerequisites"><strong>Prerequisites</strong></h3>
+<p>Before you start this guide, make sure a Databricks workspace is ready and a cluster is created using the Databricks UI.</p>
+<ol>
+<li>Create either <a href="https://docs.databricks.com/getting-started/try-databricks.html">AWS Databricks</a>  workspace or <a href="https://docs.microsoft.com/en-us/azure/azure-databricks/">Azure Databricks</a> workspace.</li>
+<li>Create Databricks <a href="https://docs.databricks.com/clusters/create.html">clusters</a> using the UI. Choose Databricks runtime version. This guide is tested on Runtime 5.5 LTS (includes Apache Spark 2.4.3, Scala 2.11).</li>
+</ol>
+<h3 id="installing-analytics-zoo-libraries"><strong>Installing Analytics Zoo libraries</strong></h3>
+<ol>
+<li>Install libraries. Right-click the Workspace folder. Select <strong>Create &gt; Library</strong>.</li>
+</ol>
+<p><img alt="Pic1" src="../../Image/PlatformGuide/create-library.png" /> </p>
+<ol>
+<li>Install Analytics Zoo python environment using PyPI. </li>
+</ol>
+<p><img alt="Pic2" src="../../Image/PlatformGuide/analytics-zoo-PyPI.PNG" /> </p>
+<ol>
+<li>Install Analytics Zoo prebuilt jar package. Download Analytics Zoo prebuilt release package from the <a href="https://analytics-zoo.github.io/master/#release-download/">Release Page</a>. Please note that you should choose the same spark version of package as your Databricks runtime version. Unzip it. Find the jar named "analytics-zoo-bigdl_<em>-spark_</em>-jar-with-dependencies.jar" in the lib directory. Drop the jar on Databricks.</li>
+</ol>
+<p><img alt="Pic3" src="../../Image/PlatformGuide/analytics-zoo-jar.PNG" /> </p>
+<ol>
+<li>Make sure the jar file and analytics-zoo installed using PyPI are installed on all clusters. In <strong>Libraries</strong> tab of your cluster, check installed libraries and click “Install automatically on all clusters” option in <strong>Admin Settings</strong>.</li>
+</ol>
+<p><img alt="Pic4" src="../../Image/PlatformGuide/install-on-allclusters.PNG" /></p>
+<h3 id="setting-spark-configuration"><strong>Setting Spark configuration</strong></h3>
+<p>On the cluster configuration page, click the <strong>Advanced Options</strong> toggle. Click the <strong>Spark</strong> tab. You can provide custom <a href="https://spark.apache.org/docs/latest/configuration.html">Spark configuration properties</a> in a cluster configuration. Please set it according to your cluster resource and program needs.  </p>
+<p><img alt="Pic5" src="../../Image/PlatformGuide/spark-config-aws.png" /></p>
+<p>See below for an example of Spark config setting needed by Analytics Zoo. Here it sets 1 core and 6g memory per executor and driver. Note that "spark.cores.max" needs to be properly set below.</p>
+<pre><code>spark.shuffle.reduceLocality.enabled false
+spark.serializer org.apache.spark.serializer.JavaSerializer
+spark.shuffle.blockTransferService nio
+spark.databricks.delta.preview.enabled true
+spark.executor.cores 1
+spark.executor.memory 6g
+spark.speculation false
+spark.driver.memory 6g
+spark.scheduler.minRegisteredResourcesRatio 1.0
+spark.cores.max 4
+spark.driver.cores 1
+</code></pre>
+
+<h3 id="running-analytics-zoo-notebook-on-databricks"><strong>Running Analytics Zoo notebook on Databricks</strong></h3>
+<p>Open a new notebook. First call <code>init_nncontext()</code> at the beginning of your code. This will create a SparkContext with optimized performance configuration and initialize the BigDL engine. </p>
+<pre><code class="python">from zoo.common.nncontext import*
+sc = init_nncontext()
+</code></pre>
+
+<p>Output on Databricks:</p>
+<pre><code>Prepending /databricks/python/lib/python3.6/site-packages/bigdl/share/conf/spark-bigdl.conf to sys.path
+Adding /databricks/python/lib/python3.6/site-packages/zoo/share/lib/analytics-zoo-bigdl_0.9.1-spark_2.4.3-0.6.0-jar-with-dependencies.jar to BIGDL_JARS
+Prepending /databricks/python/lib/python3.6/site-packages/zoo/share/conf/spark-analytics-zoo.conf to sys.path
+</code></pre>
+
+<p>If you would like to run a completed Analytics Zoo notebook, you can import an Analytics Zoo notebook from a URL directly. </p>
+<p><img alt="Pic6" src="../../Image/PlatformGuide/import-notebook.png" /></p>
+<p>For example, you may import a simple <a href="https://github.com/intel-analytics/zoo-tutorials/blob/master/keras/2.1-a-first-look-at-a-neural-network.ipynb">Analytics Zoo tutorials notebook</a>.</p>
+<p><img alt="Pic7" src="../../Image/PlatformGuide/import-zoo-notebook.PNG" /></p>
+<p>Note the above notebook runs on Spark local default; to make it run on Databricks cluster, please change the first Python cell in the notebook to:</p>
+<pre><code class="python">from zoo.common.nncontext import*
+sc = init_nncontext()
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

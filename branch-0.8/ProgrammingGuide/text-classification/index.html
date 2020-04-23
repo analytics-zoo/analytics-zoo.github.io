@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Text Classification API - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Build a TextClassifier model", url: "#build-a-textclassifier-model", children: [
+          ]},
+          {title: "Train a TextClassifier model", url: "#train-a-textclassifier-model", children: [
+          ]},
+          {title: "Do prediction", url: "#do-prediction", children: [
+          ]},
+          {title: "Examples", url: "#examples", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Text Classification API</strong></h1>
+    <hr>
+    <p>Analytics Zoo provides pre-defined models having different encoders that can be used for classifying texts.</p>
+<p><strong>Highlights</strong></p>
+<ol>
+<li>Easy-to-use Keras-Style defined models which provides compile and fit methods for training. Alternatively, they could be fed into NNFrames or BigDL Optimizer.</li>
+<li>The encoders we support include CNN, LSTM and GRU.</li>
+</ol>
+<hr />
+<h2 id="build-a-textclassifier-model"><strong>Build a TextClassifier model</strong></h2>
+<p>You can call the following API in Scala and Python respectively to create a <code>TextClassifier</code> with <em>pre-trained GloVe word embeddings as the first layer</em>.</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">val textClassifier = TextClassifier(classNum, embeddingFile, wordIndex = null, sequenceLength = 500, encoder = &quot;cnn&quot;, encoderOutputDim = 256)
+</code></pre>
+
+<ul>
+<li><code>classNum</code>: The number of text categories to be classified. Positive integer.</li>
+<li><code>embeddingFile</code> The path to the word embedding file. Currently only <em>glove.6B.50d.txt, glove.6B.100d.txt, glove.6B.200d.txt, glove.6B.300d.txt, glove.42B.300d.txt, glove.840B.300d.txt</em> are supported. You can download from <a href="https://nlp.stanford.edu/projects/glove/">here</a>.</li>
+<li><code>wordIndex</code> Map of word (String) and its corresponding index (integer). The index is supposed to <strong>start from 1</strong> with 0 reserved for unknown words. During the prediction, if you have words that are not in the wordIndex for the training, you can map them to index 0. Default is null. In this case, all the words in the embeddingFile will be taken into account and you can call <code>WordEmbedding.getWordIndex(embeddingFile)</code> to retrieve the map.</li>
+<li><code>sequenceLength</code>: The length of a sequence. Positive integer. Default is 500.</li>
+<li><code>encoder</code>: The encoder for input sequences. String. "cnn" or "lstm" or "gru" are supported. Default is "cnn".</li>
+<li><code>encoderOutputDim</code>: The output dimension for the encoder. Positive integer. Default is 256.</li>
+</ul>
+<p><strong>Python</strong></p>
+<pre><code class="python">text_classifier = TextClassifier(class_num, embedding_file, word_index=None, sequence_length=500, encoder=&quot;cnn&quot;, encoder_output_dim=256)
+</code></pre>
+
+<ul>
+<li><code>class_num</code>: The number of text categories to be classified. Positive int.</li>
+<li><code>embedding_file</code> The path to the word embedding file. Currently only <em>glove.6B.50d.txt, glove.6B.100d.txt, glove.6B.200d.txt, glove.6B.300d.txt, glove.42B.300d.txt, glove.840B.300d.txt</em> are supported. You can download from <a href="https://nlp.stanford.edu/projects/glove/">here</a>.</li>
+<li><code>word_index</code> Dictionary of word (string) and its corresponding index (int). The index is supposed to <strong>start from 1</strong> with 0 reserved for unknown words. During the prediction, if you have words that are not in the wordIndex for the training, you can map them to index 0. Default is None. In this case, all the words in the embedding_file will be taken into account and you can call <code>WordEmbedding.get_word_index(embedding_file)</code> to retrieve the dictionary.</li>
+<li><code>sequence_length</code>: The length of a sequence. Positive int. Default is 500.</li>
+<li><code>encoder</code>: The encoder for input sequences. String. 'cnn' or 'lstm' or 'gru' are supported. Default is 'cnn'.</li>
+<li><code>encoder_output_dim</code>: The output dimension for the encoder. Positive int. Default is 256.</li>
+</ul>
+<hr />
+<h2 id="train-a-textclassifier-model"><strong>Train a TextClassifier model</strong></h2>
+<p>After building the model, we can call compile and fit to train it (with validation).</p>
+<p>For training and validation data, you can first read files as <code>TextSet</code> (see <a href="../../APIGuide/FeatureEngineering/text/#read-texts-from-a-directory">here</a>) and then do preprocessing (see <a href="../../APIGuide/FeatureEngineering/text/#textset-transformations">here</a>).</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">model.compile(optimizer = new Adagrad(learningRate), loss = SparseCategoricalCrossEntropy(), metrics = List(new Accuracy()))
+model.fit(trainSet, batchSize, nbEpoch, validateSet)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<pre><code class="python">model.compile(optimizer=Adagrad(learning_rate, loss=&quot;sparse_categorical_crossentropy&quot;, metrics=['accuracy'])
+model.fit(train_set, batch_size, nb_epoch, validate_set)
+</code></pre>
+
+<hr />
+<h2 id="do-prediction"><strong>Do prediction</strong></h2>
+<p>After training the model, it can be used to predict probability distributions.</p>
+<p><strong>Scala</strong></p>
+<pre><code class="scala">val predictSet = textClassifier.predict(validateSet)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<pre><code class="python">predict_set = text_classifier.predict(validate_set)
+</code></pre>
+
+<hr />
+<h2 id="examples"><strong>Examples</strong></h2>
+<p>We provide an example to train the TextClassifier model on 20 Newsgroup dataset and uses the model to do prediction.</p>
+<p>See <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/textclassification">here</a> for the Scala example.</p>
+<p>See <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/textclassification">here</a> for the Python example.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
