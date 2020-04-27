@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Autograd - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Overview", url: "#overview", children: [
+              {title: "CustomLoss", url: "#customloss" },
+              {title: "Lambda layer", url: "#lambda-layer" },
+              {title: "Construct variable computation without Lambda layer", url: "#construct-variable-computation-without-lambda-layer" },
+              {title: "Define a model using trainable Parameter", url: "#define-a-model-using-trainable-parameter" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Autograd</strong></h1>
+    <hr>
+    <h2 id="overview">Overview</h2>
+<p><code>autograd</code> provides automatic differentiation for math operations, so that you can easily build your own <em>custom loss and layer</em> (in both Python and Scala), as illustracted below. (See more examples <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/autograd">here</a>). Conceptually we use reverse mode together with the chain rule for automatic differentiation. <code>Variable</code> is used to record the linkage of the operation history, which would generated a static directed acyclic graph for the backward execution. Within the execution graph, leaves are the input <code>variables</code> and roots are the output <code>variables</code>.</p>
+<h3 id="customloss">CustomLoss</h3>
+<p>1.Define a custom function using <code>autograd</code></p>
+<pre><code>from zoo.pipeline.api.autograd import *
+
+def mean_absolute_error(y_true, y_pred):
+   return mean(abs(y_true - y_pred), axis=1)
+</code></pre>
+
+<ol>
+<li>Use <code>CustomLoss</code> in <code>compile</code> method.</li>
+</ol>
+<pre><code># You can pass the loss function directly into `loss`
+model.compile(optimizer = SGD(), loss = mean_absolute_error)
+model.fit(x = ..., y = ...)
+</code></pre>
+
+<ol>
+<li>Use <code>CustomLoss</code> in <code>nnframe</code> pipeline.</li>
+</ol>
+<pre><code># 1) Create a CustomLoss object from function.
+loss = CustomLoss(mean_absolute_error, y_pred_shape=[2], y_true_shape=[2])
+# 2) Passing the CustomLoss object to NNClassifier.
+classifier = NNClassifier(lrModel, loss, SeqToTensor([1000]))
+</code></pre>
+
+<ol>
+<li>Use <code>forward</code> and <code>backward</code> to evaluate a <code>CustomLoss</code> for debugging.</li>
+</ol>
+<pre><code># y_pred_shape=[2] is a shape without batch
+loss = CustomLoss(mean_absolute_error, y_pred_shape=[2], y_true_shape=[2])
+error = loss.forward(y_true=np.random.uniform(0, 1, shape[3, 2]), y_pred=np.random.uniform(0, 1, shape[3, 2]))
+grad = loss.backward(y_true=np.random.uniform(0, 1, shape[3, 2]), y_pred=np.random.uniform(0, 1, shape[3, 2]))
+</code></pre>
+
+<h3 id="lambda-layer">Lambda layer</h3>
+<p>1.Define custom function using <code>autograd</code></p>
+<pre><code>from zoo.pipeline.api.autograd import *
+def add_one_func(x):
+   return x + 1.0
+</code></pre>
+
+<p>2.Define model using Keras-style API and <em>custom <code>Lambda</code> layer</em></p>
+<pre><code>from zoo.pipeline.api.keras.layers import *
+from zoo.pipeline.api.keras.models import *
+model = Sequential().add(Dense(1, input_shape=(2,))) \
+                   .add(Lambda(function=add_one_func))
+# Evaluation for debug purpose.
+model.forward(np.random.uniform(0, 1, shape[3, 2])) # 3 is the batch size
+
+</code></pre>
+
+<h3 id="construct-variable-computation-without-lambda-layer">Construct variable computation without <code>Lambda</code> layer</h3>
+<ul>
+<li>The returning type for each operation is a <code>Variable</code>, so you can connect those <code>Variable</code> together freely without using <code>Lambda</code>. i.e <code>Dense[Float](3).from(input2)</code> or <code>input1 + input2</code></li>
+<li>Shape inference is supported as well, which means you can check the output shape of a <code>Variable</code> by calling <code>get_output_shape()</code></li>
+</ul>
+<p>Python</p>
+<pre><code>import zoo.pipeline.api.autograd as auto
+from zoo.pipeline.api.keras.layers import *
+from zoo.pipeline.api.keras.models import *
+
+input = Input(shape=[2, 20]) # create a variable
+time = TimeDistributed(layer=Dense(30))(input) # time is a variable
+t1 = time.index_select(1, 0) # t1 is a variable
+t2 = time.index_select(1, 1)
+diff = auto.abs(t1 - t2)
+assert diff.get_output_shape() == (None, 30)
+assert diff.get_input_shape() == (None, 30)
+model = Model(input, diff)
+data = np.random.uniform(0, 1, [10, 2, 20])
+output = model.forward(data)
+</code></pre>
+
+<p>Scala
+- In respect of backward compatibility, the scala API is slightly different with the python API.
+- <code>layer.inputs(node)</code> would return a node(backward compatibility).
+- <code>layer.from(variable)</code> would return a variable.(You may want to use this style as it can support autograd.)</p>
+<pre><code>import com.intel.analytics.zoo.pipeline.api.autograd.Variable
+import com.intel.analytics.zoo.pipeline.api.autograd.AutoGrad
+import com.intel.analytics.zoo.pipeline.api.keras.models.Model
+import com.intel.analytics.zoo.pipeline.api.keras.layers._
+
+val input1 = Variable[Float](inputShape = Shape(3))
+val input2 = Variable[Float](inputShape = Shape(3))
+val diff = AutoGrad.abs(input1 - Dense[Float](3).from(input2))
+val model = Model[Float](input = Array(input1, input2), output = diff)
+val inputValue = Tensor[Float](1, 3).randn()
+// In scala, we use Table for multiple inputs. `T` is a short-cut for creating a Table.
+val out = model.forward(T(inputValue, inputValue)).toTensor[Float]
+</code></pre>
+
+<h3 id="define-a-model-using-trainable-parameter">Define a model using trainable Parameter</h3>
+<p>Build a <code>Linear</code> Model (Wx + b) by using trainable <code>Parameter</code> which is equivalent to use <code>Dense</code> layer.
+* Scala</p>
+<pre><code>import com.intel.analytics.zoo.pipeline.api.autograd.{AutoGrad, Parameter, Variable}
+import com.intel.analytics.zoo.pipeline.api.keras.models.Model
+val input = Variable[Float](Shape(3))
+val w = Parameter[Float](Shape(2, 3)) // outputSize * inputSize
+val bias = Parameter[Float](Shape(2))
+val cDense = AutoGrad.mm(input, w, axes = List(1, 1)) + bias
+val model = Model[Float](input = input, output = cDense)
+
+</code></pre>
+
+<ul>
+<li>Python</li>
+</ul>
+<pre><code>from zoo.pipeline.api.autograd import *
+from zoo.pipeline.api.keras.models import *
+input = Variable((3,))
+w = Parameter((2, 3)) # outputSize * inputSize
+bias = Parameter((2,))
+cDense = mm(input, w, axes = (1, 1)) + bias
+model = Model(input = input, output = cDense)
+
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

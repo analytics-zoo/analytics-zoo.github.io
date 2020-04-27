@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Time Series Forecasting - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Automated Time Series Prediction", url: "#automated-time-series-prediction", children: [
+              {title: "Training a model using TimeSequencePredictor", url: "#training-a-model-using-timesequencepredictor" },
+              {title: "Saving and Loading a TimeSequencePipeline", url: "#saving-and-loading-a-timesequencepipeline" },
+              {title: "Prediction and Evaluation using TimeSequencePipeline", url: "#prediction-and-evaluation-using-timesequencepipeline" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Time Series Forecasting</strong></h1>
+    <hr>
+    <h2 id="automated-time-series-prediction">Automated Time Series Prediction</h2>
+<h3 id="training-a-model-using-timesequencepredictor">Training a model using <em>TimeSequencePredictor</em></h3>
+<p><em>TimeSequencePredictor</em> can be used to train a model on historical time sequence data and predict future sequences. Note that: <br />
+  * We require input time series data to be uniformly sampled in timeline. Missing data points will lead to errors or unreliable prediction result. </p>
+<h4 id="1-before-training-init-rayonspark">1. Before training, init RayOnSpark.</h4>
+<ul>
+<li>Run ray on spark local mode, Example</li>
+</ul>
+<pre><code class="python">from zoo import init_spark_on_local
+from zoo.ray import RayContext
+sc = init_spark_on_local(cores=4)
+ray_ctx = RayContext(sc=sc)
+ray_ctx.init()
+</code></pre>
+
+<ul>
+<li>run ray on yarn cluster, Example  </li>
+</ul>
+<pre><code class="python">from zoo import init_spark_on_yarn
+from zoo.ray import RayContext
+slave_num = 2
+sc = init_spark_on_yarn(
+        hadoop_conf=args.hadoop_conf,
+        conda_name=&quot;ray36&quot;,
+        num_executor=slave_num,
+        executor_cores=4,
+        executor_memory=&quot;8g &quot;,
+        driver_memory=&quot;2g&quot;,
+        driver_cores=4,
+        extra_executor_memory_for_ray=&quot;10g&quot;)
+ray_ctx = RayContext(sc=sc, object_store_memory=&quot;5g&quot;)
+ray_ctx.init()
+</code></pre>
+
+<h4 id="2-create-a-timesequencepredictor">2. Create a <em>TimeSequencePredictor</em></h4>
+<ul>
+<li><code>dt_col</code> and <code>target_col</code> are datetime cols and target column in the input dataframe </li>
+<li><code>future_seq_len</code> is how many data points ahead to predict. </li>
+</ul>
+<pre><code class="python">from zoo.automl.regression.time_sequence_predictor import TimeSequencePredictor
+tsp = TimeSequencePredictor(dt_col=&quot;datetime&quot;, target_col=&quot;value&quot;, extra_features_col=None, future_seq_len=1)
+</code></pre>
+
+<h4 id="3-train-on-historical-time-sequence">3. Train on historical time sequence.</h4>
+<ul>
+<li><code>recipe</code> contains parameters to control the search space, stop criteria and number of samples (e.g. for random search strategy, how many samples are taken from the search space). Some recipe with large number of samples may lead to a large trial pool and take very long time to finish. Current avaiable recipes are: <em>SmokeRecipe</em>, <em>RandomRecipe</em>, <em>GridRandomRecipe</em> and <em>BayesRecipe</em>. <em>SmokeRecipe</em> is a very simple Recipe for smoke test that runs one epoch and one iteration with only 1 random sample. Other recipes all have arguments <code>num_random_samples</code> and <code>look_back</code>. <code>num_random_samples</code> is used to control the number of samples. Note that for GridRandomRecipe, the actual number of trials generated will be 2*<code>num_samples</code>, as it needs to do a grid search from 2 possble values for every random sample. <code>look_back</code> is the length of sequence you want to look back. The default values is 1. You can either put a tuple of (min_len, max_len) or a single int to control the look back sequence length search space. <em>BayesRecipe</em> use bayesian-optimization package to perform sequential model-based hyperparameter optimization.</li>
+<li><code>distributed</code>specifies whether to run it in a distributed fashion. </li>
+<li><code>fit</code> returns a <em>Pipeline</em> object (see next section for details). </li>
+<li>Now we don't support resume training - i.e. calling <code>fit</code> multiple times retrains on the input data from scratch. </li>
+<li>input train dataframe look like below: </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>datetime</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2019-06-06</td>
+<td>1.2</td>
+</tr>
+<tr>
+<td>2019-06-07</td>
+<td>2.3</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="python">pipeline = tsp.fit(train_df, metric=&quot;mean_squared_error&quot;, recipe=RandomRecipe(num_samples=1), distributed=False)
+</code></pre>
+
+<h4 id="4-after-training-finished-stop-rayonspark">4. After training finished, stop RayOnSpark</h4>
+<pre><code class="python">ray_ctx.stop()
+</code></pre>
+
+<h3 id="saving-and-loading-a-timesequencepipeline">Saving and Loading a <em>TimeSequencePipeline</em></h3>
+<ul>
+<li>Save the <em>Pipeline</em> object to a file</li>
+</ul>
+<pre><code class="python">pipeline.save(&quot;/tmp/saved_pipeline/my.ppl&quot;)
+</code></pre>
+
+<ul>
+<li>Load the <em>Pipeline</em> object from a file </li>
+</ul>
+<pre><code class="python">from zoo.automl.pipeline.time_sequence import load_ts_pipeline
+
+pipeline = load_ts_pipeline(&quot;/tmp/saved_pipeline/my.ppl&quot;)
+</code></pre>
+
+<h3 id="prediction-and-evaluation-using-timesequencepipeline">Prediction and Evaluation using <em>TimeSequencePipeline</em></h3>
+<p>A <em>TimeSequencePipeline</em> contains a chain of feature transformers and models, which does end-to-end time sequence prediction on input data. <em>TimeSequencePipeline</em> can be saved and loaded for future deployment.      </p>
+<ul>
+<li>Prediction using <em>Pipeline</em> object</li>
+</ul>
+<p>Output dataframe look likes below (assume predict n values forward). col <code>datetime</code> is the starting timestamp.  </p>
+<table>
+<thead>
+<tr>
+<th>datetime</th>
+<th>value_0</th>
+<th>value_1</th>
+<th>...</th>
+<th>value_{n-1}</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2019-06-06</td>
+<td>1.2</td>
+<td>2.8</td>
+<td>...</td>
+<td>4.4</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="python">result_df = pipeline.predict(test_df)
+</code></pre>
+
+<ul>
+<li>Evaluation using <em>Pipeline</em> object</li>
+</ul>
+<pre><code class="python">#evaluate with MSE and R2 metrics
+mse, rs = pipeline.evaluate(test_df, metrics=[&quot;mse&quot;, &quot;rs&quot;])
+</code></pre>
+
+<ul>
+<li>Incremental training using <em>Pipeline</em> object</li>
+</ul>
+<pre><code class="python">#fit with new data and train for 5 epochs
+pipeline.fit(new_train_df,epoch_num=5)
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

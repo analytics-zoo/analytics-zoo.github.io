@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Install - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Download a pre-built library", url: "#download-a-pre-built-library", children: [
+          ]},
+          {title: "Link with 0.8.1 release", url: "#link-with-081-release", children: [
+          ]},
+          {title: "Download Analytics Zoo Source", url: "#download-analytics-zoo-source", children: [
+          ]},
+          {title: "Setup Build Environment", url: "#setup-build-environment", children: [
+          ]},
+          {title: "Build with script (Recommended)", url: "#build-with-script-recommended", children: [
+          ]},
+          {title: "Build for Spark 1.6", url: "#build-for-spark-16", children: [
+          ]},
+          {title: "Build for Scala 2.10 or 2.11", url: "#build-for-scala-210-or-211", children: [
+          ]},
+          {title: "Build with Maven", url: "#build-with-maven", children: [
+          ]},
+          {title: "Setup IDE", url: "#setup-ide", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Install</strong></h1>
+    <hr>
+    <h2 id="download-a-pre-built-library"><strong>Download a pre-built library</strong></h2>
+<p>You can download the Analytics Zoo release and nightly build from the <a href="../../release-download/">Release Page</a></p>
+<hr />
+<h2 id="link-with-081-release"><strong>Link with 0.8.1 release</strong></h2>
+<p>Currently, Analytics Zoo releases are hosted on maven central; here's an example to add the Analytics Zoo dependency to your own project:</p>
+<pre><code class="xml">&lt;dependency&gt;
+    &lt;groupId&gt;com.intel.analytics.zoo&lt;/groupId&gt;
+    &lt;artifactId&gt;analytics-zoo-bigdl_0.10.0-[spark_2.1.1|spark_2.2.0|spark_2.3.1|spark_2.4.3]&lt;/artifactId&gt;
+    &lt;version&gt;0.8.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>SBT developers can use</p>
+<pre><code class="sbt">libraryDependencies += &quot;com.intel.analytics.zoo&quot; % &quot;analytics-zoo-bigdl_0.10.0-[spark_2.1.1|spark_2.2.0|spark_2.3.1|spark_2.4.3]&quot; % &quot;0.8.1&quot;
+</code></pre>
+
+<p>Remarks:</p>
+<ul>
+<li>Please choose the available suffix above according to your Spark platform you want to use.</li>
+<li>You don't need to add the BigDL dependency to your project as it has already been packaged within Analytics Zoo.</li>
+</ul>
+<h2 id="download-analytics-zoo-source"><strong>Download Analytics Zoo Source</strong></h2>
+<p>Analytics Zoo source code is available at <a href="https://github.com/intel-analytics/analytics-zoo">GitHub</a></p>
+<pre><code class="bash">$ git clone https://github.com/intel-analytics/analytics-zoo.git
+</code></pre>
+
+<p>By default, <code>git clone</code> will download the development version of Analytics Zoo, if you want a release version, you can use command <code>git checkout</code> to change the version.</p>
+<h2 id="setup-build-environment"><strong>Setup Build Environment</strong></h2>
+<p>The following instructions are aligned with master code.</p>
+<p>Maven 3 is needed to build Analytics Zoo, you can download it from the <a href="https://maven.apache.org/download.cgi">maven website</a>.</p>
+<p>After installing Maven 3, please set the environment variable MAVEN_OPTS as follows:</p>
+<pre><code class="bash">$ export MAVEN_OPTS=&quot;-Xmx2g -XX:ReservedCodeCacheSize=512m&quot;
+</code></pre>
+
+<p>When compiling with Java 7, you need to add the option “-XX:MaxPermSize=1G”.</p>
+<h2 id="build-with-script-recommended"><strong>Build with script (Recommended)</strong></h2>
+<p>It is highly recommended that you build Analytics Zoo using the <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/make-dist.sh">make-dist.sh script</a>. And it will handle the MAVEN_OPTS variable.</p>
+<p>Once downloaded, you can build Analytics Zoo with the following commands:</p>
+<pre><code class="bash">$ bash make-dist.sh
+</code></pre>
+
+<p>After that, you can find a <code>dist</code> folder, which contains all the needed files to run a Analytics Zoo program. The files in <code>dist</code> include:</p>
+<ul>
+<li><strong>dist/lib/analytics-zoo-VERSION-jar-with-dependencies.jar</strong>: This jar package contains all dependencies except Spark classes.</li>
+<li><strong>dist/lib/analytics-zoo-VERSION-python-api.zip</strong>: This zip package contains all Python files of Analytics Zoo.</li>
+</ul>
+<p>The instructions above will build Analytics Zoo with Spark 2.0(using Scala 2.11). It is highly recommended to use <em><strong>Java 8</strong></em> when running with Spark 2.x; otherwise you may observe very poor performance.</p>
+<h2 id="build-for-spark-16"><strong>Build for Spark 1.6</strong></h2>
+<p>To build for Spark 1.6(which uses Scala 2.10 by default), pass <code>-P spark_1.6</code> to the <code>make-dist.sh</code> script:</p>
+<pre><code class="bash">$ bash make-dist.sh -P spark_1.6
+</code></pre>
+
+<h2 id="build-for-scala-210-or-211"><strong>Build for Scala 2.10 or 2.11</strong></h2>
+<p>By default, <code>make-dist.sh</code> uses Scala 2.11 for Spark 2.1, and Scala 2.10 for Spark 1.6. To override the default behaviors, you can pass <code>-P scala_2.10</code> or <code>-P scala_2.11</code> to <code>make-dist.sh</code> as appropriate.</p>
+<hr />
+<h2 id="build-with-maven"><strong>Build with Maven</strong></h2>
+<p>To build Analytics Zoo directly using Maven, run the command below:</p>
+<pre><code class="bash">$ mvn clean package -DskipTests
+</code></pre>
+
+<p>After that, you can find that jar packages in <code>PATH_TO_ANALYTICS_ZOO</code>/target/, where <code>PATH_TO_ANALYTICS_ZOO</code> is the path to the directory of the Analytics Zoo.</p>
+<p>Note that the instructions above will build Analytics Zoo with Spark 2.0 (using Scala 2.11) for Linux. Similarly, you may customize the default behaviors by passing the following parameters to maven:</p>
+<ul>
+<li><code>-P spark_1.6</code>: build for Spark 1.6 (using Scala 2.10).</li>
+<li><code>-P scala_2.10</code> (or <code>-P scala_2.11</code>): build using Scala 2.10 (or Scala 2.11)</li>
+</ul>
+<hr />
+<h2 id="setup-ide"><strong>Setup IDE</strong></h2>
+<p>We set the scope of spark related library to <code>provided</code> in pom.xml. The reason is that we don't want package spark related jars which will make analytics zoo a huge jar, and generally as analytics zoo is invoked by spark-submit, these dependencies will be provided by spark at run-time.</p>
+<p>This will cause a problem in IDE. When you run applications, it will throw <code>NoClassDefFoundError</code> because the library scope is <code>provided</code>.</p>
+<p>You can easily change the scopes by the <code>all-in-one</code> profile.</p>
+<ul>
+<li>In Intellij, go to View -&gt; Tools Windows -&gt; Maven Projects. Then in the Maven Projects panel, Profiles -&gt; click "all-in-one".</li>
+</ul>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

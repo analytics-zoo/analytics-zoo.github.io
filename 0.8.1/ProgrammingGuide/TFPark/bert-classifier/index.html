@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>BERT Classifier - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "BERTClassifier Construction", url: "#bertclassifier-construction", children: [
+          ]},
+          {title: "Data Preparation", url: "#data-preparation", children: [
+          ]},
+          {title: "Estimator Training", url: "#estimator-training", children: [
+          ]},
+          {title: "Estimator Evaluation", url: "#estimator-evaluation", children: [
+          ]},
+          {title: "Estimator Inference", url: "#estimator-inference", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>BERT Classifier</strong></h1>
+    <hr>
+    <p>Analytics Zoo provides a built-in BERTClassifier in TFPark for Natural Language Processing (NLP) classification tasks based on <a href="../../APIGuide/TFPark/estimator/">TFEstimator</a> and BERT.</p>
+<p>Bidirectional Encoder Representations from Transformers (BERT) is Google's state-of-the-art pre-trained NLP model.
+You may refer to <a href="https://github.com/google-research/bert">here</a> for more details.</p>
+<p>BERTClassifier is a pre-built TFEstimator that takes the hidden state of the first token to do classification.</p>
+<p>In this page, we show the general steps how to train and evaluate an <a href="../../APIGuide/TFPark/bert-classifier/">BERTClassifier</a> in a distributed fashion and use this estimator for distributed inference.</p>
+<p><strong>Remarks</strong>:</p>
+<ul>
+<li>You need to install <strong>tensorflow==1.15.0</strong> on your driver node.</li>
+<li>Your operating system (OS) is required to be one of the following 64-bit systems:
+<strong>Ubuntu 16.04 or later</strong>, <strong>macOS 10.12.6 or later</strong> and <strong>Windows 7 or later</strong>.</li>
+<li>To run on other systems, you need to manually compile the TensorFlow source code. Instructions can
+  be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</li>
+</ul>
+<hr />
+<h2 id="bertclassifier-construction"><strong>BERTClassifier Construction</strong></h2>
+<p>You can easily construct an estimator for classification based on BERT using the following API.</p>
+<pre><code class="python">from zoo.tfpark.text.estimator import BERTClassifier
+
+estimator = BERTClassifier(num_classes, bert_config_file, init_checkpoint, optimizer=tf.train.AdamOptimizer(learning_rate), model_dir=&quot;/tmp/bert&quot;)
+</code></pre>
+
+<hr />
+<h2 id="data-preparation"><strong>Data Preparation</strong></h2>
+<p>BERT has three inputs of the same sequence length: input_ids, input_mask and token_type_ids. </p>
+<p>The preprocessing steps should follow BERT's conventions. You may refer to BERT TensorFlow <a href="https://github.com/google-research/bert/blob/master/run_classifier.py">run_classifier example</a> for more details.</p>
+<p>To construct the input function for BERTClassifier, you can use the following API:</p>
+<pre><code class="python">from zoo.tfpark.text.estimator import bert_input_fn
+
+input_fn = bert_input_fn(rdd, max_seq_length, batch_size)
+</code></pre>
+
+<ul>
+<li>For training and evaluation, each element in rdd should be a tuple: (feature dict, label). Label is supposed to be an integer.</li>
+<li>For prediction, each element in rdd should be a feature dict.</li>
+<li>The keys of feature dict should be <code>input_ids</code>, <code>input_mask</code> and <code>token_type_ids</code> and the values should be the corresponding preprocessed results of max_seq_length for a record.</li>
+</ul>
+<hr />
+<h2 id="estimator-training"><strong>Estimator Training</strong></h2>
+<p>You can easily call <a href="../../APIGuide/TFPark/estimator/#train">train</a> to train the BERTClassifier in a distributed fashion.</p>
+<pre><code class="python">estimator.train(train_input_fn, steps)
+</code></pre>
+
+<p>You can find the trained checkpoints saved under <code>model_dir</code>, which is specified when you initiate BERTClassifier.</p>
+<hr />
+<h2 id="estimator-evaluation"><strong>Estimator Evaluation</strong></h2>
+<p>You can easily call <a href="../../APIGuide/TFPark/estimator/#evaluate">evaluate</a> to evaluate the BERTClassifier in a distributed fashion using top1 accuracy.</p>
+<pre><code class="python">result = estimator.evaluate(eval_input_fn, eval_methods=[&quot;acc&quot;])
+</code></pre>
+
+<hr />
+<h2 id="estimator-inference"><strong>Estimator Inference</strong></h2>
+<p>You can easily call <a href="../../APIGuide/TFPark/estimator/#predict">predict</a> to use the trained BERTClassifier for distributed inference.</p>
+<pre><code class="python">predictions_rdd = estimator.predict(test_input_fn)
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
