@@ -103,7 +103,7 @@ optimizer.optimize(end_trigger=MaxEpoch(5))
 The loss tensor must come from a TensorFlow graph that only takes TFDataset.tensors and
 the tensors in <code>tensor_with_value</code> as inputs.</p>
 <pre><code class="python">from_loss(loss, optim_method, session=None, val_outputs=None,
-                  val_labels=None, val_method=None, val_split=0.0,
+                  val_labels=None, val_method=None,
                   clip_norm=None, clip_value=None, metrics=None,
                   tensor_with_value=None, **kwargs)
 </code></pre>
@@ -119,8 +119,6 @@ the tensors in <code>tensor_with_value</code> as inputs.</p>
 <li><strong>val_outputs</strong>: the validation output TensorFlow tensor to be used by val_methods</li>
 <li><strong>val_labels</strong>: the validation label TensorFlow tensor to be used by val_methods</li>
 <li><strong>val_method</strong>: the BigDL val_method(s) to be used.</li>
-<li><strong>val_split</strong>: Float between 0 and 1. Fraction of the training data to be used as
-               validation data. </li>
 <li><strong>clip_norm</strong>: float &gt;= 0. Gradients will be clipped when their L2 norm exceeds
                this value.</li>
 <li><strong>clip_value</strong>: float &gt;= 0. Gradients will be clipped when their absolute value
@@ -134,7 +132,7 @@ the tensors in <code>tensor_with_value</code> as inputs.</p>
 </ul>
 <h3 id="from_keras-factory-method">from_keras (factory method)</h3>
 <p>Create a TFOptimizer from a tensorflow.keras model. The model must be compiled.</p>
-<pre><code class="python">from_keras(keras_model, dataset, optim_method=None, val_spilt=0.0, **kwargs)
+<pre><code class="python">from_keras(keras_model, dataset, optim_method=None, **kwargs)
 </code></pre>
 
 <h4 id="arguments_1">Arguments</h4>
@@ -142,8 +140,6 @@ the tensors in <code>tensor_with_value</code> as inputs.</p>
 <li><strong>keras_model</strong>: the tensorflow.keras model, which must be compiled.</li>
 <li><strong>dataset</strong>: a <a href="../tf-dataset/">TFDataset</a></li>
 <li><strong>optim_method</strong>: the optimization method to be used, such as bigdl.optim.optimizer.Adam</li>
-<li><strong>val_spilt</strong>: Float between 0 and 1. Fraction of the training data to be used as
-      validation data.</li>
 </ul>
 <h3 id="set_train_summary">set_train_summary</h3>
 <pre><code class="python">set_train_summary(summary)

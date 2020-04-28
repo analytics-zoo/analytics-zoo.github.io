@@ -99,7 +99,7 @@ keras_model = KerasModel(model)
 <li><strong>model</strong>: a compiled keras model defined using <code>tf.keras</code></li>
 </ul>
 <h3 id="fit">fit</h3>
-<pre><code class="python">fit(x=None, y = None, batch_size=None, epochs=1, validation_split=0., validation_data=None, distributed=False)
+<pre><code class="python">fit(x=None, y = None, batch_size=None, epochs=1, validation_data=None, distributed=False)
 </code></pre>
 
 <h4 id="arguments_1">Arguments</h4>
@@ -128,26 +128,15 @@ keras_model = KerasModel(model)
               data provided.</p>
 </li>
 <li>
-<p><strong>validation_split</strong>: Float between 0 and 1.
-                        Fraction of the training data to be used as validation data.
-                        The model will set apart this fraction of the training data,
-                        will not train on it, and will evaluate
-                        the loss and any model metrics
-                        on this data at the end of each epoch.</p>
-</li>
-<li>
 <p><strong>validation_data</strong>: validation_data: Data on which to evaluate
                        the loss and any model metrics at the end of each epoch.
                        The model will not be trained on this data.
-                       <code>validation_data</code> will override <code>validation_split</code>.
-                       <code>validation_data</code> could be:</p>
-<pre><code>                  - tuple `(x_val, y_val)` of Numpy arrays or tensors
-                  - `TFDataset`
-</code></pre>
-<ul>
-<li><strong>distributed</strong>: Boolean. Whether to do prediction in distributed mode or local mode.
-               Default is True. In local mode, x must be a Numpy array.</li>
-</ul>
+                       <code>validation_data</code> could be:
+                          - tuple <code>(x_val, y_val)</code> of Numpy arrays or tensors</p>
+</li>
+<li>
+<p><strong>distributed</strong>: Boolean. Whether to do prediction in distributed mode or local mode.
+                   Default is True. In local mode, x must be a Numpy array.</p>
 </li>
 </ul>
 <h3 id="evaluate">evaluate</h3>

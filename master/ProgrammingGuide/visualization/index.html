@@ -196,6 +196,7 @@ As getting DISTRIBUTIONS and HISTOGRAMS may affect the training performance, so 
 <hr />
 <h2 id="retrieving-summary-from-build-in-api">Retrieving summary from build-in API</h2>
 <p>You can use provided API to retrieve the summaries into readable format, and export them to other tools for further analysis or visualization.</p>
+<p>Please note this approach does not work for KerasModel and TFEstimator.</p>
 <ul>
 <li><em><strong>Example: Reading summary info in NNestimator</strong></em> </li>
 </ul>
@@ -249,6 +250,7 @@ You can re-create the TrainingSummary and ValidationSummary with the same <code>
 <h2 id="visualizing-training-with-jupyter-notebook">Visualizing training with Jupyter notebook</h2>
 <p>If you're using Jupyter notebook, you can also draw the training curves using popular plotting tools (e.g. matplotlib) and show the plots inline. </p>
 <p>First, retrieve the summaries as instructed in <a href="#retrieving-summary-from-build-in-api">Retrieve Summary</a>. The retrieved summary is a list of tuples. Each tuple is a recorded event in format (iteration count, recorded value, timestamp). You can convert it to numpy array or dataframe to plot it. See example below:  </p>
+<p>Please note this approach does not work for KerasModel and TFEstimator.</p>
 <ul>
 <li><em><strong>Example: Plot the train/validation loss in Jupyter</strong></em></li>
 </ul>
