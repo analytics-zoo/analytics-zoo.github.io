@@ -87,9 +87,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
 <h2 id="using-built-in-forecast-models">Using built-in forecast models</h2>
 <p>The built-in forecast models are all derived from <a href="https://analytics-zoo.github.io/master/#APIGuide/TFPark/model/">tfpark.KerasModels</a>. </p>
-<p>1.To start, you need to create a forecast model first. Specify <strong>horizon</strong> and <strong>feature_dim</strong> in constructor. </p>
+<p>1.To start, you need to create a forecast model first. Specify <strong>target_dim</strong> and <strong>feature_dim</strong> in constructor. </p>
 <ul>
-<li><code>horizon</code>: no. of steps to forecast</li>
+<li><code>target_dim</code>: dimension of target output</li>
 <li><code>feature_dim</code>: dimension of input feature</li>
 </ul>
 <p>Refer to API doc for detailed explaination of all arguments for each forecast model.</p>
@@ -99,28 +99,30 @@ from zoo.zouwu.model.forecast import LSTMForecaster
 from zoo.zouwu.model.forecast import MTNetForecaster
 
 #build a lstm forecast model
-lstm_forecaster = LSTMForecaster(horizon=1, 
+lstm_forecaster = LSTMForecaster(target_dim=1, 
                       feature_dim=4)
 
 #build a mtnet forecast model
-mtnet_forecaster = MTNetForecaster(horizon=1,
+mtnet_forecaster = MTNetForecaster(target_dim=1,
                         feature_dim=4,
                         lb_long_steps=1,
-                        lb_long_stepsize=3
+                        lb_long_stepsize=3,
+                        ar_window_size=2,
+                        cnn_kernel_size=2)
 </code></pre>
 
 <p>2.Use <code>forecaster.fit/evalute/predict</code> in the same way as <a href="https://analytics-zoo.github.io/master/#APIGuide/TFPark/model/">tfpark.KerasModel</a></p>
 <p>3.For univariant forecasting (i.e. to predict one series at a time), you can use either <strong>LSTMForecaster</strong> or <strong>MTNetForecaster</strong>. The input data shape for <code>fit/evaluation/predict</code> should match the arguments you used to create the forecaster. Specifically:</p>
 <ul>
 <li><strong>X</strong> shape should be <code>(num of samples, lookback, feature_dim)</code></li>
-<li><strong>Y</strong> shape should be <code>(num of samples, horizon)</code></li>
-<li>Where, <code>feature_dim</code> is the number of features as specified in Forecaster constructors. <code>horizon</code> is the number of steps to look forward as specified in Forecaster constructors.<code>lookback</code> is the number of time steps you want to look back in history. </li>
+<li><strong>Y</strong> shape should be <code>(num of samples, target_dim)</code></li>
+<li>Where, <code>feature_dim</code> is the number of features as specified in Forecaster constructors. <code>lookback</code> is the number of time steps you want to look back in history. <code>target_dim</code> is the number of series to forecast at the same time as specified in Forecaster constructors and should be 1 here. If you want to do multi-step forecasting and use the second dimension as no. of steps to look forward, you won't get error but the performance may be uncertain and we don't recommend using that way.</li>
 </ul>
-<p>4.For multivariant forecasting (i.e. to predict several series at the same time), you have to use <strong>MTNetForecaster</strong>. The input data shape should meet below criteria. Note for multivariant forecasting, horizon must be 1. </p>
+<p>4.For multivariant forecasting (i.e. to predict several series at the same time), you have to use <strong>MTNetForecaster</strong>. The input data shape should meet below criteria.  </p>
 <ul>
 <li><strong>X</strong> shape should be <code>(num of samples, lookback, feature_dim)</code></li>
-<li><strong>Y</strong> shape should be <code>(num of samples, num_of_targets)</code> </li>
-<li>Where <code>lookback</code> should equal <code>(lb_long_steps+1) * lb_long_stepsize</code>, where <code>lb_long_steps</code> and <code>lb_long_stepsize</code> are as specified in <code>MTNetForecaster</code> constructor. <code>num_targets</code> is the number of series to forecast at the same time </li>
+<li><strong>Y</strong> shape should be <code>(num of samples, target_dim)</code> </li>
+<li>Where <code>lookback</code> should equal <code>(lb_long_steps+1) * lb_long_stepsize</code>, where <code>lb_long_steps</code> and <code>lb_long_stepsize</code> are as specified in <code>MTNetForecaster</code> constructor. <code>target_dim</code> should equal number of series in input.</li>
 </ul>
 <hr />
 <h2 id="using-autots">Using AutoTS</h2>
@@ -204,7 +206,7 @@ ray_ctx.init()
 <pre><code class="python"> from zoo.zouwu.autots.forecast import AutoTSTrainer
 
  trainer = AutoTSTrainer(dt_col=&quot;datetime&quot;,
-                         target_col=&quot;value&quot;
+                         target_col=&quot;value&quot;,
                          horizon=1,
                          extra_features_col=None)
 

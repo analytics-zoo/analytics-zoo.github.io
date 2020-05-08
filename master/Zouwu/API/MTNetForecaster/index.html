@@ -66,10 +66,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>MTNetForecaster is derived from tfpark.KerasMode, and can use all methods of KerasModel. Refer to <a href="../../../APIGuide/TFPark/model/">tfpark.KerasModel API Doc</a> for details.</p>
 <h2 id="methods">Methods</h2>
 <h3 id="__init__">__init__</h3>
-<pre><code class="python">MTNetForecaster(horizon=1,
+<pre><code class="python">MTNetForecaster(target_dim=1,
                feature_dim=1,
                lb_long_steps=1,
                lb_long_stepsize=1,
+               ar_window_size=1,
+               cnn_kernel_size=1,
                metric=&quot;mean_squared_error&quot;,
                uncertainty: bool = False,
             )
@@ -78,10 +80,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
 <h4 id="arguments">Arguments</h4>
 <ul>
-<li><strong>horizon</strong>: the steps to look forward</li>
+<li><strong>target_dim</strong>: the dimension of model output</li>
 <li><strong>feature_dim</strong>: the dimension of input feature</li>
 <li><strong>lb_long_steps</strong>: the number of steps for the long-term memory series</li>
 <li><strong>lb_long_stepsize</strong>: the stepsize for long-term memory series</li>
+<li><strong>ar_window_size</strong>：the auto regression window size in MTNet</li>
+<li><strong>cnn_kernel_size</strong>: cnn filter height in MTNet</li>
 <li><strong>metric</strong>: the metric for validation and evaluation</li>
 <li><strong>uncertainty</strong>: whether to enable calculation of uncertainty</li>
 </ul>
