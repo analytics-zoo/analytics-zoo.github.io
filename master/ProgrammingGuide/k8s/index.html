@@ -81,15 +81,41 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>A running Kubernetes cluster is prepared. Also make sure the permission of  <code>kubectl</code>  to create, list and delete pod.</li>
 </ol>
 <p><strong>Launch pre-built hyperzoo k8s image</strong></p>
-<ul>
-<li>Pull an Analytics Zoo k8s image:</li>
-</ul>
+<ol>
+<li>Pull an Analytics Zoo hyperzoo image from <a href="https://hub.docker.com/r/intelanalytics/hyper-zoo/tags">dockerhub</a>:</li>
+</ol>
 <pre><code class="bash">sudo docker pull intelanalytics/hyper-zoo:latest
 </code></pre>
 
 <ul>
-<li>Launch a k8s client container:</li>
+<li>Speed up pulling image by adding mirrors</li>
 </ul>
+<p>To speed up pulling the image from dockerhub in China, add a registry's mirror. For Linux OS (CentOS, Ubuntu etc), if the docker version is higher than 1.12, config the docker daemon. Edit <code>/etc/docker/daemon.json</code> and add the registry-mirrors key and value:</p>
+<pre><code class="bash">{
+  &quot;registry-mirrors&quot;: [&quot;https://&lt;my-docker-mirror-host&gt;&quot;]
+}
+</code></pre>
+
+<p>For example, add the ustc mirror in China.</p>
+<pre><code class="bash">{
+  &quot;registry-mirrors&quot;: [&quot;https://docker.mirrors.ustc.edu.cn&quot;]
+}
+</code></pre>
+
+<p>Flush changes and restart docker：</p>
+<pre><code class="bash">sudo systemctl daemon-reload
+sudo systemctl restart docker
+</code></pre>
+
+<p>If your docker version is between 1.8 and 1.11, find the docker configuration which location depends on the operation system. Edit and add <code>DOCKER_OPTS="--registry-mirror=https://&lt;my-docker-mirror-host&gt;"</code>. Restart docker <code>sudo service docker restart</code>.</p>
+<p>If you would like to speed up pulling this image on MacOS or Windows, find the docker setting and config registry-mirrors section by specifying mirror host. Restart docker. </p>
+<p>Then pull the image. It will be faster.</p>
+<pre><code class="bash">sudo docker pull intelanalytics/hyper-zoo:latest
+</code></pre>
+
+<ol>
+<li>Launch a k8s client container:</li>
+</ol>
 <p>Please note the two different containers: <strong>client container</strong> is for user to submit zoo jobs from here, since it contains all the required env and libs except hadoop/k8s configs; executor container is not need to create manually, which is scheduled by k8s at runtime.</p>
 <pre><code class="bash">sudo docker run -itd --net=host \
     -v /etc/kubernetes:/etc/kubernetes \

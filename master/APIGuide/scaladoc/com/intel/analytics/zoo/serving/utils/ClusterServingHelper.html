@@ -89,7 +89,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;():com.intel.analytics.zoo.serving.utils.ClusterServingHelper"></a>
+      <a id="&lt;init&gt;(_configPath:String):com.intel.analytics.zoo.serving.utils.ClusterServingHelper"></a>
       <a id="&lt;init&gt;:ClusterServingHelper"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -97,10 +97,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">ClusterServingHelper</span><span class="params">()</span>
+        <span class="name">ClusterServingHelper</span><span class="params">(<span name="_configPath">_configPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;config.yaml&quot;</span></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@&lt;init&gt;():com.intel.analytics.zoo.serving.utils.ClusterServingHelper" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@&lt;init&gt;(_configPath:String):com.intel.analytics.zoo.serving.utils.ClusterServingHelper" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -253,6 +253,23 @@
       </a>
     </span>
       <p class="shortcomment cmt">Check stop signal, return true if signal detected</p>
+    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#chwFlag" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="chwFlag:Boolean"></a>
+      <a id="chwFlag:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">chwFlag</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@chwFlag:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -285,7 +302,7 @@
         <span class="kind">val</span>
       </span>
       <span class="symbol">
-        <span class="name">configPath</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+        <span class="name">configPath</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@configPath:String" title="Permalink" target="_top">
@@ -311,18 +328,35 @@
     </span>
       
     </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#dataShape" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="dataShape:Array[Int]"></a>
-      <a id="dataShape:Array[Int]"></a>
+      <a id="dataShape:Array[Array[Int]]"></a>
+      <a id="dataShape:Array[Array[Int]]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">var</span>
       </span>
       <span class="symbol">
-        <span class="name">dataShape</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+        <span class="name">dataShape</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@dataShape:Array[Int]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@dataShape:Array[Array[Int]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#dataType" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="dataType:com.intel.analytics.zoo.serving.DataType.DataTypeEnumVal"></a>
+      <a id="dataType:DataTypeEnumVal"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">dataType</span><span class="result">: <a href="../DataType$$DataTypeEnumVal.html" class="extype" name="com.intel.analytics.zoo.serving.DataType.DataTypeEnumVal">DataTypeEnumVal</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@dataType:com.intel.analytics.zoo.serving.DataType.DataTypeEnumVal" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -972,23 +1006,6 @@ model definition file and model weight file</p>
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#topN" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="topN:Int"></a>
-      <a id="topN:Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">topN</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@topN:Int" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#updateConfig" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="updateConfig():Boolean"></a>
       <a id="updateConfig():Boolean"></a>
