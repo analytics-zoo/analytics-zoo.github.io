@@ -35,8 +35,8 @@
         var pageToc = [
           {title: "Introduction", url: "#introduction", children: [
           ]},
-          {title: "DataShards", url: "#datashards", children: [
-              {title: "DataShards with Pandas DataFrame", url: "#datashards-with-pandas-dataframe" },
+          {title: "XShards", url: "#xshards", children: [
+              {title: "XShards with Pandas DataFrame", url: "#xshards-with-pandas-dataframe" },
           ]},
         ];
 
@@ -70,11 +70,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>The backend distributed preprocessing engine can be <a href="https://spark.apache.org/">Spark</a> or <a href="https://github.com/ray-project/ray">Ray</a>.</p>
 <p>In current version, orca data API only supports parallel pre-processing with Pandas DataFrame on Ray.</p>
 <hr />
-<h2 id="datashards"><strong>DataShards</strong></h2>
-<p>DataShards is a collection of data in orca data API. In current version, the element in DataShards is a Pandas DataFrame.</p>
-<h3 id="datashards-with-pandas-dataframe"><strong>DataShards with Pandas DataFrame</strong></h3>
-<h4 id="read-data-into-datashards"><strong>Read data into DataShards</strong></h4>
-<p>You can read csv/json files/directory into DataShards with such APIs:</p>
+<h2 id="xshards"><strong>XShards</strong></h2>
+<p>XShards is a collection of data in orca data API. In current version, the element in XShards is a Pandas DataFrame.</p>
+<h3 id="xshards-with-pandas-dataframe"><strong>XShards with Pandas DataFrame</strong></h3>
+<h4 id="read-data-into-xshards"><strong>Read data into XShards</strong></h4>
+<p>You can read csv/json files/directory into XShards with such APIs:</p>
 <pre><code>zoo.orca.data.pandas.read_csv(file_path, context)
 
 zoo.orca.data.pandas.read_json(file_path, context)
@@ -84,23 +84,23 @@ zoo.orca.data.pandas.read_json(file_path, context)
 <li>The <code>file_path</code> could be a csv/json file, multiple csv/json file paths seperated with comma, a directory containing csv/json files. Supported file systems are local file system,<code>hdfs</code>, and <code>s3</code>.</li>
 <li><code>context</code> is a Ray context.</li>
 </ul>
-<p>After calling these APIs, you would get a DataShards of Pandas DataFrame.</p>
-<h4 id="pre-processing-on-datashards"><strong>Pre-processing on DataShards</strong></h4>
-<p>You can do pre-processing with your customized function on DataShards using below API:</p>
-<pre><code>apply(func, *args)
+<p>After calling these APIs, you would get a XShards of Pandas DataFrame.</p>
+<h4 id="pre-processing-on-xshards"><strong>Pre-processing on XShards</strong></h4>
+<p>You can do pre-processing with your customized function on XShards using below API:</p>
+<pre><code>transform_shard(func, *args)
 </code></pre>
 
 <ul>
 <li><code>func</code> is your pre-processing function. In this function, you can do the pre-processing on a Pandas DataFrame, then return the processed object. </li>
 <li><code>args</code> are the augurments for the pre-processing function.</li>
 </ul>
-<p>This method would parallelly pre-process each element in the DataShards with the customized function.</p>
-<h4 id="get-all-the-elements-in-datashards"><strong>Get all the elements in DataShards</strong></h4>
-<p>You can get all of elements in DataShards with such API:</p>
+<p>This method would parallelly pre-process each element in the XShards with the customized function.</p>
+<h4 id="get-all-the-elements-in-xshards"><strong>Get all the elements in XShards</strong></h4>
+<p>You can get all of elements in XShards with such API:</p>
 <pre><code>collect()
 </code></pre>
 
-<p>This method returns a list that contains all of the elements in this DataShards.</p>
+<p>This method returns a list that contains all of the elements in this XShards.</p>
 <p>To get the more examples on orca data API, you can refert to <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/orca/data">Example</a></p>
 
   <br>

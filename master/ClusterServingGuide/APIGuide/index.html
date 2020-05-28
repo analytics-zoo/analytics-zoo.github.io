@@ -73,23 +73,29 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
 <p>sets up a connection with configuration in your Cluster Serving <a href="">configuration file</a> <code>config.yaml</code>.</p>
 <p><em>return</em>: None</p>
-<h4 id="enqueue_image">enqueue_image</h4>
+<h4 id="enqueue">enqueue</h4>
 <p><a href="">view source</a></p>
-<pre><code>enqueue_image(uri, img)
+<pre><code>enqueue(uri, data*)
 </code></pre>
 
-<p>puts image <code>img</code> with identification <code>uri</code> into Pipeline with JPG encoding. <code>img</code> can be either a string (which represents the file path of the image), or an ndarray of the image (which should be returned by cv2.imread() of opencv-python package)</p>
+<p>puts key-value pair into data pipeline, if your model has key regulation, pass corresponded key. Otherwise, give the key any name you want.</p>
 <p><em>return</em>: None</p>
 <p><code>uri</code>: a string, unique identification of your image</p>
-<p><code>img</code>: path or <code>ndarray</code> of your image, could be loaded by <code>cv2.imread()</code> of opencv-python package.</p>
-<p><em>Example</em></p>
+<p><code>data</code>: key-value pair of your data.
+<em>Example</em>
+To enqueue an image</p>
 <pre><code>from zoo.serving.client import InputQueue
 input_api = InputQueue()
-input_api.enqueue_image('my-image1', 'path/to/image1')
+input_api.enqueue('my-image1', user_define_key='path/to/image1')
+</code></pre>
 
-import cv2
-image2 = cv2.imread('path/to/image2')
-input_api.enqueue_image('my-image2', image2)
+<p>To enqueue an instance containing 1 image and 2 ndarray</p>
+<pre><code>from zoo.serving.client import InputQueue
+import numpy as np
+input_api = InputQueue()
+t1 = np.array([1,2])
+t2 = np.array([[1,2], [3,4]])
+input_api.enqueue_image('my-instance', img='path/to/image', tensor1=t1, tensor2=t2)
 </code></pre>
 
 <h3 id="class-outputqueue">class OutputQueue</h3>
