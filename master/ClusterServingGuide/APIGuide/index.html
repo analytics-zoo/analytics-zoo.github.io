@@ -81,21 +81,55 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>puts key-value pair into data pipeline, if your model has key regulation, pass corresponded key. Otherwise, give the key any name you want.</p>
 <p><em>return</em>: None</p>
 <p><code>uri</code>: a string, unique identification of your image</p>
-<p><code>data</code>: key-value pair of your data.
+<p><code>data</code>: key-value pair of your data.</p>
+<p>There are 3 types of inputs in total, image, tensor, sparse tensor. See following example to enqueue specific type of data.
 <em>Example</em>
-To enqueue an image</p>
+Import the dependency and create an instance of <code>InputQueue</code></p>
 <pre><code>from zoo.serving.client import InputQueue
 input_api = InputQueue()
-input_api.enqueue('my-image1', user_define_key='path/to/image1')
 </code></pre>
 
-<p>To enqueue an instance containing 1 image and 2 ndarray</p>
-<pre><code>from zoo.serving.client import InputQueue
-import numpy as np
-input_api = InputQueue()
-t1 = np.array([1,2])
-t2 = np.array([[1,2], [3,4]])
-input_api.enqueue_image('my-instance', img='path/to/image', tensor1=t1, tensor2=t2)
+<p>To enqueue an image, <code>cv2</code> package is required. (Could be installed by <code>pip install opencv-python</code>)</p>
+<pre><code>input_api.enqueue('my-image1', user_define_key='path/to/image1')
+</code></pre>
+
+<p>To enqueue a tensor or sparse tensor, <code>numpy</code> package is required. (Would be installed while you installed Analytics Zoo, if not, could be installed by <code>pip install numpy</code>)</p>
+<p>To enqueue a tensor, pass a ndarray object.</p>
+<pre><code>import numpy as np
+input_api.enqueue('my-tensor1', a=np.array([1,2]))
+</code></pre>
+
+<p>To enqueue a sparse tensor pass a list of ndarray object, normally sparse tensor is only used if your model specifies the input as sparse tensor. The list should have size of 3, where the 1st element is a 2-D ndarray, representing the indices of values, the 2nd element is a 1-D ndarray, representing the values corresponded with the indices, the 3rd element is a 1-D ndarray representing the shape of the sparse tensor.</p>
+<p>A sparse tensor of shape (5,10), with 3 elements at position (0, 0), (1, 2), (4, 5), having value 101, 102, 103, visualized as following,</p>
+<pre><code>101. 0.   0.   0.   0.   0.   0.   0.   0.   0
+0.   0.   102. 0.   0.   0.   0.   0.   0.   0
+0.   0.   0.   0.   0.   0.   0.   0.   0.   0
+0.   0.   0.   0.   0.   0.   0.   0.   0.   0
+0.   0.   0.   0.   0.   103. 0.   0.   0.   0
+</code></pre>
+
+<p>could be represented as following list.</p>
+<pre><code>indices = np.array([[0, 1, 4], [0, 2, 5]])
+values = np.array([101, 102, 103])
+shape = np.array([5, 10])
+tensor = [indices, values, shape]
+</code></pre>
+
+<p>and enqueue it by</p>
+<pre><code>input_api.enqueue(tensor)
+</code></pre>
+
+<p>To enqueue an instance containing several images, tensors and sparse tensors.</p>
+<pre><code>import numpy as np
+input_api.enqueue_image('my-instance', 
+    img1='path/to/image1',
+    img2='path/to/image2
+    tensor1=np.array([1,2]), 
+    tensor2=np.array([[1,3],[2,3]])
+    sparse_tensor=[np.array([[0, 1, 4], [0, 2, 5]]),
+                   np.array([101, 102, 103])
+                   np.array([5, 10])]
+)
 </code></pre>
 
 <h3 id="class-outputqueue">class OutputQueue</h3>
