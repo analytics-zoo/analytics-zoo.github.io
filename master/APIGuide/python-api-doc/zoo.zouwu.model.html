@@ -25,6 +25,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.zouwu.autots.html" title="zoo.zouwu.autots package"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">analytics-zoo  documentation</a> &#187;</li>
@@ -38,9 +41,9 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.zouwu.model package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-zouwu-model-anomaly-module">zoo.zouwu.model.anomaly module</a></li>
-<li><a class="reference internal" href="#zoo-zouwu-model-forecast-module">zoo.zouwu.model.forecast module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.zouwu.model.anomaly">zoo.zouwu.model.anomaly module</a></li>
+<li><a class="reference internal" href="#module-zoo.zouwu.model.forecast">zoo.zouwu.model.forecast module</a></li>
+<li><a class="reference internal" href="#module-zoo.zouwu.model">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -80,14 +83,137 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-zouwu-model-anomaly-module">
-<h2>zoo.zouwu.model.anomaly module<a class="headerlink" href="#zoo-zouwu-model-anomaly-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.zouwu.model.anomaly">
+<span id="zoo-zouwu-model-anomaly-module"></span><h2>zoo.zouwu.model.anomaly module<a class="headerlink" href="#module-zoo.zouwu.model.anomaly" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.zouwu.model.anomaly.DetectorBase">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.model.anomaly.</code><code class="descname">DetectorBase</code><a class="reference internal" href="_modules/zoo/zouwu/model/anomaly.html#DetectorBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.anomaly.DetectorBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for detector</p>
+<dl class="method">
+<dt id="zoo.zouwu.model.anomaly.DetectorBase.detect">
+<code class="descname">detect</code><span class="sig-paren">(</span><em>y</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/anomaly.html#DetectorBase.detect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.anomaly.DetectorBase.detect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect anomalies in dataset
+:param y: the dataset
+:return: the anomaly indexes in y</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.zouwu.model.anomaly.Distance">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.model.anomaly.</code><code class="descname">Distance</code><a class="reference internal" href="_modules/zoo/zouwu/model/anomaly.html#Distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.anomaly.Distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The Base Distance Class.</p>
+<dl class="method">
+<dt id="zoo.zouwu.model.anomaly.Distance.distance">
+<code class="descname">distance</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/anomaly.html#Distance.distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.anomaly.Distance.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the distance between x and y. a and b should be in same shape.
+:param x: the first tensor
+:param y: the second tensor
+:return: the absolute distance between x and y</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.zouwu.model.anomaly.EuclideanDistance">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.model.anomaly.</code><code class="descname">EuclideanDistance</code><a class="reference internal" href="_modules/zoo/zouwu/model/anomaly.html#EuclideanDistance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.anomaly.EuclideanDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.zouwu.model.anomaly.Distance" title="zoo.zouwu.model.anomaly.Distance"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.zouwu.model.anomaly.Distance</span></code></a></p>
+<p>Euclidean Distance Measure</p>
+<dl class="method">
+<dt id="zoo.zouwu.model.anomaly.EuclideanDistance.distance">
+<code class="descname">distance</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/anomaly.html#EuclideanDistance.distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.anomaly.EuclideanDistance.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the distance between x and y. a and b should be in same shape.
+:param x: the first tensor
+:param y: the second tensor
+:return: the absolute distance between x and y</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.zouwu.model.anomaly.ThresholdDetector">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.model.anomaly.</code><code class="descname">ThresholdDetector</code><a class="reference internal" href="_modules/zoo/zouwu/model/anomaly.html#ThresholdDetector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.anomaly.ThresholdDetector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.zouwu.model.anomaly.DetectorBase" title="zoo.zouwu.model.anomaly.DetectorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.zouwu.model.anomaly.DetectorBase</span></code></a></p>
+<p>Anomaly detector</p>
+<dl class="method">
+<dt id="zoo.zouwu.model.anomaly.ThresholdDetector.detect">
+<code class="descname">detect</code><span class="sig-paren">(</span><em>y</em>, <em>yhat=None</em>, <em>threshold=inf</em>, <em>dist_measure=&lt;zoo.zouwu.model.anomaly.EuclideanDistance object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/anomaly.html#ThresholdDetector.detect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.anomaly.ThresholdDetector.detect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect anomalies. Each sample can have 1 or more dimensions.
+:param dist_measure:
+:param y: the values to detect. shape could be
+1-D (num_samples,)
+or 2-D array (num_samples, features)
+:param yhat: the estimated values, a tensor with same shape as y,
+could be None when threshold is a tuple
+:param threshold: threshold, could be
+1. a single value -  absolute distance threshold, same for all samples
+2. a 1-D array in shape (num_samples,) - per sample absolute distance threshold
+3. a tensor in same shape as y and yhat - per dimension absolute distance threshold
+4. a tuple (min, max) min and max tensors, same shape as y, yhat is ignored in this case
+:return: the anomaly values indexes in the samples, i.e. num_samples dimension.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.zouwu.model.anomaly.ThresholdEstimator">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.model.anomaly.</code><code class="descname">ThresholdEstimator</code><a class="reference internal" href="_modules/zoo/zouwu/model/anomaly.html#ThresholdEstimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.anomaly.ThresholdEstimator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>An estimator to find the proper threshold.</p>
+<dl class="method">
+<dt id="zoo.zouwu.model.anomaly.ThresholdEstimator.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>y</em>, <em>yhat</em>, <em>mode='default'</em>, <em>ratio=0.01</em>, <em>dist_measure=&lt;zoo.zouwu.model.anomaly.EuclideanDistance object&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/anomaly.html#ThresholdEstimator.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.anomaly.ThresholdEstimator.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>fit the y and yhat and find the proper threshold
+:param y: actual values
+:param yhat: predicted values
+:param mode: types of ways to find threshold
+“default” : fit data to a uniform distribution (the percentile way)
+“gaussian”: fit data to a gaussian distribution <a href="#id1"><span class="problematic" id="id2">*</span></a>TBD
+:param ratio: the ratio of anomaly to consider as anomaly.
+:return: the threshold</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-zouwu-model-forecast-module">
-<h2>zoo.zouwu.model.forecast module<a class="headerlink" href="#zoo-zouwu-model-forecast-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.zouwu.model.forecast">
+<span id="zoo-zouwu-model-forecast-module"></span><h2>zoo.zouwu.model.forecast module<a class="headerlink" href="#module-zoo.zouwu.model.forecast" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.zouwu.model.forecast.Forecaster">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.model.forecast.</code><code class="descname">Forecaster</code><a class="reference internal" href="_modules/zoo/zouwu/model/forecast.html#Forecaster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.Forecaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="zoo.tfpark.html#zoo.tfpark.model.KerasModel" title="zoo.tfpark.model.KerasModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.tfpark.model.KerasModel</span></code></a></p>
+<p>Base class for TFPark KerasModel based Forecast models.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.zouwu.model.forecast.LSTMForecaster">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.model.forecast.</code><code class="descname">LSTMForecaster</code><span class="sig-paren">(</span><em>target_dim=1</em>, <em>feature_dim=1</em>, <em>lstm_1_units=16</em>, <em>dropout_1=0.2</em>, <em>lstm_2_units=8</em>, <em>dropout_2=0.2</em>, <em>metric='mean_squared_error'</em>, <em>lr=0.001</em>, <em>uncertainty: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast.html#LSTMForecaster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.LSTMForecaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.zouwu.model.forecast.Forecaster" title="zoo.zouwu.model.forecast.Forecaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.zouwu.model.forecast.Forecaster</span></code></a></p>
+<p>Vanilla LSTM Forecaster</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.zouwu.model.forecast.MTNetForecaster">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.model.forecast.</code><code class="descname">MTNetForecaster</code><span class="sig-paren">(</span><em>target_dim=1</em>, <em>feature_dim=1</em>, <em>lb_long_steps=1</em>, <em>lb_long_stepsize=1</em>, <em>ar_window_size=1</em>, <em>cnn_kernel_size=1</em>, <em>metric='mean_squared_error'</em>, <em>uncertainty: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast.html#MTNetForecaster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.MTNetForecaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.zouwu.model.forecast.Forecaster" title="zoo.zouwu.model.forecast.Forecaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.zouwu.model.forecast.Forecaster</span></code></a></p>
+<p>MTNet Forecast Model</p>
+<dl class="method">
+<dt id="zoo.zouwu.model.forecast.MTNetForecaster.preprocess_input">
+<code class="descname">preprocess_input</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast.html#MTNetForecaster.preprocess_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.MTNetForecaster.preprocess_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>The original rolled features needs an extra step to process.
+This should be called before train_x, validation_x, and test_x
+:param x: the original samples from rolling
+:return: a tuple (long_term_x, short_term_x)
+which are long term and short term history respectively</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.zouwu.model">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.zouwu.model" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -103,6 +229,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.zouwu.autots.html" title="zoo.zouwu.autots package"
              >previous</a> |</li>
