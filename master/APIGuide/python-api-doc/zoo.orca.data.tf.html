@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.orca.learn.html" title="zoo.orca.learn package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -46,8 +43,8 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.orca.data.tf package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.orca.data.tf.data">zoo.orca.data.tf.data module</a></li>
-<li><a class="reference internal" href="#module-zoo.orca.data.tf">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-orca-data-tf-data-module">zoo.orca.data.tf.data module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,109 +87,11 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.orca.data.tf.data">
-<span id="zoo-orca-data-tf-data-module"></span><h2>zoo.orca.data.tf.data module<a class="headerlink" href="#module-zoo.orca.data.tf.data" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.orca.data.tf.data.Dataset">
-<em class="property">class </em><code class="descclassname">zoo.orca.data.tf.data.</code><code class="descname">Dataset</code><span class="sig-paren">(</span><em>xshards</em>, <em>create_dataset_fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/data/tf/data.html#Dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.data.tf.data.Dataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Represents a distributed set of elements backed by an RDD,
-which is created by applying tensorflow dataset transformations
-on each partitions.</p>
-<dl class="method">
-<dt id="zoo.orca.data.tf.data.Dataset.as_graph_rdd">
-<code class="descname">as_graph_rdd</code><span class="sig-paren">(</span><em>batch_per_shard</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/data/tf/data.html#Dataset.as_graph_rdd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.data.tf.data.Dataset.as_graph_rdd" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="zoo.orca.data.tf.data.Dataset.from_tensor_slices">
-<em class="property">static </em><code class="descname">from_tensor_slices</code><span class="sig-paren">(</span><em>xshards</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/data/tf/data.html#Dataset.from_tensor_slices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.data.tf.data.Dataset.from_tensor_slices" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.data.tf.data.Dataset.map">
-<code class="descname">map</code><span class="sig-paren">(</span><em>map_func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/data/tf/data.html#Dataset.map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.data.tf.data.Dataset.map" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.orca.data.tf.data.MapDataset">
-<em class="property">class </em><code class="descclassname">zoo.orca.data.tf.data.</code><code class="descname">MapDataset</code><span class="sig-paren">(</span><em>input_dataset</em>, <em>map_func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/data/tf/data.html#MapDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.data.tf.data.MapDataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.orca.data.tf.data.Dataset" title="zoo.orca.data.tf.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.orca.data.tf.data.Dataset</span></code></a></p>
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.orca.data.tf.data.TFDataDataset2">
-<em class="property">class </em><code class="descclassname">zoo.orca.data.tf.data.</code><code class="descname">TFDataDataset2</code><span class="sig-paren">(</span><em>dataset</em>, <em>batch_size</em>, <em>batch_per_thread</em>, <em>validation_dataset=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/data/tf/data.html#TFDataDataset2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.data.tf.data.TFDataDataset2" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="zoo.tfpark.html#zoo.tfpark.tf_dataset.TFDataset" title="zoo.tfpark.tf_dataset.TFDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.tfpark.tf_dataset.TFDataset</span></code></a></p>
-<dl class="method">
-<dt id="zoo.orca.data.tf.data.TFDataDataset2.get_evaluation_data">
-<code class="descname">get_evaluation_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/data/tf/data.html#TFDataDataset2.get_evaluation_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.data.tf.data.TFDataDataset2.get_evaluation_data" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">an object that can be used for TFNet.evaluate,</td>
-</tr>
-</tbody>
-</table>
-<p>e.g. an RDD of Sample or a ImageSet</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.data.tf.data.TFDataDataset2.get_prediction_data">
-<code class="descname">get_prediction_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/data/tf/data.html#TFDataDataset2.get_prediction_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.data.tf.data.TFDataDataset2.get_prediction_data" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">an object that can be used for TFNet.predict</td>
-</tr>
-</tbody>
-</table>
-<p>e.g. an RDD of Sample or a ImageSet</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.data.tf.data.TFDataDataset2.get_training_data">
-<code class="descname">get_training_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/data/tf/data.html#TFDataDataset2.get_training_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.data.tf.data.TFDataDataset2.get_training_data" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">an object that can be used to create a BigDL optimizer,</td>
-</tr>
-</tbody>
-</table>
-<p>e.g. an RDD of Sample or a DataSet</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.data.tf.data.TFDataDataset2.get_validation_data">
-<code class="descname">get_validation_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/data/tf/data.html#TFDataDataset2.get_validation_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.data.tf.data.TFDataDataset2.get_validation_data" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">an object that can be used to set validation in a BigDL optimizer,</td>
-</tr>
-</tbody>
-</table>
-<p>e.g. an RDD of Sample or a DataSet</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.orca.data.tf.data.TensorSliceDataset">
-<em class="property">class </em><code class="descclassname">zoo.orca.data.tf.data.</code><code class="descname">TensorSliceDataset</code><span class="sig-paren">(</span><em>xshards</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/data/tf/data.html#TensorSliceDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.data.tf.data.TensorSliceDataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.orca.data.tf.data.Dataset" title="zoo.orca.data.tf.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.orca.data.tf.data.Dataset</span></code></a></p>
-</dd></dl>
-
+<div class="section" id="zoo-orca-data-tf-data-module">
+<h2>zoo.orca.data.tf.data module<a class="headerlink" href="#zoo-orca-data-tf-data-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.orca.data.tf">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.orca.data.tf" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -208,9 +107,6 @@ on each partitions.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.orca.learn.html" title="zoo.orca.learn package"
              >next</a> |</li>
