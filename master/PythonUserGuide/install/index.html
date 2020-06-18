@@ -33,6 +33,8 @@
       var is_top_frame = false;
         
         var pageToc = [
+          {title: "Install the latest nightly build wheels for pip", url: "#install-the-latest-nightly-build-wheels-for-pip", children: [
+          ]},
           {title: "Install from pip for local usage", url: "#install-from-pip-for-local-usage", children: [
           ]},
           {title: "Install from pip for Yarn cluster", url: "#install-from-pip-for-yarn-cluster", children: [
@@ -70,6 +72,17 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <p>For Python users, Analytics Zoo can be installed either <a href="#install-from-pip-for-local-usage">from pip</a> or <a href="#install-without-pip">without pip</a>.</p>
 <p><strong>NOTE</strong>: We have tested on <strong>Python 3.6</strong> and <strong>Python 3.7</strong>. Support for Python 2.7 has been removed due to its end of life.</p>
 <hr />
+<h2 id="install-the-latest-nightly-build-wheels-for-pip"><strong>Install the latest nightly build wheels for pip</strong></h2>
+<p>You can find the list of the latest nightly build wheels for pip <a href="https://sourceforge.net/projects/analytics-zoo/files/zoo-py/">here</a>. 
+Choose a wheel with timestamp for your platform and click to download it to your local repository.</p>
+<p>Note that if you are using Linux, you need to choose the file <code>analytics_zoo-VERSION-TIMESTAMP-py2.py3-none-manylinux1_x86_64.whl</code>.
+If you are using Mac, choose <code>analytics_zoo-VERSION-TIMESTAMP-py2.py3-none-macosx_10_11_x86_64.whl</code> instead. </p>
+<p>After downloading the target wheel file, go to the download directory and run the following command:</p>
+<pre><code class="bash">pip install analytics_zoo-*-py2.py3-none-*_x86_64.whl
+</code></pre>
+
+<p>See <a href="#install-from-pip-for-local-usage">here</a> for some remarks with regard to pip install.</p>
+<hr />
 <h2 id="install-from-pip-for-local-usage"><strong>Install from pip for local usage</strong></h2>
 <p>You can use the following command to install the latest release version of <strong>analytics-zoo</strong> via pip easily:</p>
 <pre><code class="bash">pip install analytics-zoo
@@ -78,6 +91,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <ul>
 <li>You are strongly recommended to use Python 3.6 or 3.7. You might need to run <code>pip3 install analytics-zoo</code> instead.</li>
 <li>You might need to add <code>sudo</code> if you don't have the permission for installation.</li>
+<li>See <a href="#install-the-latest-nightly-build-wheels-for-pip">here</a> if you want to install the latest nightly build version.</li>
 </ul>
 <p><strong>Important:</strong></p>
 <ol>
@@ -108,10 +122,11 @@ sc = init_nncontext()
 source activate zoo
 </code></pre>
 
-<p>3) Install Analytics-Zoo into the created conda-env.</p>
+<p>3) Install the latest release version of <strong>analytics-zoo</strong> into the created conda environment.</p>
 <pre><code>pip install analytics-zoo
 </code></pre>
 
+<p>See <a href="#install-the-latest-nightly-build-wheels-for-pip">here</a> if you want to install the latest nightly build version.</p>
 <p>4) Download JDK8 and set the environment variable: JAVA_HOME (recommended).</p>
 <p>You can also install JDK via conda without setting the JAVA_HOME manually:</p>
 <p><code>conda install -c anaconda openjdk=8.0.152</code></p>
