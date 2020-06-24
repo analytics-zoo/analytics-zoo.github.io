@@ -34,7 +34,8 @@
         
         var pageToc = [
           {title: "LSTMForecaster", url: "#lstmforecaster", children: [
-              {title: "Methods", url: "#methods" },
+              {title: "Introduction", url: "#introduction" },
+              {title: "Method", url: "#method" },
           ]},
         ];
 
@@ -63,8 +64,23 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1><strong>LSTMForecaster</strong></h1>
     <hr>
     <h1 id="lstmforecaster">LSTMForecaster</h1>
-<p>LSTMForecaster is derived from tfpark.KerasMode, and can use all methods of KerasModel. Refer to <a href="../../../APIGuide/TFPark/model/">tfpark.KerasModel API Doc</a> for details.</p>
-<h2 id="methods">Methods</h2>
+<h2 id="introduction">Introduction</h2>
+<p>Long short-term memory(LSTM) is a special type of recurrent neural network(RNN). We implement the basic version of LSTM - VanillaLSTM for this forecaster for time-series forecasting task. It has two LSTM layers, two dropout layer and a dense layer. LSTMForecaster is derived from tfpark.KerasMode, and can use all methods of KerasModel. Refer to <a href="../../../APIGuide/TFPark/model/">tfpark.KerasModel API Doc</a> for details.</p>
+<p>For the detailed algorithm description, please refer to <a href="../../Algorithm/LSTMAlgorithm/">here</a>.</p>
+<h2 id="method">Method</h2>
+<h3 id="arguments">Arguments</h3>
+<ul>
+<li><strong><code>target_dim</code></strong>: Specify the number of variables we want to forecast. i.e. the the dimension of model output feature. This value defaults to 1.</li>
+<li><strong><code>feature_dim</code></strong>: Specify the number of variables we have in the input data. i.e. the the dimension of model input feature. This value defaults to 1.</li>
+<li><strong><code>lstm_1_units</code></strong>: Specify the dimensionality of the output space for 1st LSTM layer. This value defaults to 16. </li>
+<li><strong><code>dropout_1</code></strong>: Specify the fraction of the input units to drop for the 1st dropout layer. This value defaults to 0.2.</li>
+<li><strong><code>lstm_2_units</code></strong>: Specify the dimensionality of the output space for 2nd LSTM layer. This value defaults to 8. </li>
+<li><strong><code>dropout_2</code></strong>: Specify the fraction of the input units to drop for the 2nd dropout layer. This value defaults to 0.2.</li>
+<li><strong><code>metric</code></strong>: Specify the metric for validation and evaluation. This value defaults to MSE.</li>
+<li><strong><code>lr</code></strong>: Specify the learning rate. This value defaults to 0.001.</li>
+<li><strong><code>loss</code></strong>: Specify the target function you want to optimize on. This value defaults to MSE.</li>
+<li><strong><code>uncertainty</code></strong>: Specify whether the forecaster can perform the calculation of uncertainty.</li>
+</ul>
 <h3 id="__init__">__init__</h3>
 <pre><code class="python">LSTMForecaster(target_dim=1,
                feature_dim=1,
@@ -74,24 +90,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
                dropout_2=0.2,
                metric=&quot;mean_squared_error&quot;,
                lr=0.001,
+               loss=&quot;mse&quot;,
                uncertainty: bool = False
-            )
+               )
 </code></pre>
 
-<h4 id="arguments">Arguments</h4>
-<ul>
-<li><strong>target_dim</strong>: dimension of model output</li>
-<li><strong>feature_dim</strong>: dimension of input feature</li>
-<li><strong>lstm_1_units</strong> num of units for the 1st LSTM layer</li>
-<li><strong>dropout_1</strong>: p for the 1st dropout layer</li>
-<li><strong>lstm_2_units</strong>: num of units for the 2nd LSTM layer</li>
-<li><strong>dropout_2</strong>: p for the 2nd dropout layer</li>
-<li><strong>metric</strong>: the metric for validation and evaluation</li>
-<li><strong>lr</strong>: learning rate</li>
-<li><strong>uncertainty</strong>: whether to return uncertainty</li>
-</ul>
 <h3 id="fit-evaluate-predict">fit, evaluate, predict</h3>
-<p>Refer to <strong>fit</strong>, <strong>evaluate</strong>, <strong>predict</strong> defined in <a href="../../../APIGuide/TFPark/model/">tfpark.KerasModel API Doc</a></p>
+<p>Refer to <strong>fit</strong>, <strong>evaluate</strong>, <strong>predict</strong> defined in <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/APIGuide/TFPark/model.md">tfpark.KerasModel API Doc</a></p>
 
   <br>
 </div>
