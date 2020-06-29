@@ -1,0 +1,320 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.models.recommendation.wide_and_deep &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.models.recommendation.wide_and_deep</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">zoo.models.common</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">zoo.models.recommendation</span> <span class="kn">import</span> <span class="n">Recommender</span>
+<span class="kn">from</span> <span class="nn">zoo.common.utils</span> <span class="kn">import</span> <span class="n">callZooFunc</span>
+<span class="kn">from</span> <span class="nn">zoo.pipeline.api.keras.layers</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span> <span class="o">&gt;=</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>
+    <span class="n">long</span> <span class="o">=</span> <span class="nb">int</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+
+<div class="viewcode-block" id="ColumnFeatureInfo"><a class="viewcode-back" href="../../../../zoo.models.recommendation.html#zoo.models.recommendation.wide_and_deep.ColumnFeatureInfo">[docs]</a><span class="k">class</span> <span class="nc">ColumnFeatureInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The same data information shared by the WideAndDeep model and its feature generation part.</span>
+
+<span class="sd">    Each instance could contain the following fields:</span>
+<span class="sd">    wide_base_cols: Data of wide_base_cols together with wide_cross_cols will be fed</span>
+<span class="sd">                    into the wide model. List of String. Default is an empty list.</span>
+<span class="sd">    wide_base_dims: Dimensions of wide_base_cols. The dimensions of the data in</span>
+<span class="sd">                    wide_base_cols should be within the range of wide_base_dims.</span>
+<span class="sd">                    List of int. Default is an empty list.</span>
+<span class="sd">    wide_cross_cols: Data of wide_cross_cols will be fed into the wide model.</span>
+<span class="sd">                     List of String. Default is an empty list.</span>
+<span class="sd">    wide_cross_dims: Dimensions of wide_cross_cols. The dimensions of the data in</span>
+<span class="sd">                     wide_cross_cols should be within the range of wide_cross_dims.</span>
+<span class="sd">                     List of int. Default is an empty list.</span>
+<span class="sd">    indicator_cols: Data of indicator_cols will be fed into the deep model as multi-hot vectors.</span>
+<span class="sd">                    List of String. Default is an empty list.</span>
+<span class="sd">    indicator_dims: Dimensions of indicator_cols. The dimensions of the data in</span>
+<span class="sd">                    indicator_cols should be within the range of indicator_dims.</span>
+<span class="sd">                    List of int. Default is an empty list.</span>
+<span class="sd">    embed_cols: Data of embed_cols will be fed into the deep model as embeddings.</span>
+<span class="sd">                List of String. Default is an empty list.</span>
+<span class="sd">    embed_in_dims: Input dimension of the data in embed_cols. The dimensions of the data in</span>
+<span class="sd">                   embed_cols should be within the range of embed_in_dims.</span>
+<span class="sd">                   List of int. Default is an empty list.</span>
+<span class="sd">    embed_out_dims: The dimensions of embeddings. List of int. Default is an empty list.</span>
+<span class="sd">    continuous_cols: Data of continuous_cols will be treated as continuous values for</span>
+<span class="sd">                     the deep model. List of String. Default is an empty list.</span>
+<span class="sd">    label: The name of the &#39;label&#39; column. String. Default is &#39;label&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wide_base_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wide_base_dims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wide_cross_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">wide_cross_dims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indicator_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">indicator_dims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">embed_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">embed_in_dims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">embed_out_dims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">continuous_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wide_base_cols</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">wide_base_cols</span> <span class="k">else</span> <span class="n">wide_base_cols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wide_base_dims</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">wide_base_dims</span> <span class="k">else</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">wide_base_dims</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wide_cross_cols</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">wide_cross_cols</span> <span class="k">else</span> <span class="n">wide_cross_cols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wide_cross_dims</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">wide_cross_dims</span> <span class="k">else</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">wide_cross_dims</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indicator_cols</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">indicator_cols</span> <span class="k">else</span> <span class="n">indicator_cols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indicator_dims</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">indicator_dims</span> <span class="k">else</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">indicator_dims</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embed_cols</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">embed_cols</span> <span class="k">else</span> <span class="n">embed_cols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embed_in_dims</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">embed_in_dims</span> <span class="k">else</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">embed_in_dims</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embed_out_dims</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">embed_out_dims</span> <span class="k">else</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">embed_out_dims</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">continuous_cols</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">continuous_cols</span> <span class="k">else</span> <span class="n">continuous_cols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span> <span class="o">=</span> <span class="n">bigdl_type</span>
+
+    <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ColumnFeatureInfo</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wide_base_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wide_base_dims</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wide_cross_cols</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">wide_cross_dims</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator_dims</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">embed_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embed_in_dims</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embed_out_dims</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">continuous_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;ColumnFeatureInfo {wide_base_cols: </span><span class="si">%s</span><span class="s2">, wide_base_dims: </span><span class="si">%s</span><span class="s2">, wide_cross_cols: </span><span class="si">%s</span><span class="s2">, &quot;</span> \
+               <span class="s2">&quot;wide_cross_dims: </span><span class="si">%s</span><span class="s2">, indicator_cols: </span><span class="si">%s</span><span class="s2">, indicator_dims: </span><span class="si">%s</span><span class="s2">, embed_cols: </span><span class="si">%s</span><span class="s2">, &quot;</span> \
+               <span class="s2">&quot;embed_cols: </span><span class="si">%s</span><span class="s2">, embed_in_dims: </span><span class="si">%s</span><span class="s2">, embed_out_dims: </span><span class="si">%s</span><span class="s2">, continuous_cols: </span><span class="si">%s</span><span class="s2">, &quot;</span> \
+               <span class="s2">&quot;label: &#39;</span><span class="si">%s</span><span class="s2">&#39;}&quot;</span> \
+               <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wide_base_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wide_base_dims</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wide_cross_cols</span><span class="p">,</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">wide_cross_dims</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator_dims</span><span class="p">,</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">embed_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embed_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embed_in_dims</span><span class="p">,</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">embed_out_dims</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">continuous_cols</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WideAndDeep"><a class="viewcode-back" href="../../../../zoo.models.recommendation.html#zoo.models.recommendation.wide_and_deep.WideAndDeep">[docs]</a><span class="k">class</span> <span class="nc">WideAndDeep</span><span class="p">(</span><span class="n">Recommender</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Wide and Deep model used for recommendation.</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    class_num: The number of classes. Positive int.</span>
+<span class="sd">    column_info: An instance of ColumnFeatureInfo.</span>
+<span class="sd">    model_type: String. &#39;wide&#39;, &#39;deep&#39; and &#39;wide_n_deep&#39; are supported. Default is &#39;wide_n_deep&#39;.</span>
+<span class="sd">    hidden_layers: Units of hidden layers for the deep model.</span>
+<span class="sd">                   Tuple of positive int. Default is (40, 20, 10).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_num</span><span class="p">,</span> <span class="n">column_info</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;wide_n_deep&quot;</span><span class="p">,</span>
+                 <span class="n">hidden_layers</span><span class="o">=</span><span class="p">[</span><span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">column_info</span><span class="o">.</span><span class="n">wide_base_cols</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">column_info</span><span class="o">.</span><span class="n">wide_base_dims</span><span class="p">),</span> \
+            <span class="s2">&quot;size of wide_base_columns should match&quot;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">column_info</span><span class="o">.</span><span class="n">wide_cross_cols</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">column_info</span><span class="o">.</span><span class="n">wide_cross_dims</span><span class="p">),</span> \
+            <span class="s2">&quot;size of wide_cross_columns should match&quot;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">column_info</span><span class="o">.</span><span class="n">indicator_cols</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">column_info</span><span class="o">.</span><span class="n">indicator_dims</span><span class="p">),</span> \
+            <span class="s2">&quot;size of wide_indicator_columns should match&quot;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">column_info</span><span class="o">.</span><span class="n">embed_cols</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">column_info</span><span class="o">.</span><span class="n">embed_in_dims</span><span class="p">)</span> \
+            <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">column_info</span><span class="o">.</span><span class="n">embed_out_dims</span><span class="p">),</span> <span class="s2">&quot;size of wide_indicator_columns should match&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">class_num</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wide_base_dims</span> <span class="o">=</span> <span class="n">column_info</span><span class="o">.</span><span class="n">wide_base_dims</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wide_cross_dims</span> <span class="o">=</span> <span class="n">column_info</span><span class="o">.</span><span class="n">wide_cross_dims</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indicator_dims</span> <span class="o">=</span> <span class="n">column_info</span><span class="o">.</span><span class="n">indicator_dims</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embed_in_dims</span> <span class="o">=</span> <span class="n">column_info</span><span class="o">.</span><span class="n">embed_in_dims</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embed_out_dims</span> <span class="o">=</span> <span class="n">column_info</span><span class="o">.</span><span class="n">embed_out_dims</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">continuous_cols</span> <span class="o">=</span> <span class="n">column_info</span><span class="o">.</span><span class="n">continuous_cols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="o">=</span> <span class="n">model_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_layers</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span> <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="n">hidden_layers</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span> <span class="o">=</span> <span class="n">bigdl_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_model</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WideAndDeep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">class_num</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">hidden_layers</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">wide_base_dims</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">wide_cross_dims</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">indicator_dims</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">embed_in_dims</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">embed_out_dims</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">continuous_cols</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WideAndDeep.build_model"><a class="viewcode-back" href="../../../../zoo.models.recommendation.html#zoo.models.recommendation.wide_and_deep.WideAndDeep.build_model">[docs]</a>    <span class="k">def</span> <span class="nf">build_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">wide_dims</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wide_base_dims</span><span class="p">)</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wide_cross_dims</span><span class="p">)</span>
+        <span class="n">input_wide</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">wide_dims</span><span class="p">,))</span>
+        <span class="n">input_ind</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indicator_dims</span><span class="p">),))</span>
+        <span class="n">input_emb</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embed_in_dims</span><span class="p">),))</span>
+        <span class="n">input_con</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">continuous_cols</span><span class="p">),))</span>
+
+        <span class="n">wide_linear</span> <span class="o">=</span> <span class="n">SparseDense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_num</span><span class="p">)(</span><span class="n">input_wide</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="o">==</span> <span class="s2">&quot;wide&quot;</span><span class="p">):</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">Activation</span><span class="p">(</span><span class="s2">&quot;softmax&quot;</span><span class="p">)(</span><span class="n">wide_linear</span><span class="p">)</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">input_wide</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="o">==</span> <span class="s2">&quot;deep&quot;</span><span class="p">):</span>
+            <span class="p">(</span><span class="n">input_deep</span><span class="p">,</span> <span class="n">merge_list</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deep_merge</span><span class="p">(</span><span class="n">input_ind</span><span class="p">,</span> <span class="n">input_emb</span><span class="p">,</span> <span class="n">input_con</span><span class="p">)</span>
+            <span class="n">deep_linear</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deep_hidden</span><span class="p">(</span><span class="n">merge_list</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">Activation</span><span class="p">(</span><span class="s2">&quot;softmax&quot;</span><span class="p">)(</span><span class="n">deep_linear</span><span class="p">)</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">input_deep</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_type</span> <span class="o">==</span> <span class="s2">&quot;wide_n_deep&quot;</span><span class="p">):</span>
+            <span class="p">(</span><span class="n">input_deep</span><span class="p">,</span> <span class="n">merge_list</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deep_merge</span><span class="p">(</span><span class="n">input_ind</span><span class="p">,</span> <span class="n">input_emb</span><span class="p">,</span> <span class="n">input_con</span><span class="p">)</span>
+            <span class="n">deep_linear</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deep_hidden</span><span class="p">(</span><span class="n">merge_list</span><span class="p">)</span>
+            <span class="n">merged</span> <span class="o">=</span> <span class="n">merge</span><span class="p">([</span><span class="n">wide_linear</span><span class="p">,</span> <span class="n">deep_linear</span><span class="p">],</span> <span class="s2">&quot;sum&quot;</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">Activation</span><span class="p">(</span><span class="s2">&quot;softmax&quot;</span><span class="p">)(</span><span class="n">merged</span><span class="p">)</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">([</span><span class="n">input_wide</span><span class="p">]</span> <span class="o">+</span> <span class="n">input_deep</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Unsupported model_type: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">model</span></div>
+
+    <span class="k">def</span> <span class="nf">_deep_hidden</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">merge_list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">merge_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">merged</span> <span class="o">=</span> <span class="n">merge_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">merged</span> <span class="o">=</span> <span class="n">merge</span><span class="p">(</span><span class="n">merge_list</span><span class="p">,</span> <span class="s2">&quot;concat&quot;</span><span class="p">)</span>
+        <span class="n">linear</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_layers</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">)(</span><span class="n">merged</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">ilayer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_layers</span><span class="p">)):</span>
+            <span class="n">linear_mid</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_layers</span><span class="p">[</span><span class="n">ilayer</span><span class="p">],</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">)(</span><span class="n">linear</span><span class="p">)</span>
+            <span class="n">linear</span> <span class="o">=</span> <span class="n">linear_mid</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_num</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">)(</span><span class="n">linear</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">last</span>
+
+    <span class="k">def</span> <span class="nf">_deep_merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_ind</span><span class="p">,</span> <span class="n">input_emb</span><span class="p">,</span> <span class="n">input_cont</span><span class="p">):</span>
+        <span class="n">embed_width</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">embed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embed_in_dims</span><span class="p">)):</span>
+            <span class="n">flat_select</span> <span class="o">=</span> <span class="n">Flatten</span><span class="p">()(</span><span class="n">Select</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">embed_width</span><span class="p">)(</span><span class="n">input_emb</span><span class="p">))</span>
+            <span class="n">iembed</span> <span class="o">=</span> <span class="n">Embedding</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embed_in_dims</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">embed_out_dims</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                               <span class="n">init</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)(</span><span class="n">flat_select</span><span class="p">)</span>
+            <span class="n">flat_embed</span> <span class="o">=</span> <span class="n">Flatten</span><span class="p">()(</span><span class="n">iembed</span><span class="p">)</span>
+            <span class="n">embed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">flat_embed</span><span class="p">)</span>
+            <span class="n">embed_width</span> <span class="o">=</span> <span class="n">embed_width</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="n">has_ind</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indicator_dims</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="n">has_emd</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embed_in_dims</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="n">has_cont</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">continuous_cols</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">has_ind</span> <span class="ow">and</span> <span class="n">has_emd</span> <span class="ow">and</span> <span class="n">has_cont</span><span class="p">):</span>
+            <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_ind</span><span class="p">,</span> <span class="n">input_emb</span><span class="p">,</span> <span class="n">input_cont</span><span class="p">]</span>
+            <span class="n">merged_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_ind</span><span class="p">]</span> <span class="o">+</span> <span class="n">embed</span> <span class="o">+</span> <span class="p">[</span><span class="n">input_cont</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="ow">not</span> <span class="n">has_ind</span> <span class="ow">and</span> <span class="n">has_emd</span> <span class="ow">and</span> <span class="n">has_cont</span><span class="p">):</span>
+            <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_emb</span><span class="p">,</span> <span class="n">input_cont</span><span class="p">]</span>
+            <span class="n">merged_list</span> <span class="o">=</span> <span class="n">embed</span> <span class="o">+</span> <span class="p">[</span><span class="n">input_cont</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">has_ind</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">has_emd</span><span class="p">)</span> <span class="ow">and</span> <span class="n">has_cont</span><span class="p">):</span>
+            <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_ind</span><span class="p">,</span> <span class="n">input_cont</span><span class="p">]</span>
+            <span class="n">merged_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_ind</span><span class="p">,</span> <span class="n">input_cont</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">has_ind</span> <span class="ow">and</span> <span class="n">has_emd</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">has_cont</span><span class="p">)):</span>
+            <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_ind</span><span class="p">,</span> <span class="n">input_emb</span><span class="p">]</span>
+            <span class="n">merged_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_ind</span><span class="p">]</span> <span class="o">+</span> <span class="n">embed</span>
+        <span class="k">elif</span> <span class="p">((</span><span class="ow">not</span> <span class="n">has_ind</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">has_emd</span><span class="p">)</span> <span class="ow">and</span> <span class="n">has_cont</span><span class="p">):</span>
+            <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_cont</span><span class="p">]</span>
+            <span class="n">merged_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_cont</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="p">((</span><span class="ow">not</span> <span class="n">has_ind</span><span class="p">)</span> <span class="ow">and</span> <span class="n">has_emd</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">has_cont</span><span class="p">)):</span>
+            <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_emb</span><span class="p">]</span>
+            <span class="n">merged_list</span> <span class="o">=</span> <span class="n">embed</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">has_ind</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">has_emd</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">has_cont</span><span class="p">)):</span>
+            <span class="nb">input</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_ind</span><span class="p">]</span>
+            <span class="n">merged_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_ind</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Empty deep model for: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_type</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">merged_list</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WideAndDeep.load_model"><a class="viewcode-back" href="../../../../zoo.models.recommendation.html#zoo.models.recommendation.wide_and_deep.WideAndDeep.load_model">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load an existing WideAndDeep model (with weights).</span>
+
+<span class="sd">        # Arguments</span>
+<span class="sd">        path: The path for the pre-defined model.</span>
+<span class="sd">              Local file system, HDFS and Amazon S3 are supported.</span>
+<span class="sd">              HDFS path should be like &#39;hdfs://[host]:[port]/xxx&#39;.</span>
+<span class="sd">              Amazon S3 path should be like &#39;s3a://bucket/xxx&#39;.</span>
+<span class="sd">        weight_path: The path for pre-trained weights if any. Default is None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;loadWideAndDeep&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">ZooModel</span><span class="o">.</span><span class="n">_do_load</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span>
+        <span class="n">labor_model</span> <span class="o">=</span> <span class="n">KerasZooModel</span><span class="o">.</span><span class="n">_do_load</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">labor_model</span>
+        <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">WideAndDeep</span>
+        <span class="k">return</span> <span class="n">model</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

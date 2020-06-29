@@ -116,7 +116,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>A sample trained TensorFlow model, and sample data for inference</li>
 <li>A sample Python client program</li>
 </ul>
-<p>Use one command to run Cluster Serving container.</p>
+<p>Use one command to run Cluster Serving container. (We provide quick start model in older version of docker image, for newest version, please refer to following sections and we remove the model to reduce the docker image size).</p>
 <pre><code>docker run -itd --name cluster-serving --net=host intelanalytics/zoo-cluster-serving:0.7.0
 </code></pre>
 
@@ -162,7 +162,7 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 </code></pre>
 
 <p>then, (or directly run <code>docker run</code>, it will pull the image if it does not exist)</p>
-<pre><code>docker run --name cluster-serving --net=host -itd intelanalytics/zoo-cluster-serving:0.7.0 bash
+<pre><code>docker run --name cluster-serving --net=host -itd intelanalytics/zoo-cluster-serving:0.8.1 bash
 </code></pre>
 
 <p>Log into the container</p>
@@ -172,13 +172,13 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 <p><code>cd ./cluster-serving</code>, you can see all the environments are prepared.</p>
 <h5 id="yarn-user">Yarn user</h5>
 <p>For Yarn user using docker, you have to set additional config, thus you need to call following when starting the container</p>
-<pre><code>docker run --name cluster-serving --net=host -v /path/to/HADOOP_CONF_DIR:/opt/work/HADOOP_CONF_DIR -e HADOOP_CONF_DIR=/opt/work/HADOOP_CONF_DIR -itd intelanalytics/zoo-cluster-serving:0.7.0 bash
+<pre><code>docker run --name cluster-serving --net=host -v /path/to/HADOOP_CONF_DIR:/opt/work/HADOOP_CONF_DIR -e HADOOP_CONF_DIR=/opt/work/HADOOP_CONF_DIR -itd intelanalytics/zoo-cluster-serving:0.8.1 bash
 </code></pre>
 
 <h4 id="manual-installation">Manual installation</h4>
-<p>Non-Docker users need to install <a href="https://archive.apache.org/dist/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz">Spark 2.4.3</a>, <a href="https://redis.io/topics/quickstart">Redis</a> and <a href="https://www.tensorflow.org/tensorboard/get_started">TensorBoard</a>.</p>
-<p>After preparing dependencies above, make sure the environment variable <code>$SPARK_HOME</code> (/path/to/spark-SPARK_VERSION-bin-hadoop-HADOOP_VERSION), <code>$REDIS_HOME</code>(/path/to/redis-REDIS_VERSION) is set before following steps. </p>
-<p>Cluster Sering use TensorBoard to visualize the serving status. Use <code>pip install tensorboard</code> to install TensorBoard.</p>
+<p>Non-Docker users need to install <a href="https://archive.apache.org/dist/flink/flink-1.10.0/">Flink</a>, 1.10.0 by default, for users choose Spark as backend, install <a href="https://archive.apache.org/dist/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz">Spark</a>, 2.4.3 by default, <a href="https://redis.io/topics/quickstart">Redis</a>, 0.5.0 by default and <a href="https://www.tensorflow.org/tensorboard/get_started">TensorBoard</a> if you choose Spark backend and need visualization.</p>
+<p>After preparing dependencies above, make sure the environment variable <code>$FLINK_HOME</code> (/path/to/flink-FLINK_VERSION-bin), or <code>$SPARK_HOME</code> (/path/to/spark-SPARK_VERSION-bin-hadoop-HADOOP_VERSION), <code>$REDIS_HOME</code>(/path/to/redis-REDIS_VERSION) is set before following steps. </p>
+<p>For Spark user only, use <code>pip install tensorboard</code> to install TensorBoard.</p>
 <p>Install Analytics Zoo by Download Release or Pip.</p>
 <h5 id="download-release">Download Release</h5>
 <p>Download Analytics Zoo from <a href="https://analytics-zoo.github.io/master/#release-download/">release page</a> on the local node. </p>
@@ -233,7 +233,7 @@ spark:
 </code></pre>
 
 <h4 id="preparing-model">Preparing Model</h4>
-<p>Currently Analytics Zoo Cluster Serving supports TensorFlow, Caffe, PyTorch, BigDL, OpenVINO models. Note that currently only <strong>image classification</strong> models are supported.</p>
+<p>Currently Analytics Zoo Cluster Serving supports TensorFlow, OpenVINO, PyTorch, BigDL, Caffe models. Supported types are listed below.</p>
 <p>You need to put your model file into a directory and the directory could have layout like following according to model type, note that only one model is allowed in your directory.</p>
 <p><strong>Tensorflow</strong></p>
 <p><strong><em>Tensorflow checkpoint</em></strong>
@@ -252,7 +252,7 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
        |-- variables.index
 </code></pre>
 
-<p>Note: you can specify model inputs and outputs in the config.yaml file. If the inputs or outputs are not provided,  the signature "serving_default" will be used to find input and output tensors.</p>
+<p>Note: you can specify model inputs and outputs in the config.yaml file. If the inputs or outputs are not provided, the signature "serving_default" will be used to find input and output tensors.</p>
 <p><strong>Caffe</strong></p>
 <pre><code>|-- model
    |-- xx.prototxt
@@ -276,21 +276,21 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
 </code></pre>
 
 <p>Put the model in any of your local directory, and set <code>model:/path/to/dir</code>.</p>
-<h4 id="other-configuration">Other Configuration</h4>
+<h4 id="data-configuration">Data Configuration</h4>
 <p>The field <code>data</code> contains your input data configuration.</p>
 <ul>
-<li>src: the queue you subscribe for your input data, e.g. a default config of Redis on local machine is <code>localhost:6379</code>. Note that please use the host address in your network instead of localhost or 127.0.0.1 when you run serving in cluster, and make sure other nodes in cluster could also recognize this address.</li>
-<li>data_type: the type of your input data. image and tensor are supported.</li>
-<li>image_shape: the shape of your image input data, e.g. a default config for pretrained imagenet is <code>3,224,224</code>. You should use the same shape of data which trained your model. In TensorFlow the format is usually HWC and in other models the format is usually CHW.</li>
-<li>tensor_shape: the shape of your tensor(ndarray) or table(list of ndarray) input data. e.g. [1,2] (tensor) [[1],[2,1,2],[3]] (table) <strong>note:</strong> tensor_shape must be provided given data_type is tensor</li>
-<li>filter: the top N classes in the prediction result. <strong>note:</strong> if the top-N number is larger than model output size of the the final layer, it would just return all the outputs.</li>
+<li>src: the queue you subscribe for your input data, e.g. default config of Redis on local machine is <code>localhost:6379</code>. Note that please use the host address in your network instead of localhost or 127.0.0.1 when you run serving in cluster, and make sure other nodes in cluster could also recognize this address.</li>
+<li>shape: the shape of your input data. e.g. [[1],[3,224,224],[3]], if your model contains only one input, brackets could be omitted.</li>
+<li>filter: the post-processing of pipeline, could be none. Except none, currently supported filters are,</li>
 </ul>
+<p>Top-N, e.g. <code>topN(1)</code> represents Top-1 result is kept and returned with index. User should follow this schema <code>topN(n)</code>. Noted if the top-N number is larger than model output size of the the final layer, it would just return all the outputs.</p>
+<h4 id="other-configuration">Other Configuration</h4>
 <p>The field <code>params</code> contains your inference parameter configuration.</p>
 <ul>
-<li>batch_size: the batch size you use for model inference. We recommend this value to be not smaller than 4 and not larger than 512. In general, using larger batch size means higher throughput, but also increase the latency between batches accordingly.</li>
+<li>core_number: the batch size you use for model inference, usually the core number of your machine is recommended. Thus you could just provide your machine core number at this field. We recommend this value to be not smaller than 4 and not larger than 512. In general, using larger batch size means higher throughput, but also increase the latency between batches accordingly.</li>
 <li>performance_mode: The performance mode will utilize your CPU resource to achieve better inference performance on a single node. <strong>Note:</strong> numactl and net-tools should be installed in your system, and spark master should be <code>local[*]</code> in the config.yaml file.</li>
 </ul>
-<p>The field <code>spark</code> contains your spark configuration.</p>
+<p>For Spark users only, the field <code>spark</code> contains your spark configuration.</p>
 <ul>
 <li>master: Your cluster address, same as parameter <code>master</code> in spark</li>
 <li>driver_memory: same as parameter <code>driver-memory</code> in spark</li>
@@ -307,8 +307,8 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
 <pre><code>cluster-serving-start
 </code></pre>
 
-<p>This command will start Redis and TensorBoard if they are not running. Note that you need to provide <code>REDIS_HOME</code> environment variable as mentioned in <a href="#1-installation">Installation</a>.</p>
-<p><strong>NOTE:</strong> If your input data_type is tensor(ndarray), you should run <code>spark-structured-streaming-cluster-serving-start</code> instead.</p>
+<p>This command will start Redis and TensorBoard (for spark users only) if they are not running.</p>
+<p>For spark users, if you choose spark streaming, run <code>spark-streaming-cluster-serving-start</code>. If you choose spark structured streaming, run <code>spark-structured-streaming-cluster-serving-start</code>.</p>
 <h4 id="stop">Stop</h4>
 <p>You can use following command to stop Cluster Serving. Data in Redis and TensorBoard service will persist.</p>
 <pre><code>cluster-serving-stop
@@ -333,7 +333,7 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
 <p>To enqueue an image</p>
 <pre><code>from zoo.serving.client import InputQueue
 input_api = InputQueue()
-input_api.enqueue('my-image1', user_define_key='path/to/image1')
+input_api.enqueue('my-image1', user_define_key={&quot;path: 'path/to/image1'})
 </code></pre>
 
 <p>To enqueue an instance containing 1 image and 2 ndarray</p>
@@ -342,7 +342,7 @@ import numpy as np
 input_api = InputQueue()
 t1 = np.array([1,2])
 t2 = np.array([[1,2], [3,4]])
-input_api.enqueue_image('my-instance', img='path/to/image', tensor1=t1, tensor2=t2)
+input_api.enqueue_image('my-instance', img={&quot;path&quot;: 'path/to/image'}, tensor1=t1, tensor2=t2)
 </code></pre>
 
 <p>There are 4 types of inputs in total, string, image, tensor, sparse tensor, which could represents nearly all types of models. For more details of usage, go to <a href="../APIGuide/">API Guide</a></p>

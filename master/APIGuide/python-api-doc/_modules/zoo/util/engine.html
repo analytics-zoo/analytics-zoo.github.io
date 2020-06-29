@@ -1,0 +1,246 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.util.engine &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.util.engine</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+
+<div class="viewcode-block" id="exist_pyspark"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.engine.exist_pyspark">[docs]</a><span class="k">def</span> <span class="nf">exist_pyspark</span><span class="p">():</span>
+    <span class="c1"># check whether pyspark package exists</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">pyspark</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="check_spark_source_conflict"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.engine.check_spark_source_conflict">[docs]</a><span class="k">def</span> <span class="nf">check_spark_source_conflict</span><span class="p">(</span><span class="n">spark_home</span><span class="p">,</span> <span class="n">pyspark_path</span><span class="p">):</span>
+    <span class="c1"># Check if both $SPARK_HOME and pyspark package exist.</span>
+    <span class="c1"># Trigger a warning if two spark sources don&#39;t match.</span>
+    <span class="k">if</span> <span class="n">spark_home</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">pyspark_path</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">spark_home</span><span class="p">):</span>
+        <span class="n">warning_msg</span> <span class="o">=</span> <span class="s2">&quot;Find both SPARK_HOME and pyspark. You may need to check whether they &quot;</span> <span class="o">+</span> \
+                      <span class="s2">&quot;match with each other. SPARK_HOME environment variable &quot;</span> <span class="o">+</span> \
+                      <span class="s2">&quot;is set to: &quot;</span> <span class="o">+</span> <span class="n">spark_home</span> <span class="o">+</span> \
+                      <span class="s2">&quot;, and pyspark is found in: &quot;</span> <span class="o">+</span> <span class="n">pyspark_path</span> <span class="o">+</span> <span class="s2">&quot;. If they are unmatched, &quot;</span> <span class="o">+</span> \
+                      <span class="s2">&quot;you are recommended to use one source only to avoid conflict. &quot;</span> <span class="o">+</span> \
+                      <span class="s2">&quot;For example, you can unset SPARK_HOME and use pyspark only.&quot;</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">warning_msg</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">__prepare_spark_env</span><span class="p">():</span>
+    <span class="n">spark_home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SPARK_HOME&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">exist_pyspark</span><span class="p">():</span>
+        <span class="c1"># use pyspark as the spark source</span>
+        <span class="kn">import</span> <span class="nn">pyspark</span>
+        <span class="n">check_spark_source_conflict</span><span class="p">(</span><span class="n">spark_home</span><span class="p">,</span> <span class="n">pyspark</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># use $SPARK_HOME as the spark source</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">spark_home</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sd">&quot;&quot;&quot;Could not find Spark. Please make sure SPARK_HOME env is set:</span>
+<span class="sd">                   export SPARK_HOME=path to your spark home directory.&quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">spark_home</span><span class="p">)</span>
+        <span class="n">py4j</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">spark_home</span><span class="p">,</span> <span class="s1">&#39;python/lib&#39;</span><span class="p">,</span> <span class="s1">&#39;py4j-*.zip&#39;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">pyspark</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">spark_home</span><span class="p">,</span> <span class="s1">&#39;python/lib&#39;</span><span class="p">,</span> <span class="s1">&#39;pyspark*.zip&#39;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">py4j</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">py4j</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pyspark</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pyspark</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">__prepare_analytics_zoo_env</span><span class="p">():</span>
+    <span class="n">jar_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span> <span class="o">+</span> <span class="s2">&quot;/../../&quot;</span><span class="p">)</span>
+    <span class="n">conf_paths</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">jar_dir</span><span class="p">,</span> <span class="s2">&quot;share/conf/*.conf&quot;</span><span class="p">))</span>
+    <span class="n">extra_resources_paths</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">jar_dir</span><span class="p">,</span> <span class="s2">&quot;share/extra-resources/*&quot;</span><span class="p">))</span>
+    <span class="n">analytics_zoo_classpath</span> <span class="o">=</span> <span class="n">get_analytics_zoo_classpath</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">append_path</span><span class="p">(</span><span class="n">env_var_name</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">env_var_name</span><span class="p">]:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Adding </span><span class="si">%s</span><span class="s2"> to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">env_var_name</span><span class="p">))</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">env_var_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">env_var_name</span><span class="p">]</span>  <span class="c1"># noqa</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">env_var_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span>
+
+    <span class="k">if</span> <span class="n">analytics_zoo_classpath</span><span class="p">:</span>
+        <span class="n">append_path</span><span class="p">(</span><span class="s2">&quot;BIGDL_JARS&quot;</span><span class="p">,</span> <span class="n">analytics_zoo_classpath</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">conf_paths</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">conf_paths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Expecting one conf, but got: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">conf_paths</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">conf_paths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Prepending </span><span class="si">%s</span><span class="s2"> to sys.path&quot;</span> <span class="o">%</span> <span class="n">conf_paths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">conf_paths</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">extra_resources_paths</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">extra_resources_paths</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">resource</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">extra_resources_paths</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Prepending </span><span class="si">%s</span><span class="s2"> to sys.path&quot;</span> <span class="o">%</span> <span class="n">resource</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;BIGDL_JARS&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="n">is_spark_below_2_2</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">jar</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;BIGDL_JARS&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">):</span>
+            <span class="n">append_path</span><span class="p">(</span><span class="s2">&quot;SPARK_CLASSPATH&quot;</span><span class="p">,</span> <span class="n">jar</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;BIGDL_PACKAGES&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;BIGDL_PACKAGES&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">package</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">package</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_analytics_zoo_classpath"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.engine.get_analytics_zoo_classpath">[docs]</a><span class="k">def</span> <span class="nf">get_analytics_zoo_classpath</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get and return the jar path for analytics-zoo if exists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;BIGDL_CLASSPATH&quot;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;BIGDL_CLASSPATH&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Path </span><span class="si">{}</span><span class="s2"> specified BIGDL_CLASSPATH does not exist.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;BIGDL_CLASSPATH&quot;</span><span class="p">]</span>
+    <span class="n">jar_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span> <span class="o">+</span> <span class="s2">&quot;/../../&quot;</span><span class="p">)</span>
+    <span class="n">jar_paths</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">jar_dir</span><span class="p">,</span> <span class="s2">&quot;share/lib/*.jar&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">jar_paths</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">jar_paths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Expecting one jar: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">jar_paths</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jar_paths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="is_spark_below_2_2"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.engine.is_spark_below_2_2">[docs]</a><span class="k">def</span> <span class="nf">is_spark_below_2_2</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if spark version is below 2.2.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">pyspark</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pyspark</span><span class="p">,</span> <span class="s2">&quot;version&quot;</span><span class="p">):</span>
+        <span class="n">full_version</span> <span class="o">=</span> <span class="n">pyspark</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">__version__</span>
+        <span class="c1"># We only need the general spark version (eg, 1.6, 2.2).</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">full_version</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="n">spark_version</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">compare_version</span><span class="p">(</span><span class="n">spark_version</span><span class="p">,</span> <span class="s2">&quot;2.2&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="compare_version"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.engine.compare_version">[docs]</a><span class="k">def</span> <span class="nf">compare_version</span><span class="p">(</span><span class="n">version1</span><span class="p">,</span> <span class="n">version2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compare version strings.</span>
+<span class="sd">    Return 1 if version1 is after version2;</span>
+<span class="sd">          -1 if version1 is before version2;</span>
+<span class="sd">           0 if two versions are the same.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">v1_arr</span> <span class="o">=</span> <span class="n">version1</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">v2_arr</span> <span class="o">=</span> <span class="n">version2</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">len1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">v1_arr</span><span class="p">)</span>
+    <span class="n">len2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">v2_arr</span><span class="p">)</span>
+    <span class="n">len_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">len1</span><span class="p">,</span> <span class="n">len2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">len_max</span><span class="p">):</span>
+        <span class="n">v1_token</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">len1</span><span class="p">:</span>
+            <span class="n">v1_token</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">v1_arr</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
+        <span class="n">v2_token</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">len2</span><span class="p">:</span>
+            <span class="n">v2_token</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">v2_arr</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">v1_token</span> <span class="o">&lt;</span> <span class="n">v2_token</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="n">v1_token</span> <span class="o">&gt;</span> <span class="n">v2_token</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="prepare_env"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.engine.prepare_env">[docs]</a><span class="k">def</span> <span class="nf">prepare_env</span><span class="p">():</span>
+    <span class="n">__prepare_spark_env</span><span class="p">()</span>
+    <span class="n">__prepare_analytics_zoo_env</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

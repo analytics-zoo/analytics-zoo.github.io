@@ -89,12 +89,19 @@ Import the dependency and create an instance of <code>InputQueue</code></p>
 input_api = InputQueue()
 </code></pre>
 
-<p>To enqueue an list of string, specify key as <code>string*</code> and pass a list of str objects, list of str type input is usually used in Tensorflow models.</p>
-<pre><code>input_api.enqueue('my-string-input', string1=['hello', 'world'])
+<p>To enqueue a list of string, pass a list of str objects, list of str type input is usually used in Tensorflow models.</p>
+<pre><code>input_api.enqueue('my-string-input', user_define_key=['hello', 'world'])
 </code></pre>
 
-<p>To enqueue an image, <code>cv2</code> package is required. (Could be installed by <code>pip install opencv-python</code>)</p>
-<pre><code>input_api.enqueue('my-image1', user_define_key='path/to/image1')
+<p>To enqueue an image, you could pass either image path or base64 encoded image bytes, the type of your parameter is identified by key of dict, see example below. If you pass image path, <code>cv2</code> package is required. (Could be installed by <code>pip install opencv-python</code>)</p>
+<p>To pass image path, use key <code>path</code></p>
+<pre><code>image_path = &quot;path/to/image&quot;
+input_api.enqueue('my-image1', user_define_key={&quot;path&quot;: image_path})
+</code></pre>
+
+<p>To pass base64 encoded image bytes, use key <code>b64</code></p>
+<pre><code>image_bytes = &quot;base64_encoded_bytes&quot;
+input_api.enqueue('my-image1', user_define_key={&quot;b64&quot;: image_bytes})
 </code></pre>
 
 <p>To enqueue a tensor or sparse tensor, <code>numpy</code> package is required. (Would be installed while you installed Analytics Zoo, if not, could be installed by <code>pip install numpy</code>)</p>
@@ -120,14 +127,14 @@ tensor = [indices, values, shape]
 </code></pre>
 
 <p>and enqueue it by</p>
-<pre><code>input_api.enqueue(tensor)
+<pre><code>input_api.enqueue(&quot;my-sparse-tensor&quot;, input=tensor)
 </code></pre>
 
 <p>To enqueue an instance containing several images, tensors and sparse tensors.</p>
 <pre><code>import numpy as np
-input_api.enqueue_image('my-instance', 
-    img1='path/to/image1',
-    img2='path/to/image2
+input_api.enqueue('my-instance', 
+    img1={&quot;path: 'path/to/image1'},
+    img2={&quot;path: 'path/to/image2'},
     tensor1=np.array([1,2]), 
     tensor2=np.array([[1,3],[2,3]])
     sparse_tensor=[np.array([[0, 1, 4], [0, 2, 5]]),
