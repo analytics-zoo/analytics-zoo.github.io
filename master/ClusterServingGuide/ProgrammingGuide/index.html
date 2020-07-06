@@ -69,7 +69,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>Analytics Zoo Cluster Serving is a lightweight distributed, real-time serving solution that supports a wide range of deep learning models (such as TensorFlow, PyTorch, Caffe, BigDL and OpenVINO models). It provides a simple pub/sub API, so that the users can easily send their inference requests to the input queue (using a simple Python API); Cluster Serving will then automatically manage the scale-out and real-time model inference across a large cluster (using distributed streaming frameworks such as Apache Spark Streaming, Apache Flink, etc.) </p>
 <p>The overall architecture of Analytics Zoo Cluster Serving solution is illustrated as below: </p>
 <p><img alt="overview" src="../cluster_serving_overview.jpg" /></p>
-<p>Note: currently only <strong>image classification</strong> models are supported.</p>
 <p>This page contains the guide for you to run Analytics Zoo Cluster Serving, including following:</p>
 <ul>
 <li>
@@ -345,7 +344,7 @@ import numpy as np
 input_api = InputQueue()
 t1 = np.array([1,2])
 t2 = np.array([[1,2], [3,4]])
-input_api.enqueue_image('my-instance', img={&quot;path&quot;: 'path/to/image'}, tensor1=t1, tensor2=t2)
+input_api.enqueue('my-instance', img={&quot;path&quot;: 'path/to/image'}, tensor1=t1, tensor2=t2)
 </code></pre>
 
 <p>There are 4 types of inputs in total, string, image, tensor, sparse tensor, which could represents nearly all types of models. For more details of usage, go to <a href="../APIGuide/">API Guide</a></p>
