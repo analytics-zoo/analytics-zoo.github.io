@@ -89,7 +89,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.intel.analytics.zoo.pipeline.api.keras.optimizers.Adam#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(lr:Double,beta_1:Double,beta_2:Double,epsilon:Double,decay:Double,schedule:com.intel.analytics.bigdl.optim.SGD.LearningRateSchedule)(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.keras.optimizers.Adam[T]"></a>
+      <a id="&lt;init&gt;(lr:Double,beta_1:Double,beta_2:Double,epsilon:Double,decay:Double,wDecay:Double,schedule:com.intel.analytics.bigdl.optim.SGD.LearningRateSchedule)(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.keras.optimizers.Adam[T]"></a>
       <a id="&lt;init&gt;:Adam[T]"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -97,10 +97,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">Adam</span><span class="params">(<span name="lr">lr: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">1e-3</span></span>, <span name="beta_1">beta_1: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.9</span></span>, <span name="beta_2">beta_2: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.999</span></span>, <span name="epsilon">epsilon: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">1e-8</span></span>, <span name="decay">decay: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.0</span></span>, <span name="schedule">schedule: <span class="extype" name="com.intel.analytics.bigdl.optim.SGD.LearningRateSchedule">LearningRateSchedule</span> = <span class="symbol"><span class="name"><a href="../../../../../../../package.html">Default()</a></span></span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.optimizers.Adam.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.optimizers.Adam.T">T</span>]</span>)</span>
+        <span class="name">Adam</span><span class="params">(<span name="lr">lr: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">1e-3</span></span>, <span name="beta_1">beta_1: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.9</span></span>, <span name="beta_2">beta_2: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.999</span></span>, <span name="epsilon">epsilon: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">1e-8</span></span>, <span name="decay">decay: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.0</span></span>, <span name="wDecay">wDecay: <span class="extype" name="scala.Double">Double</span> = <span class="symbol">0.0</span></span>, <span name="schedule">schedule: <span class="extype" name="com.intel.analytics.bigdl.optim.SGD.LearningRateSchedule">LearningRateSchedule</span> = <span class="symbol"><span class="name"><a href="../../../../../../../package.html">Default()</a></span></span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.optimizers.Adam.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.optimizers.Adam.T">T</span>]</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.optimizers.Adam@&lt;init&gt;(lr:Double,beta_1:Double,beta_2:Double,epsilon:Double,decay:Double,schedule:com.intel.analytics.bigdl.optim.SGD.LearningRateSchedule)(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.keras.optimizers.Adam[T]" title="Permalink" target="_top">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.optimizers.Adam@&lt;init&gt;(lr:Double,beta_1:Double,beta_2:Double,epsilon:Double,decay:Double,wDecay:Double,schedule:com.intel.analytics.bigdl.optim.SGD.LearningRateSchedule)(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.keras.optimizers.Adam[T]" title="Permalink" target="_top">
         <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -769,6 +769,23 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>SGD → OptimMethod</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.optimizers.Adam#wDecay" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="wDecay:Double"></a>
+      <a id="wDecay:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wDecay</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.optimizers.Adam@wDecay:Double" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>
