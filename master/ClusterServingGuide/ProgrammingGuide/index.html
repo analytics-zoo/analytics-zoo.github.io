@@ -93,9 +93,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><a href="#4-model-inference">Model inference</a></p>
 </li>
 <li>
-<p><a href="#5-http-server">HTTP Server</a></p>
-</li>
-<li>
 <p><a href="#optional-operations">Optional Operations</a></p>
 <ul>
 <li>
@@ -371,7 +368,7 @@ result_class_prob_map = json.loads(img1_result)
 
 <h4 id="http-restful-api">HTTP RESTful API</h4>
 <p>For HTTP RESTful API, we provide a HTTP server to support RESTful HTTP requests. User can submit HTTP requests to the HTTP server through RESTful APIs. The HTTP server will parse the input requests and pub them to Redis input queues, and also retrieve the output results and render them as json results in HTTP responses. The serving backend will leverage the cluster serving.</p>
-<h5 id="start-the-http-server">Start the HTTP Server</h5>
+<h5 id="prepare">Prepare</h5>
 <p>User can download a analytics-zoo-${VERSION}-http.jar from the Nexus Repository with GAVP: </p>
 <pre><code>&lt;groupId&gt;com.intel.analytics.zoo&lt;/groupId&gt;
 &lt;artifactId&gt;analytics-zoo-bigdl_${BIGDL_VERSION}-spark_${SPARK_VERSION}&lt;/artifactId&gt;
@@ -382,7 +379,8 @@ result_class_prob_map = json.loads(img1_result)
 <pre><code>mvn clean package -P spark_2.4+ -Dmaven.test.skip=true
 </code></pre>
 
-<p>After that, start the HTTP server with below command.</p>
+<h5 id="start-the-http-server">Start the HTTP Server</h5>
+<p>User can start the HTTP server with following command.</p>
 <pre><code>java -jar analytics-zoo-bigdl_${BIGDL_VERSION}-spark_${SPARK_VERSION}-${ZOO_VERSION}-http.jar
 </code></pre>
 
