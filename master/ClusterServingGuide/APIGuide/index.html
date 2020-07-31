@@ -68,7 +68,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>The class <code>Input</code> defines methods allowing you to input data into Cluster Serving <a href="">Input Pipeline</a>.</p>
 <h4 id="init"><strong>init</strong></h4>
 <p><a href="">view source</a></p>
-<pre><code>__init__()
+<pre><code>__init__(host=None, port=None, sync=False, frontend_url=None)
 </code></pre>
 
 <p>sets up a connection with configuration in your Cluster Serving <a href="">configuration file</a> <code>config.yaml</code>.</p>
@@ -141,6 +141,24 @@ input_api.enqueue('my-instance',
                    np.array([101, 102, 103])
                    np.array([5, 10])]
 )
+</code></pre>
+
+<h4 id="predict"><strong>predict</strong></h4>
+<p><a href="">view source</a></p>
+<pre><code>predict(request_str)
+</code></pre>
+
+<p><em>return</em>: response of request string</p>
+<p><em>Example</em></p>
+<pre><code>from zoo.serving.client import InputQueue
+input_api = InputQueue(sync=True, frontend_url=frontend_server_url)
+request_json_string='''{
+  &quot;instances&quot; : [ {
+    &quot;ids&quot; : [ 100.0, 88.0 ]
+  }]
+}'''
+response = input_api.predict(request_json_string)
+print(response.text)
 </code></pre>
 
 <h3 id="class-outputqueue">class OutputQueue</h3>
