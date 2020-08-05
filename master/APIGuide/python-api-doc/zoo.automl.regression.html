@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.automl.search.html" title="zoo.automl.search package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -42,8 +45,8 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.automl.regression package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-automl-regression-time-sequence-predictor-module">zoo.automl.regression.time_sequence_predictor module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.regression.time_sequence_predictor">zoo.automl.regression.time_sequence_predictor module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.regression">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -86,11 +89,78 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-automl-regression-time-sequence-predictor-module">
-<h2>zoo.automl.regression.time_sequence_predictor module<a class="headerlink" href="#zoo-automl-regression-time-sequence-predictor-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.regression.time_sequence_predictor">
+<span id="zoo-automl-regression-time-sequence-predictor-module"></span><h2>zoo.automl.regression.time_sequence_predictor module<a class="headerlink" href="#module-zoo.automl.regression.time_sequence_predictor" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor">
+<em class="property">class </em><code class="descclassname">zoo.automl.regression.time_sequence_predictor.</code><code class="descname">TimeSequencePredictor</code><span class="sig-paren">(</span><em>name='automl'</em>, <em>logs_dir='~/zoo_automl_logs'</em>, <em>future_seq_len=1</em>, <em>dt_col='datetime'</em>, <em>target_col='value'</em>, <em>extra_features_col=None</em>, <em>drop_missing=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/time_sequence_predictor.html#TimeSequencePredictor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Trains a model that predicts future time sequence from past sequence.
+Past sequence should be &gt; 1. Future sequence can be &gt; 1.
+For example, predict the next 2 data points from past 5 data points.
+Output have only one target value (a scalar) for each data point in the sequence.
+Input can have more than one features (value plus several features)
+Example usage:
+tsp = TimeSequencePredictor()
+tsp.fit(input_df)
+result = tsp.predict(test_df)</p>
+<dl class="method">
+<dt id="zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>input_df</em>, <em>metric=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/time_sequence_predictor.html#TimeSequencePredictor.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the model on a list of metrics.
+:param input_df: The input time series data frame, Example:
+datetime   value   “extra feature 1”   “extra feature 2”
+2019-01-01 1.9 1   2
+2019-01-02 2.3 0   2
+:param metric: A list of Strings Available string values are “mean_squared_error”,
+“r_square”.
+:return: a list of metric evaluation results.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>input_df</em>, <em>validation_df=None</em>, <em>metric='mse'</em>, <em>recipe=&lt;zoo.automl.config.recipe.SmokeRecipe object&gt;</em>, <em>mc=False</em>, <em>resources_per_trial={'cpu': 2}</em>, <em>distributed=False</em>, <em>hdfs_url=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/time_sequence_predictor.html#TimeSequencePredictor.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trains the model for time sequence prediction.
+If future sequence length &gt; 1, use seq2seq model, else use vanilla LSTM model.
+:param input_df: The input time series data frame, Example:
+datetime   value   “extra feature 1”   “extra feature 2”
+2019-01-01 1.9 1   2
+2019-01-02 2.3 0   2
+:param validation_df: validation data
+:param metric: String. Metric used for train and validation. Available values are
+“mean_squared_error” or “r_square”
+:param recipe: a Recipe object. Various recipes covers different search space and stopping
+criteria. Default is SmokeRecipe().
+:param resources_per_trial: Machine resources to allocate per trial,
+e.g. <a href="#id1"><span class="problematic" id="id2">``</span></a>{“cpu”: 64, “gpu”: 8}`
+:param distributed: bool. Indicate if running in distributed mode. If true, we will upload
+models to HDFS.
+:param hdfs_url: the hdfs url used to save file in distributed model. If None, the default
+hdfs_url will be used.
+:return: self</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>input_df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/time_sequence_predictor.html#TimeSequencePredictor.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict future sequence from past sequence.
+:param input_df: The input time series data frame, Example:
+datetime   value   “extra feature 1”   “extra feature 2”
+2019-01-01 1.9 1   2
+2019-01-02 2.3 0   2
+:return: a data frame with 2 columns, the 1st is the datetime, which is the last datetime of
+the past sequence.
+values are the predicted future sequence values.
+Example :
+datetime    value_0     value_1   …     value_2
+2019-01-03  2           3                   9</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.regression">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.automl.regression" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -106,6 +176,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.automl.search.html" title="zoo.automl.search package"
              >next</a> |</li>

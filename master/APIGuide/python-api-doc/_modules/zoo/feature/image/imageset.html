@@ -1,0 +1,300 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.feature.image.imageset &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.feature.image.imageset</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="kn">from</span> <span class="nn">bigdl.transform.vision.image</span> <span class="kn">import</span> <span class="n">ImageFrame</span>
+<span class="kn">from</span> <span class="nn">bigdl.util.common</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">zoo.common.utils</span> <span class="kn">import</span> <span class="n">callZooFunc</span>
+
+
+<div class="viewcode-block" id="ImageSet"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet">[docs]</a><span class="k">class</span> <span class="nc">ImageSet</span><span class="p">(</span><span class="n">JavaValue</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ImageSet wraps a set of ImageFeature</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">jvalue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span> <span class="o">=</span> <span class="n">bigdl_type</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_local</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_set</span> <span class="o">=</span> <span class="n">LocalImageSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">image_set</span> <span class="o">=</span> <span class="n">DistributedImageSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ImageSet.is_local"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.is_local">[docs]</a>    <span class="k">def</span> <span class="nf">is_local</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        whether this is a LocalImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;isLocalImageSet&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ImageSet.is_distributed"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.is_distributed">[docs]</a>    <span class="k">def</span> <span class="nf">is_distributed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        whether this is a DistributedImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;isDistributedImageSet&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">label_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the labelMap of this ImageSet, None if the ImageSet does not have a labelMap</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;imageSetGetLabelMap&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ImageSet.read"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.read">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">sc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_partitions</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">resize_height</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+             <span class="n">resize_width</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">image_codec</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">with_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">one_based_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+             <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read images as Image Set</span>
+<span class="sd">        if sc is defined, Read image as DistributedImageSet from local file system or HDFS</span>
+<span class="sd">        if sc is null, Read image as LocalImageSet from local file system</span>
+<span class="sd">        :param path path to read images</span>
+<span class="sd">        if sc is defined, path can be local or HDFS. Wildcard character are supported.</span>
+<span class="sd">        if sc is null, path is local directory/image file/image file with wildcard character</span>
+
+<span class="sd">        if withLabel is set to true, path should be a directory that have two levels. The</span>
+<span class="sd">        first level is class folders, and the second is images. All images belong to a same</span>
+<span class="sd">        class should be put into the same class folder. So each image in the path is labeled by the</span>
+<span class="sd">        folder it belongs.</span>
+
+<span class="sd">        :param sc SparkContext</span>
+<span class="sd">        :param min_partitions A suggestion value of the minimal splitting number for input data.</span>
+<span class="sd">        :param resize_height height after resize, by default is -1 which will not resize the image</span>
+<span class="sd">        :param resize_width width after resize, by default is -1 which will not resize the image</span>
+<span class="sd">        :param image_codec specifying the color type of a loaded image, same as in OpenCV.imread.</span>
+<span class="sd">               By default is Imgcodecs.CV_LOAD_IMAGE_UNCHANGED(-1)</span>
+<span class="sd">        :param with_label whether to treat folders in the path as image classification labels</span>
+<span class="sd">               and read the labels into ImageSet.</span>
+<span class="sd">        :param one_based_label whether to use one based label</span>
+<span class="sd">        :return ImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ImageSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;readImageSet&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span>
+                                           <span class="n">sc</span><span class="p">,</span> <span class="n">min_partitions</span><span class="p">,</span> <span class="n">resize_height</span><span class="p">,</span>
+                                           <span class="n">resize_width</span><span class="p">,</span> <span class="n">image_codec</span><span class="p">,</span> <span class="n">with_label</span><span class="p">,</span>
+                                           <span class="n">one_based_label</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ImageSet.from_image_frame"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.from_image_frame">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_image_frame</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">image_frame</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ImageSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;imageFrameToImageSet&quot;</span><span class="p">,</span> <span class="n">image_frame</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ImageSet.from_rdds"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.from_rdds">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_rdds</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">image_rdd</span><span class="p">,</span> <span class="n">label_rdd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a ImageSet from rdds of ndarray.</span>
+
+<span class="sd">        :param image_rdd: a rdd of ndarray, each ndarray should has dimension of 3 or 4 (3D images)</span>
+<span class="sd">        :param label_rdd: a rdd of ndarray</span>
+<span class="sd">        :return: a DistributedImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image_rdd</span> <span class="o">=</span> <span class="n">image_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">label_rdd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">label_rdd</span> <span class="o">=</span> <span class="n">label_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ImageSet</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;createDistributedImageSet&quot;</span><span class="p">,</span>
+                                           <span class="n">image_rdd</span><span class="p">,</span> <span class="n">label_rdd</span><span class="p">),</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="n">bigdl_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ImageSet.transform"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transformer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        transformImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ImageSet</span><span class="p">(</span><span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;transformImageSet&quot;</span><span class="p">,</span>
+                                    <span class="n">transformer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ImageSet.get_image"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.get_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;floats&quot;</span><span class="p">,</span> <span class="n">to_chw</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get image from ImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">get_image</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">to_chw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ImageSet.get_label"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.get_label">[docs]</a>    <span class="k">def</span> <span class="nf">get_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get label from ImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">get_label</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ImageSet.get_predict"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.get_predict">[docs]</a>    <span class="k">def</span> <span class="nf">get_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get prediction from ImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_set</span><span class="o">.</span><span class="n">get_predict</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ImageSet.to_image_frame"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.ImageSet.to_image_frame">[docs]</a>    <span class="k">def</span> <span class="nf">to_image_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ImageFrame</span><span class="p">(</span><span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;imageSetToImageFrame&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="n">bigdl_type</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LocalImageSet"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.LocalImageSet">[docs]</a><span class="k">class</span> <span class="nc">LocalImageSet</span><span class="p">(</span><span class="n">ImageSet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    LocalImageSet wraps a list of ImageFeature</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label_list</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">jvalue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">jvalue</span> <span class="ow">or</span> <span class="n">image_list</span><span class="p">,</span> <span class="s2">&quot;jvalue and image_list cannot be None in the same time&quot;</span>
+        <span class="k">if</span> <span class="n">jvalue</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">jvalue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># init from image ndarray list and label rdd(optional)</span>
+            <span class="n">image_tensor_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">image</span><span class="p">:</span> <span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="n">image_list</span><span class="p">))</span>
+            <span class="n">label_tensor_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">label</span><span class="p">:</span> <span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">label</span><span class="p">),</span> <span class="n">label_list</span><span class="p">))</span> \
+                <span class="k">if</span> <span class="n">label_list</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">JavaValue</span><span class="o">.</span><span class="n">jvm_class_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
+                                     <span class="n">image_tensor_list</span><span class="p">,</span> <span class="n">label_tensor_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span> <span class="o">=</span> <span class="n">bigdl_type</span>
+
+<div class="viewcode-block" id="LocalImageSet.get_image"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.LocalImageSet.get_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;floats&quot;</span><span class="p">,</span> <span class="n">to_chw</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get image list from ImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tensors</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;localImageSetToImageTensor&quot;</span><span class="p">,</span>
+                              <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">to_chw</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">(),</span> <span class="n">tensors</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="LocalImageSet.get_label"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.LocalImageSet.get_label">[docs]</a>    <span class="k">def</span> <span class="nf">get_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get label list from ImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;localImageSetToLabelTensor&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">(),</span> <span class="n">labels</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LocalImageSet.get_predict"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.LocalImageSet.get_predict">[docs]</a>    <span class="k">def</span> <span class="nf">get_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get prediction list from ImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">predicts</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;localImageSetToPredict&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">predict</span><span class="p">:</span>
+                        <span class="p">(</span><span class="n">predict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">(),</span> <span class="n">predict</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span> <span class="k">if</span> <span class="n">predict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="k">else</span> <span class="p">(</span><span class="n">predict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">),</span> <span class="n">predicts</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="DistributedImageSet"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.DistributedImageSet">[docs]</a><span class="k">class</span> <span class="nc">DistributedImageSet</span><span class="p">(</span><span class="n">ImageSet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DistributedImageSet wraps an RDD of ImageFeature</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_rdd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label_rdd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">jvalue</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">jvalue</span> <span class="ow">or</span> <span class="n">image_rdd</span><span class="p">,</span> <span class="s2">&quot;jvalue and image_rdd cannot be None in the same time&quot;</span>
+        <span class="k">if</span> <span class="n">jvalue</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">jvalue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># init from image ndarray rdd and label rdd(optional)</span>
+            <span class="n">image_tensor_rdd</span> <span class="o">=</span> <span class="n">image_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">image</span><span class="p">:</span> <span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">image</span><span class="p">))</span>
+            <span class="n">label_tensor_rdd</span> <span class="o">=</span> <span class="n">label_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">label</span><span class="p">:</span> <span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">label</span><span class="p">))</span> \
+                <span class="k">if</span> <span class="n">label_rdd</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">JavaValue</span><span class="o">.</span><span class="n">jvm_class_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
+                                     <span class="n">image_tensor_rdd</span><span class="p">,</span> <span class="n">label_tensor_rdd</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span> <span class="o">=</span> <span class="n">bigdl_type</span>
+
+<div class="viewcode-block" id="DistributedImageSet.get_image"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.DistributedImageSet.get_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;floats&quot;</span><span class="p">,</span> <span class="n">to_chw</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get image rdd from ImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tensor_rdd</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;distributedImageSetToImageTensorRdd&quot;</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">to_chw</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tensor_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="DistributedImageSet.get_label"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.DistributedImageSet.get_label">[docs]</a>    <span class="k">def</span> <span class="nf">get_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get label rdd from ImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tensor_rdd</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;distributedImageSetToLabelTensorRdd&quot;</span><span class="p">,</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tensor_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">tensor</span><span class="p">:</span> <span class="n">tensor</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="DistributedImageSet.get_predict"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imageset.DistributedImageSet.get_predict">[docs]</a>    <span class="k">def</span> <span class="nf">get_predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;predict&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        get prediction rdd from ImageSet</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">predicts</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;distributedImageSetToPredict&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">predicts</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">predict</span><span class="p">:</span>
+                            <span class="p">(</span><span class="n">predict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                             <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">(),</span> <span class="n">predict</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span> <span class="k">if</span> <span class="n">predict</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                            <span class="k">else</span> <span class="p">(</span><span class="n">predict</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,229 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.models.common.zoo_model &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.models.common.zoo_model</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">from</span> <span class="nn">bigdl.nn.layer</span> <span class="kn">import</span> <span class="n">Container</span><span class="p">,</span> <span class="n">Layer</span>
+<span class="kn">from</span> <span class="nn">bigdl.util.common</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">zoo.pipeline.api.keras.engine.topology</span> <span class="kn">import</span> <span class="n">KerasNet</span>
+<span class="kn">from</span> <span class="nn">zoo.common.utils</span> <span class="kn">import</span> <span class="n">callZooFunc</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span> <span class="o">&gt;=</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>
+    <span class="n">long</span> <span class="o">=</span> <span class="nb">int</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+
+<div class="viewcode-block" id="ZooModelCreator"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModelCreator">[docs]</a><span class="k">class</span> <span class="nc">ZooModelCreator</span><span class="p">(</span><span class="n">JavaValue</span><span class="p">):</span>
+<div class="viewcode-block" id="ZooModelCreator.jvm_class_constructor"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModelCreator.jvm_class_constructor">[docs]</a>    <span class="k">def</span> <span class="nf">jvm_class_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;createZoo&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;creating: &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">name</span></div></div>
+
+
+<div class="viewcode-block" id="ZooModel"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModel">[docs]</a><span class="k">class</span> <span class="nc">ZooModel</span><span class="p">(</span><span class="n">ZooModelCreator</span><span class="p">,</span> <span class="n">Container</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The base class for models in Analytics Zoo.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ZooModel.predict_classes"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModel.predict_classes">[docs]</a>    <span class="k">def</span> <span class="nf">predict_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">zero_based_label</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predict for classes. By default, label predictions start from 0.</span>
+
+<span class="sd">        # Arguments</span>
+<span class="sd">        x: Prediction data. A Numpy array or RDD of Sample.</span>
+<span class="sd">        batch_size: Number of samples per batch. Default is 32.</span>
+<span class="sd">        zero_based_label: Boolean. Whether result labels start from 0.</span>
+<span class="sd">                          Default is True. If False, result labels start from 1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">data_rdd</span> <span class="o">=</span> <span class="n">to_sample_rdd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]]))</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">RDD</span><span class="p">):</span>
+            <span class="n">data_rdd</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Unsupported prediction data type: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooModelPredictClasses&quot;</span><span class="p">,</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                           <span class="n">data_rdd</span><span class="p">,</span>
+                           <span class="n">batch_size</span><span class="p">,</span>
+                           <span class="n">zero_based_label</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ZooModel.save_model"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModel.save_model">[docs]</a>    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">over_write</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the model to the specified path.</span>
+
+<span class="sd">        # Arguments</span>
+<span class="sd">        path: The path to save the model. Local file system, HDFS and Amazon S3 are supported.</span>
+<span class="sd">              HDFS path should be like &#39;hdfs://[host]:[port]/xxx&#39;.</span>
+<span class="sd">              Amazon S3 path should be like &#39;s3a://bucket/xxx&#39;.</span>
+<span class="sd">        weight_path: The path to save weights. Default is None.</span>
+<span class="sd">        over_write: Whether to overwrite the file if it already exists. Default is False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;saveZooModel&quot;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">,</span> <span class="n">over_write</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ZooModel.summary"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModel.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print out the summary of the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooModelSummary&quot;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ZooModel.set_evaluate_status"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.ZooModel.set_evaluate_status">[docs]</a>    <span class="k">def</span> <span class="nf">set_evaluate_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the model to be in evaluate status, i.e. remove the effect of Dropout, etc.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;zooModelSetEvaluateStatus&quot;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_do_load</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Layer</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="n">bigdl_type</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">jmodel</span>
+        <span class="k">return</span> <span class="n">model</span></div>
+
+
+<div class="viewcode-block" id="KerasZooModel"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel">[docs]</a><span class="k">class</span> <span class="nc">KerasZooModel</span><span class="p">(</span><span class="n">ZooModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The base class for Keras style models in Analytics Zoo.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># For the following method, please see documentation of KerasNet for details</span>
+<div class="viewcode-block" id="KerasZooModel.compile"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasZooModel.fit"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">nb_epoch</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">validation_split</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">distributed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">nb_epoch</span><span class="p">,</span> <span class="n">validation_split</span><span class="p">,</span> <span class="n">validation_data</span><span class="p">,</span> <span class="n">distributed</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasZooModel.set_checkpoint"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel.set_checkpoint">[docs]</a>    <span class="k">def</span> <span class="nf">set_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">over_write</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">set_checkpoint</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">over_write</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasZooModel.set_tensorboard"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel.set_tensorboard">[docs]</a>    <span class="k">def</span> <span class="nf">set_tensorboard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_dir</span><span class="p">,</span> <span class="n">app_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">set_tensorboard</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">app_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasZooModel.get_train_summary"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel.get_train_summary">[docs]</a>    <span class="k">def</span> <span class="nf">get_train_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_train_summary</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasZooModel.get_validation_summary"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel.get_validation_summary">[docs]</a>    <span class="k">def</span> <span class="nf">get_validation_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_validation_summary</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasZooModel.clear_gradient_clipping"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel.clear_gradient_clipping">[docs]</a>    <span class="k">def</span> <span class="nf">clear_gradient_clipping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">clear_gradient_clipping</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="KerasZooModel.set_constant_gradient_clipping"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel.set_constant_gradient_clipping">[docs]</a>    <span class="k">def</span> <span class="nf">set_constant_gradient_clipping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">set_constant_gradient_clipping</span><span class="p">(</span><span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasZooModel.set_gradient_clipping_by_l2_norm"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel.set_gradient_clipping_by_l2_norm">[docs]</a>    <span class="k">def</span> <span class="nf">set_gradient_clipping_by_l2_norm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clip_norm</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">set_gradient_clipping_by_l2_norm</span><span class="p">(</span><span class="n">clip_norm</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasZooModel.set_evaluate_status"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel.set_evaluate_status">[docs]</a>    <span class="k">def</span> <span class="nf">set_evaluate_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">set_evaluate_status</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="KerasZooModel.evaluate"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasZooModel.predict"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">batch_per_thread</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">distributed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">batch_per_thread</span><span class="p">,</span> <span class="n">distributed</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasZooModel.predict_classes"><a class="viewcode-back" href="../../../../zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel.predict_classes">[docs]</a>    <span class="k">def</span> <span class="nf">predict_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">batch_per_thread</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">distributed</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict_classes</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">batch_per_thread</span><span class="p">,</span> <span class="n">distributed</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_do_load</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">ZooModel</span><span class="o">.</span><span class="n">_do_load</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span>
+        <span class="n">labor_model</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;getModule&quot;</span><span class="p">,</span> <span class="n">jmodel</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">KerasNet</span><span class="p">(</span><span class="n">labor_model</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

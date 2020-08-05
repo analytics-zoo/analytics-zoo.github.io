@@ -174,12 +174,18 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 <h4 id="manual-installation">Manual installation</h4>
 <h5 id="requirements">Requirements</h5>
 <p>Non-Docker users need to install <a href="https://archive.apache.org/dist/flink/flink-1.10.0/">Flink</a>, 1.10.0 by default, for users choose Spark as backend, install <a href="https://archive.apache.org/dist/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz">Spark</a>, 2.4.3 by default, <a href="https://redis.io/topics/quickstart">Redis</a>, 0.5.0 by default and <a href="https://www.tensorflow.org/tensorboard/get_started">TensorBoard</a> if you choose Spark backend and need visualization.</p>
-<p>After preparing dependencies above, make sure the environment variable <code>$FLINK_HOME</code> (/path/to/flink-FLINK_VERSION-bin), or <code>$SPARK_HOME</code> (/path/to/spark-SPARK_VERSION-bin-hadoop-HADOOP_VERSION), <code>$REDIS_HOME</code>(/path/to/redis-REDIS_VERSION) is set before following steps. </p>
+<p>After preparing dependencies above, make sure the environment variable <code>$FLINK_HOME</code> (/path/to/flink-FLINK_VERSION-bin), or <code>$SPARK_HOME</code>(for Spark user only) (/path/to/spark-SPARK_VERSION-bin-hadoop-HADOOP_VERSION), <code>$REDIS_HOME</code>(/path/to/redis-REDIS_VERSION) is set before following steps. </p>
 <p>For Spark user only, use <code>pip install tensorboard</code> to install TensorBoard.</p>
-<h5 id="install-cluster-serving">Install Cluster Serving</h5>
+<h5 id="install-cluster-serving-by-download-release">Install Cluster Serving by download release</h5>
 <p>For users who need to deploy and start Cluster Serving, download Cluster Serving zip from <a href="">here</a> and unzip it, then run <code>source cluster-serving-prepare.sh</code>. A demo <code>cluster-serving-demo.sh</code> is also prepared and users can run it to check if Cluster Serving could work.</p>
 <p>For users who need to do inference, aka. predict data only, download Analytics Zoo python zip from <a href="">here</a> and run <code>export PYTHONPATH=$PYTHONPATH:/path/to/zip</code> to add this zip to <code>PYTHONPATH</code> environment variable.</p>
-<p>Run <code>export OMP_NUM_THREADS=all</code> if you want to use all cores on your machine to do inference in parallel manner.</p>
+<h5 id="install-cluster-serving-by-pip">Install Cluster Serving by pip</h5>
+<p>Download package from <a href="">here</a>, run following command to install Cluster Serving</p>
+<pre><code>pip install *.whl
+</code></pre>
+
+<p>For users who need to deploy and start Cluster Serving, run <code>cluster-serving-init</code> to download and prepare dependencies.</p>
+<p>For users who need to do inference, aka. predict data only, the environment is ready.</p>
 <h3 id="2-configuration">2. Configuration</h3>
 <h4 id="how-to-config">How to Config</h4>
 <p>After <a href="#1-installation">Installation</a>, you will see a config file <code>config.yaml</code> in your current working directory. This file contains all the configurations that you can customize for your Cluster Serving. See an example of <code>config.yaml</code> below.</p>

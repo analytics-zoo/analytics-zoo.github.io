@@ -1,0 +1,465 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.feature.image.imagePreprocessing &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.feature.image.imagePreprocessing</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">from</span> <span class="nn">bigdl.util.common</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">zoo.feature.common</span> <span class="kn">import</span> <span class="n">Preprocessing</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span> <span class="o">&gt;=</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>
+    <span class="n">long</span> <span class="o">=</span> <span class="nb">int</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+
+<div class="viewcode-block" id="ImagePreprocessing"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImagePreprocessing">[docs]</a><span class="k">class</span> <span class="nc">ImagePreprocessing</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ImagePreprocessing is a transformer that transform ImageFeature</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageBytesToMat"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageBytesToMat">[docs]</a><span class="k">class</span> <span class="nc">ImageBytesToMat</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transform byte array(original image file in byte) to OpenCVMat</span>
+<span class="sd">    :param byte_key key that maps byte array</span>
+<span class="sd">    :param image_codec specifying the color type of a loaded image, same as in OpenCV.imread.</span>
+<span class="sd">     By default is Imgcodecs.CV_LOAD_IMAGE_UNCHANGED</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">byte_key</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">,</span> <span class="n">image_codec</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageBytesToMat</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">byte_key</span><span class="p">,</span> <span class="n">image_codec</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImagePixelBytesToMat"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImagePixelBytesToMat">[docs]</a><span class="k">class</span> <span class="nc">ImagePixelBytesToMat</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Transform byte array(pixels in byte) to OpenCVMat</span>
+<span class="sd">    :param byte_key key that maps byte array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">byte_key</span><span class="o">=</span><span class="s2">&quot;bytes&quot;</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImagePixelBytesToMat</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">byte_key</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageResize"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageResize">[docs]</a><span class="k">class</span> <span class="nc">ImageResize</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Resize image</span>
+<span class="sd">    :param resize_h height after resize</span>
+<span class="sd">    :param resize_w width after resize</span>
+<span class="sd">    :param resize_mode if resizeMode = -1, random select a mode from (Imgproc.INTER_LINEAR,</span>
+<span class="sd">     Imgproc.INTER_CUBIC, Imgproc.INTER_AREA, Imgproc.INTER_NEAREST, Imgproc.INTER_LANCZOS4)</span>
+<span class="sd">    :param use_scale_factor if true, scale factor fx and fy is used, fx = fy = 0</span>
+<span class="sd">    note that the result of the following are different</span>
+<span class="sd">    Imgproc.resize(mat, mat, new Size(resizeWH, resizeWH), 0, 0, Imgproc.INTER_LINEAR)</span>
+<span class="sd">    Imgproc.resize(mat, mat, new Size(resizeWH, resizeWH))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resize_h</span><span class="p">,</span> <span class="n">resize_w</span><span class="p">,</span> <span class="n">resize_mode</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">use_scale_factor</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageResize</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">resize_h</span><span class="p">,</span> <span class="n">resize_w</span><span class="p">,</span>
+                                          <span class="n">resize_mode</span><span class="p">,</span> <span class="n">use_scale_factor</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageBrightness"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageBrightness">[docs]</a><span class="k">class</span> <span class="nc">ImageBrightness</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    adjust the image brightness</span>
+<span class="sd">    :param deltaLow brightness parameter: low bound</span>
+<span class="sd">    :param deltaHigh brightness parameter: high bound</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta_low</span><span class="p">,</span> <span class="n">delta_high</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageBrightness</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">delta_low</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">delta_high</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="ImageChannelNormalize"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageChannelNormalize">[docs]</a><span class="k">class</span> <span class="nc">ImageChannelNormalize</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    image channel normalize</span>
+<span class="sd">    :param mean_r mean value in R channel</span>
+<span class="sd">    :param mean_g mean value in G channel</span>
+<span class="sd">    :param meanB_b mean value in B channel</span>
+<span class="sd">    :param std_r std value in R channel</span>
+<span class="sd">    :param std_g std value in G channel</span>
+<span class="sd">    :param std_b std value in B channel</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mean_r</span><span class="p">,</span> <span class="n">mean_g</span><span class="p">,</span> <span class="n">mean_b</span><span class="p">,</span> <span class="n">std_r</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                 <span class="n">std_g</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">std_b</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageChannelNormalize</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">mean_r</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">mean_g</span><span class="p">),</span>
+                                                    <span class="nb">float</span><span class="p">(</span><span class="n">mean_b</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">std_r</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">std_g</span><span class="p">),</span>
+                                                    <span class="nb">float</span><span class="p">(</span><span class="n">std_b</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="PerImageNormalize"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.PerImageNormalize">[docs]</a><span class="k">class</span> <span class="nc">PerImageNormalize</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Normalizes the norm or value range per image, similar to opencv::normalize</span>
+<span class="sd">    https://docs.opencv.org/ref/master/d2/de8/group__core__array.html</span>
+<span class="sd">    #ga87eef7ee3970f86906d69a92cbf064bd</span>
+<span class="sd">    ImageNormalize normalizes scale and shift the input features. Various normalize</span>
+<span class="sd">    methods are supported,</span>
+<span class="sd">    Eg. NORM_INF, NORM_L1, NORM_L2 or NORM_MINMAX</span>
+<span class="sd">    Pleas notice it&#39;s a per image normalization.</span>
+<span class="sd">    :param min lower range boundary in case of the range normalization or</span>
+<span class="sd">    norm value to normalize</span>
+<span class="sd">    :param max upper range boundary in case of the range normalization.</span>
+<span class="sd">    It is not used for the norm normalization.</span>
+<span class="sd">    :param norm_type normalization type, see opencv:NormTypes.</span>
+<span class="sd">    https://docs.opencv.org/ref/master/d2/de8/group__core__array.html</span>
+<span class="sd">    #gad12cefbcb5291cf958a85b4b67b6149f</span>
+<span class="sd">    Default Core.NORM_MINMAX</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">,</span> <span class="n">norm_type</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PerImageNormalize</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">),</span> <span class="n">norm_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageMatToTensor"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageMatToTensor">[docs]</a><span class="k">class</span> <span class="nc">ImageMatToTensor</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    MatToTensor</span>
+<span class="sd">    :param toRGB BGR to RGB (default is BGR)</span>
+<span class="sd">    :param tensorKey key to store transformed tensor</span>
+<span class="sd">    :param format DataFormat.NCHW or DataFormat.NHWC</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to_RGB</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tensor_key</span><span class="o">=</span><span class="s2">&quot;imageTensor&quot;</span><span class="p">,</span>
+                 <span class="n">share_buffer</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;NCHW&quot;</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageMatToTensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">to_RGB</span><span class="p">,</span> <span class="n">tensor_key</span><span class="p">,</span>
+                                               <span class="n">share_buffer</span><span class="p">,</span> <span class="nb">format</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageSetToSample"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageSetToSample">[docs]</a><span class="k">class</span> <span class="nc">ImageSetToSample</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    transform imageframe to samples</span>
+<span class="sd">    :param input_keys keys that maps inputs (each input should be a tensor)</span>
+<span class="sd">    :param target_keys keys that maps targets (each target should be a tensor)</span>
+<span class="sd">    :param sample_key key to store sample</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;imageTensor&quot;</span><span class="p">],</span> <span class="n">target_keys</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">],</span>
+                 <span class="n">sample_key</span><span class="o">=</span><span class="s2">&quot;sample&quot;</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageSetToSample</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">input_keys</span><span class="p">,</span> <span class="n">target_keys</span><span class="p">,</span> <span class="n">sample_key</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageHue"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageHue">[docs]</a><span class="k">class</span> <span class="nc">ImageHue</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    adjust the image hue</span>
+<span class="sd">    :param deltaLow hue parameter: low bound</span>
+<span class="sd">    :param deltaHigh hue parameter: high bound</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta_low</span><span class="p">,</span> <span class="n">delta_high</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageHue</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">delta_low</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">delta_high</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="ImageSaturation"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageSaturation">[docs]</a><span class="k">class</span> <span class="nc">ImageSaturation</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    adjust the image Saturation</span>
+<span class="sd">    :param deltaLow brightness parameter: low bound</span>
+<span class="sd">    :param deltaHigh brightness parameter: high bound</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta_low</span><span class="p">,</span> <span class="n">delta_high</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageSaturation</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">delta_low</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">delta_high</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="ImageChannelOrder"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageChannelOrder">[docs]</a><span class="k">class</span> <span class="nc">ImageChannelOrder</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    random change the channel of an image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageChannelOrder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageColorJitter"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageColorJitter">[docs]</a><span class="k">class</span> <span class="nc">ImageColorJitter</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Random adjust brightness, contrast, hue, saturation</span>
+<span class="sd">    :param brightness_prob probability to adjust brightness</span>
+<span class="sd">    :param brightness_delta brightness parameter</span>
+<span class="sd">    :param contrast_prob probability to adjust contrast</span>
+<span class="sd">    :param contrast_lower contrast lower parameter</span>
+<span class="sd">    :param contrast_upper contrast upper parameter</span>
+<span class="sd">    :param hue_prob probability to adjust hue</span>
+<span class="sd">    :param hue_delta hue parameter</span>
+<span class="sd">    :param saturation_prob probability to adjust saturation</span>
+<span class="sd">    :param saturation_lower saturation lower parameter</span>
+<span class="sd">    :param saturation_upper saturation upper parameter</span>
+<span class="sd">    :param random_order_prob random order for different operation</span>
+<span class="sd">    :param shuffle  shuffle the transformers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">brightness_prob</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">brightness_delta</span><span class="o">=</span><span class="mf">32.0</span><span class="p">,</span>
+                 <span class="n">contrast_prob</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">contrast_lower</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">contrast_upper</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+                 <span class="n">hue_prob</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">hue_delta</span><span class="o">=</span><span class="mf">18.0</span><span class="p">,</span>
+                 <span class="n">saturation_prob</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">saturation_lower</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">saturation_upper</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+                 <span class="n">random_order_prob</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                 <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageColorJitter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span>
+                                               <span class="nb">float</span><span class="p">(</span><span class="n">brightness_prob</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">brightness_delta</span><span class="p">),</span>
+                                               <span class="nb">float</span><span class="p">(</span><span class="n">contrast_prob</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">contrast_lower</span><span class="p">),</span>
+                                               <span class="nb">float</span><span class="p">(</span><span class="n">contrast_upper</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">hue_prob</span><span class="p">),</span>
+                                               <span class="nb">float</span><span class="p">(</span><span class="n">hue_delta</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">saturation_prob</span><span class="p">),</span>
+                                               <span class="nb">float</span><span class="p">(</span><span class="n">saturation_lower</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">saturation_upper</span><span class="p">),</span>
+                                               <span class="nb">float</span><span class="p">(</span><span class="n">random_order_prob</span><span class="p">),</span> <span class="n">shuffle</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageAspectScale"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageAspectScale">[docs]</a><span class="k">class</span> <span class="nc">ImageAspectScale</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Resize the image, keep the aspect ratio. scale according to the short edge</span>
+<span class="sd">    :param min_size scale size, apply to short edge</span>
+<span class="sd">    :param scale_multiple_of make the scaled size multiple of some value</span>
+<span class="sd">    :param max_size max size after scale</span>
+<span class="sd">    :param resize_mode if resizeMode = -1, random select a mode from</span>
+<span class="sd">    (Imgproc.INTER_LINEAR, Imgproc.INTER_CUBIC, Imgproc.INTER_AREA,</span>
+<span class="sd">    Imgproc.INTER_NEAREST, Imgproc.INTER_LANCZOS4)</span>
+<span class="sd">    :param use_scale_factor if true, scale factor fx and fy is used, fx = fy = 0</span>
+<span class="sd">    :aram min_scale control the minimum scale up for image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_size</span><span class="p">,</span> <span class="n">scale_multiple_of</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                 <span class="n">resize_mode</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">use_scale_factor</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">min_scale</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span>
+                 <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageAspectScale</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span>
+                                               <span class="n">min_size</span><span class="p">,</span> <span class="n">scale_multiple_of</span><span class="p">,</span> <span class="n">max_size</span><span class="p">,</span>
+                                               <span class="n">resize_mode</span><span class="p">,</span> <span class="n">use_scale_factor</span><span class="p">,</span> <span class="n">min_scale</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageRandomAspectScale"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageRandomAspectScale">[docs]</a><span class="k">class</span> <span class="nc">ImageRandomAspectScale</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    resize the image by randomly choosing a scale</span>
+<span class="sd">    :param scales array of scale options that for random choice</span>
+<span class="sd">    :param scaleMultipleOf Resize test images so that its width and height are multiples of</span>
+<span class="sd">    :param maxSize Max pixel size of the longest side of a scaled input image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scales</span><span class="p">,</span> <span class="n">scale_multiple_of</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageRandomAspectScale</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span>
+                                                     <span class="n">scales</span><span class="p">,</span> <span class="n">scale_multiple_of</span><span class="p">,</span> <span class="n">max_size</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImagePixelNormalize"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImagePixelNormalize">[docs]</a><span class="k">class</span> <span class="nc">ImagePixelNormalize</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pixel level normalizer, data(i) = data(i) - mean(i)</span>
+
+<span class="sd">    :param means pixel level mean, following H * W * C order</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">means</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImagePixelNormalize</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">means</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageRandomCrop"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageRandomCrop">[docs]</a><span class="k">class</span> <span class="nc">ImageRandomCrop</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Random crop a `cropWidth` x `cropHeight` patch from an image.</span>
+<span class="sd">    The patch size should be less than the image size.</span>
+
+<span class="sd">    :param crop_width width after crop</span>
+<span class="sd">    :param crop_height height after crop</span>
+<span class="sd">    :param is_clip whether to clip the roi to image boundaries</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_width</span><span class="p">,</span> <span class="n">crop_height</span><span class="p">,</span> <span class="n">is_clip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageRandomCrop</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span>
+                                              <span class="n">crop_width</span><span class="p">,</span> <span class="n">crop_height</span><span class="p">,</span> <span class="n">is_clip</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageCenterCrop"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageCenterCrop">[docs]</a><span class="k">class</span> <span class="nc">ImageCenterCrop</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Crop a `cropWidth` x `cropHeight` patch from center of image.</span>
+<span class="sd">    The patch size should be less than the image size.</span>
+<span class="sd">    :param crop_width width after crop</span>
+<span class="sd">    :param crop_height height after crop</span>
+<span class="sd">    :param is_clip  clip cropping box boundary</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">crop_width</span><span class="p">,</span> <span class="n">crop_height</span><span class="p">,</span> <span class="n">is_clip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageCenterCrop</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span>
+                                              <span class="n">crop_width</span><span class="p">,</span> <span class="n">crop_height</span><span class="p">,</span> <span class="n">is_clip</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageFixedCrop"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageFixedCrop">[docs]</a><span class="k">class</span> <span class="nc">ImageFixedCrop</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Crop a fixed area of image</span>
+
+<span class="sd">    :param x1 start in width</span>
+<span class="sd">    :param y1 start in height</span>
+<span class="sd">    :param x2 end in width</span>
+<span class="sd">    :param y2 end in height</span>
+<span class="sd">    :param normalized whether args are normalized, i.e. in range [0, 1]</span>
+<span class="sd">    :param is_clip whether to clip the roi to image boundaries</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">is_clip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageFixedCrop</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span>
+                                             <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">normalized</span><span class="p">,</span> <span class="n">is_clip</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageExpand"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageExpand">[docs]</a><span class="k">class</span> <span class="nc">ImageExpand</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    expand image, fill the blank part with the meanR, meanG, meanB</span>
+
+<span class="sd">    :param means_r means in R channel</span>
+<span class="sd">    :param means_g means in G channel</span>
+<span class="sd">    :param means_b means in B channel</span>
+<span class="sd">    :param min_expand_ratio min expand ratio</span>
+<span class="sd">    :param max_expand_ratio max expand ratio</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">means_r</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">means_g</span><span class="o">=</span><span class="mi">117</span><span class="p">,</span> <span class="n">means_b</span><span class="o">=</span><span class="mi">104</span><span class="p">,</span>
+                 <span class="n">min_expand_ratio</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                 <span class="n">max_expand_ratio</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageExpand</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">means_r</span><span class="p">,</span> <span class="n">means_g</span><span class="p">,</span> <span class="n">means_b</span><span class="p">,</span>
+                                          <span class="n">min_expand_ratio</span><span class="p">,</span> <span class="n">max_expand_ratio</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageFiller"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageFiller">[docs]</a><span class="k">class</span> <span class="nc">ImageFiller</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fill part of image with certain pixel value</span>
+<span class="sd">    :param start_x start x ratio</span>
+<span class="sd">    :param start_y start y ratio</span>
+<span class="sd">    :param end_x end x ratio</span>
+<span class="sd">    :param end_y end y ratio</span>
+<span class="sd">    :param value filling value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_x</span><span class="p">,</span> <span class="n">start_y</span><span class="p">,</span> <span class="n">end_x</span><span class="p">,</span> <span class="n">end_y</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageFiller</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">start_x</span><span class="p">,</span> <span class="n">start_y</span><span class="p">,</span>
+                                          <span class="n">end_x</span><span class="p">,</span> <span class="n">end_y</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageHFlip"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageHFlip">[docs]</a><span class="k">class</span> <span class="nc">ImageHFlip</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Flip the image horizontally</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageHFlip</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageMirror"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageMirror">[docs]</a><span class="k">class</span> <span class="nc">ImageMirror</span><span class="p">(</span><span class="n">ImagePreprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Flip the image horizontally and vertically</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageMirror</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageFeatureToTensor"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageFeatureToTensor">[docs]</a><span class="k">class</span> <span class="nc">ImageFeatureToTensor</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    a Transformer that convert ImageFeature to a Tensor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageFeatureToTensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageFeatureToSample"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageFeatureToSample">[docs]</a><span class="k">class</span> <span class="nc">ImageFeatureToSample</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A transformer that get Sample from ImageFeature.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageFeatureToSample</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RowToImageFeature"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.RowToImageFeature">[docs]</a><span class="k">class</span> <span class="nc">RowToImageFeature</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    a Transformer that converts a Spark Row to a BigDL ImageFeature.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RowToImageFeature</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ImageRandomPreprocessing"><a class="viewcode-back" href="../../../../zoo.feature.image.html#zoo.feature.image.imagePreprocessing.ImageRandomPreprocessing">[docs]</a><span class="k">class</span> <span class="nc">ImageRandomPreprocessing</span><span class="p">(</span><span class="n">Preprocessing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Randomly apply the preprocessing to some of the input ImageFeatures, with probability specified.</span>
+<span class="sd">    E.g. if prob = 0.5, the preprocessing will apply to half of the input ImageFeatures.</span>
+<span class="sd">    :param preprocessing preprocessing to apply.</span>
+<span class="sd">    :param prob probability to apply the preprocessing action.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preprocessing</span><span class="p">,</span> <span class="n">prob</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageRandomPreprocessing</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">preprocessing</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">prob</span><span class="p">))</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

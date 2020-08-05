@@ -372,6 +372,43 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.serving.postprocessing.PostProcessing#pickTopN" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="pickTopN(topN:Int):String"></a>
+      <a id="pickTopN(Int):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">pickTopN</span><span class="params">(<span name="topN">topN: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@pickTopN(topN:Int):String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Pick TopN value of output tensor
+only (1) * record_size * box_value_number is supported
+thus only 2 or 3 dimension is valid for now
+</p>
+    </li><li name="com.intel.analytics.zoo.serving.postprocessing.PostProcessing#rankTopN" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="rankTopN(topN:Int):String"></a>
+      <a id="rankTopN(Int):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">rankTopN</span><span class="params">(<span name="topN">topN: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@rankTopN(topN:Int):String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">TopN filter, take 1-D size (n) tensor as input</p><div class="fullcomment"><div class="comment cmt"><p>TopN filter, take 1-D size (n) tensor as input</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>string, representing 2-D size (topN, 2) tensor</p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -441,23 +478,6 @@ could apply to any shape of tensor</p>
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.serving.postprocessing.PostProcessing#topN" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="topN(topN:Int):String"></a>
-      <a id="topN(Int):String"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">topN</span><span class="params">(<span name="topN">topN: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@topN(topN:Int):String" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">TopN filter, take 1-D size (n) tensor as input</p><div class="fullcomment"><div class="comment cmt"><p>TopN filter, take 1-D size (n) tensor as input</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>2-D size (topN, 2) tensor</p></dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>

@@ -1,0 +1,431 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.tfpark.estimator &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../tfpark.html" accesskey="U">zoo.tfpark</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.tfpark.estimator</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">from</span> <span class="nn">bigdl.optim.optimizer</span> <span class="kn">import</span> <span class="n">MaxIteration</span><span class="p">,</span> <span class="n">Loss</span><span class="p">,</span> <span class="n">TreeNNAccuracy</span>
+
+<span class="kn">from</span> <span class="nn">zoo.tfpark.utils</span> <span class="kn">import</span> <span class="n">evaluate_string_metrics</span>
+<span class="kn">from</span> <span class="nn">zoo.pipeline.api.keras</span> <span class="kn">import</span> <span class="n">metrics</span>
+<span class="kn">from</span> <span class="nn">zoo.tfpark.tfnet</span> <span class="kn">import</span> <span class="n">TFNet</span>
+<span class="kn">from</span> <span class="nn">zoo.tfpark.tf_optimizer</span> <span class="kn">import</span> <span class="n">TFOptimizer</span>
+<span class="kn">from</span> <span class="nn">zoo.tfpark.tf_dataset</span> <span class="kn">import</span> <span class="n">TFDataset</span>
+
+<span class="kn">from</span> <span class="nn">zoo.util</span> <span class="kn">import</span> <span class="n">nest</span>
+<span class="kn">import</span> <span class="nn">six</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="TFEstimator"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.estimator.TFEstimator">[docs]</a><span class="k">class</span> <span class="nc">TFEstimator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">estimator</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param estimator: a tf.estimator.Estimator, in the estimator&#39;s model_fn,</span>
+<span class="sd">        ZooOptimizer must be used and only ZooOptimizer should be used to derive</span>
+<span class="sd">        the train_op.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span> <span class="o">=</span> <span class="n">estimator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">model_fn</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">model_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tf_optimizer</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="TFEstimator.from_model_fn"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.estimator.TFEstimator.from_model_fn">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_model_fn</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model_fn</span><span class="p">,</span> <span class="n">model_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                      <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">warm_start_from</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param model_fn: Model function. Follows the signature:</span>
+
+<span class="sd">            * Args:</span>
+
+<span class="sd">                * `features`: This is the first item returned from the `input_fn`</span>
+<span class="sd">                    passed to `train`, `evaluate`, and `predict`. This should be a</span>
+<span class="sd">                    single `tf.Tensor` or `dict` of same.</span>
+<span class="sd">                * `labels`: This is the second item returned from the `input_fn`</span>
+<span class="sd">                    passed to `train`, `evaluate`, and `predict`. This should be a</span>
+<span class="sd">                    single `tf.Tensor` or `dict` of same (for multi-head models).</span>
+<span class="sd">                    If mode is `tf.estimator.ModeKeys.PREDICT`, `labels=None` will</span>
+<span class="sd">                    be passed. If the `model_fn`&#39;s signature does not accept</span>
+<span class="sd">                    `mode`, the `model_fn` must still be able to handle</span>
+<span class="sd">                    `labels=None`.</span>
+<span class="sd">                * `mode`: Optional. Specifies if this training, evaluation or</span>
+<span class="sd">                    prediction. See `tf.estimator.ModeKeys`.</span>
+<span class="sd">                * `params`: Optional `dict` of hyperparameters.  Will receive what</span>
+<span class="sd">                    is passed to Estimator in `params` parameter. This allows</span>
+<span class="sd">                    to configure Estimators from hyper parameter tuning.</span>
+<span class="sd">                * `config`: Optional `estimator.RunConfig` object. Will receive what</span>
+<span class="sd">                    is passed to Estimator as its `config` parameter, or a default</span>
+<span class="sd">                    value. Allows setting up things in your `model_fn` based on</span>
+<span class="sd">                    configuration such as `num_ps_replicas`, or `model_dir`.</span>
+
+<span class="sd">            * Returns:</span>
+<span class="sd">                `tf.estimator.EstimatorSpec`</span>
+
+<span class="sd">            For the train_op in tf.estimator.EstimatorSpec, it derive from and only from</span>
+<span class="sd">            `zoo.tfpark.zoo_optimizer.ZooOptimizer`</span>
+<span class="sd">        :param model_dir: Directory to save model parameters, graph and etc. This can</span>
+<span class="sd">            also be used to load checkpoints from the directory into an estimator to</span>
+<span class="sd">            continue training a previously saved model. If `PathLike` object, the</span>
+<span class="sd">            path will be resolved. If `None`, the model_dir in `config` will be used</span>
+<span class="sd">            if set. If both are set, they must be same. If both are `None`, a</span>
+<span class="sd">            temporary directory will be used.</span>
+<span class="sd">        :param config: `estimator.RunConfig` configuration object.</span>
+<span class="sd">        :param params: `dict` of hyper parameters that will be passed into `model_fn`.</span>
+<span class="sd">              Keys are names of parameters, values are basic python types.</span>
+<span class="sd">        :param warm_start_from: Optional string filepath to a checkpoint or SavedModel to</span>
+<span class="sd">                       warm-start from, or a `tf.estimator.WarmStartSettings`</span>
+<span class="sd">                       object to fully configure warm-starting.  If the string</span>
+<span class="sd">                       filepath is provided instead of a</span>
+<span class="sd">                       `tf.estimator.WarmStartSettings`, then all variables are</span>
+<span class="sd">                       warm-started, and it is assumed that vocabularies</span>
+<span class="sd">                       and `tf.Tensor` names are unchanged.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+        <span class="n">estimator</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">model_fn</span><span class="p">,</span> <span class="n">model_dir</span><span class="o">=</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                                           <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">warm_start_from</span><span class="o">=</span><span class="n">warm_start_from</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">estimator</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_call_model_fn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">tensorflow.python.util</span> <span class="kn">import</span> <span class="n">function_utils</span>
+        <span class="n">model_fn_args</span> <span class="o">=</span> <span class="n">function_utils</span><span class="o">.</span><span class="n">fn_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_fn</span><span class="p">)</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="s1">&#39;labels&#39;</span> <span class="ow">in</span> <span class="n">model_fn_args</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span>
+        <span class="k">if</span> <span class="s1">&#39;mode&#39;</span> <span class="ow">in</span> <span class="n">model_fn_args</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="k">if</span> <span class="s1">&#39;params&#39;</span> <span class="ow">in</span> <span class="n">model_fn_args</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span>
+        <span class="k">if</span> <span class="s1">&#39;config&#39;</span> <span class="ow">in</span> <span class="n">model_fn_args</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;config&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="n">model_fn_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_fn</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="n">features</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">model_fn_results</span>
+
+<div class="viewcode-block" id="TFEstimator.train"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.estimator.TFEstimator.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_fn</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">session_config</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Trains a model given training data `input_fn`.</span>
+
+<span class="sd">        :param input_fn: A function that constructs the input data for evaluation. The</span>
+<span class="sd">            function should construct and return one of the following:</span>
+<span class="sd">            * A `TFDataset` object, each elements of which is a tuple `(features, labels)`.</span>
+<span class="sd">            * A `tf.data.Dataset` object: Outputs of `Dataset` object must be a tuple</span>
+<span class="sd">            `(features, labels)` with same constraints as below.</span>
+<span class="sd">            * A tuple `(features, labels)`: Where `features` is a `tf.Tensor` or a dictionary</span>
+<span class="sd">            of string feature name to `Tensor` and `labels` is a `Tensor` or a</span>
+<span class="sd">            dictionary of string label name to `Tensor`. Both `features` and</span>
+<span class="sd">            `labels` are consumed by `model_fn`. They should satisfy the expectation</span>
+<span class="sd">            of `model_fn` from inputs.</span>
+<span class="sd">        :param steps: Number of steps for which to train the model.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">          `self`, for chaining.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span><span class="o">.</span><span class="n">as_default</span><span class="p">()</span> <span class="k">as</span> <span class="n">g</span><span class="p">:</span>
+            <span class="n">global_step_tensor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">_create_and_assert_global_step</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+            <span class="n">add_step_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">())</span>
+            <span class="n">assign_step</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign_add</span><span class="p">(</span><span class="n">global_step_tensor</span><span class="p">,</span> <span class="n">add_step_input</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">_call_input_fn</span><span class="p">(</span><span class="n">input_fn</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">TFDataset</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="o">.</span><span class="n">has_batch</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The batch_size of TFDataset must be &quot;</span> <span class="o">+</span>
+                                     <span class="s2">&quot;specified when used for training.&quot;</span><span class="p">)</span>
+                <span class="n">spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_model_fn</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">feature_tensors</span><span class="p">,</span>
+                                           <span class="n">result</span><span class="o">.</span><span class="n">label_tensors</span><span class="p">,</span>
+                                           <span class="n">tf</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">,</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+                <span class="n">latest_checkpoint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">()</span>
+
+                <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+                    <span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Saver</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">latest_checkpoint</span><span class="p">:</span>
+                        <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">latest_checkpoint</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
+
+                    <span class="n">zoo_ckpt_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_dir</span><span class="p">,</span> <span class="s2">&quot;analytics-zoo&quot;</span><span class="p">)</span>
+
+                    <span class="n">opt</span> <span class="o">=</span> <span class="n">TFOptimizer</span><span class="o">.</span><span class="n">from_train_op</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">train_op</span><span class="p">,</span>
+                                                    <span class="n">spec</span><span class="o">.</span><span class="n">loss</span><span class="p">,</span>
+                                                    <span class="n">sess</span><span class="o">=</span><span class="n">sess</span><span class="p">,</span>
+                                                    <span class="n">dataset</span><span class="o">=</span><span class="n">result</span><span class="p">,</span>
+                                                    <span class="n">model_dir</span><span class="o">=</span><span class="n">zoo_ckpt_path</span><span class="p">,</span>
+                                                    <span class="n">session_config</span><span class="o">=</span><span class="n">session_config</span><span class="p">)</span>
+
+                    <span class="n">opt</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">MaxIteration</span><span class="p">(</span><span class="n">steps</span><span class="p">))</span>
+                    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">assign_step</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">add_step_input</span><span class="p">:</span> <span class="n">steps</span><span class="p">})</span>
+                    <span class="n">final_step</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">global_step_tensor</span><span class="p">)</span>
+                    <span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_dir</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">)</span>
+                    <span class="n">saver</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">global_step</span><span class="o">=</span><span class="n">final_step</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">input_fn</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="n">steps</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFEstimator.evaluate"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.estimator.TFEstimator.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_fn</span><span class="p">,</span> <span class="n">eval_methods</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluates the model given evaluation data `input_fn`.</span>
+
+<span class="sd">        :param input_fn: A function that constructs the input data for evaluation. The</span>
+<span class="sd">            function should construct and return one of the following:</span>
+<span class="sd">            * A `TFDataset` object, each elements of which is a tuple `(features, labels)`.</span>
+<span class="sd">            * A `tf.data.Dataset` object: Outputs of `Dataset` object must be a tuple</span>
+<span class="sd">            `(features, labels)` with same constraints as below.</span>
+<span class="sd">            * A tuple `(features, labels)`: Where `features` is a `tf.Tensor` or a dictionary</span>
+<span class="sd">            of string feature name to `Tensor` and `labels` is a `Tensor` or a</span>
+<span class="sd">            dictionary of string label name to `Tensor`. Both `features` and</span>
+<span class="sd">            `labels` are consumed by `model_fn`. They should satisfy the expectation</span>
+<span class="sd">            of `model_fn` from inputs.</span>
+<span class="sd">        :param eval_methods: a list of strings to specify the evaluation metrics to</span>
+<span class="sd">                            be used in this model</span>
+<span class="sd">        :param steps: Number of steps for which to evaluate model.</span>
+<span class="sd">        :param checkpoint_path: Path of a specific checkpoint to evaluate. If `None`, the</span>
+<span class="sd">            latest checkpoint in `model_dir` is used.  If there are no checkpoints</span>
+<span class="sd">            in `model_dir`, evaluation is run with newly initialized `Variables`</span>
+<span class="sd">            instead of ones restored from checkpoint.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">          A dict containing the evaluation metrics specified in `model_fn` keyed by</span>
+<span class="sd">          name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">)</span> <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">eval_methods</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;All metrics should be string types&quot;</span><span class="p">)</span>
+        <span class="kn">from</span> <span class="nn">tensorflow_estimator.python.estimator.canned</span> <span class="kn">import</span> <span class="n">prediction_keys</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span><span class="o">.</span><span class="n">as_default</span><span class="p">()</span> <span class="k">as</span> <span class="n">g</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">_call_input_fn</span><span class="p">(</span><span class="n">input_fn</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">EVAL</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">TFDataset</span><span class="p">):</span>
+                <span class="n">spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_model_fn</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">feature_tensors</span><span class="p">,</span>
+                                           <span class="n">result</span><span class="o">.</span><span class="n">label_tensors</span><span class="p">,</span>
+                                           <span class="n">tf</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">EVAL</span><span class="p">,</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+                <span class="n">latest_checkpoint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">latest_checkpoint</span><span class="p">:</span>
+                    <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="n">latest_checkpoint</span>
+
+                <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">checkpoint_path</span><span class="p">:</span>
+                        <span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Saver</span><span class="p">()</span>
+                        <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">predictions</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="s2">&quot;mae&quot;</span> <span class="ow">in</span> <span class="n">eval_methods</span><span class="p">:</span>
+                            <span class="n">key</span> <span class="o">=</span> <span class="n">prediction_keys</span><span class="o">.</span><span class="n">PredictionKeys</span><span class="o">.</span><span class="n">PREDICTIONS</span>
+                            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is required for evaluating mse,&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> \
+                                  <span class="s2">&quot; please add it in your model_fn predictions&quot;</span>
+                            <span class="k">assert</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">spec</span><span class="o">.</span><span class="n">prediction</span><span class="p">,</span> <span class="n">msg</span>
+                            <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span>
+                                <span class="n">spec</span><span class="o">.</span><span class="n">predictions</span><span class="p">[</span><span class="n">prediction_keys</span><span class="o">.</span><span class="n">PredictionKeys</span><span class="o">.</span><span class="n">PREDICTIONS</span><span class="p">]]</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">key</span> <span class="o">=</span> <span class="n">prediction_keys</span><span class="o">.</span><span class="n">PredictionKeys</span><span class="o">.</span><span class="n">LOGITS</span>
+                            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is required in for evaluating,&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> \
+                                  <span class="s2">&quot; please add it in your model_fn predictions&quot;</span>
+                            <span class="k">assert</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">spec</span><span class="o">.</span><span class="n">predictions</span><span class="p">,</span> <span class="n">msg</span>
+                            <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span>
+                                <span class="n">spec</span><span class="o">.</span><span class="n">predictions</span><span class="p">[</span><span class="n">prediction_keys</span><span class="o">.</span><span class="n">PredictionKeys</span><span class="o">.</span><span class="n">LOGITS</span><span class="p">]]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">outputs</span> <span class="o">=</span> <span class="n">nest</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">predictions</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Evaluate on more than one output is not &quot;</span> <span class="o">+</span>
+                                            <span class="s2">&quot;supported now&quot;</span><span class="p">)</span>
+
+                    <span class="n">all_inputs</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">_original_tensors</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">all_inputs</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_inputs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                        <span class="n">targets</span> <span class="o">=</span> <span class="n">nest</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">all_inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">targets</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">return</span> <span class="n">evaluate_string_metrics</span><span class="p">(</span><span class="n">sess</span><span class="o">=</span><span class="n">sess</span><span class="p">,</span>
+                                                   <span class="n">string_metrics</span><span class="o">=</span><span class="n">eval_methods</span><span class="p">,</span>
+                                                   <span class="n">dataset</span><span class="o">=</span><span class="n">result</span><span class="p">,</span>
+                                                   <span class="n">inputs</span><span class="o">=</span><span class="n">nest</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">all_inputs</span><span class="p">),</span>
+                                                   <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">,</span>
+                                                   <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span>
+                                                   <span class="n">loss</span><span class="o">=</span><span class="n">spec</span><span class="o">.</span><span class="n">loss</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">input_fn</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="o">=</span><span class="n">checkpoint_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TFEstimator.predict"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.estimator.TFEstimator.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_fn</span><span class="p">,</span> <span class="n">predict_keys</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Outputs predictions for given features.</span>
+
+<span class="sd">        :param input_fn: A function that constructs the features.</span>
+<span class="sd">              * A `TFDataset` object, each elements of which is a tuple `(features, None)`.</span>
+<span class="sd">              * A `tf.data.Dataset` object: Outputs of `Dataset` object must have</span>
+<span class="sd">                same constraints as below.</span>
+<span class="sd">              * features: A `tf.Tensor` or a dictionary of string feature name to</span>
+<span class="sd">                `Tensor`. features are consumed by `model_fn`. They should satisfy</span>
+<span class="sd">                the expectation of `model_fn` from inputs.</span>
+<span class="sd">              * A tuple, in which case the first item is extracted as features.</span>
+
+<span class="sd">        :param checkpoint_path: Path of a specific checkpoint to predict. If `None`, the</span>
+<span class="sd">            latest checkpoint in `model_dir` is used.  If there are no checkpoints</span>
+<span class="sd">            in `model_dir`, prediction is run with newly initialized `Variables`</span>
+<span class="sd">            instead of ones restored from checkpoint.</span>
+
+
+<span class="sd">        Return:</span>
+<span class="sd">          Evaluated values of `predictions` tensors.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span><span class="o">.</span><span class="n">as_default</span><span class="p">()</span> <span class="k">as</span> <span class="n">g</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">_call_input_fn</span><span class="p">(</span><span class="n">input_fn</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">PREDICT</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">TFDataset</span><span class="p">):</span>
+                <span class="n">spec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_model_fn</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">feature_tensors</span><span class="p">,</span>
+                                           <span class="kc">None</span><span class="p">,</span>
+                                           <span class="n">tf</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">ModeKeys</span><span class="o">.</span><span class="n">PREDICT</span><span class="p">,</span>
+                                           <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+                <span class="n">latest_checkpoint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">latest_checkpoint</span><span class="p">:</span>
+                    <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="n">latest_checkpoint</span>
+
+                <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">checkpoint_path</span><span class="p">:</span>
+                        <span class="n">saver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Saver</span><span class="p">()</span>
+                        <span class="n">saver</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
+                    <span class="n">inputs</span> <span class="o">=</span> <span class="n">nest</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">_original_tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">predictions</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">predict_keys</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">spec</span><span class="o">.</span><span class="n">predictions</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">predict_keys</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">outputs</span> <span class="o">=</span> <span class="n">nest</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">predictions</span><span class="p">)</span>
+                    <span class="n">tfnet</span> <span class="o">=</span> <span class="n">TFNet</span><span class="o">.</span><span class="n">from_session</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
+                    <span class="n">predictions</span> <span class="o">=</span> <span class="n">tfnet</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">get_prediction_data</span><span class="p">(),</span> <span class="n">mini_batch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+                    <span class="c1"># If predictions is a dict, add back the keys and results is a dict as well.</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">predictions</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                        <span class="c1"># Given a list of outputs; return a dict of outputs.</span>
+                        <span class="k">def</span> <span class="nf">zip_key</span><span class="p">(</span><span class="n">outs</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">outs</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                                <span class="n">error_msg</span> <span class="o">=</span> <span class="s2">&quot;output length is &quot;</span> \
+                                    <span class="o">+</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> but keys length is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">outs</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">))</span>
+                                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">outs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">),</span> <span class="n">error_msg</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">outs</span> <span class="o">=</span> <span class="p">[</span><span class="n">outs</span><span class="p">]</span>
+                            <span class="n">res_dict</span> <span class="o">=</span> <span class="p">{}</span>
+                            <span class="k">for</span> <span class="n">out</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">outs</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
+                                <span class="n">res_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span>
+                            <span class="k">return</span> <span class="n">res_dict</span>
+
+                        <span class="n">pred_keys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">predictions</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">predict_keys</span> \
+                            <span class="k">else</span> <span class="n">predict_keys</span>
+                        <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">res</span><span class="p">:</span> <span class="n">zip_key</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">pred_keys</span><span class="p">))</span>
+                    <span class="k">return</span> <span class="n">predictions</span>
+
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">input_fn</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="o">=</span><span class="n">checkpoint_path</span><span class="p">))</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_to_bigdl_metric</span><span class="p">(</span><span class="n">metric</span><span class="p">):</span>
+        <span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;accuracy&quot;</span> <span class="ow">or</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;acc&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">metrics</span><span class="o">.</span><span class="n">Accuracy</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;top5accuracy&quot;</span> <span class="ow">or</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;top5acc&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">metrics</span><span class="o">.</span><span class="n">Top5Accuracy</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;mae&quot;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">bigdl.optim.optimizer</span> <span class="kn">import</span> <span class="n">MAE</span>
+            <span class="k">return</span> <span class="n">MAE</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;auc&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">metrics</span><span class="o">.</span><span class="n">AUC</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">metric</span> <span class="o">==</span> <span class="s2">&quot;treennaccuracy&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">TreeNNAccuracy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Unsupported metric: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">metric</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../tfpark.html" >zoo.tfpark</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>
