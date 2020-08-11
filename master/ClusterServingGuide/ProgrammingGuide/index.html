@@ -101,6 +101,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>
 <p><a href="#logs-and-visualization">Logs and Visualization</a></p>
 </li>
+<li>
+<p><a href="#cluster-serving-on-spark">Cluster Serving on Spark</a></p>
+</li>
 </ul>
 </li>
 </ul>
@@ -113,11 +116,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>A sample Python client program</li>
 </ul>
 <p>Use one command to run Cluster Serving container. (We provide quick start model in older version of docker image, for newest version, please refer to following sections and we remove the model to reduce the docker image size).</p>
-<pre><code>docker run -itd --name cluster-serving --net=host intelanalytics/zoo-cluster-serving:0.7.0
+<pre><code>docker run -itd --name cluster-serving --net=host intelanalytics/zoo-cluster-serving:0.9.0
 </code></pre>
 
-<p>Log into the container using <code>docker exec -it cluster-serving bash</code>. </p>
-<p>We already prepared <code>analytics-zoo</code> and <code>opencv-python</code> with pip in this container. And prepared model in <code>model</code> directory with following structure.</p>
+<p>Log into the container using <code>docker exec -it cluster-serving bash</code>.</p>
+<p>Increase the memory size <code>jobmanager.heap.size</code> and <code>taskmanager.memory.process.size</code> to 8g (recommended) in <code>$FLINK_HOME/conf/flink-conf.yaml</code>and use <code>$FLINK_HOME/bin/start-cluster.sh</code> to start the cluster.</p>
+<p>Go to Cluster Serving working directory by <code>cd cluster-serving</code>.</p>
+<p>You can see prepared TensorFlow frozen ResNet50 model in <code>resources/model</code> directory with following structure.</p>
 <pre><code>cluster-serving | 
                -- | model
                  -- frozen_graph.pb
@@ -125,7 +130,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </code></pre>
 
 <p>Start Cluster Serving using <code>cluster-serving-start</code>. </p>
-<p>Run python program <code>python quick_start.py</code> to push data into queue and get inference result. </p>
+<p>Run python program <code>python3 image_classification_and_object_detection_quick_start.py</code> to push data into queue and get inference result. </p>
 <p>Then you can see the inference output in console. </p>
 <pre><code>image: fish1.jpeg, classification-result:class: 5's prob: 0.18204997
 image: dog1.jpeg, classification-result:class: 267's prob: 0.27166227
@@ -134,7 +139,7 @@ image: cat1.jpeg, classification-result:class: 292's prob: 0.32633427
 
 <p>Wow! You made it!</p>
 <p>Note that the Cluster Serving quick start example will run on your local node only. Check the <a href="#deploy-your-own-cluster-serving">Deploy Your Own Cluster Serving</a> section for how to configure and run Cluster Serving in a distributed fashion.</p>
-<p>For more details, you could also see the log and performance by go to <code>localhost:6006</code> in your browser and refer to <a href="#logs-and-visualization">Logs and Visualization</a>, or view the source code of <code>quick_start.py</code> <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/serving/quick_start.py">here</a>, or refer to <a href="../APIGuide/">API Guide</a>.</p>
+<p>For more details, refer to following sections.</p>
 <h2 id="workflow-overview">Workflow Overview</h2>
 <p>The figure below illustrates the simple 3-step "Prepare-Launch-Inference" workflow for Cluster Serving.</p>
 <p><img alt="steps" src="../cluster_serving_steps.jpg" /></p>
@@ -158,7 +163,7 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 </code></pre>
 
 <p>then, (or directly run <code>docker run</code>, it will pull the image if it does not exist)</p>
-<pre><code>docker run --name cluster-serving --net=host -itd intelanalytics/zoo-cluster-serving:0.8.1 bash
+<pre><code>docker run --name cluster-serving --net=host -itd intelanalytics/zoo-cluster-serving:0.9.0 bash
 </code></pre>
 
 <p>Log into the container</p>
@@ -168,14 +173,13 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 <p><code>cd ./cluster-serving</code>, you can see all the environments are prepared.</p>
 <h5 id="yarn-user">Yarn user</h5>
 <p>For Yarn user using docker, you have to set additional config, thus you need to call following when starting the container</p>
-<pre><code>docker run --name cluster-serving --net=host -v /path/to/HADOOP_CONF_DIR:/opt/work/HADOOP_CONF_DIR -e HADOOP_CONF_DIR=/opt/work/HADOOP_CONF_DIR -itd intelanalytics/zoo-cluster-serving:0.8.1 bash
+<pre><code>docker run --name cluster-serving --net=host -v /path/to/HADOOP_CONF_DIR:/opt/work/HADOOP_CONF_DIR -e HADOOP_CONF_DIR=/opt/work/HADOOP_CONF_DIR -itd intelanalytics/zoo-cluster-serving:0.9.0 bash
 </code></pre>
 
 <h4 id="manual-installation">Manual installation</h4>
 <h5 id="requirements">Requirements</h5>
-<p>Non-Docker users need to install <a href="https://archive.apache.org/dist/flink/flink-1.10.0/">Flink</a>, 1.10.0 by default, for users choose Spark as backend, install <a href="https://archive.apache.org/dist/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz">Spark</a>, 2.4.3 by default, <a href="https://redis.io/topics/quickstart">Redis</a>, 0.5.0 by default and <a href="https://www.tensorflow.org/tensorboard/get_started">TensorBoard</a> if you choose Spark backend and need visualization.</p>
-<p>After preparing dependencies above, make sure the environment variable <code>$FLINK_HOME</code> (/path/to/flink-FLINK_VERSION-bin), or <code>$SPARK_HOME</code>(for Spark user only) (/path/to/spark-SPARK_VERSION-bin-hadoop-HADOOP_VERSION), <code>$REDIS_HOME</code>(/path/to/redis-REDIS_VERSION) is set before following steps. </p>
-<p>For Spark user only, use <code>pip install tensorboard</code> to install TensorBoard.</p>
+<p>Non-Docker users need to install <a href="https://archive.apache.org/dist/flink/flink-1.10.0/">Flink</a>, 1.10.0 by default, for users choose Spark as backend, , <a href="https://redis.io/topics/quickstart">Redis</a>, 0.5.0 by default and <a href="https://www.tensorflow.org/tensorboard/get_started">TensorBoard</a> if you choose Spark backend and need visualization.</p>
+<p>After preparing dependencies above, make sure the environment variable <code>$FLINK_HOME</code> (/path/to/flink-FLINK_VERSION-bin), <code>$REDIS_HOME</code>(/path/to/redis-REDIS_VERSION) is set before following steps. </p>
 <h5 id="install-cluster-serving-by-download-release">Install Cluster Serving by download release</h5>
 <p>For users who need to deploy and start Cluster Serving, download Cluster Serving zip from <a href="">here</a> and unzip it, then run <code>source cluster-serving-prepare.sh</code>. A demo <code>cluster-serving-demo.sh</code> is also prepared and users can run it to check if Cluster Serving could work.</p>
 <p>For users who need to do inference, aka. predict data only, download Analytics Zoo python zip from <a href="">here</a> and run <code>export PYTHONPATH=$PYTHONPATH:/path/to/zip</code> to add this zip to <code>PYTHONPATH</code> environment variable.</p>
@@ -194,39 +198,12 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 model:
   # model path must be set
   path: /opt/work/model
-  # the inputs of the tensorflow model, separated by &quot;,&quot;
-  inputs:
-  # the outputs of the tensorflow model, separated by &quot;,&quot;
-  outputs:
 data:
-  # default, localhost:6379
-  src:
-  # default, image (image &amp; tensor are supported)
-  data_type: 
-  # default, 3,224,224
-  image_shape:
-  # must be provided given data_type is tensor. eg: [1,2] (tensor) [[1],[2,1,2],[3]] (table)
-  tensor_shape: 
-  # default, topN(1)
-  filter:
+  # data input shape must be set
+  shape:  
 params:
   # default, 4
-  batch_size:
-  # default: OFF
-  performance_mode:
-spark:
-  # default, local[*], change this to spark://, yarn, k8s:// etc if you want to run on cluster
-  master: local[*]
-  # default, 4g
-  driver_memory:
-  # default, 1g
-  executor_memory:
-  # default, 1
-  num_executors:
-  # default, 4
-  executor_cores:
-  # default, 4
-  total_executor_cores:
+  core_num:  
 </code></pre>
 
 <h4 id="preparing-model">Preparing Model</h4>
@@ -284,42 +261,21 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
 <h4 id="other-configuration">Other Configuration</h4>
 <p>The field <code>params</code> contains your inference parameter configuration.</p>
 <ul>
-<li>core_number: the batch size you use for model inference, usually the core number of your machine is recommended. Thus you could just provide your machine core number at this field. We recommend this value to be not smaller than 4 and not larger than 512. In general, using larger batch size means higher throughput, but also increase the latency between batches accordingly.</li>
-<li>performance_mode: The performance mode will utilize your CPU resource to achieve better inference performance on a single node. <strong>Note:</strong> numactl and net-tools should be installed in your system, and spark master should be <code>local[*]</code> in the config.yaml file.</li>
+<li>core_number: the <strong>batch size</strong> you use for model inference, usually the core number of your machine is recommended. Thus you could just provide your machine core number at this field. We recommend this value to be not smaller than 4 and not larger than 512. In general, using larger batch size means higher throughput, but also increase the latency between batches accordingly.</li>
 </ul>
-<p>For Spark users only, the field <code>spark</code> contains your spark configuration.</p>
-<ul>
-<li>master: Your cluster address, same as parameter <code>master</code> in spark</li>
-<li>driver_memory: same as parameter <code>driver-memory</code> in spark</li>
-<li>executor_memory: same as parameter <code>executor-memory</code> in spark</li>
-<li>num_executors: same as parameter <code>num-executors</code> in spark</li>
-<li>executor_cores: same as paramter <code>executor-cores</code> in spark</li>
-<li>total_executor_cores: same as parameter <code>total-executor-cores</code> in spark</li>
-</ul>
-<p>For more details of these config, please refer to <a href="https://spark.apache.org/docs/latest/configuration.html">Spark Official Document</a></p>
 <h3 id="3-launching-service">3. Launching Service</h3>
-<h4 id="start-and-stop">Start and Stop</h4>
-<p>We provide following scripts to start, stop, restart Cluster Serving. </p>
-<h5 id="start">Start</h5>
+<p>This section is about how to start and stop Cluster Serving. </p>
+<h4 id="start">Start</h4>
 <p>You can use following command to start Cluster Serving.</p>
 <pre><code>cluster-serving-start
 </code></pre>
 
-<p>This command will start Redis and TensorBoard (for spark users only) if they are not running.</p>
-<p>If you want to pass config <code>config.yaml</code> manually, run <code>cluster-serving-start -c config_path</code>
-For spark users, if you choose spark streaming, run <code>cluster-serving-start --backend spark</code>.</p>
-<h5 id="stop">Stop</h5>
-<p>You can use following command to stop Cluster Serving. Data in Redis and TensorBoard service will persist.</p>
-<pre><code>cluster-serving-stop
-</code></pre>
-
-<h5 id="restart">Restart</h5>
-<p>You can use following command to restart Cluster Serving.</p>
-<pre><code>cluster-serving-restart
-</code></pre>
-
-<h5 id="shut-down">Shut Down</h5>
-<p>You can use following command to shutdown Cluster Serving. This operation will stop all running services related to Cluster Serving, specifically, Redis and TensorBoard. Note that your data in Redis will be removed when you shutdown. </p>
+<p>Use <code>cluster-serving-start -p 5</code> to start Cluster Serving with Flink parallelism 5.</p>
+<p>Use <code>cluster-serving-start -c config_path</code> to path config path <code>config_path</code> to Cluster Serving manually.</p>
+<h4 id="stop">Stop</h4>
+<p>You can use Flink UI in <code>localhost:8081</code> by default, to cancel your Cluster Serving job.</p>
+<h4 id="shut-down">Shut Down</h4>
+<p>You can use following command to shutdown Cluster Serving. This operation will stop all running services related to Cluster Serving. Note that your data in Redis will be removed when you shutdown. </p>
 <pre><code>cluster-serving-shutdown
 </code></pre>
 
@@ -420,8 +376,7 @@ print(response.text)
 </code></pre>
 
 <p>example of <code>request_json_string</code> is</p>
-<pre><code>
-'{
+<pre><code>'{
   &quot;instances&quot; : [ {
     &quot;ids&quot; : [ 100.0, 88.0 ]
   }]
@@ -449,16 +404,7 @@ In case of error, all APIs will return a JSON object in the response body with e
   &quot;instances&quot;: [
     {
       &quot;image&quot;: &quot;/9j/4AAQSkZJRgABAQEASABIAAD/7RcEUGhvdG9za...&quot;
-    },
-    {
-      &quot;image&quot;: &quot;/9j/4AAQSkZJRgABAQEASABIAAD/7RcEUGhvdG9za...&quot;
-    },
-    {
-      &quot;image&quot;: &quot;/9j/4AAQSkZJRgABAQEASABIAAD/7RcEUGhvdG9za...&quot;
-    },
-    {
-      &quot;image&quot;: &quot;/9j/4AAQSkZJRgABAQEASABIAAD/7RcEUGhvdG9za...&quot;
-    },
+    },   
     {
       &quot;image&quot;: &quot;/9j/4AAQSkZJRgABAQEASABIAAD/7RcEUGhvdG9za...&quot;
     }
@@ -470,10 +416,7 @@ In case of error, all APIs will return a JSON object in the response body with e
 <p>Response Example</p>
 <pre><code>{
   &quot;predictions&quot;: [
-    &quot;{value=[[903,0.1306194]]}&quot;,
-    &quot;{value=[[903,0.1306194]]}&quot;,
-    &quot;{value=[[903,0.1306194]]}&quot;,
-    &quot;{value=[[903,0.1306194]]}&quot;,
+    &quot;{value=[[903,0.1306194]]}&quot;,    
     &quot;{value=[[903,0.1306194]]}&quot;
   ]
 }
@@ -486,12 +429,6 @@ In case of error, all APIs will return a JSON object in the response body with e
     &quot;ids&quot; : [ 100.0, 88.0 ]
   }, {
     &quot;ids&quot; : [ 100.0, 88.0 ]
-  }, {
-    &quot;ids&quot; : [ 100.0, 88.0 ]
-  }, {
-    &quot;ids&quot; : [ 100.0, 88.0 ]
-  }, {
-    &quot;ids&quot; : [ 100.0, 88.0 ]
   } ]
 }' \
 -X POST http://host:port/predict
@@ -500,9 +437,6 @@ In case of error, all APIs will return a JSON object in the response body with e
 <p>Response Example</p>
 <pre><code>{
   &quot;predictions&quot;: [
-    &quot;{value=[[1,0.6427843]]}&quot;,
-    &quot;{value=[[1,0.6427843]]}&quot;,
-    &quot;{value=[[1,0.6427843]]}&quot;,
     &quot;{value=[[1,0.6427843]]}&quot;,
     &quot;{value=[[1,0.6427842]]}&quot;
   ]
@@ -522,17 +456,7 @@ In case of error, all APIs will return a JSON object in the response body with e
     &quot;intTensor2&quot; : [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ],
     &quot;floatTensor2&quot; : [ [ [ 0.2, 0.3 ], [ 0.5, 0.6 ] ], [ [ 0.2, 0.3 ], [ 0.5, 0.6 ] ] ],
     &quot;stringTensor2&quot; : [ [ [ [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ] ], [ [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ] ] ], [ [ [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ] ], [ [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ] ] ] ]
-  }, {
-    &quot;intScalar&quot; : 12345,
-    &quot;floatScalar&quot; : 3.14159,
-    &quot;stringScalar&quot; : &quot;hello, world. hello, arrow.&quot;,
-    &quot;intTensor&quot; : [ 7756, 9549, 1094, 9808, 4959, 3831, 3926, 6578, 1870, 1741 ],
-    &quot;floatTensor&quot; : [ 0.6804766, 0.30136853, 0.17394465, 0.44770062, 0.20275897, 0.32762378, 0.45966738, 0.30405098, 0.62053126, 0.7037923 ],
-    &quot;stringTensor&quot; : [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ],
-    &quot;intTensor2&quot; : [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ],
-    &quot;floatTensor2&quot; : [ [ [ 0.2, 0.3 ], [ 0.5, 0.6 ] ], [ [ 0.2, 0.3 ], [ 0.5, 0.6 ] ] ],
-    &quot;stringTensor2&quot; : [ [ [ [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ] ], [ [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ] ] ], [ [ [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ] ], [ [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ] ] ] ]
-  } ]
+  }]
 }' \
 -X POST http://host:port/predict
 </code></pre>
@@ -547,14 +471,7 @@ In case of error, all APIs will return a JSON object in the response body with e
       &quot;indices&quot; : [ [ 1, 1, 1 ], [ 2, 2, 2 ], [ 3, 3, 3 ], [ 4, 4, 4 ] ]
     },
     &quot;intTensor2&quot; : [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]
-  }, {
-    &quot;sparseTensor&quot; : {
-      &quot;shape&quot; : [ 100, 10000, 10 ],
-      &quot;data&quot; : [ 0.2, 0.5, 3.45, 6.78 ],
-      &quot;indices&quot; : [ [ 1, 1, 1 ], [ 2, 2, 2 ], [ 3, 3, 3 ], [ 4, 4, 4 ] ]
-    },
-    &quot;intTensor2&quot; : [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]
-  } ]
+  }]
 }' \
 -X POST http://host:port/predict
 </code></pre>
@@ -580,81 +497,6 @@ In case of error, all APIs will return a JSON object in the response body with e
     _98thPercentile: 1.268665,
     _99thPercentile: 1.608387,
     _999thPercentile: 25.874584
-  },
-  {
-    name: &quot;zoo.serving.redis.put&quot;,
-    count: 192,
-    meanRate: 2.9928448518681816,
-    min: 4,
-    max: 207,
-    mean: 8.470988823179553,
-    median: 6.909573,
-    stdDev: 13.269285415774808,
-    _75thPercentile: 8.262833,
-    _95thPercentile: 14.828704,
-    _98thPercentile: 18.860232,
-    _99thPercentile: 19.825203,
-    _999thPercentile: 207.541874
-  },
-  {
-    name: &quot;zoo.serving.redis.wait&quot;,
-    count: 192,
-    meanRate: 2.992786169232195,
-    min: 82,
-    max: 773,
-    mean: 93.03099107296806,
-    median: 88.952799,
-    stdDev: 45.54085374821418,
-    _75thPercentile: 91.893393,
-    _95thPercentile: 118.370628,
-    _98thPercentile: 119.941905,
-    _99thPercentile: 121.158649,
-    _999thPercentile: 773.497556
-  },
-  {
-    name: &quot;zoo.serving.request.metrics&quot;,
-    count: 1,
-    meanRate: 0.015586927261874562,
-    min: 18,
-    max: 18,
-    mean: 18.232472,
-    median: 18.232472,
-    stdDev: 0,
-    _75thPercentile: 18.232472,
-    _95thPercentile: 18.232472,
-    _98thPercentile: 18.232472,
-    _99thPercentile: 18.232472,
-    _999thPercentile: 18.232472
-  },
-  {
-    name: &quot;zoo.serving.request.overall&quot;,
-    count: 385,
-    meanRate: 6.000929977336221,
-    min: 18,
-    max: 894,
-    mean: 94.5795886310155,
-    median: 89.946348,
-    stdDev: 49.63620144068503,
-    _75thPercentile: 93.851032,
-    _95thPercentile: 121.148026,
-    _98thPercentile: 123.118267,
-    _99thPercentile: 124.053326,
-    _999thPercentile: 894.004612
-  },
-  {
-    name: &quot;zoo.serving.request.predict&quot;,
-    count: 192,
-    meanRate: 2.9925722215434205,
-    min: 85,
-    max: 894,
-    mean: 96.63308151066575,
-    median: 92.323305,
-    stdDev: 53.17110030594844,
-    _75thPercentile: 94.839714,
-    _95thPercentile: 122.564496,
-    _98thPercentile: 123.974892,
-    _99thPercentile: 125.636335,
-    _999thPercentile: 894.062819
   }
 ]
 </code></pre>
@@ -664,13 +506,56 @@ In case of error, all APIs will return a JSON object in the response body with e
 <p>To update your model, you could replace your model file in your model directory, and restart Cluster Serving by <code>cluster-serving-restart</code>. Note that you could also change your configurations in <code>config.yaml</code> and restart serving.</p>
 <h3 id="logs-and-visualization">Logs and Visualization</h3>
 <h4 id="logs">Logs</h4>
-<p>We use log to save Cluster Serving information and error. To see log, please refer to <code>cluster-serving.log</code>.</p>
+<p>To see log, please refer to Flink UI <code>localhost:8081</code> by default.</p>
 <h4 id="visualization">Visualization</h4>
 <p>To visualize Cluster Serving performance, go to your flink job UI, default <code>localhost:8081</code>, and go to Cluster Serving job -&gt; metrics. Add <code>numRecordsOut</code> to see total record number and <code>numRecordsOutPerSecond</code> to see throughput.</p>
 <p>See example of visualization:</p>
 <p><img alt="Example Chart" src="../serving-visualization.png" /></p>
-<h5 id="spark-streaming-visualization">Spark Streaming Visualization</h5>
-<p>TensorBoard is integrated into Spark Streaming Cluster Serving. TensorBoard service is started with Cluster Serving. Once your serving starts, you can go to <code>localhost:6006</code> to see visualization of your serving.</p>
+<h3 id="cluster-serving-on-spark">Cluster Serving on Spark</h3>
+<p>For users who are more familiar to Spark and choose Spark as backend, install <a href="https://archive.apache.org/dist/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz">Spark</a>, 2.4.3 by default. And instead of setting <code>$FLINK_HOME</code> environment variable, set <code>$SPARK_HOME</code> (/path/to/spark-SPARK_VERSION-bin-hadoop-HADOOP_VERSION)</p>
+<p>Use <code>pip install tensorboard</code> to install TensorBoard if visualization is needed.</p>
+<p>Cluster Serving could be start by</p>
+<pre><code>cluster-serving-start -e spark
+# or also
+cluster-serving-start --backend spark
+</code></pre>
+
+<h4 id="extra-config">Extra config</h4>
+<p>Users could set extra config valid in Cluster Serving on Spark in config file <code>config.yaml</code>.</p>
+<pre><code>param:
+  # default: OFF
+  performance_mode:
+spark:
+  # default, local[*], change this to spark://, yarn, k8s:// etc if you want to run on cluster
+  master: local[*]
+  # default, 4g
+  driver_memory:
+  # default, 1g
+  executor_memory:
+  # default, 1
+  num_executors:
+  # default, 4
+  executor_cores:
+  # default, 4
+  total_executor_cores:
+</code></pre>
+
+<h5 id="param">param</h5>
+<ul>
+<li>performance_mode: The performance mode will utilize your CPU resource to achieve better inference performance on a single node. <strong>Note:</strong> numactl and net-tools should be installed in your system, and spark master should be <code>local[*]</code> in the config.yaml file.</li>
+</ul>
+<h5 id="spark">spark</h5>
+<ul>
+<li>master: Your cluster address, same as parameter <code>master</code> in spark</li>
+<li>driver_memory: same as parameter <code>driver-memory</code> in spark</li>
+<li>executor_memory: same as parameter <code>executor-memory</code> in spark</li>
+<li>num_executors: same as parameter <code>num-executors</code> in spark</li>
+<li>executor_cores: same as paramter <code>executor-cores</code> in spark</li>
+<li>total_executor_cores: same as parameter <code>total-executor-cores</code> in spark</li>
+</ul>
+<p>For more details of these config, please refer to <a href="https://spark.apache.org/docs/latest/configuration.html">Spark Official Document</a></p>
+<h4 id="visualization_1">Visualization</h4>
+<p>TensorBoard is integrated into Cluster Serving on Spark. TensorBoard service is started with Cluster Serving. Once your serving starts, you can go to <code>localhost:6006</code> to see visualization of your serving.</p>
 <p>Analytics Zoo Cluster Serving provides 2 attributes in Tensorboard so far, <code>Serving Throughput</code> and <code>Total Records Number</code>.</p>
 <ul>
 <li>
