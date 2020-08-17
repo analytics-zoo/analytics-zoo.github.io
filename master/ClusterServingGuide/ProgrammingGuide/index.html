@@ -116,7 +116,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>A sample Python client program</li>
 </ul>
 <p>Use one command to run Cluster Serving container. (We provide quick start model in older version of docker image, for newest version, please refer to following sections and we remove the model to reduce the docker image size).</p>
-<pre><code>docker run -itd --name cluster-serving --net=host intelanalytics/zoo-cluster-serving:0.9.0
+<pre><code>docker run --name cluster-serving -itd --net=host intelanalytics/zoo-cluster-serving:0.9.0
 </code></pre>
 
 <p>Log into the container using <code>docker exec -it cluster-serving bash</code>, go to Cluster Serving working directory by <code>cd cluster-serving</code>.</p>
@@ -168,7 +168,7 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 </code></pre>
 
 <p>then, (or directly run <code>docker run</code>, it will pull the image if it does not exist)</p>
-<pre><code>docker run --name cluster-serving --net=host -itd intelanalytics/zoo-cluster-serving:0.9.0 bash
+<pre><code>docker run --name cluster-serving -itd --net=host intelanalytics/zoo-cluster-serving:0.9.0
 </code></pre>
 
 <p>Log into the container</p>
@@ -178,7 +178,7 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 <p><code>cd ./cluster-serving</code>, you can see all the environments are prepared.</p>
 <h5 id="yarn-user">Yarn user</h5>
 <p>For Yarn user using docker, you have to set additional config, thus you need to call following when starting the container</p>
-<pre><code>docker run --name cluster-serving --net=host -v /path/to/HADOOP_CONF_DIR:/opt/work/HADOOP_CONF_DIR -e HADOOP_CONF_DIR=/opt/work/HADOOP_CONF_DIR -itd intelanalytics/zoo-cluster-serving:0.9.0 bash
+<pre><code>docker run --name cluster-serving --net=host -v /path/to/HADOOP_CONF_DIR:/opt/work/HADOOP_CONF_DIR -e HADOOP_CONF_DIR=/opt/work/HADOOP_CONF_DIR -itd intelanalytics/zoo-cluster-serving:0.9.0
 </code></pre>
 
 <h4 id="manual-installation">Manual installation</h4>
@@ -186,11 +186,11 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 <p>Non-Docker users need to install <a href="https://archive.apache.org/dist/flink/flink-1.10.0/">Flink</a>, 1.10.0 by default, for users choose Spark as backend, , <a href="https://redis.io/topics/quickstart">Redis</a>, 0.5.0 by default and <a href="https://www.tensorflow.org/tensorboard/get_started">TensorBoard</a> if you choose Spark backend and need visualization.</p>
 <p>After preparing dependencies above, make sure the environment variable <code>$FLINK_HOME</code> (/path/to/flink-FLINK_VERSION-bin), <code>$REDIS_HOME</code>(/path/to/redis-REDIS_VERSION) is set before following steps. </p>
 <h5 id="install-cluster-serving-by-download-release">Install Cluster Serving by download release</h5>
-<p>For users who need to deploy and start Cluster Serving, download Cluster Serving zip from <a href="">here</a> and unzip it, then run <code>source cluster-serving-prepare.sh</code>. A demo <code>cluster-serving-demo.sh</code> is also prepared and users can run it to check if Cluster Serving could work.</p>
-<p>For users who need to do inference, aka. predict data only, download Analytics Zoo python zip from <a href="">here</a> and run <code>export PYTHONPATH=$PYTHONPATH:/path/to/zip</code> to add this zip to <code>PYTHONPATH</code> environment variable.</p>
+<p>For users who need to deploy and start Cluster Serving, download Cluster Serving zip <code>analytics-zoo-xxx-cluster-serving-all.zip</code> from <a href="https://oss.sonatype.org/content/repositories/snapshots/com/intel/analytics/zoo/analytics-zoo-bigdl_0.10.0-spark_2.4.3/0.9.0-SNAPSHOT/">here</a> and unzip it, then run <code>source cluster-serving-prepare.sh</code>. A demo <code>cluster-serving-demo.sh</code> is also prepared and users can run it to check if Cluster Serving could work.</p>
+<p>For users who need to do inference, aka. predict data only, download Analytics Zoo python zip <code>analytics-zoo-xxx-cluster-serving-python.zip</code> from <a href="https://oss.sonatype.org/content/repositories/snapshots/com/intel/analytics/zoo/analytics-zoo-bigdl_0.10.0-spark_2.4.3/0.9.0-SNAPSHOT/">here</a> and run <code>export PYTHONPATH=$PYTHONPATH:/path/to/zip</code> to add this zip to <code>PYTHONPATH</code> environment variable.</p>
 <h5 id="install-cluster-serving-by-pip">Install Cluster Serving by pip</h5>
-<p>Download package from <a href="">here</a>, run following command to install Cluster Serving</p>
-<pre><code>pip install *.whl
+<p>Download package from <a href="https://sourceforge.net/projects/analytics-zoo/files/cluster-serving-py/">here</a>, run following command to install Cluster Serving</p>
+<pre><code>pip install analytics_zoo_serving-*.whl
 </code></pre>
 
 <p>For users who need to deploy and start Cluster Serving, run <code>cluster-serving-init</code> to download and prepare dependencies.</p>
