@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>OrcaContext - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>OrcaContext</strong></h1>
+    <hr>
+    <p>We support users to make configurations when using the functionalities of <a href="../overview/">Project Orca</a> via <code>OrcaContext</code>.</p>
+<p>Import OrcaContext using <code>from from zoo.orca import OrcaContext</code> and then you can choose to modify the following options:</p>
+<ul>
+<li>log_output</li>
+</ul>
+<pre><code class="python">OrcaContext.log_output = False
+OrcaContext.log_output = True
+</code></pre>
+
+<p>Whether to redirect Spark driver JVM's stdout and stderr to the current python process. 
+This is useful when running Analytics Zoo in jupyter notebook.
+Default to be False. Needs to be set before initializing SparkContext.</p>
+<ul>
+<li>pandas_read_backend</li>
+</ul>
+<pre><code class="python">OrcaContext.pandas_read_backend = &quot;spark&quot;
+OrcaContext.pandas_read_backend = &quot;pandas&quot;
+</code></pre>
+
+<p>The backend for reading csv/json files. Either "spark" or "pandas". 
+"spark" backend would call <code>spark.read</code> and "pandas" backend would call <code>pandas.read</code>. 
+Default to be "spark".</p>
+<ul>
+<li>serialize_data_creation</li>
+</ul>
+<pre><code class="python">OrcaContext.serialize_data_creation = False
+OrcaContext.serialize_data_creation = True
+</code></pre>
+
+<p>Whether add a file lock to the data loading process for PyTorch Horovod training. 
+This would be useful when you run multiple workers on a single node to download data to the same destination. 
+Default to be False.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
