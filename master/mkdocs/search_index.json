@@ -1171,46 +1171,6 @@
             "title": "Examples"
         },
         {
-            "location": "/ProgrammingGuide/orca-data/",
-            "text": "Introduction\n\n\nAnalytics Zoo orca data provides data-parallel pre-processing support for AI.\n\n\nIt supports data pre-processing from different data sources, like TensorFlow DataSet, PyTorch DataLoader, MXNet DataLoader, etc. and it supports different data format, like Pandas DataFrame, Numpy, Images, Parquet.\n\n\nThe backend distributed preprocessing engine can be \nSpark\n or \nRay\n.\n\n\nIn current version, orca data API only supports parallel pre-processing with Pandas DataFrame on Ray.\n\n\n\n\nXShards\n\n\nXShards is a collection of data in orca data API. In current version, the element in XShards is a Pandas DataFrame.\n\n\nXShards with Pandas DataFrame\n\n\nRead data into XShards\n\n\nYou can read csv/json files/directory into XShards with such APIs:\n\n\nzoo.orca.data.pandas.read_csv(file_path, context)\n\nzoo.orca.data.pandas.read_json(file_path, context)\n\n\n\n\n\n\nThe \nfile_path\n could be a csv/json file, multiple csv/json file paths seperated with comma, a directory containing csv/json files. Supported file systems are local file system,\nhdfs\n, and \ns3\n.\n\n\ncontext\n is a Ray context.\n\n\n\n\nAfter calling these APIs, you would get a XShards of Pandas DataFrame.\n\n\nPre-processing on XShards\n\n\nYou can do pre-processing with your customized function on XShards using below API:\n\n\ntransform_shard(func, *args)\n\n\n\n\n\n\nfunc\n is your pre-processing function. In this function, you can do the pre-processing on a Pandas DataFrame, then return the processed object. \n\n\nargs\n are the augurments for the pre-processing function.\n\n\n\n\nThis method would parallelly pre-process each element in the XShards with the customized function, and return a new XShards after transformation.\n\n\nSharedValue\n\n\nSharedValue can be used to give every node a copy of a large input dataset in an efficient manner.\nThis is an example of using SharedValue:\n\n\ndef func(df, item_set)\n   item_set = item_set.value\n   ....\n\nitem_set= ...\nitem_set= orca.data.SharedValue(item_set)\nfull_data.transform_shard(func, item_set)\n\n\n\n\nGet all the elements in XShards\n\n\nYou can get all of elements in XShards with such API:\n\n\ncollect()\n\n\n\n\nThis method returns a list that contains all of the elements in this XShards.\n\n\nTo get the more examples on orca data API, you can refert to \nExample",
-            "title": "Orca Data"
-        },
-        {
-            "location": "/ProgrammingGuide/orca-data/#introduction",
-            "text": "Analytics Zoo orca data provides data-parallel pre-processing support for AI.  It supports data pre-processing from different data sources, like TensorFlow DataSet, PyTorch DataLoader, MXNet DataLoader, etc. and it supports different data format, like Pandas DataFrame, Numpy, Images, Parquet.  The backend distributed preprocessing engine can be  Spark  or  Ray .  In current version, orca data API only supports parallel pre-processing with Pandas DataFrame on Ray.",
-            "title": "Introduction"
-        },
-        {
-            "location": "/ProgrammingGuide/orca-data/#xshards",
-            "text": "XShards is a collection of data in orca data API. In current version, the element in XShards is a Pandas DataFrame.",
-            "title": "XShards"
-        },
-        {
-            "location": "/ProgrammingGuide/orca-data/#xshards-with-pandas-dataframe",
-            "text": "",
-            "title": "XShards with Pandas DataFrame"
-        },
-        {
-            "location": "/ProgrammingGuide/orca-data/#read-data-into-xshards",
-            "text": "You can read csv/json files/directory into XShards with such APIs:  zoo.orca.data.pandas.read_csv(file_path, context)\n\nzoo.orca.data.pandas.read_json(file_path, context)   The  file_path  could be a csv/json file, multiple csv/json file paths seperated with comma, a directory containing csv/json files. Supported file systems are local file system, hdfs , and  s3 .  context  is a Ray context.   After calling these APIs, you would get a XShards of Pandas DataFrame.",
-            "title": "Read data into XShards"
-        },
-        {
-            "location": "/ProgrammingGuide/orca-data/#pre-processing-on-xshards",
-            "text": "You can do pre-processing with your customized function on XShards using below API:  transform_shard(func, *args)   func  is your pre-processing function. In this function, you can do the pre-processing on a Pandas DataFrame, then return the processed object.   args  are the augurments for the pre-processing function.   This method would parallelly pre-process each element in the XShards with the customized function, and return a new XShards after transformation.",
-            "title": "Pre-processing on XShards"
-        },
-        {
-            "location": "/ProgrammingGuide/orca-data/#sharedvalue",
-            "text": "SharedValue can be used to give every node a copy of a large input dataset in an efficient manner.\nThis is an example of using SharedValue:  def func(df, item_set)\n   item_set = item_set.value\n   ....\n\nitem_set= ...\nitem_set= orca.data.SharedValue(item_set)\nfull_data.transform_shard(func, item_set)",
-            "title": "SharedValue"
-        },
-        {
-            "location": "/ProgrammingGuide/orca-data/#get-all-the-elements-in-xshards",
-            "text": "You can get all of elements in XShards with such API:  collect()  This method returns a list that contains all of the elements in this XShards.  To get the more examples on orca data API, you can refert to  Example",
-            "title": "Get all the elements in XShards"
-        },
-        {
             "location": "/ProgrammingGuide/object-detection/",
             "text": "Analytics Zoo provides a collection of pre-trained models for Object Detection. These models can be used for out-of-the-box inference if you are interested in categories already in the corresponding datasets. According to the business scenarios, users can embed the models locally, distributedly in Apache Spark, Apache Storm or Apache Flink.\n\n\nObject Detection examples\n\n\nAnalytics Zoo provides two typical kind of pre-trained Object Detection models : \nSSD\n and \nFaster-RCNN\n on dataset \nPASCAL\n and \nCOCO\n. For the usage of these models, please check below examples.\n\n\nScala\n\n\nScala example\n\n\nIt's very easy to apply the model for inference with below code piece.\n\n\nval model = ObjectDetector.load[Float](params.model)\nval data = ImageSet.read(params.image, sc, params.nPartition)\nval output = model.predictImageSet(data)\n\n\n\n\nFor preprocessors for Object Detection models, please check \nObject Detection Config\n\n\nNote: We expect the loaded images has 3 channels. If the channel is not 3(eg, gray/png images), please set \nimageCodec\n when loading images \nImageSet.read\n. See https://analytics-zoo.github.io/0.1.0/#ProgrammingGuide/object-detection/#object-detection-examples\n\n\nUsers can also do the inference directly using Analytics zoo.\nSample code for SSD VGG on PASCAL as below:\n\n\nval model = ObjectDetector.load[Float](params.model)\nval data = ImageSet.read(params.image, sc, params.nPartition)\nval preprocessor = Resize(300, 300) ->\n                         ChannelNormalize(123f, 117f, 104f, 1f, 1f, 1f) ->\n                         MatToTensor() -> ImageFrameToSample()\nval output = model.predictImageset(data)\n\n\n\n\nPython\n\n\nPython example\n\n\nIt's very easy to apply the model for inference with below code piece.\n\n\nmodel = ObjectDetector.load_model(model_path)\nimage_set = ImageSet.read(img_path, sc)\noutput = model.predict_image_set(image_set)\n\n\n\n\nUser can also define his own configuration to do the inference with below code piece.\n\n\nmodel = ObjectDetector.load_model(model_path)\nimage_set = ImageSet.read(img_path, sc)\npreprocessing = ChainedPreprocessing(\n                [ImageResize(256, 256), ImageCenterCrop(224, 224),\n                ImageChannelNormalize(123.0, 117.0, 104.0), ImageMatToTensor(),\n                ImageSetToSample()])\nconfig = ImageConfigure(preprocessing)\noutput = model.predict_image_set(image_set)\n\n\n\n\nFor preprocessors for Object Detection models, please check \nObject Detection Config\n\n\nDownload link\n\n\nPASCAL VOC models\n\n\n\n\nSSD 300x300 MobileNet\n\n\nSSD 300x300 VGG\n\n\nSSD 300x300 VGG Quantize\n\n\nSSD 512x512 VGG\n\n\nSSD 512x512 VGG Quantize\n\n\nFaster-RCNN VGG\n\n\nFaster-RCNN VGG Compress\n\n\nFaster-RCNN VGG Compress Quantize\n\n\nFaster-RCNN PvaNet\n\n\nFaster-RCNN PvaNet Compress\n\n\nFaster-RCNN PvaNet Compress Quantize\n\n\n\n\nCOCO models\n\n\n\n\nSSD 300x300 VGG\n\n\nSSD 300x300 VGG Quantize\n\n\nSSD 512x512 VGG\n\n\nSSD 512x512 VGG Quantize",
             "title": "Object Detection API"
@@ -3764,6 +3724,46 @@
             "location": "/Zouwu/API/TSPipeline/#arguments_4",
             "text": "pipeline_file : the pipeline file",
             "title": "Arguments"
+        },
+        {
+            "location": "/Orca/data/",
+            "text": "Introduction\n\n\nAnalytics Zoo orca data provides data-parallel pre-processing support for AI.\n\n\nIt supports data pre-processing from different data sources, like TensorFlow DataSet, PyTorch DataLoader, MXNet DataLoader, etc. and it supports different data format, like Pandas DataFrame, Numpy, Images, Parquet.\n\n\nThe backend distributed preprocessing engine can be \nSpark\n or \nRay\n.\n\n\nIn current version, orca data API only supports parallel pre-processing with Pandas DataFrame on Ray.\n\n\n\n\nXShards\n\n\nXShards is a collection of data in orca data API. In current version, the element in XShards is a Pandas DataFrame.\n\n\nXShards with Pandas DataFrame\n\n\nRead data into XShards\n\n\nYou can read csv/json files/directory into XShards with such APIs:\n\n\nzoo.orca.data.pandas.read_csv(file_path, context)\n\nzoo.orca.data.pandas.read_json(file_path, context)\n\n\n\n\n\n\nThe \nfile_path\n could be a csv/json file, multiple csv/json file paths seperated with comma, a directory containing csv/json files. Supported file systems are local file system,\nhdfs\n, and \ns3\n.\n\n\ncontext\n is a Ray context.\n\n\n\n\nAfter calling these APIs, you would get a XShards of Pandas DataFrame.\n\n\nPre-processing on XShards\n\n\nYou can do pre-processing with your customized function on XShards using below API:\n\n\ntransform_shard(func, *args)\n\n\n\n\n\n\nfunc\n is your pre-processing function. In this function, you can do the pre-processing on a Pandas DataFrame, then return the processed object. \n\n\nargs\n are the augurments for the pre-processing function.\n\n\n\n\nThis method would parallelly pre-process each element in the XShards with the customized function, and return a new XShards after transformation.\n\n\nSharedValue\n\n\nSharedValue can be used to give every node a copy of a large input dataset in an efficient manner.\nThis is an example of using SharedValue:\n\n\ndef func(df, item_set)\n   item_set = item_set.value\n   ....\n\nitem_set= ...\nitem_set= orca.data.SharedValue(item_set)\nfull_data.transform_shard(func, item_set)\n\n\n\n\nGet all the elements in XShards\n\n\nYou can get all of elements in XShards with such API:\n\n\ncollect()\n\n\n\n\nThis method returns a list that contains all of the elements in this XShards.\n\n\nTo get the more examples on orca data API, you can refert to \nExample",
+            "title": "Data"
+        },
+        {
+            "location": "/Orca/data/#introduction",
+            "text": "Analytics Zoo orca data provides data-parallel pre-processing support for AI.  It supports data pre-processing from different data sources, like TensorFlow DataSet, PyTorch DataLoader, MXNet DataLoader, etc. and it supports different data format, like Pandas DataFrame, Numpy, Images, Parquet.  The backend distributed preprocessing engine can be  Spark  or  Ray .  In current version, orca data API only supports parallel pre-processing with Pandas DataFrame on Ray.",
+            "title": "Introduction"
+        },
+        {
+            "location": "/Orca/data/#xshards",
+            "text": "XShards is a collection of data in orca data API. In current version, the element in XShards is a Pandas DataFrame.",
+            "title": "XShards"
+        },
+        {
+            "location": "/Orca/data/#xshards-with-pandas-dataframe",
+            "text": "",
+            "title": "XShards with Pandas DataFrame"
+        },
+        {
+            "location": "/Orca/data/#read-data-into-xshards",
+            "text": "You can read csv/json files/directory into XShards with such APIs:  zoo.orca.data.pandas.read_csv(file_path, context)\n\nzoo.orca.data.pandas.read_json(file_path, context)   The  file_path  could be a csv/json file, multiple csv/json file paths seperated with comma, a directory containing csv/json files. Supported file systems are local file system, hdfs , and  s3 .  context  is a Ray context.   After calling these APIs, you would get a XShards of Pandas DataFrame.",
+            "title": "Read data into XShards"
+        },
+        {
+            "location": "/Orca/data/#pre-processing-on-xshards",
+            "text": "You can do pre-processing with your customized function on XShards using below API:  transform_shard(func, *args)   func  is your pre-processing function. In this function, you can do the pre-processing on a Pandas DataFrame, then return the processed object.   args  are the augurments for the pre-processing function.   This method would parallelly pre-process each element in the XShards with the customized function, and return a new XShards after transformation.",
+            "title": "Pre-processing on XShards"
+        },
+        {
+            "location": "/Orca/data/#sharedvalue",
+            "text": "SharedValue can be used to give every node a copy of a large input dataset in an efficient manner.\nThis is an example of using SharedValue:  def func(df, item_set)\n   item_set = item_set.value\n   ....\n\nitem_set= ...\nitem_set= orca.data.SharedValue(item_set)\nfull_data.transform_shard(func, item_set)",
+            "title": "SharedValue"
+        },
+        {
+            "location": "/Orca/data/#get-all-the-elements-in-xshards",
+            "text": "You can get all of elements in XShards with such API:  collect()  This method returns a list that contains all of the elements in this XShards.  To get the more examples on orca data API, you can refert to  Example",
+            "title": "Get all the elements in XShards"
         },
         {
             "location": "/powered-by/",

@@ -28,10 +28,12 @@
         </head>
         <body class="type">
       <div id="definition">
-        <img alt="Class" src="../../../../../../lib/class_big.png" />
+        <a href="ClusterServingHelper$.html" title="See companion object"><img alt="Class/Object" src="../../../../../../lib/class_to_object_big.png" /></a>
         <p id="owner"><a href="../../../../../package.html" class="extype" name="com">com</a>.<a href="../../../../package.html" class="extype" name="com.intel">intel</a>.<a href="../../../package.html" class="extype" name="com.intel.analytics">analytics</a>.<a href="../../package.html" class="extype" name="com.intel.analytics.zoo">zoo</a>.<a href="../package.html" class="extype" name="com.intel.analytics.zoo.serving">serving</a>.<a href="package.html" class="extype" name="com.intel.analytics.zoo.serving.utils">utils</a></p>
-        <h1>ClusterServingHelper</h1><h3><span class="morelinks"><div>Related Doc:
-            <a href="package.html" class="extype" name="com.intel.analytics.zoo.serving.utils">package utils</a>
+        <h1><a href="ClusterServingHelper$.html" title="See companion object">ClusterServingHelper</a></h1><h3><span class="morelinks"><div>
+            Related Docs:
+            <a href="ClusterServingHelper$.html" title="See companion object">object ClusterServingHelper</a>
+            | <a href="package.html" class="extype" name="com.intel.analytics.zoo.serving.utils">package utils</a>
           </div></span></h3><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
@@ -49,7 +51,11 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>The helper of Cluster Serving
+by default, all parameters are loaded by config including model directory
+However, in some condition, models are distributed to remote machine
+and locate in tmp directory, but other configs are still needed.
+Thus model directory could be passed and overwrite that in config YAML</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -88,8 +94,8 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(_configPath:String):com.intel.analytics.zoo.serving.utils.ClusterServingHelper"></a>
+              <ol><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="&lt;init&gt;(_configPath:String,_modelDir:String):com.intel.analytics.zoo.serving.utils.ClusterServingHelper"></a>
       <a id="&lt;init&gt;:ClusterServingHelper"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -97,14 +103,14 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">ClusterServingHelper</span><span class="params">(<span name="_configPath">_configPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;config.yaml&quot;</span></span>)</span>
+        <span class="name">ClusterServingHelper</span><span class="params">(<span name="_configPath">_configPath: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;config.yaml&quot;</span></span>, <span name="_modelDir">_modelDir: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">null</span></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@&lt;init&gt;(_configPath:String):com.intel.analytics.zoo.serving.utils.ClusterServingHelper" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@&lt;init&gt;(_configPath:String,_modelDir:String):com.intel.analytics.zoo.serving.utils.ClusterServingHelper" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">_configPath</dt><dd class="cmt"><p>the path of Cluster Serving config YAML</p></dd><dt class="param">_modelDir</dt><dd class="cmt"><p>the path of model, if null, will read from config YAML</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -340,23 +346,6 @@
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@defPath:String" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#engineType" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="engineType:String"></a>
-      <a id="engineType:String"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">engineType</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@engineType:String" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -611,24 +600,6 @@ create &quot;running&quot; flag, for listening the stop signal
       <p class="shortcomment cmt">Load inference model
 The concurrent number of inference model depends on
 backend engine type</p>
-    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#loadModel" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="loadModel[T]()(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.Module[Float]]"></a>
-      <a id="loadModel[T]()(ClassTag[T],TensorNumeric[T]):RDD[Module[Float]]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">loadModel</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper.loadModel.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper.loadModel.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<a href="../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="scala.Float">Float</span>]]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@loadModel[T]()(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.Module[Float]]" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Inference Model do not use this method for model loading
-This method is kept for future, not used now</p>
     </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#logError" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="logError(msg:String):Unit"></a>
       <a id="logError(String):Unit"></a>
@@ -646,57 +617,6 @@ This method is kept for future, not used now</p>
       </a>
     </span>
       <p class="shortcomment cmt">Log error message to local log file</p>
-    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#logErrorFlag" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="logErrorFlag:Boolean"></a>
-      <a id="logErrorFlag:Boolean"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">logErrorFlag</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@logErrorFlag:Boolean" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#logFile" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="logFile:java.io.FileWriter"></a>
-      <a id="logFile:FileWriter"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">logFile</span><span class="result">: <span class="extype" name="java.io.FileWriter">FileWriter</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@logFile:java.io.FileWriter" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#logSummaryFlag" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="logSummaryFlag:Boolean"></a>
-      <a id="logSummaryFlag:Boolean"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">logSummaryFlag</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@logSummaryFlag:Boolean" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#logger" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="logger:org.apache.log4j.Logger"></a>
       <a id="logger:Logger"></a>
@@ -727,6 +647,23 @@ This method is kept for future, not used now</p>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@modelDir:String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#modelEncrypted" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="modelEncrypted:Boolean"></a>
+      <a id="modelEncrypted:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">modelEncrypted</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@modelEncrypted:Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -952,6 +889,23 @@ model definition file and model weight file</p>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@redisSecureTrustStorePath:String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#resize" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="resize:Boolean"></a>
+      <a id="resize:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">resize</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@resize:Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
