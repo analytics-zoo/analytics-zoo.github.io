@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Orca PyTorch Estimator - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Introduction", url: "#introduction", children: [
+              {title: "Orca PyTorch Estimator", url: "#orca-pytorch-estimator" },
+              {title: "Create Estimator from pyTorch Model", url: "#create-estimator-from-pytorch-model" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Orca PyTorch Estimator</strong></h1>
+    <hr>
+    <h2 id="introduction"><strong>Introduction</strong></h2>
+<p>Analytics Zoo Orca PyTorch Estimator provides a set APIs for running PyTorch model on Spark in a distributed fashion.</p>
+<p><strong>Remarks</strong>:</p>
+<ul>
+<li>You need to install <strong>torch==1.5.0</strong> and <strong>torchvision==0.6.0</strong> on your driver node.</li>
+<li>Your operating system (OS) is required to be one of the following 64-bit systems:
+<strong>Ubuntu 16.04 or later</strong> and <strong>macOS 10.12.6 or later</strong>.</li>
+</ul>
+<hr />
+<h3 id="orca-pytorch-estimator">Orca PyTorch Estimator</h3>
+<p>Orca PyTorch Estimator is an estimator to do PyTorch training/evaluation/prediction on Spark in a distributed fashion.</p>
+<p>It can support various data types, like XShards, PyTorch DataLoader, PyTorch DataLoader creator, etc.</p>
+<p>It supports horovod backend and BigDL backend in the unified APIs.</p>
+<h3 id="create-estimator-from-pytorch-model">Create Estimator from pyTorch Model</h3>
+<p>You can create Orca PyTorch Estimator with native PyTorch model.</p>
+<pre><code>from zoo.orca.learn.pytorch import Estimator
+Estimator.from_torch(*,
+                   model,
+                   optimizer,
+                   loss=None,
+                   scheduler_creator=None,
+                   training_operator_cls=TrainingOperator,
+                   initialization_hook=None,
+                   config=None,
+                   scheduler_step_freq=&quot;batch&quot;,
+                   use_tqdm=False,
+                   backend=&quot;horovod&quot;):
+</code></pre>
+
+<ul>
+<li><code>model</code>: PyTorch model if <code>backend="bigdl"</code>, PyTorch model creator if <code>backend="horovod"</code></li>
+<li><code>optimizer</code>: bigdl optimizer if <code>backend="bigdl"</code>, PyTorch optimizer creator if <code>backend="horovod"</code></li>
+<li><code>loss</code>: PyTorch loss if <code>backend="bigdl"</code>, PyTorch loss creator if <code>backend="horovod"</code></li>
+<li><code>scheduler_creator</code>: parameter for horovod. a learning rate scheduler wrapping the optimizer. You will need to set <code>TorchTrainer(scheduler_step_freq="epoch")</code> for the scheduler to be incremented correctly. If using a scheduler for validation loss, be sure to call <code>trainer.update_scheduler(validation_loss)</code></li>
+<li><code>training_operator_cls</code>: parameter for horovod. Custom training operator class that subclasses the TrainingOperator class. This class will be copied onto all remote workers and used to specify custom training and validation operations. Defaults to TrainingOperator.</li>
+<li><code>initialization_hook</code>: parameter for horovod.</li>
+<li><code>config</code>: parameter for horovod. Config dict to create model, optimizer loss and data.</li>
+<li><code>scheduler_step_freq</code>: parameter for horovod. "batch", "epoch", "manual", or None. This will determine when <code>scheduler.step</code> is called. If "batch", <code>step</code> will be called after every optimizer step. If "epoch", <code>step</code> will be called after one pass of the DataLoader. If "manual", the scheduler will not be incremented automatically - you are expected to call <code>trainer.update_schedulers</code> manually. If a scheduler is passed in, this value is expected to not be None.</li>
+<li><code>use_tqdm</code>: parameter for horovod. You can monitor training progress if use_tqdm=True.</li>
+<li><code>backend</code>: You can choose "horovod" or "bigdl" as backend.</li>
+</ul>
+<h4 id="use-horovod-estimator">Use horovod Estimator</h4>
+<h5 id="train-model">Train model</h5>
+<p>After an Estimator is created, you can call estimator API to train PyTorch model:</p>
+<pre><code>fit(self, data, epochs=1, profile=False, reduce_results=True, info=None)
+</code></pre>
+
+<ul>
+<li><code>data</code>: (callable) a funtion that takes a config dict as input and return a data loader containing the training data.</li>
+<li><code>epochs</code>: (int) Number of epochs to train the model</li>
+<li><code>profile</code>: (bool) Returns time stats for the training procedure.</li>
+<li><code>reduce_results</code>: (bool) Whether to average all metrics across all workers into one dict. If a metric is a non-numerical value (or nested dictionaries), one value will be randomly selected among the workers. If False, returns a list of dicts.</li>
+<li><code>info</code>: (dict) Optional dictionary passed to the training operator for <code>train_epoch</code> and <code>train_batch</code>.</li>
+</ul>
+<h5 id="evaluate-model">Evaluate model</h5>
+<p>After Training, you can call estimator API to evaluate PyTorch model:</p>
+<pre><code>evaluate(self, data, num_steps=None, profile=False, info=None)
+</code></pre>
+
+<ul>
+<li><code>data</code>: (callable) a funtion that takes a config dict as input and return a data loader containing the validation data.</li>
+<li><code>num_steps</code>: (int) Number of batches to compute update steps on. This corresponds also to the number of times <code>TrainingOperator.validate_batch</code> is called.</li>
+<li><code>profile</code>: (bool) Returns time stats for the evaluation procedure.</li>
+<li><code>info</code>: (dict) Optional dictionary passed to the training operator for <code>validate</code> and <code>validate_batch</code>.</li>
+</ul>
+<h5 id="get-model">Get model</h5>
+<p>You can get the trained model using <code>get_model(self)</code></p>
+<h5 id="save-model">Save model</h5>
+<p>You can save model using <code>save(self, checkpoint)</code>
+* <code>checkpoint</code>: (str) Path to target checkpoint file.</p>
+<h5 id="load-model">Load model</h5>
+<p>You can load saved model using <code>load(self, checkpoint)</code>
+* <code>checkpoint</code>: (str) Path to target checkpoint file.</p>
+<h5 id="shutdown-workers">Shutdown workers</h5>
+<p>You can shut down workers and releases resources using <code>shutdown(self, force=False)</code></p>
+<h4 id="use-bigdl-estimator">Use BigDL Estimator</h4>
+<h5 id="train-model_1">Train model</h5>
+<p>After an Estimator is created, you can call estimator API to train PyTorch model:</p>
+<pre><code>fit(self, data, epochs=1, batch_size=32, validation_data=None, validation_methods=None, checkpoint_trigger=None):
+</code></pre>
+
+<ul>
+<li><code>data</code>: Training data. SparkXShard, PyTorch DataLoader and PyTorch DataLoader creator are supported.</li>
+<li><code>epochs</code>: Number of epochs to train the model.</li>
+<li><code>batch_size</code>: Batch size used for training. Only used when data is a SparkXShard.</li>
+<li><code>validation_data</code>: Validation data. SparkXShard, PyTorch DataLoader and PyTorch DataLoader creator are supported.</li>
+<li><code>validation_methods</code>: BigDL validation methods.</li>
+<li><code>checkpoint_trigger</code>: BigDL Trigger to set a checkpoint.</li>
+</ul>
+<h5 id="get-model_1">Get model</h5>
+<p>You can get model using <code>get_model(self)</code></p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
