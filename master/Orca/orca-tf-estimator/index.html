@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Orca Tensorflow Estimator - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Introduction", url: "#introduction", children: [
+              {title: "Orca TF Estimator", url: "#orca-tf-estimator" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Orca Tensorflow Estimator</strong></h1>
+    <hr>
+    <h2 id="introduction"><strong>Introduction</strong></h2>
+<p>Analytics Zoo Orca Tenorflow Estimator provides a set APIs for running TensorFlow model on Spark in a distributed fashion. </p>
+<p><strong>Remarks</strong>:</p>
+<ul>
+<li>You need to install <strong>tensorflow==1.15.0</strong> on your driver node.</li>
+<li>Your operating system (OS) is required to be one of the following 64-bit systems:
+<strong>Ubuntu 16.04 or later</strong> and <strong>macOS 10.12.6 or later</strong>.</li>
+<li>To run on other systems, you need to manually compile the TensorFlow source code. Instructions can
+  be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</li>
+</ul>
+<hr />
+<h3 id="orca-tf-estimator">Orca TF Estimator</h3>
+<p>Orca TF Estimator is an estimator to do Tensorflow training/evaluation/prediction on Spark in a d distributed fashion. </p>
+<p>It can support various data types, like XShards, Spark DataFrame, tf.data.Dataset, numpy.ndarrays, etc. </p>
+<p>It supports both native Tensorflow Graph model and Tensorflow Keras model in the unified APIs. </p>
+<h4 id="create-estimator-with-graph-model">Create Estimator with graph model</h4>
+<p>You can creating Orca TF Estimator with native Tensorflow graph model.</p>
+<pre><code>from zoo.orca.learn.tf.estimator import Estimator
+
+Estimator.from_graph(*, inputs, outputs=None, labels=None, loss=None, optimizer=None,
+           clip_norm=None, clip_value=None,
+           metrics=None, updates=None,
+           sess=None, model_dir=None, backend=&quot;bigdl&quot;)
+</code></pre>
+
+<ul>
+<li><code>inputs</code>: input tensorflow tensors.</li>
+<li><code>outputs</code>: output tensorflow tensors.</li>
+<li><code>labels</code>: label tensorflow tensors.</li>
+<li><code>loss</code>: The loss tensor of the TensorFlow model, should be a scalar</li>
+<li><code>optimizer</code>: tensorflow optimization method.</li>
+<li><code>clip_norm</code>: float &gt;= 0. Gradients will be clipped when their L2 norm exceeds this value.</li>
+<li><code>clip_value</code>:  a float &gt;= 0 or a tuple of two floats.</li>
+</ul>
+<p>If clip_value is a float, gradients will be clipped when their absolute value exceeds this value.</p>
+<p>If clip_value is a tuple of two floats, gradients will be clipped when their value less than clip_value[0] or larger than clip_value[1].
+* <code>metrics</code>: dictionary of {metric_name: metric tensor}.
+* <code>sess</code>: the current TensorFlow Session, if you want to used a pre-trained model, you should use the Session to load the pre-trained variables and pass it to estimator
+* <code>model_dir</code>: location to save model checkpoint and summaries.
+* <code>backend</code>: backend for estimator. Now it only can be "bigdl".</p>
+<p>This method returns an Estimator object.</p>
+<h4 id="train-graph-model-with-estimator">Train graph model with Estimator</h4>
+<p>After an Estimator created, you can call estimator API to train Tensorflow graph model:</p>
+<pre><code>fit(data,
+    epochs=1,
+    batch_size=32,
+    feature_cols=None,
+    labels_cols=None,
+    validation_data=None,
+    hard_code_batch_size=False,
+    session_config=None,
+    feed_dict=None,
+    checkpoint_trigger=None
+    )
+</code></pre>
+
+<ul>
+<li><code>data</code>: train data. It can be XShards, Spark DataFrame, tf.data.Dataset.</li>
+</ul>
+<p>If data is XShards, each element needs to be {'x': a feature numpy array
+         or a tuple of feature numpy arrays, 'y': a label numpy array or a tuple of
+         label numpy arrays}</p>
+<p>If data is tf.data.Dataset, each element is a tuple of input tensors.
+* <code>epochs</code>: number of epochs to train.
+* <code>batch_size</code>: total batch size for each iteration.
+* <code>feature_cols</code>: feature column names if train data is Spark DataFrame.
+* <code>labels_cols</code>: label column names if train data is Spark DataFrame.
+* <code>validation_data</code>: validation data. Validation data type should be the same as train data.
+* <code>hard_code_batch_size</code>: whether hard code batch size for training. Default is False.
+* <code>session_config</code>: tensorflow session configuration for training. Should be object of tf.ConfigProto
+* <code>feed_dict</code>: a dictionary. The key is TensorFlow tensor, usually a placeholder, the value of the dictionary is a tuple of two elements. </p>
+<p>The first one of the tuple is the value to feed to the tensor in training phase and the second one is the value to feed to the tensor in validation phase.
+* <code>checkpoint_trigger</code>: when to trigger checkpoint during training. Should be bigdl optimzer trigger, like EveryEpoch(), SeveralIteration(num_iterations),etc.</p>
+<h4 id="create-estimator-with-keras-model">Create Estimator with Keras model</h4>
+<p>You can creating Orca TF Estimator with Tensorflow Keras model. The model must be compiled.</p>
+<pre><code>from zoo.orca.learn.tf.estimator import Estimator
+
+Estimator.from_keras(keras_model, metrics=None, model_dir=None, backend=&quot;bigdl&quot;)
+</code></pre>
+
+<ul>
+<li><code>keras_model</code>: the tensorflow.keras model, which must be compiled.</li>
+<li><code>metrics</code>: user specified metric.</li>
+<li><code>model_dir</code>: location to save model checkpoint and summaries.</li>
+<li><code>backend</code>: backend for estimator. Now it only can be "bigdl".</li>
+</ul>
+<p>This method returns an Estimator object.</p>
+<h4 id="train-keras-model-with-estimator">Train Keras model with Estimator</h4>
+<p>After an Estimator created, you can call estimator's API to train Tensorflow Keras model:</p>
+<pre><code>fit(data,
+    epochs=1,
+    batch_size=32,
+    feature_cols=None,
+    labels_cols=None,
+    validation_data=None,
+    hard_code_batch_size=False,
+    session_config=None,
+    checkpoint_trigger=None
+    )
+</code></pre>
+
+<ul>
+<li><code>data</code>: train data. It can be XShards, Spark DataFrame, tf.data.Dataset.</li>
+</ul>
+<p>If data is XShards, each element needs to be {'x': a feature numpy array
+         or a tuple of feature numpy arrays, 'y': a label numpy array or a tuple of
+         label numpy arrays}</p>
+<p>If data is tf.data.Dataset, each element is a tuple of input tensors.
+* <code>epochs</code>: number of epochs to train.
+* <code>batch_size</code>: total batch size for each iteration.
+* <code>feature_cols</code>: feature column names if train data is Spark DataFrame.
+* <code>labels_cols</code>: label column names if train data is Spark DataFrame.
+* <code>validation_data</code>: validation data. Validation data type should be the same as train data.
+* <code>hard_code_batch_size</code>: whether hard code batch size for training. Default is False.
+* <code>session_config</code>: tensorflow session configuration for training. Should be object of tf.ConfigProto
+* <code>checkpoint_trigger</code>: when to trigger checkpoint during training. Should be bigdl optimzer trigger, like EveryEpoch(), SeveralIteration(num_iterations),etc.</p>
+<h4 id="evaluate-with-estimator">Evaluate with Estimator</h4>
+<p>You can call estimator's API to evaluate Tensorflow graph model or keras model.</p>
+<pre><code>evaluate(data, batch_size=4,
+         feature_cols=None,
+         labels_cols=None,
+         hard_code_batch_size=False
+        )
+</code></pre>
+
+<ul>
+<li><code>data</code>: evaluation data. It can be XShards, Spark DataFrame, tf.data.Dataset.</li>
+</ul>
+<p>If data is XShards, each element needs to be {'x': a feature numpy array or a tuple of feature numpy arrays, 'y': a label numpy array or a tuple of label numpy arrays}</p>
+<p>If data is tf.data.Dataset, each element is [feature tensor tuple, label tensor tuple]
+* <code>batch_size</code>: batch size per thread.
+* <code>feature_cols</code>: feature_cols: feature column names if train data is Spark DataFrame.
+* <code>labels_cols</code>: label column names if train data is Spark DataFrame.
+* <code>hard_code_batch_size</code>: whether to hard code batch size for evaluation.</p>
+<p>This method returns evaluation result as a dictionary in the format of {'metric name': metric value}</p>
+<h4 id="predict-with-estimator">Predict with Estimator</h4>
+<p>You can call estimator's such APIs to predict with trained model.</p>
+<pre><code>predict(data, batch_size=4,
+        feature_cols=None,
+        hard_code_batch_size=False
+        ):
+</code></pre>
+
+<ul>
+<li><code>data</code>: data to be predicted.
+        It can be XShards, Spark DataFrame, or tf.data.Dataset.<pre><code>If data is XShard, each element needs to be {'x': a feature numpy array
+ or a tuple of feature numpy arrays}.
+
+If data is tf.data.Dataset, each element is feature tensor tuple
+</code></pre>
+<ul>
+<li><code>batch_size</code>: batch size per thread</li>
+<li><code>feature_cols</code>: list of feature column names if input data is Spark DataFrame.</li>
+<li><code>hard_code_batch_size</code>: if require hard code batch size for prediction. The default value is False.</li>
+</ul>
+</li>
+</ul>
+<p>This method returns a predicted result.</p>
+<p>If input data is XShards or tf.data.Dataset, the predict result is also a XShards, and the schema for each result is: {'prediction': predicted numpy array or list of predicted numpy arrays}.</p>
+<p>If input data is Spark DataFrame, the predict result is a DataFrame which includes original columns plus 'prediction' column. The 'prediction' column can be FloatType, VectorUDT or Array of VectorUDT depending on model outputs shape.</p>
+<h4 id="checkpointing-and-resume-training">Checkpointing and Resume Training</h4>
+<p>During training, Orca TF Estimator would save Orca checkpoint every epoch. You can also specify <code>checkpoint_trigger</code> in fit() to set checkpoint interval. The Orca checckpoints are saved in <code>model_dir</code> which is specified when you create estimator. You can load previous Orca checkpoint and resume train with it with such APIs:</p>
+<pre><code>load_latest_orca_checkpoint(path)
+</code></pre>
+
+<ul>
+<li>path: directory containing Orca checkpoint files.</li>
+</ul>
+<p>This method load latest checkpoint under specified directory.</p>
+<p>If you want to load specified version of checkpoint, you can use:</p>
+<pre><code>load_orca_checkpoint(path, version)
+</code></pre>
+
+<ul>
+<li>path: checkpoint directory which contains model.<em> and optimMethod-TFParkTraining.</em> files.</li>
+<li>version: checkpoint version, which is the suffix of model.* file, i.e., for modle.4 file, the version is 4.</li>
+</ul>
+<p>After loading checkpoint, you can resume training with fit(). </p>
+<h4 id="tensorboard-support">Tensorboard support</h4>
+<p>During training and validation, Orca TF Estimator would save Tensorflow summary data under <code>model_dir</code> which is specified when you create estimator. This data can be visualized in TensorBoard, or you can use estimator's APIs to retrieve it. If you want to save train/validation summary data to different directory or you don't specify <code>model_dir</code>, you can set the logdir and app name with such API:</p>
+<pre><code>set_tensorboard(log_dir, app_name)
+</code></pre>
+
+<ul>
+<li><code>log_dir</code>: The base directory path to store training and validation logs.</li>
+<li><code>app_name</code>: The name of the application.</li>
+</ul>
+<p>This method sets summary information during the training process for visualization purposes. Saved summary can be viewed via TensorBoard. In order to take effect, it needs to be called before fit.</p>
+<p>Training summary will be saved to 'log_dir/app_name/train' and validation summary (if any) will be saved to 'log_dir/app_name/validation'.</p>
+<p>Now, you can see the summary data in TensorBoard. Or else, you can get summary data with such APIs:</p>
+<pre><code>get_train_summary(tag)
+</code></pre>
+
+<ul>
+<li><code>tag</code>: The string variable represents the scalar wanted. It can only be "Loss", "LearningRate", or "Throughput".</li>
+</ul>
+<p>This method get the scalar from model train summary. Return list of summary data of [iteration_number, scalar_value, timestamp].</p>
+<pre><code>get_validation_summary(tag)
+</code></pre>
+
+<ul>
+<li><code>tag</code>: The string variable represents the scalar wanted.</li>
+</ul>
+<p>This method gets the scalar from model validation summary. Return list of summary data of [iteration_number, scalar_value, timestamp]</p>
+<h4 id="save-model">Save model</h4>
+<p>After training, you can save model in the estimator with such APIs:</p>
+<pre><code>save_tf_checkpoint(path)
+</code></pre>
+
+<ul>
+<li><code>path</code>: tensorflow checkpoint path.</li>
+</ul>
+<p>If you use tensorflow graph model in this estimator, this method would save tensorflow checkpoint.</p>
+<pre><code>save_keras_model(path)
+</code></pre>
+
+<ul>
+<li><code>path</code>: keras model save path.</li>
+</ul>
+<p>If you use tensorflow keras model in this estimator, this method would save keras model in specified path.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -36,7 +36,9 @@
           {title: "Introduction", url: "#introduction", children: [
           ]},
           {title: "XShards", url: "#xshards", children: [
+              {title: "XShards General Operations", url: "#xshards-general-operations" },
               {title: "XShards with Pandas DataFrame", url: "#xshards-with-pandas-dataframe" },
+              {title: "XShards with Numpy", url: "#xshards-with-numpy" },
           ]},
         ];
 
@@ -65,33 +67,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <h1><strong>Data</strong></h1>
     <hr>
     <h2 id="introduction"><strong>Introduction</strong></h2>
-<p>Analytics Zoo orca data provides data-parallel pre-processing support for AI.</p>
-<p>It supports data pre-processing from different data sources, like TensorFlow DataSet, PyTorch DataLoader, MXNet DataLoader, etc. and it supports different data format, like Pandas DataFrame, Numpy, Images, Parquet.</p>
-<p>The backend distributed preprocessing engine can be <a href="https://spark.apache.org/">Spark</a> or <a href="https://github.com/ray-project/ray">Ray</a>.</p>
-<p>In current version, orca data API only supports parallel pre-processing with Pandas DataFrame on Ray.</p>
+<p>Analytics Zoo Orca data provides data-parallel pre-processing support for Python AI.</p>
+<p>It supports data pre-processing from different data sources, like TensorFlow DataSet, PyTorch DataLoader, MXNet DataLoader, etc. and it supports various data formats, like Pandas DataFrame, Numpy, Images, Parquet, etc.</p>
+<p>The distributed backend engine can be <a href="https://spark.apache.org/">Spark</a> or <a href="https://github.com/ray-project/ray">Ray</a>. We now support Spark-based transformations to do the pre-processing, and provide functionality to seamlessly put data to Ray cluster for later training/inference on Ray. </p>
 <hr />
 <h2 id="xshards"><strong>XShards</strong></h2>
-<p>XShards is a collection of data in orca data API. In current version, the element in XShards is a Pandas DataFrame.</p>
-<h3 id="xshards-with-pandas-dataframe"><strong>XShards with Pandas DataFrame</strong></h3>
-<h4 id="read-data-into-xshards"><strong>Read data into XShards</strong></h4>
-<p>You can read csv/json files/directory into XShards with such APIs:</p>
-<pre><code>zoo.orca.data.pandas.read_csv(file_path, context)
-
-zoo.orca.data.pandas.read_json(file_path, context)
-</code></pre>
-
-<ul>
-<li>The <code>file_path</code> could be a csv/json file, multiple csv/json file paths seperated with comma, a directory containing csv/json files. Supported file systems are local file system,<code>hdfs</code>, and <code>s3</code>.</li>
-<li><code>context</code> is a Ray context.</li>
-</ul>
-<p>After calling these APIs, you would get a XShards of Pandas DataFrame.</p>
+<p>XShards is a collection of data in Orca data API. We provide different backends(Spark and Ray) for XShards.</p>
+<h3 id="xshards-general-operations"><strong>XShards General Operations</strong></h3>
 <h4 id="pre-processing-on-xshards"><strong>Pre-processing on XShards</strong></h4>
 <p>You can do pre-processing with your customized function on XShards using below API:</p>
 <pre><code>transform_shard(func, *args)
 </code></pre>
 
 <ul>
-<li><code>func</code> is your pre-processing function. In this function, you can do the pre-processing on a Pandas DataFrame, then return the processed object. </li>
+<li><code>func</code> is your pre-processing function. In this function, you can do the pre-processing with the data using common Python libraries such as Pandas, Numpy, PIL, TensorFlow Dataset, PyTorch DataLoader, etc., then return the processed object. </li>
 <li><code>args</code> are the augurments for the pre-processing function.</li>
 </ul>
 <p>This method would parallelly pre-process each element in the XShards with the customized function, and return a new XShards after transformation.</p>
@@ -112,8 +101,86 @@ full_data.transform_shard(func, item_set)
 <pre><code>collect()
 </code></pre>
 
-<p>This method returns a list that contains all of the elements in this XShards.</p>
-<p>To get the more examples on orca data API, you can refert to <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/orca/data">Example</a></p>
+<p>This method returns a list that contains all of the elements in this XShards. </p>
+<h4 id="repartition-xshards"><strong>Repartition XShards</strong></h4>
+<p>You can repartition XShards to different number of partitions.</p>
+<pre><code>repartition(num_partitions)
+</code></pre>
+
+<ul>
+<li><code>num_partitions</code> is the target number of partitions for the new XShards.</li>
+</ul>
+<p>The method returns a new XShards that has exactly num_partitions partitions.</p>
+<h4 id="split-xshards"><strong>Split XShards</strong></h4>
+<p>You can split one XShards into multiple XShards. Each element in the XShards needs be a list or tuple with same length.</p>
+<pre><code>split()
+</code></pre>
+
+<p>This method returns splits of XShards. If each element in the input SparkDataShard is not a list or tuple, return list of input SparkDataShards.</p>
+<h4 id="saveload-xshards"><strong>Save/Load XShards</strong></h4>
+<p>You can save XShards on Spark as SequenceFiles of serialized objects.
+The serializer used is pyspark.serializers.PickleSerializer.</p>
+<pre><code>save_pickle(path, batchSize=10)
+</code></pre>
+
+<ul>
+<li><code>path</code> is target save path.</li>
+<li><code>batchSize</code> batch size for each chunk in sequence file.</li>
+</ul>
+<p>And you can load pickle file to XShards if you use save_pickle() to save data.</p>
+<pre><code>zoo.orca.data.XShards.load_pickle(path, minPartitions=None)
+</code></pre>
+
+<ul>
+<li><code>path</code>: The pickle file path/directory.</li>
+<li><code>minPartitions</code>: The minimum partitions for the XShards.</li>
+</ul>
+<p>This method return an XShards object from pickle files.</p>
+<h4 id="move-xshards-on-spark-to-ray-backend"><strong>Move XShards on Spark to Ray backend</strong></h4>
+<p>You can put data of the XShards on Spark to Ray cluster object store for later processing on Ray.</p>
+<pre><code>to_ray()
+</code></pre>
+
+<p>This method save data of XShards on Spark to Ray object store, and return a new RayXShards which contains plasma ObjectID, the plasma object_store_address and the node IP on each partition.</p>
+<h3 id="xshards-with-pandas-dataframe"><strong>XShards with Pandas DataFrame</strong></h3>
+<h4 id="read-data-into-xshards"><strong>Read data into XShards</strong></h4>
+<p>You can read csv/json files/directory into XShards with such APIs:</p>
+<pre><code>zoo.orca.data.pandas.read_csv(file_path, **kwargs)
+
+zoo.orca.data.pandas.read_json(file_path, **kwargs)
+</code></pre>
+
+<ul>
+<li>The <code>file_path</code> could be a csv/json file, list of multiple csv/json file paths, a directory containing csv/json files. Supported file systems are local file system,<code>hdfs</code>, and <code>s3</code>.</li>
+<li><code>**kwargs</code> is read_csv/read_json options supported by pandas.</li>
+</ul>
+<p>After calling these APIs, you would get a XShards of Pandas DataFrame on Spark.</p>
+<h4 id="partition-by-pandas-dataframe-columns"><strong>Partition by Pandas DataFrame columns</strong></h4>
+<p>You can re-partition XShards of Pandas DataFrame with specified columns.</p>
+<pre><code>partition_by(cols, num_partitions=None)
+</code></pre>
+
+<ul>
+<li><code>cols</code>: DataFrame columns to partition by.</li>
+<li><code>num_partitions</code>: target number of partitions. If not specified, the new XShards would keep the current partition number.</li>
+</ul>
+<p>This method return a new XShards partitioned using the specified columns.</p>
+<h4 id="get-unique-element-list-of-xshards-of-pandas-series"><strong>Get unique element list of XShards of Pandas Series</strong></h4>
+<p>You can get a unique list of elements of this XShards. This is useful when you want to count/get unique set of some column in the XShards of Pandas DataFrame. </p>
+<pre><code>unique()
+</code></pre>
+
+<p>This method return a unique list of elements of the XShards of Pandas Series.</p>
+<h3 id="xshards-with-numpy"><strong>XShards with Numpy</strong></h3>
+<h4 id="load-local-numpy-data-to-xshards"><strong>Load local numpy data to XShards</strong></h4>
+<p>You can partition local in memory data and form an XShards on Spark.</p>
+<pre><code>zoo.orca.data.XShards.partition(data)
+</code></pre>
+
+<ul>
+<li><code>data</code>: The local data can be numpy.ndarray, a tuple, list, dict of numpy.ndarray, or a nested structure made of tuple, list, dict with ndarray as the leaf value.</li>
+</ul>
+<p>This method returns a XShards which dispatch local data in parallel on Spark.</p>
 
   <br>
 </div>
