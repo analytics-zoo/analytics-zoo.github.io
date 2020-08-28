@@ -1,0 +1,392 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.util.tf &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.util.tf</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+
+
+<div class="viewcode-block" id="process_grad"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.tf.process_grad">[docs]</a><span class="k">def</span> <span class="nf">process_grad</span><span class="p">(</span><span class="n">grad</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">tensorflow.python.framework</span> <span class="kn">import</span> <span class="n">ops</span>
+    <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+    <span class="k">if</span> <span class="n">grad</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">grad</span> <span class="o">=</span> <span class="n">ops</span><span class="o">.</span><span class="n">convert_to_tensor_or_indexed_slices</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grad</span><span class="p">,</span> <span class="n">ops</span><span class="o">.</span><span class="n">IndexedSlices</span><span class="p">):</span>
+            <span class="c1"># In IndexedSlices is not supported in java api, we have to convert it to</span>
+            <span class="c1"># a dense tensor. This operation is potentially expensive, but there seems</span>
+            <span class="c1"># no work around</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">unsorted_segment_sum</span><span class="p">(</span><span class="n">grad</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">grad</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span>
+                                           <span class="n">grad</span><span class="o">.</span><span class="n">dense_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">grad</span></div>
+
+
+<span class="k">def</span> <span class="nf">_to_operation_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_to_floats</span><span class="p">(</span><span class="n">vs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vs</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="export_tf"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.tf.export_tf">[docs]</a><span class="k">def</span> <span class="nf">export_tf</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span>
+              <span class="n">generate_backward</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">allow_non_differentiable_input</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Export the frozen tensorflow graph as well as the inputs/outputs information</span>
+<span class="sd">    to the folder for inference.</span>
+
+<span class="sd">    This function will</span>
+<span class="sd">    1. freeze the graph (replace all variables with constants)</span>
+<span class="sd">    2. strip all unused node as specified by inputs and outputs</span>
+<span class="sd">    3. add placeholder nodes as needed</span>
+<span class="sd">    4. write the frozen graph and inputs/outputs names to the folder</span>
+
+<span class="sd">    Note: There should not be any queuing operation between inputs and outputs</span>
+
+<span class="sd">    :param sess: tensorflow session holding the variables to be saved</span>
+<span class="sd">    :param folder: the folder where graph file and inputs/outputs information are saved</span>
+<span class="sd">    :param inputs: a list of tensorflow tensors that will be fed during inference</span>
+<span class="sd">    :param outputs: a list of tensorflow tensors that will be fetched during inference</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="kn">from</span> <span class="nn">tensorflow.python.platform</span> <span class="kn">import</span> <span class="n">gfile</span>
+    <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+    <span class="n">output_node_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">({</span><span class="n">t</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">})</span>
+
+    <span class="n">graph_def</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">graph_def</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">graph</span>
+
+    <span class="c1"># clear device specifications</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph_def</span><span class="o">.</span><span class="n">node</span><span class="p">:</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="n">non_placeholder_input_names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">type_enums</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">input_tensor</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Placeholder&quot;</span><span class="p">,</span> <span class="s2">&quot;PlaceholderWithDefault&quot;</span><span class="p">]:</span>
+            <span class="n">non_placeholder_input_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">input_tensor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">type_enums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">input_tensor</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">as_datatype_enum</span><span class="p">)</span>
+
+    <span class="n">output_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">]</span>
+
+    <span class="n">all_variables</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">GraphKeys</span><span class="o">.</span><span class="n">TRAINABLE_VARIABLES</span><span class="p">)</span>
+
+    <span class="kn">import</span> <span class="nn">zoo.util.tf_graph_util</span> <span class="k">as</span> <span class="nn">graph_util</span>
+    <span class="c1"># freeze graph</span>
+    <span class="n">frozen_graph_def</span> <span class="o">=</span> <span class="n">graph_util</span><span class="o">.</span><span class="n">convert_variables_to_constants</span><span class="p">(</span>
+        <span class="n">sess</span><span class="p">,</span>
+        <span class="n">graph_def</span><span class="p">,</span>
+        <span class="n">output_node_names</span>
+    <span class="p">)</span>
+
+    <span class="n">optimized_graph_def</span><span class="p">,</span> <span class="n">old_names2new</span> <span class="o">=</span> <span class="n">strip_unused</span><span class="p">(</span><span class="n">frozen_graph_def</span><span class="p">,</span>
+                                                      <span class="n">non_placeholder_input_names</span><span class="p">,</span>
+                                                      <span class="n">output_names</span><span class="p">,</span>
+                                                      <span class="n">type_enums</span><span class="p">)</span>
+
+    <span class="n">nodes_of_graph</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">optimized_graph_def</span><span class="o">.</span><span class="n">node</span><span class="p">:</span>
+        <span class="n">nodes_of_graph</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;:0&quot;</span><span class="p">)</span>
+    <span class="n">nodes_of_graph_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">nodes_of_graph</span><span class="p">)</span>
+
+    <span class="n">new_input_names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">error_input_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">old_names2new</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">old_names2new</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">nodes_of_graph_set</span><span class="p">:</span>
+                <span class="n">error_input_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">new_input_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">old_names2new</span><span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">nodes_of_graph_set</span><span class="p">:</span>
+                <span class="n">error_input_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">new_input_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">error_input_nodes</span><span class="p">:</span>
+        <span class="n">error_nodes_name</span> <span class="o">=</span> <span class="s2">&quot; and &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">error_input_nodes</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Node </span><span class="si">%s</span><span class="s2"> doesn&#39;t exist in the graph&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">error_nodes_name</span><span class="p">))</span>
+
+    <span class="c1"># check all placeholder in the graph are listed in the new_input_names:</span>
+    <span class="n">new_input_nodes</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">new_input_names</span><span class="p">}</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">optimized_graph_def</span><span class="o">.</span><span class="n">node</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;Placeholder&quot;</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_input_nodes</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Node </span><span class="si">%s</span><span class="s2"> is a Placeholder but not listed in inputs, inputs are </span><span class="si">%s</span><span class="s2">&quot;</span>
+                <span class="o">%</span> <span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">inputs</span><span class="p">))</span>
+
+    <span class="n">temp_tensors</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">used_variables</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">grad_variables</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">grad_inputs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">generate_backward</span><span class="p">:</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">n</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">optimized_graph_def</span><span class="o">.</span><span class="n">node</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">all_variables</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+                <span class="n">used_variables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span><span class="o">.</span><span class="n">as_default</span><span class="p">()</span> <span class="k">as</span> <span class="n">g</span><span class="p">:</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">import_graph_def</span><span class="p">(</span><span class="n">optimized_graph_def</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">output_tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">get_tensor_by_name</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">output_names</span><span class="p">]</span>
+            <span class="n">grad_output_placeholders</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                                                       <span class="n">name</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;_grad&quot;</span><span class="p">,</span>
+                                                       <span class="n">shape</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">output_tensors</span><span class="p">]</span>
+
+            <span class="n">variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">get_tensor_by_name</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">used_variables</span><span class="p">]</span>
+
+            <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">get_tensor_by_name</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">new_input_names</span><span class="p">]</span>
+            <span class="n">grads</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">output_tensors</span><span class="p">,</span> <span class="n">variables</span> <span class="o">+</span> <span class="n">inputs</span><span class="p">,</span>
+                                 <span class="n">grad_ys</span><span class="o">=</span><span class="n">grad_output_placeholders</span><span class="p">)</span>
+
+            <span class="n">grads</span> <span class="o">=</span> <span class="p">[</span><span class="n">process_grad</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span> <span class="k">for</span> <span class="n">grad</span> <span class="ow">in</span> <span class="n">grads</span><span class="p">]</span>
+
+            <span class="n">temp_tensors</span> <span class="o">=</span> <span class="n">_find_temp_tensors</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">nodes</span><span class="p">)</span>
+
+            <span class="n">grad_variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">variables</span><span class="p">)]]</span>
+
+            <span class="n">grad_inputs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">variables</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">grads</span><span class="p">)):</span>
+                <span class="n">grad</span> <span class="o">=</span> <span class="n">grads</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">grad</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">grad_inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grad</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># if input is not differentiable, we just return zero</span>
+                    <span class="n">input_tensor</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">variables</span><span class="p">)]</span>
+                    <span class="k">if</span> <span class="n">allow_non_differentiable_input</span><span class="p">:</span>
+                        <span class="n">zero_grad</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">))</span>
+                        <span class="n">grad_inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">zero_grad</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="s2">&quot;input tensor: </span><span class="si">%s</span><span class="s2"> is not differentiable&quot;</span> <span class="o">%</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+            <span class="n">optimized_graph_def</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">as_graph_def</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">gfile</span><span class="o">.</span><span class="n">GFile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s2">&quot;frozen_inference_graph.pb&quot;</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">optimized_graph_def</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">())</span>
+
+    <span class="n">meta</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;input_names&quot;</span><span class="p">:</span> <span class="n">new_input_names</span><span class="p">,</span>
+        <span class="s2">&quot;output_names&quot;</span><span class="p">:</span> <span class="n">output_names</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">generate_backward</span><span class="p">:</span>
+        <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;temp_tensors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">temp_tensors</span><span class="p">)</span>
+        <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;variables&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">used_variables</span>
+        <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;grad_variables&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grad_variables</span>
+        <span class="n">meta</span><span class="p">[</span><span class="s2">&quot;grad_inputs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">grad_inputs</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s2">&quot;graph_meta.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">meta</span><span class="p">))</span></div>
+
+
+<span class="k">def</span> <span class="nf">_find_temp_tensors</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">forward_ops</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    find all the tensors that are used for computing grads and has been</span>
+<span class="sd">    computed during forward</span>
+<span class="sd">    :param grads:</span>
+<span class="sd">    :param forward_ops:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">is_py2</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;2&#39;</span>
+    <span class="k">if</span> <span class="n">is_py2</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">Queue</span> <span class="k">as</span> <span class="nn">queue</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">queue</span> <span class="k">as</span> <span class="nn">queue</span>
+    <span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">grad</span> <span class="ow">in</span> <span class="n">grads</span><span class="p">:</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+
+    <span class="n">temp_tensors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="c1"># this is necessary, because input may not be differentiable</span>
+        <span class="k">if</span> <span class="n">tensor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tensor</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;Placeholder&quot;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">tensor</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">forward_ops</span><span class="p">:</span>
+                <span class="n">temp_tensors</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tensor</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">input_tensor</span> <span class="ow">in</span> <span class="n">tensor</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
+                <span class="c1"># this is necessary because there may be a cycle in the graph such as tf.while_loop</span>
+                <span class="k">if</span> <span class="n">input_tensor</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">temp_tensors</span>
+
+
+<div class="viewcode-block" id="strip_unused"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.tf.strip_unused">[docs]</a><span class="k">def</span> <span class="nf">strip_unused</span><span class="p">(</span><span class="n">input_graph_def</span><span class="p">,</span> <span class="n">input_tensor_names</span><span class="p">,</span> <span class="n">output_tensor_names</span><span class="p">,</span>
+                 <span class="n">placeholder_type_enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Removes unused nodes from a GraphDef.</span>
+
+<span class="sd">  Args:</span>
+<span class="sd">    input_graph_def: A graph with nodes we want to prune.</span>
+<span class="sd">    input_tensor_names: A list of the nodes we use as inputs.</span>
+<span class="sd">    output_tensor_names: A list of the output nodes.</span>
+<span class="sd">    placeholder_type_enum: The AttrValue enum for the placeholder data type, or</span>
+<span class="sd">        a list that specifies one value per input node name.</span>
+
+<span class="sd">  Returns:</span>
+<span class="sd">    A `GraphDef` with all unnecessary ops removed. and a map containing the old input</span>
+<span class="sd">    names to the new input names</span>
+
+<span class="sd">  Raises:</span>
+<span class="sd">    ValueError: If any element in `input_node_names` refers to a tensor instead</span>
+<span class="sd">      of an operation.</span>
+<span class="sd">    KeyError: If any element in `input_node_names` is not found in the graph.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+    <span class="kn">from</span> <span class="nn">tensorflow.core.framework</span> <span class="kn">import</span> <span class="n">attr_value_pb2</span>
+    <span class="kn">from</span> <span class="nn">tensorflow.core.framework</span> <span class="kn">import</span> <span class="n">graph_pb2</span>
+    <span class="kn">from</span> <span class="nn">tensorflow.core.framework</span> <span class="kn">import</span> <span class="n">node_def_pb2</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">input_tensor_names</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;:&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input &#39;</span><span class="si">%s</span><span class="s2">&#39; appears to refer to a Operation, &quot;</span>
+                             <span class="s2">&quot;not a Tensor.&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="n">old2new</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># Here we replace the nodes we&#39;re going to override as inputs with</span>
+    <span class="c1"># placeholders so that any unused nodes that are inputs to them are</span>
+    <span class="c1"># automatically stripped out by extract_sub_graph().</span>
+    <span class="n">not_found</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">input_tensor_names</span><span class="p">}</span>
+    <span class="n">input_node_names</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">input_tensor_names</span><span class="p">}</span>
+    <span class="n">output_node_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">({</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">output_tensor_names</span><span class="p">})</span>
+    <span class="n">inputs_replaced_graph_def</span> <span class="o">=</span> <span class="n">graph_pb2</span><span class="o">.</span><span class="n">GraphDef</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">input_graph_def</span><span class="o">.</span><span class="n">node</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">input_node_names</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">input</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">_append_port</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="ow">in</span> <span class="n">input_tensor_names</span><span class="p">:</span>
+                    <span class="n">old_name</span> <span class="o">=</span> <span class="n">_append_port</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                    <span class="n">not_found</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">old_name</span><span class="p">)</span>
+                    <span class="n">new_input_name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+                    <span class="n">placeholder_node</span> <span class="o">=</span> <span class="n">node_def_pb2</span><span class="o">.</span><span class="n">NodeDef</span><span class="p">()</span>
+                    <span class="n">placeholder_node</span><span class="o">.</span><span class="n">op</span> <span class="o">=</span> <span class="s2">&quot;Placeholder&quot;</span>
+                    <span class="n">placeholder_node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">new_input_name</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">placeholder_type_enum</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                        <span class="n">input_node_index</span> <span class="o">=</span> <span class="n">input_tensor_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">old_name</span><span class="p">)</span>
+                        <span class="n">placeholder_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span>
+                            <span class="n">attr_value_pb2</span><span class="o">.</span><span class="n">AttrValue</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">placeholder_type_enum</span><span class="p">[</span>
+                                <span class="n">input_node_index</span><span class="p">]))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">placeholder_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span>
+                            <span class="n">attr_value_pb2</span><span class="o">.</span><span class="n">AttrValue</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">placeholder_type_enum</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="s2">&quot;_output_shapes&quot;</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">:</span>
+                        <span class="n">placeholder_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;_output_shapes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span>
+                            <span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;_output_shapes&quot;</span><span class="p">])</span>
+                    <span class="n">node</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_input_name</span>
+                    <span class="n">old2new</span><span class="p">[</span><span class="n">old_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_input_name</span> <span class="o">+</span> <span class="s2">&quot;:0&quot;</span>
+                    <span class="n">inputs_replaced_graph_def</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">placeholder_node</span><span class="p">])</span>
+            <span class="n">inputs_replaced_graph_def</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">node</span><span class="p">)])</span>
+
+    <span class="k">if</span> <span class="n">not_found</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s2">&quot;The following input nodes were not found: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">not_found</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">zoo.util.tf_graph_util</span> <span class="k">as</span> <span class="nn">graph_util</span>
+    <span class="n">output_graph_def</span> <span class="o">=</span> <span class="n">graph_util</span><span class="o">.</span><span class="n">extract_sub_graph</span><span class="p">(</span><span class="n">inputs_replaced_graph_def</span><span class="p">,</span>
+                                                    <span class="n">output_node_names</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output_graph_def</span><span class="p">,</span> <span class="n">old2new</span></div>
+
+
+<span class="k">def</span> <span class="nf">_append_port</span><span class="p">(</span><span class="n">input_name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">input_name</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">input_name</span> <span class="o">+</span> <span class="s2">&quot;:0&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">input_name</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

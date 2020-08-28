@@ -1,0 +1,213 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.pipeline.api.keras.datasets.mnist &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.pipeline.api.keras.datasets.mnist</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="kn">from</span> <span class="nn">bigdl.dataset</span> <span class="kn">import</span> <span class="n">base</span>
+
+
+<span class="n">SOURCE_URL</span> <span class="o">=</span> <span class="s1">&#39;http://yann.lecun.com/exdb/mnist/&#39;</span>
+
+<span class="n">TRAIN_MEAN</span> <span class="o">=</span> <span class="mf">0.13066047740239506</span> <span class="o">*</span> <span class="mi">255</span>
+<span class="n">TRAIN_STD</span> <span class="o">=</span> <span class="mf">0.3081078</span> <span class="o">*</span> <span class="mi">255</span>
+<span class="n">TEST_MEAN</span> <span class="o">=</span> <span class="mf">0.13251460696903547</span> <span class="o">*</span> <span class="mi">255</span>
+<span class="n">TEST_STD</span> <span class="o">=</span> <span class="mf">0.31048024</span> <span class="o">*</span> <span class="mi">255</span>
+
+
+<span class="k">def</span> <span class="nf">_read32</span><span class="p">(</span><span class="n">bytestream</span><span class="p">):</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span><span class="o">.</span><span class="n">newbyteorder</span><span class="p">(</span><span class="s1">&#39;&gt;&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">bytestream</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="extract_images"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.datasets.html#zoo.pipeline.api.keras.datasets.mnist.extract_images">[docs]</a><span class="k">def</span> <span class="nf">extract_images</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extract the images into a 4D uint8 numpy array [index, y, x, depth].</span>
+
+<span class="sd">    :param: f: A file object that can be passed into a gzip reader.</span>
+<span class="sd">    :return: data: A 4D unit8 numpy array [index, y, x, depth].</span>
+<span class="sd">    :raise: ValueError: If the bytestream does not start with 2051.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Extracting&#39;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">GzipFile</span><span class="p">(</span><span class="n">fileobj</span><span class="o">=</span><span class="n">f</span><span class="p">)</span> <span class="k">as</span> <span class="n">bytestream</span><span class="p">:</span>
+        <span class="n">magic</span> <span class="o">=</span> <span class="n">_read32</span><span class="p">(</span><span class="n">bytestream</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">magic</span> <span class="o">!=</span> <span class="mi">2051</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;Invalid magic number </span><span class="si">%d</span><span class="s1"> in MNIST image file: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                <span class="p">(</span><span class="n">magic</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="n">num_images</span> <span class="o">=</span> <span class="n">_read32</span><span class="p">(</span><span class="n">bytestream</span><span class="p">)</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">_read32</span><span class="p">(</span><span class="n">bytestream</span><span class="p">)</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">_read32</span><span class="p">(</span><span class="n">bytestream</span><span class="p">)</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">bytestream</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">rows</span> <span class="o">*</span> <span class="n">cols</span> <span class="o">*</span> <span class="n">num_images</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">num_images</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="extract_labels"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.datasets.html#zoo.pipeline.api.keras.datasets.mnist.extract_labels">[docs]</a><span class="k">def</span> <span class="nf">extract_labels</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Extracting&#39;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">GzipFile</span><span class="p">(</span><span class="n">fileobj</span><span class="o">=</span><span class="n">f</span><span class="p">)</span> <span class="k">as</span> <span class="n">bytestream</span><span class="p">:</span>
+        <span class="n">magic</span> <span class="o">=</span> <span class="n">_read32</span><span class="p">(</span><span class="n">bytestream</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">magic</span> <span class="o">!=</span> <span class="mi">2049</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;Invalid magic number </span><span class="si">%d</span><span class="s1"> in MNIST label file: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
+                <span class="p">(</span><span class="n">magic</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="n">num_items</span> <span class="o">=</span> <span class="n">_read32</span><span class="p">(</span><span class="n">bytestream</span><span class="p">)</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="n">bytestream</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">num_items</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">labels</span></div>
+
+
+<div class="viewcode-block" id="read_data_sets"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.datasets.html#zoo.pipeline.api.keras.datasets.mnist.read_data_sets">[docs]</a><span class="k">def</span> <span class="nf">read_data_sets</span><span class="p">(</span><span class="n">train_dir</span><span class="p">,</span> <span class="n">data_type</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parse or download mnist data if train_dir is empty.</span>
+
+<span class="sd">    :param: train_dir: The directory storing the mnist data</span>
+
+<span class="sd">    :param: data_type: Reading training set or testing set.It can be either &quot;train&quot; or &quot;test&quot;</span>
+
+<span class="sd">    :return:</span>
+
+<span class="sd">    ```</span>
+<span class="sd">    (ndarray, ndarray) representing (features, labels)</span>
+<span class="sd">    features is a 4D unit8 numpy array [index, y, x, depth]</span>
+<span class="sd">    representing each pixel valued from 0 to 255.</span>
+<span class="sd">    labels is 1D unit8 nunpy array representing the label valued from 0 to 9.</span>
+<span class="sd">    ```</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">TRAIN_IMAGES</span> <span class="o">=</span> <span class="s1">&#39;train-images-idx3-ubyte.gz&#39;</span>
+    <span class="n">TRAIN_LABELS</span> <span class="o">=</span> <span class="s1">&#39;train-labels-idx1-ubyte.gz&#39;</span>
+    <span class="n">TEST_IMAGES</span> <span class="o">=</span> <span class="s1">&#39;t10k-images-idx3-ubyte.gz&#39;</span>
+    <span class="n">TEST_LABELS</span> <span class="o">=</span> <span class="s1">&#39;t10k-labels-idx1-ubyte.gz&#39;</span>
+
+    <span class="k">if</span> <span class="n">data_type</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">local_file</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">maybe_download</span><span class="p">(</span><span class="n">TRAIN_IMAGES</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span>
+                                         <span class="n">SOURCE_URL</span> <span class="o">+</span> <span class="n">TRAIN_IMAGES</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">train_images</span> <span class="o">=</span> <span class="n">extract_images</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="n">local_file</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">maybe_download</span><span class="p">(</span><span class="n">TRAIN_LABELS</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span>
+                                         <span class="n">SOURCE_URL</span> <span class="o">+</span> <span class="n">TRAIN_LABELS</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">train_labels</span> <span class="o">=</span> <span class="n">extract_labels</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">local_file</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">maybe_download</span><span class="p">(</span><span class="n">TEST_IMAGES</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span>
+                                         <span class="n">SOURCE_URL</span> <span class="o">+</span> <span class="n">TEST_IMAGES</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">test_images</span> <span class="o">=</span> <span class="n">extract_images</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="n">local_file</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">maybe_download</span><span class="p">(</span><span class="n">TEST_LABELS</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span>
+                                         <span class="n">SOURCE_URL</span> <span class="o">+</span> <span class="n">TEST_LABELS</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">local_file</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">test_labels</span> <span class="o">=</span> <span class="n">extract_labels</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span></div>
+
+
+<div class="viewcode-block" id="load_data"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.datasets.html#zoo.pipeline.api.keras.datasets.mnist.load_data">[docs]</a><span class="k">def</span> <span class="nf">load_data</span><span class="p">(</span><span class="n">location</span><span class="o">=</span><span class="s2">&quot;/tmp/.zoo/dataset/mnist&quot;</span><span class="p">):</span>
+    <span class="p">(</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">read_data_sets</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">read_data_sets</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">),</span> <span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="p">(</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">),</span> <span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">()</span>
+    <span class="n">train</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">read_data_sets</span><span class="p">(</span><span class="s2">&quot;/tmp/.zoo/dataset/mnist/&quot;</span><span class="p">,</span> <span class="s2">&quot;train&quot;</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">read_data_sets</span><span class="p">(</span><span class="s2">&quot;/tmp/.zoo/dataset/mnist/&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

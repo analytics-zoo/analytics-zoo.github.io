@@ -1,0 +1,316 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.automl.pipeline.time_sequence &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.automl.pipeline.time_sequence</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">zoo.automl.common.metrics</span> <span class="kn">import</span> <span class="n">Evaluator</span>
+<span class="kn">from</span> <span class="nn">zoo.automl.pipeline.abstract</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">zoo.automl.common.util</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">zoo.automl.feature.time_sequence</span> <span class="kn">import</span> <span class="n">TimeSequenceFeatureTransformer</span>
+<span class="kn">from</span> <span class="nn">zoo.automl.model</span> <span class="kn">import</span> <span class="n">TimeSequenceModel</span>
+<span class="kn">from</span> <span class="nn">zoo.automl.common.parameters</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="TimeSequencePipeline"><a class="viewcode-back" href="../../../../zoo.automl.pipeline.html#zoo.automl.pipeline.time_sequence.TimeSequencePipeline">[docs]</a><span class="k">class</span> <span class="nc">TimeSequencePipeline</span><span class="p">(</span><span class="n">Pipeline</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feature_transformers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        initialize a pipeline</span>
+<span class="sd">        :param model: the internal model</span>
+<span class="sd">        :param feature_transformers: the feature transformers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span> <span class="o">=</span> <span class="n">feature_transformers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">-%H%M%S&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TimeSequencePipeline.describe"><a class="viewcode-back" href="../../../../zoo.automl.pipeline.html#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.describe">[docs]</a>    <span class="k">def</span> <span class="nf">describe</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">init_info</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;future_seq_len&#39;</span><span class="p">,</span> <span class="s1">&#39;dt_col&#39;</span><span class="p">,</span> <span class="s1">&#39;target_col&#39;</span><span class="p">,</span> <span class="s1">&#39;extra_features_col&#39;</span><span class="p">,</span> <span class="s1">&#39;drop_missing&#39;</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**** Initialization info ****&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">init_info</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">info</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">info</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimeSequencePipeline.fit"><a class="viewcode-back" href="../../../../zoo.automl.pipeline.html#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_df</span><span class="p">,</span> <span class="n">validation_df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">epoch_num</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">input_df</span><span class="p">,</span> <span class="n">is_train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">validation_df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">validation_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">validation_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">validation_df</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">validation_data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">new_config</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;epochs&#39;</span><span class="p">:</span> <span class="n">epoch_num</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit_eval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">validation_data</span><span class="p">,</span> <span class="n">mc</span><span class="o">=</span><span class="n">mc</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">new_config</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fit done!&#39;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_is_val_df_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validation_df</span><span class="p">):</span>
+        <span class="n">df_not_empty</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">validation_df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">validation_df</span><span class="o">.</span><span class="n">empty</span>
+        <span class="n">df_list_not_empty</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">validation_df</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> \
+            <span class="ow">and</span> <span class="n">validation_df</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">empty</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">validation_df</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">validation_df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">df_not_empty</span> <span class="ow">or</span> <span class="n">df_list_not_empty</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">_check_configs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">required_configs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;future_seq_len&#39;</span><span class="p">}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">required_configs</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Missing required parameters in configuration. &quot;</span> <span class="o">+</span>
+                             <span class="s2">&quot;Required parameters are: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">required_configs</span><span class="p">))</span>
+        <span class="n">default_config</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;dt_col&#39;</span><span class="p">:</span> <span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;target_col&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="s1">&#39;extra_features_col&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                          <span class="s1">&#39;drop_missing&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;past_seq_len&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;batch_size&#39;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span> <span class="s1">&#39;lr&#39;</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+                          <span class="s1">&#39;dropout&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s1">&#39;epochs&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;metric&#39;</span><span class="p">:</span> <span class="s1">&#39;mse&#39;</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">config</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">default_config</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">config</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Config: </span><span class="se">\&#39;</span><span class="si">{}</span><span class="se">\&#39;</span><span class="s1"> is not specified. &#39;</span>
+                      <span class="s1">&#39;A default value of </span><span class="si">{}</span><span class="s1"> will be used.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+
+<div class="viewcode-block" id="TimeSequencePipeline.get_default_configs"><a class="viewcode-back" href="../../../../zoo.automl.pipeline.html#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.get_default_configs">[docs]</a>    <span class="k">def</span> <span class="nf">get_default_configs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">default_configs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;dt_col&#39;</span><span class="p">:</span> <span class="s1">&#39;datetime&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;target_col&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span>
+                           <span class="s1">&#39;extra_features_col&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                           <span class="s1">&#39;drop_missing&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                           <span class="s1">&#39;future_seq_len&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                           <span class="s1">&#39;past_seq_len&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                           <span class="s1">&#39;batch_size&#39;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+                           <span class="s1">&#39;lr&#39;</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+                           <span class="s1">&#39;dropout&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+                           <span class="s1">&#39;epochs&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                           <span class="s1">&#39;metric&#39;</span><span class="p">:</span> <span class="s1">&#39;mean_squared_error&#39;</span><span class="p">}</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**** default config: ****&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">default_configs</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">config</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">default_configs</span><span class="p">[</span><span class="n">config</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You can change any fields in the default configs by passing into &quot;</span>
+              <span class="s2">&quot;fit_with_fixed_configs(). Otherwise, the default values will be used.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">default_configs</span></div>
+
+<div class="viewcode-block" id="TimeSequencePipeline.fit_with_fixed_configs"><a class="viewcode-back" href="../../../../zoo.automl.pipeline.html#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.fit_with_fixed_configs">[docs]</a>    <span class="k">def</span> <span class="nf">fit_with_fixed_configs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_df</span><span class="p">,</span> <span class="n">validation_df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">user_configs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit pipeline with fixed configs. The model will be trained from initialization</span>
+<span class="sd">        with the hyper-parameter specified in configs. The configs contain both identity configs</span>
+<span class="sd">        (Eg. &quot;future_seq_len&quot;, &quot;dt_col&quot;, &quot;target_col&quot;, &quot;metric&quot;) and automl tunable configs</span>
+<span class="sd">        (Eg. &quot;past_seq_len&quot;, &quot;batch_size&quot;).</span>
+<span class="sd">        We recommend calling get_default_configs to see the name and default values of configs you</span>
+<span class="sd">        you can specify.</span>
+<span class="sd">        :param input_df: one data frame or a list of data frames</span>
+<span class="sd">        :param validation_df: one data frame or a list of data frames</span>
+<span class="sd">        :param user_configs: you can overwrite or add more configs with user_configs. Eg. &quot;epochs&quot;</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># self._check_configs()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_default_configs</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">user_configs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">user_configs</span><span class="p">)</span>
+        <span class="n">ft_id_config_set</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;future_seq_len&#39;</span><span class="p">,</span> <span class="s1">&#39;dt_col&#39;</span><span class="p">,</span> <span class="s1">&#39;target_col&#39;</span><span class="p">,</span>
+                            <span class="s1">&#39;extra_features_col&#39;</span><span class="p">,</span> <span class="s1">&#39;drop_missing&#39;</span><span class="p">}</span>
+        <span class="n">ft_id_configs</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">ft_id_config_set</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span> <span class="o">=</span> <span class="n">TimeSequenceFeatureTransformer</span><span class="p">(</span><span class="o">**</span><span class="n">ft_id_configs</span><span class="p">)</span>
+        <span class="n">model_id_config_set</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;future_seq_len&#39;</span><span class="p">}</span>
+        <span class="n">ft_id_configs</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">model_id_config_set</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">TimeSequenceModel</span><span class="p">(</span><span class="n">check_optional_config</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">ft_id_configs</span><span class="p">)</span>
+        <span class="n">all_available_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span><span class="o">.</span><span class="n">get_feature_list</span><span class="p">(</span><span class="n">input_df</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;selected_features&quot;</span><span class="p">:</span> <span class="n">all_available_features</span><span class="p">})</span>
+        <span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">input_df</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_val_df_valid</span><span class="p">(</span><span class="n">validation_df</span><span class="p">):</span>
+            <span class="n">validation_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">validation_df</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">validation_data</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit_eval</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span>
+                            <span class="n">validation_data</span><span class="o">=</span><span class="n">validation_data</span><span class="p">,</span>
+                            <span class="n">mc</span><span class="o">=</span><span class="n">mc</span><span class="p">,</span>
+                            <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimeSequencePipeline.evaluate"><a class="viewcode-back" href="../../../../zoo.automl.pipeline.html#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">input_df</span><span class="p">,</span>
+                 <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mse&quot;</span><span class="p">],</span>
+                 <span class="n">multioutput</span><span class="o">=</span><span class="s1">&#39;raw_values&#39;</span>
+                 <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        evaluate the pipeline</span>
+<span class="sd">        :param input_df:</span>
+<span class="sd">        :param metrics: subset of [&#39;mean_squared_error&#39;, &#39;r_square&#39;, &#39;sMAPE&#39;]</span>
+<span class="sd">        :param multioutput: string in [&#39;raw_values&#39;, &#39;uniform_average&#39;]</span>
+<span class="sd">                &#39;raw_values&#39; :</span>
+<span class="sd">                    Returns a full set of errors in case of multioutput input.</span>
+<span class="sd">                &#39;uniform_average&#39; :</span>
+<span class="sd">                    Errors of all outputs are averaged with uniform weight.</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="n">metrics</span><span class="p">]</span>
+        <span class="c1"># if not isinstance(metrics, list):</span>
+        <span class="c1">#    raise ValueError(&quot;Expected metrics to be a list!&quot;)</span>
+
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">input_df</span><span class="p">,</span> <span class="n">is_train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_pred</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">y_pred</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">multioutput</span> <span class="o">=</span> <span class="s1">&#39;uniform_average&#39;</span>
+        <span class="n">y_unscale</span><span class="p">,</span> <span class="n">y_pred_unscale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span><span class="o">.</span><span class="n">post_processing</span><span class="p">(</span><span class="n">input_df</span><span class="p">,</span>
+                                                                              <span class="n">y_pred</span><span class="p">,</span>
+                                                                              <span class="n">is_train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">Evaluator</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">y_unscale</span><span class="p">,</span> <span class="n">y_pred_unscale</span><span class="p">,</span> <span class="n">multioutput</span><span class="o">=</span><span class="n">multioutput</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TimeSequencePipeline.predict"><a class="viewcode-back" href="../../../../zoo.automl.pipeline.html#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_df</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        predict test data with the pipeline fitted</span>
+<span class="sd">        :param input_df:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">input_df</span><span class="p">,</span> <span class="n">is_train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">y_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span><span class="o">.</span><span class="n">post_processing</span><span class="p">(</span><span class="n">input_df</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">is_train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">y_output</span></div>
+
+<div class="viewcode-block" id="TimeSequencePipeline.predict_with_uncertainty"><a class="viewcode-back" href="../../../../zoo.automl.pipeline.html#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.predict_with_uncertainty">[docs]</a>    <span class="k">def</span> <span class="nf">predict_with_uncertainty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_df</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">input_df</span><span class="p">,</span> <span class="n">is_train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">y_pred</span><span class="p">,</span> <span class="n">y_pred_uncertainty</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict_with_uncertainty</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="n">n_iter</span><span class="p">)</span>
+        <span class="n">y_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span><span class="o">.</span><span class="n">post_processing</span><span class="p">(</span><span class="n">input_df</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">is_train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">y_uncertainty</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span><span class="o">.</span><span class="n">unscale_uncertainty</span><span class="p">(</span><span class="n">y_pred_uncertainty</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">y_output</span><span class="p">,</span> <span class="n">y_uncertainty</span></div>
+
+<div class="viewcode-block" id="TimeSequencePipeline.save"><a class="viewcode-back" href="../../../../zoo.automl.pipeline.html#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ppl_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        save pipeline to file, contains feature transformer, model, trial config.</span>
+<span class="sd">        :param ppl_file:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ppl_file</span> <span class="o">=</span> <span class="n">ppl_file</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DEFAULT_PPL_DIR</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">.ppl&quot;</span><span class="o">.</span>
+                                            <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">))</span>
+        <span class="n">save_zip</span><span class="p">(</span><span class="n">ppl_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_transformers</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pipeline is saved in&quot;</span><span class="p">,</span> <span class="n">ppl_file</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ppl_file</span></div>
+
+<div class="viewcode-block" id="TimeSequencePipeline.config_save"><a class="viewcode-back" href="../../../../zoo.automl.pipeline.html#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.config_save">[docs]</a>    <span class="k">def</span> <span class="nf">config_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        save all configs to file.</span>
+<span class="sd">        :param config_file:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config_file</span> <span class="o">=</span> <span class="n">config_file</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DEFAULT_CONFIG_DIR</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">.json&quot;</span><span class="o">.</span>
+                                                  <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">))</span>
+        <span class="n">save_config</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">config_file</span></div></div>
+
+
+<div class="viewcode-block" id="load_ts_pipeline"><a class="viewcode-back" href="../../../../zoo.automl.pipeline.html#zoo.automl.pipeline.time_sequence.load_ts_pipeline">[docs]</a><span class="k">def</span> <span class="nf">load_ts_pipeline</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="n">feature_transformers</span> <span class="o">=</span> <span class="n">TimeSequenceFeatureTransformer</span><span class="p">()</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">TimeSequenceModel</span><span class="p">(</span><span class="n">check_optional_config</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">all_config</span> <span class="o">=</span> <span class="n">restore_zip</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">feature_transformers</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="n">ts_pipeline</span> <span class="o">=</span> <span class="n">TimeSequencePipeline</span><span class="p">(</span><span class="n">feature_transformers</span><span class="o">=</span><span class="n">feature_transformers</span><span class="p">,</span>
+                                       <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                                       <span class="n">config</span><span class="o">=</span><span class="n">all_config</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Restore pipeline from&quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ts_pipeline</span></div>
+
+
+<div class="viewcode-block" id="load_xgboost_pipeline"><a class="viewcode-back" href="../../../../zoo.automl.pipeline.html#zoo.automl.pipeline.time_sequence.load_xgboost_pipeline">[docs]</a><span class="k">def</span> <span class="nf">load_xgboost_pipeline</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">zoo.automl.feature.identity_transformer</span> <span class="kn">import</span> <span class="n">IdentityTransformer</span>
+    <span class="kn">from</span> <span class="nn">zoo.automl.model</span> <span class="kn">import</span> <span class="n">XGBoostRegressor</span>
+    <span class="n">feature_transformers</span> <span class="o">=</span> <span class="n">IdentityTransformer</span><span class="p">()</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">XGBoostRegressor</span><span class="p">()</span>
+
+    <span class="n">all_config</span> <span class="o">=</span> <span class="n">restore_zip</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">feature_transformers</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="n">ts_pipeline</span> <span class="o">=</span> <span class="n">TimeSequencePipeline</span><span class="p">(</span><span class="n">feature_transformers</span><span class="o">=</span><span class="n">feature_transformers</span><span class="p">,</span>
+                                       <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                                       <span class="n">config</span><span class="o">=</span><span class="n">all_config</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Restore pipeline from&quot;</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ts_pipeline</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

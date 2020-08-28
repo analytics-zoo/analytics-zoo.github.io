@@ -1,0 +1,218 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.automl.model.time_sequence &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.automl.model.time_sequence</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="kn">from</span> <span class="nn">.abstract</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="kn">from</span> <span class="nn">.VanillaLSTM</span> <span class="kn">import</span> <span class="n">VanillaLSTM</span>
+<span class="kn">from</span> <span class="nn">.Seq2Seq</span> <span class="kn">import</span> <span class="n">LSTMSeq2Seq</span>
+<span class="kn">from</span> <span class="nn">.MTNet_keras</span> <span class="kn">import</span> <span class="n">MTNetKeras</span>
+<span class="kn">from</span> <span class="nn">zoo.automl.common.util</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">MODEL_MAP</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;LSTM&quot;</span><span class="p">:</span> <span class="n">VanillaLSTM</span><span class="p">,</span>
+             <span class="s2">&quot;Seq2seq&quot;</span><span class="p">:</span> <span class="n">LSTMSeq2Seq</span><span class="p">,</span>
+             <span class="s2">&quot;MTNet&quot;</span><span class="p">:</span> <span class="n">MTNetKeras</span><span class="p">,</span>
+             <span class="p">}</span>
+
+
+<div class="viewcode-block" id="TimeSequenceModel"><a class="viewcode-back" href="../../../../zoo.automl.model.html#zoo.automl.model.time_sequence.TimeSequenceModel">[docs]</a><span class="k">class</span> <span class="nc">TimeSequenceModel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Time Sequence Model is used to do model selection.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">check_optional_config</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">future_seq_len</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Contructor of time sequence model</span>
+<span class="sd">        :param check_optional_config:</span>
+<span class="sd">        :param future_seq_len:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_optional_config</span> <span class="o">=</span> <span class="n">check_optional_config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">future_seq_len</span> <span class="o">=</span> <span class="n">future_seq_len</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_model</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1">#     if future_seq_len:</span>
+    <span class="c1">#         self._model_selection(future_seq_len, check_optional_config)</span>
+    <span class="c1">#</span>
+    <span class="c1"># def _model_selection(self, future_seq_len, check_optional_config=False, verbose=1):</span>
+    <span class="c1">#     if future_seq_len == 1:</span>
+    <span class="c1">#         self.model = VanillaLSTM(check_optional_config=check_optional_config,</span>
+    <span class="c1">#                                  future_seq_len=future_seq_len)</span>
+    <span class="c1">#         if verbose == 1:</span>
+    <span class="c1">#             print(&quot;Model selection: Vanilla LSTM model is selected.&quot;)</span>
+    <span class="c1">#     else:</span>
+    <span class="c1">#         self.model = LSTMSeq2Seq(check_optional_config=check_optional_config,</span>
+    <span class="c1">#                                  future_seq_len=future_seq_len)</span>
+    <span class="c1">#         if verbose == 1:</span>
+    <span class="c1">#             print(&quot;Model selection: LSTM Seq2Seq model is selected.&quot;)</span>
+
+<div class="viewcode-block" id="TimeSequenceModel.fit_eval"><a class="viewcode-back" href="../../../../zoo.automl.model.html#zoo.automl.model.time_sequence.TimeSequenceModel.fit_eval">[docs]</a>    <span class="k">def</span> <span class="nf">fit_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">validation_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;mse&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        fit for one iteration</span>
+<span class="sd">        :param x: 3-d array in format (no. of samples, past sequence length, 2+feature length),</span>
+<span class="sd">        in the last dimension, the 1st col is the time index (data type needs to be numpy datetime</span>
+<span class="sd">        type, e.g. &quot;datetime64&quot;),</span>
+<span class="sd">        the 2nd col is the target value (data type should be numeric)</span>
+<span class="sd">        :param y: 2-d numpy array in format (no. of samples, future sequence length)</span>
+<span class="sd">        if future sequence length &gt; 1, or 1-d numpy array in format (no. of samples, )</span>
+<span class="sd">        if future sequence length = 1</span>
+<span class="sd">        :param validation_data: tuple in format (x_test,y_test), data used for validation.</span>
+<span class="sd">        If this is specified, validation result will be the optimization target for automl.</span>
+<span class="sd">        Otherwise, train metric will be the optimization target.</span>
+<span class="sd">        :param metric: the way to measure the performance of model</span>
+<span class="sd">        :param config: optimization hyper parameters</span>
+<span class="sd">        :return: the resulting metric</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sel_model</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit_eval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+                                   <span class="n">validation_data</span><span class="o">=</span><span class="n">validation_data</span><span class="p">,</span>
+                                   <span class="n">mc</span><span class="o">=</span><span class="n">mc</span><span class="p">,</span>
+                                   <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                                   <span class="o">**</span><span class="n">config</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_sel_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected_model</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="s2">&quot;LSTM&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">MODEL_MAP</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_model</span><span class="p">](</span>
+            <span class="n">check_optional_config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">check_optional_config</span><span class="p">,</span>
+            <span class="n">future_seq_len</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">future_seq_len</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">verbose</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_model</span><span class="p">,</span> <span class="s2">&quot;is selected.&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TimeSequenceModel.evaluate"><a class="viewcode-back" href="../../../../zoo.automl.model.html#zoo.automl.model.time_sequence.TimeSequenceModel.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mse&#39;</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluate on x, y</span>
+<span class="sd">        :param x: input</span>
+<span class="sd">        :param y: target</span>
+<span class="sd">        :param metric: a list of metrics in string format</span>
+<span class="sd">        :return: a list of metric evaluation results</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">metric</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimeSequenceModel.predict"><a class="viewcode-back" href="../../../../zoo.automl.model.html#zoo.automl.model.time_sequence.TimeSequenceModel.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">mc</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prediction on x.</span>
+<span class="sd">        :param x: input</span>
+<span class="sd">        :return: predicted y</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimeSequenceModel.predict_with_uncertainty"><a class="viewcode-back" href="../../../../zoo.automl.model.html#zoo.automl.model.time_sequence.TimeSequenceModel.predict_with_uncertainty">[docs]</a>    <span class="k">def</span> <span class="nf">predict_with_uncertainty</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict_with_uncertainty</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n_iter</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimeSequenceModel.save"><a class="viewcode-back" href="../../../../zoo.automl.model.html#zoo.automl.model.time_sequence.TimeSequenceModel.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">config_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        save model to file.</span>
+<span class="sd">        :param model_path: the model file.</span>
+<span class="sd">        :param config_path: the config file</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">model_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;future_seq_len&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">future_seq_len</span><span class="p">,</span>
+                        <span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_model</span><span class="p">}</span>
+        <span class="n">save_config</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="n">model_config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">config_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimeSequenceModel.restore"><a class="viewcode-back" href="../../../../zoo.automl.model.html#zoo.automl.model.time_sequence.TimeSequenceModel.restore">[docs]</a>    <span class="k">def</span> <span class="nf">restore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">):</span>
+        <span class="c1"># assert &quot;future_seq_len&quot; in config</span>
+        <span class="k">assert</span> <span class="s2">&quot;model&quot;</span> <span class="ow">in</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">future_seq_len</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;future_seq_len&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sel_model</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># self._model_selection(future_seq_len=config[&quot;future_seq_len&quot;], verbose=0)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_required_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_get_required_parameters</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_optional_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_get_optional_parameters</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

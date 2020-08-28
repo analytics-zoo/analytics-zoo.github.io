@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.util.html" title="zoo.util package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -43,11 +46,11 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.tfpark.text.keras package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-tfpark-text-keras-intent-extraction-module">zoo.tfpark.text.keras.intent_extraction module</a></li>
-<li><a class="reference internal" href="#zoo-tfpark-text-keras-ner-module">zoo.tfpark.text.keras.ner module</a></li>
-<li><a class="reference internal" href="#zoo-tfpark-text-keras-pos-tagging-module">zoo.tfpark.text.keras.pos_tagging module</a></li>
-<li><a class="reference internal" href="#zoo-tfpark-text-keras-text-model-module">zoo.tfpark.text.keras.text_model module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.tfpark.text.keras.intent_extraction">zoo.tfpark.text.keras.intent_extraction module</a></li>
+<li><a class="reference internal" href="#module-zoo.tfpark.text.keras.ner">zoo.tfpark.text.keras.ner module</a></li>
+<li><a class="reference internal" href="#module-zoo.tfpark.text.keras.pos_tagging">zoo.tfpark.text.keras.pos_tagging module</a></li>
+<li><a class="reference internal" href="#module-zoo.tfpark.text.keras.text_model">zoo.tfpark.text.keras.text_model module</a></li>
+<li><a class="reference internal" href="#module-zoo.tfpark.text.keras">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,20 +93,199 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-tfpark-text-keras-intent-extraction-module">
-<h2>zoo.tfpark.text.keras.intent_extraction module<a class="headerlink" href="#zoo-tfpark-text-keras-intent-extraction-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.tfpark.text.keras.intent_extraction">
+<span id="zoo-tfpark-text-keras-intent-extraction-module"></span><h2>zoo.tfpark.text.keras.intent_extraction module<a class="headerlink" href="#module-zoo.tfpark.text.keras.intent_extraction" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.tfpark.text.keras.intent_extraction.IntentEntity">
+<em class="property">class </em><code class="descclassname">zoo.tfpark.text.keras.intent_extraction.</code><code class="descname">IntentEntity</code><span class="sig-paren">(</span><em>num_intents</em>, <em>num_entities</em>, <em>word_vocab_size</em>, <em>char_vocab_size</em>, <em>word_length=12</em>, <em>word_emb_dim=100</em>, <em>char_emb_dim=30</em>, <em>char_lstm_dim=30</em>, <em>tagger_lstm_dim=100</em>, <em>dropout=0.2</em>, <em>optimizer=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/text/keras/intent_extraction.html#IntentEntity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.text.keras.intent_extraction.IntentEntity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.tfpark.text.keras.text_model.TextKerasModel" title="zoo.tfpark.text.keras.text_model.TextKerasModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.tfpark.text.keras.text_model.TextKerasModel</span></code></a></p>
+<p>A multi-task model used for joint intent extraction and slot filling.</p>
+<p>This model has two inputs:
+- word indices of shape (batch, sequence_length)
+- character indices of shape (batch, sequence_length, word_length)
+This model has two outputs:
+- intent labels of shape (batch, num_intents)
+- entity tags of shape (batch, sequence_length, num_entities)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>num_intents</strong> – Positive int. The number of intent classes to be classified.</li>
+<li><strong>num_entities</strong> – Positive int. The number of slot labels to be classified.</li>
+<li><strong>word_vocab_size</strong> – Positive int. The size of the word dictionary.</li>
+<li><strong>char_vocab_size</strong> – Positive int. The size of the character dictionary.</li>
+<li><strong>word_length</strong> – Positive int. The max word length in characters. Default is 12.</li>
+<li><strong>word_emb_dim</strong> – Positive int. The dimension of word embeddings. Default is 100.</li>
+<li><strong>char_emb_dim</strong> – Positive int. The dimension of character embeddings. Default is 30.</li>
+<li><strong>char_lstm_dim</strong> – Positive int. The hidden size of character feature Bi-LSTM layer.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Default is 30.
+:param tagger_lstm_dim: Positive int. The hidden size of tagger Bi-LSTM layers. Default is 100.
+:param dropout: Dropout rate. Default is 0.2.
+:param optimizer: Optimizer to train the model.
+If not specified, it will by default to be tf.train.AdamOptimizer().</p>
+<dl class="staticmethod">
+<dt id="zoo.tfpark.text.keras.intent_extraction.IntentEntity.load_model">
+<em class="property">static </em><code class="descname">load_model</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/text/keras/intent_extraction.html#IntentEntity.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.text.keras.intent_extraction.IntentEntity.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an existing IntentEntity model (with weights) from HDF5 file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – String. The path to the pre-defined model.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">IntentEntity.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-tfpark-text-keras-ner-module">
-<h2>zoo.tfpark.text.keras.ner module<a class="headerlink" href="#zoo-tfpark-text-keras-ner-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.tfpark.text.keras.ner">
+<span id="zoo-tfpark-text-keras-ner-module"></span><h2>zoo.tfpark.text.keras.ner module<a class="headerlink" href="#module-zoo.tfpark.text.keras.ner" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.tfpark.text.keras.ner.NER">
+<em class="property">class </em><code class="descclassname">zoo.tfpark.text.keras.ner.</code><code class="descname">NER</code><span class="sig-paren">(</span><em>num_entities</em>, <em>word_vocab_size</em>, <em>char_vocab_size</em>, <em>word_length=12</em>, <em>word_emb_dim=100</em>, <em>char_emb_dim=30</em>, <em>tagger_lstm_dim=100</em>, <em>dropout=0.5</em>, <em>crf_mode='reg'</em>, <em>optimizer=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/text/keras/ner.html#NER"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.text.keras.ner.NER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.tfpark.text.keras.text_model.TextKerasModel" title="zoo.tfpark.text.keras.text_model.TextKerasModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.tfpark.text.keras.text_model.TextKerasModel</span></code></a></p>
+<p>The model used for named entity recognition using Bidirectional LSTM with
+Conditional Random Field (CRF) sequence classifier.</p>
+<p>This model has two inputs:
+- word indices of shape (batch, sequence_length)
+- character indices of shape (batch, sequence_length, word_length)
+This model outputs entity tags of shape (batch, sequence_length, num_entities).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>num_entities</strong> – Positive int. The number of entity labels to be classified.</li>
+<li><strong>word_vocab_size</strong> – Positive int. The size of the word dictionary.</li>
+<li><strong>char_vocab_size</strong> – Positive int. The size of the character dictionary.</li>
+<li><strong>word_length</strong> – Positive int. The max word length in characters. Default is 12.</li>
+<li><strong>word_emb_dim</strong> – Positive int. The dimension of word embeddings. Default is 100.</li>
+<li><strong>char_emb_dim</strong> – Positive int. The dimension of character embeddings. Default is 30.</li>
+<li><strong>tagger_lstm_dim</strong> – Positive int. The hidden size of tagger Bi-LSTM layers. Default is 100.</li>
+<li><strong>dropout</strong> – Dropout rate. Default is 0.5.</li>
+<li><strong>crf_mode</strong> – String. CRF operation mode. Either ‘reg’ or ‘pad’. Default is ‘reg’.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>‘reg’ for regular full sequence learning (all sequences have equal length).
+‘pad’ for supplied sequence lengths (useful for padded sequences).
+For ‘pad’ mode, a third input for sequence_length (batch, 1) is needed.
+:param optimizer: Optimizer to train the model. If not specified, it will by default
+to be tf.keras.optimizers.Adam(0.001, clipnorm=5.).</p>
+<dl class="staticmethod">
+<dt id="zoo.tfpark.text.keras.ner.NER.load_model">
+<em class="property">static </em><code class="descname">load_model</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/text/keras/ner.html#NER.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.text.keras.ner.NER.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an existing NER model (with weights) from HDF5 file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – String. The path to the pre-defined model.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">NER.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-tfpark-text-keras-pos-tagging-module">
-<h2>zoo.tfpark.text.keras.pos_tagging module<a class="headerlink" href="#zoo-tfpark-text-keras-pos-tagging-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.tfpark.text.keras.pos_tagging">
+<span id="zoo-tfpark-text-keras-pos-tagging-module"></span><h2>zoo.tfpark.text.keras.pos_tagging module<a class="headerlink" href="#module-zoo.tfpark.text.keras.pos_tagging" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.tfpark.text.keras.pos_tagging.SequenceTagger">
+<em class="property">class </em><code class="descclassname">zoo.tfpark.text.keras.pos_tagging.</code><code class="descname">SequenceTagger</code><span class="sig-paren">(</span><em>num_pos_labels</em>, <em>num_chunk_labels</em>, <em>word_vocab_size</em>, <em>char_vocab_size=None</em>, <em>word_length=12</em>, <em>feature_size=100</em>, <em>dropout=0.2</em>, <em>classifier='softmax'</em>, <em>optimizer=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/text/keras/pos_tagging.html#SequenceTagger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.text.keras.pos_tagging.SequenceTagger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.tfpark.text.keras.text_model.TextKerasModel" title="zoo.tfpark.text.keras.text_model.TextKerasModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.tfpark.text.keras.text_model.TextKerasModel</span></code></a></p>
+<p>The model used as POS-tagger and chunker for sentence tagging, which contains three
+Bidirectional LSTM layers.</p>
+<p>This model can have one or two input(s):
+- word indices of shape (batch, sequence_length)
+<a href="#id1"><span class="problematic" id="id2">*</span></a>If char_vocab_size is not None:
+- character indices of shape (batch, sequence_length, word_length)
+This model has two outputs:
+- pos tags of shape (batch, sequence_length, num_pos_labels)
+- chunk tags of shape (batch, sequence_length, num_chunk_labels)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>num_pos_labels</strong> – Positive int. The number of pos labels to be classified.</li>
+<li><strong>num_chunk_labels</strong> – Positive int. The number of chunk labels to be classified.</li>
+<li><strong>word_vocab_size</strong> – Positive int. The size of the word dictionary.</li>
+<li><strong>char_vocab_size</strong> – Positive int. The size of the character dictionary.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Default is None and in this case only one input, namely word indices
+is expected.
+:param word_length: Positive int. The max word length in characters. Default is 12.
+:param feature_size: Positive int. The size of Embedding and Bi-LSTM layers. Default is 100.
+:param dropout: Dropout rate. Default is 0.5.
+:param classifier: String. The classification layer used for tagging chunks.
+Either ‘softmax’ or ‘crf’ (Conditional Random Field). Default is ‘softmax’.
+:param optimizer: Optimizer to train the model. If not specified, it will by default
+to be tf.train.AdamOptimizer().</p>
+<dl class="staticmethod">
+<dt id="zoo.tfpark.text.keras.pos_tagging.SequenceTagger.load_model">
+<em class="property">static </em><code class="descname">load_model</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/text/keras/pos_tagging.html#SequenceTagger.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.text.keras.pos_tagging.SequenceTagger.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an existing SequenceTagger model (with weights) from HDF5 file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – String. The path to the pre-defined model.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">NER.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-tfpark-text-keras-text-model-module">
-<h2>zoo.tfpark.text.keras.text_model module<a class="headerlink" href="#zoo-tfpark-text-keras-text-model-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.tfpark.text.keras.text_model">
+<span id="zoo-tfpark-text-keras-text-model-module"></span><h2>zoo.tfpark.text.keras.text_model module<a class="headerlink" href="#module-zoo.tfpark.text.keras.text_model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.tfpark.text.keras.text_model.TextKerasModel">
+<em class="property">class </em><code class="descclassname">zoo.tfpark.text.keras.text_model.</code><code class="descname">TextKerasModel</code><span class="sig-paren">(</span><em>labor</em>, <em>optimizer=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/text/keras/text_model.html#TextKerasModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.text.keras.text_model.TextKerasModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="zoo.tfpark.html#zoo.tfpark.model.KerasModel" title="zoo.tfpark.model.KerasModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.tfpark.model.KerasModel</span></code></a></p>
+<p>The base class for text models in tfpark.</p>
+<dl class="method">
+<dt id="zoo.tfpark.text.keras.text_model.TextKerasModel.save_model">
+<code class="descname">save_model</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/tfpark/text/keras/text_model.html#TextKerasModel.save_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.tfpark.text.keras.text_model.TextKerasModel.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the model to a single HDF5 file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – String. The path to save the model.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.tfpark.text.keras">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.tfpark.text.keras" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -119,6 +301,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.util.html" title="zoo.util package"
              >next</a> |</li>
