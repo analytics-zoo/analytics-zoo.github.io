@@ -33,6 +33,10 @@
       var is_top_frame = false;
         
         var pageToc = [
+          {title: "Initialization and Termination", url: "#initialization-and-termination", children: [
+          ]},
+          {title: "Extra Configurations", url: "#extra-configurations", children: [
+          ]},
         ];
 
     </script>
@@ -59,12 +63,44 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>OrcaContext</strong></h1>
     <hr>
-    <p>We support users to make configurations when using the functionalities of <a href="../overview/">Project Orca</a> via <code>OrcaContext</code>.</p>
+    <h3 id="initialization-and-termination"><strong>Initialization and Termination</strong></h3>
+<p>As a starting point of <a href="../overview/">Project Orca</a>, you need to call <code>init_orca_context</code> to create or get a SparkContext for your Spark cluster (and launch Ray services
+across the cluster if necessary). When your application finishes, you need to call <code>stop_orca_context</code> to stop the SparkContext (and stop Ray services across the cluster if necessary).</p>
+<pre><code class="python">from zoo.orca import init_orca_context, stop_orca_context
+
+# At the very beginning:
+sc = init_orca_context(cluster_mode=&quot;local&quot;, cores=2, memory=&quot;2g&quot;, num_nodes=1,
+                       init_ray_on_spark=False, **kwargs)
+
+# Your application goes after init_orca_context.
+
+# When your application finishes:
+stop_orca_context()
+</code></pre>
+
+<p><strong>Arguments for</strong> <code>init_orca_context</code>:</p>
+<ul>
+<li><code>cluster_mode</code>: The mode for the Spark cluster. One of "local", "yarn-client", "standalone" and "spark-submit". Default to be "local". </li>
+</ul>
+<p>For "spark-submit", you are supposed to use spark-submit to submit the application. In this case, please set the Spark configurations through command line options or
+the properties file. You need to use "spark-submit" for yarn-cluster mode.To make things easier, you are recommended to use the launching scripts under
+<code>analytics-zoo/scripts</code>.</p>
+<p>For other cluster modes, you are recommended to install and run analytics-zoo through pip, which is more convenient.</p>
+<ul>
+<li><code>cores</code>: The number of cores to be used on each node. Default to be 2.</li>
+<li><code>memory</code>: The memory allocated for each node. Default to be '2g'.</li>
+<li><code>num_nodes</code>: The number of nodes to be used in the cluster. Default to be 1. For Spark local, num_nodes should always be 1 and you don't need to change it.</li>
+<li><code>init_ray_on_spark</code>: Whether to launch Ray services across the cluster. Default to be False and in this case the Ray cluster would be launched lazily when Ray is involved in Project Orca.</li>
+<li><code>kwargs</code>: The extra keyword arguments used for creating SparkContext and launching Ray if any.</li>
+</ul>
+<hr />
+<h3 id="extra-configurations"><strong>Extra Configurations</strong></h3>
+<p>Users can make extra configurations when using the functionalities of Project Orca via <code>OrcaContext</code>.</p>
 <p>Import OrcaContext using <code>from from zoo.orca import OrcaContext</code> and then you can choose to modify the following options:</p>
 <ul>
 <li>log_output</li>
 </ul>
-<pre><code class="python">OrcaContext.log_output = False
+<pre><code class="python">OrcaContext.log_output = False  # Default
 OrcaContext.log_output = True
 </code></pre>
 
@@ -74,7 +110,7 @@ Default to be False. Needs to be set before initializing SparkContext.</p>
 <ul>
 <li>pandas_read_backend</li>
 </ul>
-<pre><code class="python">OrcaContext.pandas_read_backend = &quot;spark&quot;
+<pre><code class="python">OrcaContext.pandas_read_backend = &quot;spark&quot;  # Default
 OrcaContext.pandas_read_backend = &quot;pandas&quot;
 </code></pre>
 
@@ -84,7 +120,7 @@ Default to be "spark".</p>
 <ul>
 <li>serialize_data_creation</li>
 </ul>
-<pre><code class="python">OrcaContext.serialize_data_creation = False
+<pre><code class="python">OrcaContext.serialize_data_creation = False  # Default
 OrcaContext.serialize_data_creation = True
 </code></pre>
 
