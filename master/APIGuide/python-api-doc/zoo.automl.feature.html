@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.automl.model.html" title="zoo.automl.model package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -42,10 +45,10 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.automl.feature package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-automl-feature-abstract-module">zoo.automl.feature.abstract module</a></li>
-<li><a class="reference internal" href="#zoo-automl-feature-identity-transformer-module">zoo.automl.feature.identity_transformer module</a></li>
-<li><a class="reference internal" href="#zoo-automl-feature-time-sequence-module">zoo.automl.feature.time_sequence module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.feature.abstract">zoo.automl.feature.abstract module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.feature.identity_transformer">zoo.automl.feature.identity_transformer module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.feature.time_sequence">zoo.automl.feature.time_sequence module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.feature">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -88,17 +91,210 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-automl-feature-abstract-module">
-<h2>zoo.automl.feature.abstract module<a class="headerlink" href="#zoo-automl-feature-abstract-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.feature.abstract">
+<span id="zoo-automl-feature-abstract-module"></span><h2>zoo.automl.feature.abstract module<a class="headerlink" href="#module-zoo.automl.feature.abstract" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer">
+<em class="property">class </em><code class="descclassname">zoo.automl.feature.abstract.</code><code class="descname">BaseFeatureTransformer</code><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Abstract Base class for Feature transformers.</p>
+<dl class="attribute">
+<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.check_optional_config">
+<code class="descname">check_optional_config</code><em class="property"> = False</em><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.check_optional_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>input_df</em>, <em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>fit data with the input dataframe
+Will refit the scalars to this data if any.
+:param input_df: input to be fitted
+:param config: the config
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.restore">
+<code class="descname">restore</code><span class="sig-paren">(</span><em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore variables from file
+:param file_path: file contain saved parameters.
+i.e. some parameters are obtained during training,
+not in trial config, e.g. scaler fit params)
+:param config: the trial config
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>save the feature tools internal variables.
+Some of the variables are derived after fit_transform, so only saving config is not enough.
+:param: file_path : the file to be saved
+:param: config: the trial config
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.abstract.BaseFeatureTransformer.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>input_df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/abstract.html#BaseFeatureTransformer.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.abstract.BaseFeatureTransformer.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>transform the data with fitted
+:param input_df: input dataframe
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-automl-feature-identity-transformer-module">
-<h2>zoo.automl.feature.identity_transformer module<a class="headerlink" href="#zoo-automl-feature-identity-transformer-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.feature.identity_transformer">
+<span id="zoo-automl-feature-identity-transformer-module"></span><h2>zoo.automl.feature.identity_transformer module<a class="headerlink" href="#module-zoo.automl.feature.identity_transformer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.feature.identity_transformer.IdentityTransformer">
+<em class="property">class </em><code class="descclassname">zoo.automl.feature.identity_transformer.</code><code class="descname">IdentityTransformer</code><span class="sig-paren">(</span><em>feature_cols=None</em>, <em>target_col=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/identity_transformer.html#IdentityTransformer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.identity_transformer.IdentityTransformer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.automl.feature.abstract.BaseFeatureTransformer" title="zoo.automl.feature.abstract.BaseFeatureTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.feature.abstract.BaseFeatureTransformer</span></code></a></p>
+<p>echo transformer</p>
+<dl class="method">
+<dt id="zoo.automl.feature.identity_transformer.IdentityTransformer.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>input_df</em>, <em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/identity_transformer.html#IdentityTransformer.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.identity_transformer.IdentityTransformer.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>fit data with the input dataframe
+Will refit the scalars to this data if any.
+:param input_df: input to be fitted
+:param config: the config
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.identity_transformer.IdentityTransformer.post_processing">
+<code class="descname">post_processing</code><span class="sig-paren">(</span><em>input_df</em>, <em>y_pred</em>, <em>is_train</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/identity_transformer.html#IdentityTransformer.post_processing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.identity_transformer.IdentityTransformer.post_processing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.identity_transformer.IdentityTransformer.restore">
+<code class="descname">restore</code><span class="sig-paren">(</span><em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/identity_transformer.html#IdentityTransformer.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.identity_transformer.IdentityTransformer.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore variables from file
+:param file_path: file contain saved parameters.
+i.e. some parameters are obtained during training,
+not in trial config, e.g. scaler fit params)
+:param config: the trial config
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.identity_transformer.IdentityTransformer.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>file_path</em>, <em>replace=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/identity_transformer.html#IdentityTransformer.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.identity_transformer.IdentityTransformer.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>save the feature tools internal variables.
+Some of the variables are derived after fit_transform, so only saving config is not enough.
+:param: file_path : the file to be saved
+:param: config: the trial config
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.identity_transformer.IdentityTransformer.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>input_df</em>, <em>is_train=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/identity_transformer.html#IdentityTransformer.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.identity_transformer.IdentityTransformer.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>transform the data with fitted
+:param input_df: input dataframe
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-automl-feature-time-sequence-module">
-<h2>zoo.automl.feature.time_sequence module<a class="headerlink" href="#zoo-automl-feature-time-sequence-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.feature.time_sequence">
+<span id="zoo-automl-feature-time-sequence-module"></span><h2>zoo.automl.feature.time_sequence module<a class="headerlink" href="#module-zoo.automl.feature.time_sequence" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer">
+<em class="property">class </em><code class="descclassname">zoo.automl.feature.time_sequence.</code><code class="descname">TimeSequenceFeatureTransformer</code><span class="sig-paren">(</span><em>future_seq_len=1</em>, <em>dt_col='datetime'</em>, <em>target_col='value'</em>, <em>extra_features_col=None</em>, <em>drop_missing=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/time_sequence.html#TimeSequenceFeatureTransformer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.automl.feature.abstract.BaseFeatureTransformer" title="zoo.automl.feature.abstract.BaseFeatureTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.feature.abstract.BaseFeatureTransformer</span></code></a></p>
+<p>TimeSequence feature engineering</p>
+<dl class="method">
+<dt id="zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>input_df</em>, <em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/time_sequence.html#TimeSequenceFeatureTransformer.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit data and transform the raw data to features. This is used in training for hyper
+parameter searching.
+This method will refresh the parameters (e.g. min and max of the MinMaxScaler) if any
+:param input_df: The input time series data frame, it can be a list of data frame or just
+one dataframe
+Example:
+datetime   value   “extra feature 1”   “extra feature 2”
+2019-01-01 1.9 1   2
+2019-01-02 2.3 0   2
+:return: tuple (x,y)
+x: 3-d array in format (no. of samples, past sequence length, 2+feature length),
+in the last dimension, the 1st col is the time index
+(data type needs to be numpy datetime type, e.g. “datetime64”),
+the 2nd col is the target value (data type should be numeric)
+y: y is 2-d numpy array in format (no. of samples, future sequence length)
+if future sequence length &gt; 1, or 1-d numpy array in format (no. of samples, )
+if future sequence length = 1</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.get_feature_list">
+<code class="descname">get_feature_list</code><span class="sig-paren">(</span><em>input_df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/time_sequence.html#TimeSequenceFeatureTransformer.get_feature_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.get_feature_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.post_processing">
+<code class="descname">post_processing</code><span class="sig-paren">(</span><em>input_df</em>, <em>y_pred</em>, <em>is_train</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/time_sequence.html#TimeSequenceFeatureTransformer.post_processing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.post_processing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used only in pipeline predict, after calling self.transform(input_df, is_train=False).
+Post_processing includes converting the predicted array into data frame and scalar inverse
+transform.
+:param input_df: a list of data frames or one data frame.
+:param y_pred: Model prediction result (ndarray).
+:param is_train: indicate the output is used to evaluation or prediction.
+:return:
+In validation mode (is_train=True), return the unscaled y_pred and rolled input_y.
+In test mode (is_train=False) return unscaled data frame(s) in the format of
+{datetime_col} | {target_col(s)}.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.restore">
+<code class="descname">restore</code><span class="sig-paren">(</span><em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/time_sequence.html#TimeSequenceFeatureTransformer.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore variables from file
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>file_path</em>, <em>replace=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/time_sequence.html#TimeSequenceFeatureTransformer.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>save the feature tools internal variables as well as the initialization args.
+Some of the variables are derived after fit_transform, so only saving config is not enough.
+:param: file : the file to be saved
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>input_df</em>, <em>is_train=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/time_sequence.html#TimeSequenceFeatureTransformer.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform data into features using the preset of configurations from fit_transform
+:param input_df: The input time series data frame, input_df can be a list of data frame or
+one data frame.
+Example:
+datetime   value   “extra feature 1”   “extra feature 2”
+2019-01-01  1.9         1                       2
+2019-01-02  2.3         0                       2
+:param is_train: If the input_df is for training.
+:return: tuple (x,y)
+x: 3-d array in format (no. of samples, past sequence length, 2+feature length),
+in the last dimension, the 1st col is the time index
+(data type needs to be numpy datetime type, e.g. “datetime64”),
+the 2nd col is the target value (data type should be numeric)
+y: y is 2-d numpy array in format (no. of samples, future sequence length)
+if future sequence length &gt; 1, or 1-d numpy array in format (no. of samples, )
+if future sequence length = 1</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.unscale_uncertainty">
+<code class="descname">unscale_uncertainty</code><span class="sig-paren">(</span><em>y_uncertainty</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/feature/time_sequence.html#TimeSequenceFeatureTransformer.unscale_uncertainty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.feature.time_sequence.TimeSequenceFeatureTransformer.unscale_uncertainty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.feature">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.automl.feature" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -114,6 +310,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.automl.model.html" title="zoo.automl.model package"
              >next</a> |</li>

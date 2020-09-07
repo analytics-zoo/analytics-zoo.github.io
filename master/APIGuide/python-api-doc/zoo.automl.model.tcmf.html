@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.automl.pipeline.html" title="zoo.automl.pipeline package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -43,11 +46,11 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.automl.model.tcmf package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-automl-model-tcmf-deepglo-module">zoo.automl.model.tcmf.DeepGLO module</a></li>
-<li><a class="reference internal" href="#zoo-automl-model-tcmf-data-loader-module">zoo.automl.model.tcmf.data_loader module</a></li>
-<li><a class="reference internal" href="#zoo-automl-model-tcmf-local-model-module">zoo.automl.model.tcmf.local_model module</a></li>
-<li><a class="reference internal" href="#zoo-automl-model-tcmf-time-module">zoo.automl.model.tcmf.time module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.model.tcmf.DeepGLO">zoo.automl.model.tcmf.DeepGLO module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.model.tcmf.data_loader">zoo.automl.model.tcmf.data_loader module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.model.tcmf.local_model">zoo.automl.model.tcmf.local_model module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.model.tcmf.time">zoo.automl.model.tcmf.time module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.model.tcmf">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,20 +93,300 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-automl-model-tcmf-deepglo-module">
-<h2>zoo.automl.model.tcmf.DeepGLO module<a class="headerlink" href="#zoo-automl-model-tcmf-deepglo-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.model.tcmf.DeepGLO">
+<span id="zoo-automl-model-tcmf-deepglo-module"></span><h2>zoo.automl.model.tcmf.DeepGLO module<a class="headerlink" href="#module-zoo.automl.model.tcmf.DeepGLO" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO">
+<em class="property">class </em><code class="descclassname">zoo.automl.model.tcmf.DeepGLO.</code><code class="descname">DeepGLO</code><span class="sig-paren">(</span><em>vbsize=150, hbsize=256, num_channels_X=[32, 32, 32, 32, 1], num_channels_Y=[32, 32, 32, 32, 1], kernel_size=7, dropout=0.2, rank=64, kernel_size_Y=7, lr=0.0005, val_len=24, end_index=-24, normalize=False, start_date='2016-1-1', freq='H', covariates=None, use_time=True, dti=None, svd=False, period=None, forward_cov=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.calculate_newX_loss_vanilla">
+<code class="descname">calculate_newX_loss_vanilla</code><span class="sig-paren">(</span><em>Xn</em>, <em>Fn</em>, <em>Yn</em>, <em>Xf</em>, <em>alpha</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.calculate_newX_loss_vanilla"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.calculate_newX_loss_vanilla" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.create_Ycov">
+<code class="descname">create_Ycov</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.create_Ycov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.create_Ycov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.get_prediction_time_covs">
+<code class="descname">get_prediction_time_covs</code><span class="sig-paren">(</span><em>rg</em>, <em>horizon</em>, <em>last_step</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.get_prediction_time_covs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.get_prediction_time_covs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.get_time_covs">
+<code class="descname">get_time_covs</code><span class="sig-paren">(</span><em>start_date</em>, <em>num_ts</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.get_time_covs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.get_time_covs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>ind=None</em>, <em>last_step=100</em>, <em>future=10</em>, <em>normalize=False</em>, <em>bsize=90</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.predict_future">
+<code class="descname">predict_future</code><span class="sig-paren">(</span><em>model</em>, <em>inp</em>, <em>future=10</em>, <em>bsize=90</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.predict_future"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.predict_future" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.predict_future_batch">
+<code class="descname">predict_future_batch</code><span class="sig-paren">(</span><em>model</em>, <em>inp</em>, <em>future=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.predict_future_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.predict_future_batch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.predict_global">
+<code class="descname">predict_global</code><span class="sig-paren">(</span><em>ind</em>, <em>last_step=100</em>, <em>future=10</em>, <em>normalize=False</em>, <em>bsize=90</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.predict_global"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.predict_global" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.predict_horizon">
+<code class="descname">predict_horizon</code><span class="sig-paren">(</span><em>ind=None</em>, <em>future=10</em>, <em>normalize=False</em>, <em>bsize=90</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.predict_horizon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.predict_horizon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.recover_future_X">
+<code class="descname">recover_future_X</code><span class="sig-paren">(</span><em>last_step</em>, <em>future</em>, <em>num_epochs=50</em>, <em>alpha=0.5</em>, <em>vanilla=True</em>, <em>tol=1e-07</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.recover_future_X"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.recover_future_X" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.rolling_validation">
+<code class="descname">rolling_validation</code><span class="sig-paren">(</span><em>Ymat</em>, <em>tau=24</em>, <em>n=7</em>, <em>bsize=90</em>, <em>alpha=0.3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.rolling_validation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.rolling_validation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.step_factF_loss">
+<code class="descname">step_factF_loss</code><span class="sig-paren">(</span><em>inp</em>, <em>out</em>, <em>last_vindex</em>, <em>last_hindex</em>, <em>reg=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.step_factF_loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.step_factF_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.step_factX_loss">
+<code class="descname">step_factX_loss</code><span class="sig-paren">(</span><em>inp</em>, <em>out</em>, <em>last_vindex</em>, <em>last_hindex</em>, <em>reg=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.step_factX_loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.step_factX_loss" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.step_temporal_loss_X">
+<code class="descname">step_temporal_loss_X</code><span class="sig-paren">(</span><em>inp</em>, <em>last_vindex</em>, <em>last_hindex</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.step_temporal_loss_X"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.step_temporal_loss_X" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.temporal_to_tensor2d">
+<code class="descname">temporal_to_tensor2d</code><span class="sig-paren">(</span><em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.temporal_to_tensor2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.temporal_to_tensor2d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.tensor2d_to_temporal">
+<code class="descname">tensor2d_to_temporal</code><span class="sig-paren">(</span><em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.tensor2d_to_temporal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.tensor2d_to_temporal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.train_Xseq">
+<code class="descname">train_Xseq</code><span class="sig-paren">(</span><em>Ymat</em>, <em>num_epochs=20</em>, <em>early_stop=False</em>, <em>tenacity=3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.train_Xseq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.train_Xseq" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.train_Yseq">
+<code class="descname">train_Yseq</code><span class="sig-paren">(</span><em>num_epochs=20</em>, <em>early_stop=False</em>, <em>tenacity=7</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.train_Yseq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.train_Yseq" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.train_all_models">
+<code class="descname">train_all_models</code><span class="sig-paren">(</span><em>Ymat</em>, <em>init_epochs=100</em>, <em>alt_iters=10</em>, <em>y_iters=200</em>, <em>tenacity=7</em>, <em>mod=5</em>, <em>max_FX_epoch=300</em>, <em>max_TCN_epoch=300</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.train_all_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.train_all_models" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.DeepGLO.DeepGLO.train_factors">
+<code class="descname">train_factors</code><span class="sig-paren">(</span><em>reg_X=0.0</em>, <em>reg_F=0.0</em>, <em>mod=5</em>, <em>early_stop=False</em>, <em>tenacity=3</em>, <em>ind=None</em>, <em>seed=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#DeepGLO.train_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.DeepGLO.train_factors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.automl.model.tcmf.DeepGLO.get_model">
+<code class="descclassname">zoo.automl.model.tcmf.DeepGLO.</code><code class="descname">get_model</code><span class="sig-paren">(</span><em>A</em>, <em>y</em>, <em>lamb=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/DeepGLO.html#get_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.DeepGLO.get_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Regularized least-squares</p>
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-automl-model-tcmf-data-loader-module">
-<h2>zoo.automl.model.tcmf.data_loader module<a class="headerlink" href="#zoo-automl-model-tcmf-data-loader-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.model.tcmf.data_loader">
+<span id="zoo-automl-model-tcmf-data-loader-module"></span><h2>zoo.automl.model.tcmf.data_loader module<a class="headerlink" href="#module-zoo.automl.model.tcmf.data_loader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.model.tcmf.data_loader.DataLoader">
+<em class="property">class </em><code class="descclassname">zoo.automl.model.tcmf.data_loader.</code><code class="descname">DataLoader</code><span class="sig-paren">(</span><em>Ymat</em>, <em>covariates=None</em>, <em>Ycov=None</em>, <em>vbsize=200</em>, <em>hbsize=100</em>, <em>end_index=20000</em>, <em>val_len=30</em>, <em>shuffle=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/data_loader.html#DataLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.data_loader.DataLoader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Data Loader Class for DeepGLO</p>
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.data_loader.DataLoader.next_batch">
+<code class="descname">next_batch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/data_loader.html#DataLoader.next_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.data_loader.DataLoader.next_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns:
+data is returned as pytorch tensor of shape nd*cd*td where nd is vbsize,
+hb is hsize and cd is the number os channels (depends on covariates)
+inp: input batch
+out: one shifted output batch
+vindex: strating vertical index of input batch
+hindex: starting horizontal index of input batch</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.data_loader.DataLoader.supply_test">
+<code class="descname">supply_test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/data_loader.html#DataLoader.supply_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.data_loader.DataLoader.supply_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Supplies validation set in the same format as above</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-automl-model-tcmf-local-model-module">
-<h2>zoo.automl.model.tcmf.local_model module<a class="headerlink" href="#zoo-automl-model-tcmf-local-model-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.model.tcmf.local_model">
+<span id="zoo-automl-model-tcmf-local-model-module"></span><h2>zoo.automl.model.tcmf.local_model module<a class="headerlink" href="#module-zoo.automl.model.tcmf.local_model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.model.tcmf.local_model.Chomp1d">
+<em class="property">class </em><code class="descclassname">zoo.automl.model.tcmf.local_model.</code><code class="descname">Chomp1d</code><span class="sig-paren">(</span><em>chomp_size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#Chomp1d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.Chomp1d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.Chomp1d.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#Chomp1d.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.Chomp1d.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.automl.model.tcmf.local_model.LocalModel">
+<em class="property">class </em><code class="descclassname">zoo.automl.model.tcmf.local_model.</code><code class="descname">LocalModel</code><span class="sig-paren">(</span><em>Ymat, num_inputs=1, num_channels=[32, 32, 32, 32, 32, 1], kernel_size=7, dropout=0.2, vbsize=300, hbsize=128, num_epochs=100, lr=0.0005, val_len=10, test=True, end_index=120, normalize=False, start_date='2016-1-1', freq='H', covariates=None, use_time=False, dti=None, Ycov=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#LocalModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.LocalModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.LocalModel.convert_covariates">
+<code class="descname">convert_covariates</code><span class="sig-paren">(</span><em>data</em>, <em>covs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#LocalModel.convert_covariates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.LocalModel.convert_covariates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.LocalModel.convert_from_output">
+<code class="descname">convert_from_output</code><span class="sig-paren">(</span><em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#LocalModel.convert_from_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.LocalModel.convert_from_output" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.LocalModel.convert_to_input">
+<code class="descname">convert_to_input</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#LocalModel.convert_to_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.LocalModel.convert_to_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.LocalModel.convert_ycovs">
+<code class="descname">convert_ycovs</code><span class="sig-paren">(</span><em>data</em>, <em>ycovs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#LocalModel.convert_ycovs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.LocalModel.convert_ycovs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.LocalModel.predict_future">
+<code class="descname">predict_future</code><span class="sig-paren">(</span><em>data_in</em>, <em>covariates=None</em>, <em>ycovs=None</em>, <em>future=10</em>, <em>bsize=40</em>, <em>normalize=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#LocalModel.predict_future"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.LocalModel.predict_future" title="Permalink to this definition">¶</a></dt>
+<dd><p>data_in: input past data in same format of Ymat
+covariates: input past covariates
+ycovs: input past individual covariates
+future: number of time-points to predict
+bsize: batch size for processing (determine according to gopu memory limits)
+normalize: should be set according to the normalization used in the class initialization</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.LocalModel.predict_future_batch">
+<code class="descname">predict_future_batch</code><span class="sig-paren">(</span><em>data</em>, <em>covariates=None</em>, <em>ycovs=None</em>, <em>future=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#LocalModel.predict_future_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.LocalModel.predict_future_batch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.LocalModel.rolling_validation">
+<code class="descname">rolling_validation</code><span class="sig-paren">(</span><em>Ymat</em>, <em>tau=24</em>, <em>n=7</em>, <em>bsize=90</em>, <em>alpha=0.3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#LocalModel.rolling_validation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.LocalModel.rolling_validation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.LocalModel.train_model">
+<code class="descname">train_model</code><span class="sig-paren">(</span><em>early_stop=False</em>, <em>tenacity=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#LocalModel.train_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.LocalModel.train_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>early_stop: set true for using early stop
+tenacity: patience for early_stop</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.automl.model.tcmf.local_model.TemporalBlock">
+<em class="property">class </em><code class="descclassname">zoo.automl.model.tcmf.local_model.</code><code class="descname">TemporalBlock</code><span class="sig-paren">(</span><em>n_inputs</em>, <em>n_outputs</em>, <em>kernel_size</em>, <em>stride</em>, <em>dilation</em>, <em>padding</em>, <em>dropout=0.1</em>, <em>init=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#TemporalBlock"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.TemporalBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.TemporalBlock.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#TemporalBlock.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.TemporalBlock.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.TemporalBlock.init_weights">
+<code class="descname">init_weights</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#TemporalBlock.init_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.TemporalBlock.init_weights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.automl.model.tcmf.local_model.TemporalBlockLast">
+<em class="property">class </em><code class="descclassname">zoo.automl.model.tcmf.local_model.</code><code class="descname">TemporalBlockLast</code><span class="sig-paren">(</span><em>n_inputs</em>, <em>n_outputs</em>, <em>kernel_size</em>, <em>stride</em>, <em>dilation</em>, <em>padding</em>, <em>dropout=0.2</em>, <em>init=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#TemporalBlockLast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.TemporalBlockLast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.TemporalBlockLast.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#TemporalBlockLast.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.TemporalBlockLast.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.TemporalBlockLast.init_weights">
+<code class="descname">init_weights</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#TemporalBlockLast.init_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.TemporalBlockLast.init_weights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.automl.model.tcmf.local_model.TemporalConvNet">
+<em class="property">class </em><code class="descclassname">zoo.automl.model.tcmf.local_model.</code><code class="descname">TemporalConvNet</code><span class="sig-paren">(</span><em>num_inputs</em>, <em>num_channels</em>, <em>kernel_size=2</em>, <em>dropout=0.1</em>, <em>init=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#TemporalConvNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.TemporalConvNet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.local_model.TemporalConvNet.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/local_model.html#TemporalConvNet.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.local_model.TemporalConvNet.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-automl-model-tcmf-time-module">
-<h2>zoo.automl.model.tcmf.time module<a class="headerlink" href="#zoo-automl-model-tcmf-time-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.model.tcmf.time">
+<span id="zoo-automl-model-tcmf-time-module"></span><h2>zoo.automl.model.tcmf.time module<a class="headerlink" href="#module-zoo.automl.model.tcmf.time" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.model.tcmf.time.TimeCovariates">
+<em class="property">class </em><code class="descclassname">zoo.automl.model.tcmf.time.</code><code class="descname">TimeCovariates</code><span class="sig-paren">(</span><em>start_date</em>, <em>num_ts=100</em>, <em>freq='H'</em>, <em>normalized=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/time.html#TimeCovariates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.time.TimeCovariates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="zoo.automl.model.tcmf.time.TimeCovariates.get_covariates">
+<code class="descname">get_covariates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/model/tcmf/time.html#TimeCovariates.get_covariates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.model.tcmf.time.TimeCovariates.get_covariates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.model.tcmf">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.automl.model.tcmf" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -119,6 +402,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.automl.pipeline.html" title="zoo.automl.pipeline package"
              >next</a> |</li>

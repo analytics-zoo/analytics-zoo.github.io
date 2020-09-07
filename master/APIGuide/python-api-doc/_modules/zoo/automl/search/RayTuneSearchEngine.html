@@ -1,0 +1,487 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.automl.search.RayTuneSearchEngine &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.automl.search.RayTuneSearchEngine</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">ray</span>
+<span class="kn">from</span> <span class="nn">ray</span> <span class="kn">import</span> <span class="n">tune</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span><span class="p">,</span> <span class="n">deepcopy</span>
+
+<span class="kn">from</span> <span class="nn">zoo.automl.search.abstract</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">zoo.automl.common.util</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">ray.tune</span> <span class="kn">import</span> <span class="n">Trainable</span>
+<span class="kn">import</span> <span class="nn">ray.tune.track</span>
+<span class="kn">from</span> <span class="nn">ray.tune.suggest.bayesopt</span> <span class="kn">import</span> <span class="n">BayesOptSearch</span>
+
+
+<div class="viewcode-block" id="RayTuneSearchEngine"><a class="viewcode-back" href="../../../../zoo.automl.search.html#zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine">[docs]</a><span class="k">class</span> <span class="nc">RayTuneSearchEngine</span><span class="p">(</span><span class="n">SearchEngine</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tune driver</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">logs_dir</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                 <span class="n">resources_per_trial</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+                 <span class="n">remote_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor</span>
+<span class="sd">        :param resources_per_trial: resources for each trial</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipeline</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_func</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trainable_class</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resources_per_trail</span> <span class="o">=</span> <span class="n">resources_per_trial</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trials</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote_dir</span> <span class="o">=</span> <span class="n">remote_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+<div class="viewcode-block" id="RayTuneSearchEngine.compile"><a class="viewcode-back" href="../../../../zoo.automl.search.html#zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                <span class="n">input_df</span><span class="p">,</span>
+                <span class="n">model_create_func</span><span class="p">,</span>
+                <span class="n">search_space</span><span class="p">,</span>
+                <span class="n">num_samples</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">stop</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">search_algorithm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">search_algorithm_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">fixed_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">feature_transformers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="c1"># model=None,</span>
+                <span class="n">future_seq_len</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">validation_df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">mc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;mse&quot;</span><span class="p">,</span>
+                <span class="n">metric_mode</span><span class="o">=</span><span class="s2">&quot;min&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Do necessary preparations for the engine</span>
+<span class="sd">        :param input_df:</span>
+<span class="sd">        :param search_space:</span>
+<span class="sd">        :param num_samples:</span>
+<span class="sd">        :param stop:</span>
+<span class="sd">        :param search_algorithm:</span>
+<span class="sd">        :param search_algorithm_params:</span>
+<span class="sd">        :param fixed_params:</span>
+<span class="sd">        :param feature_transformers:</span>
+<span class="sd">        :param model:</span>
+<span class="sd">        :param validation_df:</span>
+<span class="sd">        :param metric:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_space</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_tune_config</span><span class="p">(</span><span class="n">search_space</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop_criteria</span> <span class="o">=</span> <span class="n">stop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_samples</span> <span class="o">=</span> <span class="n">num_samples</span>
+
+        <span class="k">if</span> <span class="n">search_algorithm</span> <span class="o">==</span> <span class="s1">&#39;BayesOpt&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">search_algorithm</span> <span class="o">=</span> <span class="n">BayesOptSearch</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">search_space</span><span class="p">,</span>
+                <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;reward_metric&quot;</span><span class="p">,</span>
+                <span class="n">mode</span><span class="o">=</span><span class="n">metric_mode</span><span class="p">,</span>
+                <span class="n">utility_kwargs</span><span class="o">=</span><span class="n">search_algorithm_params</span><span class="p">[</span><span class="s2">&quot;utility_kwargs&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">search_algorithm</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fixed_params</span> <span class="o">=</span> <span class="n">fixed_params</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_train_func</span><span class="p">(</span><span class="n">input_df</span><span class="o">=</span><span class="n">input_df</span><span class="p">,</span>
+                                                   <span class="n">model_create_func</span><span class="o">=</span><span class="n">model_create_func</span><span class="p">,</span>
+                                                   <span class="n">feature_transformers</span><span class="o">=</span><span class="n">feature_transformers</span><span class="p">,</span>
+                                                   <span class="n">future_seq_len</span><span class="o">=</span><span class="n">future_seq_len</span><span class="p">,</span>
+                                                   <span class="n">validation_df</span><span class="o">=</span><span class="n">validation_df</span><span class="p">,</span>
+                                                   <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
+                                                   <span class="n">metric_mode</span><span class="o">=</span><span class="n">metric_mode</span><span class="p">,</span>
+                                                   <span class="n">mc</span><span class="o">=</span><span class="n">mc</span><span class="p">,</span>
+                                                   <span class="n">remote_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">remote_dir</span><span class="p">)</span></div>
+        <span class="c1"># self.trainable_class = self._prepare_trainable_class(input_df,</span>
+        <span class="c1">#                                                      feature_transformers,</span>
+        <span class="c1">#                                                      # model,</span>
+        <span class="c1">#                                                      future_seq_len,</span>
+        <span class="c1">#                                                      validation_df,</span>
+        <span class="c1">#                                                      metric_op,</span>
+        <span class="c1">#                                                      self.remote_dir)</span>
+
+<div class="viewcode-block" id="RayTuneSearchEngine.run"><a class="viewcode-back" href="../../../../zoo.automl.search.html#zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run trials</span>
+<span class="sd">        :return: trials result</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># function based</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_algorithm</span><span class="p">:</span>
+            <span class="n">analysis</span> <span class="o">=</span> <span class="n">tune</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">train_func</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">stop</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_criteria</span><span class="p">,</span>
+                <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">search_space</span><span class="p">,</span>
+                <span class="n">num_samples</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_samples</span><span class="p">,</span>
+                <span class="n">resources_per_trial</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resources_per_trail</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">reuse_actors</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">analysis</span> <span class="o">=</span> <span class="n">tune</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">train_func</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fixed_params</span><span class="p">,</span>
+                <span class="n">stop</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_criteria</span><span class="p">,</span>
+                <span class="n">search_alg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">search_algorithm</span><span class="p">,</span>
+                <span class="n">num_samples</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_samples</span><span class="p">,</span>
+                <span class="n">resources_per_trial</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">resources_per_trail</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                <span class="n">reuse_actors</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trials</span> <span class="o">=</span> <span class="n">analysis</span><span class="o">.</span><span class="n">trials</span>
+        <span class="k">return</span> <span class="n">analysis</span></div>
+
+<div class="viewcode-block" id="RayTuneSearchEngine.get_best_trials"><a class="viewcode-back" href="../../../../zoo.automl.search.html#zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine.get_best_trials">[docs]</a>    <span class="k">def</span> <span class="nf">get_best_trials</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">sorted_trials</span> <span class="o">=</span> <span class="n">RayTuneSearchEngine</span><span class="o">.</span><span class="n">_get_sorted_trials</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trials</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;reward_metric&quot;</span><span class="p">)</span>
+        <span class="n">best_trials</span> <span class="o">=</span> <span class="n">sorted_trials</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_make_trial_output</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">best_trials</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">_make_trial_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trial</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">TrialOutput</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">trial</span><span class="o">.</span><span class="n">config</span><span class="p">,</span>
+                           <span class="n">model_path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">trial</span><span class="o">.</span><span class="n">logdir</span><span class="p">,</span> <span class="n">trial</span><span class="o">.</span><span class="n">last_result</span><span class="p">[</span><span class="s2">&quot;checkpoint&quot;</span><span class="p">]))</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_best_trial</span><span class="p">(</span><span class="n">trial_list</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the best trial.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">trial_list</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">trial</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">last_result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_sorted_trials</span><span class="p">(</span><span class="n">trial_list</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="n">trial_list</span><span class="p">,</span>
+            <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">trial</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">last_result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_best_result</span><span class="p">(</span><span class="n">trial_list</span><span class="p">,</span> <span class="n">metric</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve the last result from the best trial.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">metric</span><span class="p">:</span> <span class="n">RayTuneSearchEngine</span><span class="o">.</span><span class="n">_get_best_trial</span><span class="p">(</span><span class="n">trial_list</span><span class="p">,</span> <span class="n">metric</span><span class="p">)</span><span class="o">.</span><span class="n">last_result</span><span class="p">[</span><span class="n">metric</span><span class="p">]}</span>
+
+<div class="viewcode-block" id="RayTuneSearchEngine.test_run"><a class="viewcode-back" href="../../../../zoo.automl.search.html#zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine.test_run">[docs]</a>    <span class="k">def</span> <span class="nf">test_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">mock_reporter</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="s2">&quot;reward_metric&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">,</span> <span class="s2">&quot;Did not report proper metric&quot;</span>
+            <span class="k">assert</span> <span class="s2">&quot;checkpoint&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">,</span> <span class="s2">&quot;Accidentally removed `checkpoint`?&quot;</span>
+            <span class="k">raise</span> <span class="n">GoodError</span><span class="p">(</span><span class="s2">&quot;This works.&quot;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">train_func</span><span class="p">({</span><span class="s1">&#39;out_units&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                             <span class="s1">&#39;selected_features&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;MONTH(datetime)&quot;</span><span class="p">,</span> <span class="s2">&quot;WEEKDAY(datetime)&quot;</span><span class="p">]},</span>
+                            <span class="n">mock_reporter</span><span class="p">)</span>
+            <span class="c1"># self.train_func(self.search_space, mock_reporter)</span>
+
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Forgot to modify function signature?&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">e</span>
+        <span class="k">except</span> <span class="n">GoodError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Works!&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Didn&#39;t call reporter...&quot;</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_is_validation_df_valid</span><span class="p">(</span><span class="n">validation_df</span><span class="p">):</span>
+        <span class="n">df_not_empty</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">validation_df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">validation_df</span><span class="o">.</span><span class="n">empty</span>
+        <span class="n">df_list_not_empty</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">validation_df</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">validation_df</span> \
+            <span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">empty</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">validation_df</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">validation_df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">df_not_empty</span> <span class="ow">or</span> <span class="n">df_list_not_empty</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_prepare_train_func</span><span class="p">(</span><span class="n">input_df</span><span class="p">,</span>
+                            <span class="n">model_create_func</span><span class="p">,</span>
+                            <span class="n">feature_transformers</span><span class="p">,</span>
+                            <span class="n">future_seq_len</span><span class="p">,</span>
+                            <span class="n">metric</span><span class="p">,</span>
+                            <span class="n">metric_mode</span><span class="p">,</span>
+                            <span class="n">validation_df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">mc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="n">remote_dir</span><span class="o">=</span><span class="kc">None</span>
+                            <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prepare the train function for ray tune</span>
+<span class="sd">        :param input_df: input dataframe</span>
+<span class="sd">        :param feature_transformers: feature transformers</span>
+<span class="sd">        :param model: model or model selector</span>
+<span class="sd">        :param validation_df: validation dataframe</span>
+<span class="sd">        :param metric: the rewarding metric</span>
+<span class="sd">        :param metric_mode: the mode of rewarding metric. &quot;min&quot; or &quot;max&quot;</span>
+<span class="sd">        :return: the train function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">input_df_id</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">input_df</span><span class="p">)</span>
+        <span class="n">ft_id</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">feature_transformers</span><span class="p">)</span>
+        <span class="c1"># model_id = ray.put(model)</span>
+
+        <span class="n">df_not_empty</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">validation_df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">validation_df</span><span class="o">.</span><span class="n">empty</span>
+        <span class="n">df_list_not_empty</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">validation_df</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">validation_df</span> \
+            <span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">empty</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">validation_df</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">validation_df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">df_not_empty</span> <span class="ow">or</span> <span class="n">df_list_not_empty</span><span class="p">):</span>
+            <span class="n">validation_df_id</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">validation_df</span><span class="p">)</span>
+            <span class="n">is_val_df_valid</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">is_val_df_valid</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">def</span> <span class="nf">train_func</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+            <span class="c1"># make a copy from global variables for trial to make changes</span>
+            <span class="n">global_ft</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ft_id</span><span class="p">)</span>
+            <span class="c1"># global_model = ray.get(model_id)</span>
+            <span class="n">trial_ft</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">global_ft</span><span class="p">)</span>
+            <span class="c1"># trial_model = deepcopy(global_model)</span>
+            <span class="c1"># print(&quot;config is &quot;, config)</span>
+            <span class="c1"># if &#39;model&#39; in config.keys() and config[&#39;model&#39;] == &#39;XGBRegressor&#39;:</span>
+            <span class="c1">#     trial_model = XGBoostRegressor()</span>
+            <span class="c1"># else:</span>
+            <span class="c1">#     trial_model = TimeSequenceModel(check_optional_config=False,</span>
+            <span class="c1">#</span>
+            <span class="n">trial_model</span> <span class="o">=</span> <span class="n">model_create_func</span>
+
+            <span class="c1"># handling input</span>
+            <span class="n">global_input_df</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">input_df_id</span><span class="p">)</span>
+            <span class="n">trial_input_df</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">global_input_df</span><span class="p">)</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">convert_bayes_configs</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="c1"># print(&quot;config is &quot;, config)</span>
+            <span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> <span class="o">=</span> <span class="n">trial_ft</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">trial_input_df</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">)</span>
+            <span class="c1"># trial_ft.fit(trial_input_df, **config)</span>
+
+            <span class="c1"># handling validation data</span>
+            <span class="n">validation_data</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">is_val_df_valid</span><span class="p">:</span>
+                <span class="n">global_validation_df</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">validation_df_id</span><span class="p">)</span>
+                <span class="n">trial_validation_df</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">global_validation_df</span><span class="p">)</span>
+                <span class="n">validation_data</span> <span class="o">=</span> <span class="n">trial_ft</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">trial_validation_df</span><span class="p">)</span>
+
+            <span class="c1"># no need to call build since it is called the first time fit_eval is called.</span>
+            <span class="c1"># callbacks = [TuneCallback(tune_reporter)]</span>
+            <span class="c1"># fit model</span>
+            <span class="n">best_reward_m</span> <span class="o">=</span> <span class="o">-</span><span class="mi">999</span>
+            <span class="n">metric_op</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">metric_mode</span> <span class="ow">is</span> <span class="s2">&quot;max&quot;</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="c1"># print(&quot;config:&quot;, config)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">):</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">trial_model</span><span class="o">.</span><span class="n">fit_eval</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span>
+                                              <span class="n">y_train</span><span class="p">,</span>
+                                              <span class="n">validation_data</span><span class="o">=</span><span class="n">validation_data</span><span class="p">,</span>
+                                              <span class="n">mc</span><span class="o">=</span><span class="n">mc</span><span class="p">,</span>
+                                              <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
+                                              <span class="c1"># verbose=1,</span>
+                                              <span class="o">**</span><span class="n">config</span><span class="p">)</span>
+                <span class="n">reward_m</span> <span class="o">=</span> <span class="n">metric_op</span> <span class="o">*</span> <span class="n">result</span>
+                <span class="n">ckpt_name</span> <span class="o">=</span> <span class="s2">&quot;best.ckpt&quot;</span>
+                <span class="k">if</span> <span class="n">reward_m</span> <span class="o">&gt;</span> <span class="n">best_reward_m</span><span class="p">:</span>
+                    <span class="n">best_reward_m</span> <span class="o">=</span> <span class="n">reward_m</span>
+                    <span class="n">save_zip</span><span class="p">(</span><span class="n">ckpt_name</span><span class="p">,</span> <span class="n">trial_ft</span><span class="p">,</span> <span class="n">trial_model</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">remote_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">upload_ppl_hdfs</span><span class="p">(</span><span class="n">remote_dir</span><span class="p">,</span> <span class="n">ckpt_name</span><span class="p">)</span>
+
+                <span class="n">tune</span><span class="o">.</span><span class="n">track</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">training_iteration</span><span class="o">=</span><span class="n">i</span><span class="p">,</span>
+                               <span class="n">reward_metric</span><span class="o">=</span><span class="n">reward_m</span><span class="p">,</span>
+                               <span class="n">checkpoint</span><span class="o">=</span><span class="s2">&quot;best.ckpt&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">train_func</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_prepare_trainable_class</span><span class="p">(</span><span class="n">input_df</span><span class="p">,</span>
+                                 <span class="n">feature_transformers</span><span class="p">,</span>
+                                 <span class="n">future_seq_len</span><span class="p">,</span>
+                                 <span class="n">metric</span><span class="p">,</span>
+                                 <span class="n">metric_mode</span><span class="p">,</span>
+                                 <span class="n">validation_df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                 <span class="n">mc</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                 <span class="n">remote_dir</span><span class="o">=</span><span class="kc">None</span>
+                                 <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prepare the train function for ray tune</span>
+<span class="sd">        :param input_df: input dataframe</span>
+<span class="sd">        :param feature_transformers: feature transformers</span>
+<span class="sd">        :param model: model or model selector</span>
+<span class="sd">        :param validation_df: validation dataframe</span>
+<span class="sd">        :param metric: the rewarding metric</span>
+<span class="sd">        :param metric_mode: the mode of rewarding metric. &quot;min&quot; or &quot;max&quot;</span>
+<span class="sd">        :return: the train function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">input_df_id</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">input_df</span><span class="p">)</span>
+        <span class="n">ft_id</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">feature_transformers</span><span class="p">)</span>
+        <span class="c1"># model_id = ray.put(model)</span>
+
+        <span class="n">df_not_empty</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">validation_df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">validation_df</span><span class="o">.</span><span class="n">empty</span>
+        <span class="n">df_list_not_empty</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">validation_df</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">validation_df</span> \
+            <span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">empty</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">validation_df</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">validation_df</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="n">df_not_empty</span> <span class="ow">or</span> <span class="n">df_list_not_empty</span><span class="p">):</span>
+            <span class="n">validation_df_id</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">validation_df</span><span class="p">)</span>
+            <span class="n">is_val_df_valid</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">is_val_df_valid</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">class</span> <span class="nc">TrainableClass</span><span class="p">(</span><span class="n">Trainable</span><span class="p">):</span>
+
+            <span class="k">def</span> <span class="nf">_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+                <span class="c1"># print(&quot;config in set up is&quot;, config)</span>
+                <span class="n">global_ft</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ft_id</span><span class="p">)</span>
+                <span class="c1"># global_model = ray.get(model_id)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trial_ft</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">global_ft</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trial_model</span> <span class="o">=</span> <span class="n">TimeSequenceModel</span><span class="p">(</span><span class="n">check_optional_config</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                     <span class="n">future_seq_len</span><span class="o">=</span><span class="n">future_seq_len</span><span class="p">)</span>
+
+                <span class="c1"># handling input</span>
+                <span class="n">global_input_df</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">input_df_id</span><span class="p">)</span>
+                <span class="n">trial_input_df</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">global_input_df</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">convert_bayes_configs</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_ft</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">trial_input_df</span><span class="p">,</span>
+                                                                           <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+                <span class="c1"># trial_ft.fit(trial_input_df, **config)</span>
+
+                <span class="c1"># handling validation data</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">validation_data</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="n">is_val_df_valid</span><span class="p">:</span>
+                    <span class="n">global_validation_df</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">validation_df_id</span><span class="p">)</span>
+                    <span class="n">trial_validation_df</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">global_validation_df</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">validation_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_ft</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">trial_validation_df</span><span class="p">)</span>
+
+                <span class="c1"># no need to call build since it is called the first time fit_eval is called.</span>
+                <span class="c1"># callbacks = [TuneCallback(tune_reporter)]</span>
+                <span class="c1"># fit model</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">best_reward_m</span> <span class="o">=</span> <span class="o">-</span><span class="mi">999</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reward_m</span> <span class="o">=</span> <span class="o">-</span><span class="mi">999</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ckpt_name</span> <span class="o">=</span> <span class="s2">&quot;pipeline.ckpt&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">metric_op</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">metric_mode</span> <span class="ow">is</span> <span class="s2">&quot;max&quot;</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+
+            <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="c1"># print(&quot;self.config in train is &quot;, self.config)</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_model</span><span class="o">.</span><span class="n">fit_eval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_train</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">,</span>
+                                                   <span class="n">validation_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">validation_data</span><span class="p">,</span>
+                                                   <span class="c1"># verbose=1,</span>
+                                                   <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reward_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric_op</span> <span class="o">*</span> <span class="n">result</span>
+                <span class="c1"># if metric == &quot;mean_squared_error&quot;:</span>
+                <span class="c1">#     self.reward_m = (-1) * result</span>
+                <span class="c1">#     # print(&quot;running iteration: &quot;,i)</span>
+                <span class="c1"># elif metric == &quot;r_square&quot;:</span>
+                <span class="c1">#     self.reward_m = result</span>
+                <span class="c1"># else:</span>
+                <span class="c1">#     raise ValueError(&quot;metric can only be \&quot;mean_squared_error\&quot; or \&quot;r_square\&quot;&quot;)</span>
+                <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;reward_metric&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">reward_m</span><span class="p">,</span> <span class="s2">&quot;checkpoint&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ckpt_name</span><span class="p">}</span>
+
+            <span class="k">def</span> <span class="nf">_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_dir</span><span class="p">):</span>
+                <span class="c1"># print(&quot;checkpoint dir is &quot;, checkpoint_dir)</span>
+                <span class="n">ckpt_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ckpt_name</span>
+                <span class="c1"># save in the working dir (without &quot;checkpoint_{}&quot;.format(training_iteration))</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="n">ckpt_name</span><span class="p">)</span>
+                <span class="c1"># path = os.path.join(checkpoint_dir, ckpt_name)</span>
+                <span class="c1"># print(&quot;checkpoint save path is &quot;, checkpoint_dir)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reward_m</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_reward_m</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">best_reward_m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reward_m</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;****this reward is&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reward_m</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;*********saving checkpoint&quot;</span><span class="p">)</span>
+                    <span class="n">save_zip</span><span class="p">(</span><span class="n">ckpt_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_ft</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">remote_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">upload_ppl_hdfs</span><span class="p">(</span><span class="n">remote_dir</span><span class="p">,</span> <span class="n">ckpt_name</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">path</span>
+
+            <span class="k">def</span> <span class="nf">_restore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint_path</span><span class="p">):</span>
+                <span class="c1"># print(&quot;checkpoint path in restore is &quot;, checkpoint_path)</span>
+                <span class="k">if</span> <span class="n">remote_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">restore_hdfs</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">,</span> <span class="n">remote_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_ft</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_model</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">restore_zip</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_ft</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trial_model</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">TrainableClass</span>
+
+    <span class="k">def</span> <span class="nf">_prepare_tune_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">space</span><span class="p">):</span>
+        <span class="n">tune_config</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">space</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">RandomSample</span><span class="p">):</span>
+                <span class="n">tune_config</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">tune</span><span class="o">.</span><span class="n">sample_from</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">func</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">GridSearch</span><span class="p">):</span>
+                <span class="n">tune_config</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">tune</span><span class="o">.</span><span class="n">grid_search</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tune_config</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="k">return</span> <span class="n">tune_config</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

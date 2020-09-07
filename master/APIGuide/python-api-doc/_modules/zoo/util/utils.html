@@ -1,0 +1,233 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.util.utils &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.util.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">from</span> <span class="nn">zoo.common</span> <span class="kn">import</span> <span class="n">Sample</span>
+
+
+<div class="viewcode-block" id="to_sample_rdd"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.utils.to_sample_rdd">[docs]</a><span class="k">def</span> <span class="nf">to_sample_rdd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="n">num_slices</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert x and y into RDD[Sample]</span>
+<span class="sd">    :param sc: SparkContext</span>
+<span class="sd">    :param x: ndarray and the first dimension should be batch</span>
+<span class="sd">    :param y: ndarray and the first dimension should be batch</span>
+<span class="sd">    :param num_slices: The number of partitions for x and y.</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x_rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">num_slices</span><span class="p">)</span>
+    <span class="n">y_rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">num_slices</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x_rdd</span><span class="o">.</span><span class="n">zip</span><span class="p">(</span><span class="n">y_rdd</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">Sample</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
+
+
+<div class="viewcode-block" id="get_node_ip"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.utils.get_node_ip">[docs]</a><span class="k">def</span> <span class="nf">get_node_ip</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function is ported from ray to get the ip of the current node. In the settings where</span>
+<span class="sd">    Ray is not involved, calling ray.services.get_node_ip_address would introduce Ray overhead.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">socket</span>
+    <span class="kn">import</span> <span class="nn">errno</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># This command will raise an exception if there is no internet connection.</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s2">&quot;8.8.8.8&quot;</span><span class="p">,</span> <span class="mi">80</span><span class="p">))</span>
+        <span class="n">node_ip_address</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">getsockname</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">node_ip_address</span> <span class="o">=</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+        <span class="c1"># [Errno 101] Network is unreachable</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">==</span> <span class="n">errno</span><span class="o">.</span><span class="n">ENETUNREACH</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># try get node ip address from host name</span>
+                <span class="n">host_name</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">getfqdn</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">())</span>
+                <span class="n">node_ip_address</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyname</span><span class="p">(</span><span class="n">host_name</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">node_ip_address</span></div>
+
+
+<div class="viewcode-block" id="detect_python_location"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.utils.detect_python_location">[docs]</a><span class="k">def</span> <span class="nf">detect_python_location</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">subprocess</span>
+    <span class="n">pro</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+        <span class="s2">&quot;command -v python&quot;</span><span class="p">,</span>
+        <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+        <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span>
+    <span class="n">out</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">pro</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">err</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">errorcode</span> <span class="o">=</span> <span class="n">pro</span><span class="o">.</span><span class="n">returncode</span>
+    <span class="k">if</span> <span class="mi">0</span> <span class="o">!=</span> <span class="n">errorcode</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">err</span> <span class="o">+</span>
+                        <span class="s2">&quot;Cannot detect current python location.&quot;</span>
+                        <span class="s2">&quot;Please set it manually by python_location&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+
+
+<span class="c1"># This is adopted from conda-pack.</span>
+<div class="viewcode-block" id="pack_conda_main"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.utils.pack_conda_main">[docs]</a><span class="k">def</span> <span class="nf">pack_conda_main</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="kn">import</span> <span class="nn">traceback</span>
+    <span class="kn">from</span> <span class="nn">conda_pack.cli</span> <span class="kn">import</span> <span class="n">fail</span><span class="p">,</span> <span class="n">PARSER</span><span class="p">,</span> <span class="n">context</span>
+    <span class="kn">import</span> <span class="nn">conda_pack</span>
+    <span class="kn">from</span> <span class="nn">conda_pack</span> <span class="kn">import</span> <span class="n">pack</span><span class="p">,</span> <span class="n">CondaPackException</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">PARSER</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+    <span class="c1"># Manually handle version printing to output to stdout in python &lt; 3.4</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">version</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;conda-pack </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">conda_pack</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">context</span><span class="o">.</span><span class="n">set_cli</span><span class="p">():</span>
+            <span class="n">pack</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                 <span class="n">prefix</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span>
+                 <span class="n">output</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">,</span>
+                 <span class="nb">format</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">format</span><span class="p">,</span>
+                 <span class="n">force</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">force</span><span class="p">,</span>
+                 <span class="n">compress_level</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">compress_level</span><span class="p">,</span>
+                 <span class="n">n_threads</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">n_threads</span><span class="p">,</span>
+                 <span class="n">zip_symlinks</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">zip_symlinks</span><span class="p">,</span>
+                 <span class="n">zip_64</span><span class="o">=</span><span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">no_zip_64</span><span class="p">,</span>
+                 <span class="n">arcroot</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">arcroot</span><span class="p">,</span>
+                 <span class="n">dest_prefix</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">dest_prefix</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">quiet</span><span class="p">,</span>
+                 <span class="n">filters</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">filters</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">CondaPackException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">fail</span><span class="p">(</span><span class="s2">&quot;CondaPackError: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">fail</span><span class="p">(</span><span class="s2">&quot;Interrupted&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">fail</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="pack_penv"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.utils.pack_penv">[docs]</a><span class="k">def</span> <span class="nf">pack_penv</span><span class="p">(</span><span class="n">conda_name</span><span class="p">,</span> <span class="n">output_name</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">tempfile</span>
+    <span class="n">tmp_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+    <span class="n">tmp_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">.tar.gz&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tmp_dir</span><span class="p">,</span> <span class="n">output_name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Start to pack current python env&quot;</span><span class="p">)</span>
+    <span class="n">pack_conda_main</span><span class="p">([</span><span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">tmp_path</span><span class="p">,</span> <span class="s2">&quot;--n-threads&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="s2">&quot;--name&quot;</span><span class="p">,</span> <span class="n">conda_name</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Packing has been completed: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">tmp_path</span></div>
+
+
+<div class="viewcode-block" id="get_conda_python_path"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.utils.get_conda_python_path">[docs]</a><span class="k">def</span> <span class="nf">get_conda_python_path</span><span class="p">():</span>
+    <span class="n">conda_env_path</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">detect_python_location</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">python_interpreters</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/lib/python*&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">conda_env_path</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">python_interpreters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Conda env should contain a single Python &quot;</span> \
+                                          <span class="s2">&quot;interpreter, but got: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">python_interpreters</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">python_interpreters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_executor_conda_zoo_classpath"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.utils.get_executor_conda_zoo_classpath">[docs]</a><span class="k">def</span> <span class="nf">get_executor_conda_zoo_classpath</span><span class="p">(</span><span class="n">conda_path</span><span class="p">):</span>
+    <span class="n">zoo_classpath</span><span class="p">,</span> <span class="n">bigdl_classpath</span> <span class="o">=</span> <span class="n">get_zoo_bigdl_classpath_on_driver</span><span class="p">()</span>
+    <span class="n">zoo_jar_name</span> <span class="o">=</span> <span class="n">zoo_classpath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">bigdl_jar_name</span> <span class="o">=</span> <span class="n">bigdl_classpath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">python_interpreter_name</span> <span class="o">=</span> <span class="n">get_conda_python_path</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Python version</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/lib/</span><span class="si">{}</span><span class="s2">/site-packages/&quot;</span>\
+        <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">conda_path</span><span class="p">,</span> <span class="n">python_interpreter_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/zoo/share/lib/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">zoo_jar_name</span><span class="p">),</span>
+            <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/bigdl/share/lib/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">bigdl_jar_name</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="get_zoo_bigdl_classpath_on_driver"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.utils.get_zoo_bigdl_classpath_on_driver">[docs]</a><span class="k">def</span> <span class="nf">get_zoo_bigdl_classpath_on_driver</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">bigdl.util.engine</span> <span class="kn">import</span> <span class="n">get_bigdl_classpath</span>
+    <span class="kn">from</span> <span class="nn">zoo.util.engine</span> <span class="kn">import</span> <span class="n">get_analytics_zoo_classpath</span>
+    <span class="n">bigdl_classpath</span> <span class="o">=</span> <span class="n">get_bigdl_classpath</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">bigdl_classpath</span><span class="p">,</span> <span class="s2">&quot;Cannot find BigDL classpath, please check your installation&quot;</span>
+    <span class="n">zoo_classpath</span> <span class="o">=</span> <span class="n">get_analytics_zoo_classpath</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">zoo_classpath</span><span class="p">,</span> <span class="s2">&quot;Cannot find Analytics-Zoo classpath, please check your installation&quot;</span>
+    <span class="k">return</span> <span class="n">zoo_classpath</span><span class="p">,</span> <span class="n">bigdl_classpath</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>
