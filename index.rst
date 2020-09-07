@@ -30,8 +30,9 @@ High-level ML workflow for automating machine learning tasks
     * Cluster Serving for automatically distributed (TensorFlow/PyTorch/Caffe/OpenVINO) model inference . 
     * Scalable [AutoML](ProgrammingGuide/AutoML/overview.md) for time series prediction.
 
-Built-in models for [Recommendation](APIGuide/Models/recommendation.md), [Time Series](APIGuide/Models/anomaly-detection.md), [Computer Vision](APIGuide/Models/object-detection.md) and [NLP](APIGuide/Models/text-matching.md) applications
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Built-in models for
+--------------------
+[Recommendation](APIGuide/Models/recommendation.md), [Time Series](APIGuide/Models/anomaly-detection.md), [Computer Vision](APIGuide/Models/object-detection.md) and [NLP](APIGuide/Models/text-matching.md) applications
 
 Why use Analytics Zoo?
 ======================
