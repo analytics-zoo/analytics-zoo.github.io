@@ -98,12 +98,14 @@ Estimator.from_graph(*, inputs, outputs=None, labels=None, loss=None, optimizer=
 <li><code>clip_norm</code>: float &gt;= 0. Gradients will be clipped when their L2 norm exceeds this value.</li>
 <li><code>clip_value</code>:  a float &gt;= 0 or a tuple of two floats.</li>
 </ul>
-<p>If clip_value is a float, gradients will be clipped when their absolute value exceeds this value.</p>
-<p>If clip_value is a tuple of two floats, gradients will be clipped when their value less than clip_value[0] or larger than clip_value[1].
-* <code>metrics</code>: dictionary of {metric_name: metric tensor}.
-* <code>sess</code>: the current TensorFlow Session, if you want to used a pre-trained model, you should use the Session to load the pre-trained variables and pass it to estimator
-* <code>model_dir</code>: location to save model checkpoint and summaries.
-* <code>backend</code>: backend for estimator. Now it only can be "bigdl".</p>
+<p>If <code>clip_value</code> is a float, gradients will be clipped when their absolute value exceeds this value.</p>
+<p>If <code>clip_value</code> is a tuple of two floats, gradients will be clipped when their value less than <code>clip_value[0]</code> or larger than <code>clip_value[1]</code>.</p>
+<ul>
+<li><code>metrics</code>: dictionary of {metric_name: metric tensor}.</li>
+<li><code>sess</code>: the current TensorFlow Session, if you want to used a pre-trained model, you should use the Session to load the pre-trained variables and pass it to estimator</li>
+<li><code>model_dir</code>: location to save model checkpoint and summaries.</li>
+<li><code>backend</code>: backend for estimator. Now it only can be "bigdl".</li>
+</ul>
 <p>This method returns an Estimator object.</p>
 <p>E.g. To create Orca TF Estimator with tf graph:</p>
 <pre><code>from zoo.orca.learn.tf.estimator import Estimator
@@ -149,18 +151,20 @@ est = Estimator.from_graph(
 <ul>
 <li><code>data</code>: train data. It can be XShards, Spark DataFrame, tf.data.Dataset.</li>
 </ul>
-<p>If data is XShards, each element needs to be {'x': a feature numpy array
+<p>If <code>data</code> is XShards, each element needs to be {'x': a feature numpy array
          or a tuple of feature numpy arrays, 'y': a label numpy array or a tuple of
          label numpy arrays}</p>
-<p>If data is tf.data.Dataset, each element is a tuple of input tensors.
-* <code>epochs</code>: number of epochs to train.
-* <code>batch_size</code>: total batch size for each iteration.
-* <code>feature_cols</code>: feature column names if train data is Spark DataFrame.
-* <code>labels_cols</code>: label column names if train data is Spark DataFrame.
-* <code>validation_data</code>: validation data. Validation data type should be the same as train data.
-* <code>hard_code_batch_size</code>: whether hard code batch size for training. Default is False.
-* <code>session_config</code>: tensorflow session configuration for training. Should be object of tf.ConfigProto
-* <code>feed_dict</code>: a dictionary. The key is TensorFlow tensor, usually a placeholder, the value of the dictionary is a tuple of two elements. </p>
+<p>If <code>data</code> is tf.data.Dataset, each element is a tuple of input tensors.</p>
+<ul>
+<li><code>epochs</code>: number of epochs to train.</li>
+<li><code>batch_size</code>: total batch size for each iteration.</li>
+<li><code>feature_cols</code>: feature column names if train data is Spark DataFrame.</li>
+<li><code>labels_cols</code>: label column names if train data is Spark DataFrame.</li>
+<li><code>validation_data</code>: validation data. Validation data type should be the same as train data.</li>
+<li><code>hard_code_batch_size</code>: whether hard code batch size for training. Default is False.</li>
+<li><code>session_config</code>: tensorflow session configuration for training. Should be object of tf.ConfigProto</li>
+<li><code>feed_dict</code>: a dictionary. The key is TensorFlow tensor, usually a placeholder, the value of the dictionary is a tuple of two elements. </li>
+</ul>
 <p>The first one of the tuple is the value to feed to the tensor in training phase and the second one is the value to feed to the tensor in validation phase.
 * <code>checkpoint_trigger</code>: when to trigger checkpoint during training. Should be bigdl optimzer trigger, like EveryEpoch(), SeveralIteration(num_iterations),etc.</p>
 <p>Example of Train with Orca TF Estimator. </p>
@@ -256,21 +260,25 @@ est = Estimator.from_keras(keras_model=model)
 <ul>
 <li><code>data</code>: train data. It can be XShards, Spark DataFrame, tf.data.Dataset.</li>
 </ul>
-<p>If data is XShards, each element needs to be {'x': a feature numpy array
+<p>If <code>data</code> is XShards, each element needs to be {'x': a feature numpy array
          or a tuple of feature numpy arrays, 'y': a label numpy array or a tuple of
          label numpy arrays}</p>
-<p>If data is tf.data.Dataset, each element is a tuple of input tensors.
-* <code>epochs</code>: number of epochs to train.
-* <code>batch_size</code>: total batch size for each iteration.
-* <code>feature_cols</code>: feature column names if train data is Spark DataFrame.
-* <code>labels_cols</code>: label column names if train data is Spark DataFrame.
-* <code>validation_data</code>: validation data. Validation data type should be the same as train data.
-* <code>hard_code_batch_size</code>: whether hard code batch size for training. Default is False.
-* <code>session_config</code>: tensorflow session configuration for training. Should be object of tf.ConfigProto
-* <code>checkpoint_trigger</code>: when to trigger checkpoint during training. Should be bigdl optimzer trigger, like EveryEpoch(), SeveralIteration(num_iterations),etc.</p>
-<ol>
-<li>Train data is tf.data.DataSet. E.g.</li>
-</ol>
+<p>If <code>data</code> is tf.data.Dataset, each element is a tuple of input tensors.</p>
+<ul>
+<li><code>epochs</code>: number of epochs to train.</li>
+<li><code>batch_size</code>: total batch size for each iteration.</li>
+<li><code>feature_cols</code>: feature column names if train data is Spark DataFrame.</li>
+<li><code>labels_cols</code>: label column names if train data is Spark DataFrame.</li>
+<li><code>validation_data</code>: validation data. Validation data type should be the same as train data.</li>
+<li><code>hard_code_batch_size</code>: whether hard code batch size for training. Default is False.</li>
+<li><code>session_config</code>: tensorflow session configuration for training. Should be object of tf.ConfigProto</li>
+<li>
+<p><code>checkpoint_trigger</code>: when to trigger checkpoint during training. Should be bigdl optimzer trigger, like EveryEpoch(), SeveralIteration(num_iterations),etc.</p>
+</li>
+<li>
+<p>Train data is tf.data.DataSet. E.g.</p>
+</li>
+</ul>
 <pre><code>dataset = tf.data.Dataset.from_tensor_slices((np.random.randint(0, 200, size=(100,)),
                                               np.random.randint(0, 50, size=(100,)),
                                               np.ones(shape=(100,), dtype=np.int32)))
@@ -329,12 +337,14 @@ est.fit(data=data_shard,
 <ul>
 <li><code>data</code>: evaluation data. It can be XShards, Spark DataFrame, tf.data.Dataset.</li>
 </ul>
-<p>If data is XShards, each element needs to be {'x': a feature numpy array or a tuple of feature numpy arrays, 'y': a label numpy array or a tuple of label numpy arrays}</p>
-<p>If data is tf.data.Dataset, each element is [feature tensor tuple, label tensor tuple]
-* <code>batch_size</code>: batch size per thread.
-* <code>feature_cols</code>: feature_cols: feature column names if train data is Spark DataFrame.
-* <code>labels_cols</code>: label column names if train data is Spark DataFrame.
-* <code>hard_code_batch_size</code>: whether to hard code batch size for evaluation.</p>
+<p>If <code>data</code> is XShards, each element needs to be {'x': a feature numpy array or a tuple of feature numpy arrays, 'y': a label numpy array or a tuple of label numpy arrays}</p>
+<p>If <code>data</code> is tf.data.Dataset, each element is <code>[feature tensor tuple, label tensor tuple]</code></p>
+<ul>
+<li><code>batch_size</code>: batch size per thread.</li>
+<li><code>feature_cols</code>: feature_cols: feature column names if train data is Spark DataFrame.</li>
+<li><code>labels_cols</code>: label column names if train data is Spark DataFrame.</li>
+<li><code>hard_code_batch_size</code>: whether to hard code batch size for evaluation.</li>
+</ul>
 <p>This method returns evaluation result as a dictionary in the format of {'metric name': metric value}</p>
 <h4 id="predict-with-estimator"><strong>Predict with Estimator</strong></h4>
 <p>You can call estimator's such APIs to predict with trained model.</p>
@@ -345,22 +355,19 @@ est.fit(data=data_shard,
 </code></pre>
 
 <ul>
-<li><code>data</code>: data to be predicted.
-        It can be XShards, Spark DataFrame, or tf.data.Dataset.<pre><code>If data is XShard, each element needs to be {'x': a feature numpy array
- or a tuple of feature numpy arrays}.
-
-If data is tf.data.Dataset, each element is feature tensor tuple
-</code></pre>
-<ul>
-<li><code>batch_size</code>: batch size per thread</li>
+<li>
+<p><code>data</code>: data to be predicted. It can be XShards, Spark DataFrame, or tf.data.Dataset.        </p>
+<p>If <code>data</code> is XShard, each element needs to be {'x': a feature numpy array
+     or a tuple of feature numpy arrays}.         </p>
+<p>If <code>data</code> is tf.data.Dataset, each element is feature tensor tuple.</p>
+</li>
+<li>
+<p><code>batch_size</code>: batch size per thread</p>
+</li>
 <li><code>feature_cols</code>: list of feature column names if input data is Spark DataFrame.</li>
 <li><code>hard_code_batch_size</code>: if require hard code batch size for prediction. The default value is False.</li>
 </ul>
-</li>
-</ul>
 <p>This method returns a predicted result.</p>
-<p>If input data is XShards or tf.data.Dataset, the predict result is also a XShards, and the schema for each result is: {'prediction': predicted numpy array or list of predicted numpy arrays}.</p>
-<p>If input data is Spark DataFrame, the predict result is a DataFrame which includes original columns plus 'prediction' column. The 'prediction' column can be FloatType, VectorUDT or Array of VectorUDT depending on model outputs shape.</p>
 <ol>
 <li>Predict data is tf.data.DataSet. The prediction result should be an XShards and each element is {'prediction': predicted numpy array or list of predicted numpy arrays}.</li>
 </ol>
@@ -375,7 +382,7 @@ assert 'prediction' in predictions[0]
 </code></pre>
 
 <ol>
-<li>Predict data is Spark DataFrame. The predict result is a DataFrame which includes original columns plus 'prediction' column. </li>
+<li>Predict data is Spark DataFrame. The predict result is a DataFrame which includes original columns plus <code>prediction</code> column. The <code>prediction</code> column can be FloatType, VectorUDT or Array of VectorUDT depending on model outputs shape.</li>
 </ol>
 <pre><code>prediction_df = est.predict(df, batch_size=4, feature_cols=['user', 'item'])
 

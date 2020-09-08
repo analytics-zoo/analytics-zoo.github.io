@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.orca.learn.pytorch.html" title="zoo.orca.learn.pytorch package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -46,10 +43,10 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.orca.learn.mxnet package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.orca.learn.mxnet.mxnet_runner">zoo.orca.learn.mxnet.mxnet_runner module</a></li>
-<li><a class="reference internal" href="#module-zoo.orca.learn.mxnet.mxnet_trainer">zoo.orca.learn.mxnet.mxnet_trainer module</a></li>
-<li><a class="reference internal" href="#module-zoo.orca.learn.mxnet.utils">zoo.orca.learn.mxnet.utils module</a></li>
-<li><a class="reference internal" href="#module-zoo.orca.learn.mxnet">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-orca-learn-mxnet-mxnet-runner-module">zoo.orca.learn.mxnet.mxnet_runner module</a></li>
+<li><a class="reference internal" href="#zoo-orca-learn-mxnet-mxnet-trainer-module">zoo.orca.learn.mxnet.mxnet_trainer module</a></li>
+<li><a class="reference internal" href="#zoo-orca-learn-mxnet-utils-module">zoo.orca.learn.mxnet.utils module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -92,205 +89,17 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.orca.learn.mxnet.mxnet_runner">
-<span id="zoo-orca-learn-mxnet-mxnet-runner-module"></span><h2>zoo.orca.learn.mxnet.mxnet_runner module<a class="headerlink" href="#module-zoo.orca.learn.mxnet.mxnet_runner" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.orca.learn.mxnet.mxnet_runner.MXNetRunner">
-<em class="property">class </em><code class="descclassname">zoo.orca.learn.mxnet.mxnet_runner.</code><code class="descname">MXNetRunner</code><a class="reference internal" href="_modules/zoo/orca/learn/mxnet/mxnet_runner.html#MXNetRunner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.mxnet.mxnet_runner.MXNetRunner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Manages a MXNet model for training.</p>
-<dl class="method">
-<dt id="zoo.orca.learn.mxnet.mxnet_runner.MXNetRunner.find_free_port">
-<code class="descname">find_free_port</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/mxnet/mxnet_runner.html#MXNetRunner.find_free_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.mxnet.mxnet_runner.MXNetRunner.find_free_port" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finds a free port on the current node.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.mxnet.mxnet_runner.MXNetRunner.get_node_ip">
-<code class="descname">get_node_ip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/mxnet/mxnet_runner.html#MXNetRunner.get_node_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.mxnet.mxnet_runner.MXNetRunner.get_node_ip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the IP address of the current node.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.mxnet.mxnet_runner.MXNetRunner.setup_distributed">
-<code class="descname">setup_distributed</code><span class="sig-paren">(</span><em>env</em>, <em>config</em>, <em>model_creator</em>, <em>loss_creator=None</em>, <em>validation_metrics_creator=None</em>, <em>eval_metrics_creator=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/mxnet/mxnet_runner.html#MXNetRunner.setup_distributed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.mxnet.mxnet_runner.MXNetRunner.setup_distributed" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.mxnet.mxnet_runner.MXNetRunner.shutdown">
-<code class="descname">shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/mxnet/mxnet_runner.html#MXNetRunner.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.mxnet.mxnet_runner.MXNetRunner.shutdown" title="Permalink to this definition">¶</a></dt>
-<dd><p>Attempts to shut down the runner.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.mxnet.mxnet_runner.MXNetRunner.train">
-<code class="descname">train</code><span class="sig-paren">(</span><em>train_data</em>, <em>epochs=1</em>, <em>batch_size=32</em>, <em>validation_data=None</em>, <em>train_resize_batch_num=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/mxnet/mxnet_runner.html#MXNetRunner.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.mxnet.mxnet_runner.MXNetRunner.train" title="Permalink to this definition">¶</a></dt>
-<dd><p>Train the model and update the model parameters.</p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="zoo-orca-learn-mxnet-mxnet-runner-module">
+<h2>zoo.orca.learn.mxnet.mxnet_runner module<a class="headerlink" href="#zoo-orca-learn-mxnet-mxnet-runner-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.orca.learn.mxnet.mxnet_trainer">
-<span id="zoo-orca-learn-mxnet-mxnet-trainer-module"></span><h2>zoo.orca.learn.mxnet.mxnet_trainer module<a class="headerlink" href="#module-zoo.orca.learn.mxnet.mxnet_trainer" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.orca.learn.mxnet.mxnet_trainer.Estimator">
-<em class="property">class </em><code class="descclassname">zoo.orca.learn.mxnet.mxnet_trainer.</code><code class="descname">Estimator</code><span class="sig-paren">(</span><em>config</em>, <em>model_creator</em>, <em>loss_creator=None</em>, <em>eval_metrics_creator=None</em>, <em>validation_metrics_creator=None</em>, <em>num_workers=None</em>, <em>num_servers=None</em>, <em>runner_cores=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/mxnet/mxnet_trainer.html#Estimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.mxnet.mxnet_trainer.Estimator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>MXNet Estimator provides an automatic setup for synchronous distributed MXNet training.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config</strong> – A dictionary for training configurations. Keys must include the following:</td>
-</tr>
-</tbody>
-</table>
-<p>optimizer, optimizer_params, log_interval.
-optimizer should be an MXNet optimizer or its string representation.
-optimizer_params should be a dict in companion with the optimizer. It can contain learning_rate
-and other optimization configurations.
-log_interval should be an integer, specifying the interval for logging throughput and metrics
-information (if any) during the training process.
-You can call create_config to directly create it.
-You can specify “seed” in config to set random seed for weight initialization.
-You can specify “init” in extra_config to set model initializer for gluon models.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_creator</strong> – A function that takes config as argument and returns an MXNet model.</td>
-</tr>
-</tbody>
-</table>
-<p>The model can be defined either using MXNet symbolic API or imperative(gluon) API.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>loss_creator</strong> – A function that takes config as argument and returns an MXNet loss.</td>
-</tr>
-</tbody>
-</table>
-<p>This is not needed for symbolic API where loss is already defined as model output.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>eval_metrics_creator</strong> – A function that takes config as argument and returns one or</td>
-</tr>
-</tbody>
-</table>
-<p>a list of MXNet metrics or corresponding string representations of metrics, for example,
-‘accuracy’. This is not needed if you don’t need evaluation on the training data set.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>validation_metrics_creator</strong> – A function that takes config as argument and returns one or</td>
-</tr>
-</tbody>
-</table>
-<p>a list of MXNet metrics or corresponding string representations of metrics, for example,
-‘accuracy’. This is not needed if you don’t have validation data throughout the training.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>num_workers</strong> – The number of workers for distributed training. Default to be the number of</td>
-</tr>
-</tbody>
-</table>
-<p>nodes in the cluster.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>num_servers</strong> – The number of servers for distributed training. Default is None and in this</td>
-</tr>
-</tbody>
-</table>
-<p>case it would be equal to the number of workers.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>runner_cores</strong> – The number of CPU cores allocated for each MXNet worker and server.</td>
-</tr>
-</tbody>
-</table>
-<p>Default is None. You may need to specify this for better performance when you run in cluster.</p>
-<dl class="method">
-<dt id="zoo.orca.learn.mxnet.mxnet_trainer.Estimator.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>data</em>, <em>epochs=1</em>, <em>batch_size=32</em>, <em>validation_data=None</em>, <em>train_resize_batch_num=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/mxnet/mxnet_trainer.html#Estimator.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.mxnet.mxnet_trainer.Estimator.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Trains an MXNet model given train_data (with val_data) for several epochs.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> – An instance of SparkXShards or a function that takes config and kv as</td>
-</tr>
-</tbody>
-</table>
-<p>arguments and returns an MXNet DataIter/DataLoader for training.
-You can specify data related configurations for this function in the config argument above.
-kv is an instance of MXNet distributed key-value store. kv.num_workers and kv.rank
-can be used in this function to split data for different workers if necessary.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>epochs</strong> – The number of epochs to train the MXNet model. Default is 1.</li>
-<li><strong>batch_size</strong> – The number of samples per batch for each worker. Default is 32.</li>
-<li><strong>validation_data</strong> – An instance of SparkXShards or a function that takes config and</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<p>kv as arguments and returns an MXNet DataIter/DataLoader for validation.
-You can specify data related configurations for this function in the config argument above.
-kv is an instance of MXNet distributed key-value store. kv.num_workers and kv.rank
-can be used in this function to split data for different workers if necessary.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>train_resize_batch_num</strong> – The number of batches per epoch to resize to.</td>
-</tr>
-</tbody>
-</table>
-<p>Default is None. You might need to specify this if the size of train_data for each
-worker varies. MXNet distributed training would crash when the first worker finishes
-the training if the workers have unbalanced training data.
-See this issue for more details: <a class="reference external" href="https://github.com/apache/incubator-mxnet/issues/17651">https://github.com/apache/incubator-mxnet/issues/17651</a></p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.mxnet.mxnet_trainer.Estimator.shutdown">
-<code class="descname">shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/mxnet/mxnet_trainer.html#Estimator.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.mxnet.mxnet_trainer.Estimator.shutdown" title="Permalink to this definition">¶</a></dt>
-<dd><p>Shuts down runners and releases resources.</p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="zoo-orca-learn-mxnet-mxnet-trainer-module">
+<h2>zoo.orca.learn.mxnet.mxnet_trainer module<a class="headerlink" href="#zoo-orca-learn-mxnet-mxnet-trainer-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.orca.learn.mxnet.utils">
-<span id="zoo-orca-learn-mxnet-utils-module"></span><h2>zoo.orca.learn.mxnet.utils module<a class="headerlink" href="#module-zoo.orca.learn.mxnet.utils" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="zoo.orca.learn.mxnet.utils.create_config">
-<code class="descclassname">zoo.orca.learn.mxnet.utils.</code><code class="descname">create_config</code><span class="sig-paren">(</span><em>optimizer='sgd'</em>, <em>optimizer_params=None</em>, <em>log_interval=10</em>, <em>seed=None</em>, <em>extra_config=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/mxnet/utils.html#create_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.mxnet.utils.create_config" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.orca.learn.mxnet.utils.find_free_port">
-<code class="descclassname">zoo.orca.learn.mxnet.utils.</code><code class="descname">find_free_port</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/mxnet/utils.html#find_free_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.mxnet.utils.find_free_port" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="zoo-orca-learn-mxnet-utils-module">
+<h2>zoo.orca.learn.mxnet.utils module<a class="headerlink" href="#zoo-orca-learn-mxnet-utils-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.orca.learn.mxnet">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.orca.learn.mxnet" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -306,9 +115,6 @@ See this issue for more details: <a class="reference external" href="https://git
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.orca.learn.pytorch.html" title="zoo.orca.learn.pytorch package"
              >next</a> |</li>
