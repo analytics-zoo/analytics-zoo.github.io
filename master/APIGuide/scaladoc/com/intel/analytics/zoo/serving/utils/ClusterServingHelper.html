@@ -225,6 +225,29 @@ Thus model directory could be passed and overwrite that in config YAML</p></div>
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#checkManagerYaml" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="checkManagerYaml():Boolean"></a>
+      <a id="checkManagerYaml():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">checkManagerYaml</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@checkManagerYaml():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">To check if one of the running jobs already have this name
+If yes, existed name is not allow to used, will not submit
+the job
+The running jobs info is stored in manager YAML</p><div class="fullcomment"><div class="comment cmt"><p>To check if one of the running jobs already have this name
+If yes, existed name is not allow to used, will not submit
+the job
+The running jobs info is stored in manager YAML</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>false if running jobs exists this name</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#checkStop" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="checkStop():Boolean"></a>
       <a id="checkStop():Boolean"></a>
@@ -312,23 +335,6 @@ Thus model directory could be passed and overwrite that in config YAML</p></div>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@coreNum:Int" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#dateTime" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="dateTime:String"></a>
-      <a id="dateTime:String"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">dateTime</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@dateTime:String" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -564,6 +570,23 @@ create &quot;running&quot; flag, for listening the stop signal
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#jobName" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="jobName:String"></a>
+      <a id="jobName:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">jobName</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@jobName:String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#lastModTime" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="lastModTime:String"></a>
       <a id="lastModTime:String"></a>
@@ -1012,6 +1035,26 @@ model definition file and model weight file</p>
       </a>
     </span>
       <p class="shortcomment cmt">For dynamically update model, not used currently</p>
+    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#updateManagerYaml" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="updateManagerYaml(jobId:String,remove:Boolean):Unit"></a>
+      <a id="updateManagerYaml(String,Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">updateManagerYaml</span><span class="params">(<span name="jobId">jobId: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="remove">remove: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@updateManagerYaml(jobId:String,remove:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Add or remove job info in manager YAML,
+manager YAML stores the info of running Cluster Serving jobs</p><div class="fullcomment"><div class="comment cmt"><p>Add or remove job info in manager YAML,
+manager YAML stores the info of running Cluster Serving jobs</p></div><dl class="paramcmts block"><dt class="param">jobId</dt><dd class="cmt"><p>the jobId of this job</p></dd><dt class="param">remove</dt><dd class="cmt"><p>the flag to control whether to add job to manager YAML
+              or to remove the job in manager YAML</p></dd></dl></div>
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>
