@@ -1,9 +1,9 @@
 <!DOCTYPE html >
 <html>
         <head>
-          <title>PostProcessing - analytics-zoo-bigdl_0.11.1-spark_2.4.3 0.9.0-SNAPSHOT API - com.intel.analytics.zoo.serving.postprocessing.PostProcessing</title>
-          <meta name="description" content="PostProcessing - analytics - zoo - bigdl 0.11.1 - spark 2.4.3 0.9.0 - SNAPSHOT API - com.intel.analytics.zoo.serving.postprocessing.PostProcessing" />
-          <meta name="keywords" content="PostProcessing analytics zoo bigdl 0.11.1 spark 2.4.3 0.9.0 SNAPSHOT API com.intel.analytics.zoo.serving.postprocessing.PostProcessing" />
+          <title>ArrowSerializer - analytics-zoo-bigdl_0.11.1-spark_2.4.3 0.9.0-SNAPSHOT API - com.intel.analytics.zoo.serving.arrow.ArrowSerializer</title>
+          <meta name="description" content="ArrowSerializer - analytics - zoo - bigdl 0.11.1 - spark 2.4.3 0.9.0 - SNAPSHOT API - com.intel.analytics.zoo.serving.arrow.ArrowSerializer" />
+          <meta name="keywords" content="ArrowSerializer analytics zoo bigdl 0.11.1 spark 2.4.3 0.9.0 SNAPSHOT API com.intel.analytics.zoo.serving.arrow.ArrowSerializer" />
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
@@ -16,7 +16,7 @@
       <script type="text/javascript">
          if(top === self) {
             var url = '../../../../../../index.html';
-            var hash = 'com.intel.analytics.zoo.serving.postprocessing.PostProcessing';
+            var hash = 'com.intel.analytics.zoo.serving.arrow.ArrowSerializer';
             var anchor = window.location.hash;
             var anchor_opt = '';
             if (anchor.length >= 1)
@@ -28,14 +28,14 @@
         </head>
         <body class="type">
       <div id="definition">
-        <a href="PostProcessing$.html" title="See companion object"><img alt="Class/Object" src="../../../../../../lib/class_to_object_big.png" /></a>
-        <p id="owner"><a href="../../../../../package.html" class="extype" name="com">com</a>.<a href="../../../../package.html" class="extype" name="com.intel">intel</a>.<a href="../../../package.html" class="extype" name="com.intel.analytics">analytics</a>.<a href="../../package.html" class="extype" name="com.intel.analytics.zoo">zoo</a>.<a href="../package.html" class="extype" name="com.intel.analytics.zoo.serving">serving</a>.<a href="package.html" class="extype" name="com.intel.analytics.zoo.serving.postprocessing">postprocessing</a></p>
-        <h1><a href="PostProcessing$.html" title="See companion object">PostProcessing</a></h1><h3><span class="morelinks"><div>
+        <a href="ArrowSerializer$.html" title="See companion object"><img alt="Class/Object" src="../../../../../../lib/class_to_object_big.png" /></a>
+        <p id="owner"><a href="../../../../../package.html" class="extype" name="com">com</a>.<a href="../../../../package.html" class="extype" name="com.intel">intel</a>.<a href="../../../package.html" class="extype" name="com.intel.analytics">analytics</a>.<a href="../../package.html" class="extype" name="com.intel.analytics.zoo">zoo</a>.<a href="../package.html" class="extype" name="com.intel.analytics.zoo.serving">serving</a>.<a href="package.html" class="extype" name="com.intel.analytics.zoo.serving.arrow">arrow</a></p>
+        <h1><a href="ArrowSerializer$.html" title="See companion object">ArrowSerializer</a></h1><h3><span class="morelinks"><div>
             Related Docs:
-            <a href="PostProcessing$.html" title="See companion object">object PostProcessing</a>
-            | <a href="package.html" class="extype" name="com.intel.analytics.zoo.serving.postprocessing">package postprocessing</a>
+            <a href="ArrowSerializer$.html" title="See companion object">object ArrowSerializer</a>
+            | <a href="package.html" class="extype" name="com.intel.analytics.zoo.serving.arrow">package arrow</a>
           </div></span></h3><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -47,17 +47,13 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">PostProcessing</span><span class="result"> extends <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
+        <span class="name">ArrowSerializer</span><span class="result"> extends <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>PostProssing
-PostProcessing contains two steps
-step 1 is filter, which is optional,
-used to transform output tensor to type wanted
-step 2 is to ndarray string, which is mandatory
-to parse tensor into readable string
-this string could be parsed by json in Python to a list</p></div><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>An ArrowSerializer is an instance to handle Arrow serialization of a Tensor
+Mulitple Tensor output, aka, Table, is processed by object ArrowSerializaer
+which construct multiple ArrowSerializer</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -77,7 +73,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="com.intel.analytics.zoo.serving.postprocessing.PostProcessing"><span>PostProcessing</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="com.intel.analytics.zoo.serving.arrow.ArrowSerializer"><span>ArrowSerializer</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -96,23 +92,23 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="com.intel.analytics.zoo.serving.postprocessing.PostProcessing#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(tensor:com.intel.analytics.bigdl.tensor.Tensor[Float],filter:String):com.intel.analytics.zoo.serving.postprocessing.PostProcessing"></a>
-      <a id="&lt;init&gt;:PostProcessing"></a>
+              <ol><li name="com.intel.analytics.zoo.serving.arrow.ArrowSerializer#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="&lt;init&gt;(data:Array[Float],shape:Array[Int]):com.intel.analytics.zoo.serving.arrow.ArrowSerializer"></a>
+      <a id="&lt;init&gt;:ArrowSerializer"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">PostProcessing</span><span class="params">(<span name="tensor">tensor: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="filter">filter: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;&quot;</span></span>)</span>
+        <span class="name">ArrowSerializer</span><span class="params">(<span name="data">data: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="shape">shape: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@&lt;init&gt;(tensor:com.intel.analytics.bigdl.tensor.Tensor[Float],filter:String):com.intel.analytics.zoo.serving.postprocessing.PostProcessing" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@&lt;init&gt;(data:Array[Float],shape:Array[Int]):com.intel.analytics.zoo.serving.arrow.ArrowSerializer" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">data</dt><dd class="cmt"><p>data array of flattened Tensor</p></dd><dt class="param">shape</dt><dd class="cmt"><p>shape array of Tensor</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -134,7 +130,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@!=(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -151,7 +147,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@##():Int" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@##():Int" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -168,7 +164,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@==(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@==(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -185,7 +181,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@asInstanceOf[T0]:T0" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -202,7 +198,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@clone():Object" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@clone():Object" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -213,6 +209,77 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.serving.arrow.ArrowSerializer#copyDataToVector" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="copyDataToVector(vector:org.apache.arrow.vector.Float4Vector):Unit"></a>
+      <a id="copyDataToVector(Float4Vector):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">copyDataToVector</span><span class="params">(<span name="vector">vector: <span class="extype" name="org.apache.arrow.vector.Float4Vector">Float4Vector</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@copyDataToVector(vector:org.apache.arrow.vector.Float4Vector):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Copy data array to Arrow float vector</p>
+    </li><li name="com.intel.analytics.zoo.serving.arrow.ArrowSerializer#copyShapeToVector" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="copyShapeToVector(vector:org.apache.arrow.vector.IntVector):Unit"></a>
+      <a id="copyShapeToVector(IntVector):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">copyShapeToVector</span><span class="params">(<span name="vector">vector: <span class="extype" name="org.apache.arrow.vector.IntVector">IntVector</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@copyShapeToVector(vector:org.apache.arrow.vector.IntVector):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Copy shape array to Arrow shape vector</p>
+    </li><li name="com.intel.analytics.zoo.serving.arrow.ArrowSerializer#copyToSchemaRoot" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="copyToSchemaRoot(vectorSchemaRoot:org.apache.arrow.vector.VectorSchemaRoot):Unit"></a>
+      <a id="copyToSchemaRoot(VectorSchemaRoot):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">copyToSchemaRoot</span><span class="params">(<span name="vectorSchemaRoot">vectorSchemaRoot: <span class="extype" name="org.apache.arrow.vector.VectorSchemaRoot">VectorSchemaRoot</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@copyToSchemaRoot(vectorSchemaRoot:org.apache.arrow.vector.VectorSchemaRoot):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Copy the data and shape in this class into vectorSchemaRoot
+vectorSchemaRoot is then used to store the data
+which could be written to Arrow buffer</p>
+    </li><li name="com.intel.analytics.zoo.serving.arrow.ArrowSerializer#createVector" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="createVector():org.apache.arrow.vector.VectorSchemaRoot"></a>
+      <a id="createVector():VectorSchemaRoot"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">createVector</span><span class="params">()</span><span class="result">: <span class="extype" name="org.apache.arrow.vector.VectorSchemaRoot">VectorSchemaRoot</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@createVector():org.apache.arrow.vector.VectorSchemaRoot" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">deprecated
+Create a vector of data and shape of type ListVector</p>
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -225,7 +292,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -242,7 +309,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@equals(x$1:Any):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -259,7 +326,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@finalize():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@finalize():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -282,7 +349,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@getClass():Class[_]" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@getClass():Class[_]" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -299,7 +366,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@hashCode():Int" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@hashCode():Int" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -316,7 +383,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -333,7 +400,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -350,7 +417,7 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@notify():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@notify():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -367,65 +434,11 @@ this string could be parsed by json in Python to a list</p></div><div class="tog
         <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@notifyAll():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@notifyAll():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.serving.postprocessing.PostProcessing#pickTopN" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="pickTopN(topN:Int):String"></a>
-      <a id="pickTopN(Int):String"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">pickTopN</span><span class="params">(<span name="topN">topN: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@pickTopN(topN:Int):String" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Pick TopN value of output tensor
-only (1) * record_size * box_value_number is supported
-thus only 2 or 3 dimension is valid for now
-</p>
-    </li><li name="com.intel.analytics.zoo.serving.postprocessing.PostProcessing#processTensor" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="processTensor():String"></a>
-      <a id="processTensor():String"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">processTensor</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@processTensor():String" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.serving.postprocessing.PostProcessing#rankTopN" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="rankTopN(topN:Int):String"></a>
-      <a id="rankTopN(Int):String"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">rankTopN</span><span class="params">(<span name="topN">topN: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@rankTopN(topN:Int):String" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">TopN filter, take 1-D size (n) tensor as input</p><div class="fullcomment"><div class="comment cmt"><p>TopN filter, take 1-D size (n) tensor as input</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>string, representing 2-D size (topN, 2) tensor</p></dd></dl></div>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -438,46 +451,11 @@ thus only 2 or 3 dimension is valid for now
         <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.serving.postprocessing.PostProcessing#t" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="t:com.intel.analytics.bigdl.tensor.Tensor[Float]"></a>
-      <a id="t:Tensor[Float]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">t</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="scala.Float">Float</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@t:com.intel.analytics.bigdl.tensor.Tensor[Float]" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.serving.postprocessing.PostProcessing#tensorToNdArrayString" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="tensorToNdArrayString():String"></a>
-      <a id="tensorToNdArrayString():String"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">tensorToNdArrayString</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@tensorToNdArrayString():String" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Transform tensor into readable string,
-could apply to any shape of tensor</p>
     </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="toString():String"></a>
       <a id="toString():String"></a>
@@ -490,28 +468,11 @@ could apply to any shape of tensor</p>
         <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@toString():String" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@toString():String" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.serving.postprocessing.PostProcessing#totalSize" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="totalSize:Int"></a>
-      <a id="totalSize:Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">totalSize</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@totalSize:Int" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>
@@ -524,7 +485,7 @@ could apply to any shape of tensor</p>
         <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@wait():Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@wait():Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -547,7 +508,7 @@ could apply to any shape of tensor</p>
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -570,7 +531,7 @@ could apply to any shape of tensor</p>
         <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.postprocessing.PostProcessing@wait(x$1:Long):Unit" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.arrow.ArrowSerializer@wait(x$1:Long):Unit" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
