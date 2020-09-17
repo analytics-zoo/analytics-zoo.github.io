@@ -153,8 +153,14 @@ zoo.orca.data.pandas.read_json(file_path, **kwargs)
 <ul>
 <li>The <code>file_path</code> could be a csv/json file, list of multiple csv/json file paths, a directory containing csv/json files. Supported file systems are local file system,<code>hdfs</code>, and <code>s3</code>.</li>
 <li><code>**kwargs</code> is read_csv/read_json options supported by pandas.</li>
+<li>You can use <code>OrcaContext.pandas_read_backend = "pandas"</code> to switch to pandas backend. Reference: <a href="https://analytics-zoo.github.io/master/#Orca/context/">Orca Context</a></li>
 </ul>
 <p>After calling these APIs, you would get a XShards of Pandas DataFrame on Spark.</p>
+<p><strong>For Cloudera YARN client mode users:</strong>
+If you use <code>pandas</code> as pandas_read_backend, you should configure <code>ARROW_LIBHDFS_DIR</code> before calling read_csv:
+1. use <code>locate libhdfs.so</code> to find libhdfs.so
+2. <code>export ARROW_LIBHDFS_DIR=/opt/cloudera/parcels/CDH-5.15.2-1.cdh5.15.2.p0.3/lib64</code> (replace with the result of <code>locate libhdfs.so</code>)
+3. use <code>--conf "spark.executorEnv.ARROW_LIBHDFS_DIR=/opt/cloudera/parcels/CDH-5.15.2-1.cdh5.15.2.p0.3/lib64"</code> to export the environment variable to all executors.</p>
 <h4 id="partition-by-pandas-dataframe-columns"><strong>Partition by Pandas DataFrame columns</strong></h4>
 <p>You can re-partition XShards of Pandas DataFrame with specified columns.</p>
 <pre><code>partition_by(cols, num_partitions=None)
