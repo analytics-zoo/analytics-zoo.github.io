@@ -36,6 +36,8 @@
           {title: "Introduction", url: "#introduction", children: [
               {title: "Orca PyTorch Estimator", url: "#orca-pytorch-estimator" },
               {title: "Create Estimator from pyTorch Model", url: "#create-estimator-from-pytorch-model" },
+              {title: "Use horovod Estimator", url: "#use-horovod-estimator" },
+              {title: "Use BigDL Estimator", url: "#use-bigdl-estimator" },
           ]},
         ];
 
@@ -108,8 +110,8 @@ Estimator.from_torch(*,
 <li><code>model_dir</code>: parameter for <code>bigdl</code>. The path to save model. During the training, if checkpoint_trigger is defined and triggered, the model will be saved to model_dir.</li>
 <li><code>backend</code>: You can choose "horovod" or "bigdl" as backend.</li>
 </ul>
-<h4 id="use-horovod-estimator">Use horovod Estimator</h4>
-<h5 id="train-model">Train model</h5>
+<h3 id="use-horovod-estimator">Use horovod Estimator</h3>
+<h4 id="train-model"><strong>Train model</strong></h4>
 <p>After an Estimator is created, you can call estimator API to train PyTorch model:</p>
 <pre><code>fit(self, data, epochs=1, profile=False, reduce_results=True, info=None)
 </code></pre>
@@ -121,7 +123,7 @@ Estimator.from_torch(*,
 <li><code>reduce_results</code>: (bool) Whether to average all metrics across all workers into one dict. If a metric is a non-numerical value (or nested dictionaries), one value will be randomly selected among the workers. If False, returns a list of dicts.</li>
 <li><code>info</code>: (dict) Optional dictionary passed to the training operator for <code>train_epoch</code> and <code>train_batch</code>.</li>
 </ul>
-<h5 id="evaluate-model">Evaluate model</h5>
+<h4 id="evaluate-model"><strong>Evaluate model</strong></h4>
 <p>After Training, you can call estimator API to evaluate PyTorch model:</p>
 <pre><code>evaluate(self, data, num_steps=None, profile=False, info=None)
 </code></pre>
@@ -132,18 +134,18 @@ Estimator.from_torch(*,
 <li><code>profile</code>: (bool) Returns time stats for the evaluation procedure.</li>
 <li><code>info</code>: (dict) Optional dictionary passed to the training operator for <code>validate</code> and <code>validate_batch</code>.</li>
 </ul>
-<h5 id="get-model">Get model</h5>
+<h4 id="get-model"><strong>Get model</strong></h4>
 <p>You can get the trained model using <code>get_model(self)</code></p>
-<h5 id="save-model">Save model</h5>
+<h4 id="save-model"><strong>Save model</strong></h4>
 <p>You can save model using <code>save(self, checkpoint)</code>
 * <code>checkpoint</code>: (str) Path to target checkpoint file.</p>
-<h5 id="load-model">Load model</h5>
+<h4 id="load-model"><strong>Load model</strong></h4>
 <p>You can load saved model using <code>load(self, checkpoint)</code>
 * <code>checkpoint</code>: (str) Path to target checkpoint file.</p>
-<h5 id="shutdown-workers">Shutdown workers</h5>
+<h4 id="shutdown-workers"><strong>Shutdown workers</strong></h4>
 <p>You can shut down workers and releases resources using <code>shutdown(self, force=False)</code></p>
-<h4 id="use-bigdl-estimator">Use BigDL Estimator</h4>
-<h5 id="train-model_1">Train model</h5>
+<h3 id="use-bigdl-estimator">Use BigDL Estimator</h3>
+<h4 id="train-model_1"><strong>Train model</strong></h4>
 <p>After an Estimator is created, you can call estimator API to train PyTorch model:</p>
 <pre><code>fit(self, data, epochs=1, batch_size=32, validation_data=None, validation_methods=None, checkpoint_trigger=None):
 </code></pre>
@@ -156,7 +158,17 @@ Estimator.from_torch(*,
 <li><code>validation_methods</code>: BigDL validation methods.</li>
 <li><code>checkpoint_trigger</code>: BigDL Trigger to set a checkpoint.</li>
 </ul>
-<h5 id="get-model_1">Get model</h5>
+<h4 id="evaluate-model_1"><strong>Evaluate model</strong></h4>
+<p>After Training, you can call estimator API to evaluate PyTorch model:</p>
+<pre><code>evaluate(self, data, validation_methods=None, batch_size=32)
+</code></pre>
+
+<ul>
+<li><code>data</code>: Validation data. SparkXShard, PyTorch DataLoader and PyTorch DataLoader creator are supported.</li>
+<li><code>validation_methods</code>: BigDL validation methods.</li>
+<li><code>batch_size</code>: Batch size used for evaluation. Only used when data is a SparkXShard.</li>
+</ul>
+<h4 id="get-model_1"><strong>Get model</strong></h4>
 <p>You can get model using <code>get_model(self)</code></p>
 
   <br>

@@ -39,12 +39,6 @@
               {title: "Step 2: Define Model, Loss Function and Metrics", url: "#step-2-define-model-loss-function-and-metrics" },
               {title: "Step 3: Fit with Orca TensorFlow Estimator", url: "#step-3-fit-with-orca-tensorflow-estimator" },
           ]},
-          {title: "get DataSet", url: "#get-dataset", children: [
-          ]},
-          {title: "tf.data.Dataset.from_tensor_slices is for demo only. For production use, please use", url: "#tfdatadatasetfrom_tensor_slices-is-for-demo-only-for-production-use-please-use", children: [
-          ]},
-          {title: "file-based approach (e.g. tfrecord).", url: "#file-based-approach-eg-tfrecord", children: [
-          ]},
         ];
 
     </script>
@@ -153,45 +147,69 @@ acc = accuracy(logits, labels)
 
 <h3 id="step-3-fit-with-orca-tensorflow-estimator"><strong>Step 3: Fit with Orca TensorFlow Estimator</strong></h3>
 <ol>
-<li>
-<p>Define the dataset in whatever way you want. Orca just needs tf.data.Dataset, Spark DataFrame or Orca SparkXShards.
-    ```python
-    def preprocess(x, y):
-        return tf.to_float(tf.reshape(x, (-1, 28, 28, 1))) / 255.0, y</p>
-<h1 id="get-dataset">get DataSet</h1>
-<p>(train_feature, train_label), (val_feature, val_label) = tf.keras.datasets.mnist.load_data()</p>
-<h1 id="tfdatadatasetfrom_tensor_slices-is-for-demo-only-for-production-use-please-use">tf.data.Dataset.from_tensor_slices is for demo only. For production use, please use</h1>
-<h1 id="file-based-approach-eg-tfrecord">file-based approach (e.g. tfrecord).</h1>
-<p>train_dataset = tf.data.Dataset.from_tensor_slices((train_feature, train_label))
+<li>Define the dataset in whatever way you want. Orca just needs tf.data.Dataset, Spark DataFrame or Orca SparkXShards.</li>
+</ol>
+<pre><code class="python">def preprocess(x, y):
+    return tf.to_float(tf.reshape(x, (-1, 28, 28, 1))) / 255.0, y
+
+# get DataSet
+(train_feature, train_label), (val_feature, val_label) = tf.keras.datasets.mnist.load_data()
+
+# tf.data.Dataset.from_tensor_slices is for demo only. For production use, please use
+# file-based approach (e.g. tfrecord).
+train_dataset = tf.data.Dataset.from_tensor_slices((train_feature, train_label))
 train_dataset = train_dataset.map(preprocess)
 val_dataset = tf.data.Dataset.from_tensor_slices((val_feature, val_label))
 val_dataset = val_dataset.map(preprocess)
-<code>2. Create an estimator
-* For Keras Users</code>python
-    est = Estimator.from_keras(keras_model=model)
-    <code>* For Graph Users</code>python
-    est = Estimator.from_graph(inputs=images,
+</code></pre>
+
+<ol>
+<li>Create an estimator</li>
+<li>For Keras Users</li>
+</ol>
+<pre><code class="python">est = Estimator.from_keras(keras_model=model)
+</code></pre>
+
+<ul>
+<li>For Graph Users</li>
+</ul>
+<pre><code class="python">est = Estimator.from_graph(inputs=images, 
                            outputs=logits,
                            labels=labels,
                            loss=loss,
                            optimizer=tf.train.AdamOptimizer(),
-                           metrics={"acc": acc})
-    <code>3. Fit with estimator</code>python
-est.fit(data=train_dataset,
+                           metrics={&quot;acc&quot;: acc})
+</code></pre>
+
+<ol>
+<li>Fit with estimator</li>
+</ol>
+<pre><code class="python">est.fit(data=train_dataset,
         batch_size=320,
         epochs=max_epoch,
         validation_data=val_dataset)
-<code>4. Evaluate with estimator</code>python
-result = est.evaluate(val_dataset)
-print(result)
-<code>5. Save Model
-* For Keras Users</code>python
-    est.save_keras_model("/tmp/mnist_keras.h5")
-    <code>* For Graph Users</code>python
-    est.save_tf_checkpoint("/tmp/lenet/model")
-    ```</p>
-</li>
+</code></pre>
+
+<ol>
+<li>Evaluate with estimator</li>
 </ol>
+<pre><code class="python">result = est.evaluate(val_dataset)
+print(result)
+</code></pre>
+
+<ol>
+<li>Save Model</li>
+<li>For Keras Users</li>
+</ol>
+<pre><code class="python">est.save_keras_model(&quot;/tmp/mnist_keras.h5&quot;)
+</code></pre>
+
+<ul>
+<li>For Graph Users</li>
+</ul>
+<pre><code class="python">est.save_tf_checkpoint(&quot;/tmp/lenet/model&quot;)
+</code></pre>
+
 <p><strong>Note:</strong> you should call <code>stop_orca_context()</code> when your application finishes.</p>
 
   <br>
