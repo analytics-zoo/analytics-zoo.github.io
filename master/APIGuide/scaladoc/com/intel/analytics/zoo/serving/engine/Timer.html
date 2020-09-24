@@ -28,12 +28,10 @@
         </head>
         <body class="type">
       <div id="definition">
-        <a href="Timer$.html" title="See companion object"><img alt="Class/Object" src="../../../../../../lib/class_to_object_big.png" /></a>
+        <img alt="Class" src="../../../../../../lib/class_big.png" />
         <p id="owner"><a href="../../../../../package.html" class="extype" name="com">com</a>.<a href="../../../../package.html" class="extype" name="com.intel">intel</a>.<a href="../../../package.html" class="extype" name="com.intel.analytics">analytics</a>.<a href="../../package.html" class="extype" name="com.intel.analytics.zoo">zoo</a>.<a href="../package.html" class="extype" name="com.intel.analytics.zoo.serving">serving</a>.<a href="package.html" class="extype" name="com.intel.analytics.zoo.serving.engine">engine</a></p>
-        <h1><a href="Timer$.html" title="See companion object">Timer</a></h1><h3><span class="morelinks"><div>
-            Related Docs:
-            <a href="Timer$.html" title="See companion object">object Timer</a>
-            | <a href="package.html" class="extype" name="com.intel.analytics.zoo.serving.engine">package engine</a>
+        <h1>Timer</h1><h3><span class="morelinks"><div>Related Doc:
+            <a href="package.html" class="extype" name="com.intel.analytics.zoo.serving.engine">package engine</a>
           </div></span></h3><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
@@ -51,7 +49,8 @@
       </span>
       </h4>
       
-          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Timer class</p></div><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Timer class
+</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
           <div class="superTypes hiddenContent"><a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
@@ -90,8 +89,8 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="com.intel.analytics.zoo.serving.engine.Timer#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="&lt;init&gt;(_countFlag:Boolean):com.intel.analytics.zoo.serving.engine.Timer"></a>
+              <ol><li name="com.intel.analytics.zoo.serving.engine.Timer#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="&lt;init&gt;():com.intel.analytics.zoo.serving.engine.Timer"></a>
       <a id="&lt;init&gt;:Timer"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -99,24 +98,38 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">Timer</span><span class="params">(<span name="_countFlag">_countFlag: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span>
+        <span class="name">Timer</span><span class="params">()</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@&lt;init&gt;(_countFlag:Boolean):com.intel.analytics.zoo.serving.engine.Timer" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@&lt;init&gt;():com.intel.analytics.zoo.serving.engine.Timer" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">_countFlag</dt><dd class="cmt"><p>To determine whether this timer should be count into total
-                  Sequential operations in main workflow should be count
-                  but parallel operations in one stage should not
-                  e.g. The whole cost of preprocessing should be taken,
-                  but the preprocessing time per image, which is counted in
-                  parallel manner, should be set false, otherwise the statistic
-                  count time would be wrong</p></dd></dl></div>
+      
     </li></ol>
             </div>
 
-        
+        <div id="types" class="types members">
+              <h3>Type Members</h3>
+              <ol><li name="com.intel.analytics.zoo.serving.engine.Timer.TimerUnit" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="TimerUnitextendsAnyRef"></a>
+      <a id="TimerUnit:TimerUnit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <a href="Timer$TimerUnit.html"><span class="name">TimerUnit</span></a><span class="result"> extends <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@TimerUnitextendsAnyRef" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li></ol>
+            </div>
 
         
 
@@ -190,57 +203,6 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.serving.engine.Timer#average" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="average:Float"></a>
-      <a id="average:Float"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">average</span><span class="result">: <span class="extype" name="scala.Float">Float</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@average:Float" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.serving.engine.Timer#averageBatch" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="averageBatch:Float"></a>
-      <a id="averageBatch:Float"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">averageBatch</span><span class="result">: <span class="extype" name="scala.Float">Float</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@averageBatch:Float" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.serving.engine.Timer#batchNum" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="batchNum:Int"></a>
-      <a id="batchNum:Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">batchNum</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@batchNum:Int" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="clone():Object"></a>
       <a id="clone():AnyRef"></a>
@@ -264,23 +226,6 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.serving.engine.Timer#countFlag" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="countFlag:Boolean"></a>
-      <a id="countFlag:Boolean"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">countFlag</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@countFlag:Boolean" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a>
       <a id="eq(AnyRef):Boolean"></a>
@@ -338,23 +283,6 @@
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.serving.engine.Timer#first" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="first:Long"></a>
-      <a id="first:Long"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">first</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@first:Long" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getClass():Class[_]"></a>
       <a id="getClass():Class[_]"></a>
@@ -406,57 +334,6 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.serving.engine.Timer#max" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="max:Long"></a>
-      <a id="max:Long"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">max</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@max:Long" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.serving.engine.Timer#min" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="min:Long"></a>
-      <a id="min:Long"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">min</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@min:Long" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.serving.engine.Timer#nQ" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="nQ:Int"></a>
-      <a id="nQ:Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">nQ</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@nQ:Int" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a>
       <a id="ne(AnyRef):Boolean"></a>
@@ -525,23 +402,6 @@
       </a>
     </span>
       
-    </li><li name="com.intel.analytics.zoo.serving.engine.Timer#record" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="record:Int"></a>
-      <a id="record:Int"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">record</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@record:Int" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
       <a id="synchronized[T0](⇒T0):T0"></a>
@@ -559,6 +419,40 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.serving.engine.Timer#timerMap" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="timerMap:scala.collection.immutable.Map[String,Timer.this.TimerUnit]"></a>
+      <a id="timerMap:Map[String,TimerUnit]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">timerMap</span><span class="result">: <span class="extype" name="scala.collection.immutable.Map">Map</span>[<span class="extype" name="java.lang.String">String</span>, <a href="Timer$TimerUnit.html" class="extype" name="com.intel.analytics.zoo.serving.engine.Timer.TimerUnit">TimerUnit</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@timerMap:scala.collection.immutable.Map[String,Timer.this.TimerUnit]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.serving.engine.Timer#timing" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="timing[T](name:String,num:Int)(f:=&gt;T):T"></a>
+      <a id="timing[T](String,Int)(⇒T):T"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">timing</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="num">num: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="params">(<span name="f">f: ⇒ <span class="extype" name="com.intel.analytics.zoo.serving.engine.Timer.timing.T">T</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.zoo.serving.engine.Timer.timing.T">T</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@timing[T](name:String,num:Int)(f:=&gt;T):T" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li><li name="scala.AnyRef#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="toString():String"></a>
       <a id="toString():String"></a>
@@ -576,40 +470,6 @@
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.serving.engine.Timer#topQ" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="topQ:java.util.PriorityQueue[Long]"></a>
-      <a id="topQ:PriorityQueue[Long]"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">topQ</span><span class="result">: <span class="extype" name="java.util.PriorityQueue">PriorityQueue</span>[<span class="extype" name="scala.Long">Long</span>]</span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@topQ:java.util.PriorityQueue[Long]" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.serving.engine.Timer#total" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="total:Float"></a>
-      <a id="total:Float"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">total</span><span class="result">: <span class="extype" name="scala.Float">Float</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.engine.Timer@total:Float" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="wait():Unit"></a>
       <a id="wait():Unit"></a>

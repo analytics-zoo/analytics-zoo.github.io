@@ -101,9 +101,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>
 <p><a href="#logs-and-visualization">Logs and Visualization</a></p>
 </li>
-<li>
-<p><a href="#cluster-serving-on-spark">Cluster Serving on Spark</a></p>
-</li>
 </ul>
 </li>
 </ul>
@@ -152,17 +149,17 @@ image: cat1.jpeg, classification-result:class: 292's prob: 0.32633427
 <ul>
 <li>Copy a previously trained model to the local node; currently TensorFlow, PyTorch, Caffe, BigDL and OpenVINO models are supported.</li>
 <li>Install Analytics Zoo on the local node (e.g., using a single pip install command)</li>
-<li>Configure Cluster Server on the local node, including the file path to the trained model and the address of the cluster (such as Apache Hadoop YARN cluster, Spark Cluster, K8s cluster, etc.).
+<li>Configure Cluster Server on the local node, including the file path to the trained model and the address of the cluster (such as Apache Hadoop YARN cluster, K8s cluster, etc.).
 Please note that you only need to deploy the Cluster Serving solution on a single local node, and NO modifications are needed for the (YARN or K8s) cluster. </li>
 </ul>
 <h4 id="2-launch-the-cluster-serving-service">2. Launch the Cluster Serving service</h4>
 <p>You can launch the Cluster Serving service by running the startup script on the local node. Under the hood, Cluster Serving will automatically deploy the trained model and serve the model inference requests across the cluster in a distributed fashion. You may monitor its runtime status (such as inference throughput) using TensorBoard. </p>
 <h4 id="3-distributed-real-time-streaming-inference">3. Distributed, real-time (streaming) inference</h4>
 <p>Cluster Serving provides a simple pub/sub API to the users, so that you can easily send the inference requests to an input queue (currently Redis Streams is used) using a simple Python API.</p>
-<p>Cluster Serving will then read the requests from the Redis stream, run the distributed real-time inference across the cluster (using Spark Streaming or Flink), and return the results back through Redis. As a result, you may get the inference results again using a simple Python API.</p>
+<p>Cluster Serving will then read the requests from the Redis stream, run the distributed real-time inference across the cluster (using Flink), and return the results back through Redis. As a result, you may get the inference results again using a simple Python API.</p>
 <h2 id="deploy-your-own-cluster-serving">Deploy your Own Cluster Serving</h2>
 <h3 id="1-installation">1. Installation</h3>
-<p>It is recommended to install Cluster Serving by pulling the pre-built Docker image to your local node, which have packaged all the required dependencies. Alternatively, you may also manually install Cluster Serving (through either pip or direct downloading) as well as Spark, Redis and TensorBoard (for visualizing the serving status) on the local node.</p>
+<p>It is recommended to install Cluster Serving by pulling the pre-built Docker image to your local node, which have packaged all the required dependencies. Alternatively, you may also manually install Cluster Serving (through either pip or direct downloading), Redis on the local node.</p>
 <h4 id="docker">Docker</h4>
 <pre><code>docker pull intelanalytics/zoo-cluster-serving
 </code></pre>
@@ -177,17 +174,14 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 
 <p><code>cd ./cluster-serving</code>, you can see all the environments are prepared.</p>
 <h5 id="yarn-user">Yarn user</h5>
-<p>For Yarn user using docker, you have to set additional config, thus you need to call following when starting the container</p>
-<pre><code>docker run --name cluster-serving --net=host -v /path/to/HADOOP_CONF_DIR:/opt/work/HADOOP_CONF_DIR -e HADOOP_CONF_DIR=/opt/work/HADOOP_CONF_DIR -itd intelanalytics/zoo-cluster-serving:0.9.0
-</code></pre>
-
+<p>For Yarn user using docker, start Flink on Yarn inside the container. The other operations are the same.</p>
 <h4 id="manual-installation">Manual installation</h4>
 <h5 id="requirements">Requirements</h5>
-<p>Non-Docker users need to install <a href="https://archive.apache.org/dist/flink/flink-1.10.0/">Flink</a>, 1.10.0 by default, for users choose Spark as backend, , <a href="https://redis.io/topics/quickstart">Redis</a>, 0.5.0 by default and <a href="https://www.tensorflow.org/tensorboard/get_started">TensorBoard</a> if you choose Spark backend and need visualization.</p>
+<p>Non-Docker users need to install <a href="https://archive.apache.org/dist/flink/flink-1.10.0/">Flink</a>, 1.10.0 by default, <a href="https://redis.io/topics/quickstart">Redis</a>, 0.5.0 by default.</p>
 <p>After preparing dependencies above, make sure the environment variable <code>$FLINK_HOME</code> (/path/to/flink-FLINK_VERSION-bin), <code>$REDIS_HOME</code>(/path/to/redis-REDIS_VERSION) is set before following steps. </p>
 <h5 id="install-cluster-serving-by-download-release">Install Cluster Serving by download release</h5>
-<p>For users who need to deploy and start Cluster Serving, download Cluster Serving zip <code>analytics-zoo-xxx-cluster-serving-all.zip</code> from <a href="https://oss.sonatype.org/content/repositories/snapshots/com/intel/analytics/zoo/analytics-zoo-bigdl_0.10.0-spark_2.4.3/0.9.0-SNAPSHOT/">here</a> and unzip it, then run <code>source cluster-serving-prepare.sh</code>. A demo <code>cluster-serving-demo.sh</code> is also prepared and users can run it to check if Cluster Serving could work.</p>
-<p>For users who need to do inference, aka. predict data only, download Analytics Zoo python zip <code>analytics-zoo-xxx-cluster-serving-python.zip</code> from <a href="https://oss.sonatype.org/content/repositories/snapshots/com/intel/analytics/zoo/analytics-zoo-bigdl_0.10.0-spark_2.4.3/0.9.0-SNAPSHOT/">here</a> and run <code>export PYTHONPATH=$PYTHONPATH:/path/to/zip</code> to add this zip to <code>PYTHONPATH</code> environment variable.</p>
+<p>For users who need to deploy and start Cluster Serving, download Cluster Serving zip <code>analytics-zoo-xxx-cluster-serving-all.zip</code> from <a href="https://oss.sonatype.org/content/repositories/snapshots/com/intel/analytics/zoo/analytics-zoo-bigdl_0.10.0-spark_2.4.3/0.9.0-SNAPSHOT/">here</a> and unzip it, then run <code>source cluster-serving-setup.sh</code>.
+For users who need to do inference, aka. predict data only, download Analytics Zoo python zip <code>analytics-zoo-xxx-cluster-serving-python.zip</code> from <a href="https://oss.sonatype.org/content/repositories/snapshots/com/intel/analytics/zoo/analytics-zoo-bigdl_0.10.0-spark_2.4.3/0.9.0-SNAPSHOT/">here</a> and run <code>export PYTHONPATH=$PYTHONPATH:/path/to/zip</code> to add this zip to <code>PYTHONPATH</code> environment variable.</p>
 <h5 id="install-cluster-serving-by-pip">Install Cluster Serving by pip</h5>
 <p>Download package from <a href="https://sourceforge.net/projects/analytics-zoo/files/cluster-serving-py/">here</a>, run following command to install Cluster Serving</p>
 <pre><code>pip install analytics_zoo_serving-*.whl
@@ -203,9 +197,6 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 model:
   # model path must be set
   path: /opt/work/model
-data:
-  # data input shape must be set
-  shape:  
 params:
   # default, 4
   core_num:  
@@ -516,62 +507,6 @@ In case of error, all APIs will return a JSON object in the response body with e
 <p>To visualize Cluster Serving performance, go to your flink job UI, default <code>localhost:8081</code>, and go to Cluster Serving job -&gt; metrics. Add <code>numRecordsOut</code> to see total record number and <code>numRecordsOutPerSecond</code> to see throughput.</p>
 <p>See example of visualization:</p>
 <p><img alt="Example Chart" src="../serving-visualization.png" /></p>
-<h3 id="cluster-serving-on-spark">Cluster Serving on Spark</h3>
-<p>For users who are more familiar to Spark and choose Spark as backend, install <a href="https://archive.apache.org/dist/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz">Spark</a>, 2.4.3 by default. And instead of setting <code>$FLINK_HOME</code> environment variable, set <code>$SPARK_HOME</code> (/path/to/spark-SPARK_VERSION-bin-hadoop-HADOOP_VERSION)</p>
-<p>Use <code>pip install tensorboard</code> to install TensorBoard if visualization is needed.</p>
-<p>Cluster Serving could be start by</p>
-<pre><code>cluster-serving-start -e spark
-# or also
-cluster-serving-start --backend spark
-</code></pre>
-
-<h4 id="extra-config">Extra config</h4>
-<p>Users could set extra config valid in Cluster Serving on Spark in config file <code>config.yaml</code>.</p>
-<pre><code>param:
-  # default: OFF
-  performance_mode:
-spark:
-  # default, local[*], change this to spark://, yarn, k8s:// etc if you want to run on cluster
-  master: local[*]
-  # default, 4g
-  driver_memory:
-  # default, 1g
-  executor_memory:
-  # default, 1
-  num_executors:
-  # default, 4
-  executor_cores:
-  # default, 4
-  total_executor_cores:
-</code></pre>
-
-<h5 id="param">param</h5>
-<ul>
-<li>performance_mode: The performance mode will utilize your CPU resource to achieve better inference performance on a single node. <strong>Note:</strong> numactl and net-tools should be installed in your system, and spark master should be <code>local[*]</code> in the config.yaml file.</li>
-</ul>
-<h5 id="spark">spark</h5>
-<ul>
-<li>master: Your cluster address, same as parameter <code>master</code> in spark</li>
-<li>driver_memory: same as parameter <code>driver-memory</code> in spark</li>
-<li>executor_memory: same as parameter <code>executor-memory</code> in spark</li>
-<li>num_executors: same as parameter <code>num-executors</code> in spark</li>
-<li>executor_cores: same as paramter <code>executor-cores</code> in spark</li>
-<li>total_executor_cores: same as parameter <code>total-executor-cores</code> in spark</li>
-</ul>
-<p>For more details of these config, please refer to <a href="https://spark.apache.org/docs/latest/configuration.html">Spark Official Document</a></p>
-<h4 id="visualization_1">Visualization</h4>
-<p>TensorBoard is integrated into Cluster Serving on Spark. TensorBoard service is started with Cluster Serving. Once your serving starts, you can go to <code>localhost:6006</code> to see visualization of your serving.</p>
-<p>Analytics Zoo Cluster Serving provides 2 attributes in Tensorboard so far, <code>Serving Throughput</code> and <code>Total Records Number</code>.</p>
-<ul>
-<li>
-<p><code>Serving Throughput</code>: The overall throughput, including preprocessing and postprocessing of your serving. The line should be relatively stable after first few records. If this number has a drop and remains lower than previous, you might have lost the connection of some nodes in your cluster.</p>
-</li>
-<li>
-<p><code>Total Records Number</code>: The total number of records that Cluster Serving gets so far.</p>
-</li>
-</ul>
-<p>See example of visualization:</p>
-<p><img alt="Example Chart" src="../example-chart.png" /></p>
 
   <br>
 </div>
