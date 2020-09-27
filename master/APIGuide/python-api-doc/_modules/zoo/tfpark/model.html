@@ -1,0 +1,517 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.tfpark.model &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../tfpark.html" accesskey="U">zoo.tfpark</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.tfpark.model</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">bigdl.optim.optimizer</span> <span class="kn">import</span> <span class="n">MaxEpoch</span>
+
+<span class="kn">from</span> <span class="nn">zoo.tfpark.utils</span> <span class="kn">import</span> <span class="n">evaluate_string_metrics</span>
+<span class="kn">from</span> <span class="nn">zoo.common</span> <span class="kn">import</span> <span class="n">load_from_file</span>
+<span class="kn">from</span> <span class="nn">zoo.common</span> <span class="kn">import</span> <span class="n">save_file</span>
+<span class="kn">from</span> <span class="nn">zoo.common.nncontext</span> <span class="kn">import</span> <span class="n">getOrCreateSparkContext</span>
+<span class="kn">from</span> <span class="nn">zoo.tfpark.tf_dataset</span> <span class="kn">import</span> <span class="n">TFNdarrayDataset</span><span class="p">,</span> <span class="n">TFDataset</span>
+
+<span class="kn">from</span> <span class="nn">zoo.tfpark.tf_optimizer</span> <span class="kn">import</span> <span class="n">TFOptimizer</span>
+<span class="kn">from</span> <span class="nn">zoo.tfpark.tf_predictor</span> <span class="kn">import</span> <span class="n">TFPredictor</span>
+
+
+<div class="viewcode-block" id="KerasModel"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel">[docs]</a><span class="k">class</span> <span class="nc">KerasModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param model: a compiled keras model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span> <span class="o">=</span> <span class="n">model_dir</span>
+        <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">real_batch_size</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_tensors</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="KerasModel.add_metric"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel.add_metric">[docs]</a>    <span class="k">def</span> <span class="nf">add_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric_tensors</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">tensor</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">metrics_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">metrics_names</span>
+
+<div class="viewcode-block" id="KerasModel.get_weights"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel.get_weights">[docs]</a>    <span class="k">def</span> <span class="nf">get_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_weights</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="KerasModel.set_weights"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel.set_weights">[docs]</a>    <span class="k">def</span> <span class="nf">set_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">set_weights</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasModel.save_weights"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel.save_weights">[docs]</a>    <span class="k">def</span> <span class="nf">save_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save_format</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">save_func</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save_weights</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">,</span> <span class="n">save_format</span><span class="p">)</span>
+        <span class="n">save_file</span><span class="p">(</span><span class="n">save_func</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasModel.load_weights"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel.load_weights">[docs]</a>    <span class="k">def</span> <span class="nf">load_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">by_name</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">load_func</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">load_weights</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">by_name</span><span class="p">)</span>
+        <span class="n">load_from_file</span><span class="p">(</span><span class="n">load_func</span><span class="p">,</span> <span class="n">filepath</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasModel.save_model"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel.save_model">[docs]</a>    <span class="k">def</span> <span class="nf">save_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the model to a single HDF5 file.</span>
+
+<span class="sd">        :param path: String. The path to save the model.</span>
+<span class="sd">        :param overwrite: Boolean. Whether to silently overwrite any existing file at the target</span>
+<span class="sd">                location</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">save_func</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">over_write</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="n">over_write</span><span class="p">)</span>
+        <span class="n">save_file</span><span class="p">(</span><span class="n">save_func</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">over_write</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasModel.load_model"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel.load_model">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load an existing keras model (with weights) from HDF5 file.</span>
+
+<span class="sd">        :param path: String. The path to the pre-defined model.</span>
+<span class="sd">        :return: KerasModel.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">tensorflow.python.keras</span> <span class="kn">import</span> <span class="n">models</span>
+
+        <span class="k">def</span> <span class="nf">load_func</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+        <span class="n">keras_model</span> <span class="o">=</span> <span class="n">load_from_file</span><span class="p">(</span><span class="n">load_func</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">KerasModel</span><span class="p">(</span><span class="n">keras_model</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasModel.fit"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">validation_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">distributed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Train the model for a fixed num of epochs</span>
+
+<span class="sd">        Arguments:</span>
+<span class="sd">        :param x: Input data. It could be:</span>
+<span class="sd">            - a TFDataset object</span>
+<span class="sd">            - A Numpy array (or array-like), or a list of arrays</span>
+<span class="sd">               (in case the model has multiple inputs).</span>
+<span class="sd">            - A dict mapping input names to the corresponding array/tensors,</span>
+<span class="sd">            if the model has named inputs.</span>
+<span class="sd">        :param y: Target data. Like the input data `x`,</span>
+<span class="sd">          It should be consistent with `x` (you cannot have Numpy inputs and</span>
+<span class="sd">          tensor targets, or inversely). If `x` is a TFDataset, `y` should</span>
+<span class="sd">          not be specified (since targets will be obtained from `x`).</span>
+<span class="sd">        :param batch_size: Integer or `None`.</span>
+<span class="sd">            Number of samples per gradient update.</span>
+<span class="sd">            If `x` is a TFDataset, you do not need to specify batch_size.</span>
+<span class="sd">        :param epochs: Integer. Number of epochs to train the model.</span>
+<span class="sd">            An epoch is an iteration over the entire `x` and `y`</span>
+<span class="sd">            data provided.</span>
+<span class="sd">        :param validation_data: Data on which to evaluate</span>
+<span class="sd">            the loss and any model metrics at the end of each epoch.</span>
+<span class="sd">            The model will not be trained on this data.</span>
+<span class="sd">            `validation_data` could be:</span>
+<span class="sd">              - tuple `(x_val, y_val)` of Numpy arrays or tensors</span>
+<span class="sd">        :param distributed: Boolean. Whether to do prediction in distributed mode or local mode.</span>
+<span class="sd">                     Default is True. In local mode, x must be a Numpy array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">TFDataset</span><span class="p">):</span>
+            <span class="c1"># todo check arguments</span>
+            <span class="k">assert</span> <span class="n">validation_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;validation_data must be None when &quot;</span> \
+                                            <span class="s2">&quot;using TFDataset as input, please &quot;</span> \
+                                            <span class="s2">&quot;use set the validation data in TFDataset&quot;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">has_batch</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The batch_size of TFDataset must be &quot;</span> <span class="o">+</span>
+                                 <span class="s2">&quot;specified when used in KerasModel fit.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">TFNdarrayDataset</span><span class="p">):</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">_standarize_feature_label_dataset</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fit_distributed</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">distributed</span><span class="p">:</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">TFDataset</span><span class="o">.</span><span class="n">from_ndarrays</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">val_tensors</span><span class="o">=</span><span class="n">validation_data</span><span class="p">,</span>
+                                              <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">_standarize_feature_label_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fit_distributed</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+                           <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+                           <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                           <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+                           <span class="n">validation_data</span><span class="o">=</span><span class="n">validation_data</span><span class="p">,</span>
+                           <span class="o">**</span><span class="n">kwargs</span>
+                           <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_fit_distributed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tf_optimizer</span> <span class="o">=</span> <span class="n">TFOptimizer</span><span class="o">.</span><span class="n">from_keras</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span>
+                                                   <span class="n">model_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_dir</span><span class="p">,</span>
+                                                   <span class="n">metrics</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric_tensors</span><span class="p">,</span>
+                                                   <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tf_optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">MaxEpoch</span><span class="p">(</span><span class="n">epochs</span><span class="p">))</span>
+
+<div class="viewcode-block" id="KerasModel.evaluate"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">batch_per_thread</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">distributed</span><span class="o">=</span><span class="kc">False</span>
+                 <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluate a model on a given dataset</span>
+
+<span class="sd">        :param x: Input data. It could be:</span>
+<span class="sd">            - a TFDataset object</span>
+<span class="sd">            - A Numpy array (or array-like), or a list of arrays</span>
+<span class="sd">               (in case the model has multiple inputs).</span>
+<span class="sd">            - A dict mapping input names to the corresponding array/tensors,</span>
+<span class="sd">            if the model has named inputs.</span>
+<span class="sd">        :param y: Target data. Like the input data `x`,</span>
+<span class="sd">          It should be consistent with `x` (you cannot have Numpy inputs and</span>
+<span class="sd">          tensor targets, or inversely). If `x` is a TFDataset, `y` should</span>
+<span class="sd">          not be specified (since targets will be obtained from `x`).</span>
+<span class="sd">        :param batch_per_thread:</span>
+<span class="sd">          The default value is 1.</span>
+<span class="sd">          When distributed is True,the total batch size is batch_per_thread * rdd.getNumPartitions.</span>
+<span class="sd">          When distributed is False the total batch size is batch_per_thread * numOfCores.</span>
+<span class="sd">        :param distributed: Boolean. Whether to do prediction in distributed mode or local mode.</span>
+<span class="sd">                     Default is True. In local mode, x must be a Numpy array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">TFDataset</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">has_batch</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The batch_per_thread of TFDataset must be &quot;</span> <span class="o">+</span>
+                                 <span class="s2">&quot;specified when used in KerasModel evaluate.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">TFNdarrayDataset</span><span class="p">):</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">_standarize_feature_label_dataset</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+            <span class="c1"># todo check arguments</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_distributed</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">distributed</span><span class="p">:</span>
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">TFDataset</span><span class="o">.</span><span class="n">from_ndarrays</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
+                                                  <span class="n">batch_per_thread</span><span class="o">=-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">batch_per_thread</span> <span class="ow">is</span> <span class="kc">None</span>
+                                                  <span class="k">else</span> <span class="n">batch_per_thread</span>
+                                                  <span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_evaluate_distributed</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+                                              <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+                                              <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_per_thread</span><span class="p">)</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_names</span><span class="p">,</span> <span class="n">results</span><span class="p">))</span>
+                <span class="k">return</span> <span class="n">results</span></div>
+
+    <span class="k">def</span> <span class="nf">_evaluate_distributed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+
+        <span class="kn">import</span> <span class="nn">tensorflow.keras.backend</span> <span class="k">as</span> <span class="nn">K</span>
+
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;targets&quot;</span><span class="p">):</span>
+            <span class="n">model_targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">targets</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_targets</span>
+
+        <span class="k">return</span> <span class="n">evaluate_string_metrics</span><span class="p">(</span><span class="n">sess</span><span class="o">=</span><span class="n">K</span><span class="o">.</span><span class="n">get_session</span><span class="p">(),</span>
+                                       <span class="n">string_metrics</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics_names</span><span class="p">,</span>
+                                       <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+                                       <span class="n">inputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">inputs</span> <span class="o">+</span> <span class="n">model_targets</span><span class="p">,</span>
+                                       <span class="n">targets</span><span class="o">=</span><span class="n">model_targets</span><span class="p">,</span>
+                                       <span class="n">outputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">outputs</span><span class="p">,</span>
+                                       <span class="n">loss</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">total_loss</span><span class="p">)</span>
+
+<div class="viewcode-block" id="KerasModel.predict"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                <span class="n">x</span><span class="p">,</span>
+                <span class="n">batch_per_thread</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">distributed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Use a model to do prediction.</span>
+
+<span class="sd">        :param x: Input data. It could be:</span>
+<span class="sd">            - a TFDataset object</span>
+<span class="sd">            - A Numpy array (or array-like), or a list of arrays</span>
+<span class="sd">               (in case the model has multiple inputs).</span>
+<span class="sd">            - A dict mapping input names to the corresponding array/tensors,</span>
+<span class="sd">            if the model has named inputs.</span>
+<span class="sd">        :param batch_per_thread:</span>
+<span class="sd">          The default value is 1.</span>
+<span class="sd">          When distributed is True,the total batch size is batch_per_thread * rdd.getNumPartitions.</span>
+<span class="sd">          When distributed is False the total batch size is batch_per_thread * numOfCores.</span>
+<span class="sd">        :param distributed: Boolean. Whether to do prediction in distributed mode or local mode.</span>
+<span class="sd">                     Default is True. In local mode, x must be a Numpy array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">TFDataset</span><span class="p">):</span>
+            <span class="c1"># todo check arguments</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">has_batch</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The batch_per_thread of TFDataset&quot;</span> <span class="o">+</span>
+                                 <span class="s2">&quot; must be specified when used in KerasModel predict.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">TFNdarrayDataset</span><span class="p">):</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">_standarize_feature_dataset</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predict_distributed</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">distributed</span><span class="p">:</span>
+                <span class="n">sc</span> <span class="o">=</span> <span class="n">getOrCreateSparkContext</span><span class="p">()</span>
+                <span class="n">rdd</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">shapes</span> <span class="o">=</span> <span class="n">_create_rdd_x</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_feed_input_names</span><span class="p">,</span> <span class="n">sc</span><span class="p">)</span>
+
+                <span class="n">dataset</span> <span class="o">=</span> <span class="n">TFDataset</span><span class="o">.</span><span class="n">from_rdd</span><span class="p">(</span><span class="n">rdd</span><span class="p">,</span>
+                                             <span class="n">names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_feed_input_names</span><span class="p">,</span>
+                                             <span class="n">types</span><span class="o">=</span><span class="n">types</span><span class="p">,</span>
+                                             <span class="n">shapes</span><span class="o">=</span><span class="n">shapes</span><span class="p">,</span>
+                                             <span class="n">batch_per_thread</span><span class="o">=-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">batch_per_thread</span> <span class="ow">is</span> <span class="kc">None</span>
+                                             <span class="k">else</span> <span class="n">batch_per_thread</span><span class="p">)</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_predict_distributed</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+                <span class="n">output_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">output_num</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">output_num</span><span class="p">):</span>
+                        <span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]))</span>
+                    <span class="k">return</span> <span class="n">predictions</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+                                          <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_per_thread</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_predict_distributed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">predictor</span> <span class="o">=</span> <span class="n">TFPredictor</span><span class="o">.</span><span class="n">from_keras</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">predictor</span><span class="o">.</span><span class="n">predict</span><span class="p">()</span>
+
+<div class="viewcode-block" id="KerasModel.train_on_batch"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel.train_on_batch">[docs]</a>    <span class="k">def</span> <span class="nf">train_on_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                       <span class="n">x</span><span class="p">,</span>
+                       <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">class_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">reset_metrics</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">train_on_batch</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+                                         <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+                                         <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">,</span>
+                                         <span class="n">class_weight</span><span class="o">=</span><span class="n">class_weight</span><span class="p">,</span>
+                                         <span class="n">reset_metrics</span><span class="o">=</span><span class="n">reset_metrics</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasModel.test_on_batch"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel.test_on_batch">[docs]</a>    <span class="k">def</span> <span class="nf">test_on_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reset_metrics</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">test_on_batch</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+                                        <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+                                        <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">,</span>
+                                        <span class="n">reset_metrics</span><span class="o">=</span><span class="n">reset_metrics</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KerasModel.predict_on_batch"><a class="viewcode-back" href="../../../zoo.tfpark.html#zoo.tfpark.model.KerasModel.predict_on_batch">[docs]</a>    <span class="k">def</span> <span class="nf">predict_on_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict_on_batch</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_standarize_feature_label_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="n">input_names</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">input_names</span>
+    <span class="n">output_names</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">output_names</span>
+
+    <span class="k">def</span> <span class="nf">_process_labels</span><span class="p">(</span><span class="n">ys</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">y</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">ys</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">y</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">ys</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">y</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">ys</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">ys</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">ys</span>
+
+    <span class="k">def</span> <span class="nf">_training_reorder</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">input_names</span><span class="p">,</span> <span class="n">output_names</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">_reorder</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">input_names</span><span class="p">),</span> <span class="n">_reorder</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">output_names</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_reorder</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">x</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+
+    <span class="n">rdd</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_process_labels</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>\
+        <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">sample</span><span class="p">:</span> <span class="n">_training_reorder</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">input_names</span><span class="p">,</span> <span class="n">output_names</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">dataset</span><span class="o">.</span><span class="n">val_rdd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">val_rdd</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">val_rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_process_labels</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>\
+            <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">sample</span><span class="p">:</span> <span class="n">_training_reorder</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">input_names</span><span class="p">,</span> <span class="n">output_names</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">val_rdd</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tensor_structure</span> <span class="o">=</span> <span class="n">_training_reorder</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">tensor_structure</span><span class="p">,</span> <span class="n">input_names</span><span class="p">,</span> <span class="n">output_names</span><span class="p">)</span>
+    <span class="n">new_dataset</span> <span class="o">=</span> <span class="n">TFNdarrayDataset</span><span class="p">(</span><span class="n">rdd</span><span class="p">,</span> <span class="n">tensor_structure</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
+                                   <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">hard_code_batch_size</span><span class="p">,</span> <span class="n">val_rdd</span><span class="p">)</span>
+    <span class="n">new_dataset</span><span class="o">.</span><span class="n">batch_per_thread</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">batch_per_thread</span>
+    <span class="k">return</span> <span class="n">new_dataset</span>
+
+
+<span class="k">def</span> <span class="nf">_standarize_feature_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="n">input_names</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">input_names</span>
+
+    <span class="k">def</span> <span class="nf">_reorder</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">x</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+
+    <span class="n">rdd</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">sample</span><span class="p">:</span> <span class="n">_reorder</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">input_names</span><span class="p">))</span>
+    <span class="n">feature_schema</span> <span class="o">=</span> <span class="n">_reorder</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">tensor_structure</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">input_names</span><span class="p">)</span>
+
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">TFNdarrayDataset</span><span class="p">(</span><span class="n">rdd</span><span class="p">,</span> <span class="n">feature_schema</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
+                               <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">hard_code_batch_size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dataset</span>
+
+
+<span class="k">def</span> <span class="nf">_create_rdd_x_y</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">input_names</span><span class="p">,</span> <span class="n">output_names</span><span class="p">,</span> <span class="n">sc</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">tensorflow.python.keras.engine</span> <span class="kn">import</span> <span class="n">training_utils</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">training_utils</span><span class="o">.</span><span class="n">standardize_input_data</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">input_names</span><span class="p">,</span>
+                                              <span class="n">check_batch_axis</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                              <span class="n">exception_prefix</span><span class="o">=</span><span class="s1">&#39;input&#39;</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">training_utils</span><span class="o">.</span><span class="n">standardize_input_data</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">output_names</span><span class="p">,</span>
+                                              <span class="n">shapes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">check_batch_axis</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                              <span class="n">exception_prefix</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
+
+    <span class="n">num_samples</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">num_inputs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">num_targets</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="n">input_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">):</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_inputs</span><span class="p">):</span>
+            <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_targets</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="n">input_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">))</span>
+
+    <span class="n">x_meta</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">input_names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">input_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+                   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">input_names</span><span class="p">))])</span>
+
+    <span class="n">y_meta</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">output_names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="p">(</span><span class="n">input_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">input_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+                   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">input_names</span><span class="p">))])</span>
+
+    <span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rdd</span><span class="p">,</span> <span class="n">x_meta</span><span class="p">,</span> <span class="n">y_meta</span>
+
+
+<span class="k">def</span> <span class="nf">_create_rdd_x</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">input_names</span><span class="p">,</span> <span class="n">sc</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">tensorflow.python.keras.engine</span> <span class="kn">import</span> <span class="n">training_utils</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">training_utils</span><span class="o">.</span><span class="n">standardize_input_data</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">input_names</span><span class="p">,</span>
+                                              <span class="n">check_batch_axis</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                              <span class="n">exception_prefix</span><span class="o">=</span><span class="s1">&#39;input&#39;</span><span class="p">)</span>
+
+    <span class="n">num_samples</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">num_inputs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="n">input_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_samples</span><span class="p">):</span>
+        <span class="n">sample</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_inputs</span><span class="p">):</span>
+            <span class="n">sample</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="n">input_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+
+    <span class="n">types</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">shapes</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">input_data</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+    <span class="n">rdd</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rdd</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">shapes</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../tfpark.html" >zoo.tfpark</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

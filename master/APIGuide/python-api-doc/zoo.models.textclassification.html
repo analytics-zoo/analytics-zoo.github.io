@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.models.textmatching.html" title="zoo.models.textmatching package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -42,8 +45,8 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.models.textclassification package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-models-textclassification-text-classifier-module">zoo.models.textclassification.text_classifier module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.models.textclassification.text_classifier">zoo.models.textclassification.text_classifier module</a></li>
+<li><a class="reference internal" href="#module-zoo.models.textclassification">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -86,11 +89,86 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-models-textclassification-text-classifier-module">
-<h2>zoo.models.textclassification.text_classifier module<a class="headerlink" href="#zoo-models-textclassification-text-classifier-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.models.textclassification.text_classifier">
+<span id="zoo-models-textclassification-text-classifier-module"></span><h2>zoo.models.textclassification.text_classifier module<a class="headerlink" href="#module-zoo.models.textclassification.text_classifier" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.models.textclassification.text_classifier.TextClassifier">
+<em class="property">class </em><code class="descclassname">zoo.models.textclassification.text_classifier.</code><code class="descname">TextClassifier</code><span class="sig-paren">(</span><em>class_num</em>, <em>embedding_file</em>, <em>word_index=None</em>, <em>sequence_length=500</em>, <em>encoder='cnn'</em>, <em>encoder_output_dim=256</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textclassification/text_classifier.html#TextClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textclassification.text_classifier.TextClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="zoo.models.common.html#zoo.models.common.zoo_model.ZooModel" title="zoo.models.common.zoo_model.ZooModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.models.common.zoo_model.ZooModel</span></code></a></p>
+<p>The model used for text classification with WordEmbedding as its first layer.</p>
+<p># Arguments
+class_num: The number of text categories to be classified. Positive int.
+embedding_file: The path to the word embedding file.
+Currently only the following GloVe files are supported:
+“glove.6B.50d.txt”, “glove.6B.100d.txt”, “glove.6B.200d.txt”
+“glove.6B.300d.txt”, “glove.42B.300d.txt”, “glove.840B.300d.txt”.
+You can download from: <a class="reference external" href="https://nlp.stanford.edu/projects/glove/">https://nlp.stanford.edu/projects/glove/</a>.
+word_index: Dictionary of word (string) and its corresponding index (int).
+The index is supposed to start from 1 with 0 reserved for unknown words.
+During the prediction, if you have words that are not in the word_index
+for the training, you can map them to index 0.
+Default is None. In this case, all the words in the embedding_file will
+be taken into account and you can call
+WordEmbedding.get_word_index(embedding_file) to retrieve the dictionary.
+sequence_length: The length of a sequence. Positive int. Default is 500.
+encoder: The encoder for input sequences. String. ‘cnn’ or ‘lstm’ or ‘gru’ are supported.
+Default is ‘cnn’.
+encoder_output_dim: The output dimension for the encoder. Positive int. Default is 256.</p>
+<dl class="method">
+<dt id="zoo.models.textclassification.text_classifier.TextClassifier.build_model">
+<code class="descname">build_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textclassification/text_classifier.html#TextClassifier.build_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textclassification.text_classifier.TextClassifier.build_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.models.textclassification.text_classifier.TextClassifier.compile">
+<code class="descname">compile</code><span class="sig-paren">(</span><em>optimizer</em>, <em>loss</em>, <em>metrics=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textclassification/text_classifier.html#TextClassifier.compile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textclassification.text_classifier.TextClassifier.compile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.models.textclassification.text_classifier.TextClassifier.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>x</em>, <em>batch_size=32</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textclassification/text_classifier.html#TextClassifier.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textclassification.text_classifier.TextClassifier.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate on TextSet.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.models.textclassification.text_classifier.TextClassifier.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>x</em>, <em>batch_size=32</em>, <em>nb_epoch=10</em>, <em>validation_data=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textclassification/text_classifier.html#TextClassifier.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textclassification.text_classifier.TextClassifier.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit on TextSet.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.models.textclassification.text_classifier.TextClassifier.load_model">
+<em class="property">static </em><code class="descname">load_model</code><span class="sig-paren">(</span><em>path</em>, <em>weight_path=None</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textclassification/text_classifier.html#TextClassifier.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textclassification.text_classifier.TextClassifier.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an existing TextClassifier model (with weights).</p>
+<p># Arguments
+path: The path for the pre-defined model.
+Local file system, HDFS and Amazon S3 are supported.
+HDFS path should be like ‘hdfs://[host]:[port]/xxx’.
+Amazon S3 path should be like ‘s3a://bucket/xxx’.
+weight_path: The path for pre-trained weights if any. Default is None.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.models.textclassification.text_classifier.TextClassifier.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em>, <em>batch_per_thread=4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textclassification/text_classifier.html#TextClassifier.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textclassification.text_classifier.TextClassifier.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict on TextSet.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.models.textclassification.text_classifier.TextClassifier.set_checkpoint">
+<code class="descname">set_checkpoint</code><span class="sig-paren">(</span><em>path</em>, <em>over_write=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textclassification/text_classifier.html#TextClassifier.set_checkpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textclassification.text_classifier.TextClassifier.set_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.models.textclassification.text_classifier.TextClassifier.set_tensorboard">
+<code class="descname">set_tensorboard</code><span class="sig-paren">(</span><em>log_dir</em>, <em>app_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/textclassification/text_classifier.html#TextClassifier.set_tensorboard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.textclassification.text_classifier.TextClassifier.set_tensorboard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.models.textclassification">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.models.textclassification" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -106,6 +184,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.models.textmatching.html" title="zoo.models.textmatching package"
              >next</a> |</li>

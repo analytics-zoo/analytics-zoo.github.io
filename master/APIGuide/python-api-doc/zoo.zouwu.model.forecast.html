@@ -1,0 +1,258 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.zouwu.model.forecast package &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="zoo.zouwu.model package" href="zoo.zouwu.model.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="zoo.zouwu.model.html" title="zoo.zouwu.model package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="zoo.html" >zoo package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="zoo.zouwu.html" >zoo.zouwu package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="zoo.zouwu.model.html" accesskey="U">zoo.zouwu.model package</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">zoo.zouwu.model.forecast package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-zoo.zouwu.model.forecast.abstract">zoo.zouwu.model.forecast.abstract module</a></li>
+<li><a class="reference internal" href="#module-zoo.zouwu.model.forecast.lstm_forecaster">zoo.zouwu.model.forecast.lstm_forecaster module</a></li>
+<li><a class="reference internal" href="#module-zoo.zouwu.model.forecast.mtnet_forecaster">zoo.zouwu.model.forecast.mtnet_forecaster module</a></li>
+<li><a class="reference internal" href="#module-zoo.zouwu.model.forecast.tcmf_forecaster">zoo.zouwu.model.forecast.tcmf_forecaster module</a></li>
+<li><a class="reference internal" href="#module-zoo.zouwu.model.forecast.tfpark_forecaster">zoo.zouwu.model.forecast.tfpark_forecaster module</a></li>
+<li><a class="reference internal" href="#module-zoo.zouwu.model.forecast">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="zoo.zouwu.model.html"
+                        title="previous chapter">zoo.zouwu.model package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/zoo.zouwu.model.forecast.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="zoo-zouwu-model-forecast-package">
+<h1>zoo.zouwu.model.forecast package<a class="headerlink" href="#zoo-zouwu-model-forecast-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-zoo.zouwu.model.forecast.abstract">
+<span id="zoo-zouwu-model-forecast-abstract-module"></span><h2>zoo.zouwu.model.forecast.abstract module<a class="headerlink" href="#module-zoo.zouwu.model.forecast.abstract" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.zouwu.model.forecast.abstract.Forecaster">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.model.forecast.abstract.</code><code class="descname">Forecaster</code><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/abstract.html#Forecaster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.abstract.Forecaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="zoo.zouwu.model.forecast.abstract.Forecaster.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/abstract.html#Forecaster.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.abstract.Forecaster.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.zouwu.model.forecast.abstract.Forecaster.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/abstract.html#Forecaster.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.abstract.Forecaster.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.zouwu.model.forecast.abstract.Forecaster.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/abstract.html#Forecaster.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.abstract.Forecaster.predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-zoo.zouwu.model.forecast.lstm_forecaster">
+<span id="zoo-zouwu-model-forecast-lstm-forecaster-module"></span><h2>zoo.zouwu.model.forecast.lstm_forecaster module<a class="headerlink" href="#module-zoo.zouwu.model.forecast.lstm_forecaster" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.zouwu.model.forecast.lstm_forecaster.LSTMForecaster">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.model.forecast.lstm_forecaster.</code><code class="descname">LSTMForecaster</code><span class="sig-paren">(</span><em>target_dim=1</em>, <em>feature_dim=1</em>, <em>lstm_1_units=16</em>, <em>dropout_1=0.2</em>, <em>lstm_2_units=8</em>, <em>dropout_2=0.2</em>, <em>metric='mean_squared_error'</em>, <em>lr=0.001</em>, <em>loss='mse'</em>, <em>uncertainty: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/lstm_forecaster.html#LSTMForecaster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.lstm_forecaster.LSTMForecaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.zouwu.model.forecast.tfpark_forecaster.TFParkForecaster" title="zoo.zouwu.model.forecast.tfpark_forecaster.TFParkForecaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.zouwu.model.forecast.tfpark_forecaster.TFParkForecaster</span></code></a></p>
+<p>Vanilla LSTM Forecaster</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-zoo.zouwu.model.forecast.mtnet_forecaster">
+<span id="zoo-zouwu-model-forecast-mtnet-forecaster-module"></span><h2>zoo.zouwu.model.forecast.mtnet_forecaster module<a class="headerlink" href="#module-zoo.zouwu.model.forecast.mtnet_forecaster" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.zouwu.model.forecast.mtnet_forecaster.MTNetForecaster">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.model.forecast.mtnet_forecaster.</code><code class="descname">MTNetForecaster</code><span class="sig-paren">(</span><em>target_dim=1, feature_dim=1, long_series_num=1, series_length=1, ar_window_size=1, cnn_height=1, cnn_hid_size=32, rnn_hid_sizes=[16, 32], lr=0.001, loss='mae', cnn_dropout=0.2, rnn_dropout=0.2, metric='mean_squared_error', uncertainty: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/mtnet_forecaster.html#MTNetForecaster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.mtnet_forecaster.MTNetForecaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.zouwu.model.forecast.tfpark_forecaster.TFParkForecaster" title="zoo.zouwu.model.forecast.tfpark_forecaster.TFParkForecaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.zouwu.model.forecast.tfpark_forecaster.TFParkForecaster</span></code></a></p>
+<p>MTNet Forecast Model</p>
+<dl class="method">
+<dt id="zoo.zouwu.model.forecast.mtnet_forecaster.MTNetForecaster.preprocess_input">
+<code class="descname">preprocess_input</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/mtnet_forecaster.html#MTNetForecaster.preprocess_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.mtnet_forecaster.MTNetForecaster.preprocess_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>The original rolled features needs an extra step to process.
+This should be called before train_x, validation_x, and test_x
+:param x: the original samples from rolling
+:return: a tuple (long_term_x, short_term_x)
+which are long term and short term history respectively</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-zoo.zouwu.model.forecast.tcmf_forecaster">
+<span id="zoo-zouwu-model-forecast-tcmf-forecaster-module"></span><h2>zoo.zouwu.model.forecast.tcmf_forecaster module<a class="headerlink" href="#module-zoo.zouwu.model.forecast.tcmf_forecaster" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.model.forecast.tcmf_forecaster.</code><code class="descname">TCMFForecaster</code><span class="sig-paren">(</span><em>vbsize=128, hbsize=256, num_channels_X=[32, 32, 32, 32, 32, 1], num_channels_Y=[16, 16, 16, 16, 16, 1], kernel_size=7, dropout=0.1, rank=64, kernel_size_Y=7, learning_rate=0.0005, val_len=24, normalize=False, start_date='2020-4-1', freq='1H', covariates=None, use_time=True, dti=None, svd=True, period=24, y_iters=10, init_FX_epoch=100, max_FX_epoch=300, max_TCN_epoch=300, alt_iters=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/tcmf_forecaster.html#TCMFForecaster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.zouwu.model.forecast.abstract.Forecaster" title="zoo.zouwu.model.forecast.abstract.Forecaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.zouwu.model.forecast.abstract.Forecaster</span></code></a></p>
+<dl class="method">
+<dt id="zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>target_value, x=None, metric=['mae'], covariates=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/tcmf_forecaster.html#TCMFForecaster.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>evaluate the model
+:param target_value: target value for evaluation. We interpret its second dimension of
+as the horizon length for evaluation.
+:param covariates: global covariates
+:param x: the input
+:param metric: the metrics
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>x</em>, <em>incremental=False</em>, <em>num_workers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/tcmf_forecaster.html#TCMFForecaster.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>fit the model
+:param x: the input for fit. Only dict of ndarray and SparkXShards of dict of ndarray
+are supported. Example: {‘id’: id_arr, ‘y’: data_ndarray}
+:param incremental: if the fit is incremental
+:param num_workers: the number of workers you want to use for fit. If None, it defaults to
+num_ray_nodes in the created RayContext or 1 if there is no active RayContext.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster.is_distributed">
+<code class="descname">is_distributed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/tcmf_forecaster.html#TCMFForecaster.is_distributed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster.is_distributed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster.load">
+<em class="property">classmethod </em><code class="descname">load</code><span class="sig-paren">(</span><em>path</em>, <em>distributed=False</em>, <em>minPartitions=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/tcmf_forecaster.html#TCMFForecaster.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>x=None</em>, <em>horizon=24</em>, <em>covariates=None</em>, <em>num_workers=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/tcmf_forecaster.html#TCMFForecaster.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster.predict" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> – the input. We don’t support input x directly</li>
+<li><strong>horizon</strong> – horizon length to look forward.</li>
+<li><strong>covariates</strong> – the global covariates</li>
+<li><strong>num_workers</strong> – the number of workers to use in predict. It defaults to 1.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/tcmf_forecaster.html#TCMFForecaster.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.tcmf_forecaster.TCMFForecaster.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-zoo.zouwu.model.forecast.tfpark_forecaster">
+<span id="zoo-zouwu-model-forecast-tfpark-forecaster-module"></span><h2>zoo.zouwu.model.forecast.tfpark_forecaster module<a class="headerlink" href="#module-zoo.zouwu.model.forecast.tfpark_forecaster" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.zouwu.model.forecast.tfpark_forecaster.TFParkForecaster">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.model.forecast.tfpark_forecaster.</code><code class="descname">TFParkForecaster</code><a class="reference internal" href="_modules/zoo/zouwu/model/forecast/tfpark_forecaster.html#TFParkForecaster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.model.forecast.tfpark_forecaster.TFParkForecaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="zoo.tfpark.html#zoo.tfpark.model.KerasModel" title="zoo.tfpark.model.KerasModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.tfpark.model.KerasModel</span></code></a>, <a class="reference internal" href="#zoo.zouwu.model.forecast.abstract.Forecaster" title="zoo.zouwu.model.forecast.abstract.Forecaster"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.zouwu.model.forecast.abstract.Forecaster</span></code></a></p>
+<p>Base class for TFPark KerasModel based Forecast models.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-zoo.zouwu.model.forecast">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.zouwu.model.forecast" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="zoo.zouwu.model.html" title="zoo.zouwu.model package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="zoo.html" >zoo package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="zoo.zouwu.html" >zoo.zouwu package</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="zoo.zouwu.model.html" >zoo.zouwu.model package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>
