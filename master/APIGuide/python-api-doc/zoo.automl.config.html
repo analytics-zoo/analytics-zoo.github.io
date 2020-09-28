@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.automl.feature.html" title="zoo.automl.feature package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -45,8 +42,8 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.automl.config package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.config.recipe">zoo.automl.config.recipe module</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.config">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-automl-config-recipe-module">zoo.automl.config.recipe module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -89,178 +86,11 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.config.recipe">
-<span id="zoo-automl-config-recipe-module"></span><h2>zoo.automl.config.recipe module<a class="headerlink" href="#module-zoo.automl.config.recipe" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.automl.config.recipe.BayesRecipe">
-<em class="property">class </em><code class="descclassname">zoo.automl.config.recipe.</code><code class="descname">BayesRecipe</code><span class="sig-paren">(</span><em>num_samples=1</em>, <em>look_back=2</em>, <em>epochs=5</em>, <em>reward_metric=-0.05</em>, <em>training_iteration=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#BayesRecipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.BayesRecipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.automl.config.recipe.Recipe" title="zoo.automl.config.recipe.Recipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.config.recipe.Recipe</span></code></a></p>
-<p>A Bayes search Recipe. (Experimental)
-tsp = TimeSequencePredictor(…,recipe = BayesRecipe(5))</p>
-<dl class="method">
-<dt id="zoo.automl.config.recipe.BayesRecipe.fixed_params">
-<code class="descname">fixed_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#BayesRecipe.fixed_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.BayesRecipe.fixed_params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.config.recipe.BayesRecipe.search_algorithm">
-<code class="descname">search_algorithm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#BayesRecipe.search_algorithm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.BayesRecipe.search_algorithm" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.config.recipe.BayesRecipe.search_algorithm_params">
-<code class="descname">search_algorithm_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#BayesRecipe.search_algorithm_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.BayesRecipe.search_algorithm_params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.config.recipe.BayesRecipe.search_space">
-<code class="descname">search_space</code><span class="sig-paren">(</span><em>all_available_features</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#BayesRecipe.search_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.BayesRecipe.search_space" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.config.recipe.GridRandomRecipe">
-<em class="property">class </em><code class="descclassname">zoo.automl.config.recipe.</code><code class="descname">GridRandomRecipe</code><span class="sig-paren">(</span><em>num_rand_samples=1</em>, <em>look_back=2</em>, <em>epochs=5</em>, <em>training_iteration=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#GridRandomRecipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.GridRandomRecipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.automl.config.recipe.Recipe" title="zoo.automl.config.recipe.Recipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.config.recipe.Recipe</span></code></a></p>
-<p>A recipe involves both grid search and random search.
-tsp = TimeSequencePredictor(…,recipe = GridRandomRecipe(1))</p>
-<dl class="method">
-<dt id="zoo.automl.config.recipe.GridRandomRecipe.search_space">
-<code class="descname">search_space</code><span class="sig-paren">(</span><em>all_available_features</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#GridRandomRecipe.search_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.GridRandomRecipe.search_space" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.config.recipe.LSTMGridRandomRecipe">
-<em class="property">class </em><code class="descclassname">zoo.automl.config.recipe.</code><code class="descname">LSTMGridRandomRecipe</code><span class="sig-paren">(</span><em>num_rand_samples=1, epochs=5, training_iteration=10, look_back=2, lstm_1_units=[16, 32, 64, 128], lstm_2_units=[16, 32, 64], batch_size=[32, 64]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#LSTMGridRandomRecipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.LSTMGridRandomRecipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.automl.config.recipe.Recipe" title="zoo.automl.config.recipe.Recipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.config.recipe.Recipe</span></code></a></p>
-<p>A recipe involves both grid search and random search, only for LSTM.
-tsp = TimeSequencePredictor(…,recipe = LSTMGridRandomRecipe(1))</p>
-<dl class="method">
-<dt id="zoo.automl.config.recipe.LSTMGridRandomRecipe.search_space">
-<code class="descname">search_space</code><span class="sig-paren">(</span><em>all_available_features</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#LSTMGridRandomRecipe.search_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.LSTMGridRandomRecipe.search_space" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.config.recipe.MTNetGridRandomRecipe">
-<em class="property">class </em><code class="descclassname">zoo.automl.config.recipe.</code><code class="descname">MTNetGridRandomRecipe</code><span class="sig-paren">(</span><em>num_rand_samples=1, epochs=5, training_iteration=10, time_step=[3, 4], long_num=[3, 4], cnn_height=[2, 3], cnn_hid_size=[32, 50, 100], ar_size=[2, 3], batch_size=[32, 64]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#MTNetGridRandomRecipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.MTNetGridRandomRecipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.automl.config.recipe.Recipe" title="zoo.automl.config.recipe.Recipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.config.recipe.Recipe</span></code></a></p>
-<p>Grid+Random Recipe for MTNet</p>
-<dl class="method">
-<dt id="zoo.automl.config.recipe.MTNetGridRandomRecipe.search_space">
-<code class="descname">search_space</code><span class="sig-paren">(</span><em>all_available_features</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#MTNetGridRandomRecipe.search_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.MTNetGridRandomRecipe.search_space" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.config.recipe.MTNetSmokeRecipe">
-<em class="property">class </em><code class="descclassname">zoo.automl.config.recipe.</code><code class="descname">MTNetSmokeRecipe</code><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#MTNetSmokeRecipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.MTNetSmokeRecipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.automl.config.recipe.Recipe" title="zoo.automl.config.recipe.Recipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.config.recipe.Recipe</span></code></a></p>
-<p>A very simple Recipe for smoke test that runs one epoch and one iteration
-with only 1 random sample.</p>
-<dl class="method">
-<dt id="zoo.automl.config.recipe.MTNetSmokeRecipe.search_space">
-<code class="descname">search_space</code><span class="sig-paren">(</span><em>all_available_features</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#MTNetSmokeRecipe.search_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.MTNetSmokeRecipe.search_space" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.config.recipe.PastSeqParamHandler">
-<em class="property">class </em><code class="descclassname">zoo.automl.config.recipe.</code><code class="descname">PastSeqParamHandler</code><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#PastSeqParamHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.PastSeqParamHandler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Utility to handle PastSeq Param</p>
-<dl class="staticmethod">
-<dt id="zoo.automl.config.recipe.PastSeqParamHandler.get_past_seq_config">
-<em class="property">static </em><code class="descname">get_past_seq_config</code><span class="sig-paren">(</span><em>look_back</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#PastSeqParamHandler.get_past_seq_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.PastSeqParamHandler.get_past_seq_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>generate pass sequence config based on look_back
-:param look_back: look_back configuration
-:return: search configuration for past sequence</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.config.recipe.RandomRecipe">
-<em class="property">class </em><code class="descclassname">zoo.automl.config.recipe.</code><code class="descname">RandomRecipe</code><span class="sig-paren">(</span><em>num_rand_samples=1</em>, <em>look_back=2</em>, <em>epochs=5</em>, <em>reward_metric=-0.05</em>, <em>training_iteration=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#RandomRecipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.RandomRecipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.automl.config.recipe.Recipe" title="zoo.automl.config.recipe.Recipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.config.recipe.Recipe</span></code></a></p>
-<p>Pure random sample Recipe. Often used as baseline.
-tsp = TimeSequencePredictor(…,recipe = RandomRecipe(5))</p>
-<dl class="method">
-<dt id="zoo.automl.config.recipe.RandomRecipe.search_space">
-<code class="descname">search_space</code><span class="sig-paren">(</span><em>all_available_features</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#RandomRecipe.search_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.RandomRecipe.search_space" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.config.recipe.Recipe">
-<em class="property">class </em><code class="descclassname">zoo.automl.config.recipe.</code><code class="descname">Recipe</code><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#Recipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.Recipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="zoo.automl.config.recipe.Recipe.fixed_params">
-<code class="descname">fixed_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#Recipe.fixed_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.Recipe.fixed_params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.config.recipe.Recipe.runtime_params">
-<code class="descname">runtime_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#Recipe.runtime_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.Recipe.runtime_params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.config.recipe.Recipe.scheduler_params">
-<code class="descname">scheduler_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#Recipe.scheduler_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.Recipe.scheduler_params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.config.recipe.Recipe.search_algorithm">
-<code class="descname">search_algorithm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#Recipe.search_algorithm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.Recipe.search_algorithm" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.config.recipe.Recipe.search_algorithm_params">
-<code class="descname">search_algorithm_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#Recipe.search_algorithm_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.Recipe.search_algorithm_params" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.config.recipe.Recipe.search_space">
-<code class="descname">search_space</code><span class="sig-paren">(</span><em>all_available_features</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#Recipe.search_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.Recipe.search_space" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.config.recipe.SmokeRecipe">
-<em class="property">class </em><code class="descclassname">zoo.automl.config.recipe.</code><code class="descname">SmokeRecipe</code><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#SmokeRecipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.SmokeRecipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.automl.config.recipe.Recipe" title="zoo.automl.config.recipe.Recipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.config.recipe.Recipe</span></code></a></p>
-<p>A very simple Recipe for smoke test that runs one epoch and one iteration
-with only 1 random sample.</p>
-<dl class="method">
-<dt id="zoo.automl.config.recipe.SmokeRecipe.search_space">
-<code class="descname">search_space</code><span class="sig-paren">(</span><em>all_available_features</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#SmokeRecipe.search_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.SmokeRecipe.search_space" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.config.recipe.XgbRegressorGridRandomRecipe">
-<em class="property">class </em><code class="descclassname">zoo.automl.config.recipe.</code><code class="descname">XgbRegressorGridRandomRecipe</code><span class="sig-paren">(</span><em>num_rand_samples=1, n_estimators=[8, 15], max_depth=[10, 15], n_jobs=-1, tree_method='hist', random_state=2, seed=0, lr=(0.0001, 0.1), subsample=0.8, colsample_bytree=0.8, min_child_weight=[1, 2, 3], gamma=0, reg_alpha=0, reg_lambda=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#XgbRegressorGridRandomRecipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.XgbRegressorGridRandomRecipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.automl.config.recipe.Recipe" title="zoo.automl.config.recipe.Recipe"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.config.recipe.Recipe</span></code></a></p>
-<dl class="method">
-<dt id="zoo.automl.config.recipe.XgbRegressorGridRandomRecipe.search_space">
-<code class="descname">search_space</code><span class="sig-paren">(</span><em>all_available_features</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/config/recipe.html#XgbRegressorGridRandomRecipe.search_space"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.config.recipe.XgbRegressorGridRandomRecipe.search_space" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="zoo-automl-config-recipe-module">
+<h2>zoo.automl.config.recipe module<a class="headerlink" href="#zoo-automl-config-recipe-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.config">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.automl.config" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -276,9 +106,6 @@ with only 1 random sample.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.automl.feature.html" title="zoo.automl.feature package"
              >next</a> |</li>
