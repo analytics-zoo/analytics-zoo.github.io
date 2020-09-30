@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>LSTMForecaster and MTNetForecaster - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Step 0: Prepare environment", url: "#step-0-prepare-environment", children: [
+          ]},
+          {title: "Step 1: Create forecast model", url: "#step-1-create-forecast-model", children: [
+          ]},
+          {title: "Step 2: Use forecast model", url: "#step-2-use-forecast-model", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>LSTMForecaster and MTNetForecaster</strong></h1>
+    <hr>
+    <p>In this guide, we will show you how to use the built-in LSTMForecaster and MTNetForecaster for time series forecasting.</p>
+<p>The built-in LSTMForecaster and MTNetForecaster are both derived from <a href="https://analytics-zoo.github.io/master/#APIGuide/TFPark/model/">tfpark.KerasModels</a>. </p>
+<p>Refer to <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/zouwu/use-case/network_traffic/network_traffic_model_forecasting.ipynb">network traffic notebook</a> for demonstration of forecasting network traffic data with Zouwu built-in LSTMForecaster and MTNetForecaster.</p>
+<p>Refer to <a href="../../API/LSTMForecaster/">LSTMForecaster API</a> and <a href="../../API/MTNetForecaster/">MTNetForecaster API</a> detailed explanation of all arguments for each forecast model.</p>
+<hr />
+<h3 id="step-0-prepare-environment"><strong>Step 0: Prepare environment</strong></h3>
+<p>We recommend you to use <a href="https://www.anaconda.com/distribution/#linux">Anaconda</a> to prepare the enviroments, especially if you want to run automated training on a yarn cluster (yarn-client mode only).</p>
+<pre><code class="bash">conda create -n zoo python=3.7 #zoo is conda enviroment name, you can set another name you like.
+conda activate zoo
+pip install analytics-zoo[automl]==0.9.0.dev0 # or above
+</code></pre>
+
+<h3 id="step-1-create-forecast-model"><strong>Step 1: Create forecast model</strong></h3>
+<p>To start, you need to create a forecast model first. Specify <strong>target_dim</strong> and <strong>feature_dim</strong> in constructor. </p>
+<ul>
+<li><code>target_dim</code>: dimension of target output</li>
+<li><code>feature_dim</code>: dimension of input feature</li>
+</ul>
+<p>Below are some example code to create forecast models.</p>
+<pre><code class="python">#import forecast models
+from zoo.zouwu.model.forecast.lstm_forecaster import LSTMForecaster
+from zoo.zouwu.model.forecast.mtnet_forecaster import MTNetForecaster
+
+#build a lstm forecast model
+lstm_forecaster = LSTMForecaster(target_dim=1, 
+                      feature_dim=4)
+
+#build a mtnet forecast model
+mtnet_forecaster = MTNetForecaster(target_dim=1,
+                        feature_dim=4,
+                        long_series_num=1,
+                        series_length=3,
+                        ar_window_size=2,
+                        cnn_height=2)
+</code></pre>
+
+<h3 id="step-2-use-forecast-model"><strong>Step 2: Use forecast model</strong></h3>
+<p>Use <code>forecaster.fit/evalute/predict</code> in the same way as <a href="https://analytics-zoo.github.io/master/#APIGuide/TFPark/model/">tfpark.KerasModel</a></p>
+<p>For univariant forecasting (i.e. to predict one series at a time), you can use either <strong>LSTMForecaster</strong> or <strong>MTNetForecaster</strong>. The input data shape for <code>fit/evaluation/predict</code> should match the arguments you used to create the forecaster. Specifically:</p>
+<ul>
+<li><strong>X</strong> shape should be <code>(num of samples, lookback, feature_dim)</code></li>
+<li><strong>Y</strong> shape should be <code>(num of samples, target_dim)</code></li>
+<li>Where, <code>feature_dim</code> is the number of features as specified in Forecaster constructors. <code>lookback</code> is the number of time steps you want to look back in history. <code>target_dim</code> is the number of series to forecast at the same time as specified in Forecaster constructors and should be 1 here. If you want to do multi-step forecasting and use the second dimension as no. of steps to look forward, you won't get error but the performance may be uncertain and we don't recommend using that way.</li>
+</ul>
+<p>For multivariant forecasting (i.e. to predict several series at the same time), you have to use <strong>MTNetForecaster</strong>. The input data shape should meet below criteria.  </p>
+<ul>
+<li><strong>X</strong> shape should be <code>(num of samples, lookback, feature_dim)</code></li>
+<li><strong>Y</strong> shape should be <code>(num of samples, target_dim)</code> </li>
+<li>Where <code>lookback</code> should equal <code>(lb_long_steps+1) * lb_long_stepsize</code>, where <code>lb_long_steps</code> and <code>lb_long_stepsize</code> are as specified in <code>MTNetForecaster</code> constructor. <code>target_dim</code> should equal number of series in input.</li>
+</ul>
+<hr />
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
