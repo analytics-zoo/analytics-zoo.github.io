@@ -1,0 +1,382 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.util.spark &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.util.spark</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+
+<span class="kn">from</span> <span class="nn">pyspark</span> <span class="kn">import</span> <span class="n">SparkContext</span>
+<span class="kn">from</span> <span class="nn">zoo</span> <span class="kn">import</span> <span class="n">init_nncontext</span><span class="p">,</span> <span class="n">init_spark_conf</span>
+<span class="kn">from</span> <span class="nn">zoo.util.utils</span> <span class="kn">import</span> <span class="n">detect_python_location</span><span class="p">,</span> <span class="n">pack_penv</span>
+<span class="kn">from</span> <span class="nn">zoo.util.utils</span> <span class="kn">import</span> <span class="n">get_executor_conda_zoo_classpath</span><span class="p">,</span> <span class="n">get_zoo_bigdl_classpath_on_driver</span>
+
+
+<div class="viewcode-block" id="SparkRunner"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.spark.SparkRunner">[docs]</a><span class="k">class</span> <span class="nc">SparkRunner</span><span class="p">:</span>
+    <span class="n">standalone_env</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">spark_log_level</span><span class="o">=</span><span class="s2">&quot;WARN&quot;</span><span class="p">,</span>
+                 <span class="n">redirect_spark_log</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spark_log_level</span> <span class="o">=</span> <span class="n">spark_log_level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">redirect_spark_log</span> <span class="o">=</span> <span class="n">redirect_spark_log</span>
+        <span class="k">with</span> <span class="n">SparkContext</span><span class="o">.</span><span class="n">_lock</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">SparkContext</span><span class="o">.</span><span class="n">_active_spark_context</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;There&#39;s existing SparkContext. Please close it first.&quot;</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">pyspark</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current pyspark location is : </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pyspark</span><span class="o">.</span><span class="vm">__file__</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SparkRunner.create_sc"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.spark.SparkRunner.create_sc">[docs]</a>    <span class="k">def</span> <span class="nf">create_sc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">submit_args</span><span class="p">,</span> <span class="n">conf</span><span class="p">):</span>
+        <span class="n">submit_args</span> <span class="o">=</span> <span class="n">submit_args</span> <span class="o">+</span> <span class="s2">&quot; pyspark-shell&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYSPARK_SUBMIT_ARGS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">submit_args</span>
+        <span class="n">spark_conf</span> <span class="o">=</span> <span class="n">init_spark_conf</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
+        <span class="n">sc</span> <span class="o">=</span> <span class="n">init_nncontext</span><span class="p">(</span><span class="n">conf</span><span class="o">=</span><span class="n">spark_conf</span><span class="p">,</span> <span class="n">spark_log_level</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spark_log_level</span><span class="p">,</span>
+                            <span class="n">redirect_spark_log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">redirect_spark_log</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sc</span></div>
+
+<div class="viewcode-block" id="SparkRunner.init_spark_on_local"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.spark.SparkRunner.init_spark_on_local">[docs]</a>    <span class="k">def</span> <span class="nf">init_spark_on_local</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cores</span><span class="p">,</span> <span class="n">conf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">python_location</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Start to getOrCreate SparkContext&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;PYSPARK_PYTHON&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYSPARK_PYTHON&quot;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">python_location</span> <span class="k">if</span> <span class="n">python_location</span> <span class="k">else</span> <span class="n">detect_python_location</span><span class="p">()</span>
+        <span class="n">master</span> <span class="o">=</span> <span class="s2">&quot;local[</span><span class="si">{}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cores</span><span class="p">)</span>
+        <span class="n">zoo_conf</span> <span class="o">=</span> <span class="n">init_spark_conf</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span><span class="o">.</span><span class="n">setMaster</span><span class="p">(</span><span class="n">master</span><span class="p">)</span>
+        <span class="n">sc</span> <span class="o">=</span> <span class="n">init_nncontext</span><span class="p">(</span><span class="n">conf</span><span class="o">=</span><span class="n">zoo_conf</span><span class="p">,</span> <span class="n">spark_log_level</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">spark_log_level</span><span class="p">,</span>
+                            <span class="n">redirect_spark_log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">redirect_spark_log</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully got a SparkContext&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sc</span></div>
+
+<div class="viewcode-block" id="SparkRunner.init_spark_on_yarn"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.spark.SparkRunner.init_spark_on_yarn">[docs]</a>    <span class="k">def</span> <span class="nf">init_spark_on_yarn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                           <span class="n">hadoop_conf</span><span class="p">,</span>
+                           <span class="n">conda_name</span><span class="p">,</span>
+                           <span class="n">num_executors</span><span class="p">,</span>
+                           <span class="n">executor_cores</span><span class="p">,</span>
+                           <span class="n">executor_memory</span><span class="o">=</span><span class="s2">&quot;2g&quot;</span><span class="p">,</span>
+                           <span class="n">driver_cores</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                           <span class="n">driver_memory</span><span class="o">=</span><span class="s2">&quot;1g&quot;</span><span class="p">,</span>
+                           <span class="n">extra_executor_memory_for_ray</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">extra_python_lib</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">penv_archive</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">additional_archive</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">hadoop_user_name</span><span class="o">=</span><span class="s2">&quot;root&quot;</span><span class="p">,</span>
+                           <span class="n">spark_yarn_archive</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">conf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">jars</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initializing SparkContext for yarn-client mode&quot;</span><span class="p">)</span>
+        <span class="n">executor_python_env</span> <span class="o">=</span> <span class="s2">&quot;python_env&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;HADOOP_CONF_DIR&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hadoop_conf</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;HADOOP_USER_NAME&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hadoop_user_name</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYSPARK_PYTHON&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/bin/python&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">executor_python_env</span><span class="p">)</span>
+
+        <span class="n">pack_env</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">assert</span> <span class="n">penv_archive</span> <span class="ow">or</span> <span class="n">conda_name</span><span class="p">,</span> \
+            <span class="s2">&quot;You should either specify penv_archive or conda_name explicitly&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">penv_archive</span><span class="p">:</span>
+                <span class="n">penv_archive</span> <span class="o">=</span> <span class="n">pack_penv</span><span class="p">(</span><span class="n">conda_name</span><span class="p">,</span> <span class="n">executor_python_env</span><span class="p">)</span>
+                <span class="n">pack_env</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="n">archive</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">#</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">penv_archive</span><span class="p">,</span> <span class="n">executor_python_env</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">additional_archive</span><span class="p">:</span>
+                <span class="n">archive</span> <span class="o">=</span> <span class="n">archive</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="n">additional_archive</span>
+            <span class="n">submit_args</span> <span class="o">=</span> <span class="s2">&quot;--master yarn --deploy-mode client&quot;</span>
+            <span class="n">submit_args</span> <span class="o">=</span> <span class="n">submit_args</span> <span class="o">+</span> <span class="s2">&quot; --archives </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">archive</span><span class="p">)</span>
+            <span class="n">submit_args</span> <span class="o">=</span> <span class="n">submit_args</span> <span class="o">+</span> <span class="n">gen_submit_args</span><span class="p">(</span>
+                <span class="n">driver_cores</span><span class="p">,</span> <span class="n">driver_memory</span><span class="p">,</span> <span class="n">num_executors</span><span class="p">,</span> <span class="n">executor_cores</span><span class="p">,</span>
+                <span class="n">executor_memory</span><span class="p">,</span> <span class="n">extra_python_lib</span><span class="p">,</span> <span class="n">jars</span><span class="p">)</span>
+
+            <span class="n">conf</span> <span class="o">=</span> <span class="n">enrich_conf_for_spark</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">driver_cores</span><span class="p">,</span> <span class="n">driver_memory</span><span class="p">,</span> <span class="n">num_executors</span><span class="p">,</span>
+                                         <span class="n">executor_cores</span><span class="p">,</span> <span class="n">executor_memory</span><span class="p">,</span>
+                                         <span class="n">extra_executor_memory_for_ray</span><span class="p">)</span>
+            <span class="n">py_version</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+            <span class="n">preload_so</span> <span class="o">=</span> <span class="n">executor_python_env</span> <span class="o">+</span> <span class="s2">&quot;/lib/libpython&quot;</span> <span class="o">+</span> <span class="n">py_version</span> <span class="o">+</span> <span class="s2">&quot;m.so&quot;</span>
+            <span class="n">ld_path</span> <span class="o">=</span> <span class="n">executor_python_env</span> <span class="o">+</span> <span class="s2">&quot;/lib:&quot;</span> <span class="o">+</span> <span class="n">executor_python_env</span> <span class="o">+</span> <span class="s2">&quot;/lib/python&quot;</span> <span class="o">+</span>\
+                <span class="n">py_version</span> <span class="o">+</span> <span class="s2">&quot;/lib-dynload&quot;</span>
+            <span class="k">if</span> <span class="s2">&quot;spark.executor.extraLibraryPath&quot;</span> <span class="ow">in</span> <span class="n">conf</span><span class="p">:</span>
+                <span class="n">ld_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ld_path</span><span class="p">,</span> <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;spark.executor.extraLibraryPath&quot;</span><span class="p">])</span>
+            <span class="n">conf</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;spark.scheduler.minRegisteredResourcesRatio&quot;</span><span class="p">:</span> <span class="s2">&quot;1.0&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;spark.executorEnv.PYTHONHOME&quot;</span><span class="p">:</span> <span class="n">executor_python_env</span><span class="p">,</span>
+                         <span class="s2">&quot;spark.executor.extraLibraryPath&quot;</span><span class="p">:</span> <span class="n">ld_path</span><span class="p">,</span>
+                         <span class="s2">&quot;spark.executorEnv.LD_PRELOAD&quot;</span><span class="p">:</span> <span class="n">preload_so</span><span class="p">})</span>
+            <span class="k">if</span> <span class="n">spark_yarn_archive</span><span class="p">:</span>
+                <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;spark.yarn.archive&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spark_yarn_archive</span>
+            <span class="n">zoo_bigdl_path_on_executor</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="nb">list</span><span class="p">(</span><span class="n">get_executor_conda_zoo_classpath</span><span class="p">(</span><span class="n">executor_python_env</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="s2">&quot;spark.executor.extraClassPath&quot;</span> <span class="ow">in</span> <span class="n">conf</span><span class="p">:</span>
+                <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;spark.executor.extraClassPath&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">zoo_bigdl_path_on_executor</span><span class="p">,</span> <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;spark.executor.extraClassPath&quot;</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;spark.executor.extraClassPath&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zoo_bigdl_path_on_executor</span>
+
+            <span class="n">sc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_sc</span><span class="p">(</span><span class="n">submit_args</span><span class="p">,</span> <span class="n">conf</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">conda_name</span> <span class="ow">and</span> <span class="n">penv_archive</span> <span class="ow">and</span> <span class="n">pack_env</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">penv_archive</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sc</span></div>
+
+<div class="viewcode-block" id="SparkRunner.init_spark_standalone"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.spark.SparkRunner.init_spark_standalone">[docs]</a>    <span class="k">def</span> <span class="nf">init_spark_standalone</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                              <span class="n">num_executors</span><span class="p">,</span>
+                              <span class="n">executor_cores</span><span class="p">,</span>
+                              <span class="n">executor_memory</span><span class="o">=</span><span class="s2">&quot;2g&quot;</span><span class="p">,</span>
+                              <span class="n">driver_cores</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                              <span class="n">driver_memory</span><span class="o">=</span><span class="s2">&quot;1g&quot;</span><span class="p">,</span>
+                              <span class="n">master</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="n">extra_executor_memory_for_ray</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="n">extra_python_lib</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="n">conf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="n">jars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="n">python_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                              <span class="n">enable_numa_binding</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">subprocess</span>
+        <span class="kn">import</span> <span class="nn">pyspark</span>
+        <span class="kn">from</span> <span class="nn">zoo.util.utils</span> <span class="kn">import</span> <span class="n">get_node_ip</span>
+
+        <span class="k">if</span> <span class="s2">&quot;PYSPARK_PYTHON&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYSPARK_PYTHON&quot;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">python_location</span> <span class="k">if</span> <span class="n">python_location</span> <span class="k">else</span> <span class="n">detect_python_location</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">master</span><span class="p">:</span>
+            <span class="n">pyspark_home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">pyspark</span><span class="o">.</span><span class="vm">__file__</span> <span class="o">+</span> <span class="s2">&quot;/../&quot;</span><span class="p">)</span>
+            <span class="n">zoo_standalone_home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span> <span class="o">+</span> <span class="s2">&quot;/../../share/bin/standalone&quot;</span><span class="p">)</span>
+            <span class="n">node_ip</span> <span class="o">=</span> <span class="n">get_node_ip</span><span class="p">()</span>
+            <span class="n">SparkRunner</span><span class="o">.</span><span class="n">standalone_env</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;SPARK_HOME&quot;</span><span class="p">:</span> <span class="n">pyspark_home</span><span class="p">,</span>
+                <span class="s2">&quot;ZOO_STANDALONE_HOME&quot;</span><span class="p">:</span> <span class="n">zoo_standalone_home</span><span class="p">,</span>
+                <span class="c1"># If not set this, by default master is hostname but not ip,</span>
+                <span class="s2">&quot;SPARK_MASTER_HOST&quot;</span><span class="p">:</span> <span class="n">node_ip</span><span class="p">}</span>
+            <span class="k">if</span> <span class="s1">&#39;JAVA_HOME&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+                <span class="n">SparkRunner</span><span class="o">.</span><span class="n">standalone_env</span><span class="p">[</span><span class="s2">&quot;JAVA_HOME&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;JAVA_HOME&quot;</span><span class="p">]</span>
+            <span class="c1"># The scripts installed from pip don&#39;t have execution permission</span>
+            <span class="c1"># and need to first give them permission.</span>
+            <span class="n">pro</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s2">&quot;chmod&quot;</span><span class="p">,</span> <span class="s2">&quot;-R&quot;</span><span class="p">,</span> <span class="s2">&quot;+x&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/sbin&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zoo_standalone_home</span><span class="p">)])</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">waitpid</span><span class="p">(</span><span class="n">pro</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="c1"># Start master</span>
+            <span class="n">start_master_pro</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/sbin/start-master.sh&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zoo_standalone_home</span><span class="p">),</span>
+                <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">SparkRunner</span><span class="o">.</span><span class="n">standalone_env</span><span class="p">)</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">waitpid</span><span class="p">(</span><span class="n">start_master_pro</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;starting master failed&quot;</span><span class="p">)</span>
+            <span class="n">master</span> <span class="o">=</span> <span class="s2">&quot;spark://</span><span class="si">{}</span><span class="s2">:7077&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_ip</span><span class="p">)</span>  <span class="c1"># 7077 is the default port</span>
+            <span class="c1"># Start worker</span>
+            <span class="k">if</span> <span class="n">enable_numa_binding</span><span class="p">:</span>
+                <span class="n">worker_script</span> <span class="o">=</span> <span class="s2">&quot;start-worker-with-numactl.sh&quot;</span>
+                <span class="n">SparkRunner</span><span class="o">.</span><span class="n">standalone_env</span><span class="p">[</span><span class="s2">&quot;SPARK_WORKER_INSTANCES&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">num_executors</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">worker_script</span> <span class="o">=</span> <span class="s2">&quot;start-worker.sh&quot;</span>
+            <span class="n">start_worker_pro</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/sbin/</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zoo_standalone_home</span><span class="p">,</span> <span class="n">worker_script</span><span class="p">,</span> <span class="n">master</span><span class="p">),</span>
+                <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">SparkRunner</span><span class="o">.</span><span class="n">standalone_env</span><span class="p">)</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">status</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">waitpid</span><span class="p">(</span><span class="n">start_worker_pro</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;starting worker failed&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># A Spark standalone cluster has already been started by the user.</span>
+            <span class="k">assert</span> <span class="n">master</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;spark://&quot;</span><span class="p">),</span> \
+                <span class="s2">&quot;Please input a valid master address for your Spark standalone cluster: &quot;</span> \
+                <span class="s2">&quot;spark://master:port&quot;</span>
+
+        <span class="c1"># Start pyspark-shell</span>
+        <span class="n">submit_args</span> <span class="o">=</span> <span class="s2">&quot;--master &quot;</span> <span class="o">+</span> <span class="n">master</span>
+        <span class="n">submit_args</span> <span class="o">=</span> <span class="n">submit_args</span> <span class="o">+</span> <span class="n">gen_submit_args</span><span class="p">(</span>
+            <span class="n">driver_cores</span><span class="p">,</span> <span class="n">driver_memory</span><span class="p">,</span> <span class="n">num_executors</span><span class="p">,</span> <span class="n">executor_cores</span><span class="p">,</span>
+            <span class="n">executor_memory</span><span class="p">,</span> <span class="n">extra_python_lib</span><span class="p">,</span> <span class="n">jars</span><span class="p">)</span>
+
+        <span class="n">conf</span> <span class="o">=</span> <span class="n">enrich_conf_for_spark</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">driver_cores</span><span class="p">,</span> <span class="n">driver_memory</span><span class="p">,</span> <span class="n">num_executors</span><span class="p">,</span>
+                                     <span class="n">executor_cores</span><span class="p">,</span> <span class="n">executor_memory</span><span class="p">,</span> <span class="n">extra_executor_memory_for_ray</span><span class="p">)</span>
+        <span class="n">conf</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+            <span class="s2">&quot;spark.cores.max&quot;</span><span class="p">:</span> <span class="n">num_executors</span> <span class="o">*</span> <span class="n">executor_cores</span><span class="p">,</span>
+            <span class="s2">&quot;spark.executorEnv.PYTHONHOME&quot;</span><span class="p">:</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">detect_python_location</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+        <span class="p">})</span>
+        <span class="n">zoo_bigdl_jar_path</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">get_zoo_bigdl_classpath_on_driver</span><span class="p">()))</span>
+        <span class="k">if</span> <span class="s2">&quot;spark.executor.extraClassPath&quot;</span> <span class="ow">in</span> <span class="n">conf</span><span class="p">:</span>
+            <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;spark.executor.extraClassPath&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">zoo_bigdl_jar_path</span><span class="p">,</span> <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;spark.executor.extraClassPath&quot;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;spark.executor.extraClassPath&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zoo_bigdl_jar_path</span>
+
+        <span class="n">sc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_sc</span><span class="p">(</span><span class="n">submit_args</span><span class="p">,</span> <span class="n">conf</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sc</span></div>
+
+<div class="viewcode-block" id="SparkRunner.stop_spark_standalone"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.spark.SparkRunner.stop_spark_standalone">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">stop_spark_standalone</span><span class="p">():</span>
+        <span class="kn">import</span> <span class="nn">subprocess</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="n">SparkRunner</span><span class="o">.</span><span class="n">standalone_env</span>
+        <span class="k">if</span> <span class="n">env</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">stop_worker_pro</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/sbin/stop-worker.sh&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s2">&quot;ZOO_STANDALONE_HOME&quot;</span><span class="p">]),</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">waitpid</span><span class="p">(</span><span class="n">stop_worker_pro</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">stop_master_pro</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/sbin/stop-master.sh&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">env</span><span class="p">[</span><span class="s2">&quot;ZOO_STANDALONE_HOME&quot;</span><span class="p">]),</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">waitpid</span><span class="p">(</span><span class="n">stop_master_pro</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># if env is None, then the standalone cluster is not started by analytics zoo</span>
+            <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="SparkRunner.init_spark_on_k8s"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.spark.SparkRunner.init_spark_on_k8s">[docs]</a>    <span class="k">def</span> <span class="nf">init_spark_on_k8s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                          <span class="n">master</span><span class="p">,</span>
+                          <span class="n">container_image</span><span class="p">,</span>
+                          <span class="n">num_executors</span><span class="p">,</span>
+                          <span class="n">executor_cores</span><span class="p">,</span>
+                          <span class="n">executor_memory</span><span class="o">=</span><span class="s2">&quot;2g&quot;</span><span class="p">,</span>
+                          <span class="n">driver_memory</span><span class="o">=</span><span class="s2">&quot;1g&quot;</span><span class="p">,</span>
+                          <span class="n">driver_cores</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                          <span class="n">extra_executor_memory_for_ray</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">extra_python_lib</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">conf</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">jars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                          <span class="n">python_location</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Initializing SparkContext for k8s-client mode&quot;</span><span class="p">)</span>
+        <span class="n">python_env</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">detect_python_location</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s2">&quot;PYSPARK_PYTHON&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYSPARK_PYTHON&quot;</span><span class="p">]</span> <span class="o">=</span> \
+                <span class="n">python_location</span> <span class="k">if</span> <span class="n">python_location</span> <span class="k">else</span> <span class="n">detect_python_location</span><span class="p">()</span>
+
+        <span class="n">submit_args</span> <span class="o">=</span> <span class="s2">&quot;--master &quot;</span> <span class="o">+</span> <span class="n">master</span> <span class="o">+</span> <span class="s2">&quot; --deploy-mode client&quot;</span>
+        <span class="n">submit_args</span> <span class="o">=</span> <span class="n">submit_args</span> <span class="o">+</span> <span class="n">gen_submit_args</span><span class="p">(</span>
+            <span class="n">driver_cores</span><span class="p">,</span> <span class="n">driver_memory</span><span class="p">,</span> <span class="n">num_executors</span><span class="p">,</span> <span class="n">executor_cores</span><span class="p">,</span>
+            <span class="n">executor_memory</span><span class="p">,</span> <span class="n">extra_python_lib</span><span class="p">,</span> <span class="n">jars</span><span class="p">)</span>
+
+        <span class="n">conf</span> <span class="o">=</span> <span class="n">enrich_conf_for_spark</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">driver_cores</span><span class="p">,</span> <span class="n">driver_memory</span><span class="p">,</span> <span class="n">num_executors</span><span class="p">,</span>
+                                     <span class="n">executor_cores</span><span class="p">,</span> <span class="n">executor_memory</span><span class="p">,</span> <span class="n">extra_executor_memory_for_ray</span><span class="p">)</span>
+        <span class="n">py_version</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">preload_so</span> <span class="o">=</span> <span class="n">python_env</span> <span class="o">+</span> <span class="s2">&quot;/lib/libpython&quot;</span> <span class="o">+</span> <span class="n">py_version</span> <span class="o">+</span> <span class="s2">&quot;m.so&quot;</span>
+        <span class="n">ld_path</span> <span class="o">=</span> <span class="n">python_env</span> <span class="o">+</span> <span class="s2">&quot;/lib:&quot;</span> <span class="o">+</span> <span class="n">python_env</span> <span class="o">+</span> <span class="s2">&quot;/lib/python&quot;</span> <span class="o">+</span>\
+            <span class="n">py_version</span> <span class="o">+</span> <span class="s2">&quot;/lib-dynload&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;spark.executor.extraLibraryPath&quot;</span> <span class="ow">in</span> <span class="n">conf</span><span class="p">:</span>
+            <span class="n">ld_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ld_path</span><span class="p">,</span> <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;spark.executor.extraLibraryPath&quot;</span><span class="p">])</span>
+        <span class="n">conf</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;spark.cores.max&quot;</span><span class="p">:</span> <span class="n">num_executors</span> <span class="o">*</span> <span class="n">executor_cores</span><span class="p">,</span>
+                     <span class="s2">&quot;spark.executorEnv.PYTHONHOME&quot;</span><span class="p">:</span> <span class="n">python_env</span><span class="p">,</span>
+                     <span class="s2">&quot;spark.executor.extraLibraryPath&quot;</span><span class="p">:</span> <span class="n">ld_path</span><span class="p">,</span>
+                     <span class="s2">&quot;spark.executorEnv.LD_PRELOAD&quot;</span><span class="p">:</span> <span class="n">preload_so</span><span class="p">,</span>
+                     <span class="s2">&quot;spark.kubernetes.container.image&quot;</span><span class="p">:</span> <span class="n">container_image</span><span class="p">})</span>
+        <span class="c1"># Not targeted to use pip install. BIGDL_CLASSPATH is supposed to set.</span>
+        <span class="k">if</span> <span class="s2">&quot;BIGDL_CLASSPATH&quot;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">zoo_bigdl_jar_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;BIGDL_CLASSPATH&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">zoo_bigdl_jar_path</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">get_zoo_bigdl_classpath_on_driver</span><span class="p">()))</span>
+        <span class="k">if</span> <span class="s2">&quot;spark.executor.extraClassPath&quot;</span> <span class="ow">in</span> <span class="n">conf</span><span class="p">:</span>
+            <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;spark.executor.extraClassPath&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">zoo_bigdl_jar_path</span><span class="p">,</span> <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;spark.executor.extraClassPath&quot;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;spark.executor.extraClassPath&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zoo_bigdl_jar_path</span>
+
+        <span class="n">sc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_sc</span><span class="p">(</span><span class="n">submit_args</span><span class="p">,</span> <span class="n">conf</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sc</span></div></div>
+
+
+<div class="viewcode-block" id="gen_submit_args"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.spark.gen_submit_args">[docs]</a><span class="k">def</span> <span class="nf">gen_submit_args</span><span class="p">(</span><span class="n">driver_cores</span><span class="p">,</span> <span class="n">driver_memory</span><span class="p">,</span> <span class="n">num_executors</span><span class="p">,</span> <span class="n">executor_cores</span><span class="p">,</span> <span class="n">executor_memory</span><span class="p">,</span>
+                    <span class="n">extra_python_lib</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">jars</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">submit_args</span> <span class="o">=</span> <span class="s2">&quot; --driver-cores </span><span class="si">{}</span><span class="s2"> --driver-memory </span><span class="si">{}</span><span class="s2"> --num-executors </span><span class="si">{}</span><span class="s2">&quot;</span> \
+                  <span class="s2">&quot; --executor-cores </span><span class="si">{}</span><span class="s2"> --executor-memory </span><span class="si">{}</span><span class="s2">&quot;</span> \
+        <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">driver_cores</span><span class="p">,</span> <span class="n">driver_memory</span><span class="p">,</span> <span class="n">num_executors</span><span class="p">,</span> <span class="n">executor_cores</span><span class="p">,</span> <span class="n">executor_memory</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">extra_python_lib</span><span class="p">:</span>
+        <span class="n">submit_args</span> <span class="o">=</span> <span class="n">submit_args</span> <span class="o">+</span> <span class="s2">&quot; --py-files </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">extra_python_lib</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">jars</span><span class="p">:</span>
+        <span class="n">submit_args</span> <span class="o">=</span> <span class="n">submit_args</span> <span class="o">+</span> <span class="s2">&quot; --jars </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">jars</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">submit_args</span></div>
+
+
+<div class="viewcode-block" id="enrich_conf_for_spark"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.spark.enrich_conf_for_spark">[docs]</a><span class="k">def</span> <span class="nf">enrich_conf_for_spark</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">driver_cores</span><span class="p">,</span> <span class="n">driver_memory</span><span class="p">,</span> <span class="n">num_executors</span><span class="p">,</span> <span class="n">executor_cores</span><span class="p">,</span>
+                          <span class="n">executor_memory</span><span class="p">,</span> <span class="n">extra_executor_memory_for_ray</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">conf</span><span class="p">:</span>
+        <span class="n">conf</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">conf</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;spark.driver.cores&quot;</span><span class="p">:</span> <span class="n">driver_cores</span><span class="p">,</span>
+                 <span class="s2">&quot;spark.driver.memory&quot;</span><span class="p">:</span> <span class="n">driver_memory</span><span class="p">,</span>
+                 <span class="s2">&quot;spark.executor.instances&quot;</span><span class="p">:</span> <span class="n">num_executors</span><span class="p">,</span>
+                 <span class="s2">&quot;spark.executor.cores&quot;</span><span class="p">:</span> <span class="n">executor_cores</span><span class="p">,</span>
+                 <span class="s2">&quot;spark.executor.memory&quot;</span><span class="p">:</span> <span class="n">executor_memory</span><span class="p">})</span>
+    <span class="k">if</span> <span class="n">extra_executor_memory_for_ray</span><span class="p">:</span>
+        <span class="n">conf</span><span class="p">[</span><span class="s2">&quot;spark.executor.memoryOverhead&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">extra_executor_memory_for_ray</span>
+    <span class="k">return</span> <span class="n">conf</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

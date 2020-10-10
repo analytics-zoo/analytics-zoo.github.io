@@ -1,0 +1,540 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.orca.learn.pytorch.training_operator &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.orca.learn.pytorch.training_operator</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="c1"># Copyright 2017 The Ray Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#  http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="c1"># This file is adapted from</span>
+<span class="c1"># https://github.com/ray-project/ray/blob/master/python/ray/util/sgd/torch/training_operator.py</span>
+
+<span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="kn">from</span> <span class="nn">zoo.orca.learn.pytorch.utils</span> <span class="kn">import</span> <span class="p">(</span><span class="n">TimerCollection</span><span class="p">,</span> <span class="n">AverageMeterCollection</span><span class="p">,</span>
+                                          <span class="n">NUM_SAMPLES</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">zoo.orca.learn.pytorch.constants</span> <span class="kn">import</span> <span class="p">(</span><span class="n">SCHEDULER_STEP_EPOCH</span><span class="p">,</span> <span class="n">NUM_STEPS</span><span class="p">,</span>
+                                              <span class="n">SCHEDULER_STEP_BATCH</span><span class="p">,</span> <span class="n">SCHEDULER_STEP</span><span class="p">)</span>
+
+<span class="n">tqdm</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">_is_multiple</span><span class="p">(</span><span class="n">component</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks if a component (optimizer, model, etc) is not singular.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Iterable</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">component</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+
+
+<div class="viewcode-block" id="TrainingOperator"><a class="viewcode-back" href="../../../../../zoo.orca.learn.pytorch.html#zoo.orca.learn.pytorch.training_operator.TrainingOperator">[docs]</a><span class="k">class</span> <span class="nc">TrainingOperator</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Abstract class for custom training or validation loops.</span>
+
+<span class="sd">    The scheduler will only be called at a batch or epoch frequency, depending</span>
+<span class="sd">    on the user parameter. Be sure to set ``scheduler_step_freq`` in</span>
+<span class="sd">    ``TorchTrainer`` to either &quot;batch&quot; or &quot;epoch&quot; to increment the scheduler</span>
+<span class="sd">    correctly during training. If using a learning rate scheduler</span>
+<span class="sd">    that depends on validation loss, you can use ``trainer.update_scheduler``.</span>
+
+<span class="sd">    For both training and validation, there are two granularities that</span>
+<span class="sd">    you can provide customization: per epoch or per batch.</span>
+<span class="sd">    You do not need to override both.</span>
+
+<span class="sd">    .. image:: raysgd-custom.jpg</span>
+<span class="sd">        :scale: 80%</span>
+<span class="sd">        :align: center</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError if multiple models/optimizers/schedulers are provided.</span>
+<span class="sd">            You are expected to subclass this class if you wish</span>
+<span class="sd">            to train over multiple models/optimizers/schedulers.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">config</span><span class="p">,</span>
+                 <span class="n">models</span><span class="p">,</span>
+                 <span class="n">optimizers</span><span class="p">,</span>
+                 <span class="n">world_rank</span><span class="p">,</span>
+                 <span class="n">criterion</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">schedulers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">device_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">use_fp16</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">use_tqdm</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="c1"># You are not expected to override this method.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_models</span> <span class="o">=</span> <span class="n">models</span>  <span class="c1"># List of models</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">models</span><span class="p">,</span>
+            <span class="n">collections</span><span class="o">.</span><span class="n">Iterable</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Components need to be iterable. Got: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">models</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_optimizers</span> <span class="o">=</span> <span class="n">optimizers</span>  <span class="c1"># List of optimizers</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">optimizers</span><span class="p">,</span>
+            <span class="n">collections</span><span class="o">.</span><span class="n">Iterable</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Components need to be iterable. Got: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="nb">type</span><span class="p">(</span><span class="n">optimizers</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_world_rank</span> <span class="o">=</span> <span class="n">world_rank</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_criterion</span> <span class="o">=</span> <span class="n">criterion</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_schedulers</span> <span class="o">=</span> <span class="n">schedulers</span>
+        <span class="k">if</span> <span class="n">schedulers</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+                <span class="n">schedulers</span><span class="p">,</span>
+                <span class="n">collections</span><span class="o">.</span><span class="n">Iterable</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Components need to be iterable. Got: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="nb">type</span><span class="p">(</span><span class="n">schedulers</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_use_fp16</span> <span class="o">=</span> <span class="n">use_fp16</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device_ids</span> <span class="o">=</span> <span class="n">device_ids</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_use_gpu</span> <span class="o">=</span> <span class="n">use_gpu</span> <span class="ow">and</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_gpu</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tqdm</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">use_tqdm</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;tqdm must be installed to use tqdm in training.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_use_tqdm</span> <span class="o">=</span> <span class="n">use_tqdm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">global_step</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">is</span> <span class="n">TrainingOperator</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="n">schedulers</span><span class="p">,</span> <span class="n">optimizers</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">_is_multiple</span><span class="p">(</span><span class="n">component</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;Need to provide a custom operator subclassing &quot;</span>
+                        <span class="s2">&quot;TrainingOperator if using multi-scheduler, &quot;</span>
+                        <span class="s2">&quot;multi-model or multi-optimizer training/validation.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timers</span> <span class="o">=</span> <span class="n">TimerCollection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_timers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timers</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Passes in the timers from the Runner.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timers</span> <span class="o">=</span> <span class="n">timers</span>
+
+<div class="viewcode-block" id="TrainingOperator.setup"><a class="viewcode-back" href="../../../../../zoo.orca.learn.pytorch.html#zoo.orca.learn.pytorch.training_operator.TrainingOperator.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Override this method to implement custom operator setup.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (dict): Custom configuration value to be passed to</span>
+<span class="sd">                all creator and operator constructors. Same as ``self.config``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TrainingOperator.train_epoch"><a class="viewcode-back" href="../../../../../zoo.orca.learn.pytorch.html#zoo.orca.learn.pytorch.training_operator.TrainingOperator.train_epoch">[docs]</a>    <span class="k">def</span> <span class="nf">train_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterator</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs one standard training pass over the training dataloader.</span>
+
+<span class="sd">        By default, this method will iterate over the given iterator and</span>
+<span class="sd">        call ``self.train_batch`` over each batch. If ``scheduler_step_freq``</span>
+<span class="sd">        is set, this default method will also step the scheduler accordingly.</span>
+
+<span class="sd">        You do not need to call ``train_batch`` in this method if you plan</span>
+<span class="sd">        to implement a custom optimization/training routine here.</span>
+
+<span class="sd">        You may find ``ray.util.sgd.utils.AverageMeterCollection`` useful</span>
+<span class="sd">        when overriding this method. See example below:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            def train_epoch(self, ...):</span>
+<span class="sd">                meter_collection = AverageMeterCollection()</span>
+<span class="sd">                self.model.train()</span>
+<span class="sd">                for batch in iterator:</span>
+<span class="sd">                    # do some processing</span>
+<span class="sd">                    metrics = {&quot;metric_1&quot;: 1, &quot;metric_2&quot;: 3} # dict of metrics</span>
+
+<span class="sd">                    # This keeps track of all metrics across multiple batches</span>
+<span class="sd">                    meter_collection.update(metrics, n=len(batch))</span>
+
+<span class="sd">                # Returns stats of the meters.</span>
+<span class="sd">                stats = meter_collection.summary()</span>
+<span class="sd">                return stats</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            iterator (iter): Iterator over the training data for the entire</span>
+<span class="sd">                epoch. This iterator is expected to be entirely consumed.</span>
+<span class="sd">            info (dict): Dictionary for information to be used for custom</span>
+<span class="sd">                training operations.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dict of metrics from training.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_tqdm</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">world_rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s2">&quot;epoch_idx&quot;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;num_epochs&quot;</span> <span class="ow">in</span> <span class="n">info</span><span class="p">:</span>
+                    <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">e&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;epoch_idx&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                                           <span class="n">info</span><span class="p">[</span><span class="s2">&quot;num_epochs&quot;</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">e&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;epoch_idx&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">_progress_bar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span>
+                <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">iterator</span><span class="p">),</span>
+                <span class="n">desc</span><span class="o">=</span><span class="n">desc</span><span class="p">,</span>
+                <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;batch&quot;</span><span class="p">,</span>
+                <span class="n">leave</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">metric_meters</span> <span class="o">=</span> <span class="n">AverageMeterCollection</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterator</span><span class="p">):</span>
+            <span class="n">batch_info</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;batch_idx&quot;</span><span class="p">:</span> <span class="n">batch_idx</span><span class="p">,</span>
+                <span class="s2">&quot;global_step&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">global_step</span>
+            <span class="p">}</span>
+            <span class="n">batch_info</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_batch</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch_info</span><span class="o">=</span><span class="n">batch_info</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_tqdm</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">world_rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">_progress_bar</span><span class="o">.</span><span class="n">n</span> <span class="o">=</span> <span class="n">batch_idx</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">postfix</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">if</span> <span class="s2">&quot;train_loss&quot;</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
+                    <span class="n">postfix</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;train_loss&quot;</span><span class="p">])</span>
+                <span class="n">_progress_bar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">(</span><span class="n">postfix</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span> <span class="ow">and</span> <span class="n">batch_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="n">SCHEDULER_STEP</span><span class="p">)</span> <span class="o">==</span> <span class="n">SCHEDULER_STEP_BATCH</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+            <span class="n">metric_meters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">metrics</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">NUM_SAMPLES</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">global_step</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span> <span class="ow">and</span> <span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">SCHEDULER_STEP</span><span class="p">)</span> <span class="o">==</span> <span class="n">SCHEDULER_STEP_EPOCH</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">metric_meters</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TrainingOperator.train_batch"><a class="viewcode-back" href="../../../../../zoo.orca.learn.pytorch.html#zoo.orca.learn.pytorch.training_operator.TrainingOperator.train_batch">[docs]</a>    <span class="k">def</span> <span class="nf">train_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_info</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Computes loss and updates the model over one batch.</span>
+
+<span class="sd">        This method is responsible for computing the loss and gradient and</span>
+<span class="sd">        updating the model.</span>
+
+<span class="sd">        By default, this method implementation assumes that batches</span>
+<span class="sd">        are in (\*features, labels) format. So we also support multiple inputs</span>
+<span class="sd">        model. If using amp/fp16 training, it will also scale the loss</span>
+<span class="sd">        automatically.</span>
+
+<span class="sd">        You can provide custom loss metrics and training operations if you</span>
+<span class="sd">        override this method. If overriding this method, you can access model,</span>
+<span class="sd">        optimizer, criterion via ``self.model``, ``self.optimizer``,</span>
+<span class="sd">        and ``self.criterion``.</span>
+
+<span class="sd">        You do not need to override this method if you plan to</span>
+<span class="sd">        override ``train_epoch``.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            batch: One item of the validation iterator.</span>
+<span class="sd">            batch_info (dict): Information dict passed in from ``train_epoch``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary of metrics.</span>
+<span class="sd">                By default, this dictionary contains &quot;loss&quot; and &quot;num_samples&quot;.</span>
+<span class="sd">                &quot;num_samples&quot; corresponds to number of datapoints in the batch.</span>
+<span class="sd">                However, you can provide any number of other values.</span>
+<span class="sd">                Consider returning &quot;num_samples&quot; in the metrics because</span>
+<span class="sd">                by default, ``train_epoch`` uses &quot;num_samples&quot; to</span>
+<span class="sd">                calculate averages.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># unpack features into list to support multiple inputs model</span>
+        <span class="o">*</span><span class="n">features</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="c1"># If features is already a tuple, we don&#39;t give it an extra list dimension.</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">features</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># Create non_blocking tensors for distributed training</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_gpu</span><span class="p">:</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">feature</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">non_blocking</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span>
+            <span class="p">]</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">non_blocking</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Compute output.</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">timers</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="s2">&quot;fwd&quot;</span><span class="p">):</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">features</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="c1"># Then target is also assumed to be a tuple or list.</span>
+                <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="o">*</span><span class="n">output</span><span class="p">,</span> <span class="o">*</span><span class="n">target</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+
+        <span class="c1"># Compute gradients in a backward pass.</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">timers</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="s2">&quot;grad&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_fp16</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">amp</span><span class="o">.</span><span class="n">scale_loss</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">)</span> <span class="k">as</span> <span class="n">scaled_loss</span><span class="p">:</span>
+                    <span class="n">scaled_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+        <span class="c1"># Call step of optimizer to update model params.</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">timers</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="s2">&quot;apply&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;train_loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">NUM_SAMPLES</span><span class="p">:</span> <span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)}</span></div>
+
+<div class="viewcode-block" id="TrainingOperator.validate"><a class="viewcode-back" href="../../../../../zoo.orca.learn.pytorch.html#zoo.orca.learn.pytorch.training_operator.TrainingOperator.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val_iterator</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs one standard validation pass over the val_iterator.</span>
+
+<span class="sd">        This will call ``model.eval()`` and ``torch.no_grad`` when iterating</span>
+<span class="sd">        over the validation dataloader.</span>
+
+<span class="sd">        If overriding this method, you can access model, criterion via</span>
+<span class="sd">        ``self.model`` and ``self.criterion``. You also do not need to call</span>
+<span class="sd">        ``validate_batch`` if overriding this method.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            val_iterator (iter): Iterable constructed from the</span>
+<span class="sd">                validation dataloader.</span>
+<span class="sd">            info: (dict): Dictionary for information to be used for custom</span>
+<span class="sd">                validation operations.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dict of metrics from the evaluation.</span>
+<span class="sd">                By default, returns &quot;val_accuracy&quot; and &quot;val_loss&quot;</span>
+<span class="sd">                which is computed by aggregating &quot;loss&quot; and &quot;correct&quot; values</span>
+<span class="sd">                from ``validate_batch`` and dividing it by the sum of</span>
+<span class="sd">                ``num_samples`` from all calls to ``self.validate_batch``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">metric_meters</span> <span class="o">=</span> <span class="n">AverageMeterCollection</span><span class="p">()</span>
+
+        <span class="c1"># switch to evaluate mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">val_iterator</span><span class="p">):</span>
+                <span class="n">batch_info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;batch_idx&quot;</span><span class="p">:</span> <span class="n">batch_idx</span><span class="p">}</span>
+                <span class="n">batch_info</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+                <span class="n">metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_batch</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">batch_info</span><span class="p">)</span>
+                <span class="n">metric_meters</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">metrics</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">metrics</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">NUM_SAMPLES</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">metric_meters</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TrainingOperator.validate_batch"><a class="viewcode-back" href="../../../../../zoo.orca.learn.pytorch.html#zoo.orca.learn.pytorch.training_operator.TrainingOperator.validate_batch">[docs]</a>    <span class="k">def</span> <span class="nf">validate_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_info</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calcuates the loss and accuracy over a given batch.</span>
+
+<span class="sd">        You can override this method to provide arbitrary metrics.</span>
+
+<span class="sd">        Same as ``train_batch``, this method implementation assumes that</span>
+<span class="sd">        batches are in (\*features, labels) format by default. So we also</span>
+<span class="sd">        support multiple inputs model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            batch: One item of the validation iterator.</span>
+<span class="sd">            batch_info (dict): Contains information per batch from</span>
+<span class="sd">                ``validate()``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dict of metrics.</span>
+<span class="sd">                By default, returns &quot;val_loss&quot;, &quot;val_accuracy&quot;, and</span>
+<span class="sd">                &quot;num_samples&quot;. When overriding, consider returning</span>
+<span class="sd">                &quot;num_samples&quot; in the metrics because</span>
+<span class="sd">                by default, ``validate`` uses &quot;num_samples&quot; to</span>
+<span class="sd">                calculate averages.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># unpack features into list to support multiple inputs model</span>
+        <span class="o">*</span><span class="n">features</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_gpu</span><span class="p">:</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">feature</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">non_blocking</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span>
+            <span class="p">]</span>
+            <span class="n">target</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">non_blocking</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># compute output</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">timers</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="s2">&quot;eval_fwd&quot;</span><span class="p">):</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="o">*</span><span class="n">features</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">num_correct</span> <span class="o">=</span> <span class="p">(</span><span class="n">predicted</span> <span class="o">==</span> <span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">num_samples</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;val_loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
+            <span class="s2">&quot;val_accuracy&quot;</span><span class="p">:</span> <span class="n">num_correct</span> <span class="o">/</span> <span class="n">num_samples</span><span class="p">,</span>
+            <span class="n">NUM_SAMPLES</span><span class="p">:</span> <span class="n">num_samples</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="TrainingOperator.state_dict"><a class="viewcode-back" href="../../../../../zoo.orca.learn.pytorch.html#zoo.orca.learn.pytorch.training_operator.TrainingOperator.state_dict">[docs]</a>    <span class="k">def</span> <span class="nf">state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Override this to return a representation of the operator state.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: The state dict of the operator.&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TrainingOperator.load_state_dict"><a class="viewcode-back" href="../../../../../zoo.orca.learn.pytorch.html#zoo.orca.learn.pytorch.training_operator.TrainingOperator.load_state_dict">[docs]</a>    <span class="k">def</span> <span class="nf">load_state_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Override this to load the representation of the operator state.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            state_dict (dict): State dict as returned by the operator. &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">device</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;torch.device: The appropriate torch device, at your convenience.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;dict: Provided into TorchTrainer.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;First or only model created by the provided ``model_creator``.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List of models created by the provided ``model_creator``.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_models</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;First or only optimizer(s) created by the ``optimizer_creator``.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimizers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List of optimizers created by the ``optimizer_creator``.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_optimizers</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">world_rank</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;int: The rank of the parent runner. Always 0 if not distributed.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_world_rank</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">criterion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Criterion created by the provided ``loss_creator``.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_criterion</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">scheduler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;First or only scheduler(s) created by the ``scheduler_creator``.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schedulers</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schedulers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">schedulers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List of schedulers created by the ``scheduler_creator``.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_schedulers</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">use_gpu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns True if cuda is available and use_gpu is True.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_gpu</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">use_fp16</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;bool: Whether the model and optimizer have been FP16 enabled.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_fp16</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">use_tqdm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;bool: Whether tqdm progress bars are enabled.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_tqdm</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">device_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List[int]: Device IDs for the model.</span>
+
+<span class="sd">        This is useful for using batch norm with DistributedDataParallel.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_device_ids</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

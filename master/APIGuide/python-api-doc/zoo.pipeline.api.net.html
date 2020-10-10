@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.pipeline.api.onnx.html" title="zoo.pipeline.api.onnx package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -43,12 +46,12 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.pipeline.api.net package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-pipeline-api-net-graph-net-module">zoo.pipeline.api.net.graph_net module</a></li>
-<li><a class="reference internal" href="#zoo-pipeline-api-net-net-load-module">zoo.pipeline.api.net.net_load module</a></li>
-<li><a class="reference internal" href="#zoo-pipeline-api-net-torch-criterion-module">zoo.pipeline.api.net.torch_criterion module</a></li>
-<li><a class="reference internal" href="#zoo-pipeline-api-net-torch-net-module">zoo.pipeline.api.net.torch_net module</a></li>
-<li><a class="reference internal" href="#zoo-pipeline-api-net-utils-module">zoo.pipeline.api.net.utils module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.pipeline.api.net.graph_net">zoo.pipeline.api.net.graph_net module</a></li>
+<li><a class="reference internal" href="#module-zoo.pipeline.api.net.net_load">zoo.pipeline.api.net.net_load module</a></li>
+<li><a class="reference internal" href="#module-zoo.pipeline.api.net.torch_criterion">zoo.pipeline.api.net.torch_criterion module</a></li>
+<li><a class="reference internal" href="#module-zoo.pipeline.api.net.torch_net">zoo.pipeline.api.net.torch_net module</a></li>
+<li><a class="reference internal" href="#module-zoo.pipeline.api.net.utils">zoo.pipeline.api.net.utils module</a></li>
+<li><a class="reference internal" href="#module-zoo.pipeline.api.net">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -91,23 +94,368 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-pipeline-api-net-graph-net-module">
-<h2>zoo.pipeline.api.net.graph_net module<a class="headerlink" href="#zoo-pipeline-api-net-graph-net-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.pipeline.api.net.graph_net">
+<span id="zoo-pipeline-api-net-graph-net-module"></span><h2>zoo.pipeline.api.net.graph_net module<a class="headerlink" href="#module-zoo.pipeline.api.net.graph_net" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.pipeline.api.net.graph_net.GraphNet">
+<em class="property">class </em><code class="descclassname">zoo.pipeline.api.net.graph_net.</code><code class="descname">GraphNet</code><span class="sig-paren">(</span><em>input</em>, <em>output</em>, <em>jvalue=None</em>, <em>bigdl_type='float'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/graph_net.html#GraphNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.graph_net.GraphNet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bigdl.nn.layer.Model</span></code></p>
+<dl class="method">
+<dt id="zoo.pipeline.api.net.graph_net.GraphNet.flattened_layers">
+<code class="descname">flattened_layers</code><span class="sig-paren">(</span><em>include_container=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/graph_net.html#GraphNet.flattened_layers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.graph_net.GraphNet.flattened_layers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.api.net.graph_net.GraphNet.freeze_up_to">
+<code class="descname">freeze_up_to</code><span class="sig-paren">(</span><em>names</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/graph_net.html#GraphNet.freeze_up_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.graph_net.GraphNet.freeze_up_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Freeze the model from the bottom up to the layers specified by names (inclusive).
+This is useful for finetuning a model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>names</strong> – A list of module names to be Freezed</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">current graph model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.pipeline.api.net.graph_net.GraphNet.from_jvalue">
+<em class="property">static </em><code class="descname">from_jvalue</code><span class="sig-paren">(</span><em>jvalue</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/graph_net.html#GraphNet.from_jvalue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.graph_net.GraphNet.from_jvalue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Python Model base on the given java value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>jvalue</strong> – Java object create by Py4j</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A Python Model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.pipeline.api.net.graph_net.GraphNet.layers">
+<code class="descname">layers</code><a class="headerlink" href="#zoo.pipeline.api.net.graph_net.GraphNet.layers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.api.net.graph_net.GraphNet.new_graph">
+<code class="descname">new_graph</code><span class="sig-paren">(</span><em>outputs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/graph_net.html#GraphNet.new_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.graph_net.GraphNet.new_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify a list of nodes as output and return a new graph using the existing nodes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>outputs</strong> – A list of nodes specified</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A graph model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.api.net.graph_net.GraphNet.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em>, <em>batch_per_thread=4</em>, <em>distributed=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/graph_net.html#GraphNet.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.graph_net.GraphNet.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a model to do prediction.</p>
+<p># Arguments
+x: Prediction data. A Numpy array or RDD of Sample or ImageSet.
+batch_per_thread:
+The default value is 4.
+When distributed is True,the total batch size is batch_per_thread * rdd.getNumPartitions.
+When distributed is False the total batch size is batch_per_thread * numOfCores.
+distributed: Boolean. Whether to do prediction in distributed mode or local mode.
+Default is True. In local mode, x must be a Numpy array.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.api.net.graph_net.GraphNet.to_keras">
+<code class="descname">to_keras</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/graph_net.html#GraphNet.to_keras"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.graph_net.GraphNet.to_keras" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.api.net.graph_net.GraphNet.unfreeze">
+<code class="descname">unfreeze</code><span class="sig-paren">(</span><em>names=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/graph_net.html#GraphNet.unfreeze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.graph_net.GraphNet.unfreeze" title="Permalink to this definition">¶</a></dt>
+<dd><p>“unfreeze” module, i.e. make the module parameters(weight/bias, if exists)
+to be trained(updated) in training process.
+If ‘names’ is a non-empty list, unfreeze layers that match given names</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>names</strong> – list of module names to be unFreezed. Default is None.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">current graph model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-pipeline-api-net-net-load-module">
-<h2>zoo.pipeline.api.net.net_load module<a class="headerlink" href="#zoo-pipeline-api-net-net-load-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.pipeline.api.net.net_load">
+<span id="zoo-pipeline-api-net-net-load-module"></span><h2>zoo.pipeline.api.net.net_load module<a class="headerlink" href="#module-zoo.pipeline.api.net.net_load" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.pipeline.api.net.net_load.JavaToPython">
+<em class="property">class </em><code class="descclassname">zoo.pipeline.api.net.net_load.</code><code class="descname">JavaToPython</code><span class="sig-paren">(</span><em>jvalue</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/net_load.html#JavaToPython"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.net_load.JavaToPython" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="zoo.pipeline.api.net.net_load.JavaToPython.get_python_class">
+<code class="descname">get_python_class</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/net_load.html#JavaToPython.get_python_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.net_load.JavaToPython.get_python_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redirect the jvalue to the proper python class.
+:param jvalue: Java object create by Py4j
+:return: A proper Python wrapper which would be a Model, Sequential…</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.pipeline.api.net.net_load.Net">
+<em class="property">class </em><code class="descclassname">zoo.pipeline.api.net.net_load.</code><code class="descname">Net</code><a class="reference internal" href="_modules/zoo/pipeline/api/net/net_load.html#Net"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.net_load.Net" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="staticmethod">
+<dt id="zoo.pipeline.api.net.net_load.Net.from_jvalue">
+<em class="property">static </em><code class="descname">from_jvalue</code><span class="sig-paren">(</span><em>jvalue</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/net_load.html#Net.from_jvalue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.net_load.Net.from_jvalue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.pipeline.api.net.net_load.Net.load">
+<em class="property">static </em><code class="descname">load</code><span class="sig-paren">(</span><em>model_path</em>, <em>weight_path=None</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/net_load.html#Net.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.net_load.Net.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an existing Analytics Zoo model defined in Keras-style(with weights).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_path</strong> – The path to load the saved model.</td>
+</tr>
+</tbody>
+</table>
+<p>Local file system, HDFS and Amazon S3 are supported.
+HDFS path should be like ‘hdfs://[host]:[port]/xxx’.
+Amazon S3 path should be like ‘s3a://bucket/xxx’.
+:param weight_path: The path for pre-trained weights if any. Default is None.
+:return: An Analytics Zoo model.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.pipeline.api.net.net_load.Net.load_bigdl">
+<em class="property">static </em><code class="descname">load_bigdl</code><span class="sig-paren">(</span><em>model_path</em>, <em>weight_path=None</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/net_load.html#Net.load_bigdl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.net_load.Net.load_bigdl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a pre-trained BigDL model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model_path</strong> – The path to the pre-trained model.</li>
+<li><strong>weight_path</strong> – The path to the weights of the pre-trained model. Default is None.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A pre-trained model.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.pipeline.api.net.net_load.Net.load_caffe">
+<em class="property">static </em><code class="descname">load_caffe</code><span class="sig-paren">(</span><em>def_path</em>, <em>model_path</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/net_load.html#Net.load_caffe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.net_load.Net.load_caffe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a pre-trained Caffe model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>def_path</strong> – The path containing the caffe model definition.</li>
+<li><strong>model_path</strong> – The path containing the pre-trained caffe model.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A pre-trained model.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.pipeline.api.net.net_load.Net.load_keras">
+<em class="property">static </em><code class="descname">load_keras</code><span class="sig-paren">(</span><em>json_path=None</em>, <em>hdf5_path=None</em>, <em>by_name=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/net_load.html#Net.load_keras"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.net_load.Net.load_keras" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a pre-trained Keras model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>json_path</strong> – The json path containing the keras model definition. Default is None.</li>
+<li><strong>hdf5_path</strong> – The HDF5 path containing the pre-trained keras model weights</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>with or without the model architecture. Default is None.
+:param by_name: by default the architecture should be unchanged.
+If set as True, only layers with the same name will be loaded.
+:return: A BigDL model.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.pipeline.api.net.net_load.Net.load_torch">
+<em class="property">static </em><code class="descname">load_torch</code><span class="sig-paren">(</span><em>path</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/net_load.html#Net.load_torch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.net_load.Net.load_torch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a pre-trained Torch model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – The path containing the pre-trained model.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A pre-trained model.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-pipeline-api-net-torch-criterion-module">
-<h2>zoo.pipeline.api.net.torch_criterion module<a class="headerlink" href="#zoo-pipeline-api-net-torch-criterion-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.pipeline.api.net.torch_criterion">
+<span id="zoo-pipeline-api-net-torch-criterion-module"></span><h2>zoo.pipeline.api.net.torch_criterion module<a class="headerlink" href="#module-zoo.pipeline.api.net.torch_criterion" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.pipeline.api.net.torch_criterion.LossWrapperModule">
+<em class="property">class </em><code class="descclassname">zoo.pipeline.api.net.torch_criterion.</code><code class="descname">LossWrapperModule</code><span class="sig-paren">(</span><em>lossFunc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/torch_criterion.html#LossWrapperModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.torch_criterion.LossWrapperModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">torch.nn.modules.module.Module</span></code></p>
+<dl class="method">
+<dt id="zoo.pipeline.api.net.torch_criterion.LossWrapperModule.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/torch_criterion.html#LossWrapperModule.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.torch_criterion.LossWrapperModule.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.pipeline.api.net.torch_criterion.TorchCriterion">
+<em class="property">class </em><code class="descclassname">zoo.pipeline.api.net.torch_criterion.</code><code class="descname">TorchCriterion</code><span class="sig-paren">(</span><em>path</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/torch_criterion.html#TorchCriterion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.torch_criterion.TorchCriterion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bigdl.nn.criterion.Criterion</span></code></p>
+<p>TorchCriterion wraps a loss function for distributed inference or training.
+Use TorchCriterion.from_pytorch to initialize.</p>
+<dl class="staticmethod">
+<dt id="zoo.pipeline.api.net.torch_criterion.TorchCriterion.from_pytorch">
+<em class="property">static </em><code class="descname">from_pytorch</code><span class="sig-paren">(</span><em>loss</em>, <em>input</em>, <em>label=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/torch_criterion.html#TorchCriterion.from_pytorch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.torch_criterion.TorchCriterion.from_pytorch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a TorchCriterion directly from PyTorch function. We need users to provide example
+input and label (or just their sizes) to trace the loss function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>loss</strong> – this can be a torch loss (e.g. nn.MSELoss()) or</td>
+</tr>
+</tbody>
+</table>
+<p>a function that takes two Tensor parameters: input and label. E.g.
+def lossFunc(input, target):
+return nn.CrossEntropyLoss().forward(input, target.flatten().long())
+:param input: example input. It can be:
+1. a torch tensor, or tuple of torch tensors for multi-input models
+2. list of integers, or tuple of int list for multi-input models. E.g. For
+ResNet, this can be [1, 3, 224, 224]. A random tensor with the
+specified size will be used as the example input.
+:param label: example label. It can be:
+1. a torch tensor, or tuple of torch tensors for multi-input models
+2. list of integers, or tuple of int list for multi-input models. E.g. For
+ResNet, this can be [1, 3, 224, 224]. A random tensor with the
+specified size will be used as the example input.
+When label is None, input will also be used as label.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-pipeline-api-net-torch-net-module">
-<h2>zoo.pipeline.api.net.torch_net module<a class="headerlink" href="#zoo-pipeline-api-net-torch-net-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.pipeline.api.net.torch_net">
+<span id="zoo-pipeline-api-net-torch-net-module"></span><h2>zoo.pipeline.api.net.torch_net module<a class="headerlink" href="#module-zoo.pipeline.api.net.torch_net" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.pipeline.api.net.torch_net.TorchNet">
+<em class="property">class </em><code class="descclassname">zoo.pipeline.api.net.torch_net.</code><code class="descname">TorchNet</code><span class="sig-paren">(</span><em>path</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/torch_net.html#TorchNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.torch_net.TorchNet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bigdl.nn.layer.Layer</span></code></p>
+<p>TorchNet wraps a TorchScript model as a single layer, thus the Pytorch model can be used for
+distributed inference or training.
+:param path: path to the TorchScript model.</p>
+<dl class="staticmethod">
+<dt id="zoo.pipeline.api.net.torch_net.TorchNet.from_pytorch">
+<em class="property">static </em><code class="descname">from_pytorch</code><span class="sig-paren">(</span><em>module</em>, <em>input</em>, <em>check_trace=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/torch_net.html#TorchNet.from_pytorch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.torch_net.TorchNet.from_pytorch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a TorchNet directly from PyTorch model, e.g. model in torchvision.models.
+Users need to provide an example input or the input tensor shape.
+:param module: a PyTorch model
+:param input: To trace the tensor operations, torch jit trace requires users to
+provide an example input. Here the input parameter can be:
+1. a torch tensor, or tuple of torch tensors for multi-input models
+2. list of integers, or tuple of int list for multi-input models. E.g. For
+ResNet, this can be [1, 3, 224, 224]. A random tensor with the
+specified size will be used as the example input.
+:param check_trace: boolean value, optional. check if the same inputs run through
+traced module produce the same outputs. Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>. You
+might want to disable this if, for example, your network contains
+non-deterministic ops or if you are sure that the network is
+correct despite a checker failure.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.pipeline.api.net.torch_net.TorchNet.get_sample_input">
+<em class="property">static </em><code class="descname">get_sample_input</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/torch_net.html#TorchNet.get_sample_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.torch_net.TorchNet.get_sample_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.api.net.torch_net.TorchNet.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em>, <em>batch_per_thread=1</em>, <em>distributed=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/torch_net.html#TorchNet.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.torch_net.TorchNet.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a model to do prediction.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.api.net.torch_net.TorchNet.savePytorch">
+<code class="descname">savePytorch</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/torch_net.html#TorchNet.savePytorch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.torch_net.TorchNet.savePytorch" title="Permalink to this definition">¶</a></dt>
+<dd><p>save the model as a torch script module</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-pipeline-api-net-utils-module">
-<h2>zoo.pipeline.api.net.utils module<a class="headerlink" href="#zoo-pipeline-api-net-utils-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.pipeline.api.net.utils">
+<span id="zoo-pipeline-api-net-utils-module"></span><h2>zoo.pipeline.api.net.utils module<a class="headerlink" href="#module-zoo.pipeline.api.net.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="zoo.pipeline.api.net.utils.find_placeholders">
+<code class="descclassname">zoo.pipeline.api.net.utils.</code><code class="descname">find_placeholders</code><span class="sig-paren">(</span><em>grads</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/utils.html#find_placeholders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.utils.find_placeholders" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.pipeline.api.net.utils.find_tensors">
+<code class="descclassname">zoo.pipeline.api.net.utils.</code><code class="descname">find_tensors</code><span class="sig-paren">(</span><em>sources</em>, <em>predicate</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/utils.html#find_tensors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.utils.find_tensors" title="Permalink to this definition">¶</a></dt>
+<dd><p>find all the tensors that are used for computing grads and has been
+computed during forward
+:param grads:
+:param forward_ops:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.pipeline.api.net.utils.to_bigdl_optim_method">
+<code class="descclassname">zoo.pipeline.api.net.utils.</code><code class="descname">to_bigdl_optim_method</code><span class="sig-paren">(</span><em>koptim_method</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/api/net/utils.html#to_bigdl_optim_method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.api.net.utils.to_bigdl_optim_method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.pipeline.api.net">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.pipeline.api.net" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -123,6 +471,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.pipeline.api.onnx.html" title="zoo.pipeline.api.onnx package"
              >next</a> |</li>

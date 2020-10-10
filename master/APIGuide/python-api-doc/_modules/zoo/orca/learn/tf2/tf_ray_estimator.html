@@ -1,0 +1,295 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.orca.learn.tf2.tf_ray_estimator &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.orca.learn.tf2.tf_ray_estimator</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">ray</span>
+
+<span class="kn">from</span> <span class="nn">zoo.orca.learn.tf2.tf_runner</span> <span class="kn">import</span> <span class="n">TFRunner</span>
+<span class="kn">from</span> <span class="nn">zoo.ray</span> <span class="kn">import</span> <span class="n">RayContext</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Estimator"><a class="viewcode-back" href="../../../../../zoo.orca.learn.tf2.html#zoo.orca.learn.tf2.tf_ray_estimator.Estimator">[docs]</a><span class="k">class</span> <span class="nc">Estimator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">model_creator</span><span class="p">,</span>
+                 <span class="n">compile_args_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;tf&quot;</span><span class="p">,</span>
+                 <span class="n">workers_per_node</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets up the TensorFlow trainer.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_creator (dict -&gt; Model): This function takes in the `config`</span>
+<span class="sd">                dict and returns a compiled TF model.</span>
+<span class="sd">            data_creator (dict -&gt; tf.Dataset, tf.Dataset): Creates</span>
+<span class="sd">                the training and validation data sets using the config.</span>
+<span class="sd">                `config` dict is passed into the function.</span>
+<span class="sd">            config (dict): configuration passed to &#39;model_creator&#39;,</span>
+<span class="sd">                &#39;data_creator&#39;. Also contains `fit_config`, which is passed</span>
+<span class="sd">                into `model.fit(data, **fit_config)` and</span>
+<span class="sd">                `evaluate_config` which is passed into `model.evaluate`.</span>
+<span class="sd">            num_replicas (int): Sets number of workers used in distributed</span>
+<span class="sd">                training. Workers will be placed arbitrarily across the</span>
+<span class="sd">                cluster.</span>
+<span class="sd">            use_gpu (bool): Enables all workers to use GPU.</span>
+<span class="sd">            verbose (bool): Prints output of one model if true.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_creator</span> <span class="o">=</span> <span class="n">model_creator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compile_args_creator</span> <span class="o">=</span> <span class="n">compile_args_creator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
+
+        <span class="n">ray_ctx</span> <span class="o">=</span> <span class="n">RayContext</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s2">&quot;inter_op_parallelism&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;inter_op_parallelism&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="s2">&quot;intra_op_parallelism&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;intra_op_parallelism&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ray_ctx</span><span class="o">.</span><span class="n">ray_node_cpu_cores</span> <span class="o">//</span> <span class="n">workers_per_node</span>
+
+        <span class="k">if</span> <span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;horovod&quot;</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">compile_args_creator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;compile_args_creator should not be None,&quot;</span> \
+                                                     <span class="s2">&quot; when backend is set to horovod&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;model_creator&quot;</span><span class="p">:</span> <span class="n">model_creator</span><span class="p">,</span>
+            <span class="s2">&quot;compile_args_creator&quot;</span><span class="p">:</span> <span class="n">compile_args_creator</span><span class="p">,</span>
+            <span class="s2">&quot;config&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span>
+            <span class="s2">&quot;verbose&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;tf&quot;</span><span class="p">:</span>
+            <span class="n">cores_per_node</span> <span class="o">=</span> <span class="n">ray_ctx</span><span class="o">.</span><span class="n">ray_node_cpu_cores</span> <span class="o">//</span> <span class="n">workers_per_node</span>
+            <span class="n">num_nodes</span> <span class="o">=</span> <span class="n">ray_ctx</span><span class="o">.</span><span class="n">num_ray_nodes</span> <span class="o">*</span> <span class="n">workers_per_node</span>
+
+            <span class="n">worker_class</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">num_cpus</span><span class="o">=</span><span class="n">cores_per_node</span><span class="p">)(</span><span class="n">TFRunner</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span> <span class="o">=</span> <span class="p">[</span><span class="n">worker_class</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+                                   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_nodes</span><span class="p">)]</span>
+            <span class="n">ips</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">worker</span><span class="o">.</span><span class="n">get_node_ip</span><span class="o">.</span><span class="n">remote</span><span class="p">()</span> <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span><span class="p">])</span>
+            <span class="n">ports</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">worker</span><span class="o">.</span><span class="n">find_free_port</span><span class="o">.</span><span class="n">remote</span><span class="p">()</span> <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span><span class="p">])</span>
+
+            <span class="n">urls</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;</span><span class="si">{ip}</span><span class="s2">:</span><span class="si">{port}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ip</span><span class="o">=</span><span class="n">ips</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">port</span><span class="o">=</span><span class="n">ports</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span><span class="p">))]</span>
+
+            <span class="c1"># Get setup tasks in order to throw errors on failure</span>
+            <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">([</span>
+                <span class="n">worker</span><span class="o">.</span><span class="n">setup_distributed</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">urls</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">worker</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span><span class="p">)])</span>
+        <span class="k">elif</span> <span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;horovod&quot;</span><span class="p">:</span>
+            <span class="c1"># it is necessary to call self.run first to set horovod environment</span>
+            <span class="kn">from</span> <span class="nn">zoo.orca.learn.horovod.horovod_ray_runner</span> <span class="kn">import</span> <span class="n">HorovodRayRunner</span>
+            <span class="n">horovod_runner</span> <span class="o">=</span> <span class="n">HorovodRayRunner</span><span class="p">(</span><span class="n">ray_ctx</span><span class="p">,</span>
+                                              <span class="n">worker_cls</span><span class="o">=</span><span class="n">TFRunner</span><span class="p">,</span>
+                                              <span class="n">worker_param</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+                                              <span class="n">workers_per_node</span><span class="o">=</span><span class="n">workers_per_node</span><span class="p">)</span>
+            <span class="n">horovod_runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;worker initialized&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span> <span class="o">=</span> <span class="n">horovod_runner</span><span class="o">.</span><span class="n">remote_workers</span>
+            <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">([</span>
+                <span class="n">worker</span><span class="o">.</span><span class="n">setup_horovod</span><span class="o">.</span><span class="n">remote</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">worker</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span><span class="p">)])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Only </span><span class="se">\&quot;</span><span class="s2">tf</span><span class="se">\&quot;</span><span class="s2"> and </span><span class="se">\&quot;</span><span class="s2">horovod</span><span class="se">\&quot;</span><span class="s2"> are legal &quot;</span>
+                            <span class="s2">&quot;value of backend, but got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">backend</span><span class="p">))</span>
+
+<div class="viewcode-block" id="Estimator.from_keras"><a class="viewcode-back" href="../../../../../zoo.orca.learn.tf2.html#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.from_keras">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_keras</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model_creator</span><span class="p">,</span>
+                   <span class="n">config</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                   <span class="n">workers_per_node</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                   <span class="n">compile_args_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">backend</span><span class="o">=</span><span class="s2">&quot;tf&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">model_creator</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                   <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">workers_per_node</span><span class="o">=</span><span class="n">workers_per_node</span><span class="p">,</span>
+                   <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">compile_args_creator</span><span class="o">=</span><span class="n">compile_args_creator</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Estimator.fit"><a class="viewcode-back" href="../../../../../zoo.orca.learn.tf2.html#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_creator</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">callbacks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validation_data_creator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">steps_per_epoch</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validation_steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validation_freq</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Runs a training epoch.&quot;&quot;&quot;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">data_creator</span><span class="o">=</span><span class="n">data_creator</span><span class="p">,</span>
+            <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">,</span>
+            <span class="n">validation_data_creator</span><span class="o">=</span><span class="n">validation_data_creator</span><span class="p">,</span>
+            <span class="n">class_weight</span><span class="o">=</span><span class="n">class_weight</span><span class="p">,</span>
+            <span class="n">steps_per_epoch</span><span class="o">=</span><span class="n">steps_per_epoch</span><span class="p">,</span>
+            <span class="n">validation_steps</span><span class="o">=</span><span class="n">validation_steps</span><span class="p">,</span>
+            <span class="n">validation_freq</span><span class="o">=</span><span class="n">validation_freq</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">worker_stats</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">([</span><span class="n">w</span><span class="o">.</span><span class="n">step</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span><span class="p">])</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">worker_stats</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">stats</span></div>
+
+<div class="viewcode-block" id="Estimator.evaluate"><a class="viewcode-back" href="../../../../../zoo.orca.learn.tf2.html#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_creator</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluates the model on the validation data set.&quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Starting validation step.&quot;</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">data_creator</span><span class="o">=</span><span class="n">data_creator</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">,</span>
+            <span class="n">steps</span><span class="o">=</span><span class="n">steps</span><span class="p">,</span>
+            <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span>
+        <span class="p">)</span>
+        <span class="c1"># see ./tf_runner.py:setup_distributed</span>
+        <span class="c1"># for an explanation of only taking the first worker&#39;s data</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">([</span><span class="n">w</span><span class="o">.</span><span class="n">validate</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span><span class="p">])</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">stats</span></div>
+
+<div class="viewcode-block" id="Estimator.get_model"><a class="viewcode-back" href="../../../../../zoo.orca.learn.tf2.html#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.get_model">[docs]</a>    <span class="k">def</span> <span class="nf">get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the learned model.&quot;&quot;&quot;</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_state</span><span class="o">.</span><span class="n">remote</span><span class="p">())</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_model_from_state</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Estimator.save"><a class="viewcode-back" href="../../../../../zoo.orca.learn.tf2.html#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Saves the model at the provided checkpoint.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            checkpoint (str): Path to target checkpoint file.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">state</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_state</span><span class="o">.</span><span class="n">remote</span><span class="p">())</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">checkpoint</span></div>
+
+<div class="viewcode-block" id="Estimator.restore"><a class="viewcode-back" href="../../../../../zoo.orca.learn.tf2.html#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.restore">[docs]</a>    <span class="k">def</span> <span class="nf">restore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checkpoint</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Restores the model from the provided checkpoint.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            checkpoint (str): Path to target checkpoint file.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="n">state_id</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">([</span><span class="n">worker</span><span class="o">.</span><span class="n">set_state</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">state_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Estimator.shutdown"><a class="viewcode-back" href="../../../../../zoo.orca.learn.tf2.html#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.shutdown">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Shuts down workers and releases resources.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">remote_workers</span><span class="p">:</span>
+            <span class="n">worker</span><span class="o">.</span><span class="n">shutdown</span><span class="o">.</span><span class="n">remote</span><span class="p">()</span>
+            <span class="n">worker</span><span class="o">.</span><span class="n">__ray_terminate__</span><span class="o">.</span><span class="n">remote</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_model_from_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates model and load weights from state&quot;&quot;&quot;</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_creator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">set_weights</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;weights&quot;</span><span class="p">])</span>
+
+        <span class="c1"># This part is due to ray.get() changing scalar np.int64 object to int</span>
+        <span class="n">state</span><span class="p">[</span><span class="s2">&quot;optimizer_weights&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="n">state</span><span class="p">[</span><span class="s2">&quot;optimizer_weights&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">weights</span> <span class="o">==</span> <span class="p">[]:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">_make_train_function</span><span class="p">()</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">set_weights</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;optimizer_weights&quot;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">model</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>
