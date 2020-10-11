@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.common.html" title="zoo.common package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -45,9 +42,9 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.automl.search package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.search.RayTuneSearchEngine">zoo.automl.search.RayTuneSearchEngine module</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.search.abstract">zoo.automl.search.abstract module</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.search">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-automl-search-raytunesearchengine-module">zoo.automl.search.RayTuneSearchEngine module</a></li>
+<li><a class="reference internal" href="#zoo-automl-search-abstract-module">zoo.automl.search.abstract module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,111 +87,14 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.search.RayTuneSearchEngine">
-<span id="zoo-automl-search-raytunesearchengine-module"></span><h2>zoo.automl.search.RayTuneSearchEngine module<a class="headerlink" href="#module-zoo.automl.search.RayTuneSearchEngine" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine">
-<em class="property">class </em><code class="descclassname">zoo.automl.search.RayTuneSearchEngine.</code><code class="descname">RayTuneSearchEngine</code><span class="sig-paren">(</span><em>logs_dir=''</em>, <em>resources_per_trial=None</em>, <em>name=''</em>, <em>remote_dir=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/search/RayTuneSearchEngine.html#RayTuneSearchEngine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.automl.search.abstract.SearchEngine" title="zoo.automl.search.abstract.SearchEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.search.abstract.SearchEngine</span></code></a></p>
-<p>Tune driver</p>
-<dl class="method">
-<dt id="zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine.compile">
-<code class="descname">compile</code><span class="sig-paren">(</span><em>input_df</em>, <em>model_create_func</em>, <em>search_space</em>, <em>recipe</em>, <em>feature_transformers=None</em>, <em>future_seq_len=1</em>, <em>validation_df=None</em>, <em>mc=False</em>, <em>metric='mse'</em>, <em>metric_mode='min'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/search/RayTuneSearchEngine.html#RayTuneSearchEngine.compile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine.compile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Do necessary preparations for the engine
-:param input_df:
-:param search_space:
-:param num_samples:
-:param stop:
-:param search_algorithm:
-:param search_algorithm_params:
-:param fixed_params:
-:param feature_transformers:
-:param model:
-:param validation_df:
-:param metric:
-:return:</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine.get_best_trials">
-<code class="descname">get_best_trials</code><span class="sig-paren">(</span><em>k=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/search/RayTuneSearchEngine.html#RayTuneSearchEngine.get_best_trials"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine.get_best_trials" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the best trials from .
-:param k: trials to be selected
-:return: the config of best k trials</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine.run">
-<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/search/RayTuneSearchEngine.html#RayTuneSearchEngine.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run trials
-:return: trials result</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine.test_run">
-<code class="descname">test_run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/search/RayTuneSearchEngine.html#RayTuneSearchEngine.test_run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.search.RayTuneSearchEngine.RayTuneSearchEngine.test_run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="zoo-automl-search-raytunesearchengine-module">
+<h2>zoo.automl.search.RayTuneSearchEngine module<a class="headerlink" href="#zoo-automl-search-raytunesearchengine-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.search.abstract">
-<span id="zoo-automl-search-abstract-module"></span><h2>zoo.automl.search.abstract module<a class="headerlink" href="#module-zoo.automl.search.abstract" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.automl.search.abstract.BayersianOpt">
-<em class="property">class </em><code class="descclassname">zoo.automl.search.abstract.</code><code class="descname">BayersianOpt</code><a class="reference internal" href="_modules/zoo/automl/search/abstract.html#BayersianOpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.search.abstract.BayersianOpt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="zoo.automl.search.abstract.GoodError">
-<em class="property">exception </em><code class="descclassname">zoo.automl.search.abstract.</code><code class="descname">GoodError</code><a class="reference internal" href="_modules/zoo/automl/search/abstract.html#GoodError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.search.abstract.GoodError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.search.abstract.GridSearch">
-<em class="property">class </em><code class="descclassname">zoo.automl.search.abstract.</code><code class="descname">GridSearch</code><span class="sig-paren">(</span><em>values</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/search/abstract.html#GridSearch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.search.abstract.GridSearch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.search.abstract.RandomSample">
-<em class="property">class </em><code class="descclassname">zoo.automl.search.abstract.</code><code class="descname">RandomSample</code><span class="sig-paren">(</span><em>func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/search/abstract.html#RandomSample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.search.abstract.RandomSample" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.search.abstract.SearchEngine">
-<em class="property">class </em><code class="descclassname">zoo.automl.search.abstract.</code><code class="descname">SearchEngine</code><a class="reference internal" href="_modules/zoo/automl/search/abstract.html#SearchEngine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.search.abstract.SearchEngine" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
-<p>Abstract Base Search Engine class. For hyper paramter tuning.</p>
-<dl class="method">
-<dt id="zoo.automl.search.abstract.SearchEngine.get_best_trials">
-<code class="descname">get_best_trials</code><span class="sig-paren">(</span><em>k</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/search/abstract.html#SearchEngine.get_best_trials"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.search.abstract.SearchEngine.get_best_trials" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the best trials from .
-:param k: trials to be selected
-:return: the config of best k trials</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.search.abstract.SearchEngine.run">
-<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/search/abstract.html#SearchEngine.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.search.abstract.SearchEngine.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run the trials with searched parameters
-:return:</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.search.abstract.TrialOutput">
-<em class="property">class </em><code class="descclassname">zoo.automl.search.abstract.</code><code class="descname">TrialOutput</code><span class="sig-paren">(</span><em>config</em>, <em>model_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/search/abstract.html#TrialOutput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.search.abstract.TrialOutput" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-</dd></dl>
-
+<div class="section" id="zoo-automl-search-abstract-module">
+<h2>zoo.automl.search.abstract module<a class="headerlink" href="#zoo-automl-search-abstract-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.search">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.automl.search" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -210,9 +110,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.common.html" title="zoo.common package"
              >next</a> |</li>

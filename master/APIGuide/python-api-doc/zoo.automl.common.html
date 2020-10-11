@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.automl.config.html" title="zoo.automl.config package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -45,10 +42,10 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.automl.common package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.common.metrics">zoo.automl.common.metrics module</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.common.parameters">zoo.automl.common.parameters module</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.common.util">zoo.automl.common.util module</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.common">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-automl-common-metrics-module">zoo.automl.common.metrics module</a></li>
+<li><a class="reference internal" href="#zoo-automl-common-parameters-module">zoo.automl.common.parameters module</a></li>
+<li><a class="reference internal" href="#zoo-automl-common-util-module">zoo.automl.common.util module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -91,286 +88,17 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.common.metrics">
-<span id="zoo-automl-common-metrics-module"></span><h2>zoo.automl.common.metrics module<a class="headerlink" href="#module-zoo.automl.common.metrics" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="zoo.automl.common.metrics.Accuracy">
-<code class="descclassname">zoo.automl.common.metrics.</code><code class="descname">Accuracy</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>multioutput=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/metrics.html#Accuracy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.metrics.Accuracy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.common.metrics.Evaluator">
-<em class="property">class </em><code class="descclassname">zoo.automl.common.metrics.</code><code class="descname">Evaluator</code><a class="reference internal" href="_modules/zoo/automl/common/metrics.html#Evaluator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.metrics.Evaluator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Evaluate metrics for y_true and y_pred</p>
-<dl class="staticmethod">
-<dt id="zoo.automl.common.metrics.Evaluator.check_metric">
-<em class="property">static </em><code class="descname">check_metric</code><span class="sig-paren">(</span><em>metric</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/metrics.html#Evaluator.check_metric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.metrics.Evaluator.check_metric" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="zoo.automl.common.metrics.Evaluator.evaluate">
-<em class="property">static </em><code class="descname">evaluate</code><span class="sig-paren">(</span><em>metric</em>, <em>y_true</em>, <em>y_pred</em>, <em>multioutput='raw_values'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/metrics.html#Evaluator.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.metrics.Evaluator.evaluate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="zoo.automl.common.metrics.Evaluator.metrics_func">
-<code class="descname">metrics_func</code><em class="property"> = {'accuracy': &lt;function Accuracy&gt;, 'mae': &lt;function mean_absolute_error&gt;, 'mape': &lt;function MAPE&gt;, 'mdape': &lt;function MDAPE&gt;, 'me': &lt;function ME&gt;, 'mpe': &lt;function MPE&gt;, 'mse': &lt;function mean_squared_error&gt;, 'msle': &lt;function mean_squared_log_error&gt;, 'mspe': &lt;function MSPE&gt;, 'r2': &lt;function r2_score&gt;, 'rmse': &lt;function RMSE&gt;, 'smape': &lt;function sMAPE&gt;, 'smdape': &lt;function sMDAPE&gt;}</em><a class="headerlink" href="#zoo.automl.common.metrics.Evaluator.metrics_func" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.metrics.MAPE">
-<code class="descclassname">zoo.automl.common.metrics.</code><code class="descname">MAPE</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>multioutput='raw_values'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/metrics.html#MAPE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.metrics.MAPE" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate mean absolute percentage error (MAPE).
-&lt;math&gt;mbox{M} = 
-rac{100%}{n}sum_{t=1}^n  left|
-rac{A_t-F_t}{A_t}
-ight|, &lt;/math&gt;
-:param y_true: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Ground truth (correct) target values.
-:param y_pred: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Estimated target values.
-:param multioutput: string in [‘raw_values’, ‘uniform_average’]
-:return:float or ndarray of floats
-A non-negative floating point value (the best value is 0.0), or an
-array of floating point values, one for each individual target.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.metrics.MDAPE">
-<code class="descclassname">zoo.automl.common.metrics.</code><code class="descname">MDAPE</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>multioutput='raw_values'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/metrics.html#MDAPE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.metrics.MDAPE" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate Median Absolute Percentage Error (MDAPE).
-:param y_true: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Ground truth (correct) target values.
-:param y_pred: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Estimated target values.
-:param multioutput: string in [‘raw_values’, ‘uniform_average’]
-:return:float or ndarray of floats
-A non-negative floating point value (the best value is 0.0), or an
-array of floating point values, one for each individual target.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.metrics.ME">
-<code class="descclassname">zoo.automl.common.metrics.</code><code class="descname">ME</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>multioutput='raw_values'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/metrics.html#ME"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.metrics.ME" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate Mean Error (ME).
-:param y_true: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Ground truth (correct) target values.
-:param y_pred: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Estimated target values.
-:param multioutput: string in [‘raw_values’, ‘uniform_average’]
-:return:float or ndarray of floats
-A non-negative floating point value (the best value is 0.0), or an
-array of floating point values, one for each individual target.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.metrics.MPE">
-<code class="descclassname">zoo.automl.common.metrics.</code><code class="descname">MPE</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>multioutput='raw_values'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/metrics.html#MPE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.metrics.MPE" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate mean percentage error (MPE).
-&lt;math&gt;      ext{MPE} = 
-rac{100%}{n}sum_{t=1}^n 
-rac{a_t-f_t}{a_t} &lt;/math&gt;
-:param y_true: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Ground truth (correct) target values.
-:param y_pred: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Estimated target values.
-:param multioutput: string in [‘raw_values’, ‘uniform_average’]
-:return:float or ndarray of floats
-A non-negative floating point value (the best value is 0.0), or an
-array of floating point values, one for each individual target.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.metrics.MSPE">
-<code class="descclassname">zoo.automl.common.metrics.</code><code class="descname">MSPE</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>multioutput='raw_values'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/metrics.html#MSPE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.metrics.MSPE" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate mean squared percentage error (MSPE).
-&lt;math&gt;operatorname{MSPE}(L)=operatorname{E}
-left[left( g(x_i)-widehat{g}(x_i)
-ight)^2
-ight].&lt;/math&gt;
-:param y_true: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Ground truth (correct) target values.
-:param y_pred: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Estimated target values.
-:param multioutput: string in [‘raw_values’, ‘uniform_average’]
-:return:float or ndarray of floats
-A non-negative floating point value (the best value is 0.0), or an
-array of floating point values, one for each individual target.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.metrics.RMSE">
-<code class="descclassname">zoo.automl.common.metrics.</code><code class="descname">RMSE</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>multioutput='raw_values'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/metrics.html#RMSE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.metrics.RMSE" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate square root of the mean squared error (RMSE).
-:param y_true: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Ground truth (correct) target values.
-:param y_pred: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Estimated target values.
-:param multioutput: string in [‘raw_values’, ‘uniform_average’]
-:return:float or ndarray of floats
-A non-negative floating point value (the best value is 0.0), or an
-array of floating point values, one for each individual target.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.metrics.check_input">
-<code class="descclassname">zoo.automl.common.metrics.</code><code class="descname">check_input</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>multioutput</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/metrics.html#check_input"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.metrics.check_input" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.metrics.sMAPE">
-<code class="descclassname">zoo.automl.common.metrics.</code><code class="descname">sMAPE</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>multioutput='raw_values'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/metrics.html#sMAPE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.metrics.sMAPE" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate Symmetric mean absolute percentage error (sMAPE).
-&lt;math&gt;      ext{SMAPE} = 
-rac{100%}{n} sum_{t=1}^n 
-rac{<a href="#id1"><span class="problematic" id="id2">|F_t-A_t|</span></a>}{<a href="#id3"><span class="problematic" id="id4">|A_t|+|F_t|</span></a>}&lt;/math&gt;
-:param y_true: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Ground truth (correct) target values.
-:param y_pred: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Estimated target values.
-:param multioutput: string in [‘raw_values’, ‘uniform_average’]
-:return:float or ndarray of floats
-A non-negative floating point value (the best value is 0.0), or an
-array of floating point values, one for each individual target.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.metrics.sMDAPE">
-<code class="descclassname">zoo.automl.common.metrics.</code><code class="descname">sMDAPE</code><span class="sig-paren">(</span><em>y_true</em>, <em>y_pred</em>, <em>multioutput='raw_values'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/metrics.html#sMDAPE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.metrics.sMDAPE" title="Permalink to this definition">¶</a></dt>
-<dd><p>calculate Symmetric Median Absolute Percentage Error (sMDAPE).
-:param y_true: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Ground truth (correct) target values.
-:param y_pred: array-like of shape = (n_samples) or (n_samples, n_outputs)
-Estimated target values.
-:param multioutput: string in [‘raw_values’, ‘uniform_average’]
-:return:float or ndarray of floats
-A non-negative floating point value (the best value is 0.0), or an
-array of floating point values, one for each individual target.</p>
-</dd></dl>
-
+<div class="section" id="zoo-automl-common-metrics-module">
+<h2>zoo.automl.common.metrics module<a class="headerlink" href="#zoo-automl-common-metrics-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.common.parameters">
-<span id="zoo-automl-common-parameters-module"></span><h2>zoo.automl.common.parameters module<a class="headerlink" href="#module-zoo.automl.common.parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="zoo-automl-common-parameters-module">
+<h2>zoo.automl.common.parameters module<a class="headerlink" href="#zoo-automl-common-parameters-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.common.util">
-<span id="zoo-automl-common-util-module"></span><h2>zoo.automl.common.util module<a class="headerlink" href="#module-zoo.automl.common.util" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.automl.common.util.NumpyEncoder">
-<em class="property">class </em><code class="descclassname">zoo.automl.common.util.</code><code class="descname">NumpyEncoder</code><span class="sig-paren">(</span><em>*</em>, <em>skipkeys=False</em>, <em>ensure_ascii=True</em>, <em>check_circular=True</em>, <em>allow_nan=True</em>, <em>sort_keys=False</em>, <em>indent=None</em>, <em>separators=None</em>, <em>default=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#NumpyEncoder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.NumpyEncoder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">json.encoder.JSONEncoder</span></code></p>
-<p>convert numpy array to list for JSON serialize</p>
-<dl class="method">
-<dt id="zoo.automl.common.util.NumpyEncoder.default">
-<code class="descname">default</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#NumpyEncoder.default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.NumpyEncoder.default" title="Permalink to this definition">¶</a></dt>
-<dd><p>Implement this method in a subclass such that it returns
-a serializable object for <code class="docutils literal notranslate"><span class="pre">o</span></code>, or calls the base implementation
-(to raise a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>).</p>
-<p>For example, to support arbitrary iterators, you could
-implement default like this:</p>
-<p>def default(self, o):
-try:
-iterable = iter(o)
-except TypeError:
-pass
-else:
-return list(iterable)
-# Let the base class default method raise the TypeError
-return JSONEncoder.default(self, o)</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.util.convert_bayes_configs">
-<code class="descclassname">zoo.automl.common.util.</code><code class="descname">convert_bayes_configs</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#convert_bayes_configs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.convert_bayes_configs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.util.get_remote_list">
-<code class="descclassname">zoo.automl.common.util.</code><code class="descname">get_remote_list</code><span class="sig-paren">(</span><em>dir_in</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#get_remote_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.get_remote_list" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.util.load_config">
-<code class="descclassname">zoo.automl.common.util.</code><code class="descname">load_config</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#load_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.load_config" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.util.process">
-<code class="descclassname">zoo.automl.common.util.</code><code class="descname">process</code><span class="sig-paren">(</span><em>cmd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.process" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.util.restore">
-<code class="descclassname">zoo.automl.common.util.</code><code class="descname">restore</code><span class="sig-paren">(</span><em>file</em>, <em>feature_transformers=None</em>, <em>model=None</em>, <em>config=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.restore" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.util.restore_hdfs">
-<code class="descclassname">zoo.automl.common.util.</code><code class="descname">restore_hdfs</code><span class="sig-paren">(</span><em>model_path</em>, <em>remote_dir</em>, <em>feature_transformers=None</em>, <em>model=None</em>, <em>config=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#restore_hdfs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.restore_hdfs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.util.restore_zip">
-<code class="descclassname">zoo.automl.common.util.</code><code class="descname">restore_zip</code><span class="sig-paren">(</span><em>file</em>, <em>feature_transformers=None</em>, <em>model=None</em>, <em>config=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#restore_zip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.restore_zip" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.util.save">
-<code class="descclassname">zoo.automl.common.util.</code><code class="descname">save</code><span class="sig-paren">(</span><em>file_path</em>, <em>feature_transformers=None</em>, <em>model=None</em>, <em>config=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.save" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.util.save_config">
-<code class="descclassname">zoo.automl.common.util.</code><code class="descname">save_config</code><span class="sig-paren">(</span><em>file_path</em>, <em>config</em>, <em>replace=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#save_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.save_config" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>file_path</strong> – the file path of config to be saved.</li>
-<li><strong>config</strong> – dict. The config to be saved</li>
-<li><strong>replace</strong> – whether to replace if the config file already existed.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.util.save_zip">
-<code class="descclassname">zoo.automl.common.util.</code><code class="descname">save_zip</code><span class="sig-paren">(</span><em>file</em>, <em>feature_transformers=None</em>, <em>model=None</em>, <em>config=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#save_zip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.save_zip" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.util.train_val_test_split">
-<code class="descclassname">zoo.automl.common.util.</code><code class="descname">train_val_test_split</code><span class="sig-paren">(</span><em>df</em>, <em>val_ratio=0</em>, <em>test_ratio=0.1</em>, <em>look_back=0</em>, <em>horizon=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#train_val_test_split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.train_val_test_split" title="Permalink to this definition">¶</a></dt>
-<dd><p>split input dataframe into train_df, val_df and test_df according to split ratio.
-The dataframe is splitted in its originally order in timeline.
-e.g. <a href="#id5"><span class="problematic" id="id6">|......... train_df(80%) ........ | ... val_df(10%) ...|</span></a> …test_df(10%)…|
-:param df: dataframe to be splitted
-:param val_ratio: validation ratio
-:param test_ratio: test ratio
-:param look_back: the length to look back
-:param horizon: num of steps to look forward
-:return:</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.automl.common.util.upload_ppl_hdfs">
-<code class="descclassname">zoo.automl.common.util.</code><code class="descname">upload_ppl_hdfs</code><span class="sig-paren">(</span><em>upload_dir</em>, <em>ckpt_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/common/util.html#upload_ppl_hdfs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.common.util.upload_ppl_hdfs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="zoo-automl-common-util-module">
+<h2>zoo.automl.common.util module<a class="headerlink" href="#zoo-automl-common-util-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.common">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.automl.common" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -386,9 +114,6 @@ e.g. <a href="#id5"><span class="problematic" id="id6">|......... train_df(80%) 
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.automl.config.html" title="zoo.automl.config package"
              >next</a> |</li>
