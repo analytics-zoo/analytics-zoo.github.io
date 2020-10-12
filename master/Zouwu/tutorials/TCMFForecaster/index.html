@@ -39,11 +39,11 @@
           ]},
           {title: "Step 2: Create a TCMFForecaster", url: "#step-2-create-a-tcmfforecaster", children: [
           ]},
-          {title: "Step 3: Fit with TCMFForecaster", url: "#step-3-fit-with-tcmfforecaster", children: [
-          ]},
-          {title: "Step 4: Evaluate with TCMFForecaster", url: "#step-4-evaluate-with-tcmfforecaster", children: [
-          ]},
-          {title: "Step 5: Save and Load", url: "#step-5-save-and-load", children: [
+          {title: "Step 3: Use TCMFForecaster", url: "#step-3-use-tcmfforecaster", children: [
+              {title: "Fit with TCMFForecaster", url: "#fit-with-tcmfforecaster" },
+              {title: "Evaluate with TCMFForecaster", url: "#evaluate-with-tcmfforecaster" },
+              {title: "Incremental fit TCMFForecaster", url: "#incremental-fit-tcmfforecaster" },
+              {title: "Save and Load", url: "#save-and-load" },
           ]},
         ];
 
@@ -153,25 +153,30 @@ model = TCMFForecaster(
          alt_iters=10)
 </code></pre>
 
-<h3 id="step-3-fit-with-tcmfforecaster"><strong>Step 3: Fit with TCMFForecaster</strong></h3>
-<pre><code>model.fit(x, incremental=False)
+<h3 id="step-3-use-tcmfforecaster"><strong>Step 3: Use TCMFForecaster</strong></h3>
+<h4 id="fit-with-tcmfforecaster"><strong>Fit with TCMFForecaster</strong></h4>
+<pre><code>model.fit(x, num_workers=num_workers_for_fit)
 </code></pre>
 
-<h3 id="step-4-evaluate-with-tcmfforecaster"><strong>Step 4: Evaluate with TCMFForecaster</strong></h3>
+<h4 id="evaluate-with-tcmfforecaster"><strong>Evaluate with TCMFForecaster</strong></h4>
 <p>You can either directly call <code>model.evaluate</code> as</p>
-<pre><code>model.evaluate(target_value,metric=['mae'])
+<pre><code>model.evaluate(target_value,metric=['mae'], num_workers=num_workers_for_predict)
 </code></pre>
 
 <p>Or you could predict first and then evaluate with metric name.</p>
-<pre><code>yhat = model.predict(x=None, horizon=24, num_workers=2)
+<pre><code>yhat = model.predict(horizon, num_workers=num_workers_for_predict)
 
 from zoo.automl.common.metrics import Evaluator
 evaluate_mse = Evaluator.evaluate(&quot;mse&quot;, target_data, yhat)
 </code></pre>
 
-<h3 id="step-5-save-and-load"><strong>Step 5: Save and Load</strong></h3>
+<h4 id="incremental-fit-tcmfforecaster"><strong>Incremental fit TCMFForecaster</strong></h4>
+<pre><code class="python">model.fit_incremental(x_incr)
+</code></pre>
+
+<h4 id="save-and-load"><strong>Save and Load</strong></h4>
 <pre><code class="python">model.save(dirname)
-loaded_model = TCMFForecaster.load(dirname, distributed=False)
+loaded_model = TCMFForecaster.load(dirname)
 </code></pre>
 
   <br>

@@ -159,7 +159,6 @@ model = TCMFForecaster(
 <h4 id="train-model"><strong>Train model</strong></h4>
 <p>After an TCMFForecaster is created, you can call forecaster API to train a tcmf model:</p>
 <pre><code>model.fit(x, 
-          incremental=False, 
           num_workers=None)
 </code></pre>
 
@@ -169,10 +168,9 @@ model = TCMFForecaster(
        are supported. Example: {'id': id_arr, 'y': data_ndarray}. If input is SparkXShards, each partition will use one model to fit.</p>
 </li>
 <li>
-<p><code>incremental</code>: if the fit is incremental. Incremental fitting hasn't been enabled yet.</p>
+<p><code>num_workers</code>: the number of workers you want to use for fit. It is only effective while input x is dict of ndarray. If None, it defaults to
+        num_ray_nodes in the created RayContext or 1 if there is no active RayContext.</p>
 </li>
-<li><code>num_workers</code>: the number of workers you want to use for fit. It is only effective while input x is dict of ndarray. If None, it defaults to
-        num_ray_nodes in the created RayContext or 1 if there is no active RayContext.</li>
 </ul>
 <h4 id="get-prediction-results-of-model"><strong>Get prediction results of model</strong></h4>
 <p>After Training, you can call forecaster API to get the prediction result of tcmf model. <code>model.predict</code> will output the prediction results of future <code>horizon</code> steps after <code>x</code> in <code>fit</code>.</p>
@@ -206,6 +204,18 @@ model = TCMFForecaster(
 <li><code>num_workers</code>: the number of workers to use in evaluate. It is only effective while input target value is dict of ndarray. If None, it defaults to
         num_ray_nodes in the created RayContext or 1 if there is no active RayContext.</li>
 </ul>
+<h4 id="incrementally-fit-the-model-with-additional-data"><strong>Incrementally fit the model with additional data</strong></h4>
+<p>Incrementally fit the model. Note that we only incrementally fit X_seq (TCN in global model). We haven't enable fit_incremental for input SparkXshards yet.</p>
+<pre><code class="python">model.fit_incremental(x_incr)
+</code></pre>
+
+<ul>
+<li><code>x_incr</code>: incremental data to be fitted. It should be of the same format as input x in fit, which is a dict of ndarray or SparkXShards of dict of ndarray.
+Example: {'id': id_arr, 'y': incr_ndarray}, and incr_ndarray is of shape (n, T_incr), where
+n is the number of target time series, T_incr is the number of time steps incremented. You
+can choose not to input 'id' in x_incr, but if you do, the elements of id in x_incr should
+be the same as id in x of fit.</li>
+</ul>
 <h4 id="save-model"><strong>Save model</strong></h4>
 <p>You can save model after fit for future deployment.</p>
 <pre><code>model.save(path)
@@ -226,8 +236,8 @@ model = TCMFForecaster(
 <li><code>distributed</code>: Whether the model is distributed trained with input of dict of SparkXshards.</li>
 <li><code>minPartitions</code>: The minimum partitions for the XShards.</li>
 </ul>
-<h4 id="check-whether-model-is-distributed"><strong>Check whether model is distributed</strong></h4>
-<p>You can check whether model is distributed with <code>model.is_distributed()</code>.</p>
+<h4 id="check-whether-model-is-distributed-with-input-xshards"><strong>Check whether model is distributed with input xshards</strong></h4>
+<p>You can check whether model is distributed by input xshards with <code>model.is_xshards_distributed()</code>.</p>
 
   <br>
 </div>
