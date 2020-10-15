@@ -133,45 +133,55 @@ model = TCMFForecaster(
         num_channels_X=[32, 32, 32, 32, 32, 1],
         num_channels_Y=[16, 16, 16, 16, 16, 1],
         kernel_size=7,
-         dropout=0.1,
-         rank=64,
-         kernel_size_Y=7,
-         learning_rate=0.0005,
-         val_len=24,
-         normalize=False,
-         start_date=&quot;2020-4-1&quot;,
-         freq=&quot;1H&quot;,
-         covariates=None,
-         use_time=True,
-         dti=None,
-         svd=True,
-         period=24,
-         y_iters=10,
-         init_FX_epoch=100,
-         max_FX_epoch=300,
-         max_TCN_epoch=300,
-         alt_iters=10)
+        dropout=0.1,
+        rank=64,
+        kernel_size_Y=7,
+        learning_rate=0.0005,
+        normalize=False,
+        use_time=True,
+        svd=True,)
 </code></pre>
 
 <h3 id="step-3-use-tcmfforecaster"><strong>Step 3: Use TCMFForecaster</strong></h3>
 <h4 id="fit-with-tcmfforecaster"><strong>Fit with TCMFForecaster</strong></h4>
-<pre><code>model.fit(x, num_workers=num_workers_for_fit)
+<pre><code>model.fit(
+        x,
+        val_len=24,
+        start_date=&quot;2020-4-1&quot;,
+        freq=&quot;1H&quot;,
+        covariates=None,
+        dti=None,
+        period=24,
+        y_iters=10,
+        init_FX_epoch=100,
+        max_FX_epoch=300,
+        max_TCN_epoch=300,
+        alt_iters=10,
+        num_workers=num_workers_for_fit)
 </code></pre>
 
 <h4 id="evaluate-with-tcmfforecaster"><strong>Evaluate with TCMFForecaster</strong></h4>
 <p>You can either directly call <code>model.evaluate</code> as</p>
-<pre><code>model.evaluate(target_value,metric=['mae'], num_workers=num_workers_for_predict)
+<pre><code>model.evaluate(target_value,
+               metric=['mae'],
+               target_covariates=None,
+               target_dti=None,
+               num_workers=num_workers_for_predict,
+               )
 </code></pre>
 
 <p>Or you could predict first and then evaluate with metric name.</p>
-<pre><code>yhat = model.predict(horizon, num_workers=num_workers_for_predict)
+<pre><code>yhat = model.predict(horizon,
+                     future_covariates=None,
+                     future_dti=None,
+                     num_workers=num_workers_for_predict)
 
 from zoo.automl.common.metrics import Evaluator
 evaluate_mse = Evaluator.evaluate(&quot;mse&quot;, target_data, yhat)
 </code></pre>
 
 <h4 id="incremental-fit-tcmfforecaster"><strong>Incremental fit TCMFForecaster</strong></h4>
-<pre><code class="python">model.fit_incremental(x_incr)
+<pre><code class="python">model.fit_incremental(x_incr, covariates_incr=None, dti_incr=None)
 </code></pre>
 
 <h4 id="save-and-load"><strong>Save and Load</strong></h4>
