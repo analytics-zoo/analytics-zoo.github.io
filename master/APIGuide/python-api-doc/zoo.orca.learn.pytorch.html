@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.orca.learn.tf.html" title="zoo.orca.learn.tf package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -43,14 +46,14 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.orca.learn.pytorch package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-orca-learn-pytorch-constants-module">zoo.orca.learn.pytorch.constants module</a></li>
-<li><a class="reference internal" href="#zoo-orca-learn-pytorch-estimator-module">zoo.orca.learn.pytorch.estimator module</a></li>
-<li><a class="reference internal" href="#zoo-orca-learn-pytorch-pytorch-horovod-estimator-module">zoo.orca.learn.pytorch.pytorch_horovod_estimator module</a></li>
-<li><a class="reference internal" href="#zoo-orca-learn-pytorch-pytorch-trainer-module">zoo.orca.learn.pytorch.pytorch_trainer module</a></li>
-<li><a class="reference internal" href="#zoo-orca-learn-pytorch-torch-runner-module">zoo.orca.learn.pytorch.torch_runner module</a></li>
-<li><a class="reference internal" href="#zoo-orca-learn-pytorch-training-operator-module">zoo.orca.learn.pytorch.training_operator module</a></li>
-<li><a class="reference internal" href="#zoo-orca-learn-pytorch-utils-module">zoo.orca.learn.pytorch.utils module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.pytorch.constants">zoo.orca.learn.pytorch.constants module</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.pytorch.estimator">zoo.orca.learn.pytorch.estimator module</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.pytorch.pytorch_horovod_estimator">zoo.orca.learn.pytorch.pytorch_horovod_estimator module</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.pytorch.pytorch_trainer">zoo.orca.learn.pytorch.pytorch_trainer module</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.pytorch.torch_runner">zoo.orca.learn.pytorch.torch_runner module</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.pytorch.training_operator">zoo.orca.learn.pytorch.training_operator module</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.pytorch.utils">zoo.orca.learn.pytorch.utils module</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.pytorch">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -93,29 +96,946 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-orca-learn-pytorch-constants-module">
-<h2>zoo.orca.learn.pytorch.constants module<a class="headerlink" href="#zoo-orca-learn-pytorch-constants-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.orca.learn.pytorch.constants">
+<span id="zoo-orca-learn-pytorch-constants-module"></span><h2>zoo.orca.learn.pytorch.constants module<a class="headerlink" href="#module-zoo.orca.learn.pytorch.constants" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-orca-learn-pytorch-estimator-module">
-<h2>zoo.orca.learn.pytorch.estimator module<a class="headerlink" href="#zoo-orca-learn-pytorch-estimator-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.orca.learn.pytorch.estimator">
+<span id="zoo-orca-learn-pytorch-estimator-module"></span><h2>zoo.orca.learn.pytorch.estimator module<a class="headerlink" href="#module-zoo.orca.learn.pytorch.estimator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.orca.learn.pytorch.estimator.Estimator">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.pytorch.estimator.</code><code class="descname">Estimator</code><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#Estimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.Estimator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.Estimator.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#Estimator.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.Estimator.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.Estimator.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>data</em>, <em>epochs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#Estimator.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.Estimator.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.orca.learn.pytorch.estimator.Estimator.from_torch">
+<em class="property">static </em><code class="descname">from_torch</code><span class="sig-paren">(</span><em>*</em>, <em>model</em>, <em>optimizer</em>, <em>loss=None</em>, <em>scheduler_creator=None</em>, <em>training_operator_cls=&lt;class 'zoo.orca.learn.pytorch.training_operator.TrainingOperator'&gt;</em>, <em>initialization_hook=None</em>, <em>config=None</em>, <em>scheduler_step_freq='batch'</em>, <em>use_tqdm=False</em>, <em>workers_per_node=1</em>, <em>model_dir=None</em>, <em>backend='bigdl'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#Estimator.from_torch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.Estimator.from_torch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.Estimator.get_model">
+<code class="descname">get_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#Estimator.get_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.Estimator.get_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.Estimator.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>checkpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#Estimator.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.Estimator.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.Estimator.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#Estimator.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.Estimator.predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.Estimator.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>checkpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#Estimator.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.Estimator.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.Estimator.shutdown">
+<code class="descname">shutdown</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#Estimator.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.Estimator.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.pytorch.estimator.</code><code class="descname">PyTorchHorovodEstimatorWrapper</code><span class="sig-paren">(</span><em>*</em>, <em>model_creator</em>, <em>optimizer_creator</em>, <em>loss_creator=None</em>, <em>scheduler_creator=None</em>, <em>training_operator_cls=&lt;class 'zoo.orca.learn.pytorch.training_operator.TrainingOperator'&gt;</em>, <em>initialization_hook=None</em>, <em>config=None</em>, <em>scheduler_step_freq='batch'</em>, <em>use_tqdm=False</em>, <em>workers_per_node=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PyTorchHorovodEstimatorWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.orca.learn.pytorch.estimator.Estimator" title="zoo.orca.learn.pytorch.estimator.Estimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.orca.learn.pytorch.estimator.Estimator</span></code></a></p>
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>data</em>, <em>num_steps=None</em>, <em>profile=False</em>, <em>info=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PyTorchHorovodEstimatorWrapper.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> – (callable) a funtion that takes a config dict as input and return</td>
+</tr>
+</tbody>
+</table>
+<p>a data loader containing the validation data.
+:param num_steps: (int) Number of batches to compute update steps on.
+This corresponds also to the number of times <code class="docutils literal notranslate"><span class="pre">TrainingOperator.validate_batch</span></code>
+is called.
+:param profile: (bool) Returns time stats for the evaluation procedure.
+:param info: (dict) Optional dictionary passed to the training operator for <cite>validate</cite>
+and <cite>validate_batch</cite>.
+:return: A dictionary of metrics for validation.
+You can provide custom metrics by passing in a custom <code class="docutils literal notranslate"><span class="pre">training_operator_cls</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>data</em>, <em>epochs=1</em>, <em>profile=False</em>, <em>reduce_results=True</em>, <em>info=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PyTorchHorovodEstimatorWrapper.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.fit" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> – (callable) a funtion that takes a config dict as input and return a data</td>
+</tr>
+</tbody>
+</table>
+<p>loader containing the training data.
+:param epochs: (int) Number of epochs to train the model
+:param profile: (bool) Returns time stats for the training procedure.
+:param reduce_results: (bool) Whether to average all metrics across all workers into one
+dict. If a metric is a non-numerical value (or nested dictionaries), one value will be
+randomly selected among the workers. If False, returns a list of dicts.
+:param info: (dict) Optional dictionary passed to the training operator for <code class="docutils literal notranslate"><span class="pre">train_epoch</span></code>
+and <code class="docutils literal notranslate"><span class="pre">train_batch</span></code>.
+:return: (list) A list of stats whose length will be equal to <code class="docutils literal notranslate"><span class="pre">epochs</span></code>.
+stats is a dictionary of metrics for training.
+You can provide custom metrics by passing in a custom
+<code class="docutils literal notranslate"><span class="pre">training_operator_cls</span></code>. If <code class="docutils literal notranslate"><span class="pre">reduce_results=False</span></code>,
+this will return a list of metric dictionaries whose
+length will be equal to <code class="docutils literal notranslate"><span class="pre">num_workers</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.get_model">
+<code class="descname">get_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PyTorchHorovodEstimatorWrapper.get_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.get_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the learned model(s).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>checkpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PyTorchHorovodEstimatorWrapper.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the Estimator and all workers from the provided checkpoint.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>checkpoint</strong> – (str) Path to target checkpoint file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PyTorchHorovodEstimatorWrapper.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>checkpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PyTorchHorovodEstimatorWrapper.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the Estimator state to the provided checkpoint path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>checkpoint</strong> – (str) Path to target checkpoint file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.shutdown">
+<code class="descname">shutdown</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PyTorchHorovodEstimatorWrapper.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PyTorchHorovodEstimatorWrapper.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuts down workers and releases resources.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.pytorch.estimator.</code><code class="descname">PytorchSparkEstimatorWrapper</code><span class="sig-paren">(</span><em>model</em>, <em>loss</em>, <em>optimizer</em>, <em>model_dir=None</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PytorchSparkEstimatorWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.orca.learn.pytorch.estimator.Estimator" title="zoo.orca.learn.pytorch.estimator.Estimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.orca.learn.pytorch.estimator.Estimator</span></code></a></p>
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.clear_gradient_clipping">
+<code class="descname">clear_gradient_clipping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PytorchSparkEstimatorWrapper.clear_gradient_clipping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.clear_gradient_clipping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear gradient clipping parameters. In this case, gradient clipping will not be applied.
+In order to take effect, it needs to be called before fit.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>data</em>, <em>validation_methods=None</em>, <em>batch_size=32</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PytorchSparkEstimatorWrapper.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>data</em>, <em>epochs=1</em>, <em>batch_size=32</em>, <em>validation_data=None</em>, <em>validation_methods=None</em>, <em>checkpoint_trigger=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PytorchSparkEstimatorWrapper.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.get_model">
+<code class="descname">get_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PytorchSparkEstimatorWrapper.get_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.get_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>checkpoint</em>, <em>loss=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PytorchSparkEstimatorWrapper.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PytorchSparkEstimatorWrapper.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>checkpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PytorchSparkEstimatorWrapper.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.set_constant_gradient_clipping">
+<code class="descname">set_constant_gradient_clipping</code><span class="sig-paren">(</span><em>min</em>, <em>max</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PytorchSparkEstimatorWrapper.set_constant_gradient_clipping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.set_constant_gradient_clipping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set constant gradient clipping during the training process.
+In order to take effect, it needs to be called before fit.
+:param min: The minimum value to clip by.
+:param max: The maximum value to clip by.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.set_l2_norm_gradient_clipping">
+<code class="descname">set_l2_norm_gradient_clipping</code><span class="sig-paren">(</span><em>clip_norm</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PytorchSparkEstimatorWrapper.set_l2_norm_gradient_clipping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.set_l2_norm_gradient_clipping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clip gradient to a maximum L2-Norm during the training process.
+In order to take effect, it needs to be called before fit.
+:param clip_norm: Gradient L2-Norm threshold.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.shutdown">
+<code class="descname">shutdown</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/estimator.html#PytorchSparkEstimatorWrapper.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.estimator.PytorchSparkEstimatorWrapper.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-orca-learn-pytorch-pytorch-horovod-estimator-module">
-<h2>zoo.orca.learn.pytorch.pytorch_horovod_estimator module<a class="headerlink" href="#zoo-orca-learn-pytorch-pytorch-horovod-estimator-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.orca.learn.pytorch.pytorch_horovod_estimator">
+<span id="zoo-orca-learn-pytorch-pytorch-horovod-estimator-module"></span><h2>zoo.orca.learn.pytorch.pytorch_horovod_estimator module<a class="headerlink" href="#module-zoo.orca.learn.pytorch.pytorch_horovod_estimator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.pytorch.pytorch_horovod_estimator.</code><code class="descname">PyTorchHorovodEstimator</code><span class="sig-paren">(</span><em>*</em>, <em>model_creator</em>, <em>optimizer_creator</em>, <em>loss_creator=None</em>, <em>scheduler_creator=None</em>, <em>training_operator_cls=&lt;class 'zoo.orca.learn.pytorch.training_operator.TrainingOperator'&gt;</em>, <em>initialization_hook=None</em>, <em>config=None</em>, <em>scheduler_step_freq='batch'</em>, <em>use_tqdm=False</em>, <em>workers_per_node=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#PyTorchHorovodEstimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="zoo.orca.learn.horovod.html#zoo.orca.learn.horovod.horovod_ray_runner.HorovodRayRunner" title="zoo.orca.learn.horovod.horovod_ray_runner.HorovodRayRunner"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.orca.learn.horovod.horovod_ray_runner.HorovodRayRunner</span></code></a></p>
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.get_model">
+<code class="descname">get_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#PyTorchHorovodEstimator.get_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.get_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the learned model(s).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.get_state_dict">
+<code class="descname">get_state_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#PyTorchHorovodEstimator.get_state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.get_state_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>checkpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#PyTorchHorovodEstimator.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the Estimator and all workers from the provided checkpoint.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>checkpoint</strong> – (str) Path to target checkpoint file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.load_state_dict">
+<code class="descname">load_state_dict</code><span class="sig-paren">(</span><em>state_dict</em>, <em>blocking=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#PyTorchHorovodEstimator.load_state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.load_state_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>checkpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#PyTorchHorovodEstimator.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the Estimator state to the provided checkpoint path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>checkpoint</strong> – (str) Path to target checkpoint file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.shutdown">
+<code class="descname">shutdown</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#PyTorchHorovodEstimator.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuts down workers and releases resources.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>data_creator</em>, <em>epochs=1</em>, <em>profile=False</em>, <em>reduce_results=True</em>, <em>info=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#PyTorchHorovodEstimator.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs a training epoch.</p>
+<p>Calls <cite>operator.train_epoch()</cite> on N parallel workers simultaneously
+underneath the hood.
+:param data_creator: (callable) a funtion that takes a config dict as input
+and return a data loader containing the training data.
+:param epochs: (int) Number of epochs to train the model
+:param profile: (bool) Returns time stats for the training procedure.
+:param reduce_results: (bool) Whether to average all metrics across
+all workers into one dict. If a metric is a non-numerical
+value (or nested dictionaries), one value will be randomly
+selected among the workers. If False, returns a list of dicts.
+:param info: (dict) Optional dictionary passed to the training
+operator for <code class="docutils literal notranslate"><span class="pre">train_epoch</span></code> and <code class="docutils literal notranslate"><span class="pre">train_batch</span></code>.</p>
+<p>:return
+(dict | list) A dictionary of metrics for training.
+You can provide custom metrics by passing in a custom
+<code class="docutils literal notranslate"><span class="pre">training_operator_cls</span></code>. If <code class="docutils literal notranslate"><span class="pre">reduce_results=False</span></code>,
+this will return a list of metric dictionaries whose
+length will be equal to <code class="docutils literal notranslate"><span class="pre">num_workers</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><em>data_creator</em>, <em>num_steps=None</em>, <em>profile=False</em>, <em>info=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#PyTorchHorovodEstimator.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.PyTorchHorovodEstimator.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates the model on the validation data set.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_creator</strong> – (callable) a funtion that takes a config dict as input</td>
+</tr>
+</tbody>
+</table>
+<p>and return a data loader containing the validation data.
+:param num_steps: (int) Number of batches to compute update steps on.
+This corresponds also to the number of times
+<code class="docutils literal notranslate"><span class="pre">TrainingOperator.validate_batch</span></code> is called.
+:param profile: (bool) Returns time stats for the evaluation procedure.
+:param info: (dict) Optional dictionary passed to the training
+operator for <cite>validate</cite> and <cite>validate_batch</cite>.
+:return: A dictionary of metrics for validation.
+You can provide custom metrics by passing in a custom
+<code class="docutils literal notranslate"><span class="pre">training_operator_cls</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.TorchWorker">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.pytorch.pytorch_horovod_estimator.</code><code class="descname">TorchWorker</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#TorchWorker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.TorchWorker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="zoo.orca.learn.horovod.html#zoo.orca.learn.horovod.horovod_ray_runner.HorovodWorker" title="zoo.orca.learn.horovod.horovod_ray_runner.HorovodWorker"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.orca.learn.horovod.horovod_ray_runner.HorovodWorker</span></code></a>, <a class="reference internal" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner" title="zoo.orca.learn.pytorch.torch_runner.TorchRunner"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.orca.learn.pytorch.torch_runner.TorchRunner</span></code></a></p>
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.TorchWorker.load_state_stream">
+<code class="descname">load_state_stream</code><span class="sig-paren">(</span><em>byte_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#TorchWorker.load_state_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.TorchWorker.load_state_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a bytes object the training state dict.</p>
+<p>This is needed because we don’t want to deserialize the tensor
+onto the same device (which is from the driver process). We want to
+map it onto the actor’s specific device.</p>
+<p>From: github.com/pytorch/pytorch/issues/10622#issuecomment-474733769</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.TorchWorker.setup_components">
+<code class="descname">setup_components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#TorchWorker.setup_components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.TorchWorker.setup_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the creator functions without any distributed coordination.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.TorchWorker.setup_ddp_and_operator">
+<code class="descname">setup_ddp_and_operator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#TorchWorker.setup_ddp_and_operator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.TorchWorker.setup_ddp_and_operator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs distributed coordination components.</p>
+<p>This helps avoid timeouts due to creator functions (perhaps
+downloading data or models).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.TorchWorker.with_sampler">
+<code class="descname">with_sampler</code><span class="sig-paren">(</span><em>loader</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#TorchWorker.with_sampler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.TorchWorker.with_sampler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.orca.learn.pytorch.pytorch_horovod_estimator.check_for_failure">
+<code class="descclassname">zoo.orca.learn.pytorch.pytorch_horovod_estimator.</code><code class="descname">check_for_failure</code><span class="sig-paren">(</span><em>remote_values</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_horovod_estimator.html#check_for_failure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_horovod_estimator.check_for_failure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks remote values for any that returned and failed.
+:param remote_values: List of object IDs representing functions
+that may fail in the middle of execution. For example, running
+a SGD training loop in multiple parallel actor calls.
+:return Bool for success in executing given remote tasks.</p>
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-orca-learn-pytorch-pytorch-trainer-module">
-<h2>zoo.orca.learn.pytorch.pytorch_trainer module<a class="headerlink" href="#zoo-orca-learn-pytorch-pytorch-trainer-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.orca.learn.pytorch.pytorch_trainer">
+<span id="zoo-orca-learn-pytorch-pytorch-trainer-module"></span><h2>zoo.orca.learn.pytorch.pytorch_trainer module<a class="headerlink" href="#module-zoo.orca.learn.pytorch.pytorch_trainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.orca.learn.pytorch.pytorch_trainer.PyTorchTrainer">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.pytorch.pytorch_trainer.</code><code class="descname">PyTorchTrainer</code><span class="sig-paren">(</span><em>model_creator</em>, <em>data_creator</em>, <em>optimizer_creator</em>, <em>loss_creator=None</em>, <em>scheduler_creator=None</em>, <em>training_operator_cls=None</em>, <em>initialization_hook=None</em>, <em>config=None</em>, <em>num_workers=None</em>, <em>use_fp16=False</em>, <em>use_tqdm=False</em>, <em>scheduler_step_freq='batch'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_trainer.html#PyTorchTrainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_trainer.PyTorchTrainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_trainer.PyTorchTrainer.get_model">
+<code class="descname">get_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_trainer.html#PyTorchTrainer.get_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_trainer.PyTorchTrainer.get_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the learned model(s).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_trainer.PyTorchTrainer.shutdown">
+<code class="descname">shutdown</code><span class="sig-paren">(</span><em>force=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_trainer.html#PyTorchTrainer.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_trainer.PyTorchTrainer.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_trainer.PyTorchTrainer.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>nb_epoch=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_trainer.html#PyTorchTrainer.train"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_trainer.PyTorchTrainer.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trains a PyTorch model for several epochs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.pytorch_trainer.PyTorchTrainer.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><em>num_steps=None</em>, <em>profile=False</em>, <em>reduce_results=True</em>, <em>info=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/pytorch_trainer.html#PyTorchTrainer.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.pytorch_trainer.PyTorchTrainer.validate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-orca-learn-pytorch-torch-runner-module">
-<h2>zoo.orca.learn.pytorch.torch_runner module<a class="headerlink" href="#zoo-orca-learn-pytorch-torch-runner-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.orca.learn.pytorch.torch_runner">
+<span id="zoo-orca-learn-pytorch-torch-runner-module"></span><h2>zoo.orca.learn.pytorch.torch_runner module<a class="headerlink" href="#module-zoo.orca.learn.pytorch.torch_runner" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.pytorch.torch_runner.</code><code class="descname">TorchRunner</code><span class="sig-paren">(</span><em>model_creator</em>, <em>optimizer_creator</em>, <em>loss_creator=None</em>, <em>scheduler_creator=None</em>, <em>training_operator_cls=None</em>, <em>config=None</em>, <em>use_tqdm=False</em>, <em>scheduler_step_freq=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Manages a PyTorch model for training.</p>
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.apply">
+<code class="descname">apply</code><span class="sig-paren">(</span><em>fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.apply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.apply" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.apply_operator">
+<code class="descname">apply_operator</code><span class="sig-paren">(</span><em>fn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.apply_operator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.apply_operator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.find_free_port">
+<code class="descname">find_free_port</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.find_free_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.find_free_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds a free port on the current node.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.get_node_ip">
+<code class="descname">get_node_ip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.get_node_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.get_node_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the IP address of the current node.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.given_models">
+<code class="descname">given_models</code><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.given_models" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.given_optimizers">
+<code class="descname">given_optimizers</code><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.given_optimizers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.given_schedulers">
+<code class="descname">given_schedulers</code><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.given_schedulers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.load_state_dict">
+<code class="descname">load_state_dict</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.load_state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.load_state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the state of the model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.load_state_stream">
+<code class="descname">load_state_stream</code><span class="sig-paren">(</span><em>byte_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.load_state_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.load_state_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a bytes object the training state dict.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.setup_components">
+<code class="descname">setup_components</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.setup_components"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.setup_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the creator functions without any distributed coordination.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.setup_operator">
+<code class="descname">setup_operator</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.setup_operator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.setup_operator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the training operator.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.should_wrap_dataloader">
+<em class="property">static </em><code class="descname">should_wrap_dataloader</code><span class="sig-paren">(</span><em>loader</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.should_wrap_dataloader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.should_wrap_dataloader" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.shutdown">
+<code class="descname">shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attempts to shut down the worker.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.state_dict">
+<code class="descname">state_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the state of the runner.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.state_stream">
+<code class="descname">state_stream</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.state_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.state_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a bytes object for the state dict.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.train_epoch">
+<code class="descname">train_epoch</code><span class="sig-paren">(</span><em>data_loader</em>, <em>profile=False</em>, <em>info=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.train_epoch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.train_epoch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs a training epoch and updates the model parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.train_epochs">
+<code class="descname">train_epochs</code><span class="sig-paren">(</span><em>data_creator</em>, <em>epochs=1</em>, <em>profile=False</em>, <em>info=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.train_epochs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.train_epochs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><em>data_creator</em>, <em>num_steps=None</em>, <em>profile=False</em>, <em>info=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates the model on the validation data set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.torch_runner.TorchRunner.with_sampler">
+<code class="descname">with_sampler</code><span class="sig-paren">(</span><em>loader</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/torch_runner.html#TorchRunner.with_sampler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.torch_runner.TorchRunner.with_sampler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-orca-learn-pytorch-training-operator-module">
-<h2>zoo.orca.learn.pytorch.training_operator module<a class="headerlink" href="#zoo-orca-learn-pytorch-training-operator-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.orca.learn.pytorch.training_operator">
+<span id="zoo-orca-learn-pytorch-training-operator-module"></span><h2>zoo.orca.learn.pytorch.training_operator module<a class="headerlink" href="#module-zoo.orca.learn.pytorch.training_operator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.pytorch.training_operator.</code><code class="descname">TrainingOperator</code><span class="sig-paren">(</span><em>config</em>, <em>models</em>, <em>optimizers</em>, <em>world_rank</em>, <em>criterion=None</em>, <em>schedulers=None</em>, <em>device_ids=None</em>, <em>use_gpu=False</em>, <em>use_fp16=False</em>, <em>use_tqdm=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/training_operator.html#TrainingOperator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Abstract class for custom training or validation loops.</p>
+<p>The scheduler will only be called at a batch or epoch frequency, depending
+on the user parameter. Be sure to set <code class="docutils literal notranslate"><span class="pre">scheduler_step_freq</span></code> in
+<code class="docutils literal notranslate"><span class="pre">TorchTrainer</span></code> to either “batch” or “epoch” to increment the scheduler
+correctly during training. If using a learning rate scheduler
+that depends on validation loss, you can use <code class="docutils literal notranslate"><span class="pre">trainer.update_scheduler</span></code>.</p>
+<p>For both training and validation, there are two granularities that
+you can provide customization: per epoch or per batch.
+You do not need to override both.</p>
+<img alt="raysgd-custom.jpg" src="raysgd-custom.jpg" />
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Scale:</th><td class="field-body">80%</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Align:</th><td class="field-body">center</td>
+</tr>
+</tbody>
+</table>
+<p>Raises:
+ValueError if multiple models/optimizers/schedulers are provided.
+You are expected to subclass this class if you wish
+to train over multiple models/optimizers/schedulers.</p>
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.config">
+<code class="descname">config</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.config" title="Permalink to this definition">¶</a></dt>
+<dd><p>dict: Provided into TorchTrainer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.criterion">
+<code class="descname">criterion</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.criterion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Criterion created by the provided <code class="docutils literal notranslate"><span class="pre">loss_creator</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.device">
+<code class="descname">device</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.device" title="Permalink to this definition">¶</a></dt>
+<dd><p>torch.device: The appropriate torch device, at your convenience.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.device_ids">
+<code class="descname">device_ids</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.device_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>List[int]: Device IDs for the model.</p>
+<p>This is useful for using batch norm with DistributedDataParallel.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.load_state_dict">
+<code class="descname">load_state_dict</code><span class="sig-paren">(</span><em>state_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/training_operator.html#TrainingOperator.load_state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.load_state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this to load the representation of the operator state.</p>
+<p>Args:
+state_dict (dict): State dict as returned by the operator.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.model">
+<code class="descname">model</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>First or only model created by the provided <code class="docutils literal notranslate"><span class="pre">model_creator</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.models">
+<code class="descname">models</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.models" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of models created by the provided <code class="docutils literal notranslate"><span class="pre">model_creator</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.optimizer">
+<code class="descname">optimizer</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.optimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>First or only optimizer(s) created by the <code class="docutils literal notranslate"><span class="pre">optimizer_creator</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.optimizers">
+<code class="descname">optimizers</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.optimizers" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of optimizers created by the <code class="docutils literal notranslate"><span class="pre">optimizer_creator</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.scheduler">
+<code class="descname">scheduler</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.scheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>First or only scheduler(s) created by the <code class="docutils literal notranslate"><span class="pre">scheduler_creator</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.schedulers">
+<code class="descname">schedulers</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.schedulers" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of schedulers created by the <code class="docutils literal notranslate"><span class="pre">scheduler_creator</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.setup">
+<code class="descname">setup</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/training_operator.html#TrainingOperator.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to implement custom operator setup.</p>
+<p>Args:
+config (dict): Custom configuration value to be passed to
+all creator and operator constructors. Same as <code class="docutils literal notranslate"><span class="pre">self.config</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.state_dict">
+<code class="descname">state_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/training_operator.html#TrainingOperator.state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this to return a representation of the operator state.</p>
+<p>Returns:
+dict: The state dict of the operator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.train_batch">
+<code class="descname">train_batch</code><span class="sig-paren">(</span><em>batch</em>, <em>batch_info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/training_operator.html#TrainingOperator.train_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.train_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes loss and updates the model over one batch.</p>
+<p>This method is responsible for computing the loss and gradient and
+updating the model.</p>
+<p>By default, this method implementation assumes that batches
+are in (*features, labels) format. So we also support multiple inputs
+model. If using amp/fp16 training, it will also scale the loss
+automatically.</p>
+<p>You can provide custom loss metrics and training operations if you
+override this method. If overriding this method, you can access model,
+optimizer, criterion via <code class="docutils literal notranslate"><span class="pre">self.model</span></code>, <code class="docutils literal notranslate"><span class="pre">self.optimizer</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">self.criterion</span></code>.</p>
+<p>You do not need to override this method if you plan to
+override <code class="docutils literal notranslate"><span class="pre">train_epoch</span></code>.</p>
+<p>Args:
+batch: One item of the validation iterator.
+batch_info (dict): Information dict passed in from <code class="docutils literal notranslate"><span class="pre">train_epoch</span></code>.</p>
+<p>Returns:
+A dictionary of metrics.
+By default, this dictionary contains “loss” and “num_samples”.
+“num_samples” corresponds to number of datapoints in the batch.
+However, you can provide any number of other values.
+Consider returning “num_samples” in the metrics because
+by default, <code class="docutils literal notranslate"><span class="pre">train_epoch</span></code> uses “num_samples” to
+calculate averages.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.train_epoch">
+<code class="descname">train_epoch</code><span class="sig-paren">(</span><em>iterator</em>, <em>info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/training_operator.html#TrainingOperator.train_epoch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.train_epoch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs one standard training pass over the training dataloader.</p>
+<p>By default, this method will iterate over the given iterator and
+call <code class="docutils literal notranslate"><span class="pre">self.train_batch</span></code> over each batch. If <code class="docutils literal notranslate"><span class="pre">scheduler_step_freq</span></code>
+is set, this default method will also step the scheduler accordingly.</p>
+<p>You do not need to call <code class="docutils literal notranslate"><span class="pre">train_batch</span></code> in this method if you plan
+to implement a custom optimization/training routine here.</p>
+<p>You may find <code class="docutils literal notranslate"><span class="pre">ray.util.sgd.utils.AverageMeterCollection</span></code> useful
+when overriding this method. See example below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
 </div>
-<div class="section" id="zoo-orca-learn-pytorch-utils-module">
-<h2>zoo.orca.learn.pytorch.utils module<a class="headerlink" href="#zoo-orca-learn-pytorch-utils-module" title="Permalink to this headline">¶</a></h2>
+<p>def train_epoch(self, …):
+meter_collection = AverageMeterCollection()
+self.model.train()
+for batch in iterator:
+# do some processing
+metrics = {“metric_1”: 1, “metric_2”: 3} # dict of metrics</p>
+<p># This keeps track of all metrics across multiple batches
+meter_collection.update(metrics, n=len(batch))</p>
+<p># Returns stats of the meters.
+stats = meter_collection.summary()
+return stats</p>
+<p>Args:
+iterator (iter): Iterator over the training data for the entire
+epoch. This iterator is expected to be entirely consumed.
+info (dict): Dictionary for information to be used for custom
+training operations.</p>
+<p>Returns:
+A dict of metrics from training.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.use_fp16">
+<code class="descname">use_fp16</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.use_fp16" title="Permalink to this definition">¶</a></dt>
+<dd><p>bool: Whether the model and optimizer have been FP16 enabled.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.use_gpu">
+<code class="descname">use_gpu</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.use_gpu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if cuda is available and use_gpu is True.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.use_tqdm">
+<code class="descname">use_tqdm</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.use_tqdm" title="Permalink to this definition">¶</a></dt>
+<dd><p>bool: Whether tqdm progress bars are enabled.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><em>val_iterator</em>, <em>info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/training_operator.html#TrainingOperator.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs one standard validation pass over the val_iterator.</p>
+<p>This will call <code class="docutils literal notranslate"><span class="pre">model.eval()</span></code> and <code class="docutils literal notranslate"><span class="pre">torch.no_grad</span></code> when iterating
+over the validation dataloader.</p>
+<p>If overriding this method, you can access model, criterion via
+<code class="docutils literal notranslate"><span class="pre">self.model</span></code> and <code class="docutils literal notranslate"><span class="pre">self.criterion</span></code>. You also do not need to call
+<code class="docutils literal notranslate"><span class="pre">validate_batch</span></code> if overriding this method.</p>
+<p>Args:
+val_iterator (iter): Iterable constructed from the
+validation dataloader.
+info: (dict): Dictionary for information to be used for custom
+validation operations.</p>
+<p>Returns:
+A dict of metrics from the evaluation.
+By default, returns “val_accuracy” and “val_loss”
+which is computed by aggregating “loss” and “correct” values
+from <code class="docutils literal notranslate"><span class="pre">validate_batch</span></code> and dividing it by the sum of
+<code class="docutils literal notranslate"><span class="pre">num_samples</span></code> from all calls to <code class="docutils literal notranslate"><span class="pre">self.validate_batch</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.validate_batch">
+<code class="descname">validate_batch</code><span class="sig-paren">(</span><em>batch</em>, <em>batch_info</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/training_operator.html#TrainingOperator.validate_batch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.validate_batch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calcuates the loss and accuracy over a given batch.</p>
+<p>You can override this method to provide arbitrary metrics.</p>
+<p>Same as <code class="docutils literal notranslate"><span class="pre">train_batch</span></code>, this method implementation assumes that
+batches are in (*features, labels) format by default. So we also
+support multiple inputs model.</p>
+<p>Args:
+batch: One item of the validation iterator.
+batch_info (dict): Contains information per batch from
+<code class="docutils literal notranslate"><span class="pre">validate()</span></code>.</p>
+<p>Returns:
+A dict of metrics.
+By default, returns “val_loss”, “val_accuracy”, and
+“num_samples”. When overriding, consider returning
+“num_samples” in the metrics because
+by default, <code class="docutils literal notranslate"><span class="pre">validate</span></code> uses “num_samples” to
+calculate averages.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.training_operator.TrainingOperator.world_rank">
+<code class="descname">world_rank</code><a class="headerlink" href="#zoo.orca.learn.pytorch.training_operator.TrainingOperator.world_rank" title="Permalink to this definition">¶</a></dt>
+<dd><p>int: The rank of the parent runner. Always 0 if not distributed.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.orca.learn.pytorch.utils">
+<span id="zoo-orca-learn-pytorch-utils-module"></span><h2>zoo.orca.learn.pytorch.utils module<a class="headerlink" href="#module-zoo.orca.learn.pytorch.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.orca.learn.pytorch.utils.AverageMeter">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.pytorch.utils.</code><code class="descname">AverageMeter</code><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#AverageMeter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.AverageMeter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Computes and stores the average and current value.</p>
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.utils.AverageMeter.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#AverageMeter.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.AverageMeter.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.utils.AverageMeter.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>val</em>, <em>n=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#AverageMeter.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.AverageMeter.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.orca.learn.pytorch.utils.AverageMeterCollection">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.pytorch.utils.</code><code class="descname">AverageMeterCollection</code><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#AverageMeterCollection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.AverageMeterCollection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A grouping of AverageMeters.</p>
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.utils.AverageMeterCollection.summary">
+<code class="descname">summary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#AverageMeterCollection.summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.AverageMeterCollection.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dict of average and most recent values for each metric.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.utils.AverageMeterCollection.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>metrics</em>, <em>n=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#AverageMeterCollection.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.AverageMeterCollection.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.orca.learn.pytorch.utils.TimerCollection">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.pytorch.utils.</code><code class="descname">TimerCollection</code><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#TimerCollection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerCollection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A grouping of Timers.</p>
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.utils.TimerCollection.disable">
+<code class="descname">disable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#TimerCollection.disable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerCollection.disable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.utils.TimerCollection.enable">
+<code class="descname">enable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#TimerCollection.enable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerCollection.enable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.utils.TimerCollection.record">
+<code class="descname">record</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#TimerCollection.record"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerCollection.record" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.utils.TimerCollection.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#TimerCollection.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerCollection.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.utils.TimerCollection.stats">
+<code class="descname">stats</code><span class="sig-paren">(</span><em>mean=True</em>, <em>last=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#TimerCollection.stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerCollection.stats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.orca.learn.pytorch.utils.TimerStat">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.pytorch.utils.</code><code class="descname">TimerStat</code><span class="sig-paren">(</span><em>window_size=10</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#TimerStat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerStat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A running stat for conveniently logging the duration of a code block.</p>
+<p>Note that this class is <em>not</em> thread-safe.</p>
+<p>Examples:
+Time a call to ‘time.sleep’.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sleep_timer</span> <span class="o">=</span> <span class="n">TimerStat</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">sleep_timer</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">round</span><span class="p">(</span><span class="n">sleep_timer</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.utils.TimerStat.first">
+<code class="descname">first</code><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerStat.first" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.utils.TimerStat.last">
+<code class="descname">last</code><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerStat.last" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.utils.TimerStat.max">
+<code class="descname">max</code><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerStat.max" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.utils.TimerStat.mean">
+<code class="descname">mean</code><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerStat.mean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.utils.TimerStat.mean_throughput">
+<code class="descname">mean_throughput</code><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerStat.mean_throughput" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.utils.TimerStat.mean_units_processed">
+<code class="descname">mean_units_processed</code><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerStat.mean_units_processed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.utils.TimerStat.median">
+<code class="descname">median</code><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerStat.median" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.utils.TimerStat.push">
+<code class="descname">push</code><span class="sig-paren">(</span><em>time_delta</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#TimerStat.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerStat.push" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.utils.TimerStat.push_units_processed">
+<code class="descname">push_units_processed</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#TimerStat.push_units_processed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerStat.push_units_processed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.pytorch.utils.TimerStat.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#TimerStat.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerStat.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.utils.TimerStat.size">
+<code class="descname">size</code><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerStat.size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="zoo.orca.learn.pytorch.utils.TimerStat.sum">
+<code class="descname">sum</code><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.TimerStat.sum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.orca.learn.pytorch.utils.check_for_failure">
+<code class="descclassname">zoo.orca.learn.pytorch.utils.</code><code class="descname">check_for_failure</code><span class="sig-paren">(</span><em>remote_values</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#check_for_failure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.check_for_failure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks remote values for any that returned and failed.</p>
+<p>Args:
+remote_values (list): List of object IDs representing functions
+that may fail in the middle of execution. For example, running
+a SGD training loop in multiple parallel actor calls.</p>
+<p>Returns:
+Bool for success in executing given remote tasks.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.orca.learn.pytorch.utils.find_free_port">
+<code class="descclassname">zoo.orca.learn.pytorch.utils.</code><code class="descname">find_free_port</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#find_free_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.find_free_port" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.orca.learn.pytorch.utils.override">
+<code class="descclassname">zoo.orca.learn.pytorch.utils.</code><code class="descname">override</code><span class="sig-paren">(</span><em>interface_class</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/pytorch/utils.html#override"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.pytorch.utils.override" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-zoo.orca.learn.pytorch">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.orca.learn.pytorch" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -131,6 +1051,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.orca.learn.tf.html" title="zoo.orca.learn.tf package"
              >next</a> |</li>

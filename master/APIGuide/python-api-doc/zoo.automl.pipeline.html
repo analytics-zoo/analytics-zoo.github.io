@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.automl.regression.html" title="zoo.automl.regression package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -42,9 +45,9 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.automl.pipeline package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-automl-pipeline-abstract-module">zoo.automl.pipeline.abstract module</a></li>
-<li><a class="reference internal" href="#zoo-automl-pipeline-time-sequence-module">zoo.automl.pipeline.time_sequence module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.pipeline.abstract">zoo.automl.pipeline.abstract module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.pipeline.time_sequence">zoo.automl.pipeline.time_sequence module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.pipeline">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -87,14 +90,135 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-automl-pipeline-abstract-module">
-<h2>zoo.automl.pipeline.abstract module<a class="headerlink" href="#zoo-automl-pipeline-abstract-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.pipeline.abstract">
+<span id="zoo-automl-pipeline-abstract-module"></span><h2>zoo.automl.pipeline.abstract module<a class="headerlink" href="#module-zoo.automl.pipeline.abstract" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.pipeline.abstract.Pipeline">
+<em class="property">class </em><code class="descclassname">zoo.automl.pipeline.abstract.</code><code class="descname">Pipeline</code><a class="reference internal" href="_modules/zoo/automl/pipeline/abstract.html#Pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.abstract.Pipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>The pipeline object which is used to store the series of transformation of features and model</p>
+<dl class="method">
+<dt id="zoo.automl.pipeline.abstract.Pipeline.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>input_df</em>, <em>metric=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/abstract.html#Pipeline.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.abstract.Pipeline.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>evaluate the pipeline
+:param input_df: input data frame
+:param metric: the evaluation metric
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.pipeline.abstract.Pipeline.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>input_df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/abstract.html#Pipeline.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.abstract.Pipeline.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>predict using the pipeline
+:param input_df: input data frame
+:return: the prediction result</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.pipeline.abstract.Pipeline.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/abstract.html#Pipeline.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.abstract.Pipeline.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>save the pipeline to a file
+:param file: the pipeline file
+:return: a pipeline object</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-automl-pipeline-time-sequence-module">
-<h2>zoo.automl.pipeline.time_sequence module<a class="headerlink" href="#zoo-automl-pipeline-time-sequence-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.pipeline.time_sequence">
+<span id="zoo-automl-pipeline-time-sequence-module"></span><h2>zoo.automl.pipeline.time_sequence module<a class="headerlink" href="#module-zoo.automl.pipeline.time_sequence" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.pipeline.time_sequence.TimeSequencePipeline">
+<em class="property">class </em><code class="descclassname">zoo.automl.pipeline.time_sequence.</code><code class="descname">TimeSequencePipeline</code><span class="sig-paren">(</span><em>feature_transformers=None</em>, <em>model=None</em>, <em>config=None</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/time_sequence.html#TimeSequencePipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.time_sequence.TimeSequencePipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.automl.pipeline.abstract.Pipeline" title="zoo.automl.pipeline.abstract.Pipeline"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.pipeline.abstract.Pipeline</span></code></a></p>
+<dl class="method">
+<dt id="zoo.automl.pipeline.time_sequence.TimeSequencePipeline.config_save">
+<code class="descname">config_save</code><span class="sig-paren">(</span><em>config_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/time_sequence.html#TimeSequencePipeline.config_save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.config_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>save all configs to file.
+:param config_file:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.pipeline.time_sequence.TimeSequencePipeline.describe">
+<code class="descname">describe</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/time_sequence.html#TimeSequencePipeline.describe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.describe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.pipeline.time_sequence.TimeSequencePipeline.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>input_df, metrics=['mse'], multioutput='raw_values'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/time_sequence.html#TimeSequencePipeline.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>evaluate the pipeline
+:param input_df:
+:param metrics: subset of [‘mean_squared_error’, ‘r_square’, ‘sMAPE’]
+:param multioutput: string in [‘raw_values’, ‘uniform_average’]
+‘raw_values’ :
+Returns a full set of errors in case of multioutput input.
+‘uniform_average’ :
+Errors of all outputs are averaged with uniform weight.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.pipeline.time_sequence.TimeSequencePipeline.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>input_df</em>, <em>validation_df=None</em>, <em>mc=False</em>, <em>epoch_num=20</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/time_sequence.html#TimeSequencePipeline.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.pipeline.time_sequence.TimeSequencePipeline.fit_with_fixed_configs">
+<code class="descname">fit_with_fixed_configs</code><span class="sig-paren">(</span><em>input_df</em>, <em>validation_df=None</em>, <em>mc=False</em>, <em>**user_configs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/time_sequence.html#TimeSequencePipeline.fit_with_fixed_configs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.fit_with_fixed_configs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit pipeline with fixed configs. The model will be trained from initialization
+with the hyper-parameter specified in configs. The configs contain both identity configs
+(Eg. “future_seq_len”, “dt_col”, “target_col”, “metric”) and automl tunable configs
+(Eg. “past_seq_len”, “batch_size”).
+We recommend calling get_default_configs to see the name and default values of configs you
+you can specify.
+:param input_df: one data frame or a list of data frames
+:param validation_df: one data frame or a list of data frames
+:param user_configs: you can overwrite or add more configs with user_configs. Eg. “epochs”
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.pipeline.time_sequence.TimeSequencePipeline.get_default_configs">
+<code class="descname">get_default_configs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/time_sequence.html#TimeSequencePipeline.get_default_configs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.get_default_configs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.pipeline.time_sequence.TimeSequencePipeline.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>input_df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/time_sequence.html#TimeSequencePipeline.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>predict test data with the pipeline fitted
+:param input_df:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.pipeline.time_sequence.TimeSequencePipeline.predict_with_uncertainty">
+<code class="descname">predict_with_uncertainty</code><span class="sig-paren">(</span><em>input_df</em>, <em>n_iter=100</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/time_sequence.html#TimeSequencePipeline.predict_with_uncertainty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.predict_with_uncertainty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.pipeline.time_sequence.TimeSequencePipeline.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>ppl_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/time_sequence.html#TimeSequencePipeline.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.time_sequence.TimeSequencePipeline.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>save pipeline to file, contains feature transformer, model, trial config.
+:param ppl_file:
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.automl.pipeline.time_sequence.load_ts_pipeline">
+<code class="descclassname">zoo.automl.pipeline.time_sequence.</code><code class="descname">load_ts_pipeline</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/time_sequence.html#load_ts_pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.time_sequence.load_ts_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.automl.pipeline.time_sequence.load_xgboost_pipeline">
+<code class="descclassname">zoo.automl.pipeline.time_sequence.</code><code class="descname">load_xgboost_pipeline</code><span class="sig-paren">(</span><em>file</em>, <em>model_type='regressor'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/pipeline/time_sequence.html#load_xgboost_pipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.pipeline.time_sequence.load_xgboost_pipeline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.pipeline">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.automl.pipeline" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -110,6 +234,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.automl.regression.html" title="zoo.automl.regression package"
              >next</a> |</li>

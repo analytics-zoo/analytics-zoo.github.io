@@ -1,0 +1,569 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.util.tf_graph_util &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.util.tf_graph_util</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="c1"># This file is adapted from https://github.com/tensorflow/tensorflow/blob/master</span>
+<span class="c1"># /tensorflow/python/framework/graph_util_impl.py</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2015 The TensorFlow Authors. All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="sd">&quot;&quot;&quot;Helpers to manipulate a tensor graph in python.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">six</span>
+
+<span class="kn">from</span> <span class="nn">tensorflow.core.framework</span> <span class="kn">import</span> <span class="n">attr_value_pb2</span>
+<span class="kn">from</span> <span class="nn">tensorflow.core.framework</span> <span class="kn">import</span> <span class="n">graph_pb2</span>
+<span class="kn">from</span> <span class="nn">tensorflow.core.framework</span> <span class="kn">import</span> <span class="n">node_def_pb2</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.framework</span> <span class="kn">import</span> <span class="n">dtypes</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.framework</span> <span class="kn">import</span> <span class="n">ops</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.framework</span> <span class="kn">import</span> <span class="n">tensor_util</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.platform</span> <span class="kn">import</span> <span class="n">tf_logging</span> <span class="k">as</span> <span class="n">logging</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.util</span> <span class="kn">import</span> <span class="n">deprecation</span>
+<span class="kn">from</span> <span class="nn">tensorflow.python.util.tf_export</span> <span class="kn">import</span> <span class="n">tf_export</span>
+
+<span class="n">_VARIABLE_OPS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Assign&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AssignAdd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AssignSub&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Queue&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ScatterAdd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ScatterSub&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ScatterUpdate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TruncatedNormal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Variable&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;VariableV2&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">_is_variable_op</span><span class="p">(</span><span class="n">op</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns true if &#39;op&#39; refers to a Variable node.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">_VARIABLE_OPS</span>
+
+
+<div class="viewcode-block" id="must_run_on_cpu"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.tf_graph_util.must_run_on_cpu">[docs]</a><span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span>
+    <span class="n">date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">instructions</span><span class="o">=</span><span class="s2">&quot;Use `tf.compat.v1.graph_util.must_run_on_cpu`&quot;</span><span class="p">)</span>
+<span class="nd">@tf_export</span><span class="p">(</span><span class="n">v1</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;graph_util.must_run_on_cpu&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">must_run_on_cpu</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">pin_variables_on_cpu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns True if the given node_def must run on CPU, otherwise False.</span>
+<span class="sd">    Args:</span>
+<span class="sd">      node: The node to be assigned to a device. Could be either an ops.Operation</span>
+<span class="sd">        or NodeDef.</span>
+<span class="sd">      pin_variables_on_cpu: If True, this function will return False if node_def</span>
+<span class="sd">        represents a variable-related op.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      True if the given node must run on CPU, otherwise False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ops</span><span class="o">.</span><span class="n">Operation</span><span class="p">):</span>
+        <span class="n">node_def</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">node_def</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">node_def_pb2</span><span class="o">.</span><span class="n">NodeDef</span><span class="p">)</span>
+        <span class="n">node_def</span> <span class="o">=</span> <span class="n">node</span>
+
+    <span class="c1"># If the op is a variable-related op, should we pin it on CPU?</span>
+    <span class="k">if</span> <span class="n">pin_variables_on_cpu</span> <span class="ow">and</span> <span class="n">_is_variable_op</span><span class="p">(</span><span class="n">node_def</span><span class="o">.</span><span class="n">op</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># Constant operations producing a string or int32 must run on CPU.</span>
+    <span class="k">if</span> <span class="n">node_def</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;Const&quot;</span><span class="p">:</span>
+        <span class="c1"># Get the value of the &#39;dtype&#39; attr</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">node_def</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">type</span>
+        <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">string</span> <span class="ow">or</span> <span class="n">dtype</span> <span class="o">==</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">int32</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">node_def</span><span class="o">.</span><span class="n">op</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;DynamicStitch&quot;</span><span class="p">,</span> <span class="s2">&quot;ParallelDynamicStitch&quot;</span><span class="p">]:</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">node_def</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">type</span>
+        <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">int32</span><span class="p">:</span>
+            <span class="c1"># DynamicStitch on GPU only works for int32 values.</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">node_def</span><span class="o">.</span><span class="n">op</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Cast&quot;</span><span class="p">]:</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">node_def</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;SrcT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">type</span>
+        <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">int32</span><span class="p">:</span>
+            <span class="c1"># Cast on GPU does not works for int32 values.</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1">#</span>
+<span class="c1"># device functions for use in with g.device(...)</span>
+<span class="c1">#</span>
+<span class="c1">################################################################################</span>
+
+
+<span class="k">def</span> <span class="nf">_node_name</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;^&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_graph_summary</span><span class="p">(</span><span class="n">graph_def</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extracts useful information from the graph and returns them.&quot;&quot;&quot;</span>
+    <span class="n">name_to_input_name</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Keyed by the dest node name.</span>
+    <span class="n">name_to_node</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Keyed by node name.</span>
+
+    <span class="c1"># Keeps track of node sequences. It is important to still output the</span>
+    <span class="c1"># operations in the original order.</span>
+    <span class="n">name_to_seq_num</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Keyed by node name.</span>
+    <span class="n">seq</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">graph_def</span><span class="o">.</span><span class="n">node</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">_node_name</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">name_to_node</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="n">name_to_input_name</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">_node_name</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">input</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;_class&quot;</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">:</span>
+            <span class="c1"># Prevent colocated nodes being lost</span>
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;_class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">s</span><span class="p">:</span>
+                <span class="n">v_str</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">v_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;loc:@&quot;</span><span class="p">):</span>
+                    <span class="n">colocated_node</span> <span class="o">=</span> <span class="n">v_str</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span>
+                    <span class="n">name_to_input_name</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">colocated_node</span><span class="p">)</span>
+        <span class="n">name_to_seq_num</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">seq</span>
+        <span class="n">seq</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">name_to_input_name</span><span class="p">,</span> <span class="n">name_to_node</span><span class="p">,</span> <span class="n">name_to_seq_num</span>
+
+
+<span class="k">def</span> <span class="nf">_assert_nodes_are_present</span><span class="p">(</span><span class="n">name_to_node</span><span class="p">,</span> <span class="n">nodes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Assert that nodes are present in the graph.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">name_to_node</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> is not in graph&quot;</span> <span class="o">%</span> <span class="n">d</span>
+
+
+<span class="k">def</span> <span class="nf">_bfs_for_reachable_nodes</span><span class="p">(</span><span class="n">target_nodes</span><span class="p">,</span> <span class="n">name_to_input_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Breadth first search for reachable nodes from target nodes.&quot;&quot;&quot;</span>
+    <span class="n">nodes_to_keep</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="c1"># Breadth first search to find all the nodes that we should keep.</span>
+    <span class="n">next_to_visit</span> <span class="o">=</span> <span class="n">target_nodes</span><span class="p">[:]</span>
+    <span class="k">while</span> <span class="n">next_to_visit</span><span class="p">:</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">next_to_visit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">next_to_visit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes_to_keep</span><span class="p">:</span>
+            <span class="c1"># Already visited this node.</span>
+            <span class="k">continue</span>
+        <span class="n">nodes_to_keep</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">name_to_input_name</span><span class="p">:</span>
+            <span class="n">next_to_visit</span> <span class="o">+=</span> <span class="n">name_to_input_name</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">nodes_to_keep</span>
+
+
+<div class="viewcode-block" id="extract_sub_graph"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.tf_graph_util.extract_sub_graph">[docs]</a><span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span>
+    <span class="n">date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">instructions</span><span class="o">=</span><span class="s2">&quot;Use `tf.compat.v1.graph_util.extract_sub_graph`&quot;</span><span class="p">)</span>
+<span class="nd">@tf_export</span><span class="p">(</span><span class="n">v1</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;graph_util.extract_sub_graph&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">extract_sub_graph</span><span class="p">(</span><span class="n">graph_def</span><span class="p">,</span> <span class="n">dest_nodes</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extract the subgraph that can reach any of the nodes in &#39;dest_nodes&#39;.</span>
+<span class="sd">    Args:</span>
+<span class="sd">      graph_def: A graph_pb2.GraphDef proto.</span>
+<span class="sd">      dest_nodes: A list of strings specifying the destination node names.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      The GraphDef of the sub-graph.</span>
+<span class="sd">    Raises:</span>
+<span class="sd">      TypeError: If &#39;graph_def&#39; is not a graph_pb2.GraphDef proto.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">graph_def</span><span class="p">,</span> <span class="n">graph_pb2</span><span class="o">.</span><span class="n">GraphDef</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;graph_def must be a graph_pb2.GraphDef proto.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dest_nodes</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;dest_nodes must be a list.&quot;</span><span class="p">)</span>
+
+    <span class="n">name_to_input_name</span><span class="p">,</span> <span class="n">name_to_node</span><span class="p">,</span> <span class="n">name_to_seq_num</span> <span class="o">=</span> <span class="n">_extract_graph_summary</span><span class="p">(</span>
+        <span class="n">graph_def</span><span class="p">)</span>
+    <span class="n">_assert_nodes_are_present</span><span class="p">(</span><span class="n">name_to_node</span><span class="p">,</span> <span class="n">dest_nodes</span><span class="p">)</span>
+
+    <span class="n">nodes_to_keep</span> <span class="o">=</span> <span class="n">_bfs_for_reachable_nodes</span><span class="p">(</span><span class="n">dest_nodes</span><span class="p">,</span> <span class="n">name_to_input_name</span><span class="p">)</span>
+
+    <span class="n">nodes_to_keep_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+        <span class="nb">list</span><span class="p">(</span><span class="n">nodes_to_keep</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">name_to_seq_num</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+    <span class="c1"># Now construct the output GraphDef</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">graph_pb2</span><span class="o">.</span><span class="n">GraphDef</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nodes_to_keep_list</span><span class="p">:</span>
+        <span class="n">out</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">name_to_node</span><span class="p">[</span><span class="n">n</span><span class="p">])])</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">library</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">graph_def</span><span class="o">.</span><span class="n">library</span><span class="p">)</span>
+    <span class="n">out</span><span class="o">.</span><span class="n">versions</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">graph_def</span><span class="o">.</span><span class="n">versions</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">out</span></div>
+
+
+<div class="viewcode-block" id="tensor_shape_from_node_def_name"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.tf_graph_util.tensor_shape_from_node_def_name">[docs]</a><span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span>
+    <span class="n">date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">instructions</span><span class="o">=</span><span class="s2">&quot;Use `tf.compat.v1.graph_util.tensor_shape_from_node_def_name`&quot;</span>
+<span class="p">)</span>
+<span class="nd">@tf_export</span><span class="p">(</span><span class="n">v1</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;graph_util.tensor_shape_from_node_def_name&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">tensor_shape_from_node_def_name</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">input_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convenience function to get a shape from a NodeDef&#39;s input string.&quot;&quot;&quot;</span>
+    <span class="c1"># To get a tensor, the name must be in the form &lt;input&gt;:&lt;port&gt;, for example</span>
+    <span class="c1"># &#39;Mul:0&#39;. The GraphDef input strings don&#39;t always have the port specified</span>
+    <span class="c1"># though, so if there isn&#39;t a colon we need to add a default &#39;:0&#39; to the end.</span>
+    <span class="k">if</span> <span class="s2">&quot;:&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">input_name</span><span class="p">:</span>
+        <span class="n">canonical_name</span> <span class="o">=</span> <span class="n">input_name</span> <span class="o">+</span> <span class="s2">&quot;:0&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">canonical_name</span> <span class="o">=</span> <span class="n">input_name</span>
+    <span class="n">tensor</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">get_tensor_by_name</span><span class="p">(</span><span class="n">canonical_name</span><span class="p">)</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">get_shape</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">shape</span></div>
+
+
+<div class="viewcode-block" id="convert_variables_to_constants"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.tf_graph_util.convert_variables_to_constants">[docs]</a><span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span>
+    <span class="n">date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">instructions</span><span class="o">=</span><span class="s2">&quot;Use `tf.compat.v1.graph_util.convert_variables_to_constants`&quot;</span><span class="p">)</span>
+<span class="nd">@tf_export</span><span class="p">(</span><span class="n">v1</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;graph_util.convert_variables_to_constants&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">convert_variables_to_constants</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span>
+                                   <span class="n">input_graph_def</span><span class="p">,</span>
+                                   <span class="n">output_node_names</span><span class="p">,</span>
+                                   <span class="n">variable_names_whitelist</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">variable_names_blacklist</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Replaces all the variables in a graph with constants of the same values.</span>
+<span class="sd">    If you have a trained graph containing Variable ops, it can be convenient to</span>
+<span class="sd">    convert them all to Const ops holding the same values. This makes it possible</span>
+<span class="sd">    to describe the network fully with a single GraphDef file, and allows the</span>
+<span class="sd">    removal of a lot of ops related to loading and saving the variables.</span>
+<span class="sd">    Args:</span>
+<span class="sd">      sess: Active TensorFlow session containing the variables.</span>
+<span class="sd">      input_graph_def: GraphDef object holding the network.</span>
+<span class="sd">      output_node_names: List of name strings for the result nodes of the graph.</span>
+<span class="sd">      variable_names_whitelist: The set of variable names to convert (by default,</span>
+<span class="sd">                                all variables are converted).</span>
+<span class="sd">      variable_names_blacklist: The set of variable names to omit converting</span>
+<span class="sd">                                to constants.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      GraphDef containing a simplified version of the original.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">trace_back_find_variable</span><span class="p">(</span><span class="n">origin_name</span><span class="p">,</span> <span class="n">name_to_nodes</span><span class="p">):</span>
+
+        <span class="n">nodes_in_path</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">control_ops</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Enter&quot;</span><span class="p">,</span> <span class="s2">&quot;Exit&quot;</span><span class="p">,</span> <span class="s2">&quot;NextIteration&quot;</span><span class="p">,</span> <span class="s2">&quot;Switch&quot;</span><span class="p">]</span>
+
+        <span class="n">current_name</span> <span class="o">=</span> <span class="n">origin_name</span>
+        <span class="k">while</span> <span class="n">name_to_nodes</span><span class="p">[</span><span class="n">current_name</span><span class="p">]</span><span class="o">.</span><span class="n">op</span> <span class="o">!=</span> <span class="s2">&quot;VarHandleOp&quot;</span><span class="p">:</span>
+            <span class="n">nodes_in_path</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">current_name</span><span class="p">)</span>
+            <span class="n">current_node</span> <span class="o">=</span> <span class="n">name_to_nodes</span><span class="p">[</span><span class="n">current_name</span><span class="p">]</span>
+            <span class="n">op_name</span> <span class="o">=</span> <span class="n">current_node</span><span class="o">.</span><span class="n">op</span>
+            <span class="k">if</span> <span class="n">op_name</span> <span class="ow">in</span> <span class="n">control_ops</span> <span class="ow">or</span> <span class="n">op_name</span> <span class="o">==</span> <span class="s2">&quot;Identity&quot;</span><span class="p">:</span>
+                <span class="n">curr_input_name</span> <span class="o">=</span> <span class="n">_node_name</span><span class="p">(</span><span class="n">current_node</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Op type </span><span class="si">%s</span><span class="s2"> should not be in the path &quot;</span> <span class="o">+</span>
+                                 <span class="s2">&quot;between ReadVariableOp and VarHandleOp&quot;</span> <span class="o">%</span> <span class="n">current_node</span><span class="o">.</span><span class="n">op</span><span class="p">)</span>
+            <span class="n">current_name</span> <span class="o">=</span> <span class="n">curr_input_name</span>
+
+        <span class="k">return</span> <span class="n">current_name</span><span class="p">,</span> <span class="n">nodes_in_path</span>
+
+    <span class="k">def</span> <span class="nf">create_const_op</span><span class="p">(</span><span class="n">node_name</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">data_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a Const op.&quot;&quot;&quot;</span>
+        <span class="n">output_node</span> <span class="o">=</span> <span class="n">node_def_pb2</span><span class="o">.</span><span class="n">NodeDef</span><span class="p">()</span>
+        <span class="n">output_node</span><span class="o">.</span><span class="n">op</span> <span class="o">=</span> <span class="s2">&quot;Const&quot;</span>
+        <span class="n">output_node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">node_name</span>
+        <span class="n">output_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">output_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span>
+            <span class="n">attr_value_pb2</span><span class="o">.</span><span class="n">AttrValue</span><span class="p">(</span>
+                <span class="n">tensor</span><span class="o">=</span><span class="n">tensor_util</span><span class="o">.</span><span class="n">make_tensor_proto</span><span class="p">(</span>
+                    <span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">data_shape</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="n">output_node</span>
+
+    <span class="c1"># This graph only includes the nodes needed to evaluate the output nodes, and</span>
+    <span class="c1"># removes unneeded nodes like those involved in saving and assignment.</span>
+    <span class="n">inference_graph</span> <span class="o">=</span> <span class="n">extract_sub_graph</span><span class="p">(</span><span class="n">input_graph_def</span><span class="p">,</span> <span class="n">output_node_names</span><span class="p">)</span>
+
+    <span class="c1"># Identify the ops in the graph.</span>
+    <span class="n">map_name_to_node</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">inference_graph</span><span class="o">.</span><span class="n">node</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Get list of variables.</span>
+    <span class="n">variable_names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">variable_dict_names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">resource_identity_types</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">read_variable_op_types</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">inference_graph</span><span class="o">.</span><span class="n">node</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">op</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Variable&quot;</span><span class="p">,</span> <span class="s2">&quot;VariableV2&quot;</span><span class="p">,</span> <span class="s2">&quot;VarHandleOp&quot;</span><span class="p">]:</span>
+            <span class="n">variable_name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">variable_names_whitelist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                 <span class="ow">and</span> <span class="n">variable_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">variable_names_whitelist</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="p">(</span><span class="n">variable_names_blacklist</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="ow">and</span> <span class="n">variable_name</span> <span class="ow">in</span> <span class="n">variable_names_blacklist</span><span class="p">)):</span>
+                <span class="k">continue</span>
+            <span class="n">variable_dict_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variable_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;VarHandleOp&quot;</span><span class="p">:</span>
+                <span class="n">variable_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variable_name</span> <span class="o">+</span> <span class="s2">&quot;/Read/ReadVariableOp:0&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">variable_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variable_name</span> <span class="o">+</span> <span class="s2">&quot;:0&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">op</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ReadVariableOp&quot;</span><span class="p">,</span> <span class="s2">&quot;ResourceGather&quot;</span><span class="p">,</span> <span class="s2">&quot;VariableShape&quot;</span><span class="p">]:</span>
+            <span class="c1"># There can be one or more Identity or control flow ops in between the ReadVariableOp</span>
+            <span class="c1"># and VarHandleOp.  Store them with the associated dtypes.</span>
+            <span class="n">source_op_name</span><span class="p">,</span> <span class="n">nodes_in_path</span> <span class="o">=</span> <span class="n">trace_back_find_variable</span><span class="p">(</span><span class="n">_node_name</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                                                                     <span class="n">map_name_to_node</span><span class="p">)</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="n">map_name_to_node</span><span class="p">[</span><span class="n">source_op_name</span><span class="p">]</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">node_name</span> <span class="ow">in</span> <span class="n">nodes_in_path</span><span class="p">:</span>
+                <span class="n">resource_identity_types</span><span class="p">[</span><span class="n">node_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">dtype</span>
+            <span class="n">read_variable_op_types</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">dtype</span>
+
+    <span class="c1"># Gets map of variables and the associated data.</span>
+    <span class="k">if</span> <span class="n">variable_names</span><span class="p">:</span>
+        <span class="n">returned_variables</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">variable_names</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">returned_variables</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">variables_data_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">variable_dict_names</span><span class="p">,</span> <span class="n">returned_variables</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Froze </span><span class="si">%d</span><span class="s2"> variables.&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">returned_variables</span><span class="p">))</span>
+
+    <span class="c1"># Reconstruct the graph with constants in place of variables.</span>
+    <span class="n">output_graph_def</span> <span class="o">=</span> <span class="n">graph_pb2</span><span class="o">.</span><span class="n">GraphDef</span><span class="p">()</span>
+    <span class="n">how_many_converted</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">input_node</span> <span class="ow">in</span> <span class="n">inference_graph</span><span class="o">.</span><span class="n">node</span><span class="p">:</span>
+        <span class="n">output_node</span> <span class="o">=</span> <span class="n">node_def_pb2</span><span class="o">.</span><span class="n">NodeDef</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">input_node</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">variables_data_map</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">variables_data_map</span><span class="p">[</span><span class="n">input_node</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+            <span class="n">output_node</span> <span class="o">=</span> <span class="n">create_const_op</span><span class="p">(</span><span class="n">input_node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">input_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">],</span>
+                                          <span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">how_many_converted</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">input_node</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">resource_identity_types</span><span class="p">:</span>
+            <span class="c1"># Converts the Identities of type RESOURCE_DT to the appropriate type</span>
+            <span class="c1"># based on the input they are referencing.</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">input_node</span><span class="p">)</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">resource_identity_types</span><span class="p">[</span><span class="n">input_node</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">input_node</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;ReadVariableOp&quot;</span><span class="p">:</span>
+            <span class="c1"># The first branch converts all VarHandleOps of ResourceVariables to</span>
+            <span class="c1"># constants, so we need to convert the associated ReadVariableOps to</span>
+            <span class="c1"># Identity ops.</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">op</span> <span class="o">=</span> <span class="s2">&quot;Identity&quot;</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">input_node</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">input_node</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">input_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="s2">&quot;_class&quot;</span> <span class="ow">in</span> <span class="n">input_node</span><span class="o">.</span><span class="n">attr</span><span class="p">:</span>
+                <span class="n">output_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;_class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">input_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;_class&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">input_node</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;ResourceGather&quot;</span><span class="p">:</span>
+            <span class="c1"># The first branch converts all VarHandleOps of ResourceGather to</span>
+            <span class="c1"># constants, so we need to convert the associated ResourceGather to Gather</span>
+            <span class="c1"># ops with a Const axis feeding into it.</span>
+            <span class="k">if</span> <span class="n">input_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;batch_dims&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;batch_dims != 0 is not supported by freeze_graph.&quot;</span><span class="p">)</span>
+            <span class="n">axis_data</span> <span class="o">=</span> <span class="n">input_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;batch_dims&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">i</span>
+            <span class="n">axis_node_name</span> <span class="o">=</span> <span class="n">input_node</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;/axis&quot;</span>
+            <span class="n">axis_dtype</span> <span class="o">=</span> <span class="n">input_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;Tindices&quot;</span><span class="p">]</span>
+            <span class="n">output_axis_node</span> <span class="o">=</span> <span class="n">create_const_op</span><span class="p">(</span><span class="n">axis_node_name</span><span class="p">,</span> <span class="n">axis_dtype</span><span class="p">,</span> <span class="n">axis_data</span><span class="p">)</span>
+            <span class="n">output_graph_def</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">output_axis_node</span><span class="p">])</span>
+
+            <span class="n">output_node</span><span class="o">.</span><span class="n">op</span> <span class="o">=</span> <span class="s2">&quot;GatherV2&quot;</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">input_node</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">input_node</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">input_node</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis_node_name</span><span class="p">])</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;Tparams&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">input_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;dtype&quot;</span><span class="p">])</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;Tindices&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">input_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;Tindices&quot;</span><span class="p">])</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;Taxis&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">axis_dtype</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;_class&quot;</span> <span class="ow">in</span> <span class="n">input_node</span><span class="o">.</span><span class="n">attr</span><span class="p">:</span>
+                <span class="n">output_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;_class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">input_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;_class&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">input_node</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s2">&quot;VariableShape&quot;</span><span class="p">:</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">op</span> <span class="o">=</span> <span class="s2">&quot;Shape&quot;</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">input_node</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">input_node</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;T&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">read_variable_op_types</span><span class="p">[</span><span class="n">input_node</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">input_node</span><span class="o">.</span><span class="n">attr</span><span class="p">[</span><span class="s2">&quot;out_type&quot;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output_node</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">input_node</span><span class="p">)</span>
+        <span class="n">output_graph_def</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">output_node</span><span class="p">])</span>
+
+    <span class="n">output_graph_def</span><span class="o">.</span><span class="n">library</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">inference_graph</span><span class="o">.</span><span class="n">library</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Converted </span><span class="si">%d</span><span class="s2"> variables to const ops.&quot;</span><span class="p">,</span> <span class="n">how_many_converted</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output_graph_def</span></div>
+
+
+<div class="viewcode-block" id="remove_training_nodes"><a class="viewcode-back" href="../../../zoo.util.html#zoo.util.tf_graph_util.remove_training_nodes">[docs]</a><span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span>
+    <span class="n">date</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">instructions</span><span class="o">=</span><span class="s2">&quot;Use `tf.compat.v1.graph_util.remove_training_nodes`&quot;</span><span class="p">)</span>
+<span class="nd">@tf_export</span><span class="p">(</span><span class="n">v1</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;graph_util.remove_training_nodes&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">remove_training_nodes</span><span class="p">(</span><span class="n">input_graph</span><span class="p">,</span> <span class="n">protected_nodes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Prunes out nodes that aren&#39;t needed for inference.</span>
+<span class="sd">    There are nodes like Identity and CheckNumerics that are only useful</span>
+<span class="sd">    during training, and can be removed in graphs that will be used for</span>
+<span class="sd">    nothing but inference. Here we identify and remove them, returning an</span>
+<span class="sd">    equivalent graph. To be specific, CheckNumerics nodes are always removed, and</span>
+<span class="sd">    Identity nodes that aren&#39;t involved in control edges are spliced out so that</span>
+<span class="sd">    their input and outputs are directly connected.</span>
+<span class="sd">    Args:</span>
+<span class="sd">      input_graph: Model to analyze and prune.</span>
+<span class="sd">      protected_nodes: An optional list of names of nodes to be kept</span>
+<span class="sd">        unconditionally. This is for example useful to preserve Identity output</span>
+<span class="sd">        nodes.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">      A list of nodes with the unnecessary ones removed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">protected_nodes</span><span class="p">:</span>
+        <span class="n">protected_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">types_to_remove</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;CheckNumerics&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+
+    <span class="n">input_nodes</span> <span class="o">=</span> <span class="n">input_graph</span><span class="o">.</span><span class="n">node</span>
+    <span class="n">names_to_remove</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">input_nodes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">op</span> <span class="ow">in</span> <span class="n">types_to_remove</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">protected_nodes</span><span class="p">:</span>
+            <span class="n">names_to_remove</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">nodes_after_removal</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">input_nodes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">names_to_remove</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">new_node</span> <span class="o">=</span> <span class="n">node_def_pb2</span><span class="o">.</span><span class="n">NodeDef</span><span class="p">()</span>
+        <span class="n">new_node</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">input_before_removal</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">input</span>
+        <span class="k">del</span> <span class="n">new_node</span><span class="o">.</span><span class="n">input</span><span class="p">[:]</span>
+        <span class="k">for</span> <span class="n">full_input_name</span> <span class="ow">in</span> <span class="n">input_before_removal</span><span class="p">:</span>
+            <span class="n">input_name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\^&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">full_input_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">input_name</span> <span class="ow">in</span> <span class="n">names_to_remove</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">new_node</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full_input_name</span><span class="p">)</span>
+        <span class="n">nodes_after_removal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+
+    <span class="n">types_to_splice</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Identity&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+    <span class="n">control_input_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">node_names_with_control_input</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes_after_removal</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">node_input</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">input</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;^&quot;</span> <span class="ow">in</span> <span class="n">node_input</span><span class="p">:</span>
+                <span class="n">control_input_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node_input</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;^&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+                <span class="n">node_names_with_control_input</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="n">names_to_splice</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes_after_removal</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">op</span> <span class="ow">in</span> <span class="n">types_to_splice</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">protected_nodes</span><span class="p">:</span>
+            <span class="c1"># We don&#39;t want to remove nodes that have control edge inputs, because</span>
+            <span class="c1"># they might be involved in subtle dependency issues that removing them</span>
+            <span class="c1"># will jeopardize.</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">node_names_with_control_input</span><span class="p">:</span>
+                <span class="n">names_to_splice</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># We also don&#39;t want to remove nodes which are used as control edge inputs.</span>
+    <span class="n">names_to_splice</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">names_to_splice</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                       <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">control_input_names</span><span class="p">}</span>
+
+    <span class="n">nodes_after_splicing</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes_after_removal</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">names_to_splice</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">new_node</span> <span class="o">=</span> <span class="n">node_def_pb2</span><span class="o">.</span><span class="n">NodeDef</span><span class="p">()</span>
+        <span class="n">new_node</span><span class="o">.</span><span class="n">CopyFrom</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">input_before_removal</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">input</span>
+        <span class="k">del</span> <span class="n">new_node</span><span class="o">.</span><span class="n">input</span><span class="p">[:]</span>
+        <span class="k">for</span> <span class="n">full_input_name</span> <span class="ow">in</span> <span class="n">input_before_removal</span><span class="p">:</span>
+            <span class="n">input_name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\^&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">full_input_name</span><span class="p">)</span>
+            <span class="k">while</span> <span class="n">input_name</span> <span class="ow">in</span> <span class="n">names_to_splice</span><span class="p">:</span>
+                <span class="n">full_input_name</span> <span class="o">=</span> <span class="n">names_to_splice</span><span class="p">[</span><span class="n">input_name</span><span class="p">]</span>
+                <span class="n">input_name</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^\^&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">full_input_name</span><span class="p">)</span>
+            <span class="n">new_node</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full_input_name</span><span class="p">)</span>
+        <span class="n">nodes_after_splicing</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_node</span><span class="p">)</span>
+
+    <span class="n">output_graph</span> <span class="o">=</span> <span class="n">graph_pb2</span><span class="o">.</span><span class="n">GraphDef</span><span class="p">()</span>
+    <span class="n">output_graph</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">nodes_after_splicing</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output_graph</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

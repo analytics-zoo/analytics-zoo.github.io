@@ -1,0 +1,151 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.automl.feature.identity_transformer &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.automl.feature.identity_transformer</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="kn">from</span> <span class="nn">featuretools</span> <span class="kn">import</span> <span class="n">TransformFeature</span>
+
+<span class="kn">from</span> <span class="nn">zoo.automl.common.util</span> <span class="kn">import</span> <span class="n">save_config</span>
+<span class="kn">from</span> <span class="nn">zoo.automl.feature.abstract</span> <span class="kn">import</span> <span class="n">BaseFeatureTransformer</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MinMaxScaler</span><span class="p">,</span> <span class="n">StandardScaler</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">featuretools</span> <span class="k">as</span> <span class="nn">ft</span>
+<span class="kn">from</span> <span class="nn">featuretools.primitives</span> <span class="kn">import</span> <span class="n">make_agg_primitive</span><span class="p">,</span> <span class="n">make_trans_primitive</span>
+<span class="kn">from</span> <span class="nn">featuretools.variable_types</span> <span class="kn">import</span> <span class="n">Text</span><span class="p">,</span> <span class="n">Numeric</span><span class="p">,</span> <span class="n">DatetimeTimeIndex</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+
+<div class="viewcode-block" id="IdentityTransformer"><a class="viewcode-back" href="../../../../zoo.automl.feature.html#zoo.automl.feature.identity_transformer.IdentityTransformer">[docs]</a><span class="k">class</span> <span class="nc">IdentityTransformer</span><span class="p">(</span><span class="n">BaseFeatureTransformer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    echo transformer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">feature_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">target_col</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_cols</span> <span class="o">=</span> <span class="n">feature_cols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_col</span> <span class="o">=</span> <span class="n">target_col</span>
+
+<div class="viewcode-block" id="IdentityTransformer.fit_transform"><a class="viewcode-back" href="../../../../zoo.automl.feature.html#zoo.automl.feature.identity_transformer.IdentityTransformer.fit_transform">[docs]</a>    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_df</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">):</span>
+        <span class="n">train_x</span> <span class="o">=</span> <span class="n">input_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_cols</span><span class="p">]</span>
+        <span class="n">train_y</span> <span class="o">=</span> <span class="n">input_df</span><span class="p">[[</span><span class="bp">self</span><span class="o">.</span><span class="n">target_col</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span></div>
+
+<div class="viewcode-block" id="IdentityTransformer.transform"><a class="viewcode-back" href="../../../../zoo.automl.feature.html#zoo.automl.feature.identity_transformer.IdentityTransformer.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_df</span><span class="p">,</span> <span class="n">is_train</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">train_x</span> <span class="o">=</span> <span class="n">input_df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_cols</span><span class="p">]</span>
+        <span class="n">train_y</span> <span class="o">=</span> <span class="n">input_df</span><span class="p">[[</span><span class="bp">self</span><span class="o">.</span><span class="n">target_col</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span></div>
+
+<div class="viewcode-block" id="IdentityTransformer.save"><a class="viewcode-back" href="../../../../zoo.automl.feature.html#zoo.automl.feature.identity_transformer.IdentityTransformer.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">data_to_save</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;feature_cols&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">feature_cols</span><span class="p">,</span>
+                        <span class="s2">&quot;target_col&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_col</span>
+                        <span class="p">}</span>
+        <span class="n">save_config</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">data_to_save</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="n">replace</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IdentityTransformer.restore"><a class="viewcode-back" href="../../../../zoo.automl.feature.html#zoo.automl.feature.identity_transformer.IdentityTransformer.restore">[docs]</a>    <span class="k">def</span> <span class="nf">restore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_cols</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;feature_cols&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target_col</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;target_col&quot;</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_required_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_optional_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">()</span>
+
+<div class="viewcode-block" id="IdentityTransformer.post_processing"><a class="viewcode-back" href="../../../../zoo.automl.feature.html#zoo.automl.feature.identity_transformer.IdentityTransformer.post_processing">[docs]</a>    <span class="k">def</span> <span class="nf">post_processing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_df</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">is_train</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_train</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">input_df</span><span class="p">[[</span><span class="bp">self</span><span class="o">.</span><span class="n">target_col</span><span class="p">]],</span> <span class="n">y_pred</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">y_pred</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

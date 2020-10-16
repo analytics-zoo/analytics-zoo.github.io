@@ -93,7 +93,7 @@ Estimator.from_torch(*,
                    use_tqdm=False,
                    workers_per_node=1,
                    model_dir=None,
-                   backend=&quot;horovod&quot;):
+                   backend=&quot;bigdl&quot;):
 </code></pre>
 
 <ul>
@@ -108,7 +108,7 @@ Estimator.from_torch(*,
 <li><code>use_tqdm</code>: parameter for horovod. You can monitor training progress if use_tqdm=True.</li>
 <li><code>workers_per_node</code>: parameter for horovod. worker number on each node. default: 1.</li>
 <li><code>model_dir</code>: parameter for <code>bigdl</code>. The path to save model. During the training, if checkpoint_trigger is defined and triggered, the model will be saved to model_dir.</li>
-<li><code>backend</code>: You can choose "horovod" or "bigdl" as backend.</li>
+<li><code>backend</code>: You can choose "horovod" or "bigdl" as backend. Default: bigdl.</li>
 </ul>
 <h3 id="use-horovod-estimator">Use horovod Estimator</h3>
 <h4 id="train-model"><strong>Train model</strong></h4>
@@ -170,6 +170,22 @@ Estimator.from_torch(*,
 </ul>
 <h4 id="get-model_1"><strong>Get model</strong></h4>
 <p>You can get model using <code>get_model(self)</code></p>
+<h4 id="load-model_1"><strong>Load model</strong></h4>
+<p>You can load saved model using <code>load(self, checkpoint, loss=None)</code>
+* <code>checkpoint</code>: (str) Path to target checkpoint file.
+* <code>loss</code>: PyTorch loss function.</p>
+<h4 id="clear-gradient-clipping"><strong>Clear gradient clipping</strong></h4>
+<p>You can clear gradient clipping parameters using <code>clear_gradient_clipping(self)</code>. In this case, gradient clipping will not be applied.
+<strong>Note:</strong> In order to take effect, it needs to be called before fit.</p>
+<h4 id="set-constant-gradient-clipping"><strong>Set constant gradient clipping</strong></h4>
+<p>You can Set constant gradient clipping during the training process using <code>set_constant_gradient_clipping(self, min, max)</code>.
+* <code>min</code>: The minimum value to clip by.
+* <code>max</code>: The maximum value to clip by.
+<strong>Note:</strong> In order to take effect, it needs to be called before fit.</p>
+<h4 id="set-clip-gradient-to-a-maximum-l2-norm"><strong>Set clip gradient to a maximum L2-Norm</strong></h4>
+<p>You can set clip gradient to a maximum L2-Norm during the training process using <code>set_l2_norm_gradient_clipping(self, clip_norm)</code>.
+* <code>clip_norm</code>: Gradient L2-Norm threshold.
+<strong>Note:</strong> In order to take effect, it needs to be called before fit.</p>
 
   <br>
 </div>

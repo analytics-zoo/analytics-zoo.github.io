@@ -1,0 +1,467 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.pipeline.api.keras.layers.self_attention &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.pipeline.api.keras.layers.self_attention</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">from</span> <span class="nn">bigdl.nn.layer</span> <span class="kn">import</span> <span class="n">Sum</span>
+<span class="kn">from</span> <span class="nn">bigdl.nn.layer</span> <span class="kn">import</span> <span class="n">Layer</span>
+<span class="kn">from</span> <span class="nn">zoo.common.utils</span> <span class="kn">import</span> <span class="n">callZooFunc</span>
+
+<span class="kn">from</span> <span class="nn">zoo.models.common</span> <span class="kn">import</span> <span class="n">ZooModel</span>
+<span class="kn">from</span> <span class="nn">zoo.pipeline.api.keras.engine</span> <span class="kn">import</span> <span class="n">ZooKerasLayer</span>
+<span class="kn">from</span> <span class="nn">zoo.pipeline.api.keras.layers</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">zoo.pipeline.api.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">zoo.pipeline.api.keras.models</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">import</span> <span class="nn">zoo.pipeline.api.autograd</span> <span class="k">as</span> <span class="nn">auto</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span> <span class="o">&gt;=</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>
+    <span class="n">long</span> <span class="o">=</span> <span class="nb">int</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+
+<div class="viewcode-block" id="layer_norm"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.layer_norm">[docs]</a><span class="k">def</span> <span class="nf">layer_norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">):</span>
+    <span class="n">sizes</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">get_output_shape</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sizes</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">auto</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">u</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sizes</span><span class="p">),</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">u</span><span class="p">)</span> <span class="o">/</span> <span class="n">auto</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s</span> <span class="o">+</span> <span class="n">e</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">w</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="n">y</span></div>
+
+
+<div class="viewcode-block" id="TransformerLayer"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.TransformerLayer">[docs]</a><span class="k">class</span> <span class="nc">TransformerLayer</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A self attention layer</span>
+
+<span class="sd">    Input is a list which consists of 2 ndarrays.</span>
+<span class="sd">    1. Token id ndarray: shape [batch, seqLen] with the word token indices in the vocabulary</span>
+<span class="sd">    2. Position id ndarray: shape [batch, seqLen] with positions in the sentence.</span>
+<span class="sd">    Output is a list which contains:</span>
+<span class="sd">    1. The states of Transformer layer.</span>
+<span class="sd">    2. The pooled output which processes the hidden state of the last layer with regard to the first</span>
+<span class="sd">    token of the sequence. This would be useful for segment-level tasks.</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    nBlock: block number</span>
+<span class="sd">    hidden_drop: drop probability off projection</span>
+<span class="sd">    attn_drop: drop probability of attention</span>
+<span class="sd">    n_head: head number</span>
+<span class="sd">    initializer_range: weight initialization range</span>
+<span class="sd">    bidirectional: whether unidirectional or bidirectional</span>
+<span class="sd">    output_all_block: whether output all blocks&#39; output</span>
+<span class="sd">    embedding_layer: embedding layer</span>
+<span class="sd">    input_shape: input shape</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_block</span><span class="p">,</span> <span class="n">hidden_drop</span><span class="p">,</span> <span class="n">attn_drop</span><span class="p">,</span> <span class="n">n_head</span><span class="p">,</span> <span class="n">initializer_range</span><span class="p">,</span> <span class="n">bidirectional</span><span class="p">,</span>
+                 <span class="n">output_all_block</span><span class="p">,</span> <span class="n">embedding_layer</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">intermediate_size</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_drop</span> <span class="o">=</span> <span class="n">hidden_drop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attn_drop</span> <span class="o">=</span> <span class="n">attn_drop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_head</span> <span class="o">=</span> <span class="n">n_head</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initializer_range</span> <span class="o">=</span> <span class="n">initializer_range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_all_block</span> <span class="o">=</span> <span class="n">output_all_block</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bidirectional</span> <span class="o">=</span> <span class="n">bidirectional</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intermediate_size</span> <span class="o">=</span> <span class="n">intermediate_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span> <span class="o">=</span> <span class="n">bigdl_type</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">bidirectional</span><span class="p">:</span>
+            <span class="n">mask_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tril</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">bigdl_type</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mask_value</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">mask_value</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+                                                                     <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span><span class="p">)))</span>
+
+        <span class="p">(</span><span class="n">extended_attention_mask</span><span class="p">,</span> <span class="n">embedding_inputs</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_input</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">embedding_layer</span><span class="p">(</span><span class="n">embedding_inputs</span><span class="p">)</span>
+        <span class="n">hidden_size</span> <span class="o">=</span> <span class="n">embedding</span><span class="o">.</span><span class="n">get_output_shape</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">next_input</span> <span class="o">=</span> <span class="n">embedding</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_block</span>
+        <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">block</span><span class="p">(</span><span class="n">next_input</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">extended_attention_mask</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_block</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">o</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">block</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">extended_attention_mask</span><span class="p">)</span>
+            <span class="n">output</span><span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">o</span>
+
+        <span class="n">pooler_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pooler</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">hidden_size</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pooler_output</span><span class="p">))</span> <span class="k">if</span> <span class="n">output_all_block</span> \
+            <span class="k">else</span> <span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="p">[</span><span class="n">output</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">pooler_output</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">value</span>
+
+<div class="viewcode-block" id="TransformerLayer.build_input"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.TransformerLayer.build_input">[docs]</a>    <span class="k">def</span> <span class="nf">build_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">input_shape</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;TransformerLayer input must be a list of ndarray (consisting&#39;</span>
+                            <span class="s1">&#39; of input sequence, sequence positions, etc.)&#39;</span><span class="p">)</span>
+
+        <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">Input</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span> <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="n">input_shape</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">inputs</span></div>
+
+<div class="viewcode-block" id="TransformerLayer.block"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.TransformerLayer.block">[docs]</a>    <span class="k">def</span> <span class="nf">block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eplision</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">):</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="n">init_weight</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">))</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="n">init_weight</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">))</span>
+        <span class="n">g2</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="n">init_weight</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">))</span>
+        <span class="n">b2</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="n">init_weight</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">))</span>
+
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multi_head_self_attention</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">layer_norm</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">a</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">eplision</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mlp</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">layer_norm</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">g2</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b2</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">eplision</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">h</span></div>
+
+<div class="viewcode-block" id="TransformerLayer.projection_layer"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.TransformerLayer.projection_layer">[docs]</a>    <span class="k">def</span> <span class="nf">projection_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_size</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Convolution1D</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initializer_range</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TransformerLayer.multi_head_self_attention"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.TransformerLayer.multi_head_self_attention">[docs]</a>    <span class="k">def</span> <span class="nf">multi_head_self_attention</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">projection_layer</span><span class="p">(</span><span class="n">size</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_heads</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_head</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_heads</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_head</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_heads</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_head</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attn</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">merge_heads</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">projection_layer</span><span class="p">(</span><span class="n">size</span><span class="p">)(</span><span class="n">m</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_drop</span><span class="p">)(</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span></div>
+
+<div class="viewcode-block" id="TransformerLayer.attn"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.TransformerLayer.attn">[docs]</a>    <span class="k">def</span> <span class="nf">attn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scale</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">get_output_shape</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bidirectional</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask_value</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mask_value</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mf">1e9</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">attention_mask</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">+</span> <span class="n">attention_mask</span>
+
+        <span class="n">w</span> <span class="o">=</span> <span class="n">Activation</span><span class="p">(</span><span class="s2">&quot;softmax&quot;</span><span class="p">)(</span><span class="n">w</span><span class="p">)</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attn_drop</span><span class="p">)(</span><span class="n">w</span><span class="p">)</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">mm</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">w</span></div>
+
+<div class="viewcode-block" id="TransformerLayer.mlp"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.TransformerLayer.mlp">[docs]</a>    <span class="k">def</span> <span class="nf">mlp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">):</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intermediate_size</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">intermediate_size</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">hidden_size</span> <span class="o">*</span> <span class="mi">4</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">projection_layer</span><span class="p">(</span><span class="n">size</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gelu</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+        <span class="n">h2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">projection_layer</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">)(</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_drop</span><span class="p">)(</span><span class="n">h2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">y</span></div>
+
+<div class="viewcode-block" id="TransformerLayer.gelu"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.TransformerLayer.gelu">[docs]</a>    <span class="k">def</span> <span class="nf">gelu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">auto</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="mf">0.044715</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">Activation</span><span class="p">(</span><span class="s2">&quot;tanh&quot;</span><span class="p">)(</span><span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.0</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">y</span>
+        <span class="k">return</span> <span class="n">y</span></div>
+
+<div class="viewcode-block" id="TransformerLayer.split_heads"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.TransformerLayer.split_heads">[docs]</a>    <span class="k">def</span> <span class="nf">split_heads</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">n_head</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">sizes</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">get_output_shape</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sizes</span> <span class="o">+</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sizes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">n_head</span><span class="p">),))</span>
+        <span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_head</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">Reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">k</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">Permute</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))(</span><span class="n">r</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">Permute</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))(</span><span class="n">r</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">f</span></div>
+
+<div class="viewcode-block" id="TransformerLayer.merge_heads"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.TransformerLayer.merge_heads">[docs]</a>    <span class="k">def</span> <span class="nf">merge_heads</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">contiguous</span><span class="p">(</span><span class="n">Permute</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">sizes</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_output_shape</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">merge_sizes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sizes</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">sizes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">sizes</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],))</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">Reshape</span><span class="p">(</span><span class="n">merge_sizes</span><span class="p">)(</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">m</span></div>
+
+<div class="viewcode-block" id="TransformerLayer.pooler"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.TransformerLayer.pooler">[docs]</a>    <span class="k">def</span> <span class="nf">pooler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">):</span>
+        <span class="n">first_token</span> <span class="o">=</span> <span class="n">Select</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">pooler_output</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">)(</span><span class="n">first_token</span><span class="p">)</span>
+        <span class="n">o</span> <span class="o">=</span> <span class="n">Activation</span><span class="p">(</span><span class="s2">&quot;tanh&quot;</span><span class="p">)(</span><span class="n">pooler_output</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">o</span></div>
+
+<div class="viewcode-block" id="TransformerLayer.init"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.TransformerLayer.init">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="mi">40990</span><span class="p">,</span> <span class="n">seq_len</span><span class="o">=</span><span class="mi">77</span><span class="p">,</span> <span class="n">n_block</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">hidden_drop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+             <span class="n">attn_drop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">n_head</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">768</span><span class="p">,</span>
+             <span class="n">embedding_drop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">initializer_range</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+             <span class="n">bidirectional</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_all_block</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        vocab: vocabulary size of training data, default is 40990</span>
+<span class="sd">        seq_len: max sequence length of training data, default is 77</span>
+<span class="sd">        n_block: block number, default is 12</span>
+<span class="sd">        hidden_drop: drop probability of projection, default is 0.1</span>
+<span class="sd">        attn_drop: drop probability of attention, default is 0.1</span>
+<span class="sd">        n_head: head number, default is 12</span>
+<span class="sd">        hidden_size: is also embedding size</span>
+<span class="sd">        embedding_drop: drop probability of embedding layer, default is 0.1</span>
+<span class="sd">        initializer_range: weight initialization range, default is 0.02</span>
+<span class="sd">        bidirectional: whether unidirectional or bidirectional, default is unidirectional</span>
+<span class="sd">        output_all_block: whether output all blocks&#39; output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">hidden_size</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;hidden_size must be greater than 0 with default embedding layer&#39;</span><span class="p">)</span>
+        <span class="kn">from</span> <span class="nn">bigdl.nn.layer</span> <span class="kn">import</span> <span class="n">Squeeze</span>
+        <span class="n">word_input</span> <span class="o">=</span> <span class="n">InputLayer</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,))</span>
+        <span class="n">postion_input</span> <span class="o">=</span> <span class="n">InputLayer</span><span class="p">(</span><span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,))</span>
+
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+        <span class="n">embedding</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Merge</span><span class="p">(</span><span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="n">word_input</span><span class="p">,</span> <span class="n">postion_input</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;concat&#39;</span><span class="p">))</span> \
+            <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Reshape</span><span class="p">([</span><span class="n">seq_len</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]))</span> \
+            <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">input_length</span><span class="o">=</span><span class="n">seq_len</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span>
+                           <span class="n">weights</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">initializer_range</span><span class="p">,</span> <span class="p">(</span><span class="n">vocab</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">))))</span>\
+            <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="n">embedding_drop</span><span class="p">))</span> \
+            <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Reshape</span><span class="p">((</span><span class="n">seq_len</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)))</span> \
+            <span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">KerasLayerWrapper</span><span class="p">(</span><span class="n">Sum</span><span class="p">(</span><span class="n">dimension</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
+        <span class="c1"># walk around for bug #1208, need remove this line after the bug fixed</span>
+        <span class="n">embedding</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">KerasLayerWrapper</span><span class="p">(</span><span class="n">Squeeze</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">3</span><span class="p">)))</span>
+
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">((</span><span class="n">seq_len</span><span class="p">,),</span> <span class="p">(</span><span class="n">seq_len</span><span class="p">,))</span>
+        <span class="k">return</span> <span class="n">TransformerLayer</span><span class="p">(</span><span class="n">n_block</span><span class="p">,</span> <span class="n">hidden_drop</span><span class="p">,</span> <span class="n">attn_drop</span><span class="p">,</span> <span class="n">n_head</span><span class="p">,</span> <span class="n">initializer_range</span><span class="p">,</span>
+                                <span class="n">bidirectional</span><span class="p">,</span> <span class="n">output_all_block</span><span class="p">,</span> <span class="n">embedding</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="BERT"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.BERT">[docs]</a><span class="k">class</span> <span class="nc">BERT</span><span class="p">(</span><span class="n">TransformerLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A self attention layer.</span>
+<span class="sd">    Input is a list which consists of 4 ndarrays.</span>
+<span class="sd">    1. Token id ndarray: shape [batch, seqLen] with the word token indices in the vocabulary</span>
+<span class="sd">    2. Token type id ndarray: shape [batch, seqLen] with the token types in [0, 1].</span>
+<span class="sd">       0 means `sentence A` and 1 means a `sentence B` (see BERT paper for more details).</span>
+<span class="sd">    3. Position id ndarray: shape [batch, seqLen] with positions in the sentence.</span>
+<span class="sd">    4. Attention_mask ndarray: shape [batch, seqLen] with indices in [0, 1].</span>
+<span class="sd">       It&#39;s a mask to be used if the input sequence length is smaller than seqLen in</span>
+<span class="sd">       the current batch.</span>
+<span class="sd">    Output is a list which contains:</span>
+<span class="sd">    1. The states of BERT layer.</span>
+<span class="sd">    2. The pooled output which processes the hidden state of the last layer with regard to the first</span>
+<span class="sd">    token of the sequence. This would be useful for segment-level tasks.</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    n_block: block number</span>
+<span class="sd">    n_head: head number</span>
+<span class="sd">    intermediate_size: The size of the &quot;intermediate&quot; (i.e., feed-forward)</span>
+<span class="sd">    hidden_drop: The dropout probability for all fully connected layers</span>
+<span class="sd">    attn_drop: drop probability of attention</span>
+<span class="sd">    initializer_ranger: weight initialization range</span>
+<span class="sd">    output_all_block: whether output all blocks&#39; output</span>
+<span class="sd">    embedding_layer: embedding layer</span>
+<span class="sd">    input_shape: input shape</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_block</span><span class="p">,</span> <span class="n">n_head</span><span class="p">,</span> <span class="n">intermediate_size</span><span class="p">,</span> <span class="n">hidden_drop</span><span class="p">,</span> <span class="n">attn_drop</span><span class="p">,</span>
+                 <span class="n">initializer_range</span><span class="p">,</span> <span class="n">output_all_block</span><span class="p">,</span> <span class="n">embedding_layer</span><span class="p">,</span>
+                 <span class="n">input_shape</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_drop</span> <span class="o">=</span> <span class="n">hidden_drop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attn_drop</span> <span class="o">=</span> <span class="n">attn_drop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_head</span> <span class="o">=</span> <span class="n">n_head</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intermediate_size</span> <span class="o">=</span> <span class="n">intermediate_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_all_block</span> <span class="o">=</span> <span class="n">output_all_block</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span> <span class="o">=</span> <span class="n">bigdl_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initializer_range</span> <span class="o">=</span> <span class="n">initializer_range</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bidirectional</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_block</span> <span class="o">=</span> <span class="n">n_block</span>
+
+        <span class="n">word_input</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">token_type_input</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">position_input</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+        <span class="n">e</span> <span class="o">=</span> <span class="n">embedding_layer</span><span class="p">([</span><span class="n">word_input</span><span class="p">,</span> <span class="n">token_type_input</span><span class="p">,</span> <span class="n">position_input</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">get_output_shape</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">extended_attention_mask</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span> <span class="n">attention_mask</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mf">10000.0</span>
+
+        <span class="n">next_input</span> <span class="o">=</span> <span class="n">e</span>
+        <span class="n">model_output</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_block</span>
+        <span class="n">model_output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">block</span><span class="p">(</span><span class="n">next_input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">extended_attention_mask</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_block</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">block</span><span class="p">(</span><span class="n">model_output</span><span class="p">[</span><span class="n">_</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">extended_attention_mask</span><span class="p">)</span>
+            <span class="n">model_output</span><span class="p">[</span><span class="n">_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span>
+
+        <span class="n">pooler_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pooler</span><span class="p">(</span><span class="n">model_output</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">output_all_block</span><span class="p">:</span>
+            <span class="n">model_output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pooler_output</span><span class="p">)</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">([</span><span class="n">word_input</span><span class="p">,</span> <span class="n">token_type_input</span><span class="p">,</span> <span class="n">position_input</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">],</span>
+                          <span class="n">model_output</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">([</span><span class="n">word_input</span><span class="p">,</span> <span class="n">token_type_input</span><span class="p">,</span> <span class="n">position_input</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">],</span>
+                          <span class="p">[</span><span class="n">model_output</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">pooler_output</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">value</span>
+
+<div class="viewcode-block" id="BERT.projection_layer"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.BERT.projection_layer">[docs]</a>    <span class="k">def</span> <span class="nf">projection_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_size</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Dense</span><span class="p">(</span><span class="n">output_size</span><span class="p">,</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">initializer_range</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="BERT.build_input"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.BERT.build_input">[docs]</a>    <span class="k">def</span> <span class="nf">build_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">input_shape</span><span class="p">)</span> \
+                <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;BERT input must be a list of 4 ndarray (consisting of input&#39;</span>
+                            <span class="s1">&#39; sequence, sequence positions, segment id, attention mask)&#39;</span><span class="p">)</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">Input</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span> <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="n">input_shape</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="o">-</span> <span class="n">inputs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mf">10000.0</span><span class="p">,</span> <span class="n">inputs</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">inputs</span></div>
+
+<div class="viewcode-block" id="BERT.gelu"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.BERT.gelu">[docs]</a>    <span class="k">def</span> <span class="nf">gelu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">erf</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">e</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">y</span></div>
+
+<div class="viewcode-block" id="BERT.init"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.BERT.init">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="mi">40990</span><span class="p">,</span> <span class="n">hidden_size</span><span class="o">=</span><span class="mi">768</span><span class="p">,</span> <span class="n">n_block</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">n_head</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+             <span class="n">seq_len</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">intermediate_size</span><span class="o">=</span><span class="mi">3072</span><span class="p">,</span> <span class="n">hidden_drop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+             <span class="n">attn_drop</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">initializer_range</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">output_all_block</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+             <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        vocab: vocabulary size of training data, default is 40990</span>
+<span class="sd">        hidden_size: size of the encoder layers, default is 768</span>
+<span class="sd">        n_block: block number, default is 12</span>
+<span class="sd">        n_head: head number, default is 12</span>
+<span class="sd">        seq_len: max sequence length of training data, default is 77</span>
+<span class="sd">        intermediate_size: The size of the &quot;intermediate&quot; (i.e., feed-forward)</span>
+<span class="sd">        hidden_drop: drop probability of full connected layers, default is 0.1</span>
+<span class="sd">        attn_drop: drop probability of attention, default is 0.1</span>
+<span class="sd">        initializer_ranger: weight initialization range, default is 0.02</span>
+<span class="sd">        output_all_block: whether output all blocks&#39; output, default is True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">word_input</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,))</span>
+        <span class="n">token_type_input</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,))</span>
+        <span class="n">position_input</span> <span class="o">=</span> <span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,))</span>
+        <span class="n">word_embedding</span> <span class="o">=</span> <span class="n">Embedding</span><span class="p">(</span><span class="n">vocab</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">input_length</span><span class="o">=</span><span class="n">seq_len</span><span class="p">,</span>
+                                   <span class="n">weights</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">initializer_range</span><span class="p">,</span>
+                                                            <span class="p">(</span><span class="n">vocab</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)))(</span><span class="n">word_input</span><span class="p">)</span>
+        <span class="n">position_embedding</span> <span class="o">=</span> <span class="n">Embedding</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">input_length</span><span class="o">=</span><span class="n">seq_len</span><span class="p">,</span>
+                                       <span class="n">weights</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">initializer_range</span><span class="p">,</span>
+                                                                <span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)))(</span>
+            <span class="n">position_input</span><span class="p">)</span>
+        <span class="n">token_type_embedding</span> <span class="o">=</span> <span class="n">Embedding</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">input_length</span><span class="o">=</span><span class="n">seq_len</span><span class="p">,</span>
+                                         <span class="n">weights</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">initializer_range</span><span class="p">,</span>
+                                                                  <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)))(</span>
+            <span class="n">token_type_input</span><span class="p">)</span>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">word_embedding</span> <span class="o">+</span> <span class="n">position_embedding</span> <span class="o">+</span> <span class="n">token_type_embedding</span>
+
+        <span class="n">w</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">),</span>
+                           <span class="n">init_weight</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">bigdl_type</span><span class="p">))</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">auto</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">),</span>
+                           <span class="n">init_weight</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">bigdl_type</span><span class="p">))</span>
+        <span class="n">after_norm</span> <span class="o">=</span> <span class="n">layer_norm</span><span class="p">(</span><span class="n">embedding</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mf">1e-12</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">Dropout</span><span class="p">(</span><span class="n">hidden_drop</span><span class="p">)(</span><span class="n">after_norm</span><span class="p">)</span>
+
+        <span class="n">embedding_layer</span> <span class="o">=</span> <span class="n">Model</span><span class="p">([</span><span class="n">word_input</span><span class="p">,</span> <span class="n">token_type_input</span><span class="p">,</span> <span class="n">position_input</span><span class="p">],</span> <span class="n">h</span><span class="p">)</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">((</span><span class="n">seq_len</span><span class="p">,),</span> <span class="p">(</span><span class="n">seq_len</span><span class="p">,),</span> <span class="p">(</span><span class="n">seq_len</span><span class="p">,),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">BERT</span><span class="p">(</span><span class="n">n_block</span><span class="p">,</span> <span class="n">n_head</span><span class="p">,</span> <span class="n">intermediate_size</span><span class="p">,</span> <span class="n">hidden_drop</span><span class="p">,</span> <span class="n">attn_drop</span><span class="p">,</span> <span class="n">initializer_range</span><span class="p">,</span>
+                    <span class="n">output_all_block</span><span class="p">,</span> <span class="n">embedding_layer</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BERT.init_from_existing_model"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.self_attention.BERT.init_from_existing_model">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">init_from_existing_model</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">input_seq_len</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">hidden_drop</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span>
+                                 <span class="n">attn_drop</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">output_all_block</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load an existing BERT model (with weights).</span>
+
+<span class="sd">        # Arguments</span>
+<span class="sd">        path: The path for the pre-defined model.</span>
+<span class="sd">              Local file system, HDFS and Amazon S3 are supported.</span>
+<span class="sd">              HDFS path should be like &#39;hdfs://[host]:[port]/xxx&#39;.</span>
+<span class="sd">              Amazon S3 path should be like &#39;s3a://bucket/xxx&#39;.</span>
+<span class="sd">        weight_path: The path for pre-trained weights if any. Default is None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">jlayer</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;loadBERT&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">,</span> <span class="n">input_seq_len</span><span class="p">,</span>
+                             <span class="n">hidden_drop</span><span class="p">,</span> <span class="n">attn_drop</span><span class="p">,</span> <span class="n">output_all_block</span><span class="p">)</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Layer</span><span class="p">(</span><span class="n">jvalue</span><span class="o">=</span><span class="n">jlayer</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="n">bigdl_type</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">=</span> <span class="n">BERT</span>
+        <span class="k">return</span> <span class="n">model</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

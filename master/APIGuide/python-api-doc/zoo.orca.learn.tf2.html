@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.pipeline.html" title="zoo.pipeline package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -43,9 +46,9 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.orca.learn.tf2 package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-orca-learn-tf2-tf-ray-estimator-module">zoo.orca.learn.tf2.tf_ray_estimator module</a></li>
-<li><a class="reference internal" href="#zoo-orca-learn-tf2-tf-runner-module">zoo.orca.learn.tf2.tf_runner module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.tf2.tf_ray_estimator">zoo.orca.learn.tf2.tf_ray_estimator module</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.tf2.tf_runner">zoo.orca.learn.tf2.tf_runner module</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.tf2">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -88,14 +91,150 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-orca-learn-tf2-tf-ray-estimator-module">
-<h2>zoo.orca.learn.tf2.tf_ray_estimator module<a class="headerlink" href="#zoo-orca-learn-tf2-tf-ray-estimator-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.orca.learn.tf2.tf_ray_estimator">
+<span id="zoo-orca-learn-tf2-tf-ray-estimator-module"></span><h2>zoo.orca.learn.tf2.tf_ray_estimator module<a class="headerlink" href="#module-zoo.orca.learn.tf2.tf_ray_estimator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.orca.learn.tf2.tf_ray_estimator.Estimator">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.tf2.tf_ray_estimator.</code><code class="descname">Estimator</code><span class="sig-paren">(</span><em>model_creator</em>, <em>compile_args_creator=None</em>, <em>config=None</em>, <em>verbose=False</em>, <em>backend='tf2'</em>, <em>workers_per_node=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_ray_estimator.html#Estimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_ray_estimator.Estimator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_ray_estimator.Estimator.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>data_creator</em>, <em>verbose=1</em>, <em>sample_weight=None</em>, <em>steps=None</em>, <em>callbacks=None</em>, <em>data_config=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_ray_estimator.html#Estimator.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates the model on the validation data set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_ray_estimator.Estimator.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>data_creator</em>, <em>epochs=1</em>, <em>verbose=1</em>, <em>callbacks=None</em>, <em>validation_data_creator=None</em>, <em>class_weight=None</em>, <em>steps_per_epoch=None</em>, <em>validation_steps=None</em>, <em>validation_freq=1</em>, <em>data_config=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_ray_estimator.html#Estimator.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs a training epoch.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="zoo.orca.learn.tf2.tf_ray_estimator.Estimator.from_keras">
+<em class="property">classmethod </em><code class="descname">from_keras</code><span class="sig-paren">(</span><em>model_creator</em>, <em>config=None</em>, <em>verbose=False</em>, <em>workers_per_node=1</em>, <em>compile_args_creator=None</em>, <em>backend='tf2'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_ray_estimator.html#Estimator.from_keras"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.from_keras" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_ray_estimator.Estimator.get_model">
+<code class="descname">get_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_ray_estimator.html#Estimator.get_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.get_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the learned model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_ray_estimator.Estimator.restore">
+<code class="descname">restore</code><span class="sig-paren">(</span><em>checkpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_ray_estimator.html#Estimator.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restores the model from the provided checkpoint.</p>
+<p>Args:
+checkpoint (str): Path to target checkpoint file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_ray_estimator.Estimator.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>checkpoint</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_ray_estimator.html#Estimator.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the model at the provided checkpoint.</p>
+<p>Args:
+checkpoint (str): Path to target checkpoint file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_ray_estimator.Estimator.shutdown">
+<code class="descname">shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_ray_estimator.html#Estimator.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_ray_estimator.Estimator.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shuts down workers and releases resources.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.orca.learn.tf2.tf_ray_estimator.data_length">
+<code class="descclassname">zoo.orca.learn.tf2.tf_ray_estimator.</code><code class="descname">data_length</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_ray_estimator.html#data_length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_ray_estimator.data_length" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.orca.learn.tf2.tf_ray_estimator.ray_partition_to_creator">
+<code class="descclassname">zoo.orca.learn.tf2.tf_ray_estimator.</code><code class="descname">ray_partition_to_creator</code><span class="sig-paren">(</span><em>partition</em>, <em>max_length=None</em>, <em>shuffle=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_ray_estimator.html#ray_partition_to_creator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_ray_estimator.ray_partition_to_creator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
-<div class="section" id="zoo-orca-learn-tf2-tf-runner-module">
-<h2>zoo.orca.learn.tf2.tf_runner module<a class="headerlink" href="#zoo-orca-learn-tf2-tf-runner-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.orca.learn.tf2.tf_runner">
+<span id="zoo-orca-learn-tf2-tf-runner-module"></span><h2>zoo.orca.learn.tf2.tf_runner module<a class="headerlink" href="#module-zoo.orca.learn.tf2.tf_runner" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.orca.learn.tf2.tf_runner.TFRunner">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.tf2.tf_runner.</code><code class="descname">TFRunner</code><span class="sig-paren">(</span><em>model_creator</em>, <em>compile_args_creator</em>, <em>config=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_runner.html#TFRunner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_runner.TFRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Manages a TensorFlow model for training.</p>
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_runner.TFRunner.find_free_port">
+<code class="descname">find_free_port</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_runner.html#TFRunner.find_free_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_runner.TFRunner.find_free_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds a free port on the current node.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_runner.TFRunner.get_node_ip">
+<code class="descname">get_node_ip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_runner.html#TFRunner.get_node_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_runner.TFRunner.get_node_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the IP address of the current node.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_runner.TFRunner.get_state">
+<code class="descname">get_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_runner.html#TFRunner.get_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_runner.TFRunner.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the state of the runner.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_runner.TFRunner.set_state">
+<code class="descname">set_state</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_runner.html#TFRunner.set_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_runner.TFRunner.set_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the state of the model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_runner.TFRunner.setup">
+<code class="descname">setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_runner.html#TFRunner.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_runner.TFRunner.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the model.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_runner.TFRunner.setup_distributed">
+<code class="descname">setup_distributed</code><span class="sig-paren">(</span><em>urls</em>, <em>world_rank</em>, <em>world_size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_runner.html#TFRunner.setup_distributed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_runner.TFRunner.setup_distributed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets up TensorFLow distributed environment and initializes the model.
+Args:
+urls (str): the URLs that each node uses to connect.
+world_rank (int): the index of the runner.
+world_size (int): the total number of runners.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_runner.TFRunner.setup_horovod">
+<code class="descname">setup_horovod</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_runner.html#TFRunner.setup_horovod"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_runner.TFRunner.setup_horovod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_runner.TFRunner.shutdown">
+<code class="descname">shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_runner.html#TFRunner.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_runner.TFRunner.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attempts to shut down the worker.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_runner.TFRunner.step">
+<code class="descname">step</code><span class="sig-paren">(</span><em>data_creator</em>, <em>epochs=1</em>, <em>verbose=1</em>, <em>callbacks=None</em>, <em>validation_data_creator=None</em>, <em>class_weight=None</em>, <em>steps_per_epoch=None</em>, <em>validation_steps=None</em>, <em>validation_freq=1</em>, <em>data_config=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_runner.html#TFRunner.step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_runner.TFRunner.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs a training epoch and updates the model parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf2.tf_runner.TFRunner.validate">
+<code class="descname">validate</code><span class="sig-paren">(</span><em>data_creator</em>, <em>verbose=1</em>, <em>sample_weight=None</em>, <em>steps=None</em>, <em>callbacks=None</em>, <em>data_config=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_runner.html#TFRunner.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_runner.TFRunner.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates the model on the validation data set.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.orca.learn.tf2.tf_runner.find_free_port">
+<code class="descclassname">zoo.orca.learn.tf2.tf_runner.</code><code class="descname">find_free_port</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf2/tf_runner.html#find_free_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf2.tf_runner.find_free_port" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.orca.learn.tf2">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.orca.learn.tf2" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -111,6 +250,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.pipeline.html" title="zoo.pipeline package"
              >next</a> |</li>
