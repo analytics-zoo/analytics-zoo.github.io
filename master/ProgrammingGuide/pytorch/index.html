@@ -37,6 +37,8 @@
           ]},
           {title: "Pytorch API", url: "#pytorch-api", children: [
           ]},
+          {title: "this loss function is calculating loss for a multi-output model", url: "#this-loss-function-is-calculating-loss-for-a-multi-output-model", children: [
+          ]},
           {title: "Examples", url: "#examples", children: [
           ]},
         ];
@@ -76,41 +78,38 @@ Python: 3.7  </p>
 <h1 id="pytorch-api">Pytorch API</h1>
 <p>Two wrappers are defined in Analytics Zoo for Pytorch:</p>
 <ol>
-<li>TorchModel: TorchModel is a wrapper class for Pytorch model.
-User may create a TorchModel by providing a Pytorch model, e.g.</li>
-</ol>
-<pre><code class="python">    from zoo.pipeline.api.torch import TorchModel
-    TorchModel.from_pytorch(torchvision.models.resnet18(pretrained=True))
-</code></pre>
-
-<p>The above line creates TorchModel wrapping a ResNet model, and user can use the TorchModel for
+<li>
+<p>TorchModel: TorchModel is a wrapper class for Pytorch model.
+User may create a TorchModel by providing a Pytorch model, e.g.
+    <code>python
+    from zoo.pipeline.api.torch import TorchModel
+    TorchModel.from_pytorch(torchvision.models.resnet18(pretrained=True))</code>
+The above line creates TorchModel wrapping a ResNet model, and user can use the TorchModel for
 training or inference with Analytics Zoo.</p>
-<ol>
-<li>TorchLoss: TorchLoss is a wrapper for loss functions defined by Pytorch.
-User may create a TorchLoss from a Pytorch Criterion, </li>
+</li>
+<li>
+<p>TorchLoss: TorchLoss is a wrapper for loss functions defined by Pytorch.
+User may create a TorchLoss from a Pytorch Criterion, 
+    ```python
+    from torch import nn
+    from zoo.pipeline.api.torch import TorchLoss</p>
+<p>az_criterion = TorchLoss.from_pytorch(nn.MSELoss())
+```
+or from a custom loss function, which takes input and label as parameters</p>
+<p>```python
+from torch import nn
+from zoo.pipeline.api.torch import TorchLoss</p>
+<p>criterion = nn.MSELoss()</p>
+<h1 id="this-loss-function-is-calculating-loss-for-a-multi-output-model">this loss function is calculating loss for a multi-output model</h1>
+<p>def lossFunc(input, label):
+    loss1 = criterion(input[0], label[0])
+    loss2 = criterion(input[1], label[1])
+    loss = loss1 + 0.4 * loss2
+    return loss</p>
+<p>az_criterion = TorchLoss.from_pytorch(lossFunc)
+```</p>
+</li>
 </ol>
-<pre><code class="python">    from torch import nn
-    from zoo.pipeline.api.torch import TorchLoss
-
-    az_criterion = TorchLoss.from_pytorch(loss=nn.MSELoss())
-</code></pre>
-
-<p>or from a custom loss function, which takes input and label as parameters</p>
-<pre><code class="python">    from torch import nn
-    from zoo.pipeline.api.torch import TorchLoss
-
-    criterion = nn.MSELoss()
-
-    # this loss function is calculating loss for a multi-output model
-    def lossFunc(input, label):
-        loss1 = criterion(input[0], label[0])
-        loss2 = criterion(input[1], label[1])
-        loss = loss1 + 0.4 * loss2
-        return loss
-
-    az_criterion = TorchLoss.from_pytorch(loss=lossFunc)
-</code></pre>
-
 <h1 id="examples">Examples</h1>
 <p>Here we provide a simple end to end example, where we use TorchModel and TorchLoss to
 train a simple model with Spark DataFrame.</p>
