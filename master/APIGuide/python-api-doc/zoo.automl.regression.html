@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.automl.search.html" title="zoo.automl.search package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -42,10 +45,10 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.automl.regression package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-automl-regression-base-predictor-module">zoo.automl.regression.base_predictor module</a></li>
-<li><a class="reference internal" href="#zoo-automl-regression-time-sequence-predictor-module">zoo.automl.regression.time_sequence_predictor module</a></li>
-<li><a class="reference internal" href="#zoo-automl-regression-xgb-predictor-module">zoo.automl.regression.xgb_predictor module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.regression.base_predictor">zoo.automl.regression.base_predictor module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.regression.time_sequence_predictor">zoo.automl.regression.time_sequence_predictor module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.regression.xgb_predictor">zoo.automl.regression.xgb_predictor module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.regression">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -88,17 +91,135 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-automl-regression-base-predictor-module">
-<h2>zoo.automl.regression.base_predictor module<a class="headerlink" href="#zoo-automl-regression-base-predictor-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.regression.base_predictor">
+<span id="zoo-automl-regression-base-predictor-module"></span><h2>zoo.automl.regression.base_predictor module<a class="headerlink" href="#module-zoo.automl.regression.base_predictor" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.regression.base_predictor.BasePredictor">
+<em class="property">class </em><code class="descclassname">zoo.automl.regression.base_predictor.</code><code class="descname">BasePredictor</code><span class="sig-paren">(</span><em>name='automl'</em>, <em>logs_dir='~/zoo_automl_logs'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/base_predictor.html#BasePredictor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.base_predictor.BasePredictor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="zoo.automl.regression.base_predictor.BasePredictor.create_feature_transformer">
+<code class="descname">create_feature_transformer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/base_predictor.html#BasePredictor.create_feature_transformer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.base_predictor.BasePredictor.create_feature_transformer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.regression.base_predictor.BasePredictor.create_model">
+<code class="descname">create_model</code><span class="sig-paren">(</span><em>resource_per_trail</em>, <em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/base_predictor.html#BasePredictor.create_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.base_predictor.BasePredictor.create_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.regression.base_predictor.BasePredictor.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>input_df</em>, <em>metric=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/base_predictor.html#BasePredictor.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.base_predictor.BasePredictor.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the model on a list of metrics.
+:param input_df: The input time series data frame, Example:
+datetime   value   “extra feature 1”   “extra feature 2”
+2019-01-01 1.9 1   2
+2019-01-02 2.3 0   2
+:param metric: A list of Strings Available string values are “mean_squared_error”,
+“r_square”.
+:return: a list of metric evaluation results.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.regression.base_predictor.BasePredictor.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>input_df</em>, <em>validation_df=None</em>, <em>metric='mse'</em>, <em>recipe=&lt;zoo.automl.config.recipe.SmokeRecipe object&gt;</em>, <em>mc=False</em>, <em>resources_per_trial={'cpu': 2}</em>, <em>distributed=False</em>, <em>hdfs_url=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/base_predictor.html#BasePredictor.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.base_predictor.BasePredictor.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trains the model for time sequence prediction.
+If future sequence length &gt; 1, use seq2seq model, else use vanilla LSTM model.
+:param input_df: The input time series data frame, Example:
+datetime   value   “extra feature 1”   “extra feature 2”
+2019-01-01 1.9 1   2
+2019-01-02 2.3 0   2
+:param validation_df: validation data
+:param metric: String. Metric used for train and validation. Available values are
+“mean_squared_error” or “r_square”
+:param recipe: a Recipe object. Various recipes covers different search space and stopping
+criteria. Default is SmokeRecipe().
+:param resources_per_trial: Machine resources to allocate per trial,
+e.g. <a href="#id1"><span class="problematic" id="id2">``</span></a>{“cpu”: 64, “gpu”: 8}`
+:param distributed: bool. Indicate if running in distributed mode. If true, we will upload
+models to HDFS.
+:param hdfs_url: the hdfs url used to save file in distributed model. If None, the default
+hdfs_url will be used.
+:return: self</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.regression.base_predictor.BasePredictor.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>input_df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/base_predictor.html#BasePredictor.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.base_predictor.BasePredictor.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict future sequence from past sequence.
+:param input_df: The input time series data frame, Example:
+datetime   value   “extra feature 1”   “extra feature 2”
+2019-01-01 1.9 1   2
+2019-01-02 2.3 0   2
+:return: a data frame with 2 columns, the 1st is the datetime, which is the last datetime of
+the past sequence.
+values are the predicted future sequence values.
+Example :
+datetime    value_0     value_1   …     value_2
+2019-01-03  2           3                   9</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-automl-regression-time-sequence-predictor-module">
-<h2>zoo.automl.regression.time_sequence_predictor module<a class="headerlink" href="#zoo-automl-regression-time-sequence-predictor-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.regression.time_sequence_predictor">
+<span id="zoo-automl-regression-time-sequence-predictor-module"></span><h2>zoo.automl.regression.time_sequence_predictor module<a class="headerlink" href="#module-zoo.automl.regression.time_sequence_predictor" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor">
+<em class="property">class </em><code class="descclassname">zoo.automl.regression.time_sequence_predictor.</code><code class="descname">TimeSequencePredictor</code><span class="sig-paren">(</span><em>name='automl', logs_dir='~/zoo_automl_logs', future_seq_len=1, dt_col='datetime', target_col=['value'], extra_features_col=None, drop_missing=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/time_sequence_predictor.html#TimeSequencePredictor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.automl.regression.base_predictor.BasePredictor" title="zoo.automl.regression.base_predictor.BasePredictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.regression.base_predictor.BasePredictor</span></code></a></p>
+<p>Trains a model that predicts future time sequence from past sequence.
+Past sequence should be &gt; 1. Future sequence can be &gt; 1.
+For example, predict the next 2 data points from past 5 data points.
+Output have only one target value (a scalar) for each data point in the sequence.
+Input can have more than one features (value plus several features)
+Example usage:
+tsp = TimeSequencePredictor()
+tsp.fit(input_df)
+result = tsp.predict(test_df)</p>
+<dl class="method">
+<dt id="zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor.create_feature_transformer">
+<code class="descname">create_feature_transformer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/time_sequence_predictor.html#TimeSequencePredictor.create_feature_transformer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor.create_feature_transformer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor.create_model">
+<code class="descname">create_model</code><span class="sig-paren">(</span><em>resources_per_trial</em>, <em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/time_sequence_predictor.html#TimeSequencePredictor.create_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.time_sequence_predictor.TimeSequencePredictor.create_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-automl-regression-xgb-predictor-module">
-<h2>zoo.automl.regression.xgb_predictor module<a class="headerlink" href="#zoo-automl-regression-xgb-predictor-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.regression.xgb_predictor">
+<span id="zoo-automl-regression-xgb-predictor-module"></span><h2>zoo.automl.regression.xgb_predictor module<a class="headerlink" href="#module-zoo.automl.regression.xgb_predictor" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.regression.xgb_predictor.XgbPredictor">
+<em class="property">class </em><code class="descclassname">zoo.automl.regression.xgb_predictor.</code><code class="descname">XgbPredictor</code><span class="sig-paren">(</span><em>feature_cols</em>, <em>target_col</em>, <em>model_type='regressor'</em>, <em>config=None</em>, <em>name='automl'</em>, <em>logs_dir='~/zoo_automl_logs'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/xgb_predictor.html#XgbPredictor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.xgb_predictor.XgbPredictor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.automl.regression.base_predictor.BasePredictor" title="zoo.automl.regression.base_predictor.BasePredictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.regression.base_predictor.BasePredictor</span></code></a></p>
+<p>Trains a model that predicts future time sequence from past sequence.
+Past sequence should be &gt; 1. Future sequence can be &gt; 1.
+For example, predict the next 2 data points from past 5 data points.
+Output have only one target value (a scalar) for each data point in the sequence.
+Input can have more than one features (value plus several features)
+Example usage:
+tsp = TimeSequencePredictor()
+tsp.fit(input_df)
+result = tsp.predict(test_df)</p>
+<dl class="method">
+<dt id="zoo.automl.regression.xgb_predictor.XgbPredictor.create_feature_transformer">
+<code class="descname">create_feature_transformer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/xgb_predictor.html#XgbPredictor.create_feature_transformer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.xgb_predictor.XgbPredictor.create_feature_transformer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.regression.xgb_predictor.XgbPredictor.create_model">
+<code class="descname">create_model</code><span class="sig-paren">(</span><em>resources_per_trial</em>, <em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/regression/xgb_predictor.html#XgbPredictor.create_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.regression.xgb_predictor.XgbPredictor.create_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.regression">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.automl.regression" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -114,6 +235,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.automl.search.html" title="zoo.automl.search package"
              >next</a> |</li>
