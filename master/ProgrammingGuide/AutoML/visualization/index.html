@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Visualization - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Visualization", url: "#visualization", children: [
+              {title: "AutoML visualization Overview", url: "#automl-visualization-overview" },
+              {title: "Scalar view", url: "#scalar-view" },
+              {title: "Leaderboard view", url: "#leaderboard-view" },
+              {title: "Use visualization in Jupyter Notebook", url: "#use-visualization-in-jupyter-notebook" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Visualization</strong></h1>
+    <hr>
+    <h1 id="visualization">Visualization</h1>
+<h2 id="automl-visualization-overview">AutoML visualization Overview</h2>
+<p>AutoML visualization provides two kinds of visualization.</p>
+<ol>
+<li>During the searching process, the visualizations of each trail are shown and updated every 30 seconds.</li>
+<li>After the searching process, a leaderboard of each trail's configs and metrics is shown.</li>
+</ol>
+<p>Note that: AutoML visualization is based on tensorboard and tensorboardx. They should be installed properly before the training starts.</p>
+<h2 id="scalar-view">Scalar view</h2>
+<p>Before training, start the tensorboard server through</p>
+<pre><code class="shell">tensorboard --logdir=&lt;logs_dir&gt;/&lt;job_name&gt;/
+</code></pre>
+
+<p><code>logs_dir</code> is the log directory you set for your predictor(e.g. <em>TimeSequencePredictor</em> in Automated Time Series Prediction). It is default to "/home/\&lt;username>/zoo_automl_logs", where <code>username</code> is your login username. <code>job_name</code> is the name parameter you set for your predictor.</p>
+<p>The data in SCALARS tag will be updated every 30 seconds for users to see the training progress.</p>
+<p><img alt="Scalar" src="../../../Image/automl_scalar.png" /></p>
+<h2 id="leaderboard-view">Leaderboard view</h2>
+<p>After training, start the tensorboard server through</p>
+<pre><code class="shell">tensorboard --logdir=&lt;logs_dir&gt;/&lt;job_name&gt;_leaderboard/
+</code></pre>
+
+<p>where <code>logs_dir</code> and <code>job_name</code> are the same as stated in <a href="#Scalar view">Scalar view</a>.</p>
+<p>A leaderboard of each trail's configs and metrics is shown in the HPARAMS tag.</p>
+<p><img alt="Leaderboard" src="../../../Image/automl_hparams.png" /></p>
+<h2 id="use-visualization-in-jupyter-notebook">Use visualization in Jupyter Notebook</h2>
+<p>You can enable a tensorboard view in jupyter notebook by the following code</p>
+<pre><code class="python">%load_ext tensorboard
+# for scalar view
+%tensorboard --logdir &lt;logs_dir&gt;/&lt;job_name&gt;/
+# for leaderboard view
+%tensorboard --logdir &lt;logs_dir&gt;/&lt;job_name&gt;_leaderboard/
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
