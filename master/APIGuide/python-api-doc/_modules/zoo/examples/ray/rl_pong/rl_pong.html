@@ -1,0 +1,365 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.examples.ray.rl_pong.rl_pong &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.examples.ray.rl_pong.rl_pong</h1><div class="highlight"><pre>
+<span></span><span class="c1"># This file is adapted from https://github.com/ray-project/ray/blob/master</span>
+<span class="c1"># /examples/rl_pong/driver.py</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1"># ==============================================================================</span>
+<span class="c1"># play Pong https://gist.github.com/karpathy/a4166c7fe253700972fcbc77e4ea32c5.</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">ray</span>
+
+<span class="kn">from</span> <span class="nn">zoo</span> <span class="kn">import</span> <span class="n">init_spark_on_yarn</span><span class="p">,</span> <span class="n">init_spark_on_local</span>
+<span class="kn">from</span> <span class="nn">zoo.ray</span> <span class="kn">import</span> <span class="n">RayContext</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;LANG&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;C.UTF-8&quot;</span>
+<span class="c1"># Define some hyperparameters.</span>
+
+<span class="c1"># The number of hidden layer neurons.</span>
+<span class="n">H</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1e-4</span>
+<span class="c1"># Discount factor for reward.</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.99</span>
+<span class="c1"># The decay factor for RMSProp leaky sum of grad^2.</span>
+<span class="n">decay_rate</span> <span class="o">=</span> <span class="mf">0.99</span>
+
+<span class="c1"># The input dimensionality: 80x80 grid.</span>
+<span class="n">D</span> <span class="o">=</span> <span class="mi">80</span> <span class="o">*</span> <span class="mi">80</span>
+
+
+<div class="viewcode-block" id="sigmoid"><a class="viewcode-back" href="../../../../../zoo.examples.ray.rl_pong.html#zoo.examples.ray.rl_pong.rl_pong.sigmoid">[docs]</a><span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="c1"># Sigmoid &quot;squashing&quot; function to interval [0, 1].</span>
+    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="preprocess"><a class="viewcode-back" href="../../../../../zoo.examples.ray.rl_pong.html#zoo.examples.ray.rl_pong.rl_pong.preprocess">[docs]</a><span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Preprocess 210x160x3 uint8 frame into 6400 (80x80) 1D float vector.&quot;&quot;&quot;</span>
+    <span class="c1"># Crop the image.</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="p">[</span><span class="mi">35</span><span class="p">:</span><span class="mi">195</span><span class="p">]</span>
+    <span class="c1"># Downsample by factor of 2.</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="p">[::</span><span class="mi">2</span><span class="p">,</span> <span class="p">::</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># Erase background (background type 1).</span>
+    <span class="n">img</span><span class="p">[</span><span class="n">img</span> <span class="o">==</span> <span class="mi">144</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Erase background (background type 2).</span>
+    <span class="n">img</span><span class="p">[</span><span class="n">img</span> <span class="o">==</span> <span class="mi">109</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Set everything else (paddles, ball) to 1.</span>
+    <span class="n">img</span><span class="p">[</span><span class="n">img</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="discount_rewards"><a class="viewcode-back" href="../../../../../zoo.examples.ray.rl_pong.html#zoo.examples.ray.rl_pong.rl_pong.discount_rewards">[docs]</a><span class="k">def</span> <span class="nf">discount_rewards</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;take 1D float array of rewards and compute discounted reward&quot;&quot;&quot;</span>
+    <span class="n">discounted_r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="n">running_add</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">size</span><span class="p">)):</span>
+        <span class="c1"># Reset the sum, since this was a game boundary (pong specific!).</span>
+        <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">running_add</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">running_add</span> <span class="o">=</span> <span class="n">running_add</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+        <span class="n">discounted_r</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">running_add</span>
+    <span class="k">return</span> <span class="n">discounted_r</span></div>
+
+
+<span class="c1"># defines the policy network</span>
+<span class="c1"># x is a vector that holds the preprocessed pixel information</span>
+<div class="viewcode-block" id="policy_forward"><a class="viewcode-back" href="../../../../../zoo.examples.ray.rl_pong.html#zoo.examples.ray.rl_pong.rl_pong.policy_forward">[docs]</a><span class="k">def</span> <span class="nf">policy_forward</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="c1"># neurons in the hidden layer (W1) can detect various game senarios</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;W1&quot;</span><span class="p">],</span> <span class="n">x</span><span class="p">)</span>   <span class="c1"># compute hidden layer neuron activations</span>
+    <span class="n">h</span><span class="p">[</span><span class="n">h</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># ReLU nonlinearity. threhold at zero</span>
+    <span class="c1"># weights in W2 can then decide if each case we should go UP or DOWN</span>
+    <span class="n">logp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="s2">&quot;W2&quot;</span><span class="p">],</span> <span class="n">h</span><span class="p">)</span>   <span class="c1"># compuate the log probability of going up</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">logp</span><span class="p">)</span>
+    <span class="c1"># Return probability of taking action 2, and hidden state.</span>
+    <span class="k">return</span> <span class="n">p</span><span class="p">,</span> <span class="n">h</span></div>
+
+
+<div class="viewcode-block" id="policy_backward"><a class="viewcode-back" href="../../../../../zoo.examples.ray.rl_pong.html#zoo.examples.ray.rl_pong.rl_pong.policy_backward">[docs]</a><span class="k">def</span> <span class="nf">policy_backward</span><span class="p">(</span><span class="n">eph</span><span class="p">,</span> <span class="n">epx</span><span class="p">,</span> <span class="n">epdlogp</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;backward pass. (eph is array of intermediate hidden states)&quot;&quot;&quot;</span>
+<span class="c1"># the way to change the policy parameters is to</span>
+<span class="c1"># do some rollouts, take the gradient of the sampled actions</span>
+<span class="c1">#  multiply it by the score and add everything</span>
+    <span class="n">dW2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">eph</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">epdlogp</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="n">dh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">epdlogp</span><span class="p">,</span> <span class="n">model</span><span class="p">[</span><span class="s2">&quot;W2&quot;</span><span class="p">])</span>
+    <span class="c1"># Backprop relu.</span>
+    <span class="n">dh</span><span class="p">[</span><span class="n">eph</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dW1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dh</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">epx</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;W1&quot;</span><span class="p">:</span> <span class="n">dW1</span><span class="p">,</span> <span class="s2">&quot;W2&quot;</span><span class="p">:</span> <span class="n">dW2</span><span class="p">}</span></div>
+
+
+<span class="nd">@ray</span><span class="o">.</span><span class="n">remote</span>
+<span class="k">class</span> <span class="nc">PongEnv</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Tell numpy to only use one core. If we don&#39;t do this, each actor may</span>
+        <span class="c1"># try to use all of the cores and the resulting contention may result</span>
+        <span class="c1"># in no speedup over the serial version. Note that if numpy is using</span>
+        <span class="c1"># OpenBLAS, then you need to set OPENBLAS_NUM_THREADS=1, and you</span>
+        <span class="c1"># probably need to do it from the command line (so it happens before</span>
+        <span class="c1"># numpy is imported).</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;MKL_NUM_THREADS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;1&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;Pong-v0&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">compute_gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="c1"># model = {&#39;W1&#39;:W1, &#39;W2&#39;:W2}</span>
+        <span class="c1"># given a model, run for one episode and return the parameter</span>
+        <span class="c1"># to be updated and sum(reward)</span>
+        <span class="c1"># Reset the game.</span>
+        <span class="n">observation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+        <span class="c1"># Note that prev_x is used in computing the difference frame.</span>
+        <span class="n">prev_x</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">xs</span><span class="p">,</span> <span class="n">hs</span><span class="p">,</span> <span class="n">dlogps</span><span class="p">,</span> <span class="n">drs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">reward_sum</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+            <span class="n">cur_x</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">observation</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">cur_x</span> <span class="o">-</span> <span class="n">prev_x</span> <span class="k">if</span> <span class="n">prev_x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+            <span class="n">prev_x</span> <span class="o">=</span> <span class="n">cur_x</span>
+
+            <span class="c1"># feed difference frames into the network</span>
+            <span class="c1"># so that it can detect motion</span>
+            <span class="n">aprob</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">policy_forward</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+            <span class="c1"># Sample an action.</span>
+            <span class="n">action</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">aprob</span> <span class="k">else</span> <span class="mi">3</span>
+
+            <span class="c1"># The observation.</span>
+            <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="c1"># The hidden state.</span>
+            <span class="n">hs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="mi">0</span>  <span class="c1"># A &quot;fake label&quot;.</span>
+            <span class="c1"># The gradient that encourages the action that was taken to be</span>
+            <span class="c1"># taken (see http://cs231n.github.io/neural-networks-2/#losses if</span>
+            <span class="c1"># confused).</span>
+            <span class="n">dlogps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">aprob</span><span class="p">)</span>
+
+            <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="n">reward_sum</span> <span class="o">+=</span> <span class="n">reward</span>
+
+            <span class="c1"># Record reward (has to be done after we call step() to get reward</span>
+            <span class="c1"># for previous action).</span>
+            <span class="n">drs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reward</span><span class="p">)</span>
+
+        <span class="n">epx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+        <span class="n">eph</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">hs</span><span class="p">)</span>
+        <span class="n">epdlogp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">dlogps</span><span class="p">)</span>
+        <span class="n">epr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">drs</span><span class="p">)</span>
+        <span class="c1"># Reset the array memory.</span>
+        <span class="n">xs</span><span class="p">,</span> <span class="n">hs</span><span class="p">,</span> <span class="n">dlogps</span><span class="p">,</span> <span class="n">drs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+
+        <span class="c1"># Compute the discounted reward backward through time.</span>
+        <span class="n">discounted_epr</span> <span class="o">=</span> <span class="n">discount_rewards</span><span class="p">(</span><span class="n">epr</span><span class="p">)</span>
+        <span class="c1"># Standardize the rewards to be unit normal (helps control the gradient</span>
+        <span class="c1"># estimator variance).</span>
+        <span class="n">discounted_epr</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">discounted_epr</span><span class="p">)</span>
+        <span class="n">discounted_epr</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">discounted_epr</span><span class="p">)</span>
+        <span class="c1"># Modulate the gradient with advantage (the policy gradient magic</span>
+        <span class="c1"># happens right here).</span>
+        <span class="n">epdlogp</span> <span class="o">*=</span> <span class="n">discounted_epr</span>
+        <span class="k">return</span> <span class="n">policy_backward</span><span class="p">(</span><span class="n">eph</span><span class="p">,</span> <span class="n">epx</span><span class="p">,</span> <span class="n">epdlogp</span><span class="p">,</span> <span class="n">model</span><span class="p">),</span> <span class="n">reward_sum</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">&quot;Train an RL agent&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--hadoop_conf&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;turn on yarn mode by passing the hadoop path&quot;</span>
+                        <span class="s2">&quot;configuration folder. Otherwise, turn on local mode.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--batch_size&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The number of roll-outs to do per batch.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--iterations&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The number of model updates to perform. By &quot;</span>
+                        <span class="s2">&quot;default, training will not terminate.&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--conda_name&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The name of conda environment.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--slave_num&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The number of slave nodes&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--executor_cores&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The number of driver&#39;s cpu cores you want to use.&quot;</span>
+                             <span class="s2">&quot;You can change it depending on your own cluster setting.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--executor_memory&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;10g&quot;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The size of slave(executor)&#39;s memory you want to use.&quot;</span>
+                             <span class="s2">&quot;You can change it depending on your own cluster setting.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--driver_memory&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;2g&quot;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The size of driver&#39;s memory you want to use.&quot;</span>
+                             <span class="s2">&quot;You can change it depending on your own cluster setting.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--driver_cores&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The number of driver&#39;s cpu cores you want to use.&quot;</span>
+                             <span class="s2">&quot;You can change it depending on your own cluster setting.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--extra_executor_memory_for_ray&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;20g&quot;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The extra executor memory to store some data.&quot;</span>
+                             <span class="s2">&quot;You can change it depending on your own cluster setting.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--object_store_memory&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;4g&quot;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The memory to store data on local.&quot;</span>
+                             <span class="s2">&quot;You can change it depending on your own cluster setting.&quot;</span><span class="p">)</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">hadoop_conf</span><span class="p">:</span>
+        <span class="n">sc</span> <span class="o">=</span> <span class="n">init_spark_on_yarn</span><span class="p">(</span>
+            <span class="n">hadoop_conf</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">hadoop_conf</span><span class="p">,</span>
+            <span class="n">conda_name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">conda_name</span><span class="p">,</span>
+            <span class="n">num_executors</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">slave_num</span><span class="p">,</span>
+            <span class="n">executor_cores</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">executor_cores</span><span class="p">,</span>
+            <span class="n">executor_memory</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">executor_memory</span><span class="p">,</span>
+            <span class="n">driver_memory</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">driver_memory</span><span class="p">,</span>
+            <span class="n">driver_cores</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">driver_cores</span><span class="p">,</span>
+            <span class="n">extra_executor_memory_for_ray</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">extra_executor_memory_for_ray</span><span class="p">)</span>
+        <span class="n">ray_ctx</span> <span class="o">=</span> <span class="n">RayContext</span><span class="p">(</span>
+            <span class="n">sc</span><span class="o">=</span><span class="n">sc</span><span class="p">,</span>
+            <span class="n">object_store_memory</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">object_store_memory</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sc</span> <span class="o">=</span> <span class="n">init_spark_on_local</span><span class="p">(</span><span class="n">cores</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">driver_cores</span><span class="p">)</span>
+        <span class="n">ray_ctx</span> <span class="o">=</span> <span class="n">RayContext</span><span class="p">(</span><span class="n">sc</span><span class="o">=</span><span class="n">sc</span><span class="p">,</span> <span class="n">object_store_memory</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">object_store_memory</span><span class="p">)</span>
+    <span class="n">ray_ctx</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">batch_size</span>
+    <span class="c1"># Run the reinforcement learning.</span>
+    <span class="n">running_reward</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">batch_num</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># &quot;Xavier&quot; initialization.</span>
+    <span class="n">model</span><span class="p">[</span><span class="s2">&quot;W1&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+    <span class="n">model</span><span class="p">[</span><span class="s2">&quot;W2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">H</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+    <span class="c1"># Update buffers that add up gradients over a batch.</span>
+    <span class="n">grad_buffer</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="c1"># Update the rmsprop memory.</span>
+    <span class="n">rmsprop_cache</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">actors</span> <span class="o">=</span> <span class="p">[</span><span class="n">PongEnv</span><span class="o">.</span><span class="n">remote</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)]</span>
+    <span class="n">iteration</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">iteration</span> <span class="o">!=</span> <span class="n">args</span><span class="o">.</span><span class="n">iterations</span><span class="p">:</span>
+        <span class="n">iteration</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">model_id</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">actions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># Launch tasks to compute gradients from multiple rollouts in parallel.</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="c1"># run rall_out for batch_size times</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">):</span>
+            <span class="c1"># compute_gradient returns two variables, so action_id is a list</span>
+            <span class="n">action_id</span> <span class="o">=</span> <span class="n">actors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">compute_gradient</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
+            <span class="n">actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action_id</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">):</span>
+            <span class="c1"># wait for one actor to finish its operation</span>
+            <span class="c1"># action_id is the ready object id</span>
+            <span class="n">action_id</span><span class="p">,</span> <span class="n">actions</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span>
+            <span class="n">grad</span><span class="p">,</span> <span class="n">reward_sum</span> <span class="o">=</span> <span class="n">ray</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">action_id</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="c1"># Accumulate the gradient of each weight parameter over batch.</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">model</span><span class="p">:</span>
+                <span class="n">grad_buffer</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">grad</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">running_reward</span> <span class="o">=</span> <span class="p">(</span><span class="n">reward_sum</span> <span class="k">if</span> <span class="n">running_reward</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span>
+                              <span class="n">running_reward</span> <span class="o">*</span> <span class="mf">0.99</span> <span class="o">+</span> <span class="n">reward_sum</span> <span class="o">*</span> <span class="mf">0.01</span><span class="p">)</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Batch </span><span class="si">{}</span><span class="s2"> computed </span><span class="si">{}</span><span class="s2"> rollouts in </span><span class="si">{}</span><span class="s2"> seconds, &quot;</span>
+              <span class="s2">&quot;running mean is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">batch_num</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span>
+                                          <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">,</span>
+                                          <span class="n">running_reward</span><span class="p">))</span>
+        <span class="c1"># update gradient after one iteration</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">grad_buffer</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="n">rmsprop_cache</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">decay_rate</span> <span class="o">*</span> <span class="n">rmsprop_cache</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">decay_rate</span><span class="p">)</span> <span class="o">*</span> <span class="n">g</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">model</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">g</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rmsprop_cache</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">+</span> <span class="mf">1e-5</span><span class="p">)</span>
+            <span class="c1"># Reset the batch gradient buffer.</span>
+            <span class="n">grad_buffer</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">batch_num</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">ray_ctx</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

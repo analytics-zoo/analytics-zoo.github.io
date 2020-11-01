@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.examples.html" title="zoo.examples package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -41,9 +44,9 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.common package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-common-nncontext-module">zoo.common.nncontext module</a></li>
-<li><a class="reference internal" href="#zoo-common-utils-module">zoo.common.utils module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.common.nncontext">zoo.common.nncontext module</a></li>
+<li><a class="reference internal" href="#module-zoo.common.utils">zoo.common.utils module</a></li>
+<li><a class="reference internal" href="#module-zoo.common">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -86,14 +89,410 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-common-nncontext-module">
-<h2>zoo.common.nncontext module<a class="headerlink" href="#zoo-common-nncontext-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.common.nncontext">
+<span id="zoo-common-nncontext-module"></span><h2>zoo.common.nncontext module<a class="headerlink" href="#module-zoo.common.nncontext" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.common.nncontext.ZooContext">
+<em class="property">class </em><code class="descclassname">zoo.common.nncontext.</code><code class="descname">ZooContext</code><a class="reference internal" href="_modules/zoo/common/nncontext.html#ZooContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.ZooContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.common.nncontext.ZooContextMeta">
+<em class="property">class </em><code class="descclassname">zoo.common.nncontext.</code><code class="descname">ZooContextMeta</code><a class="reference internal" href="_modules/zoo/common/nncontext.html#ZooContextMeta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.ZooContextMeta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></p>
+<dl class="attribute">
+<dt id="zoo.common.nncontext.ZooContextMeta.log_output">
+<code class="descname">log_output</code><a class="headerlink" href="#zoo.common.nncontext.ZooContextMeta.log_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to redirect Spark driver JVM’s stdout and stderr to the current
+python process. This is useful when running Analytics Zoo in jupyter notebook.
+Default to be False. Needs to be set before initializing SparkContext.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.check_version">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">check_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#check_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.check_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.getOrCreateSparkContext">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">getOrCreateSparkContext</code><span class="sig-paren">(</span><em>conf=None</em>, <em>appName=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#getOrCreateSparkContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.getOrCreateSparkContext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current active SparkContext or create a new SparkContext.
+:param conf: An instance of SparkConf. If not specified, a new SparkConf with
+Analytics Zoo and BigDL configurations would be created and used.
+:param appName: The name of the application if any.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An instance of SparkContext.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.get_analytics_zoo_conf">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">get_analytics_zoo_conf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#get_analytics_zoo_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.get_analytics_zoo_conf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.get_optimizer_version">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">get_optimizer_version</code><span class="sig-paren">(</span><em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#get_optimizer_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.get_optimizer_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get DistriOptimizer version.
+return optimizerVersion</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.init_env">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">init_env</code><span class="sig-paren">(</span><em>conf</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#init_env"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.init_env" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.init_nncontext">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">init_nncontext</code><span class="sig-paren">(</span><em>conf=None</em>, <em>spark_log_level='WARN'</em>, <em>redirect_spark_log=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#init_nncontext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.init_nncontext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates or gets a SparkContext with optimized configurations for BigDL performance.
+This method will also initialize the BigDL engine.</p>
+<p>Note: If you use spark-shell or Jupyter notebook, as the SparkContext is created
+before your code, you have to set the Spark configurations through command line options
+or the properties file before calling this method. In this case, you are recommended
+to use the launch scripts we provide:
+<a class="reference external" href="https://github.com/intel-analytics/analytics-zoo/tree/master/scripts">https://github.com/intel-analytics/analytics-zoo/tree/master/scripts</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>conf</strong> – An instance of SparkConf. If not specified, a new SparkConf with</td>
+</tr>
+</tbody>
+</table>
+<p>Analytics Zoo and BigDL configurations would be created and used.
+You can also input a string here to indicate the name of the application.
+:param spark_log_level: The log level for Spark. Default to be ‘WARN’.
+:param redirect_spark_log: Whether to redirect the Spark log to local file. Default to be True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An instance of SparkContext.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.init_spark_conf">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">init_spark_conf</code><span class="sig-paren">(</span><em>conf=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#init_spark_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.init_spark_conf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.init_spark_on_k8s">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">init_spark_on_k8s</code><span class="sig-paren">(</span><em>master</em>, <em>container_image</em>, <em>num_executors</em>, <em>executor_cores</em>, <em>executor_memory='2g'</em>, <em>driver_memory='1g'</em>, <em>driver_cores=4</em>, <em>extra_executor_memory_for_ray=None</em>, <em>extra_python_lib=None</em>, <em>spark_log_level='WARN'</em>, <em>redirect_spark_log=True</em>, <em>jars=None</em>, <em>conf=None</em>, <em>python_location=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#init_spark_on_k8s"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.init_spark_on_k8s" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a SparkContext with Analytics Zoo configurations on Kubernetes cluster for k8s client
+mode. You are recommended to use the Docker image intelanalytics/hyperzoo:latest.
+You can refer to https://github.com/intel-analytics/analytics-zoo/tree/master/docker/hyperzoo
+to build your own Docker image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>master</strong> – The master address of your k8s cluster.</li>
+<li><strong>container_image</strong> – The name of the docker container image for Spark executors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>For example, intelanalytics/hyperzoo:latest
+:param num_executors: The number of Spark executors.
+:param executor_cores: The number of cores for each executor.
+:param executor_memory: The memory for each executor. Default to be ‘2g’.
+:param driver_cores: The number of cores for the Spark driver. Default to be 4.
+:param driver_memory: The memory for the Spark driver. Default to be ‘1g’.
+:param extra_executor_memory_for_ray: The extra memory for Ray services. Default to be None.
+:param extra_python_lib: Extra python files or packages needed for distribution.
+Default to be None.
+:param spark_log_level: The log level for Spark. Default to be ‘WARN’.
+:param redirect_spark_log: Whether to redirect the Spark log to local file. Default to be True.
+:param jars: Comma-separated list of jars to be included on driver and executor’s classpath.
+Default to be None.
+:param conf: You can append extra conf for Spark in key-value format.
+i.e conf={“spark.executor.extraJavaOptions”: “-XX:+PrintGCDetails”}.
+Default to be None.
+:param python_location: The path to your running Python executable. If not specified, the
+default Python interpreter in effect would be used.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An instance of SparkContext.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.init_spark_on_local">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">init_spark_on_local</code><span class="sig-paren">(</span><em>cores=2</em>, <em>conf=None</em>, <em>python_location=None</em>, <em>spark_log_level='WARN'</em>, <em>redirect_spark_log=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#init_spark_on_local"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.init_spark_on_local" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a SparkContext with Analytics Zoo configurations on the local machine.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cores</strong> – The number of cores for Spark local. Default to be 2. You can also set it to “*”</td>
+</tr>
+</tbody>
+</table>
+<p>to use all the available cores. i.e <cite>init_spark_on_local(cores=”*”)</cite>
+:param conf: You can append extra conf for Spark in key-value format.
+i.e conf={“spark.executor.extraJavaOptions”: “-XX:+PrintGCDetails”}.
+Default to be None.
+:param python_location: The path to your running Python executable. If not specified, the
+default Python interpreter in effect would be used.
+:param spark_log_level: The log level for Spark. Default to be ‘WARN’.
+:param redirect_spark_log: Whether to redirect the Spark log to local file. Default to be True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An instance of SparkContext.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.init_spark_on_yarn">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">init_spark_on_yarn</code><span class="sig-paren">(</span><em>hadoop_conf</em>, <em>conda_name</em>, <em>num_executors</em>, <em>executor_cores</em>, <em>executor_memory='2g'</em>, <em>driver_cores=4</em>, <em>driver_memory='1g'</em>, <em>extra_executor_memory_for_ray=None</em>, <em>extra_python_lib=None</em>, <em>penv_archive=None</em>, <em>additional_archive=None</em>, <em>hadoop_user_name='root'</em>, <em>spark_yarn_archive=None</em>, <em>spark_log_level='WARN'</em>, <em>redirect_spark_log=True</em>, <em>jars=None</em>, <em>conf=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#init_spark_on_yarn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.init_spark_on_yarn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a SparkContext with Analytics Zoo configurations on Yarn cluster for yarn-client mode.
+You only need to create a conda environment and install the python dependencies in that
+environment beforehand on the driver machine. These dependencies would be automatically
+packaged and distributed to the whole Yarn cluster.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>hadoop_conf</strong> – The path to the yarn configuration folder.</li>
+<li><strong>conda_name</strong> – The name of the conda environment.</li>
+<li><strong>num_executors</strong> – The number of Spark executors.</li>
+<li><strong>executor_cores</strong> – The number of cores for each executor.</li>
+<li><strong>executor_memory</strong> – The memory for each executor. Default to be ‘2g’.</li>
+<li><strong>driver_cores</strong> – The number of cores for the Spark driver. Default to be 4.</li>
+<li><strong>driver_memory</strong> – The memory for the Spark driver. Default to be ‘1g’.</li>
+<li><strong>extra_executor_memory_for_ray</strong> – The extra memory for Ray services. Default to be None.</li>
+<li><strong>extra_python_lib</strong> – Extra python files or packages needed for distribution.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Default to be None.
+:param penv_archive: Ideally, the program would auto-pack the conda environment specified by
+‘conda_name’, but you can also pass the path to a packed file in “tar.gz” format here.
+Default to be None.
+:param additional_archive: Comma-separated list of additional archives to be uploaded and
+unpacked on executors. Default to be None.
+:param hadoop_user_name: The user name for running the yarn cluster. Default to be ‘root’.
+:param spark_yarn_archive: Conf value for setting spark.yarn.archive. Default to be None.
+:param spark_log_level: The log level for Spark. Default to be ‘WARN’.
+:param redirect_spark_log: Whether to redirect the Spark log to local file. Default to be True.
+:param jars: Comma-separated list of jars to be included on driver and executor’s classpath.
+Default to be None.
+:param conf: You can append extra conf for Spark in key-value format.
+i.e conf={“spark.executor.extraJavaOptions”: “-XX:+PrintGCDetails”}.
+Default to be None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An instance of SparkContext.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.init_spark_standalone">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">init_spark_standalone</code><span class="sig-paren">(</span><em>num_executors</em>, <em>executor_cores</em>, <em>executor_memory='2g'</em>, <em>driver_cores=4</em>, <em>driver_memory='1g'</em>, <em>master=None</em>, <em>extra_executor_memory_for_ray=None</em>, <em>extra_python_lib=None</em>, <em>spark_log_level='WARN'</em>, <em>redirect_spark_log=True</em>, <em>conf=None</em>, <em>jars=None</em>, <em>python_location=None</em>, <em>enable_numa_binding=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#init_spark_standalone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.init_spark_standalone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a SparkContext with Analytics Zoo configurations on Spark standalone cluster.</p>
+<p>You need to specify master if you already have a Spark standalone cluster. For a
+standalone cluster with multiple nodes, make sure that analytics-zoo is installed via
+pip in the Python environment on every node.
+If master is not specified, a new Spark standalone cluster on the current single node
+would be started first and the SparkContext would use its master address. You need to
+call <cite>stop_spark_standalone</cite> after your program finishes to shutdown the cluster.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>num_executors</strong> – The number of Spark executors.</li>
+<li><strong>executor_cores</strong> – The number of cores for each executor.</li>
+<li><strong>executor_memory</strong> – The memory for each executor. Default to be ‘2g’.</li>
+<li><strong>driver_cores</strong> – The number of cores for the Spark driver. Default to be 4.</li>
+<li><strong>driver_memory</strong> – The memory for the Spark driver. Default to be ‘1g’.</li>
+<li><strong>master</strong> – The master URL of an existing Spark standalone cluster: ‘spark://master:port’.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>You only need to specify this if you have already started a standalone cluster.
+Default to be None and a new standalone cluster would be started in this case.
+:param extra_executor_memory_for_ray: The extra memory for Ray services. Default to be None.
+:param extra_python_lib: Extra python files or packages needed for distribution.
+Default to be None.
+:param spark_log_level: The log level for Spark. Default to be ‘WARN’.
+:param redirect_spark_log: Whether to redirect the Spark log to local file. Default to be True.
+:param jars: Comma-separated list of jars to be included on driver and executor’s classpath.
+Default to be None.
+:param conf: You can append extra conf for Spark in key-value format.
+i.e conf={“spark.executor.extraJavaOptions”: “-XX:+PrintGCDetails”}.
+Default to be None.
+:param python_location: The path to your running Python executable. If not specified, the
+default Python interpreter in effect would be used.
+:param enable_numa_binding: Whether to use numactl to start spark worker in order to bind
+different worker processes to different cpus and memory areas. This is may lead to
+better performance on a multi-sockets machine. Defaults to False.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An instance of SparkContext.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.load_conf">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">load_conf</code><span class="sig-paren">(</span><em>conf_str</em>, <em>split_char=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#load_conf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.load_conf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.set_optimizer_version">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">set_optimizer_version</code><span class="sig-paren">(</span><em>optimizerVersion</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#set_optimizer_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.set_optimizer_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set DistriOptimizer version.
+param optimizerVersion: should be “OptimizerV1” or “OptimizerV2”.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.nncontext.stop_spark_standalone">
+<code class="descclassname">zoo.common.nncontext.</code><code class="descname">stop_spark_standalone</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/nncontext.html#stop_spark_standalone"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.nncontext.stop_spark_standalone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the Spark standalone cluster created from init_spark_standalone (master not specified).</p>
+</dd></dl>
+
 </div>
-<div class="section" id="zoo-common-utils-module">
-<h2>zoo.common.utils module<a class="headerlink" href="#zoo-common-utils-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.common.utils">
+<span id="zoo-common-utils-module"></span><h2>zoo.common.utils module<a class="headerlink" href="#module-zoo.common.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.common.utils.JTensor">
+<em class="property">class </em><code class="descclassname">zoo.common.utils.</code><code class="descname">JTensor</code><span class="sig-paren">(</span><em>storage</em>, <em>shape</em>, <em>bigdl_type='float'</em>, <em>indices=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#JTensor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.JTensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bigdl.util.common.JTensor</span></code></p>
+<dl class="classmethod">
+<dt id="zoo.common.utils.JTensor.from_ndarray">
+<em class="property">classmethod </em><code class="descname">from_ndarray</code><span class="sig-paren">(</span><em>a_ndarray</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#JTensor.from_ndarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.JTensor.from_ndarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a ndarray to a DenseTensor which would be used in Java side.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.common.utils.Sample">
+<em class="property">class </em><code class="descclassname">zoo.common.utils.</code><code class="descname">Sample</code><span class="sig-paren">(</span><em>features</em>, <em>labels</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#Sample"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.Sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bigdl.util.common.Sample</span></code></p>
+<dl class="classmethod">
+<dt id="zoo.common.utils.Sample.from_ndarray">
+<em class="property">classmethod </em><code class="descname">from_ndarray</code><span class="sig-paren">(</span><em>features</em>, <em>labels</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#Sample.from_ndarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.Sample.from_ndarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a ndarray of features and labels to Sample, which would be used in Java side.
+:param features: an ndarray or a list of ndarrays
+:param labels: an ndarray or a list of ndarrays or a scalar
+:param bigdl_type: “double” or “float”</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigdl.util.common</span> <span class="kn">import</span> <span class="n">callBigDlFunc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">numpy.testing</span> <span class="kn">import</span> <span class="n">assert_allclose</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sample</span> <span class="o">=</span> <span class="n">Sample</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sample_back</span> <span class="o">=</span> <span class="n">callBigDlFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;testSample&quot;</span><span class="p">,</span> <span class="n">sample</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">(),</span> <span class="n">sample_back</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">(),</span> <span class="n">sample_back</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expected_feature_storage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(([[</span><span class="mf">0.69646919</span><span class="p">,</span> <span class="mf">0.28613934</span><span class="p">,</span> <span class="mf">0.22685145</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.55131477</span><span class="p">,</span> <span class="mf">0.71946895</span><span class="p">,</span> <span class="mf">0.42310646</span><span class="p">]]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expected_feature_shape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expected_label_storage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(([[</span><span class="mf">0.98076421</span><span class="p">,</span> <span class="mf">0.68482971</span><span class="p">,</span> <span class="mf">0.48093191</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.39211753</span><span class="p">,</span> <span class="mf">0.343178</span><span class="p">,</span> <span class="mf">0.72904968</span><span class="p">]]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expected_label_shape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">storage</span><span class="p">,</span> <span class="n">expected_feature_storage</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">expected_feature_shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">storage</span><span class="p">,</span> <span class="n">expected_label_storage</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">sample</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">expected_label_shape</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.utils.append_suffix">
+<code class="descclassname">zoo.common.utils.</code><code class="descname">append_suffix</code><span class="sig-paren">(</span><em>prefix</em>, <em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#append_suffix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.append_suffix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.utils.callZooFunc">
+<code class="descclassname">zoo.common.utils.</code><code class="descname">callZooFunc</code><span class="sig-paren">(</span><em>bigdl_type</em>, <em>name</em>, <em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#callZooFunc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.callZooFunc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call API in PythonBigDL</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.utils.convert_to_safe_path">
+<code class="descclassname">zoo.common.utils.</code><code class="descname">convert_to_safe_path</code><span class="sig-paren">(</span><em>input_path</em>, <em>follow_symlinks=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#convert_to_safe_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.convert_to_safe_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.utils.get_file_list">
+<code class="descclassname">zoo.common.utils.</code><code class="descname">get_file_list</code><span class="sig-paren">(</span><em>path</em>, <em>recursive=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#get_file_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.get_file_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.utils.get_remote_file_to_local">
+<code class="descclassname">zoo.common.utils.</code><code class="descname">get_remote_file_to_local</code><span class="sig-paren">(</span><em>remote_path</em>, <em>local_path</em>, <em>over_write=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#get_remote_file_to_local"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.get_remote_file_to_local" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.utils.is_local_path">
+<code class="descclassname">zoo.common.utils.</code><code class="descname">is_local_path</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#is_local_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.is_local_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.utils.load_from_file">
+<code class="descclassname">zoo.common.utils.</code><code class="descname">load_from_file</code><span class="sig-paren">(</span><em>load_func</em>, <em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#load_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.load_from_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.utils.put_local_file_to_remote">
+<code class="descclassname">zoo.common.utils.</code><code class="descname">put_local_file_to_remote</code><span class="sig-paren">(</span><em>local_path</em>, <em>remote_path</em>, <em>over_write=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#put_local_file_to_remote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.put_local_file_to_remote" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.utils.save_file">
+<code class="descclassname">zoo.common.utils.</code><code class="descname">save_file</code><span class="sig-paren">(</span><em>save_func</em>, <em>path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#save_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.save_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.utils.set_core_number">
+<code class="descclassname">zoo.common.utils.</code><code class="descname">set_core_number</code><span class="sig-paren">(</span><em>num</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#set_core_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.set_core_number" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.common.utils.to_list_of_numpy">
+<code class="descclassname">zoo.common.utils.</code><code class="descname">to_list_of_numpy</code><span class="sig-paren">(</span><em>elements</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/common/utils.html#to_list_of_numpy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.common.utils.to_list_of_numpy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-zoo.common">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.common" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -109,6 +508,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.examples.html" title="zoo.examples package"
              >next</a> |</li>

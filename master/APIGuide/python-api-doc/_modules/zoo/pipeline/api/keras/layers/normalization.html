@@ -1,0 +1,186 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.pipeline.api.keras.layers.normalization &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.pipeline.api.keras.layers.normalization</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">..engine.topology</span> <span class="kn">import</span> <span class="n">ZooKerasLayer</span>
+<span class="kn">from</span> <span class="nn">bigdl.util.common</span> <span class="kn">import</span> <span class="n">JTensor</span>
+<span class="kn">from</span> <span class="nn">zoo.common.utils</span> <span class="kn">import</span> <span class="n">callZooFunc</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span> <span class="o">&gt;=</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>
+    <span class="n">long</span> <span class="o">=</span> <span class="nb">int</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+
+<div class="viewcode-block" id="BatchNormalization"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.normalization.BatchNormalization">[docs]</a><span class="k">class</span> <span class="nc">BatchNormalization</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Batch normalization layer.</span>
+<span class="sd">    Normalize the activations of the previous layer at each batch, i.e. applies a transformation</span>
+<span class="sd">    that maintains the mean activation close to 0 and the activation standard deviation close to 1.</span>
+<span class="sd">    It is a feature-wise normalization, each feature map in the input will be normalized separately.</span>
+<span class="sd">    The input of this layer should be 4D or 2D.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    epsilon: Small float &gt; 0. Fuzz parameter. Default is 0.001.</span>
+<span class="sd">    momentum: Float. Momentum in the computation of the exponential average of the mean and</span>
+<span class="sd">              standard deviation of the data, for feature-wise normalization. Default is 0.99.</span>
+<span class="sd">    beta_init: Name of the initialization function for shift parameter. Default is &#39;zero&#39;.</span>
+<span class="sd">    gamma_init: Name of the initialization function for scale parameter. Default is &#39;one&#39;.</span>
+<span class="sd">    dim_ordering: Format of input data. Either &#39;th&#39; (Channel First) or &#39;tf&#39; (Channel Last).</span>
+<span class="sd">                  Default is &#39;th&#39;. For &#39;th&#39;, axis along which to normalize is 1.</span>
+<span class="sd">                  For &#39;tf&#39;, axis is 3.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; batchnormalization = BatchNormalization(input_shape=(3, 12, 12), name=&quot;bn1&quot;)</span>
+<span class="sd">    creating: createZooKerasBatchNormalization</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">beta_init</span><span class="o">=</span><span class="s2">&quot;zero&quot;</span><span class="p">,</span>
+                 <span class="n">gamma_init</span><span class="o">=</span><span class="s2">&quot;one&quot;</span><span class="p">,</span> <span class="n">dim_ordering</span><span class="o">=</span><span class="s2">&quot;th&quot;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;For BatchNormalization, only mode=0 is supported for now&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dim_ordering</span> <span class="o">==</span> <span class="s2">&quot;th&quot;</span> <span class="ow">and</span> <span class="n">axis</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;For BatchNormalization with th dim ordering, &quot;</span>
+                             <span class="s2">&quot;only axis=1 is supported for now&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dim_ordering</span> <span class="o">==</span> <span class="s2">&quot;tf&quot;</span> <span class="ow">and</span> <span class="n">axis</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">axis</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;For BatchNormalization with tf dim ordering, &quot;</span>
+                             <span class="s2">&quot;only axis=-1 is supported for now&quot;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BatchNormalization</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                                 <span class="nb">float</span><span class="p">(</span><span class="n">epsilon</span><span class="p">),</span>
+                                                 <span class="nb">float</span><span class="p">(</span><span class="n">momentum</span><span class="p">),</span>
+                                                 <span class="n">beta_init</span><span class="p">,</span>
+                                                 <span class="n">gamma_init</span><span class="p">,</span>
+                                                 <span class="n">dim_ordering</span><span class="p">,</span>
+                                                 <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BatchNormalization.set_running_mean"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.normalization.BatchNormalization.set_running_mean">[docs]</a>    <span class="k">def</span> <span class="nf">set_running_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">running_mean</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the running mean of the BatchNormalization layer.</span>
+<span class="sd">        :param running_mean: a Numpy array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;setRunningMean&quot;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">running_mean</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="BatchNormalization.set_running_std"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.normalization.BatchNormalization.set_running_std">[docs]</a>    <span class="k">def</span> <span class="nf">set_running_std</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">running_std</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the running variance of the BatchNormalization layer.</span>
+<span class="sd">        :param running_std: a Numpy array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;setRunningStd&quot;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">JTensor</span><span class="o">.</span><span class="n">from_ndarray</span><span class="p">(</span><span class="n">running_std</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="BatchNormalization.get_running_mean"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.normalization.BatchNormalization.get_running_mean">[docs]</a>    <span class="k">def</span> <span class="nf">get_running_mean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the running meaning of the BatchNormalization layer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;getRunningMean&quot;</span><span class="p">,</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="BatchNormalization.get_running_std"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.normalization.BatchNormalization.get_running_std">[docs]</a>    <span class="k">def</span> <span class="nf">get_running_std</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the running variance of the BatchNormalization layer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;getRunningStd&quot;</span><span class="p">,</span>
+                           <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">to_ndarray</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

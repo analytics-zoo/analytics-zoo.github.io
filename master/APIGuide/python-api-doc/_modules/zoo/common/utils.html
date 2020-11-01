@@ -1,0 +1,251 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.common.utils &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.common.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+<span class="kn">from</span> <span class="nn">bigdl.util.common</span> <span class="kn">import</span> <span class="n">Sample</span> <span class="k">as</span> <span class="n">BSample</span><span class="p">,</span> <span class="n">JTensor</span> <span class="k">as</span> <span class="n">BJTensor</span><span class="p">,</span>\
+    <span class="n">JavaCreator</span><span class="p">,</span> <span class="n">_get_gateway</span><span class="p">,</span> <span class="n">_java2py</span><span class="p">,</span> <span class="n">_py2java</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">urlparse</span>
+
+
+<div class="viewcode-block" id="convert_to_safe_path"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.convert_to_safe_path">[docs]</a><span class="k">def</span> <span class="nf">convert_to_safe_path</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="n">follow_symlinks</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="c1"># resolves symbolic links</span>
+    <span class="k">if</span> <span class="n">follow_symlinks</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span>
+    <span class="c1"># covert to abs path</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="to_list_of_numpy"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.to_list_of_numpy">[docs]</a><span class="k">def</span> <span class="nf">to_list_of_numpy</span><span class="p">(</span><span class="n">elements</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elements</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">elements</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">elements</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">elements</span><span class="p">)]</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">elements</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong type: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">elements</span><span class="p">))</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">element</span><span class="p">):</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Wrong type: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="get_file_list"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.get_file_list">[docs]</a><span class="k">def</span> <span class="nf">get_file_list</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;listPaths&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">recursive</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="is_local_path"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.is_local_path">[docs]</a><span class="k">def</span> <span class="nf">is_local_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">parse_result</span> <span class="o">=</span> <span class="n">urlparse</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">parse_result</span><span class="o">.</span><span class="n">scheme</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">parse_result</span><span class="o">.</span><span class="n">scheme</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;file&quot;</span></div>
+
+
+<div class="viewcode-block" id="append_suffix"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.append_suffix">[docs]</a><span class="k">def</span> <span class="nf">append_suffix</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="c1"># append suffix</span>
+    <span class="n">splits</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">splits</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">splits</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">prefix</span>
+
+    <span class="k">return</span> <span class="n">file_name</span></div>
+
+
+<div class="viewcode-block" id="save_file"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.save_file">[docs]</a><span class="k">def</span> <span class="nf">save_file</span><span class="p">(</span><span class="n">save_func</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">is_local_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="n">save_func</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid1</span><span class="p">())</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">append_suffix</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">temp_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span> <span class="n">file_name</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">save_func</span><span class="p">(</span><span class="n">temp_path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">put_local_file_to_remote</span><span class="p">(</span><span class="n">temp_path</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temp_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_from_file"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.load_from_file">[docs]</a><span class="k">def</span> <span class="nf">load_from_file</span><span class="p">(</span><span class="n">load_func</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">is_local_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">load_func</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid1</span><span class="p">())</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">append_suffix</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">temp_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span> <span class="n">file_name</span><span class="p">)</span>
+        <span class="n">get_remote_file_to_local</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">temp_path</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">load_func</span><span class="p">(</span><span class="n">temp_path</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">temp_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_remote_file_to_local"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.get_remote_file_to_local">[docs]</a><span class="k">def</span> <span class="nf">get_remote_file_to_local</span><span class="p">(</span><span class="n">remote_path</span><span class="p">,</span> <span class="n">local_path</span><span class="p">,</span> <span class="n">over_write</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">callZooFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;getRemoteFileToLocal&quot;</span><span class="p">,</span> <span class="n">remote_path</span><span class="p">,</span> <span class="n">local_path</span><span class="p">,</span> <span class="n">over_write</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="put_local_file_to_remote"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.put_local_file_to_remote">[docs]</a><span class="k">def</span> <span class="nf">put_local_file_to_remote</span><span class="p">(</span><span class="n">local_path</span><span class="p">,</span> <span class="n">remote_path</span><span class="p">,</span> <span class="n">over_write</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">callZooFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;putLocalFileToRemote&quot;</span><span class="p">,</span> <span class="n">local_path</span><span class="p">,</span> <span class="n">remote_path</span><span class="p">,</span> <span class="n">over_write</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="set_core_number"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.set_core_number">[docs]</a><span class="k">def</span> <span class="nf">set_core_number</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="n">callZooFunc</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;setCoreNumber&quot;</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="callZooFunc"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.callZooFunc">[docs]</a><span class="k">def</span> <span class="nf">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Call API in PythonBigDL &quot;&quot;&quot;</span>
+    <span class="n">gateway</span> <span class="o">=</span> <span class="n">_get_gateway</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">_py2java</span><span class="p">(</span><span class="n">gateway</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">]</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Cannot find function: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">jinvoker</span> <span class="ow">in</span> <span class="n">JavaCreator</span><span class="o">.</span><span class="n">instance</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="n">gateway</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="c1"># hasattr(jinvoker, name) always return true here,</span>
+        <span class="c1"># so you need to invoke the method to check if it exist or not</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">api</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">jinvoker</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="n">java_result</span> <span class="o">=</span> <span class="n">api</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">_java2py</span><span class="p">(</span><span class="n">gateway</span><span class="p">,</span> <span class="n">java_result</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">e</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="s2">&quot;does not exist&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                    <span class="ow">and</span> <span class="s2">&quot;Method </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="n">e</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">result</span>
+    <span class="k">raise</span> <span class="n">error</span></div>
+
+
+<div class="viewcode-block" id="JTensor"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.JTensor">[docs]</a><span class="k">class</span> <span class="nc">JTensor</span><span class="p">(</span><span class="n">BJTensor</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">storage</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">JTensor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">storage</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">,</span> <span class="n">indices</span><span class="p">)</span>
+
+<div class="viewcode-block" id="JTensor.from_ndarray"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.JTensor.from_ndarray">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_ndarray</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">a_ndarray</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a ndarray to a DenseTensor which would be used in Java side.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">a_ndarray</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a_ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">),</span> \
+            <span class="s2">&quot;input should be a np.ndarray, not </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">a_ndarray</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">a_ndarray</span><span class="p">,</span>
+                   <span class="n">a_ndarray</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                   <span class="n">bigdl_type</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Sample"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.Sample">[docs]</a><span class="k">class</span> <span class="nc">Sample</span><span class="p">(</span><span class="n">BSample</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Sample</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Sample.from_ndarray"><a class="viewcode-back" href="../../../zoo.common.html#zoo.common.utils.Sample.from_ndarray">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_ndarray</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="n">features</span> <span class="o">=</span> <span class="n">to_list_of_numpy</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">to_list_of_numpy</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="n">JTensor</span><span class="p">(</span><span class="n">feature</span><span class="p">,</span> <span class="n">feature</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">],</span>
+            <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="n">JTensor</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">label</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">],</span>
+            <span class="n">bigdl_type</span><span class="o">=</span><span class="n">bigdl_type</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

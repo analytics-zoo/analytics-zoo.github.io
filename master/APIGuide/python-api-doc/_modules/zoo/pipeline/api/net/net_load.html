@@ -1,0 +1,219 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.pipeline.api.net.net_load &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.pipeline.api.net.net_load</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">zoo.common.utils</span> <span class="kn">import</span> <span class="n">callZooFunc</span>
+<span class="kn">from</span> <span class="nn">bigdl.nn.layer</span> <span class="kn">import</span> <span class="n">Model</span> <span class="k">as</span> <span class="n">BModel</span>
+<span class="kn">from</span> <span class="nn">zoo.pipeline.api.net.graph_net</span> <span class="kn">import</span> <span class="n">GraphNet</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span> <span class="o">&gt;=</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>
+    <span class="n">long</span> <span class="o">=</span> <span class="nb">int</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+
+<div class="viewcode-block" id="JavaToPython"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.net.html#zoo.pipeline.api.net.net_load.JavaToPython">[docs]</a><span class="k">class</span> <span class="nc">JavaToPython</span><span class="p">:</span>
+    <span class="c1"># TODO: Add more mapping here as it only support Model and Sequential for now.</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jvaule</span> <span class="o">=</span> <span class="n">jvalue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jfullname</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span>
+                                     <span class="s2">&quot;getRealClassNameOfJValue&quot;</span><span class="p">,</span>
+                                     <span class="n">jvalue</span><span class="p">)</span>
+
+<div class="viewcode-block" id="JavaToPython.get_python_class"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.net.html#zoo.pipeline.api.net.net_load.JavaToPython.get_python_class">[docs]</a>    <span class="k">def</span> <span class="nf">get_python_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Redirect the jvalue to the proper python class.</span>
+<span class="sd">        :param jvalue: Java object create by Py4j</span>
+<span class="sd">        :return: A proper Python wrapper which would be a Model, Sequential...</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">jpackage_name</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jfullname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">pclass_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_py_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jfullname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">base_module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_ppackage_by_jpackage</span><span class="p">(</span><span class="n">jpackage_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pclass_name</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">base_module</span><span class="p">):</span>
+            <span class="n">pclass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">base_module</span><span class="p">,</span> <span class="n">pclass_name</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="s2">&quot;from_jvalue&quot;</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">pclass</span><span class="p">),</span> \
+                <span class="s2">&quot;pclass: </span><span class="si">{}</span><span class="s2"> should implement from_jvalue method&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pclass</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">pclass</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No proper python class for: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jfullname</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_py_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jclass_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">jclass_name</span> <span class="o">==</span> <span class="s2">&quot;Model&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Model&quot;</span>
+        <span class="k">elif</span> <span class="n">jclass_name</span> <span class="o">==</span> <span class="s2">&quot;Sequential&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Sequential&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Not supported type: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">jclass_name</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_load_ppackage_by_jpackage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jpackage_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;com.intel.analytics.zoo.pipeline.api.keras.models&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s1">&#39;zoo.pipeline.api.keras.models&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Not supported package: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">jpackage_name</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Net"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.net.html#zoo.pipeline.api.net.net_load.Net">[docs]</a><span class="k">class</span> <span class="nc">Net</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Net.from_jvalue"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.net.html#zoo.pipeline.api.net.net_load.Net.from_jvalue">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_jvalue</span><span class="p">(</span><span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="n">pclass</span> <span class="o">=</span> <span class="n">JavaToPython</span><span class="p">(</span><span class="n">jvalue</span><span class="p">)</span><span class="o">.</span><span class="n">get_python_class</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">pclass</span><span class="p">,</span> <span class="s2">&quot;from_jvalue&quot;</span><span class="p">)(</span><span class="n">jvalue</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Net.load_bigdl"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.net.html#zoo.pipeline.api.net.net_load.Net.load_bigdl">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_bigdl</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">weight_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a pre-trained BigDL model.</span>
+
+<span class="sd">        :param model_path: The path to the pre-trained model.</span>
+<span class="sd">        :param weight_path: The path to the weights of the pre-trained model. Default is None.</span>
+<span class="sd">        :return: A pre-trained model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;netLoadBigDL&quot;</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">GraphNet</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">jmodel</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Net.load"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.net.html#zoo.pipeline.api.net.net_load.Net.load">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">weight_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load an existing Analytics Zoo model defined in Keras-style(with weights).</span>
+
+<span class="sd">        :param model_path: The path to load the saved model.</span>
+<span class="sd">                          Local file system, HDFS and Amazon S3 are supported.</span>
+<span class="sd">                          HDFS path should be like &#39;hdfs://[host]:[port]/xxx&#39;.</span>
+<span class="sd">                          Amazon S3 path should be like &#39;s3a://bucket/xxx&#39;.</span>
+<span class="sd">        :param weight_path: The path for pre-trained weights if any. Default is None.</span>
+<span class="sd">        :return: An Analytics Zoo model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;netLoad&quot;</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Net</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Net.load_torch"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.net.html#zoo.pipeline.api.net.net_load.Net.load_torch">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_torch</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a pre-trained Torch model.</span>
+
+<span class="sd">        :param path: The path containing the pre-trained model.</span>
+<span class="sd">        :return: A pre-trained model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;netLoadTorch&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">GraphNet</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Net.load_caffe"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.net.html#zoo.pipeline.api.net.net_load.Net.load_caffe">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_caffe</span><span class="p">(</span><span class="n">def_path</span><span class="p">,</span> <span class="n">model_path</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a pre-trained Caffe model.</span>
+
+<span class="sd">        :param def_path: The path containing the caffe model definition.</span>
+<span class="sd">        :param model_path: The path containing the pre-trained caffe model.</span>
+<span class="sd">        :return: A pre-trained model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">jmodel</span> <span class="o">=</span> <span class="n">callZooFunc</span><span class="p">(</span><span class="n">bigdl_type</span><span class="p">,</span> <span class="s2">&quot;netLoadCaffe&quot;</span><span class="p">,</span> <span class="n">def_path</span><span class="p">,</span> <span class="n">model_path</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">GraphNet</span><span class="o">.</span><span class="n">from_jvalue</span><span class="p">(</span><span class="n">jmodel</span><span class="p">,</span> <span class="n">bigdl_type</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Net.load_keras"><a class="viewcode-back" href="../../../../../zoo.pipeline.api.net.html#zoo.pipeline.api.net.net_load.Net.load_keras">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">load_keras</span><span class="p">(</span><span class="n">json_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hdf5_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">by_name</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a pre-trained Keras model.</span>
+
+<span class="sd">        :param json_path: The json path containing the keras model definition. Default is None.</span>
+<span class="sd">        :param hdf5_path: The HDF5 path containing the pre-trained keras model weights</span>
+<span class="sd">                        with or without the model architecture. Default is None.</span>
+<span class="sd">        :param by_name: by default the architecture should be unchanged.</span>
+<span class="sd">                        If set as True, only layers with the same name will be loaded.</span>
+<span class="sd">        :return: A BigDL model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">BModel</span><span class="o">.</span><span class="n">load_keras</span><span class="p">(</span><span class="n">json_path</span><span class="p">,</span> <span class="n">hdf5_path</span><span class="p">,</span> <span class="n">by_name</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>
