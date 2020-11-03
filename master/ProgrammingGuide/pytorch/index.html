@@ -37,9 +37,9 @@
           ]},
           {title: "Pytorch API", url: "#pytorch-api", children: [
           ]},
-          {title: "this loss function is calculating loss for a multi-output model", url: "#this-loss-function-is-calculating-loss-for-a-multi-output-model", children: [
-          ]},
           {title: "Examples", url: "#examples", children: [
+          ]},
+          {title: "FAQ", url: "#faq", children: [
           ]},
         ];
 
@@ -67,49 +67,65 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>PyTorch</strong></h1>
     <hr>
-    <p>Analytics-Zoo supports distributed Pytorch training and inferenceon on Apache Spark. User can
+    <p>Analytics-Zoo supports distributed Pytorch training and inference on on Apache Spark. User can
 define their model and loss function with Pytorch API, and run it in a distributed environment
 with the wrapper layers provided by Analytics Zoo.</p>
 <h1 id="system-requirement">System Requirement</h1>
 <p>Pytorch version: 1.5.0 or above<br />
 torchvision: 0.6.0 or above<br />
+cloudpickle: 1.6.0<br />
 jep: 3.9.0<br />
-Python: 3.7  </p>
+Python: 3.7</p>
 <h1 id="pytorch-api">Pytorch API</h1>
-<p>Two wrappers are defined in Analytics Zoo for Pytorch:</p>
+<p>A few wrappers are defined in Analytics Zoo for Pytorch:</p>
 <ol>
-<li>
-<p>TorchModel: TorchModel is a wrapper class for Pytorch model.
-User may create a TorchModel by providing a Pytorch model, e.g.
-    <code>python
-    from zoo.pipeline.api.torch import TorchModel
-    TorchModel.from_pytorch(torchvision.models.resnet18(pretrained=True))</code>
-The above line creates TorchModel wrapping a ResNet model, and user can use the TorchModel for
+<li>TorchModel: TorchModel is a wrapper class for Pytorch model.
+User may create a TorchModel by providing a Pytorch model, e.g.</li>
+</ol>
+<pre><code class="python">from zoo.pipeline.api.torch import TorchModel
+import torchvision
+zoo_model = TorchModel.from_pytorch(torchvision.models.resnet18(pretrained=True))
+</code></pre>
+
+<p>The above line creates TorchModel wrapping a ResNet model, and user can use the TorchModel for
 training or inference with Analytics Zoo.</p>
-</li>
-<li>
-<p>TorchLoss: TorchLoss is a wrapper for loss functions defined by Pytorch.
-User may create a TorchLoss from a Pytorch Criterion, 
-    ```python
-    from torch import nn
-    from zoo.pipeline.api.torch import TorchLoss</p>
-<p>az_criterion = TorchLoss.from_pytorch(nn.MSELoss())
-```
-or from a custom loss function, which takes input and label as parameters</p>
-<p>```python
-from torch import nn
-from zoo.pipeline.api.torch import TorchLoss</p>
-<p>criterion = nn.MSELoss()</p>
-<h1 id="this-loss-function-is-calculating-loss-for-a-multi-output-model">this loss function is calculating loss for a multi-output model</h1>
-<p>def lossFunc(input, label):
+<ol>
+<li>TorchLoss: TorchLoss is a wrapper for loss functions defined by Pytorch.
+User may create a TorchLoss from a Pytorch Criterion, </li>
+</ol>
+<pre><code class="python">import torch
+from zoo.pipeline.api.torch import TorchLoss
+
+az_criterion = TorchLoss.from_pytorch(torch.nn.MSELoss())
+</code></pre>
+
+<p>or from a custom loss function, which takes input and label as parameters</p>
+<pre><code class="python">import torch
+from zoo.pipeline.api.torch import TorchLoss
+
+criterion = torch.nn.MSELoss()
+
+# this loss function is calculating loss for a multi-output model
+def lossFunc(input, label):
     loss1 = criterion(input[0], label[0])
     loss2 = criterion(input[1], label[1])
     loss = loss1 + 0.4 * loss2
-    return loss</p>
-<p>az_criterion = TorchLoss.from_pytorch(lossFunc)
-```</p>
-</li>
+    return loss
+
+az_criterion = TorchLoss.from_pytorch(lossFunc)
+</code></pre>
+
+<ol>
+<li>TorchOptim: TorchOptim wraps a torch optimizer for distributed training.</li>
 </ol>
+<pre><code class="python">from zoo.pipeline.api.torch import TorchOptim
+import torch
+
+model = torchvision.models.resnet18(pretrained=True))
+adam = torch.optim.Adam(model.parameters())
+zoo_optimizer = TorchOptim.from_pytorch(adam)
+</code></pre>
+
 <h1 id="examples">Examples</h1>
 <p>Here we provide a simple end to end example, where we use TorchModel and TorchLoss to
 train a simple model with Spark DataFrame.</p>
@@ -130,9 +146,8 @@ train a simple model with Spark DataFrame.</p>
 #
 import torch
 import torch.nn as nn
-from bigdl.optim.optimizer import Adam
 from zoo.common.nncontext import *
-from zoo.pipeline.api.torch import TorchModel, TorchLoss
+from zoo.pipeline.api.torch import TorchModel, TorchLoss, TorchOptim
 from zoo.pipeline.nnframes import *
 
 from pyspark.ml.linalg import Vectors
@@ -152,8 +167,7 @@ class SimpleTorchModel(nn.Module):
         return x
 
 if __name__ == '__main__':
-    sparkConf = init_spark_conf().setAppName(&quot;example_pytorch&quot;).setMaster('local[1]')
-    sc = init_nncontext(sparkConf)
+    sc = init_spark_on_local(cores=1)
     spark = SparkSession \
         .builder \
         .getOrCreate()
@@ -167,13 +181,15 @@ if __name__ == '__main__':
 
     torch_model = SimpleTorchModel()
     torch_criterion = nn.MSELoss()
+    torch_optimizer = torch.optim.Adam(torch_model.parameters())
 
     az_model = TorchModel.from_pytorch(torch_model)
     az_criterion = TorchLoss.from_pytorch(torch_criterion)
+    az_optimizer = TorchOptim.from_pytorch(torch_optimizer)
 
     classifier = NNClassifier(az_model, az_criterion) \
         .setBatchSize(4) \
-        .setOptimMethod(Adam()) \
+        .setOptimMethod(az_optimizer) \
         .setLearningRate(0.01) \
         .setMaxEpoch(10)
 
@@ -185,7 +201,7 @@ if __name__ == '__main__':
 
 </code></pre>
 
-<p>Please export <code>PYTHONHOME</code> env before you run this code, and we expects to see the output like:</p>
+<p>You can simply use <code>python</code> to execute the script above. We expects to see the output like:</p>
 <pre><code class="python">+---------+-----+----------+
 |features |label|prediction|
 +---------+-----+----------+
@@ -195,6 +211,40 @@ if __name__ == '__main__':
 |[1.0,2.0]|0.0  |0.0       |
 +---------+-----+----------+
 </code></pre>
+
+<h1 id="faq">FAQ</h1>
+<ol>
+<li>
+<p>Does analytics-zoo's distributed pytorch support training or inference?<br />
+Analytics-Zoo support both training and inference.</p>
+</li>
+<li>
+<p>How to prepare the environment?<br />
+We recommend you to use <a href="https://www.anaconda.com/distribution/#linux">Anaconda</a> to prepare the enviroments, especially if you want to run on a yarn cluster(yarn-client mode only). </p>
+</li>
+</ol>
+<pre><code class="bash">conda create -n zoo python=3.7 #zoo is conda enviroment name, you can set another name you like.
+conda activate zoo
+pip install analytics-zoo[torch]
+</code></pre>
+
+<p>Note that the extra dependencies (including BigDL, torch, torchvision, jep, cloudpickle, conda-pack) will be installed by specifying [torch].  </p>
+<ol>
+<li>
+<p>How to determine how many resources do you use in analytics-zoo's distributed mode?<br />
+If you are running your jobs on yarn cluster, you can use <code>init_spark_on_yarn</code> from package <code>zoo.common.nncontext</code> to request cores and memorys from resource manager.<br />
+If you are running your jobs on Spark standalone cluster, you can use <code>init_spark_standalone</code> from package <code>zoo.common.nncontext</code> to request resources from Spark master.<br />
+If you are running your jobs on spark local mode(single-node, pseudo-distributed), you can use <code>init_spark_on_local</code> from package <code>zoo.common.nncontext</code> to declare how many cores and memorys.</p>
+</li>
+<li>
+<p>Supported torch and torchvision version?<br />
+We support torch 1.5.x and 1.6.x, torchvision's version should match torch's version.  </p>
+</li>
+<li>
+<p>How to migrate training from pytorch to AZ?<br />
+Here is a simple example migrate <a href="https://github.com/pytorch/examples/blob/60108edfa3838a823220e16428cb5f98e8e88d53/mnist/main.py">pytorch mnist example</a> to <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/pytorch/train/mnist">analytics-zoo distributed pytorch mnist example</a>.</p>
+</li>
+</ol>
 
   <br>
 </div>
