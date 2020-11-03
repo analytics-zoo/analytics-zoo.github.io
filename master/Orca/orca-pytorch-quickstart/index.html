@@ -33,11 +33,13 @@
       var is_top_frame = false;
         
         var pageToc = [
-          {title: "Orca PyTorch Quickstart", url: "#orca-pytorch-quickstart", children: [
-              {title: "Step 0: Prepare environment", url: "#step-0-prepare-environment" },
-              {title: "Step 1: Init Orca Context", url: "#step-1-init-orca-context" },
-              {title: "Step 2: Define PyTorch Model, Loss function and Optimizer", url: "#step-2-define-pytorch-model-loss-function-and-optimizer" },
-              {title: "Step 3: Fit with Orca PyTorch Estimator", url: "#step-3-fit-with-orca-pytorch-estimator" },
+          {title: "Step 0: Prepare Environment", url: "#step-0-prepare-environment", children: [
+          ]},
+          {title: "Step 1: Init Orca Context", url: "#step-1-init-orca-context", children: [
+          ]},
+          {title: "Step 2: Define PyTorch Model, Loss function and Optimizer", url: "#step-2-define-pytorch-model-loss-function-and-optimizer", children: [
+          ]},
+          {title: "Step 3: Fit with Orca PyTorch Estimator", url: "#step-3-fit-with-orca-pytorch-estimator", children: [
           ]},
         ];
 
@@ -65,21 +67,23 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>PyTorch Quickstart</strong></h1>
     <hr>
-    <h2 id="orca-pytorch-quickstart"><strong>Orca PyTorch Quickstart</strong></h2>
-<p><strong>In this guide we’ll show you how to organize your PyTorch code into Orca in 3 steps</strong></p>
-<p>Organizing your code with Orca makes your code:
-* Keep all the flexibility
-* Easier to reproduce
-* Utilize distributed training without changing your model</p>
-<h3 id="step-0-prepare-environment"><strong>Step 0: Prepare environment</strong></h3>
-<p>We recommend you to use <a href="https://www.anaconda.com/distribution/#linux">Anaconda</a> to prepare the environments, especially if you want to run on a yarn cluster(yarn-client mode only).
-<strong>Note:</strong> You can install the latest analytics whl by following instructions (<a href="https://analytics-zoo.github.io/master/#PythonUserGuide/install/#install-the-latest-nightly-build-wheels-for-pip">here</a>).</p>
-<pre><code>conda create -n zoo python=3.7 #zoo is conda enviroment name, you can set another name you like.
+    <p><strong>In this guide we’ll show you how to organize your PyTorch code into Orca in 3 steps.</strong></p>
+<p>Scaling your Pytorch applications with Orca makes your code:</p>
+<ul>
+<li>Well-organized and flexible</li>
+<li>Easier to reproduce</li>
+<li>Able to perform distributed training without changing your model</li>
+</ul>
+<h3 id="step-0-prepare-environment"><strong>Step 0: Prepare Environment</strong></h3>
+<p>We recommend you to use <a href="https://www.anaconda.com/distribution/#linux">Anaconda</a> to prepare the environments, especially if you want to run on a yarn cluster (yarn-client mode only).</p>
+<p>Download and install latest analytics-zoo whl by the following instructions <a href="../../PythonUserGuide/install/#install-the-latest-nightly-build-wheels-for-pip">here</a>.  </p>
+<p><strong>Note:</strong> Conda environment is required to run on Yarn, but not strictly necessary for running on local.</p>
+<pre><code class="bash">conda create -n zoo python=3.7 # zoo is conda enviroment name, you can set another name you like.
 conda activate zoo
-pip install analytics-zoo==0.9.0.dev0 # or above
+pip install analytics_zoo-${VERSION}-${TIMESTAMP}-py2.py3-none-${OS}_x86_64.whl 
 pip install jep==3.9.0
-conda install pytorch torchvision cpuonly -c pytorch #command for linux
-conda install pytorch torchvision -c pytorch #command for macOS
+conda install pytorch torchvision cpuonly -c pytorch # command for linux
+conda install pytorch torchvision -c pytorch # command for macOS
 </code></pre>
 
 <h3 id="step-1-init-orca-context"><strong>Step 1: Init Orca Context</strong></h3>
@@ -97,8 +101,8 @@ sc = init_orca_context(
         &quot;spark.driver.extraJavaOptions&quot;: &quot;-Dbigdl.failure.retryTimes=1&quot;})
 </code></pre>
 
-<p><strong>Note:</strong> you should <code>export HADOOP_CONF_DIR=/path/to/hadoop/conf/dir</code>
-* Reference: <a href="https://analytics-zoo.github.io/master/#Orca/context/">Orca Context</a></p>
+<p><strong>Note:</strong> You should <code>export HADOOP_CONF_DIR=/path/to/hadoop/conf/dir</code>. </p>
+<p>View <a href="../context">Orca Context</a> for more details.</p>
 <h3 id="step-2-define-pytorch-model-loss-function-and-optimizer"><strong>Step 2: Define PyTorch Model, Loss function and Optimizer</strong></h3>
 <pre><code class="python">import torch.nn as nn
 import torch.nn.functional as F
@@ -125,48 +129,49 @@ class LeNet(nn.Module):
 model = LeNet()
 model.train()
 criterion = nn.NLLLoss()
-adam = Adam(args.lr)
+adam = Adam(1e-4)
 </code></pre>
 
 <h3 id="step-3-fit-with-orca-pytorch-estimator"><strong>Step 3: Fit with Orca PyTorch Estimator</strong></h3>
-<ol>
-<li>Define the data in whatever way you want. Orca just needs a dataloader, a callable datacreator or an Orca SparkXShards</li>
-</ol>
-<pre><code class="python">torch.manual_seed(args.seed)
+<p>1)  Define the data in whatever way you want. Orca just needs a <a href="https://pytorch.org/docs/stable/data.html">Pytorch DataLoader</a>, a data creator function or <a href="../data">Orca SparkXShards</a>.</p>
+<pre><code class="python">import torch
+from torchvision import datasets, transforms
 
+torch.manual_seed(0)
+dir='./dataset'
+batch_size=64
+test_batch_size=64
 train_loader = torch.utils.data.DataLoader(
-    datasets.MNIST(args.dir, train=True, download=True,
+    datasets.MNIST(dir, train=True, download=True,
                    transform=transforms.Compose([
                        transforms.ToTensor(),
                        transforms.Normalize((0.1307,), (0.3081,))
                    ])),
-    batch_size=args.batch_size, shuffle=True)
+    batch_size=batch_size, shuffle=True)
 test_loader = torch.utils.data.DataLoader(
-    datasets.MNIST(args.dir, train=False,
+    datasets.MNIST(dir, train=False,
                    transform=transforms.Compose([
                        transforms.ToTensor(),
                        transforms.Normalize((0.1307,), (0.3081,))
                    ])),
-    batch_size=args.test_batch_size, shuffle=False) 
+    batch_size=test_batch_size, shuffle=False) 
 </code></pre>
 
-<ol>
-<li>Create an estimator</li>
-</ol>
+<p>2)  Create an Estimator</p>
 <pre><code class="python">from zoo.orca.learn.pytorch import Estimator 
+
 zoo_estimator = Estimator.from_torch(model=model, optimizer=adam, loss=criterion, backend=&quot;bigdl&quot;) 
 </code></pre>
 
-<ol>
-<li>Fit with estimator</li>
-</ol>
+<p>3)  Fit with Estimator</p>
 <pre><code class="python">from zoo.orca.learn.metrics import Accuracy
 from zoo.orca.learn.trigger import EveryEpoch 
-zoo_estimator.fit(data=train_loader, epochs=args.epochs, validation_data=test_loader,
+
+zoo_estimator.fit(data=train_loader, epochs=10, validation_data=test_loader,
                   validation_methods=[Accuracy()], checkpoint_trigger=EveryEpoch()) 
 </code></pre>
 
-<p><strong>Note:</strong> you should call <code>stop_orca_context()</code> when your application finishes.</p>
+<p><strong>Note:</strong> You should call <code>stop_orca_context()</code> when your application finishes.</p>
 
   <br>
 </div>
