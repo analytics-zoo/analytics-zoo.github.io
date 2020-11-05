@@ -447,9 +447,11 @@ and maxConcurrentNum
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">load a Torch model as TorchNet
-</p><div class="fullcomment"><div class="comment cmt"><p>load a Torch model as TorchNet
-</p></div><dl class="paramcmts block"><dt class="param">modelBytes</dt><dd class="cmt"><p>the bytes of the torch script</p></dd></dl></div>
+      <p class="shortcomment cmt">load a Torch model as TorchModel
+The torch model should be saved using zoo_pickle_module in python.</p><div class="fullcomment"><div class="comment cmt"><p>load a Torch model as TorchModel
+The torch model should be saved using zoo_pickle_module in python.</p><pre>from zoo.pipeline.api.torch <span class="kw">import</span> zoo_pickle_module
+model = models.resnet18(pretrained = True)
+torch.save(model, <span class="lit">"$modelPath"</span>, pickle_module=zoo_pickle_module)</pre></div><dl class="paramcmts block"><dt class="param">modelBytes</dt><dd class="cmt"><p>the bytes of the torch model</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadPyTorch" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadPyTorch(modelPath:String):Unit"></a>
       <a id="doLoadPyTorch(String):Unit"></a>
@@ -466,9 +468,11 @@ and maxConcurrentNum
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
-      <p class="shortcomment cmt">load a Torch model as TorchNet
-</p><div class="fullcomment"><div class="comment cmt"><p>load a Torch model as TorchNet
-</p></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the torch script</p></dd></dl></div>
+      <p class="shortcomment cmt">load a Torch model as TorchModel
+The torch model should be saved using zoo_pickle_module in python.</p><div class="fullcomment"><div class="comment cmt"><p>load a Torch model as TorchModel
+The torch model should be saved using zoo_pickle_module in python.</p><pre>from zoo.pipeline.api.torch <span class="kw">import</span> zoo_pickle_module
+model = models.resnet18(pretrained = True)
+torch.save(model, path, pickle_module=zoo_pickle_module)</pre></div><dl class="paramcmts block"><dt class="param">modelPath</dt><dd class="cmt"><p>the path of the torch model</p></dd></dl></div>
     </li><li name="com.intel.analytics.zoo.pipeline.inference.InferenceModel#doLoadTensorflow" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="doLoadTensorflow(modelBytes:Array[Byte],modelType:String,inputs:Array[String],outputs:Array[String],intraOpParallelismThreads:Int,interOpParallelismThreads:Int,usePerSessionThreads:Boolean):Unit"></a>
       <a id="doLoadTensorflow(Array[Byte],String,Array[String],Array[String],Int,Int,Boolean):Unit"></a>
