@@ -70,9 +70,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <pre><code class="python">from zoo.zouwu.autots.forecast import AutoTSTrainer
 
 trainer = AutoTSTrainer(dt_col=&quot;datetime&quot;,
-                         target_col=&quot;value&quot;
+                         target_col=&quot;value&quot;,
                          horizon=1,
-                         extra_features_col=None)
+                         extra_features_col=None,
+                         search_alg=None,
+                         search_alg_params=None,
+                         scheduler=None,
+                         scheduler_params=None,)
 
 </code></pre>
 
@@ -81,6 +85,12 @@ trainer = AutoTSTrainer(dt_col=&quot;datetime&quot;,
 <li><strong>target_col</strong>: target column to predict</li>
 <li><strong>horizon</strong> : num of steps to look forward</li>
 <li><strong>extra_feature_col</strong>: a list of columns which are also included in input as features except target column</li>
+<li><strong>search_alg</strong>: Optional(str). The search algorithm to use. We only support "bayesopt" and "skopt" for now.
+                The default search_alg is None and variants will be generated according to the search method in search space.</li>
+<li><strong>search_alg_params</strong>: Optional(Dict). params of search_alg.</li>
+<li><strong>scheduler</strong>: Optional(str). Scheduler name. Allowed scheduler names are "fifo", "async_hyperband",
+    "asynchyperband", "median_stopping_rule", "medianstopping", "hyperband", "hb_bohb", "pbt". The default scheduler is "fifo".</li>
+<li><strong>scheduler_params</strong>: Optional(Dict). Necessary params of scheduler.</li>
 </ul>
 <h3 id="fit">fit</h3>
 <p><code>python 

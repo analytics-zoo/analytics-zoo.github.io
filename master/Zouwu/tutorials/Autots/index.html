@@ -109,6 +109,12 @@ init_orca_context(cluster_mode=&quot;yarn-client&quot;,
 <li><code>target_col</code>: target column to predict</li>
 <li><code>horizon</code> : num of steps to look forward </li>
 <li><code>extra_feature_col</code>: a list of columns which are also included in input as features except target column</li>
+<li><code>search_alg</code>: Optional(str). The search algorithm to use. We only support "bayesopt" and "skopt" for now.
+                The default search_alg is None and variants will be generated according to the search method in search space.</li>
+<li><code>search_alg_params</code>: Optional(Dict). params of search_alg.</li>
+<li><code>scheduler</code>: Optional(str). Scheduler name. Allowed scheduler names are "fifo", "async_hyperband",
+    "asynchyperband", "median_stopping_rule", "medianstopping", "hyperband", "hb_bohb", "pbt". The default scheduler is "fifo".</li>
+<li><code>scheduler_params</code>: Optional(Dict). Necessary params of scheduler.</li>
 </ul>
 <pre><code class="python"> from zoo.zouwu.autots.forecast import AutoTSTrainer
 
