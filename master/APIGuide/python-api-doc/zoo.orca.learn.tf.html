@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.orca.learn.tf2.html" title="zoo.orca.learn.tf2 package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -43,9 +46,9 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.orca.learn.tf package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-orca-learn-tf-estimator-module">zoo.orca.learn.tf.estimator module</a></li>
-<li><a class="reference internal" href="#zoo-orca-learn-tf-utils-module">zoo.orca.learn.tf.utils module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.tf.estimator">zoo.orca.learn.tf.estimator module</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.tf.utils">zoo.orca.learn.tf.utils module</a></li>
+<li><a class="reference internal" href="#module-zoo.orca.learn.tf">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -88,14 +91,333 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-orca-learn-tf-estimator-module">
-<h2>zoo.orca.learn.tf.estimator module<a class="headerlink" href="#zoo-orca-learn-tf-estimator-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.orca.learn.tf.estimator">
+<span id="zoo-orca-learn-tf-estimator-module"></span><h2>zoo.orca.learn.tf.estimator module<a class="headerlink" href="#module-zoo.orca.learn.tf.estimator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.orca.learn.tf.estimator.Estimator">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.tf.estimator.</code><code class="descname">Estimator</code><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#Estimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.Estimator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.Estimator.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#Estimator.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.Estimator.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.Estimator.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>data</em>, <em>epochs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#Estimator.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.Estimator.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.orca.learn.tf.estimator.Estimator.from_graph">
+<em class="property">static </em><code class="descname">from_graph</code><span class="sig-paren">(</span><em>*</em>, <em>inputs</em>, <em>outputs=None</em>, <em>labels=None</em>, <em>loss=None</em>, <em>optimizer=None</em>, <em>clip_norm=None</em>, <em>clip_value=None</em>, <em>metrics=None</em>, <em>updates=None</em>, <em>sess=None</em>, <em>model_dir=None</em>, <em>backend='bigdl'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#Estimator.from_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.Estimator.from_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an Estimator for tesorflow graph.
+:param inputs: input tensorflow tensors.
+:param outputs: output tensorflow tensors.
+:param labels: label tensorflow tensors.
+:param loss: The loss tensor of the TensorFlow model, should be a scalar
+:param optimizer: tensorflow optimization method.
+:param clip_norm: float &gt;= 0. Gradients will be clipped when their L2 norm exceeds
+this value.
+:param clip_value:  a float &gt;= 0 or a tuple of two floats.
+If clip_value is a float, gradients will be clipped when their absolute value
+exceeds this value.
+If clip_value is a tuple of two floats, gradients will be clipped when their value less
+than clip_value[0] or larger than clip_value[1].
+:param metrics: metric tensor.
+:param sess: the current TensorFlow Session, if you want to used a pre-trained model,
+you should use the Session to load the pre-trained variables and pass it to estimator
+:param model_dir: location to save model checkpoint and summaries.
+:param backend: backend for estimator. Now it only can be “bigdl”.
+:return: an Estimator object.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.orca.learn.tf.estimator.Estimator.from_keras">
+<em class="property">static </em><code class="descname">from_keras</code><span class="sig-paren">(</span><em>keras_model</em>, <em>metrics=None</em>, <em>model_dir=None</em>, <em>backend='bigdl'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#Estimator.from_keras"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.Estimator.from_keras" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an Estimator from a tensorflow.keras model. The model must be compiled.
+:param keras_model: the tensorflow.keras model, which must be compiled.
+:param metrics: user specified metric.
+:param model_dir: location to save model checkpoint and summaries.
+:param backend: backend for estimator. Now it only can be “bigdl”.
+:return: an Estimator object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.Estimator.get_train_summary">
+<code class="descname">get_train_summary</code><span class="sig-paren">(</span><em>tag=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#Estimator.get_train_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.Estimator.get_train_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the scalar from model train summary
+Return list of summary data of [iteration_number, scalar_value, timestamp]
+# Arguments
+tag: The string variable represents the scalar wanted</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.Estimator.get_validation_summary">
+<code class="descname">get_validation_summary</code><span class="sig-paren">(</span><em>tag=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#Estimator.get_validation_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.Estimator.get_validation_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the scalar from model validation summary
+Return list of summary data of [iteration_number, scalar_value, timestamp]</p>
+<p>Note: The metric and tag may not be consistent
+Please look up following form to pass tag parameter
+Left side is your metric during compile
+Right side is the tag you should pass
+‘Accuracy’                  |   ‘Top1Accuracy’
+‘BinaryAccuracy’            |   ‘Top1Accuracy’
+‘CategoricalAccuracy’       |   ‘Top1Accuracy’
+‘SparseCategoricalAccuracy’ |   ‘Top1Accuracy’
+‘AUC’                       |   ‘AucScore’
+‘HitRatio’                  |   ‘HitRate&#64;k’ (k is Top-k)
+‘Loss’                      |   ‘Loss’
+‘MAE’                       |   ‘MAE’
+‘NDCG’                      |   ‘NDCG’
+‘TFValidationMethod’        |   ‘${name + ” ” + valMethod.toString()}’
+‘Top5Accuracy’              |   ‘Top5Accuracy’
+‘TreeNNAccuracy’            |   ‘TreeNNAccuracy()’
+‘MeanAveragePrecision’      |   ‘MAP&#64;k’ (k is Top-k) (BigDL)
+‘MeanAveragePrecision’      |   ‘PascalMeanAveragePrecision’ (Zoo)
+‘StatelessMetric’           |   ‘${name}’
+# Arguments
+tag: The string variable represents the scalar wanted</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.Estimator.load_latest_orca_checkpoint">
+<code class="descname">load_latest_orca_checkpoint</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#Estimator.load_latest_orca_checkpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.Estimator.load_latest_orca_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load latest Orca checkpoint under specified directory.
+:param path: directory containing Orca checkpoint files.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.Estimator.load_orca_checkpoint">
+<code class="descname">load_orca_checkpoint</code><span class="sig-paren">(</span><em>path</em>, <em>version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#Estimator.load_orca_checkpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.Estimator.load_orca_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load specified Orca checkpoint.
+:param path: checkpoint directory which contains model.* and
+optimMethod-TFParkTraining.* files.
+:param version: checkpoint version, which is the suffix of model.* file,
+i.e., for modle.4 file, the version is 4.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.Estimator.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#Estimator.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.Estimator.predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.Estimator.save_keras_model">
+<code class="descname">save_keras_model</code><span class="sig-paren">(</span><em>path</em>, <em>overwrite=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#Estimator.save_keras_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.Estimator.save_keras_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save tensorflow keras model in this estimator.
+:param path: keras model save path.
+:param overwrite: Whether to silently overwrite any existing file at the target location.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.Estimator.save_tf_checkpoint">
+<code class="descname">save_tf_checkpoint</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#Estimator.save_tf_checkpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.Estimator.save_tf_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save tensorflow checkpoint in this estimator.
+:param path: tensorflow checkpoint path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.Estimator.set_tensorboard">
+<code class="descname">set_tensorboard</code><span class="sig-paren">(</span><em>log_dir</em>, <em>app_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#Estimator.set_tensorboard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.Estimator.set_tensorboard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set summary information during the training process for visualization purposes.
+Saved summary can be viewed via TensorBoard.
+In order to take effect, it needs to be called before fit.</p>
+<p>Training summary will be saved to ‘log_dir/app_name/train’
+and validation summary (if any) will be saved to ‘log_dir/app_name/validation’.</p>
+<p># Arguments
+:param log_dir: The base directory path to store training and validation logs.
+:param app_name: The name of the application.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.orca.learn.tf.estimator.TFKerasWrapper">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.tf.estimator.</code><code class="descname">TFKerasWrapper</code><span class="sig-paren">(</span><em>keras_model</em>, <em>metrics</em>, <em>model_dir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#TFKerasWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.TFKerasWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.orca.learn.tf.estimator.Estimator" title="zoo.orca.learn.tf.estimator.Estimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.orca.learn.tf.estimator.Estimator</span></code></a></p>
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.TFKerasWrapper.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>data</em>, <em>batch_size=4</em>, <em>feature_cols=None</em>, <em>labels_cols=None</em>, <em>hard_code_batch_size=False</em>, <em>auto_shard_files=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#TFKerasWrapper.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.TFKerasWrapper.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate model.
+:param data: evaluation data. It can be XShards, Spark DataFrame, tf.data.Dataset.
+If data is XShards, each element needs to be {‘x’: a feature numpy array
+or a tuple of feature numpy arrays, ‘y’: a label numpy array or a tuple of
+label numpy arrays}
+If data is tf.data.Dataset, each element is [feature tensor tuple, label tensor tuple]
+:param batch_size: batch size per thread.
+:param feature_cols: feature_cols: feature column names if train data is Spark DataFrame.
+:param labels_cols: label column names if train data is Spark DataFrame.
+:param hard_code_batch_size: whether to hard code batch size for evaluation.
+:return: evaluation result as a dictionary of {‘metric name’: metric value}</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.TFKerasWrapper.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>data</em>, <em>epochs=1</em>, <em>batch_size=32</em>, <em>feature_cols=None</em>, <em>labels_cols=None</em>, <em>validation_data=None</em>, <em>hard_code_batch_size=False</em>, <em>session_config=None</em>, <em>checkpoint_trigger=None</em>, <em>auto_shard_files=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#TFKerasWrapper.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.TFKerasWrapper.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train this keras model with train data.
+:param data: train data. It can be XShards, Spark DataFrame, tf.data.Dataset.
+If data is XShards, each element needs to be {‘x’: a feature numpy array
+or a tuple of feature numpy arrays, ‘y’: a label numpy array or a tuple of
+label numpy arrays}
+If data is tf.data.Dataset, each element is [feature tensor tuple, label tensor tuple]
+:param epochs: number of epochs to train.
+:param batch_size: total batch size for each iteration.
+:param feature_cols: feature column names if train data is Spark DataFrame.
+:param labels_cols: label column names if train data is Spark DataFrame.
+:param validation_data: validation data. Validation data type should be the same
+as train data.
+:param hard_code_batch_size: whether hard code batch size for training. Default is False.
+:param session_config: tensorflow session configuration for training.
+Should be object of tf.ConfigProto
+:param checkpoint_trigger: when to trigger checkpoint during training.
+Should be bigdl optimzer trigger, like EveryEpoch(), SeveralIteration(num_iterations),etc.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.TFKerasWrapper.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>data</em>, <em>batch_size=4</em>, <em>feature_cols=None</em>, <em>hard_code_batch_size=False</em>, <em>auto_shard_files=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#TFKerasWrapper.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.TFKerasWrapper.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict input data
+:param data: data to be predicted.
+It can be XShards, Spark DataFrame, or tf.data.Dataset.
+If data is XShard, each element needs to be {‘x’: a feature numpy array
+or a tuple of feature numpy arrays}.
+If data is tf.data.Dataset, each element is feature tensor tuple
+:param batch_size: batch size per thread
+:param feature_cols: list of feature column names if input data is Spark DataFrame.
+:param hard_code_batch_size: if require hard code batch size for prediction.
+The default value is False.
+:return: predicted result.
+If input data is XShards or tf.data.Dataset, the predict result is also a XShards,
+and the schema for each result is: {‘prediction’: predicted numpy array or
+list of predicted numpy arrays}.
+If input data is Spark DataFrame, the predict result is a DataFrame which includes
+original columns plus ‘prediction’ column. The ‘prediction’ column can be FloatType,
+VectorUDT or Array of VectorUDT depending on model outputs shape.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.TFKerasWrapper.save_keras_model">
+<code class="descname">save_keras_model</code><span class="sig-paren">(</span><em>path</em>, <em>overwrite=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#TFKerasWrapper.save_keras_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.TFKerasWrapper.save_keras_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save tensorflow keras model in this estimator.
+:param path: keras model save path.
+:param overwrite: Whether to silently overwrite any existing file at the target location.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.orca.learn.tf.estimator.TFOptimizerWrapper">
+<em class="property">class </em><code class="descclassname">zoo.orca.learn.tf.estimator.</code><code class="descname">TFOptimizerWrapper</code><span class="sig-paren">(</span><em>*</em>, <em>inputs</em>, <em>outputs</em>, <em>labels</em>, <em>loss</em>, <em>optimizer</em>, <em>clip_norm</em>, <em>clip_value</em>, <em>metrics</em>, <em>updates</em>, <em>sess</em>, <em>model_dir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#TFOptimizerWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.TFOptimizerWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoo.orca.learn.tf.estimator.Estimator" title="zoo.orca.learn.tf.estimator.Estimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.orca.learn.tf.estimator.Estimator</span></code></a></p>
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.TFOptimizerWrapper.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>data</em>, <em>batch_size=32</em>, <em>feature_cols=None</em>, <em>labels_cols=None</em>, <em>hard_code_batch_size=False</em>, <em>auto_shard_files=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#TFOptimizerWrapper.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.TFOptimizerWrapper.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate model.
+:param data: evaluation data. It can be XShards, Spark DataFrame, tf.data.Dataset.
+If data is XShards, each element needs to be {‘x’: a feature numpy array
+or a tuple of feature numpy arrays, ‘y’: a label numpy array or a tuple of
+label numpy arrays}
+If data is tf.data.Dataset, each element is a tuple of input tensors.
+:param batch_size: batch size per thread.
+:param feature_cols: feature_cols: feature column names if train data is Spark DataFrame.
+:param labels_cols: label column names if train data is Spark DataFrame.
+:param hard_code_batch_size: whether to hard code batch size for evaluation.
+:return: evaluation result as a dictionary of {‘metric name’: metric value}</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.TFOptimizerWrapper.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>data</em>, <em>epochs=1</em>, <em>batch_size=32</em>, <em>feature_cols=None</em>, <em>labels_cols=None</em>, <em>validation_data=None</em>, <em>hard_code_batch_size=False</em>, <em>auto_shard_files=True</em>, <em>session_config=None</em>, <em>feed_dict=None</em>, <em>checkpoint_trigger=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#TFOptimizerWrapper.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.TFOptimizerWrapper.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train this graph model with train data.
+:param data: train data. It can be XShards, Spark DataFrame, tf.data.Dataset.
+If data is XShards, each element needs to be {‘x’: a feature numpy array
+or a tuple of feature numpy arrays, ‘y’: a label numpy array or a tuple of
+label numpy arrays}
+If data is tf.data.Dataset, each element is a tuple of input tensors.
+:param epochs: number of epochs to train.
+:param batch_size: total batch size for each iteration.
+:param feature_cols: feature column names if train data is Spark DataFrame.
+:param labels_cols: label column names if train data is Spark DataFrame.
+:param validation_data: validation data. Validation data type should be the same
+as train data.
+:param hard_code_batch_size: whether hard code batch size for training. Default is False.
+:param auto_shard_files: whether to automatically detect if the dataset is file-based and
+and apply sharding on files, otherwise sharding on records. Default is True.
+:param session_config: tensorflow session configuration for training.
+Should be object of tf.ConfigProto
+:param feed_dict: a dictionary. The key is TensorFlow tensor, usually a
+placeholder, the value of the dictionary is a tuple of two elements. The first one of
+the tuple is the value to feed to the tensor in training phase and the second one
+is the value to feed to the tensor in validation phase.
+:param checkpoint_trigger: when to trigger checkpoint during training.
+Should be bigdl optimzer trigger, like EveryEpoch(), SeveralIteration(num_iterations),etc.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.TFOptimizerWrapper.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>data</em>, <em>batch_size=4</em>, <em>feature_cols=None</em>, <em>hard_code_batch_size=False</em>, <em>auto_shard_files=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#TFOptimizerWrapper.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.TFOptimizerWrapper.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict input data
+:param data: data to be predicted. It can be XShards, Spark DataFrame.
+If data is XShards, each element needs to be {‘x’: a feature numpy array
+or a tuple of feature numpy arrays}.
+:param batch_size: batch size per thread
+:param feature_cols: list of feature column names if input data is Spark DataFrame.
+:param hard_code_batch_size: whether to hard code batch size for prediction.
+The default value is False.
+:return: predicted result.
+If input data is XShards or tf.data.Dataset, the predict result is a XShards,
+and the schema for each result is: {‘prediction’: predicted numpy array or
+list of predicted numpy arrays}.
+If input data is Spark DataFrame, the predict result is a DataFrame which includes original
+columns plus ‘prediction’ column. The ‘prediction’ column can be FloatType, VectorUDT
+or Array of VectorUDT depending on model outputs shape.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.orca.learn.tf.estimator.TFOptimizerWrapper.save_tf_checkpoint">
+<code class="descname">save_tf_checkpoint</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#TFOptimizerWrapper.save_tf_checkpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.TFOptimizerWrapper.save_tf_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save tensorflow checkpoint in this estimator.
+:param path: tensorflow checkpoint path.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="zoo.orca.learn.tf.estimator.is_tf_data_dataset">
+<code class="descclassname">zoo.orca.learn.tf.estimator.</code><code class="descname">is_tf_data_dataset</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#is_tf_data_dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.is_tf_data_dataset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.orca.learn.tf.estimator.to_dataset">
+<code class="descclassname">zoo.orca.learn.tf.estimator.</code><code class="descname">to_dataset</code><span class="sig-paren">(</span><em>data</em>, <em>batch_size</em>, <em>batch_per_thread</em>, <em>validation_data</em>, <em>feature_cols</em>, <em>labels_cols</em>, <em>hard_code_batch_size</em>, <em>sequential_order</em>, <em>shuffle</em>, <em>auto_shard_files</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/estimator.html#to_dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.estimator.to_dataset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
-<div class="section" id="zoo-orca-learn-tf-utils-module">
-<h2>zoo.orca.learn.tf.utils module<a class="headerlink" href="#zoo-orca-learn-tf-utils-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.orca.learn.tf.utils">
+<span id="zoo-orca-learn-tf-utils-module"></span><h2>zoo.orca.learn.tf.utils module<a class="headerlink" href="#module-zoo.orca.learn.tf.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="zoo.orca.learn.tf.utils.convert_predict_to_dataframe">
+<code class="descclassname">zoo.orca.learn.tf.utils.</code><code class="descname">convert_predict_to_dataframe</code><span class="sig-paren">(</span><em>df</em>, <em>prediction_rdd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/utils.html#convert_predict_to_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.utils.convert_predict_to_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.orca.learn.tf.utils.convert_predict_to_xshard">
+<code class="descclassname">zoo.orca.learn.tf.utils.</code><code class="descname">convert_predict_to_xshard</code><span class="sig-paren">(</span><em>prediction_rdd</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/utils.html#convert_predict_to_xshard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.utils.convert_predict_to_xshard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.orca.learn.tf.utils.find_latest_checkpoint">
+<code class="descclassname">zoo.orca.learn.tf.utils.</code><code class="descname">find_latest_checkpoint</code><span class="sig-paren">(</span><em>model_dir</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/utils.html#find_latest_checkpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.utils.find_latest_checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="zoo.orca.learn.tf.utils.xshards_to_tf_dataset">
+<code class="descclassname">zoo.orca.learn.tf.utils.</code><code class="descname">xshards_to_tf_dataset</code><span class="sig-paren">(</span><em>data_shard</em>, <em>batch_size=-1</em>, <em>batch_per_thread=-1</em>, <em>validation_data_shard=None</em>, <em>hard_code_batch_size=False</em>, <em>sequential_order=False</em>, <em>shuffle=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/tf/utils.html#xshards_to_tf_dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.tf.utils.xshards_to_tf_dataset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.orca.learn.tf">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.orca.learn.tf" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -111,6 +433,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.orca.learn.tf2.html" title="zoo.orca.learn.tf2 package"
              >next</a> |</li>

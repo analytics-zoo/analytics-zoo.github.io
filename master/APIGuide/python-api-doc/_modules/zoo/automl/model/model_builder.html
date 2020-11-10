@@ -1,0 +1,162 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.automl.model.model_builder &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.automl.model.model_builder</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either exp&#39;</span>
+<span class="c1"># ress or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+
+<div class="viewcode-block" id="ModelBuilder"><a class="viewcode-back" href="../../../../zoo.automl.model.html#zoo.automl.model.model_builder.ModelBuilder">[docs]</a><span class="k">class</span> <span class="nc">ModelBuilder</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">=</span> <span class="n">backend</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="bp">cls</span>
+
+<div class="viewcode-block" id="ModelBuilder.from_pytorch"><a class="viewcode-back" href="../../../../zoo.automl.model.html#zoo.automl.model.model_builder.ModelBuilder.from_pytorch">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_pytorch</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model_creator</span><span class="p">,</span> <span class="n">optimizer_creator</span><span class="p">,</span> <span class="n">loss_creator</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="s2">&quot;pytorch&quot;</span><span class="p">,</span>
+                   <span class="n">model_creator</span><span class="o">=</span><span class="n">model_creator</span><span class="p">,</span>
+                   <span class="n">optimizer_creator</span><span class="o">=</span><span class="n">optimizer_creator</span><span class="p">,</span>
+                   <span class="n">loss_creator</span><span class="o">=</span><span class="n">loss_creator</span>
+                   <span class="p">)</span></div>
+
+    <span class="c1"># @classmethod</span>
+    <span class="c1"># def from_tfkeras(cls, model_creator, compile_args_creator):</span>
+    <span class="c1">#     return cls(backend=&quot;keras&quot;,</span>
+    <span class="c1">#                model_creator=model_creator,</span>
+    <span class="c1">#                compile_args_creator=compile_args_creator)</span>
+
+<div class="viewcode-block" id="ModelBuilder.from_name"><a class="viewcode-back" href="../../../../zoo.automl.model.html#zoo.automl.model.model_builder.ModelBuilder.from_name">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">dev_option</span><span class="o">=</span><span class="s2">&quot;pytorch&quot;</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">get_class</span><span class="p">(</span><span class="n">base_class</span><span class="p">,</span> <span class="n">class_name</span><span class="o">=</span><span class="n">name</span><span class="p">):</span>
+            <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">base_class</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">()}</span>
+            <span class="k">if</span> <span class="n">class_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;We don&#39;t have built-in </span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2"> yet. &quot;</span>
+                                 <span class="sa">f</span><span class="s2">&quot;Please choose from </span><span class="si">{</span><span class="n">mapping</span><span class="o">.</span><span class="n">keys</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">mapping</span><span class="p">[</span><span class="n">class_name</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">dev_option</span> <span class="o">==</span> <span class="s1">&#39;pytorch&#39;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">zoo.automl.model.base_pytorch_model</span> <span class="kn">import</span> <span class="n">PytorchBaseModel</span>
+            <span class="kn">from</span> <span class="nn">zoo.automl.model.Seq2Seq_pytorch</span> <span class="kn">import</span> <span class="n">Seq2SeqPytorch</span>
+            <span class="kn">from</span> <span class="nn">zoo.automl.model.VanillaLSTM_pytorch</span> <span class="kn">import</span> <span class="n">VanillaLSTMPytorch</span>
+            <span class="kn">from</span> <span class="nn">zoo.automl.model.tcn</span> <span class="kn">import</span> <span class="n">TCNPytorch</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="n">get_class</span><span class="p">(</span><span class="n">PytorchBaseModel</span><span class="p">))</span></div>
+
+        <span class="c1"># elif dev_option == &#39;tf.keras&#39;:</span>
+        <span class="c1">#     from zoo.automl.model.base_keras_model import KerasBaseModel</span>
+        <span class="c1">#     from zoo.automl.model.VanillaLSTM import VanillaLSTM</span>
+        <span class="c1">#     from zoo.automl.model.MTNet_keras import MTNetKeras</span>
+        <span class="c1">#     from zoo.automl.model.Seq2Seq import LSTMSeq2Seq</span>
+        <span class="c1">#     return cls(cls=get_class(KerasBaseModel))</span>
+
+<div class="viewcode-block" id="ModelBuilder.from_cls"><a class="viewcode-back" href="../../../../zoo.automl.model.html#zoo.automl.model.model_builder.ModelBuilder.from_cls">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_cls</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">estimator</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="bp">cls</span><span class="o">=</span><span class="n">estimator</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ModelBuilder.build"><a class="viewcode-back" href="../../../../zoo.automl.model.html#zoo.automl.model.model_builder.ModelBuilder.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">==</span> <span class="s2">&quot;pytorch&quot;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">zoo.automl.model.base_pytorch_model</span> <span class="kn">import</span> <span class="n">PytorchBaseModel</span>
+            <span class="k">return</span> <span class="n">PytorchBaseModel</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                                    <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+        <span class="c1"># elif self.backend == &quot;keras&quot;:</span>
+        <span class="c1">#     from zoo.automl.model.base_keras_model import KerasBaseModel</span>
+        <span class="c1">#     return KerasBaseModel(**self.params,</span>
+        <span class="c1">#                           config=config)</span>
+
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">builder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_name</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">],</span> <span class="n">dev_option</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;dev_option&quot;</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">builder</span><span class="o">.</span><span class="n">cls</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

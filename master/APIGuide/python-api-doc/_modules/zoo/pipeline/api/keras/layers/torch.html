@@ -1,0 +1,889 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.pipeline.api.keras.layers.torch &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.pipeline.api.keras.layers.torch</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="c1"># Layers from Torch wrapped in Keras style.</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">..engine.topology</span> <span class="kn">import</span> <span class="n">ZooKerasLayer</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version</span> <span class="o">&gt;=</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span>
+    <span class="n">long</span> <span class="o">=</span> <span class="nb">int</span>
+    <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
+
+
+<div class="viewcode-block" id="Select"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.Select">[docs]</a><span class="k">class</span> <span class="nc">Select</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Select an index of the input in the given dim and return the subset part.</span>
+<span class="sd">    The batch dimension needs to be unchanged.</span>
+<span class="sd">    The returned tensor has one less dimension: the dimension dim is removed.</span>
+<span class="sd">    As a result, it is not possible to select() on a 1D tensor.</span>
+<span class="sd">    For example, if input is: [[1 2 3], [4 5 6]]</span>
+<span class="sd">    Select(1, 1) will give output [2 5]</span>
+<span class="sd">    Select(1, -1) will give output [3 6]</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    dim: The dimension to select. 0-based index. Cannot select the batch dimension.</span>
+<span class="sd">         -1 means the last dimension of the input.</span>
+<span class="sd">    index: The index of the dimension to be selected. 0-based index.</span>
+<span class="sd">           -1 means the last dimension of the input.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the wrapper.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; select = Select(0, -1, input_shape=(3, 4), name=&quot;select1&quot;)</span>
+<span class="sd">    creating: createZooKerasSelect</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Select</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                     <span class="n">dim</span><span class="p">,</span>
+                                     <span class="n">index</span><span class="p">,</span>
+                                     <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                     <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Narrow"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.Narrow">[docs]</a><span class="k">class</span> <span class="nc">Narrow</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Narrow the input with the number of dimensions not being reduced.</span>
+<span class="sd">    The batch dimension needs to be unchanged.</span>
+<span class="sd">    For example, if input is: [[1 2 3], [4 5 6]]</span>
+<span class="sd">    Narrow(1, 1, 2) will give output [[2 3], [5 6]]</span>
+<span class="sd">    Narrow(1, 2, -1) will give output [[3], [6]]</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    dim: The dimension to narrow. 0-based index. Cannot narrow the batch dimension.</span>
+<span class="sd">         -1 means the last dimension of the input.</span>
+<span class="sd">    offset: Non-negative integer. The start index on the given dimension. 0-based index.</span>
+<span class="sd">    length: The length to narrow. Default is 1.</span>
+<span class="sd">            Can use a negative length such as -1 in the case where input size is unknown.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; narrow = Narrow(1, 3, input_shape=(5, 6, 7), name=&quot;narrow1&quot;)</span>
+<span class="sd">    creating: createZooKerasNarrow</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Narrow</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                     <span class="n">dim</span><span class="p">,</span>
+                                     <span class="n">offset</span><span class="p">,</span>
+                                     <span class="n">length</span><span class="p">,</span>
+                                     <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                     <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Squeeze"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.Squeeze">[docs]</a><span class="k">class</span> <span class="nc">Squeeze</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Delete the singleton dimension(s).</span>
+<span class="sd">    The batch dimension needs to be unchanged.</span>
+<span class="sd">    For example, if input has size (2, 1, 3, 4, 1):</span>
+<span class="sd">    Squeeze(1) will give output size (2, 3, 4, 1)</span>
+<span class="sd">    Squeeze() will give output size (2, 3, 4)</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    dim: The dimension(s) to squeeze. Can be either int or tuple of int.</span>
+<span class="sd">         0-based index. Cannot squeeze the batch dimension.</span>
+<span class="sd">         The selected dimensions must be singleton, i.e. having size 1.</span>
+<span class="sd">         Default is None, and in this case all the non-batch singleton dimensions will be deleted.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; squeeze1 = Squeeze(1, input_shape=(1, 4, 5))</span>
+<span class="sd">    creating: createZooKerasSqueeze</span>
+<span class="sd">    &gt;&gt;&gt; squeeze2 = Squeeze(input_shape=(1, 8, 1, 4))</span>
+<span class="sd">    creating: createZooKerasSqueeze</span>
+<span class="sd">    &gt;&gt;&gt; squeeze3 = Squeeze((1, 2), input_shape=(1, 1, 1, 32))</span>
+<span class="sd">    creating: createZooKerasSqueeze</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">dim</span> <span class="o">=</span> <span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Squeeze</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                      <span class="n">dim</span><span class="p">,</span>
+                                      <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                      <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AddConstant"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.AddConstant">[docs]</a><span class="k">class</span> <span class="nc">AddConstant</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add a (non-learnable) scalar constant to the input.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    constant: The scalar constant to be added.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; addconstant = AddConstant(1, input_shape=(1, 4, 5))</span>
+<span class="sd">    creating: createZooKerasAddConstant</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constant</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AddConstant</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                          <span class="nb">float</span><span class="p">(</span><span class="n">constant</span><span class="p">),</span>
+                                          <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MulConstant"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.MulConstant">[docs]</a><span class="k">class</span> <span class="nc">MulConstant</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Multiply the input by a (non-learnable) scalar constant.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    constant: The scalar constant to be multiplied.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; mulconstant = MulConstant(2.2, input_shape=(3, 4))</span>
+<span class="sd">    creating: createZooKerasMulConstant</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constant</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MulConstant</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                          <span class="nb">float</span><span class="p">(</span><span class="n">constant</span><span class="p">),</span>
+                                          <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LRN2D"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.LRN2D">[docs]</a><span class="k">class</span> <span class="nc">LRN2D</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Local Response Normalization between different feature maps.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    alpha: Float. The scaling parameter. Default is 0.0001.</span>
+<span class="sd">    k: Float. A constant.</span>
+<span class="sd">    beta: Float. The exponent. Default is 0.75.</span>
+<span class="sd">    n: The number of channels to sum over.</span>
+<span class="sd">    dim_ordering: Format of input data. Either &#39;th&#39; (Channel First) or &#39;tf&#39; (Channel Last).</span>
+<span class="sd">                  Default is &#39;th&#39;.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; lrn2d = LRN2D(1e-3, 1.2, 0.4, 4, dim_ordering=&quot;tf&quot;, input_shape=(4, 5, 6))</span>
+<span class="sd">    creating: createZooKerasLRN2D</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                 <span class="n">dim_ordering</span><span class="o">=</span><span class="s2">&quot;th&quot;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LRN2D</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                    <span class="nb">float</span><span class="p">(</span><span class="n">alpha</span><span class="p">),</span>
+                                    <span class="nb">float</span><span class="p">(</span><span class="n">k</span><span class="p">),</span>
+                                    <span class="nb">float</span><span class="p">(</span><span class="n">beta</span><span class="p">),</span>
+                                    <span class="n">n</span><span class="p">,</span>
+                                    <span class="n">dim_ordering</span><span class="p">,</span>
+                                    <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                    <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ShareConvolution2D"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.ShareConvolution2D">[docs]</a><span class="k">class</span> <span class="nc">ShareConvolution2D</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies a 2D convolution over an input image composed of several input planes.</span>
+<span class="sd">    You can also use ShareConv2D as an alias of this layer.</span>
+<span class="sd">    Data format currently supported for this layer is dim_ordering=&#39;th&#39; (Channel First).</span>
+<span class="sd">    The input of this layer should be 4D.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+<span class="sd">    e.g. input_shape=(3, 128, 128) for 128x128 RGB pictures.</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    nb_filter: Number of convolution filters to use.</span>
+<span class="sd">    nb_row: Number of rows in the convolution kernel.</span>
+<span class="sd">    nb_col: Number of cols in the convolution kernel.</span>
+<span class="sd">    init: String representation of the initialization method for the weights of the layer.</span>
+<span class="sd">          Default is &#39;glorot_uniform&#39;.</span>
+<span class="sd">    activation: String representation of the activation function to use</span>
+<span class="sd">                (such as &#39;relu&#39; or &#39;sigmoid&#39;). Default is None.</span>
+<span class="sd">    subsample: Int tuple of length 2 corresponding to the step of the convolution in the</span>
+<span class="sd">               height and width dimension. Also called strides elsewhere. Default is (1, 1).</span>
+<span class="sd">    pad_h: The additional zeros added to the height dimension. Default is 0.</span>
+<span class="sd">    pad_w: The additional zeros added to the width dimension. Default is 0.</span>
+<span class="sd">    propagate_back: Whether to propagate gradient back. Default is True.</span>
+<span class="sd">    dim_ordering: Format of input data. Only &#39;th&#39; (Channel First) is supported for now.</span>
+<span class="sd">    W_regularizer: An instance of [[Regularizer]], (eg. L1 or L2 regularization),</span>
+<span class="sd">                   applied to the input weights matrices. Default is None.</span>
+<span class="sd">    b_regularizer: An instance of [[Regularizer]], applied to the bias. Default is None.</span>
+<span class="sd">    bias: Whether to include a bias (i.e. make the layer affine rather than linear).</span>
+<span class="sd">          Default is True.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; shareconv2d = ShareConvolution2D(32, 3, 4, activation=&quot;tanh&quot;, input_shape=(3, 128, 128))</span>
+<span class="sd">    creating: createZooKerasShareConvolution2D</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_filter</span><span class="p">,</span> <span class="n">nb_row</span><span class="p">,</span> <span class="n">nb_col</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s2">&quot;glorot_uniform&quot;</span><span class="p">,</span>
+                 <span class="n">activation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subsample</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">pad_h</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad_w</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">propagate_back</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                 <span class="n">dim_ordering</span><span class="o">=</span><span class="s2">&quot;th&quot;</span><span class="p">,</span> <span class="n">W_regularizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b_regularizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ShareConvolution2D</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                                 <span class="n">nb_filter</span><span class="p">,</span>
+                                                 <span class="n">nb_row</span><span class="p">,</span>
+                                                 <span class="n">nb_col</span><span class="p">,</span>
+                                                 <span class="n">init</span><span class="p">,</span>
+                                                 <span class="n">activation</span><span class="p">,</span>
+                                                 <span class="n">subsample</span><span class="p">,</span>
+                                                 <span class="n">pad_h</span><span class="p">,</span>
+                                                 <span class="n">pad_w</span><span class="p">,</span>
+                                                 <span class="n">propagate_back</span><span class="p">,</span>
+                                                 <span class="n">dim_ordering</span><span class="p">,</span>
+                                                 <span class="n">W_regularizer</span><span class="p">,</span>
+                                                 <span class="n">b_regularizer</span><span class="p">,</span>
+                                                 <span class="n">bias</span><span class="p">,</span>
+                                                 <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<span class="n">ShareConv2D</span> <span class="o">=</span> <span class="n">ShareConvolution2D</span>
+
+
+<div class="viewcode-block" id="CAdd"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.CAdd">[docs]</a><span class="k">class</span> <span class="nc">CAdd</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This layer has a bias with given size.</span>
+<span class="sd">    The bias will be added element-wise to the input.</span>
+<span class="sd">    If the element number of the bias matches the input, a simple element-wise addition</span>
+<span class="sd">    will be done.</span>
+<span class="sd">    Or the bias will be expanded to the same size of the input.</span>
+<span class="sd">    The expand means repeat on unmatched singleton dimension (if some unmatched dimension</span>
+<span class="sd">    isn&#39;t a singleton dimension, an error will be raised).</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    size: The size of the bias.</span>
+<span class="sd">    b_regularizer: An instance of [[Regularizer]], applied to the bias. Default is null.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; cadd = CAdd((2, 1), input_shape=(3, ))</span>
+<span class="sd">    creating: createZooKerasCAdd</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">b_regularizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CAdd</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">size</span><span class="p">,</span>
+                                   <span class="n">b_regularizer</span><span class="p">,</span>
+                                   <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                   <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CMul"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.CMul">[docs]</a><span class="k">class</span> <span class="nc">CMul</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This layer has a weight with given size.</span>
+<span class="sd">    The weight will be multiplied element-wise to the input.</span>
+<span class="sd">    If the element number of the weight matches the input,</span>
+<span class="sd">    a simple element-wise multiplication will be done.</span>
+<span class="sd">    Or the bias will be expanded to the same size of the input.</span>
+<span class="sd">    The expand means repeat on unmatched singleton dimension (if some unmatched dimension isn&#39;t</span>
+<span class="sd">    singleton dimension, an error will be raised).</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    size: The size of the bias.</span>
+<span class="sd">    W_regularizer: An instance of [[Regularizer]], (eg. L1 or L2 regularization),</span>
+<span class="sd">                   applied to the input weights matrices. Default is null.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; cmul = CMul((2, 1), input_shape=(3, ))</span>
+<span class="sd">    creating: createZooKerasCMul</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">W_regularizer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CMul</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">size</span><span class="p">,</span>
+                                   <span class="n">W_regularizer</span><span class="p">,</span>
+                                   <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                   <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Exp"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.Exp">[docs]</a><span class="k">class</span> <span class="nc">Exp</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies element-wise exp to the input.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; exp = Exp(input_shape=(2, 3, 4))</span>
+<span class="sd">    creating: createZooKerasExp</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Exp</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                  <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Identity"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.Identity">[docs]</a><span class="k">class</span> <span class="nc">Identity</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Identity just return the input to output.</span>
+<span class="sd">    It&#39;s useful in same parallel container to get an origin input.</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; identity = Identity(input_shape=(3, ))</span>
+<span class="sd">    creating: createZooKerasIdentity</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Identity</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                       <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                       <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Log"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.Log">[docs]</a><span class="k">class</span> <span class="nc">Log</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies a log transformation to the input.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; log = Log(input_shape=(4, 8, 8))</span>
+<span class="sd">    creating: createZooKerasLog</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Log</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                  <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Mul"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.Mul">[docs]</a><span class="k">class</span> <span class="nc">Mul</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Multiply a single scalar factor to the input.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; mul = Mul(input_shape=(3, 4, 5))</span>
+<span class="sd">    creating: createZooKerasMul</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Mul</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                  <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Power"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.Power">[docs]</a><span class="k">class</span> <span class="nc">Power</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies an element-wise power operation with scale and shift to the input.</span>
+
+<span class="sd">    f(x) = (shift + scale * x)^power^</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    power: The exponent.</span>
+<span class="sd">    scale: The scale parameter. Default is 1.</span>
+<span class="sd">    shift: The shift parameter. Default is 0.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; power = Power(3, input_shape=(3, ))</span>
+<span class="sd">    creating: createZooKerasPower</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Power</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                    <span class="nb">float</span><span class="p">(</span><span class="n">power</span><span class="p">),</span>
+                                    <span class="nb">float</span><span class="p">(</span><span class="n">scale</span><span class="p">),</span>
+                                    <span class="nb">float</span><span class="p">(</span><span class="n">shift</span><span class="p">),</span>
+                                    <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                    <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Scale"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.Scale">[docs]</a><span class="k">class</span> <span class="nc">Scale</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Scale is the combination of CMul and CAdd.</span>
+
+<span class="sd">    Computes the element-wise product of the input and weight,</span>
+<span class="sd">    with the shape of the weight &quot;expand&quot; to match the shape of the input.</span>
+<span class="sd">    Similarly, perform an expanded bias and perform an element-wise add.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    size: Size of the weight and bias.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; scale = Scale((2, 1), input_shape=(3, ))</span>
+<span class="sd">    creating: createZooKerasScale</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Scale</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                    <span class="n">size</span><span class="p">,</span>
+                                    <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                    <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Sqrt"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.Sqrt">[docs]</a><span class="k">class</span> <span class="nc">Sqrt</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies an element-wise square root operation to the input.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; sqrt = Sqrt(input_shape=(3, ))</span>
+<span class="sd">    creating: createZooKerasSqrt</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Sqrt</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                   <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                   <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Square"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.Square">[docs]</a><span class="k">class</span> <span class="nc">Square</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies an element-wise square operation to the input.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; square = Square(input_shape=(5, ))</span>
+<span class="sd">    creating: createZooKerasSquare</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Square</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                     <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                     <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HardShrink"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.HardShrink">[docs]</a><span class="k">class</span> <span class="nc">HardShrink</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies the hard shrinkage function element-wise to the input.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    value: The threshold value. Default is 0.5.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; hardshrink = HardShrink(input_shape=(2, 4, 8))</span>
+<span class="sd">    creating: createZooKerasHardShrink</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HardShrink</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                         <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
+                                         <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                         <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HardTanh"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.HardTanh">[docs]</a><span class="k">class</span> <span class="nc">HardTanh</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies the hard tanh function element-wise to the input.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    min_value: The minimum threshold value. Default is -1.</span>
+<span class="sd">    max_value: The maximum threshold value. Default is 1.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; hardtanh = HardTanh(input_shape=(3, 4))</span>
+<span class="sd">    creating: createZooKerasHardTanh</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HardTanh</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                       <span class="nb">float</span><span class="p">(</span><span class="n">min_value</span><span class="p">),</span>
+                                       <span class="nb">float</span><span class="p">(</span><span class="n">max_value</span><span class="p">),</span>
+                                       <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                       <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Negative"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.Negative">[docs]</a><span class="k">class</span> <span class="nc">Negative</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the negative value of each element of the input.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; negative = Negative(input_shape=(4, 5, 8))</span>
+<span class="sd">    creating: createZooKerasNegative</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Negative</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                       <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                       <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PReLU"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.PReLU">[docs]</a><span class="k">class</span> <span class="nc">PReLU</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies parametric ReLU, where parameter varies the slope of the negative part.</span>
+
+<span class="sd">    Notice: Please don&#39;t use weight decay on this.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    n_output_plane: Input map number. Default is 0,</span>
+<span class="sd">                    which means using PReLU in shared version and has only one parameter.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; prelu = PReLU(input_shape=(3, 4, 8, 8))</span>
+<span class="sd">    creating: createZooKerasPReLU</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_output_plane</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PReLU</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                    <span class="n">n_output_plane</span><span class="p">,</span>
+                                    <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                    <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RReLU"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.RReLU">[docs]</a><span class="k">class</span> <span class="nc">RReLU</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies the randomized leaky rectified linear unit element-wise to the input.</span>
+
+<span class="sd">    In the training mode, negative inputs are multiplied by a factor drawn</span>
+<span class="sd">    from a uniform random distribution U(l, u).</span>
+<span class="sd">    In the evaluation mode, a RReLU behaves like a LeakyReLU with a constant mean</span>
+<span class="sd">    factor a = (l + u) / 2.</span>
+<span class="sd">    If l == u, a RReLU essentially becomes a LeakyReLU.</span>
+<span class="sd">    Regardless of operating in in-place mode a RReLU will internally</span>
+<span class="sd">    allocate an input-sized noise tensor to store random factors for negative inputs.</span>
+<span class="sd">    For reference see [Empirical Evaluation of Rectified Activations in Convolutional</span>
+<span class="sd">    Network](http://arxiv.org/abs/1505.00853).</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    lower: Lower boundary of the uniform random distribution. Default is 1.0/8.</span>
+<span class="sd">    upper: Upper boundary of the uniform random distribution. Default is 1.0/3.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; rrelu = RReLU(input_shape=(3, 4))</span>
+<span class="sd">    creating: createZooKerasRReLU</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mf">1.0</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">1.0</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RReLU</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                    <span class="nb">float</span><span class="p">(</span><span class="n">lower</span><span class="p">),</span>
+                                    <span class="nb">float</span><span class="p">(</span><span class="n">upper</span><span class="p">),</span>
+                                    <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                    <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SoftShrink"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.SoftShrink">[docs]</a><span class="k">class</span> <span class="nc">SoftShrink</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies the soft shrinkage function element-wise to the input.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    value: The threshold value. Default is 0.5.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; softshrink = SoftShrink(input_shape=(4, 4, 8, 8))</span>
+<span class="sd">    creating: createZooKerasSoftShrink</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SoftShrink</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                         <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
+                                         <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                         <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WithinChannelLRN2D"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.WithinChannelLRN2D">[docs]</a><span class="k">class</span> <span class="nc">WithinChannelLRN2D</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The local response normalization layer performs a kind of &quot;lateral inhibition&quot;</span>
+<span class="sd">    by normalizing over local input regions. The local regions extend spatially,</span>
+<span class="sd">    in separate channels (i.e., they have shape 1 x size x size).</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    size: The side length of the square region to sum over. Default is 5.</span>
+<span class="sd">    alpha: The scaling parameter. Default is 1.0.</span>
+<span class="sd">    beta: The exponent. Default is 0.75.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; withinchannellrn2d = WithinChannelLRN2D(input_shape=(2, 3, 8, 8))</span>
+<span class="sd">    creating: createZooKerasWithinChannelLRN2D</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WithinChannelLRN2D</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                                 <span class="n">size</span><span class="p">,</span>
+                                                 <span class="nb">float</span><span class="p">(</span><span class="n">alpha</span><span class="p">),</span>
+                                                 <span class="nb">float</span><span class="p">(</span><span class="n">beta</span><span class="p">),</span>
+                                                 <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                                 <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BinaryThreshold"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.BinaryThreshold">[docs]</a><span class="k">class</span> <span class="nc">BinaryThreshold</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Threshold the input.</span>
+<span class="sd">    If an input element is smaller than the threshold value,</span>
+<span class="sd">    it will be replaced by 0; otherwise, it will be replaced by 1.</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    value: The threshold value to compare with. Default is 1e-6.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+
+<span class="sd">    &gt;&gt;&gt; binarythreshold = BinaryThreshold(input_shape=(2, 3, 4, 5))</span>
+<span class="sd">    creating: createZooKerasBinaryThreshold</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BinaryThreshold</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                              <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">),</span>
+                                              <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                              <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Threshold"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.Threshold">[docs]</a><span class="k">class</span> <span class="nc">Threshold</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Threshold input Tensor.</span>
+<span class="sd">    If values in the Tensor smaller than or equal to th, then replace it with v.</span>
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+<span class="sd">    # Arguments</span>
+<span class="sd">    th: The threshold value to compare with. Default is 1e-6.</span>
+<span class="sd">    v: the value to replace with.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+<span class="sd">    name: String to set the name of the layer.</span>
+<span class="sd">          If not specified, its name will by default to be a generated string.</span>
+<span class="sd">    &gt;&gt;&gt; threshold = Threshold(input_shape=(2, 3, 4, 5))</span>
+<span class="sd">    creating: createZooKerasThreshold</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">th</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Threshold</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                        <span class="nb">float</span><span class="p">(</span><span class="n">th</span><span class="p">),</span>
+                                        <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>
+                                        <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GaussianSampler"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.GaussianSampler">[docs]</a><span class="k">class</span> <span class="nc">GaussianSampler</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Takes {mean, log_variance} as input and samples from the Gaussian distribution</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+
+<span class="sd">    &gt;&gt;&gt; gaussianSampler = GaussianSampler(input_shape=[(3,),(3,)])</span>
+<span class="sd">    creating: createZooKerasGaussianSampler</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GaussianSampler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                              <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                              <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ResizeBilinear"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.ResizeBilinear">[docs]</a><span class="k">class</span> <span class="nc">ResizeBilinear</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Resize the input image with bilinear interpolation. The input image must be a float tensor with</span>
+<span class="sd">    NHWC or NCHW layout</span>
+
+<span class="sd">    When you use this layer as the first layer of a model, you need to provide the argument</span>
+<span class="sd">    input_shape (a shape tuple, does not include the batch dimension).</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    output_height: output height</span>
+<span class="sd">    output_width: output width</span>
+<span class="sd">    align_corner: align corner or not</span>
+<span class="sd">    dim_ordering: Format of input data. Either &#39;th&#39; (Channel First) or &#39;tf&#39; (Channel Last).</span>
+<span class="sd">                  Default is &#39;th&#39;.</span>
+<span class="sd">    input_shape: A shape tuple, not including batch.</span>
+
+<span class="sd">    &gt;&gt;&gt; resizeBilinear = ResizeBilinear(10, 20, input_shape=(2, 3, 5, 7))</span>
+<span class="sd">    creating: createZooKerasResizeBilinear</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_height</span><span class="p">,</span> <span class="n">output_width</span><span class="p">,</span> <span class="n">align_corner</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">dim_ordering</span><span class="o">=</span><span class="s2">&quot;th&quot;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ResizeBilinear</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                             <span class="n">output_height</span><span class="p">,</span>
+                                             <span class="n">output_width</span><span class="p">,</span>
+                                             <span class="n">align_corner</span><span class="p">,</span>
+                                             <span class="n">dim_ordering</span><span class="p">,</span>
+                                             <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SelectTable"><a class="viewcode-back" href="../../../../../../zoo.pipeline.api.keras.layers.html#zoo.pipeline.api.keras.layers.torch.SelectTable">[docs]</a><span class="k">class</span> <span class="nc">SelectTable</span><span class="p">(</span><span class="n">ZooKerasLayer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a module that takes a list of JTensors as input and outputs the element at index `index`</span>
+
+<span class="sd">    # Arguments</span>
+<span class="sd">    index: the index to be selected. 0-based index</span>
+<span class="sd">    input_shape: a list of shape tuples, not including batch.</span>
+
+<span class="sd">    &gt;&gt;&gt; selectTable = SelectTable(0, input_shape=[[2, 3], [5, 7]])</span>
+<span class="sd">    creating: createZooKerasSelectTable</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SelectTable</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
+                                          <span class="n">index</span><span class="p">,</span>
+                                          <span class="nb">list</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)</span> <span class="k">if</span> <span class="n">input_shape</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                          <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

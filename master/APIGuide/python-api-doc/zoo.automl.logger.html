@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.automl.model.html" title="zoo.automl.model package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -42,8 +45,8 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.automl.logger package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-automl-logger-tensorboardxlogger-module">zoo.automl.logger.tensorboardxlogger module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.logger.tensorboardxlogger">zoo.automl.logger.tensorboardxlogger module</a></li>
+<li><a class="reference internal" href="#module-zoo.automl.logger">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -86,11 +89,45 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-automl-logger-tensorboardxlogger-module">
-<h2>zoo.automl.logger.tensorboardxlogger module<a class="headerlink" href="#zoo-automl-logger-tensorboardxlogger-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.logger.tensorboardxlogger">
+<span id="zoo-automl-logger-tensorboardxlogger-module"></span><h2>zoo.automl.logger.tensorboardxlogger module<a class="headerlink" href="#module-zoo.automl.logger.tensorboardxlogger" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.automl.logger.tensorboardxlogger.TensorboardXLogger">
+<em class="property">class </em><code class="descclassname">zoo.automl.logger.tensorboardxlogger.</code><code class="descname">TensorboardXLogger</code><span class="sig-paren">(</span><em>logs_dir=''</em>, <em>writer=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/logger/tensorboardxlogger.html#TensorboardXLogger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.logger.tensorboardxlogger.TensorboardXLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="zoo.automl.logger.tensorboardxlogger.TensorboardXLogger.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/logger/tensorboardxlogger.html#TensorboardXLogger.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.logger.tensorboardxlogger.TensorboardXLogger.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the logger</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.automl.logger.tensorboardxlogger.TensorboardXLogger.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>config</em>, <em>metric</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/logger/tensorboardxlogger.html#TensorboardXLogger.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.logger.tensorboardxlogger.TensorboardXLogger.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write log files(event files)</p>
+<p>The log files is arranged as following:
+self.logs_dir
+<a href="#id1"><span class="problematic" id="id2">|</span></a>–eventfile_all
+<a href="#id3"><span class="problematic" id="id4">|</span></a>–Trail_1
+|  <a href="#id5"><span class="problematic" id="id6">|</span></a>–eventfile_1
+<a href="#id7"><span class="problematic" id="id8">|</span></a>–Trail_2
+|  <a href="#id9"><span class="problematic" id="id10">|</span></a>–eventfile_2
+…
+:param config: A dictionary. Keys are trail name,
+value is a dictionary indicates the trail config
+:param metric: A dictionary. Keys are trail name,
+value is a dictionary indicates the trail metric results</p>
+<p>Example:
+Config = {“run1”:{“lr”:0.001, “hidden_units”: 32}, “run2”:{“lr”:0.01, “hidden_units”: 64}}
+Metric = {“run1”:{“acc”:0.91, “time”: 32.13}, “run2”:{“acc”:0.93, “time”: 61.33}}</p>
+<p>Note that the keys of config and metric should be exactly the same</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.automl.logger">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.automl.logger" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -106,6 +143,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.automl.model.html" title="zoo.automl.model package"
              >next</a> |</li>

@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.zouwu.model.html" title="zoo.zouwu.model package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -42,8 +45,8 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.zouwu.autots package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-zouwu-autots-forecast-module">zoo.zouwu.autots.forecast module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.zouwu.autots.forecast">zoo.zouwu.autots.forecast module</a></li>
+<li><a class="reference internal" href="#module-zoo.zouwu.autots">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -86,11 +89,98 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-zouwu-autots-forecast-module">
-<h2>zoo.zouwu.autots.forecast module<a class="headerlink" href="#zoo-zouwu-autots-forecast-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.zouwu.autots.forecast">
+<span id="zoo-zouwu-autots-forecast-module"></span><h2>zoo.zouwu.autots.forecast module<a class="headerlink" href="#module-zoo.zouwu.autots.forecast" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.zouwu.autots.forecast.AutoTSTrainer">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.autots.forecast.</code><code class="descname">AutoTSTrainer</code><span class="sig-paren">(</span><em>horizon=1</em>, <em>dt_col='datetime'</em>, <em>target_col='value'</em>, <em>extra_features_col=None</em>, <em>search_alg=None</em>, <em>search_alg_params=None</em>, <em>scheduler=None</em>, <em>scheduler_params=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/autots/forecast.html#AutoTSTrainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.autots.forecast.AutoTSTrainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The Automated Time Series Forecast Trainer</p>
+<dl class="method">
+<dt id="zoo.zouwu.autots.forecast.AutoTSTrainer.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>train_df</em>, <em>validation_df=None</em>, <em>metric='mse'</em>, <em>recipe: zoo.automl.config.recipe.Recipe = &lt;zoo.automl.config.recipe.SmokeRecipe object&gt;</em>, <em>uncertainty: bool = False</em>, <em>distributed: bool = False</em>, <em>hdfs_url=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/autots/forecast.html#AutoTSTrainer.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.autots.forecast.AutoTSTrainer.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a time series forecasting pipeline w/ automl
+:param train_df: the input dataframe (as pandas.dataframe)
+:param validation_df: the validation dataframe (as pandas.dataframe)
+:param recipe: the configuration of searching
+:param metric: the evaluation metric to optimize
+:param uncertainty: whether to enable uncertainty calculation
+(will output an uncertainty sigma)
+:param hdfs_url: the hdfs_url to use for storing trail and intermediate results
+:param distributed: whether to enable distributed training
+:return a TSPipeline</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="zoo.zouwu.autots.forecast.TSPipeline">
+<em class="property">class </em><code class="descclassname">zoo.zouwu.autots.forecast.</code><code class="descname">TSPipeline</code><a class="reference internal" href="_modules/zoo/zouwu/autots/forecast.html#TSPipeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.autots.forecast.TSPipeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A pipeline for time series forecasting.</p>
+<dl class="method">
+<dt id="zoo.zouwu.autots.forecast.TSPipeline.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>input_df, metrics=['mse'], multioutput='raw_values'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/autots/forecast.html#TSPipeline.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.autots.forecast.TSPipeline.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>evaluate the results
+:param input_df: the input dataframe
+:param metrics: the evaluation metrics
+:param multioutput: output mode of multiple output, whether to aggregate
+:return: the evaluation results</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.zouwu.autots.forecast.TSPipeline.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>input_df</em>, <em>validation_df=None</em>, <em>uncertainty: bool = False</em>, <em>epochs=1</em>, <em>**user_config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/autots/forecast.html#TSPipeline.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.autots.forecast.TSPipeline.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Incremental Fitting</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>input_df</strong> – the input dataframe</li>
+<li><strong>validation_df</strong> – the validation dataframe</li>
+<li><strong>uncertainty</strong> – whether to calculate uncertainty</li>
+<li><strong>epochs</strong> – number of epochs to train</li>
+<li><strong>user_config</strong> – user configurations</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="zoo.zouwu.autots.forecast.TSPipeline.load">
+<em class="property">static </em><code class="descname">load</code><span class="sig-paren">(</span><em>pipeline_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/autots/forecast.html#TSPipeline.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.autots.forecast.TSPipeline.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>load pipeline from a file
+:param pipeline_file: the pipeline file
+:return: a TSPipeline object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.zouwu.autots.forecast.TSPipeline.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>input_df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/autots/forecast.html#TSPipeline.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.autots.forecast.TSPipeline.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>predict the result
+:param input_df: the input dataframe
+:return: the forecast results</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.zouwu.autots.forecast.TSPipeline.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>pipeline_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/zouwu/autots/forecast.html#TSPipeline.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.zouwu.autots.forecast.TSPipeline.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>save the pipeline to a file
+:param pipeline_file: the file path
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.zouwu.autots">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.zouwu.autots" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -106,6 +196,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.zouwu.model.html" title="zoo.zouwu.model package"
              >next</a> |</li>
