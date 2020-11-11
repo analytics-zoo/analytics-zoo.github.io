@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.models.image.imageclassification.html" title="zoo.models.image.imageclassification package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -46,9 +43,9 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.models.image.common package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.models.image.common.image_config">zoo.models.image.common.image_config module</a></li>
-<li><a class="reference internal" href="#module-zoo.models.image.common.image_model">zoo.models.image.common.image_model module</a></li>
-<li><a class="reference internal" href="#module-zoo.models.image.common">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-models-image-common-image-config-module">zoo.models.image.common.image_config module</a></li>
+<li><a class="reference internal" href="#zoo-models-image-common-image-model-module">zoo.models.image.common.image_model module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -91,54 +88,14 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.models.image.common.image_config">
-<span id="zoo-models-image-common-image-config-module"></span><h2>zoo.models.image.common.image_config module<a class="headerlink" href="#module-zoo.models.image.common.image_config" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.models.image.common.image_config.ImageConfigure">
-<em class="property">class </em><code class="descclassname">zoo.models.image.common.image_config.</code><code class="descname">ImageConfigure</code><span class="sig-paren">(</span><em>pre_processor=None</em>, <em>post_processor=None</em>, <em>batch_per_partition=4</em>, <em>label_map=None</em>, <em>feature_padding_param=None</em>, <em>jvalue=None</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/image/common/image_config.html#ImageConfigure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.image.common.image_config.ImageConfigure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bigdl.util.common.JavaValue</span></code></p>
-<p>predictor configure
-:param pre_processor preprocessor of ImageSet before model inference
-:param post_processor postprocessor of ImageSet after model inference
-:param batch_per_partition batch size per partition
-:param label_map mapping from prediction result indexes to real dataset labels
-:param feature_padding_param featurePaddingParam if the inputs have variant size</p>
-<dl class="method">
-<dt id="zoo.models.image.common.image_config.ImageConfigure.label_map">
-<code class="descname">label_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/image/common/image_config.html#ImageConfigure.label_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.image.common.image_config.ImageConfigure.label_map" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.models.image.common.image_config.PaddingParam">
-<em class="property">class </em><code class="descclassname">zoo.models.image.common.image_config.</code><code class="descname">PaddingParam</code><span class="sig-paren">(</span><em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/image/common/image_config.html#PaddingParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.image.common.image_config.PaddingParam" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bigdl.util.common.JavaValue</span></code></p>
-</dd></dl>
-
+<div class="section" id="zoo-models-image-common-image-config-module">
+<h2>zoo.models.image.common.image_config module<a class="headerlink" href="#zoo-models-image-common-image-config-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.models.image.common.image_model">
-<span id="zoo-models-image-common-image-model-module"></span><h2>zoo.models.image.common.image_model module<a class="headerlink" href="#module-zoo.models.image.common.image_model" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.models.image.common.image_model.ImageModel">
-<em class="property">class </em><code class="descclassname">zoo.models.image.common.image_model.</code><code class="descname">ImageModel</code><span class="sig-paren">(</span><em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/image/common/image_model.html#ImageModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.image.common.image_model.ImageModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="zoo.models.common.html#zoo.models.common.zoo_model.ZooModel" title="zoo.models.common.zoo_model.ZooModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.models.common.zoo_model.ZooModel</span></code></a></p>
-<p>The basic class for image model.</p>
-<dl class="method">
-<dt id="zoo.models.image.common.image_model.ImageModel.get_config">
-<code class="descname">get_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/image/common/image_model.html#ImageModel.get_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.image.common.image_model.ImageModel.get_config" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.models.image.common.image_model.ImageModel.predict_image_set">
-<code class="descname">predict_image_set</code><span class="sig-paren">(</span><em>image</em>, <em>configure=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/image/common/image_model.html#ImageModel.predict_image_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.image.common.image_model.ImageModel.predict_image_set" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
+<div class="section" id="zoo-models-image-common-image-model-module">
+<h2>zoo.models.image.common.image_model module<a class="headerlink" href="#zoo-models-image-common-image-model-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.models.image.common">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.models.image.common" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -154,9 +111,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.models.image.imageclassification.html" title="zoo.models.image.imageclassification package"
              >next</a> |</li>

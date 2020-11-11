@@ -89,7 +89,7 @@
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
               <ol><li name="com.intel.analytics.zoo.serving.PreProcessing#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="&lt;init&gt;(chwFlag:Boolean):com.intel.analytics.zoo.serving.PreProcessing"></a>
+      <a id="&lt;init&gt;(chwFlag:Boolean,redisHost:String,redisPort:Int,jobName:String):com.intel.analytics.zoo.serving.PreProcessing"></a>
       <a id="&lt;init&gt;:PreProcessing"></a>
       <h4 class="signature">
       <span class="modifier_kind">
@@ -97,10 +97,10 @@
         <span class="kind">new</span>
       </span>
       <span class="symbol">
-        <span class="name">PreProcessing</span><span class="params">(<span name="chwFlag">chwFlag: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span>
+        <span class="name">PreProcessing</span><span class="params">(<span name="chwFlag">chwFlag: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>, <span name="redisHost">redisHost: <span class="extype" name="scala.Predef.String">String</span> = <span class="symbol">&quot;localhost&quot;</span></span>, <span name="redisPort">redisPort: <span class="extype" name="scala.Int">Int</span> = <span class="symbol">6379</span></span>, <span name="jobName">jobName: <span class="extype" name="scala.Predef.String">String</span> = <span class="defval" name='<span class="name"><a href="../../../../package.html">Conventions.SERVING_STREAM_DEFAULT_NAME</a></span>'>...</span></span>)</span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#com.intel.analytics.zoo.serving.PreProcessing@&lt;init&gt;(chwFlag:Boolean):com.intel.analytics.zoo.serving.PreProcessing" title="Permalink" target="_top">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.serving.PreProcessing@&lt;init&gt;(chwFlag:Boolean,redisHost:String,redisPort:Int,jobName:String):com.intel.analytics.zoo.serving.PreProcessing" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -223,18 +223,18 @@
               
         </dd></dl></div>
     </li><li name="com.intel.analytics.zoo.serving.PreProcessing#decodeArrowBase64" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="decodeArrowBase64(s:String):com.intel.analytics.bigdl.nn.abstractnn.Activity"></a>
-      <a id="decodeArrowBase64(String):Activity"></a>
+      <a id="decodeArrowBase64(key:String,s:String):com.intel.analytics.bigdl.nn.abstractnn.Activity"></a>
+      <a id="decodeArrowBase64(String,String):Activity"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">decodeArrowBase64</span><span class="params">(<span name="s">s: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
+        <span class="name">decodeArrowBase64</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="s">s: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../index.html#com.intel.analytics.zoo.serving.PreProcessing@decodeArrowBase64(s:String):com.intel.analytics.bigdl.nn.abstractnn.Activity" title="Permalink" target="_top">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.serving.PreProcessing@decodeArrowBase64(key:String,s:String):com.intel.analytics.bigdl.nn.abstractnn.Activity" title="Permalink" target="_top">
         <img src="../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -569,6 +569,23 @@
     </span>)</span>
               
         </dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.serving.PreProcessing#writeNaNtoRedis" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="writeNaNtoRedis(key:String):Unit"></a>
+      <a id="writeNaNtoRedis(String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">writeNaNtoRedis</span><span class="params">(<span name="key">key: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../index.html#com.intel.analytics.zoo.serving.PreProcessing@writeNaNtoRedis(key:String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
     </li></ol>
             </div>
 

@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.tfpark.html" title="zoo.tfpark package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -44,10 +41,10 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.ray package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.ray.process">zoo.ray.process module</a></li>
-<li><a class="reference internal" href="#module-zoo.ray.raycontext">zoo.ray.raycontext module</a></li>
-<li><a class="reference internal" href="#module-zoo.ray.utils">zoo.ray.utils module</a></li>
-<li><a class="reference internal" href="#module-zoo.ray">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-ray-process-module">zoo.ray.process module</a></li>
+<li><a class="reference internal" href="#zoo-ray-raycontext-module">zoo.ray.raycontext module</a></li>
+<li><a class="reference internal" href="#zoo-ray-utils-module">zoo.ray.utils module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,164 +87,17 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.ray.process">
-<span id="zoo-ray-process-module"></span><h2>zoo.ray.process module<a class="headerlink" href="#module-zoo.ray.process" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.ray.process.ProcessInfo">
-<em class="property">class </em><code class="descclassname">zoo.ray.process.</code><code class="descname">ProcessInfo</code><span class="sig-paren">(</span><em>out</em>, <em>err</em>, <em>errorcode</em>, <em>pgid</em>, <em>tag='default'</em>, <em>pids=None</em>, <em>node_ip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/process.html#ProcessInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.process.ProcessInfo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.ray.process.ProcessMonitor">
-<em class="property">class </em><code class="descclassname">zoo.ray.process.</code><code class="descname">ProcessMonitor</code><span class="sig-paren">(</span><em>process_infos</em>, <em>sc</em>, <em>ray_rdd</em>, <em>raycontext</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/process.html#ProcessMonitor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.process.ProcessMonitor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="method">
-<dt id="zoo.ray.process.ProcessMonitor.clean_fn">
-<code class="descname">clean_fn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/process.html#ProcessMonitor.clean_fn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.process.ProcessMonitor.clean_fn" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.ray.process.ProcessMonitor.print_ray_remote_err_out">
-<code class="descname">print_ray_remote_err_out</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/process.html#ProcessMonitor.print_ray_remote_err_out"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.process.ProcessMonitor.print_ray_remote_err_out" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="zoo.ray.process.ProcessMonitor.register_shutdown_hook">
-<em class="property">static </em><code class="descname">register_shutdown_hook</code><span class="sig-paren">(</span><em>pgid=None</em>, <em>extra_close_fn=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/process.html#ProcessMonitor.register_shutdown_hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.process.ProcessMonitor.register_shutdown_hook" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.ray.process.pids_from_gpid">
-<code class="descclassname">zoo.ray.process.</code><code class="descname">pids_from_gpid</code><span class="sig-paren">(</span><em>gpid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/process.html#pids_from_gpid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.process.pids_from_gpid" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.ray.process.session_execute">
-<code class="descclassname">zoo.ray.process.</code><code class="descname">session_execute</code><span class="sig-paren">(</span><em>command</em>, <em>env=None</em>, <em>tag=None</em>, <em>fail_fast=False</em>, <em>timeout=120</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/process.html#session_execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.process.session_execute" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="zoo-ray-process-module">
+<h2>zoo.ray.process module<a class="headerlink" href="#zoo-ray-process-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.ray.raycontext">
-<span id="zoo-ray-raycontext-module"></span><h2>zoo.ray.raycontext module<a class="headerlink" href="#module-zoo.ray.raycontext" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.ray.raycontext.JVMGuard">
-<em class="property">class </em><code class="descclassname">zoo.ray.raycontext.</code><code class="descname">JVMGuard</code><a class="reference internal" href="_modules/zoo/ray/raycontext.html#JVMGuard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.raycontext.JVMGuard" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>The registered pids would be put into the killing list of Spark Executor.</p>
-<dl class="staticmethod">
-<dt id="zoo.ray.raycontext.JVMGuard.register_pids">
-<em class="property">static </em><code class="descname">register_pids</code><span class="sig-paren">(</span><em>pids</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/raycontext.html#JVMGuard.register_pids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.raycontext.JVMGuard.register_pids" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.ray.raycontext.RayContext">
-<em class="property">class </em><code class="descclassname">zoo.ray.raycontext.</code><code class="descname">RayContext</code><span class="sig-paren">(</span><em>sc</em>, <em>redis_port=None</em>, <em>password='123456'</em>, <em>object_store_memory=None</em>, <em>verbose=False</em>, <em>env=None</em>, <em>extra_params=None</em>, <em>num_ray_nodes=None</em>, <em>ray_node_cpu_cores=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/raycontext.html#RayContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.raycontext.RayContext" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="attribute">
-<dt id="zoo.ray.raycontext.RayContext.address_info">
-<code class="descname">address_info</code><a class="headerlink" href="#zoo.ray.raycontext.RayContext.address_info" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="zoo.ray.raycontext.RayContext.get">
-<em class="property">classmethod </em><code class="descname">get</code><span class="sig-paren">(</span><em>initialize=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/raycontext.html#RayContext.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.raycontext.RayContext.get" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.ray.raycontext.RayContext.init">
-<code class="descname">init</code><span class="sig-paren">(</span><em>driver_cores=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/raycontext.html#RayContext.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.raycontext.RayContext.init" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initiate the ray cluster.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>driver_cores</strong> – The number of cores for the raylet on driver for Spark cluster mode.</td>
-</tr>
-</tbody>
-</table>
-<p>Default is 0 and in this case the local driver wouldn’t have any ray workload.</p>
-<p>:return The dictionary of address information about the ray cluster.
-Information contains node_ip_address, redis_address, object_store_address,
-raylet_socket_name, webui_url and session_dir.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.ray.raycontext.RayContext.purge">
-<code class="descname">purge</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/raycontext.html#RayContext.purge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.raycontext.RayContext.purge" title="Permalink to this definition">¶</a></dt>
-<dd><p>Invoke ray stop to clean ray processes.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="zoo.ray.raycontext.RayContext.redis_address">
-<code class="descname">redis_address</code><a class="headerlink" href="#zoo.ray.raycontext.RayContext.redis_address" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.ray.raycontext.RayContext.stop">
-<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/raycontext.html#RayContext.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.raycontext.RayContext.stop" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.ray.raycontext.RayServiceFuncGenerator">
-<em class="property">class </em><code class="descclassname">zoo.ray.raycontext.</code><code class="descname">RayServiceFuncGenerator</code><span class="sig-paren">(</span><em>python_loc</em>, <em>redis_port</em>, <em>ray_node_cpu_cores</em>, <em>password</em>, <em>object_store_memory</em>, <em>verbose=False</em>, <em>env=None</em>, <em>extra_params=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/raycontext.html#RayServiceFuncGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.raycontext.RayServiceFuncGenerator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>This should be a pickable class.</p>
-<dl class="method">
-<dt id="zoo.ray.raycontext.RayServiceFuncGenerator.gen_ray_start">
-<code class="descname">gen_ray_start</code><span class="sig-paren">(</span><em>master_ip</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/raycontext.html#RayServiceFuncGenerator.gen_ray_start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.raycontext.RayServiceFuncGenerator.gen_ray_start" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.ray.raycontext.RayServiceFuncGenerator.gen_stop">
-<code class="descname">gen_stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/raycontext.html#RayServiceFuncGenerator.gen_stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.raycontext.RayServiceFuncGenerator.gen_stop" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.ray.raycontext.kill_redundant_log_monitors">
-<code class="descclassname">zoo.ray.raycontext.</code><code class="descname">kill_redundant_log_monitors</code><span class="sig-paren">(</span><em>redis_address</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/raycontext.html#kill_redundant_log_monitors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.raycontext.kill_redundant_log_monitors" title="Permalink to this definition">¶</a></dt>
-<dd><p>Killing redundant log_monitor.py processes.
-If multiple ray nodes are started on the same machine,
-there will be multiple ray log_monitor.py processes
-monitoring the same log dir. As a result, the logs
-will be replicated multiple times and forwarded to driver.
-See issue <a class="reference external" href="https://github.com/ray-project/ray/issues/10392">https://github.com/ray-project/ray/issues/10392</a></p>
-</dd></dl>
-
+<div class="section" id="zoo-ray-raycontext-module">
+<h2>zoo.ray.raycontext module<a class="headerlink" href="#zoo-ray-raycontext-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.ray.utils">
-<span id="zoo-ray-utils-module"></span><h2>zoo.ray.utils module<a class="headerlink" href="#module-zoo.ray.utils" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="zoo.ray.utils.gen_shutdown_per_node">
-<code class="descclassname">zoo.ray.utils.</code><code class="descname">gen_shutdown_per_node</code><span class="sig-paren">(</span><em>pgids</em>, <em>node_ips=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/utils.html#gen_shutdown_per_node"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.utils.gen_shutdown_per_node" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.ray.utils.is_local">
-<code class="descclassname">zoo.ray.utils.</code><code class="descname">is_local</code><span class="sig-paren">(</span><em>sc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/utils.html#is_local"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.utils.is_local" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.ray.utils.resource_to_bytes">
-<code class="descclassname">zoo.ray.utils.</code><code class="descname">resource_to_bytes</code><span class="sig-paren">(</span><em>resource_str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/utils.html#resource_to_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.utils.resource_to_bytes" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="zoo.ray.utils.to_list">
-<code class="descclassname">zoo.ray.utils.</code><code class="descname">to_list</code><span class="sig-paren">(</span><em>input</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/ray/utils.html#to_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.ray.utils.to_list" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="zoo-ray-utils-module">
+<h2>zoo.ray.utils module<a class="headerlink" href="#zoo-ray-utils-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.ray">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.ray" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -263,9 +113,6 @@ See issue <a class="reference external" href="https://github.com/ray-project/ray
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.tfpark.html" title="zoo.tfpark package"
              >next</a> |</li>

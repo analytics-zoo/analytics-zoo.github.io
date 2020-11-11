@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.models.common.html" title="zoo.models.common package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -45,8 +42,8 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.models.anomalydetection package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.models.anomalydetection.anomaly_detector">zoo.models.anomalydetection.anomaly_detector module</a></li>
-<li><a class="reference internal" href="#module-zoo.models.anomalydetection">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-models-anomalydetection-anomaly-detector-module">zoo.models.anomalydetection.anomaly_detector module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -89,93 +86,11 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.models.anomalydetection.anomaly_detector">
-<span id="zoo-models-anomalydetection-anomaly-detector-module"></span><h2>zoo.models.anomalydetection.anomaly_detector module<a class="headerlink" href="#module-zoo.models.anomalydetection.anomaly_detector" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.models.anomalydetection.anomaly_detector.AnomalyDetector">
-<em class="property">class </em><code class="descclassname">zoo.models.anomalydetection.anomaly_detector.</code><code class="descname">AnomalyDetector</code><span class="sig-paren">(</span><em>feature_shape, hidden_layers=[8, 32, 15], dropouts=[0.2, 0.2, 0.2], **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/anomalydetection/anomaly_detector.html#AnomalyDetector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="zoo.models.common.html#zoo.models.common.zoo_model.KerasZooModel" title="zoo.models.common.zoo_model.KerasZooModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.models.common.zoo_model.KerasZooModel</span></code></a></p>
-<p>The anomaly detector model for sequence data based on LSTM.</p>
-<p># Arguments
-feature_shape: The input shape of features, including unroll_length and feature_size.
-hidden_layers: Units of hidden layers of LSTM.
-dropouts:     Fraction of the input units to drop out. Float between 0 and 1.</p>
-<dl class="method">
-<dt id="zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.build_model">
-<code class="descname">build_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/anomalydetection/anomaly_detector.html#AnomalyDetector.build_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.build_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.detect_anomalies">
-<em class="property">classmethod </em><code class="descname">detect_anomalies</code><span class="sig-paren">(</span><em>ytruth</em>, <em>ypredict</em>, <em>anomaly_size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/anomalydetection/anomaly_detector.html#AnomalyDetector.detect_anomalies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.detect_anomalies" title="Permalink to this definition">¶</a></dt>
-<dd><p># Arguments
-:param ytruth: RDD of float or double values. Truth to be compared.
-:param ypredict: RDD of float or double values. Predictions.
-:param anomaly_size: Int. The size to be considered as anomalies.
-:return: RDD of [ytruth, ypredict, anomaly], anomaly is None or ytruth</p>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.load_model">
-<em class="property">static </em><code class="descname">load_model</code><span class="sig-paren">(</span><em>path</em>, <em>weight_path=None</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/anomalydetection/anomaly_detector.html#AnomalyDetector.load_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.load_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load an existing AnomalyDetector model (with weights).</p>
-<p># Arguments
-path: The path for the pre-defined model.
-Local file system, HDFS and Amazon S3 are supported.
-HDFS path should be like ‘hdfs://[host]:[port]/xxx’.
-Amazon S3 path should be like ‘s3a://bucket/xxx’.
-weight_path: The path for pre-trained weights if any. Default is None.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>x</em>, <em>batch_per_thread=8</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/anomalydetection/anomaly_detector.html#AnomalyDetector.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Precict on RDD[Sample].</p>
-</dd></dl>
-
-<dl class="staticmethod">
-<dt id="zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.standardScale">
-<em class="property">static </em><code class="descname">standardScale</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/anomalydetection/anomaly_detector.html#AnomalyDetector.standardScale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.standardScale" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="staticmethod">
-<dt id="zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.train_test_split">
-<em class="property">static </em><code class="descname">train_test_split</code><span class="sig-paren">(</span><em>unrolled</em>, <em>test_size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/anomalydetection/anomaly_detector.html#AnomalyDetector.train_test_split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.train_test_split" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.unroll">
-<em class="property">classmethod </em><code class="descname">unroll</code><span class="sig-paren">(</span><em>data_rdd</em>, <em>unroll_length</em>, <em>predict_step=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/anomalydetection/anomaly_detector.html#AnomalyDetector.unroll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.anomalydetection.anomaly_detector.AnomalyDetector.unroll" title="Permalink to this definition">¶</a></dt>
-<dd><p>Unroll a rdd of arrays to prepare features and labels.</p>
-<p># Arguments
-data_rdd: RDD[Array]. data to be unrolled, it holds original time series features
-unroll_length: Int. the length of precious values to predict future value.
-predict_step: Int. How many time steps to predict future value, default is 1.
-return: an rdd of FeatureLableIndex
-a simple example
-data: (1,2,3,4,5,6); unrollLength: 2, predictStep: 1
-features, label, index
-(1,2), 3, 0
-(2,3), 4, 1
-(3,4), 5, 2
-(4,5), 6, 3</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.models.anomalydetection.anomaly_detector.FeatureLableIndex">
-<em class="property">class </em><code class="descclassname">zoo.models.anomalydetection.anomaly_detector.</code><code class="descname">FeatureLableIndex</code><span class="sig-paren">(</span><em>feature</em>, <em>label</em>, <em>index</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/models/anomalydetection/anomaly_detector.html#FeatureLableIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.models.anomalydetection.anomaly_detector.FeatureLableIndex" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Each record should contain the following fields:
-feature: List[List[float]].
-label: float.
-index: long.</p>
-</dd></dl>
-
+<div class="section" id="zoo-models-anomalydetection-anomaly-detector-module">
+<h2>zoo.models.anomalydetection.anomaly_detector module<a class="headerlink" href="#zoo-models-anomalydetection-anomaly-detector-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.models.anomalydetection">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.models.anomalydetection" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -191,9 +106,6 @@ index: long.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.models.common.html" title="zoo.models.common package"
              >next</a> |</li>
