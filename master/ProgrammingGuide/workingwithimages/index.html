@@ -111,18 +111,17 @@ accessed from <code>com.intel.analytics.zoo.pipeline.nnframes.DLImageSchema.byte
 Each record in "image" column represents one image record, in the format of
 Row(origin, height, width, num of channels, mode, data), where origin contains the URI for the image file,
 and <code>data</code> holds the original file bytes for the image file. <code>mode</code> represents the OpenCV-compatible
-type: CV_8UC3, CV_8UC1 in most cases.</p>
-<pre><code class="scala">  val byteSchema = StructType(
-    StructField(&quot;origin&quot;, StringType, true) ::
-      StructField(&quot;height&quot;, IntegerType, false) ::
-      StructField(&quot;width&quot;, IntegerType, false) ::
-      StructField(&quot;nChannels&quot;, IntegerType, false) ::
+type: CV_8UC3, CV_8UC1 in most cases.
+  <code>scala
+  val byteSchema = StructType(
+    StructField("origin", StringType, true) ::
+      StructField("height", IntegerType, false) ::
+      StructField("width", IntegerType, false) ::
+      StructField("nChannels", IntegerType, false) ::
       // OpenCV-compatible type: CV_8UC3, CV_32FC3 in most cases
-      StructField(&quot;mode&quot;, IntegerType, false) ::
+      StructField("mode", IntegerType, false) ::
       // Bytes in OpenCV-compatible order: row-wise BGR in most cases
-      StructField(&quot;data&quot;, BinaryType, false) :: Nil)
-</code></pre>
-
+      StructField("data", BinaryType, false) :: Nil)</code></p>
 <p>After loading the image, user can compose the preprocess steps with the <code>Preprocessing</code> defined
 in <code>com.intel.analytics.zoo.feature.image</code>.</p>
 <h3 id="load-to-imageset">Load to ImageSet</h3>
@@ -308,47 +307,47 @@ lrModel.fit(x = samples, batch_size=batchsize, nb_epoch=nEpochs)
 <p>After training with <em>NNEstimator/NNCLassifier</em>, you'll get a trained <em>NNModel/NNClassifierModel</em> . You can call <code>transform</code> to predict Image DataFrame with this <em>NNModel/NNClassifierModel</em> . Or you can load pre-trained <em>Analytics-Zoo/BigDL/Caffe/Torch/Tensorflow</em>  model and create <em>NNModel/NNClassifierModel</em> with this model. Then call to <code>transform</code> to Image DataFrame.</p>
 <p>After prediction, there is a new column <code>prediction</code> in the prediction image dataframe.</p>
 <p><strong>Scala example:</strong></p>
-<pre><code class="scala"> val batchsize = 128
- val nEpochs = 10
- val featureTransformer = RowToImageFeature() -&gt; ImageResize(256, 256) -&gt;
-                                    ImageCenterCrop(224, 224) -&gt;
-                                    ImageChannelNormalize(123, 117, 104) -&gt;
-                                    ImageMatToTensor() -&gt;
-                                    ImageFeatureToTensor()
- val classifier = NNClassifier(model, CrossEntropyCriterion[Float](), featureTransformer)
-         .setFeaturesCol(&quot;image&quot;)
-         .setLearningRate(0.003)
-         .setBatchSize(batchsize)
-         .setMaxEpoch(nEpochs)
-         .setValidation(Trigger.everyEpoch, valDf, Array(new Top1Accuracy()), batchsize)
- val trainedModel = classifier.fit(trainDf)
- // predict with trained model
- val predictions = trainedModel.transform(testDf)
- predictions.select(col(&quot;image&quot;), col(&quot;label&quot;), col(&quot;prediction&quot;)).show(false)
+<pre><code class="scala">val batchsize = 128
+val nEpochs = 10
+val featureTransformer = RowToImageFeature() -&gt; ImageResize(256, 256) -&gt;
+                                   ImageCenterCrop(224, 224) -&gt;
+                                   ImageChannelNormalize(123, 117, 104) -&gt;
+                                   ImageMatToTensor() -&gt;
+                                   ImageFeatureToTensor()
+val classifier = NNClassifier(model, CrossEntropyCriterion[Float](), featureTransformer)
+        .setFeaturesCol(&quot;image&quot;)
+        .setLearningRate(0.003)
+        .setBatchSize(batchsize)
+        .setMaxEpoch(nEpochs)
+        .setValidation(Trigger.everyEpoch, valDf, Array(new Top1Accuracy()), batchsize)
+val trainedModel = classifier.fit(trainDf)
+// predict with trained model
+val predictions = trainedModel.transform(testDf)
+predictions.select(col(&quot;image&quot;), col(&quot;label&quot;), col(&quot;prediction&quot;)).show(false)
 
- // predict with loaded pre-trained model
- val model = Module.loadModule[Float](modelPath)
- val dlmodel = NNClassifierModel(model, featureTransformer)
-         .setBatchSize(batchsize)
-         .setFeaturesCol(&quot;image&quot;)
-         .setPredictionCol(&quot;prediction&quot;) 
- val resultDF = dlmodel.transform(testDf)
+// predict with loaded pre-trained model
+val model = Module.loadModule[Float](modelPath)
+val dlmodel = NNClassifierModel(model, featureTransformer)
+        .setBatchSize(batchsize)
+        .setFeaturesCol(&quot;image&quot;)
+        .setPredictionCol(&quot;prediction&quot;) 
+val resultDF = dlmodel.transform(testDf)
 </code></pre>
 
 <p><strong>Python example:</strong></p>
-<pre><code class="python"> batchsize = 128
- nEpochs = 10
- featureTransformer = ChainedPreprocessing([RowToImageFeature(), ImageResize(256, 256),
-                                    ImageCenterCrop(224, 224),
-                                    ImageChannelNormalize(123, 117, 104),
-                                    ImageMatToTensor(),
-                                    ImageFeatureToTensor()])
- classifier = NNClassifier(model, CrossEntropyCriterion(), featureTransformer)\
-         .setFeaturesCol(&quot;image&quot;)\
-         .setLearningRate(0.003)\
-         .setBatchSize(batchsize)\
-         .setMaxEpoch(nEpochs)\
-         .setValidation(EveryEpoch(), valDf, [Top1Accuracy()], batch_size)
+<pre><code class="python">batchsize = 128
+nEpochs = 10
+featureTransformer = ChainedPreprocessing([RowToImageFeature(), ImageResize(256, 256),
+    ImageCenterCrop(224, 224),
+    ImageChannelNormalize(123, 117, 104),
+    ImageMatToTensor(),
+    ImageFeatureToTensor()])
+classifier = NNClassifier(model, CrossEntropyCriterion(), featureTransformer)\
+        .setFeaturesCol(&quot;image&quot;)\
+        .setLearningRate(0.003)\
+        .setBatchSize(batchsize)\
+        .setMaxEpoch(nEpochs)\
+        .setValidation(EveryEpoch(), valDf, [Top1Accuracy()], batch_size)
 trainedModel = classifier.fit(trainDf)
 # predict with trained model
 predictions = trainedModel.transform(testDf)

@@ -116,18 +116,18 @@ init_orca_context(cluster_mode=&quot;yarn-client&quot;,
     "asynchyperband", "median_stopping_rule", "medianstopping", "hyperband", "hb_bohb", "pbt". The default scheduler is "fifo".</li>
 <li><code>scheduler_params</code>: Optional(Dict). Necessary params of scheduler.</li>
 </ul>
-<pre><code class="python"> from zoo.zouwu.autots.forecast import AutoTSTrainer
+<pre><code class="python">from zoo.zouwu.autots.forecast import AutoTSTrainer
 
- trainer = AutoTSTrainer(dt_col=&quot;datetime&quot;,
-                         target_col=&quot;value&quot;,
-                         horizon=1,
-                         extra_features_col=None)
+trainer = AutoTSTrainer(dt_col=&quot;datetime&quot;,
+                        target_col=&quot;value&quot;,
+                        horizon=1,
+                        extra_features_col=None)
 
 </code></pre>
 
 <h3 id="step-3-fit-with-autotstrainer"><strong>Step 3: Fit with AutoTSTrainer</strong></h3>
 <p>Use <code>AutoTSTrainer.fit</code> on train data and validation data. A TSPipeline will be returned. </p>
-<pre><code class="python"> ts_pipeline = trainer.fit(train_df, validation_df)
+<pre><code class="python">ts_pipeline = trainer.fit(train_df, validation_df)
 </code></pre>
 
 <p>Both AutoTSTrainer and TSPipeline accepts data frames as input. An exmaple data frame looks like below.</p>
@@ -159,19 +159,19 @@ init_orca_context(cluster_mode=&quot;yarn-client&quot;,
 <p>For visualization, please refer to <a href="../../../ProgrammingGuide/AutoML/visualization/">here</a>.</p>
 <h3 id="step-4-further-deployment-with-tspipeline"><strong>Step 4: Further deployment with TSPipeline</strong></h3>
 <p>Use <code>TSPipeline.fit/evaluate/predict</code> to train pipeline (incremental fitting), evaluate or predict. </p>
-<pre><code class="python"> #incremental fitting
- ts_pipeline.fit(new_train_df, new_val_df, epochs=10)
- #evaluate
- ts_pipeline.evalute(val_df)
- ts_pipeline.predict(test_df) 
+<pre><code class="python">#incremental fitting
+ts_pipeline.fit(new_train_df, new_val_df, epochs=10)
+#evaluate
+ts_pipeline.evalute(val_df)
+ts_pipeline.predict(test_df) 
 
 </code></pre>
 
 <p>Use <code>TSPipeline.save/load</code> to load from file or save to file. </p>
-<pre><code class="python"> from zoo.zouwu.autots.forecast import TSPipeline
- loaded_ppl = TSPipeline.load(file)
- # ... do sth. e.g. incremental fitting
- loaded_ppl.save(another_file)
+<pre><code class="python">from zoo.zouwu.autots.forecast import TSPipeline
+loaded_ppl = TSPipeline.load(file)
+# ... do sth. e.g. incremental fitting
+loaded_ppl.save(another_file)
 </code></pre>
 
   <br>
