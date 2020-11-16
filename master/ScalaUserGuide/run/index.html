@@ -114,34 +114,53 @@ scala&gt; ObjectDetector.loadModel[Float](params.modelPath)
 <ol>
 <li>Download the pre-trained model from <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/ProgrammingGuide/object-detection.md">here</a>.</li>
 <li>Prepare predict images</li>
-<li>Run the following command:
-  ```bash
-  # Spark local mode
-  spark-submit --master local[core_number] --class com.intel.analytics.zoo.examples.objectdetection.Predict \
-  dist/lib/analytics-zoo-VERSION-jar-with-dependencies.jar \
-  --image path_to_your_images --output path_to_output --model path_to_model</li>
+<li>Run the following command:</li>
 </ol>
-<p># Spark standalone mode
-  spark-submit --master spark://... --executor-cores cores_per_executor \
+<pre><code class="bash"># Spark local mode
+spark-submit \ 
+  --master local[core_number] \
+  --class com.intel.analytics.zoo.examples.objectdetection.Predict \
+  dist/lib/analytics-zoo-VERSION-jar-with-dependencies.jar \
+  --image path_to_your_images \
+  --output path_to_output \
+  --model path_to_model
+
+# Spark standalone mode
+spark-submit \
+  --master spark://... \
+  --executor-cores cores_per_executor \
   --total-executor-cores total_cores_for_the_job \
   --class com.intel.analytics.zoo.examples.objectdetection.Predict \
   dist/lib/analytics-zoo-VERSION-jar-with-dependencies.jar \
-  --image path_to_your_images --output path_to_output --model path_to_model</p>
-<p># Spark yarn client mode
-  spark-submit --master yarn --deploy-mode client \
+  --image path_to_your_images \
+  --output path_to_output \
+  --model path_to_model
+
+# Spark yarn client mode
+spark-submit \
+  --master yarn \
+  --deploy-mode client \
   --executor-cores cores_per_executor \
   --num-executors executors_number \
   --class com.intel.analytics.zoo.examples.objectdetection.Predict \
   dist/lib/analytics-zoo-VERSION-jar-with-dependencies.jar \
-  --image path_to_your_images --output path_to_output --model path_to_model</p>
-<p># Spark yarn cluster mode
-  spark-submit --master yarn --deploy-mode cluster \
+  --image path_to_your_images \
+  --output path_to_output \
+  --model path_to_model
+
+# Spark yarn cluster mode
+spark-submit \
+  --master yarn \
+  --deploy-mode cluster \
   --executor-cores cores_per_executor \
   --num-executors executors_number \
   --class com.intel.analytics.zoo.examples.objectdetection.Predict \
   dist/lib/analytics-zoo-VERSION-jar-with-dependencies.jar \
-  --image path_to_your_images --output path_to_output --model path_to_model
-  ```</p>
+  --image path_to_your_images \
+  --output path_to_output \
+  --model path_to_model
+</code></pre>
+
 <p>If you are to run your own program, do remember to create SparkContext and initialize before calling other Analytics Zoo API's, as shown below.</p>
 <pre><code class="scala">import com.intel.analytics.zoo.common.NNContext
 val sc = NNContext.initNNContext(conf)

@@ -111,17 +111,18 @@ accessed from <code>com.intel.analytics.zoo.pipeline.nnframes.DLImageSchema.byte
 Each record in "image" column represents one image record, in the format of
 Row(origin, height, width, num of channels, mode, data), where origin contains the URI for the image file,
 and <code>data</code> holds the original file bytes for the image file. <code>mode</code> represents the OpenCV-compatible
-type: CV_8UC3, CV_8UC1 in most cases.
-  <code>scala
-  val byteSchema = StructType(
-    StructField("origin", StringType, true) ::
-      StructField("height", IntegerType, false) ::
-      StructField("width", IntegerType, false) ::
-      StructField("nChannels", IntegerType, false) ::
+type: CV_8UC3, CV_8UC1 in most cases.</p>
+<pre><code class="scala">  val byteSchema = StructType(
+    StructField(&quot;origin&quot;, StringType, true) ::
+      StructField(&quot;height&quot;, IntegerType, false) ::
+      StructField(&quot;width&quot;, IntegerType, false) ::
+      StructField(&quot;nChannels&quot;, IntegerType, false) ::
       // OpenCV-compatible type: CV_8UC3, CV_32FC3 in most cases
-      StructField("mode", IntegerType, false) ::
+      StructField(&quot;mode&quot;, IntegerType, false) ::
       // Bytes in OpenCV-compatible order: row-wise BGR in most cases
-      StructField("data", BinaryType, false) :: Nil)</code></p>
+      StructField(&quot;data&quot;, BinaryType, false) :: Nil)
+</code></pre>
+
 <p>After loading the image, user can compose the preprocess steps with the <code>Preprocessing</code> defined
 in <code>com.intel.analytics.zoo.feature.image</code>.</p>
 <h3 id="load-to-imageset">Load to ImageSet</h3>
@@ -420,10 +421,11 @@ result = prediction.collect()
 <p>Here is a scala <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/inception/README.md">example</a> to train Inception V1 with ImageNet-2012 dataset. If you set the option <code>memoryType</code> to <code>PMEM</code>, the data will be cached in Intel Optane DC Persistent Memory; please refer to the guide <a href="https://github.com/memkind/memkind#run-requirements">here</a> on how to set up the system environment.</p>
 <p>In the InceptionV1 example, we use an new dataset called <a href="../../APIGuide/FeatureEngineering/featureset/">FeatureSet</a> to cache the data. Only scala API is currently available.</p>
 <p><strong>Scala example:</strong></p>
-<p><code>scala
- val rawData = readFromSeqFiles(path, sc, classNumber)
- val featureSet = FeatureSet.rdd(rawData, memoryType = PMEM)</code>
- <code>readFromSeqFiles</code> read the Sequence File into <code>RDD[ByteRecord]</code>, then <code>FeatureSet.rdd(rawData, memoryType = PMEM)</code> will cache the data to Intel Optane DC Persistent Memory.</p>
+<pre><code class="scala"> val rawData = readFromSeqFiles(path, sc, classNumber)
+ val featureSet = FeatureSet.rdd(rawData, memoryType = PMEM)
+</code></pre>
+
+<p><code>readFromSeqFiles</code> read the Sequence File into <code>RDD[ByteRecord]</code>, then <code>FeatureSet.rdd(rawData, memoryType = PMEM)</code> will cache the data to Intel Optane DC Persistent Memory.</p>
 
   <br>
 </div>
