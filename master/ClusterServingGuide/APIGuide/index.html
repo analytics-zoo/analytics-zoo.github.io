@@ -148,7 +148,7 @@ input_api.enqueue('my-instance',
 <pre><code>predict(request_str)
 </code></pre>
 
-<p><em>return</em>: response of request string</p>
+<p><em>return</em>: Numpy ndarray</p>
 <p><em>Example</em></p>
 <pre><code>from zoo.serving.client import InputQueue
 input_api = InputQueue(sync=True, frontend_url=frontend_server_url)
@@ -175,7 +175,7 @@ print(response.text)
 </code></pre>
 
 <p>query result in output Pipeline by key <code>uri</code></p>
-<p><em>return</em>: string type, the output of your prediction, which can be parsed to a dict by json. </p>
+<p><em>return</em>: Numpy ndarray</p>
 <p>Format: </p>
 <pre><code>{
     &quot;class_1&quot;: &quot;probability_1&quot;,
@@ -204,7 +204,7 @@ print(output)
 </code></pre>
 
 <p>gets all result of your model prediction and dequeue them from OutputQueue</p>
-<p><em>return</em>: dict(), with keys the <code>uri</code> of your <a href="">enqueue</a>, string type, and values the output of your prediction, string type, which can be parsed by json. </p>
+<p><em>return</em>: dict(), with keys the <code>uri</code> of your <a href="">enqueue</a>, string type, and values the output of your prediction, Numpy ndarray</p>
 <p>Format: </p>
 <pre><code>{
   &quot;image1&quot;: {

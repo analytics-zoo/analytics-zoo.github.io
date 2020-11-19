@@ -204,17 +204,9 @@ params:
 
 <h4 id="preparing-model">Preparing Model</h4>
 <p>Currently Analytics Zoo Cluster Serving supports TensorFlow, OpenVINO, PyTorch, BigDL, Caffe models. Supported types are listed below.</p>
-<p>You need to put your model file into a directory and the directory could have layout like following according to model type, note that only one model is allowed in your directory.</p>
-<p><strong>Tensorflow</strong></p>
-<p><strong><em>Tensorflow checkpoint</em></strong>
-Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/tensorflow/freeze_checkpoint">freeze checkpoint example</a></p>
-<p><strong><em>Tensorflow frozen model</em></strong></p>
-<pre><code>|-- model
-   |-- frozen_graph.pb
-   |-- graph_meta.json
-</code></pre>
-
-<p><strong><em>Tensorflow saved model</em></strong></p>
+<p>You need to put your model file into a directory with layout like following according to model type, note that only one model is allowed in your directory. Then, set in <code>config.yaml</code> file with <code>model:path:/path/to/dir</code>.</p>
+<p><strong>Tensorflow*<em>
+</em></strong>Tensorflow SavedModel***</p>
 <pre><code>|-- model
    |-- saved_model.pb
    |-- variables
@@ -222,16 +214,24 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
        |-- variables.index
 </code></pre>
 
-<p>Note: you can specify model inputs and outputs in the config.yaml file. If the inputs or outputs are not provided, the signature "serving_default" will be used to find input and output tensors.</p>
-<p><strong>Caffe</strong></p>
+<p><strong><em>Tensorflow Frozen Graph</em></strong></p>
 <pre><code>|-- model
-   |-- xx.prototxt
-   |-- xx.caffemodel
+   |-- frozen_graph.pb
+   |-- graph_meta.json
 </code></pre>
 
+<p><strong><em>Tensorflow Checkpoint</em></strong>
+Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/tensorflow/freeze_checkpoint">freeze checkpoint example</a></p>
 <p><strong>Pytorch</strong></p>
 <pre><code>|-- model
    |-- xx.pt
+</code></pre>
+
+<p>Running Pytorch model needs extra dependency and config. Refer to <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/examples/pytorch/train/README.md">here</a> to install dependencies, and set environment variable <code>$PYTHONHOME</code> to your python, e.g. python could be run by <code>$PYTHONHOME/bin/python</code> and library is at <code>$PYTHONHOME/lib/</code>.
+<strong>OpenVINO</strong></p>
+<pre><code>|-- model
+   |-- xx.xml
+   |-- xx.bin
 </code></pre>
 
 <p><strong>BigDL</strong></p>
@@ -239,13 +239,12 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
    |-- xx.model
 </code></pre>
 
-<p><strong>OpenVINO</strong></p>
+<p><strong>Caffe</strong></p>
 <pre><code>|-- model
-   |-- xx.xml
-   |-- xx.bin
+   |-- xx.prototxt
+   |-- xx.caffemodel
 </code></pre>
 
-<p>Put the model in any of your local directory, and set <code>model:/path/to/dir</code>.</p>
 <h4 id="data-configuration">Data Configuration</h4>
 <p>The field <code>data</code> contains your input data configuration.</p>
 <ul>
@@ -351,15 +350,6 @@ all_result = output_api.dequeue() # the output queue is empty after this code
 
 <p>Consider the code above,</p>
 <pre><code>img1_result = output_api.query('img1')
-</code></pre>
-
-<p>The <code>img1_result</code> is a json format string, like following:</p>
-<pre><code>'{&quot;class_1&quot;:&quot;prob_1&quot;,&quot;class_2&quot;:&quot;prob_2&quot;,...,&quot;class_n&quot;,&quot;prob_n&quot;}'
-</code></pre>
-
-<p>Where <code>n</code> is the number of <code>top_n</code> in your configuration file. This string could be parsed by <code>json.loads</code>.</p>
-<pre><code>import json
-result_class_prob_map = json.loads(img1_result)
 </code></pre>
 
 <h5 id="sync-api">Sync API</h5>
