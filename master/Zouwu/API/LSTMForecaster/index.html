@@ -72,26 +72,23 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <ul>
 <li><strong><code>target_dim</code></strong>: Specify the number of variables we want to forecast. i.e. the the dimension of model output feature. This value defaults to 1.</li>
 <li><strong><code>feature_dim</code></strong>: Specify the number of variables we have in the input data. i.e. the the dimension of model input feature. This value defaults to 1.</li>
-<li><strong><code>lstm_1_units</code></strong>: Specify the dimensionality of the output space for 1st LSTM layer. This value defaults to 16. </li>
-<li><strong><code>dropout_1</code></strong>: Specify the fraction of the input units to drop for the 1st dropout layer. This value defaults to 0.2.</li>
-<li><strong><code>lstm_2_units</code></strong>: Specify the dimensionality of the output space for 2nd LSTM layer. This value defaults to 8. </li>
-<li><strong><code>dropout_2</code></strong>: Specify the fraction of the input units to drop for the 2nd dropout layer. This value defaults to 0.2.</li>
+<li><strong><code>lstm_units</code></strong>: Specify the dimensionality of the output space for LSTM layers. This value defaults to (16, 8). </li>
+<li><strong><code>dropouts</code></strong>: Specify the fraction of the input units to drop for dropout layers. This value defaults to 0.2. Note that The same dropout rate will be set to all
+            layers if dropouts is one float value while lstm_units has multiple elements.</li>
 <li><strong><code>metric</code></strong>: Specify the metric for validation and evaluation. This value defaults to MSE.</li>
 <li><strong><code>lr</code></strong>: Specify the learning rate. This value defaults to 0.001.</li>
 <li><strong><code>loss</code></strong>: Specify the target function you want to optimize on. This value defaults to MSE.</li>
-<li><strong><code>uncertainty</code></strong>: Specify whether the forecaster can perform the calculation of uncertainty.</li>
+<li><strong><code>optimizer</code></strong>: Specify the optimizer used for training. This value defaults to Adam.</li>
 </ul>
 <h3 id="__init__">__init__</h3>
 <pre><code class="python">LSTMForecaster(target_dim=1,
                feature_dim=1,
-               lstm_1_units=16,
-               dropout_1=0.2,
-               lstm_2_units=8,
-               dropout_2=0.2,
+               lstm_units=(16, 8),
+               dropouts=0.2,
                metric=&quot;mean_squared_error&quot;,
                lr=0.001,
                loss=&quot;mse&quot;,
-               uncertainty: bool = False
+               optimizer=&quot;Adam&quot;,
                )
 </code></pre>
 
