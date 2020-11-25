@@ -45,9 +45,7 @@
           ]},
           {title: "Build with script (Recommended)", url: "#build-with-script-recommended", children: [
           ]},
-          {title: "Build for Spark 1.6", url: "#build-for-spark-16", children: [
-          ]},
-          {title: "Build for Scala 2.10 or 2.11", url: "#build-for-scala-210-or-211", children: [
+          {title: "Build with Spark version", url: "#build-with-spark-version", children: [
           ]},
           {title: "Build with Maven", url: "#build-with-maven", children: [
           ]},
@@ -91,6 +89,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 &lt;/dependency&gt;
 </code></pre>
 
+<p>You can find the latest ANALYTICS_ZOO_VERSION <a href="https://search.maven.org/search?q=analytics-zoo-bigdl">here</a>.  </p>
 <p>SBT developers can use</p>
 <pre><code class="sbt">libraryDependencies += &quot;com.intel.analytics.zoo&quot; % &quot;analytics-zoo-bigdl_0.10.0-[spark_2.1.1|spark_2.2.0|spark_2.3.1|spark_2.4.3]&quot; % &quot;${ANALYTICS_ZOO_VERSION}&quot;
 </code></pre>
@@ -123,7 +122,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </code></pre>
 
 <h2 id="download-analytics-zoo-source"><strong>Download Analytics Zoo Source</strong></h2>
-<p>Analytics Zoo source code is available at <a href="https://github.com/intel-analytics/analytics-zoo">GitHub</a></p>
+<p>Analytics Zoo source code is available at <a href="https://github.com/intel-analytics/analytics-zoo">GitHub</a>.</p>
 <pre><code class="bash">$ git clone https://github.com/intel-analytics/analytics-zoo.git
 </code></pre>
 
@@ -147,14 +146,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><strong>dist/lib/analytics-zoo-VERSION-jar-with-dependencies.jar</strong>: This jar package contains all dependencies except Spark classes.</li>
 <li><strong>dist/lib/analytics-zoo-VERSION-python-api.zip</strong>: This zip package contains all Python files of Analytics Zoo.</li>
 </ul>
-<p>The instructions above will build Analytics Zoo with Spark 2.0(using Scala 2.11). It is highly recommended to use <em><strong>Java 8</strong></em> when running with Spark 2.x; otherwise you may observe very poor performance.</p>
-<h2 id="build-for-spark-16"><strong>Build for Spark 1.6</strong></h2>
-<p>To build for Spark 1.6(which uses Scala 2.10 by default), pass <code>-P spark_1.6</code> to the <code>make-dist.sh</code> script:</p>
-<pre><code class="bash">$ bash make-dist.sh -P spark_1.6
-</code></pre>
-
-<h2 id="build-for-scala-210-or-211"><strong>Build for Scala 2.10 or 2.11</strong></h2>
-<p>By default, <code>make-dist.sh</code> uses Scala 2.11 for Spark 2.1, and Scala 2.10 for Spark 1.6. To override the default behaviors, you can pass <code>-P scala_2.10</code> or <code>-P scala_2.11</code> to <code>make-dist.sh</code> as appropriate.</p>
+<p>The instructions above will build Analytics Zoo with Spark 2.1.0. It is highly recommended to use <em><strong>Java 8</strong></em> when running with Spark 2.x; otherwise you may observe very poor performance.</p>
+<h2 id="build-with-spark-version"><strong>Build with Spark version</strong></h2>
+<p>By default, <code>make-dist.sh</code> uses Spark 2.1.0. To override the default behaviors, for example building analytics-zoo with spark 2.2.0, you can use <code>bash make-dist.sh -Dspark.version=2.2.0 -Dbigdl.artifactId=bigdl_SPARK_2.2</code>.<br />
+Additionally, we provide a profile to build with spark 2.4, you can use <code>bash make-dist.sh -P spark_2.4+</code>.</p>
 <hr />
 <h2 id="build-with-maven"><strong>Build with Maven</strong></h2>
 <p>To build Analytics Zoo directly using Maven, run the command below:</p>
@@ -162,11 +157,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </code></pre>
 
 <p>After that, you can find that jar packages in <code>PATH_TO_ANALYTICS_ZOO</code>/target/, where <code>PATH_TO_ANALYTICS_ZOO</code> is the path to the directory of the Analytics Zoo.</p>
-<p>Note that the instructions above will build Analytics Zoo with Spark 2.0 (using Scala 2.11) for Linux. Similarly, you may customize the default behaviors by passing the following parameters to maven:</p>
-<ul>
-<li><code>-P spark_1.6</code>: build for Spark 1.6 (using Scala 2.10).</li>
-<li><code>-P scala_2.10</code> (or <code>-P scala_2.11</code>): build using Scala 2.10 (or Scala 2.11)</li>
-</ul>
+<p>Note that the instructions above will build Analytics Zoo with Spark 2.1.0 for Linux. Similarly, you may customize spark version like <a href="#build-with-spark-version">above</a>.</p>
 <hr />
 <h2 id="setup-ide"><strong>Setup IDE</strong></h2>
 <p>We set the scope of spark related library to <code>provided</code> in pom.xml. The reason is that we don't want package spark related jars which will make analytics zoo a huge jar, and generally as analytics zoo is invoked by spark-submit, these dependencies will be provided by spark at run-time.</p>
