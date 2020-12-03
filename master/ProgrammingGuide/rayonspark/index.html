@@ -37,6 +37,8 @@
           ]},
           {title: "Steps to run RayOnSpark", url: "#steps-to-run-rayonspark", children: [
           ]},
+          {title: "FAQ", url: "#faq", children: [
+          ]},
         ];
 
     </script>
@@ -143,6 +145,21 @@ print(ray.get([c.increment.remote() for c in counters]))
 
 ray_ctx.stop()
 sc.stop()
+</code></pre>
+
+<hr />
+<h3 id="faq"><strong>FAQ</strong></h3>
+<ul>
+<li>If you encounter the following error when initiating RayOnSpark, especially when you are using Spark standalone cluster:</li>
+</ul>
+<pre><code>This system supports the C.UTF-8 locale which is recommended. You might be able to resolve your issue by exporting the following environment variables:
+
+    export LC_ALL=C.UTF-8
+    export LANG=C.UTF-8
+</code></pre>
+
+<p>Add the environment variables when initiating RayContext would resolve the issue:</p>
+<pre><code class="python">ray_ctx = RayContext(sc=sc, object_store_memory=&quot;5g&quot;, env={&quot;LANG&quot;: &quot;C.UTF-8&quot;, &quot;LC_ALL&quot;: &quot;C.UTF-8&quot;})
 </code></pre>
 
   <br>
