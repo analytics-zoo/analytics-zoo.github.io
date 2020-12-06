@@ -1,0 +1,2369 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>LSTM - analytics-zoo-bigdl_0.12.1-spark_2.4.3 0.9.0-SNAPSHOT API - com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM</title>
+          <meta name="description" content="LSTM - analytics - zoo - bigdl 0.12.1 - spark 2.4.3 0.9.0 - SNAPSHOT API - com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM" />
+          <meta name="keywords" content="LSTM analytics zoo bigdl 0.12.1 spark 2.4.3 0.9.0 SNAPSHOT API com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../../../../../index.html';
+            var hash = 'com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <a href="LSTM$.html" title="See companion object"><img alt="Class/Object" src="../../../../../../../../lib/class_to_object_big.png" /></a>
+        <p id="owner"><a href="../../../../../../../package.html" class="extype" name="com">com</a>.<a href="../../../../../../package.html" class="extype" name="com.intel">intel</a>.<a href="../../../../../package.html" class="extype" name="com.intel.analytics">analytics</a>.<a href="../../../../package.html" class="extype" name="com.intel.analytics.zoo">zoo</a>.<a href="../../../package.html" class="extype" name="com.intel.analytics.zoo.pipeline">pipeline</a>.<a href="../../package.html" class="extype" name="com.intel.analytics.zoo.pipeline.api">api</a>.<a href="../package.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras">keras</a>.<a href="package.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers">layers</a></p>
+        <h1><a href="LSTM$.html" title="See companion object">LSTM</a></h1><h3><span class="morelinks"><div>
+            Related Docs:
+            <a href="LSTM$.html" title="See companion object">object LSTM</a>
+            | <a href="package.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers">package layers</a>
+          </div></span></h3><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">LSTM</span><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>] with <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Long Short Term Memory unit architecture.
+The input of this layer should be 3D, i.e. (batch, time steps, input dim).</p><p>When you use this layer as the first layer of a model, you need to provide the argument
+inputShape (a Single Shape, does not include the batch dimension).
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>Numeric type of parameter(e.g. weight, bias). Only support float/double now.</p></dd></dl><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a>, <a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.keras.Recurrent">bigdl.nn.keras.Recurrent</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.Container">Container</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
+        </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By Inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM"><span>LSTM</span></li><li class="in" name="com.intel.analytics.zoo.pipeline.api.Net"><span>Net</span></li><li class="in" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent"><span>Recurrent</span></li><li class="in" name="com.intel.analytics.bigdl.nn.keras.Recurrent"><span>Recurrent</span></li><li class="in" name="com.intel.analytics.bigdl.nn.keras.KerasLayer"><span>KerasLayer</span></li><li class="in" name="com.intel.analytics.bigdl.nn.Container"><span>Container</span></li><li class="in" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule"><span>AbstractModule</span></li><li class="in" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape"><span>InferShape</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show All</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        <div id="constructors" class="members">
+              <h3>Instance Constructors</h3>
+              <ol><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM#&lt;init&gt;" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="&lt;init&gt;(outputDimension:Int,activation:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T],innerActivation:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T],returnSeq:Boolean,goBackward:Boolean,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],uRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],mInputShape:com.intel.analytics.bigdl.utils.Shape)(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM[T]"></a>
+      <a id="&lt;init&gt;:LSTM[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">new</span>
+      </span>
+      <span class="symbol">
+        <span class="name">LSTM</span><span class="params">(<span name="outputDimension">outputDimension: <span class="extype" name="scala.Int">Int</span></span>, <span name="activation">activation: <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>] = <span class="symbol">null</span></span>, <span name="innerActivation">innerActivation: <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>] = <span class="symbol">null</span></span>, <span name="returnSeq">returnSeq: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>, <span name="goBackward">goBackward: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">false</span></span>, <span name="wRegularizer">wRegularizer: <span class="extype" name="com.intel.analytics.bigdl.optim.Regularizer">Regularizer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>] = <span class="symbol">null</span></span>, <span name="uRegularizer">uRegularizer: <span class="extype" name="com.intel.analytics.bigdl.optim.Regularizer">Regularizer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>] = <span class="symbol">null</span></span>, <span name="bRegularizer">bRegularizer: <span class="extype" name="com.intel.analytics.bigdl.optim.Regularizer">Regularizer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>] = <span class="symbol">null</span></span>, <span name="mInputShape">mInputShape: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span> = <span class="symbol">null</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>)</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@&lt;init&gt;(outputDimension:Int,activation:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T],innerActivation:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T],returnSeq:Boolean,goBackward:Boolean,wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],uRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T],mInputShape:com.intel.analytics.bigdl.utils.Shape)(implicitevidence$1:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">outputDimension</dt><dd class="cmt"><p>Hidden unit size. Dimension of internal projections and final output.</p></dd><dt class="param">activation</dt><dd class="cmt"><p>Activation function to use.
+                  You can also pass in corresponding string representations such as 'relu'
+                  or 'sigmoid', etc. for simple activations in the factory method.
+                  Default is 'tanh'.</p></dd><dt class="param">innerActivation</dt><dd class="cmt"><p>Activation function for inner cells.
+                       You can also pass in corresponding string representations such as 'relu'
+                       or 'sigmoid', etc. for simple activations in the factory method.
+                       Default is 'hard_sigmoid'.</p></dd><dt class="param">returnSeq</dt><dd class="cmt"><p>Whether to return the full sequence or only return the last output
+                       in the output sequence. Default is false.</p></dd><dt class="param">goBackward</dt><dd class="cmt"><p>Whether the input sequence will be processed backwards. Default is false.</p></dd><dt class="param">wRegularizer</dt><dd class="cmt"><p>An instance of <span class="extype" name="Regularizer">Regularizer</span>, (eg. L1 or L2 regularization),
+                    applied to the input weights matrices. Default is null.</p></dd><dt class="param">uRegularizer</dt><dd class="cmt"><p>An instance of <span class="extype" name="Regularizer">Regularizer</span>, applied the recurrent weights matrices.
+                    Default is null.</p></dd><dt class="param">bRegularizer</dt><dd class="cmt"><p>An instance of <span class="extype" name="Regularizer">Regularizer</span>, applied to the bias. Default is null.</p></dd><dt class="param">mInputShape</dt><dd class="cmt"><p>A Single Shape, does not include the batch dimension.</p></dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@##():Int" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#accGradParameters" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="accGradParameters(input:A,gradOutput:B):Unit"></a>
+      <a id="accGradParameters(Tensor[T],Tensor[T]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">accGradParameters</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@accGradParameters(input:A,gradOutput:B):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM#activation" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="activation:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]"></a>
+      <a id="activation:KerasLayer[Tensor[T],Tensor[T],T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">activation</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@activation:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Activation function to use.</p><div class="fullcomment"><div class="comment cmt"><p>Activation function to use.
+                  You can also pass in corresponding string representations such as 'relu'
+                  or 'sigmoid', etc. for simple activations in the factory method.
+                  Default is 'tanh'.</p></div></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#apply" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="apply(name:String):Option[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]]"></a>
+      <a id="apply(String):Option[AbstractModule[Activity,Activity,T]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">apply</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@apply(name:String):Option[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM#bRegularizer" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T]"></a>
+      <a id="bRegularizer:Regularizer[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">bRegularizer</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.Regularizer">Regularizer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@bRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">An instance of <span class="extype" name="Regularizer">Regularizer</span>, applied to the bias.</p><div class="fullcomment"><div class="comment cmt"><p>An instance of <span class="extype" name="Regularizer">Regularizer</span>, applied to the bias. Default is null.</p></div></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#backward" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="backward(input:A,gradOutput:B):A"></a>
+      <a id="backward(Tensor[T],Tensor[T]):Tensor[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">backward</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@backward(input:A,gradOutput:B):A" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#backwardTime" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="backwardTime:Long"></a>
+      <a id="backwardTime:Long"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">backwardTime</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@backwardTime:Long" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#build" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="build(calcInputShape:com.intel.analytics.bigdl.utils.Shape):com.intel.analytics.bigdl.utils.Shape"></a>
+      <a id="build(Shape):Shape"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">build</span><span class="params">(<span name="calcInputShape">calcInputShape: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@build(calcInputShape:com.intel.analytics.bigdl.utils.Shape):com.intel.analytics.bigdl.utils.Shape" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → InferShape</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM#buildCell" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="buildCell(input:Array[Int]):com.intel.analytics.bigdl.nn.Cell[T]"></a>
+      <a id="buildCell(Array[Int]):Cell[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">buildCell</span><span class="params">(<span name="input">input: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Cell">Cell</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@buildCell(input:Array[Int]):com.intel.analytics.bigdl.nn.Cell[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a> → Recurrent</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#canEqual" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="canEqual(other:Any):Boolean"></a>
+      <a id="canEqual(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">canEqual</span><span class="params">(<span name="other">other: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@canEqual(other:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#checkEngineType" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="checkEngineType():Container.this.type"></a>
+      <a id="checkEngineType():LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">checkEngineType</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@checkEngineType():Container.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#clearState" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clearState():Container.this.type"></a>
+      <a id="clearState():LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clearState</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@clearState():Container.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#clone" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone(deepCopy:Boolean):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]"></a>
+      <a id="clone(Boolean):AbstractModule[Tensor[T],Tensor[T],T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">(<span name="deepCopy">deepCopy: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@clone(deepCopy:Boolean):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="../../../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@clone():Object" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#cloneModule" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="cloneModule():AbstractModule.this.type"></a>
+      <a id="cloneModule():LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">cloneModule</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@cloneModule():AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.Recurrent#computeOutputShape" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="computeOutputShape(inputShape:com.intel.analytics.bigdl.utils.Shape):com.intel.analytics.bigdl.utils.Shape"></a>
+      <a id="computeOutputShape(Shape):Shape"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">computeOutputShape</span><span class="params">(<span name="inputShape">inputShape: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@computeOutputShape(inputShape:com.intel.analytics.bigdl.utils.Shape):com.intel.analytics.bigdl.utils.Shape" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Recurrent → KerasLayer → InferShape</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent#doBuild" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="doBuild(inputShape:com.intel.analytics.bigdl.utils.Shape):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]"></a>
+      <a id="doBuild(Shape):AbstractModule[Tensor[T],Tensor[T],T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">doBuild</span><span class="params">(<span name="inputShape">inputShape: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@doBuild(inputShape:com.intel.analytics.bigdl.utils.Shape):com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a> → Recurrent → KerasLayer</dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(other:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="other">other: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@equals(other:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule → AnyRef → Any</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#evaluate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="evaluate():Container.this.type"></a>
+      <a id="evaluate():LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">evaluate</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@evaluate():Container.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#evaluate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="evaluate(dataSet:com.intel.analytics.bigdl.dataset.LocalDataSet[com.intel.analytics.bigdl.dataset.MiniBatch[T]],vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]"></a>
+      <a id="evaluate(LocalDataSet[MiniBatch[T]],Array[_&lt;:ValidationMethod[T]]):Array[(ValidationResult,ValidationMethod[T])]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">evaluate</span><span class="params">(<span name="dataSet">dataSet: <span class="extype" name="com.intel.analytics.bigdl.dataset.LocalDataSet">LocalDataSet</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.MiniBatch">MiniBatch</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>, <span name="vMethods">vMethods: <span class="extype" name="scala.Array">Array</span>[_ &lt;: <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationResult">ValidationResult</span>, <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>])]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@evaluate(dataSet:com.intel.analytics.bigdl.dataset.LocalDataSet[com.intel.analytics.bigdl.dataset.MiniBatch[T]],vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#evaluate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="evaluate(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.MiniBatch[T]],vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]"></a>
+      <a id="evaluate(RDD[MiniBatch[T]],Array[_&lt;:ValidationMethod[T]]):Array[(ValidationResult,ValidationMethod[T])]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">evaluate</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.MiniBatch">MiniBatch</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>, <span name="vMethods">vMethods: <span class="extype" name="scala.Array">Array</span>[_ &lt;: <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationResult">ValidationResult</span>, <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>])]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@evaluate(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.MiniBatch[T]],vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#evaluate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="evaluate(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]],batchSize:Option[Int]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]"></a>
+      <a id="evaluate(RDD[Sample[T]],Array[_&lt;:ValidationMethod[T]],Option[Int]):Array[(ValidationResult,ValidationMethod[T])]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">evaluate</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>, <span name="vMethods">vMethods: <span class="extype" name="scala.Array">Array</span>[_ &lt;: <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationResult">ValidationResult</span>, <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>])]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@evaluate(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]],batchSize:Option[Int]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#evaluateImage" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="evaluateImage(imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame,vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]],batchSize:Option[Int]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]"></a>
+      <a id="evaluateImage(ImageFrame,Array[_&lt;:ValidationMethod[T]],Option[Int]):Array[(ValidationResult,ValidationMethod[T])]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">evaluateImage</span><span class="params">(<span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFrame">ImageFrame</span></span>, <span name="vMethods">vMethods: <span class="extype" name="scala.Array">Array</span>[_ &lt;: <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationResult">ValidationResult</span>, <span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>])]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@evaluateImage(imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame,vMethods:Array[_&lt;:com.intel.analytics.bigdl.optim.ValidationMethod[T]],batchSize:Option[Int]):Array[(com.intel.analytics.bigdl.optim.ValidationResult,com.intel.analytics.bigdl.optim.ValidationMethod[T])]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#findModules" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="findModules(moduleType:String):scala.collection.mutable.ArrayBuffer[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[_,_,T]]"></a>
+      <a id="findModules(String):ArrayBuffer[AbstractModule[_,_,T]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">findModules</span><span class="params">(<span name="moduleType">moduleType: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.collection.mutable.ArrayBuffer">ArrayBuffer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[_, _, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@findModules(moduleType:String):scala.collection.mutable.ArrayBuffer[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[_,_,T]]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#forward" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="forward(input:A):B"></a>
+      <a id="forward(Tensor[T]):Tensor[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">forward</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@forward(input:A):B" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#forwardTime" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="forwardTime:Long"></a>
+      <a id="forwardTime:Long"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">forwardTime</span><span class="result">: <span class="extype" name="scala.Long">Long</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@forwardTime:Long" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#freeze" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="freeze(names:String*):Container.this.type"></a>
+      <a id="freeze(String*):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">freeze</span><span class="params">(<span name="names">names: <span class="extype" name="scala.Predef.String">String</span>*</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@freeze(names:String*):Container.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.Net#from" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="from[T](vars:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]*)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]"></a>
+      <a id="from[T](Variable[T]*)(ClassTag[T],TensorNumeric[T]):Variable[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">from</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="vars">vars: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.Net.from.T">T</span>]*</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.Net.from.T">T</span>]</span>, <span name="ev">ev: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric">TensorNumeric</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.Net.from.T">T</span>]</span>)</span><span class="result">: <a href="../../autograd/Variable.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.autograd.Variable">Variable</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.Net.from.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@from[T](vars:com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]*)(implicitevidence$2:scala.reflect.ClassTag[T],implicitev:com.intel.analytics.bigdl.tensor.TensorNumericMath.TensorNumeric[T]):com.intel.analytics.zoo.pipeline.api.autograd.Variable[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Build graph: some other modules point to current module</p><div class="fullcomment"><div class="comment cmt"><p>Build graph: some other modules point to current module</p></div><dl class="paramcmts block"><dt class="param">vars</dt><dd class="cmt"><p>upstream variables</p></dd><dt>returns</dt><dd class="cmt"><p>Variable containing current module</p></dd></dl><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#getEndNodes" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getEndNodes(startNodes:Array[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):Array[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]"></a>
+      <a id="getEndNodes(Array[ModuleNode[T]]):Array[ModuleNode[T]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getEndNodes</span><span class="params">(<span name="startNodes">startNodes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getEndNodes(startNodes:Array[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):Array[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#getExtraParameter" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getExtraParameter():Array[com.intel.analytics.bigdl.tensor.Tensor[T]]"></a>
+      <a id="getExtraParameter():Array[Tensor[T]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getExtraParameter</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getExtraParameter():Array[com.intel.analytics.bigdl.tensor.Tensor[T]]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent#getGradHiddenState" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getGradHiddenState():com.intel.analytics.bigdl.nn.abstractnn.Activity"></a>
+      <a id="getGradHiddenState():Activity"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getGradHiddenState</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getGradHiddenState():com.intel.analytics.bigdl.nn.abstractnn.Activity" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent#getHiddenShape" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getHiddenShape():Array[Int]"></a>
+      <a id="getHiddenShape():Array[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getHiddenShape</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getHiddenShape():Array[Int]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent#getHiddenState" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getHiddenState():com.intel.analytics.bigdl.nn.abstractnn.Activity"></a>
+      <a id="getHiddenState():Activity"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getHiddenState</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getHiddenState():com.intel.analytics.bigdl.nn.abstractnn.Activity" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a></dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.InferShape#getInputShape" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getInputShape():com.intel.analytics.bigdl.utils.Shape"></a>
+      <a id="getInputShape():Shape"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getInputShape</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getInputShape():com.intel.analytics.bigdl.utils.Shape" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>InferShape</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#getName" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getName():String"></a>
+      <a id="getName():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getName</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getName():String" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#getNumericType" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getNumericType():com.intel.analytics.bigdl.tensor.TensorDataType"></a>
+      <a id="getNumericType():TensorDataType"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getNumericType</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.TensorDataType">TensorDataType</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getNumericType():com.intel.analytics.bigdl.tensor.TensorDataType" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.InferShape#getOutputShape" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getOutputShape():com.intel.analytics.bigdl.utils.Shape"></a>
+      <a id="getOutputShape():Shape"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getOutputShape</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getOutputShape():com.intel.analytics.bigdl.utils.Shape" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>InferShape</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#getParametersTable" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getParametersTable():com.intel.analytics.bigdl.utils.Table"></a>
+      <a id="getParametersTable():Table"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getParametersTable</span><span class="params">()</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.Table">Table</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getParametersTable():com.intel.analytics.bigdl.utils.Table" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#getPrintName" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getPrintName():String"></a>
+      <a id="getPrintName():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getPrintName</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getPrintName():String" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#getScaleB" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getScaleB():Double"></a>
+      <a id="getScaleB():Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getScaleB</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getScaleB():Double" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#getScaleW" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getScaleW():Double"></a>
+      <a id="getScaleW():Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getScaleW</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getScaleW():Double" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#getTimes" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getTimes():Array[(com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[_&lt;:com.intel.analytics.bigdl.nn.abstractnn.Activity,_&lt;:com.intel.analytics.bigdl.nn.abstractnn.Activity,T],Long,Long)]"></a>
+      <a id="getTimes():Array[(AbstractModule[_&lt;:Activity,_&lt;:Activity,T],Long,Long)]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getTimes</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[_ &lt;: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, _ &lt;: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="scala.Long">Long</span>, <span class="extype" name="scala.Long">Long</span>)]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getTimes():Array[(com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[_&lt;:com.intel.analytics.bigdl.nn.abstractnn.Activity,_&lt;:com.intel.analytics.bigdl.nn.abstractnn.Activity,T],Long,Long)]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#getTimesGroupByModuleType" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getTimesGroupByModuleType():Array[(String,Long,Long)]"></a>
+      <a id="getTimesGroupByModuleType():Array[(String,Long,Long)]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getTimesGroupByModuleType</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[(<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Long">Long</span>, <span class="extype" name="scala.Long">Long</span>)]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getTimesGroupByModuleType():Array[(String,Long,Long)]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#getWeightsBias" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getWeightsBias():Array[com.intel.analytics.bigdl.tensor.Tensor[T]]"></a>
+      <a id="getWeightsBias():Array[Tensor[T]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getWeightsBias</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@getWeightsBias():Array[com.intel.analytics.bigdl.tensor.Tensor[T]]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM#goBackward" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="goBackward:Boolean"></a>
+      <a id="goBackward:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">goBackward</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@goBackward:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Whether the input sequence will be processed backwards.</p><div class="fullcomment"><div class="comment cmt"><p>Whether the input sequence will be processed backwards. Default is false.</p></div></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent#goBackwards" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="goBackwards:Boolean"></a>
+      <a id="goBackwards:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">goBackwards</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@goBackwards:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a> → Recurrent</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#gradInput" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="gradInput:A"></a>
+      <a id="gradInput:Tensor[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">gradInput</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@gradInput:A" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#hasName" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hasName:Boolean"></a>
+      <a id="hasName:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hasName</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@hasName:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule → AnyRef → Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM#innerActivation" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="innerActivation:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]"></a>
+      <a id="innerActivation:KerasLayer[Tensor[T],Tensor[T],T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">innerActivation</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@innerActivation:com.intel.analytics.bigdl.nn.keras.KerasLayer[com.intel.analytics.bigdl.tensor.Tensor[T],com.intel.analytics.bigdl.tensor.Tensor[T],T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Activation function for inner cells.</p><div class="fullcomment"><div class="comment cmt"><p>Activation function for inner cells.
+                       You can also pass in corresponding string representations such as 'relu'
+                       or 'sigmoid', etc. for simple activations in the factory method.
+                       Default is 'hard_sigmoid'.</p></div></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent#inputShape" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="inputShape:com.intel.analytics.bigdl.utils.Shape"></a>
+      <a id="inputShape:Shape"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">inputShape</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@inputShape:com.intel.analytics.bigdl.utils.Shape" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a> → Recurrent</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#inputs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="inputs(first:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int),nodesWithIndex:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int)*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]"></a>
+      <a id="inputs((ModuleNode[T],Int),(ModuleNode[T],Int)*):ModuleNode[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">inputs</span><span class="params">(<span name="first">first: (<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="scala.Int">Int</span>)</span>, <span name="nodesWithIndex">nodesWithIndex: (<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="scala.Int">Int</span>)*</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@inputs(first:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int),nodesWithIndex:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int)*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#inputs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="inputs(nodes:Array[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]"></a>
+      <a id="inputs(Array[ModuleNode[T]]):ModuleNode[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">inputs</span><span class="params">(<span name="nodes">nodes: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@inputs(nodes:Array[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#inputs" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="inputs(nodes:com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]"></a>
+      <a id="inputs(ModuleNode[T]*):ModuleNode[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">inputs</span><span class="params">(<span name="nodes">nodes: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]*</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@inputs(nodes:com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#inputsFormats" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="inputsFormats:Seq[Int]"></a>
+      <a id="inputsFormats:Seq[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">inputsFormats</span><span class="result">: <a href="../../../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@inputsFormats:Seq[Int]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#isBuilt" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isBuilt():Boolean"></a>
+      <a id="isBuilt():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isBuilt</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@isBuilt():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → InferShape</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.Net#isFrozen" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isFrozen[T]()(implicitevidence$1:scala.reflect.ClassTag[T]):Boolean"></a>
+      <a id="isFrozen[T]()(ClassTag[T]):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isFrozen</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">()</span><span class="params">(<span class="implicit">implicit </span><span name="arg0">arg0: <span class="extype" name="scala.reflect.ClassTag">ClassTag</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.Net.isFrozen.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@isFrozen[T]()(implicitevidence$1:scala.reflect.ClassTag[T]):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#isKerasStyle" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isKerasStyle():Boolean"></a>
+      <a id="isKerasStyle():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isKerasStyle</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@isKerasStyle():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → InferShape</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#isTraining" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isTraining():Boolean"></a>
+      <a id="isTraining():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isTraining</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@isTraining():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#labor" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="labor:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]"></a>
+      <a id="labor:AbstractModule[Tensor[T],Tensor[T],T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">labor</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@labor:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#labor_=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="labor_=(value:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]):Unit"></a>
+      <a id="labor_=(AbstractModule[Tensor[T],Tensor[T],T]):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: labor_$eq" class="name">labor_=</span><span class="params">(<span name="value">value: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@labor_=(value:com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[A,B,T]):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#line" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="line:String"></a>
+      <a id="line:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">line</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@line:String" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#loadModelWeights" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="loadModelWeights(srcModel:com.intel.analytics.bigdl.Module[Float],matchAll:Boolean):AbstractModule.this.type"></a>
+      <a id="loadModelWeights(Module[Float],Boolean):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadModelWeights</span><span class="params">(<span name="srcModel">srcModel: <a href="../../../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="scala.Float">Float</span>]</span>, <span name="matchAll">matchAll: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@loadModelWeights(srcModel:com.intel.analytics.bigdl.Module[Float],matchAll:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#loadWeights" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="loadWeights(weightPath:String,matchAll:Boolean):AbstractModule.this.type"></a>
+      <a id="loadWeights(String,Boolean):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadWeights</span><span class="params">(<span name="weightPath">weightPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="matchAll">matchAll: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@loadWeights(weightPath:String,matchAll:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM#mInputShape" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="mInputShape:com.intel.analytics.bigdl.utils.Shape"></a>
+      <a id="mInputShape:Shape"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">mInputShape</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.utils.Shape">Shape</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@mInputShape:com.intel.analytics.bigdl.utils.Shape" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">A Single Shape, does not include the batch dimension.</p>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#modules" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="modules:scala.collection.mutable.ArrayBuffer[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]]"></a>
+      <a id="modules:ArrayBuffer[AbstractModule[Activity,Activity,T]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">modules</span><span class="result">: <span class="extype" name="scala.collection.mutable.ArrayBuffer">ArrayBuffer</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@modules:scala.collection.mutable.ArrayBuffer[com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container</dd></dl></div>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#output" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="output:B"></a>
+      <a id="output:Tensor[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">output</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@output:B" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent#outputDim" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="outputDim:Int"></a>
+      <a id="outputDim:Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">outputDim</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@outputDim:Int" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a> → Recurrent</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM#outputDimension" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="outputDimension:Int"></a>
+      <a id="outputDimension:Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">outputDimension</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@outputDimension:Int" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Hidden unit size.</p><div class="fullcomment"><div class="comment cmt"><p>Hidden unit size. Dimension of internal projections and final output.</p></div></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#outputsFormats" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="outputsFormats:Seq[Int]"></a>
+      <a id="outputsFormats:Seq[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">outputsFormats</span><span class="result">: <a href="../../../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@outputsFormats:Seq[Int]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#parameters" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="parameters():(Array[com.intel.analytics.bigdl.tensor.Tensor[T]],Array[com.intel.analytics.bigdl.tensor.Tensor[T]])"></a>
+      <a id="parameters():(Array[Tensor[T]],Array[Tensor[T]])"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">parameters</span><span class="params">()</span><span class="result">: (<span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]], <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]])</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@parameters():(Array[com.intel.analytics.bigdl.tensor.Tensor[T]],Array[com.intel.analytics.bigdl.tensor.Tensor[T]])" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#predict" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="predict(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int,shareBuffer:Boolean):org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.nn.abstractnn.Activity]"></a>
+      <a id="predict(RDD[Sample[T]],Int,Boolean):RDD[Activity]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">predict</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>, <span name="shareBuffer">shareBuffer: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@predict(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int,shareBuffer:Boolean):org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.nn.abstractnn.Activity]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#predictClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="predictClass(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int):org.apache.spark.rdd.RDD[Int]"></a>
+      <a id="predictClass(RDD[Sample[T]],Int):RDD[Int]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">predictClass</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.rdd.RDD">RDD</span>[<span class="extype" name="scala.Int">Int</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@predictClass(dataset:org.apache.spark.rdd.RDD[com.intel.analytics.bigdl.dataset.Sample[T]],batchSize:Int):org.apache.spark.rdd.RDD[Int]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#predictImage" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="predictImage(imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame,outputLayer:String,shareBuffer:Boolean,batchPerPartition:Int,predictKey:String,featurePaddingParam:Option[com.intel.analytics.bigdl.dataset.PaddingParam[T]]):com.intel.analytics.bigdl.transform.vision.image.ImageFrame"></a>
+      <a id="predictImage(ImageFrame,String,Boolean,Int,String,Option[PaddingParam[T]]):ImageFrame"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">predictImage</span><span class="params">(<span name="imageFrame">imageFrame: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFrame">ImageFrame</span></span>, <span name="outputLayer">outputLayer: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="shareBuffer">shareBuffer: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="batchPerPartition">batchPerPartition: <span class="extype" name="scala.Int">Int</span></span>, <span name="predictKey">predictKey: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="featurePaddingParam">featurePaddingParam: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.bigdl.dataset.PaddingParam">PaddingParam</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.transform.vision.image.ImageFrame">ImageFrame</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@predictImage(imageFrame:com.intel.analytics.bigdl.transform.vision.image.ImageFrame,outputLayer:String,shareBuffer:Boolean,batchPerPartition:Int,predictKey:String,featurePaddingParam:Option[com.intel.analytics.bigdl.dataset.PaddingParam[T]]):com.intel.analytics.bigdl.transform.vision.image.ImageFrame" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#processInputs" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="processInputs(first:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int),nodesWithIndex:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int)*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]"></a>
+      <a id="processInputs((ModuleNode[T],Int),(ModuleNode[T],Int)*):ModuleNode[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">processInputs</span><span class="params">(<span name="first">first: (<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="scala.Int">Int</span>)</span>, <span name="nodesWithIndex">nodesWithIndex: (<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="scala.Int">Int</span>)*</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@processInputs(first:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int),nodesWithIndex:(com.intel.analytics.bigdl.nn.Graph.ModuleNode[T],Int)*):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#processInputs" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="processInputs(nodes:Seq[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]"></a>
+      <a id="processInputs(Seq[ModuleNode[T]]):ModuleNode[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">processInputs</span><span class="params">(<span name="nodes">nodes: <a href="../../../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@processInputs(nodes:Seq[com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]]):com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#quantize" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="quantize():com.intel.analytics.bigdl.Module[T]"></a>
+      <a id="quantize():Module[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">quantize</span><span class="params">()</span><span class="result">: <a href="../../../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@quantize():com.intel.analytics.bigdl.Module[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent#rec" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="rec:com.intel.analytics.zoo.pipeline.api.keras.layers.internal.InternalRecurrent[T]"></a>
+      <a id="rec:InternalRecurrent[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">rec</span><span class="result">: <a href="internal/InternalRecurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.internal.InternalRecurrent">InternalRecurrent</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@rec:com.intel.analytics.zoo.pipeline.api.keras.layers.internal.InternalRecurrent[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a></dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#release" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="release():Unit"></a>
+      <a id="release():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">release</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@release():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#reset" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="reset():Unit"></a>
+      <a id="reset():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">reset</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@reset():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#resetTimes" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="resetTimes():Unit"></a>
+      <a id="resetTimes():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">resetTimes</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@resetTimes():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM#returnSeq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="returnSeq:Boolean"></a>
+      <a id="returnSeq:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">returnSeq</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@returnSeq:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Whether to return the full sequence or only return the last output
+                       in the output sequence.</p><div class="fullcomment"><div class="comment cmt"><p>Whether to return the full sequence or only return the last output
+                       in the output sequence. Default is false.</p></div></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent#returnSequences" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="returnSequences:Boolean"></a>
+      <a id="returnSequences:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">returnSequences</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@returnSequences:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a> → Recurrent</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#saveCaffe" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="saveCaffe(prototxtPath:String,modelPath:String,useV2:Boolean,overwrite:Boolean):AbstractModule.this.type"></a>
+      <a id="saveCaffe(String,String,Boolean,Boolean):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">saveCaffe</span><span class="params">(<span name="prototxtPath">prototxtPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="modelPath">modelPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="useV2">useV2: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="overwrite">overwrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@saveCaffe(prototxtPath:String,modelPath:String,useV2:Boolean,overwrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#saveDefinition" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="saveDefinition(path:String,overWrite:Boolean):AbstractModule.this.type"></a>
+      <a id="saveDefinition(String,Boolean):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">saveDefinition</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@saveDefinition(path:String,overWrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#saveModule" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="saveModule(path:String,weightPath:String,overWrite:Boolean):AbstractModule.this.type"></a>
+      <a id="saveModule(String,String,Boolean):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">saveModule</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="weightPath">weightPath: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@saveModule(path:String,weightPath:String,overWrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#saveTF" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="saveTF(inputs:Seq[(String,Seq[Int])],path:String,byteOrder:java.nio.ByteOrder,dataFormat:com.intel.analytics.bigdl.utils.tf.TensorflowDataFormat):AbstractModule.this.type"></a>
+      <a id="saveTF(Seq[(String,Seq[Int])],String,ByteOrder,TensorflowDataFormat):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">saveTF</span><span class="params">(<span name="inputs">inputs: <a href="../../../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[(<span class="extype" name="scala.Predef.String">String</span>, <a href="../../../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Int">Int</span>])]</span>, <span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="byteOrder">byteOrder: <span class="extype" name="java.nio.ByteOrder">ByteOrder</span></span>, <span name="dataFormat">dataFormat: <span class="extype" name="com.intel.analytics.bigdl.utils.tf.TensorflowDataFormat">TensorflowDataFormat</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@saveTF(inputs:Seq[(String,Seq[Int])],path:String,byteOrder:java.nio.ByteOrder,dataFormat:com.intel.analytics.bigdl.utils.tf.TensorflowDataFormat):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#saveTorch" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="saveTorch(path:String,overWrite:Boolean):AbstractModule.this.type"></a>
+      <a id="saveTorch(String,Boolean):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">saveTorch</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@saveTorch(path:String,overWrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#saveWeights" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="saveWeights(path:String,overWrite:Boolean):Unit"></a>
+      <a id="saveWeights(String,Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">saveWeights</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@saveWeights(path:String,overWrite:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#scaleB" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="scaleB:Double"></a>
+      <a id="scaleB:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">scaleB</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@scaleB:Double" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#scaleW" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="scaleW:Double"></a>
+      <a id="scaleW:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">scaleW</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@scaleW:Double" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#setExtraParameter" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setExtraParameter(extraParam:Array[com.intel.analytics.bigdl.tensor.Tensor[T]]):AbstractModule.this.type"></a>
+      <a id="setExtraParameter(Array[Tensor[T]]):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setExtraParameter</span><span class="params">(<span name="extraParam">extraParam: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@setExtraParameter(extraParam:Array[com.intel.analytics.bigdl.tensor.Tensor[T]]):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent#setGradHiddenState" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setGradHiddenState(gradHiddenState:com.intel.analytics.bigdl.nn.abstractnn.Activity):Unit"></a>
+      <a id="setGradHiddenState(Activity):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setGradHiddenState</span><span class="params">(<span name="gradHiddenState">gradHiddenState: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@setGradHiddenState(gradHiddenState:com.intel.analytics.bigdl.nn.abstractnn.Activity):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent#setHiddenState" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setHiddenState(hiddenState:com.intel.analytics.bigdl.nn.abstractnn.Activity):Unit"></a>
+      <a id="setHiddenState(Activity):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setHiddenState</span><span class="params">(<span name="hiddenState">hiddenState: <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.Activity">Activity</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@setHiddenState(hiddenState:com.intel.analytics.bigdl.nn.abstractnn.Activity):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a></dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#setInputFormats" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setInputFormats(formats:Seq[Int]):AbstractModule.this.type"></a>
+      <a id="setInputFormats(Seq[Int]):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setInputFormats</span><span class="params">(<span name="formats">formats: <a href="../../../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@setInputFormats(formats:Seq[Int]):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#setLine" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setLine(line:String):AbstractModule.this.type"></a>
+      <a id="setLine(String):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setLine</span><span class="params">(<span name="line">line: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@setLine(line:String):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#setName" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setName(name:String):AbstractModule.this.type"></a>
+      <a id="setName(String):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setName</span><span class="params">(<span name="name">name: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@setName(name:String):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#setOutputFormats" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setOutputFormats(formats:Seq[Int]):AbstractModule.this.type"></a>
+      <a id="setOutputFormats(Seq[Int]):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setOutputFormats</span><span class="params">(<span name="formats">formats: <a href="../../../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.Int">Int</span>]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@setOutputFormats(formats:Seq[Int]):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#setScaleB" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setScaleB(b:Double):Container.this.type"></a>
+      <a id="setScaleB(Double):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setScaleB</span><span class="params">(<span name="b">b: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@setScaleB(b:Double):Container.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#setScaleW" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setScaleW(w:Double):Container.this.type"></a>
+      <a id="setScaleW(Double):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setScaleW</span><span class="params">(<span name="w">w: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@setScaleW(w:Double):Container.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#setWeightsBias" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setWeightsBias(newWeights:Array[com.intel.analytics.bigdl.tensor.Tensor[T]]):AbstractModule.this.type"></a>
+      <a id="setWeightsBias(Array[Tensor[T]]):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setWeightsBias</span><span class="params">(<span name="newWeights">newWeights: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@setWeightsBias(newWeights:Array[com.intel.analytics.bigdl.tensor.Tensor[T]]):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#toGraph" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toGraph(startNodes:com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]*):com.intel.analytics.bigdl.nn.Graph[T]"></a>
+      <a id="toGraph(ModuleNode[T]*):Graph[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toGraph</span><span class="params">(<span name="startNodes">startNodes: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph.ModuleNode">ModuleNode</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]*</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.nn.Graph">Graph</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@toGraph(startNodes:com.intel.analytics.bigdl.nn.Graph.ModuleNode[T]*):com.intel.analytics.bigdl.nn.Graph[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@toString():String" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule → AnyRef → Any</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#train" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="train:Boolean"></a>
+      <a id="train:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">train</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@train:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#training" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="training():Container.this.type"></a>
+      <a id="training():LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">training</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@training():Container.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM#uRegularizer" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="uRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T]"></a>
+      <a id="uRegularizer:Regularizer[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">uRegularizer</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.Regularizer">Regularizer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@uRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">An instance of <span class="extype" name="Regularizer">Regularizer</span>, applied the recurrent weights matrices.</p><div class="fullcomment"><div class="comment cmt"><p>An instance of <span class="extype" name="Regularizer">Regularizer</span>, applied the recurrent weights matrices.
+                    Default is null.</p></div></div>
+    </li><li name="com.intel.analytics.bigdl.nn.Container#unFreeze" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="unFreeze(names:String*):Container.this.type"></a>
+      <a id="unFreeze(String*):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">unFreeze</span><span class="params">(<span name="names">names: <span class="extype" name="scala.Predef.String">String</span>*</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@unFreeze(names:String*):Container.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Container → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#updateGradInput" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="updateGradInput(input:A,gradOutput:B):A"></a>
+      <a id="updateGradInput(Tensor[T],Tensor[T]):Tensor[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">updateGradInput</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>, <span name="gradOutput">gradOutput: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@updateGradInput(input:A,gradOutput:B):A" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.keras.KerasLayer#updateOutput" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="updateOutput(input:A):B"></a>
+      <a id="updateOutput(Tensor[T]):Tensor[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">updateOutput</span><span class="params">(<span name="input">input: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@updateOutput(input:A):B" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>KerasLayer → AbstractModule</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM#wRegularizer" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T]"></a>
+      <a id="wRegularizer:Regularizer[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wRegularizer</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.Regularizer">Regularizer</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@wRegularizer:com.intel.analytics.bigdl.optim.Regularizer[T]" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">An instance of <span class="extype" name="Regularizer">Regularizer</span>, (eg.</p><div class="fullcomment"><div class="comment cmt"><p>An instance of <span class="extype" name="Regularizer">Regularizer</span>, (eg. L1 or L2 regularization),
+                    applied to the input weights matrices. Default is null.</p></div></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#zeroGradParameters" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="zeroGradParameters():Unit"></a>
+      <a id="zeroGradParameters():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">zeroGradParameters</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@zeroGradParameters():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Deprecated Value Members</h3>
+              <ol><li name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule#save" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="save(path:String,overWrite:Boolean):AbstractModule.this.type"></a>
+      <a id="save(String,Boolean):LSTM.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.3.0) please use recommended saveModule(path, overWrite)">save</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="overWrite">overWrite: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM">LSTM</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../../../index.html#com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM@save(path:String,overWrite:Boolean):AbstractModule.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AbstractModule</dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.3.0)</i> please use recommended saveModule(path, overWrite)</p></dd></dl></div>
+    </li></ol>
+            </div>
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="com.intel.analytics.zoo.pipeline.api.Net">
+              <h3>Inherited from <a href="../../Net.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.Net">Net</a></h3>
+            </div><div class="parent" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">
+              <h3>Inherited from <a href="Recurrent.html" class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.Recurrent">Recurrent</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</h3>
+            </div><div class="parent" name="com.intel.analytics.bigdl.nn.keras.Recurrent">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.keras.Recurrent">bigdl.nn.keras.Recurrent</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</h3>
+            </div><div class="parent" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.keras.KerasLayer">KerasLayer</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</h3>
+            </div><div class="parent" name="com.intel.analytics.bigdl.nn.Container">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.Container">Container</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</h3>
+            </div><div class="parent" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.AbstractModule">AbstractModule</span>[<span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.bigdl.tensor.Tensor">Tensor</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.api.keras.layers.LSTM.T">T</span>]</h3>
+            </div><div class="parent" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.bigdl.nn.abstractnn.InferShape">InferShape</span></h3>
+            </div><div class="parent" name="scala.Serializable">
+              <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="java.io.Serializable">
+              <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <a href="../../../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>

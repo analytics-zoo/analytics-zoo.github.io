@@ -1,0 +1,2479 @@
+<!DOCTYPE html >
+<html>
+        <head>
+          <title>NNEstimator - analytics-zoo-bigdl_0.12.1-spark_2.4.3 0.9.0-SNAPSHOT API - com.intel.analytics.zoo.pipeline.nnframes.NNEstimator</title>
+          <meta name="description" content="NNEstimator - analytics - zoo - bigdl 0.12.1 - spark 2.4.3 0.9.0 - SNAPSHOT API - com.intel.analytics.zoo.pipeline.nnframes.NNEstimator" />
+          <meta name="keywords" content="NNEstimator analytics zoo bigdl 0.12.1 spark 2.4.3 0.9.0 SNAPSHOT API com.intel.analytics.zoo.pipeline.nnframes.NNEstimator" />
+          <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+          
+      <link href="../../../../../../lib/template.css" media="screen" type="text/css" rel="stylesheet" />
+      <link href="../../../../../../lib/diagrams.css" media="screen" type="text/css" rel="stylesheet" id="diagrams-css" />
+      <script type="text/javascript" src="../../../../../../lib/jquery.js" id="jquery-js"></script>
+      <script type="text/javascript" src="../../../../../../lib/jquery-ui.js"></script>
+      <script type="text/javascript" src="../../../../../../lib/template.js"></script>
+      <script type="text/javascript" src="../../../../../../lib/tools.tooltip.js"></script>
+      
+      <script type="text/javascript">
+         if(top === self) {
+            var url = '../../../../../../index.html';
+            var hash = 'com.intel.analytics.zoo.pipeline.nnframes.NNEstimator';
+            var anchor = window.location.hash;
+            var anchor_opt = '';
+            if (anchor.length >= 1)
+              anchor_opt = '@' + anchor.substring(1);
+            window.location.href = url + '#' + hash + anchor_opt;
+         }
+   	  </script>
+    
+        </head>
+        <body class="type">
+      <div id="definition">
+        <a href="NNEstimator$.html" title="See companion object"><img alt="Class/Object" src="../../../../../../lib/class_to_object_big.png" /></a>
+        <p id="owner"><a href="../../../../../package.html" class="extype" name="com">com</a>.<a href="../../../../package.html" class="extype" name="com.intel">intel</a>.<a href="../../../package.html" class="extype" name="com.intel.analytics">analytics</a>.<a href="../../package.html" class="extype" name="com.intel.analytics.zoo">zoo</a>.<a href="../package.html" class="extype" name="com.intel.analytics.zoo.pipeline">pipeline</a>.<a href="package.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes">nnframes</a></p>
+        <h1><a href="NNEstimator$.html" title="See companion object">NNEstimator</a></h1><h3><span class="morelinks"><div>
+            Related Docs:
+            <a href="NNEstimator$.html" title="See companion object">object NNEstimator</a>
+            | <a href="package.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes">package nnframes</a>
+          </div></span></h3><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      </div>
+
+      <h4 id="signature" class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">class</span>
+      </span>
+      <span class="symbol">
+        <span class="name">NNEstimator</span><span class="tparams">[<span name="T">T</span>]</span><span class="result"> extends <span class="extype" name="org.apache.spark.ml.DLEstimatorBase">DLEstimatorBase</span>[<a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>], <a href="NNModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNModel">NNModel</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]] with <span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNParams">NNParams</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>] with <span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams">TrainingParams</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</span>
+      </span>
+      </h4>
+      
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a> extends <span class="extype" name="org.apache.spark.ml.Estimator">org.apache.spark.ml.Estimator</span> and supports training a BigDL
+model with Spark DataFrame data. It can be integrated into a standard Spark ML Pipeline
+to allow users combine the components of BigDL and Spark MLlib.</p><p><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a> supports different feature and label data type through <span class="extype" name="Preprocessing">Preprocessing</span>. We
+provide pre-defined <span class="extype" name="Preprocessing">Preprocessing</span> for popular data types like Array or Vector in package
+<a href="../../feature/package.html" class="extype" name="com.intel.analytics.zoo.feature">com.intel.analytics.zoo.feature</a>, while user can also develop customized <span class="extype" name="Preprocessing">Preprocessing</span>.
+During fit, NNEstimator will extract feature and label data from input DataFrame and use
+the <span class="extype" name="Preprocessing">Preprocessing</span> to prepare data for the model. Using the <span class="extype" name="Preprocessing">Preprocessing</span> allows
+<a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a> to cache only the raw data and decrease the memory consumption during feature
+conversion and training.
+More concrete examples are available in package <a href="../../examples/nnframes/package.html" class="extype" name="com.intel.analytics.zoo.examples.nnframes">com.intel.analytics.zoo.examples.nnframes</a>
+</p></div><dl class="paramcmts block"><dt class="tparam">T</dt><dd class="cmt"><p>data type of BigDL Model</p></dd></dl><div class="toggleContainer block">
+          <span class="toggle">Linear Supertypes</span>
+          <div class="superTypes hiddenContent"><span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams">TrainingParams</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>], <span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNParams">NNParams</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>], <span class="extype" name="org.apache.spark.ml.VectorCompatibility">VectorCompatibility</span>, <span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.HasBatchSize">HasBatchSize</span>, <span class="extype" name="org.apache.spark.ml.adapter.HasPredictionCol">HasPredictionCol</span>, <span class="extype" name="org.apache.spark.ml.param.shared.HasPredictionCol">HasPredictionCol</span>, <span class="extype" name="org.apache.spark.ml.adapter.HasFeaturesCol">HasFeaturesCol</span>, <span class="extype" name="org.apache.spark.ml.param.shared.HasFeaturesCol">HasFeaturesCol</span>, <span class="extype" name="org.apache.spark.ml.DLEstimatorBase">DLEstimatorBase</span>[<a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>], <a href="NNModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNModel">NNModel</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]], <span class="extype" name="org.apache.spark.ml.param.shared.HasLabelCol">HasLabelCol</span>, <span class="extype" name="org.apache.spark.ml.Estimator">Estimator</span>[<a href="NNModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNModel">NNModel</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]], <span class="extype" name="org.apache.spark.ml.PipelineStage">PipelineStage</span>, <span class="extype" name="org.apache.spark.internal.Logging">Logging</span>, <span class="extype" name="org.apache.spark.ml.param.Params">Params</span>, <span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <span class="extype" name="org.apache.spark.ml.util.Identifiable">Identifiable</span>, <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
+        </div><div class="toggleContainer block">
+            <span class="toggle">Known Subclasses</span>
+            <div class="subClasses hiddenContent"><a href="NNClassifier.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNClassifier">NNClassifier</a></div>
+          </div></div>
+        
+
+      <div id="mbrsel">
+        <div id="textfilter"><span class="pre"></span><span class="input"><input id="mbrsel-input" type="text" accesskey="/" /></span><span class="post"></span></div>
+        <div id="order">
+              <span class="filtertype">Ordering</span>
+              <ol>
+                
+                <li class="alpha in"><span>Alphabetic</span></li>
+                <li class="inherit out"><span>By Inheritance</span></li>
+              </ol>
+            </div>
+        <div id="ancestors">
+                <span class="filtertype">Inherited<br />
+                </span>
+                <ol id="linearization">
+                  <li class="in" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator"><span>NNEstimator</span></li><li class="in" name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams"><span>TrainingParams</span></li><li class="in" name="com.intel.analytics.zoo.pipeline.nnframes.NNParams"><span>NNParams</span></li><li class="in" name="org.apache.spark.ml.VectorCompatibility"><span>VectorCompatibility</span></li><li class="in" name="com.intel.analytics.zoo.pipeline.nnframes.HasBatchSize"><span>HasBatchSize</span></li><li class="in" name="org.apache.spark.ml.adapter.HasPredictionCol"><span>HasPredictionCol</span></li><li class="in" name="org.apache.spark.ml.param.shared.HasPredictionCol"><span>HasPredictionCol</span></li><li class="in" name="org.apache.spark.ml.adapter.HasFeaturesCol"><span>HasFeaturesCol</span></li><li class="in" name="org.apache.spark.ml.param.shared.HasFeaturesCol"><span>HasFeaturesCol</span></li><li class="in" name="org.apache.spark.ml.DLEstimatorBase"><span>DLEstimatorBase</span></li><li class="in" name="org.apache.spark.ml.param.shared.HasLabelCol"><span>HasLabelCol</span></li><li class="in" name="org.apache.spark.ml.Estimator"><span>Estimator</span></li><li class="in" name="org.apache.spark.ml.PipelineStage"><span>PipelineStage</span></li><li class="in" name="org.apache.spark.internal.Logging"><span>Logging</span></li><li class="in" name="org.apache.spark.ml.param.Params"><span>Params</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="org.apache.spark.ml.util.Identifiable"><span>Identifiable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                </ol>
+              </div><div id="ancestors">
+            <span class="filtertype"></span>
+            <ol>
+              <li class="hideall out"><span>Hide All</span></li>
+              <li class="showall in"><span>Show All</span></li>
+            </ol>
+          </div>
+        <div id="visbl">
+            <span class="filtertype">Visibility</span>
+            <ol><li class="public in"><span>Public</span></li><li class="all out"><span>All</span></li></ol>
+          </div>
+      </div>
+
+      <div id="template">
+        <div id="allMembers">
+        
+
+        
+
+        
+
+        <div id="values" class="values members">
+              <h3>Value Members</h3>
+              <ol><li name="scala.AnyRef#!=" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="!=(x$1:Any):Boolean"></a>
+      <a id="!=(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $bang$eq" class="name">!=</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@!=(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.AnyRef###" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="##():Int"></a>
+      <a id="##():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $hash$hash" class="name">##</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@##():Int" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#$" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="$[T](param:org.apache.spark.ml.param.Param[T]):T"></a>
+      <a id="$[T](Param[T]):T"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">$</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="param">param: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="org.apache.spark.ml.param.Params.$.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Params.$.T">T</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@$[T](param:org.apache.spark.ml.param.Param[T]):T" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="scala.AnyRef#==" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="==(x$1:Any):Boolean"></a>
+      <a id="==(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span title="gt4s: $eq$eq" class="name">==</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@==(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="scala.Any#asInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="asInstanceOf[T0]:T0"></a>
+      <a id="asInstanceOf[T0]:T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">asInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Any.asInstanceOf.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@asInstanceOf[T0]:T0" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.HasBatchSize#batchSize" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="batchSize:org.apache.spark.ml.param.IntParam"></a>
+      <a id="batchSize:IntParam"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">batchSize</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.IntParam">IntParam</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@batchSize:org.apache.spark.ml.param.IntParam" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Global batch size across the cluster.</p><div class="fullcomment"><div class="comment cmt"><p>Global batch size across the cluster.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>HasBatchSize</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#cachingSample" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="cachingSample:org.apache.spark.ml.param.BooleanParam"></a>
+      <a id="cachingSample:BooleanParam"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">cachingSample</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.BooleanParam">BooleanParam</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@cachingSample:org.apache.spark.ml.param.BooleanParam" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">whether to cache the Samples after preprocessing.</p><div class="fullcomment"><div class="comment cmt"><p>whether to cache the Samples after preprocessing.
+Default: true
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#checkpointOverwrite" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="checkpointOverwrite:org.apache.spark.ml.param.BooleanParam"></a>
+      <a id="checkpointOverwrite:BooleanParam"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">checkpointOverwrite</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.BooleanParam">BooleanParam</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@checkpointOverwrite:org.apache.spark.ml.param.BooleanParam" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#checkpointPath" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="checkpointPath:org.apache.spark.ml.param.Param[String]"></a>
+      <a id="checkpointPath:Param[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">checkpointPath</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@checkpointPath:org.apache.spark.ml.param.Param[String]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Set a check point saved at <code>path</code> triggered by <code>trigger</code>
+Default: not enabled
+</p><div class="fullcomment"><div class="comment cmt"><p>Set a check point saved at <code>path</code> triggered by <code>trigger</code>
+Default: not enabled
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#checkpointTrigger" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="checkpointTrigger:org.apache.spark.ml.param.Param[com.intel.analytics.bigdl.optim.Trigger]"></a>
+      <a id="checkpointTrigger:Param[Trigger]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">checkpointTrigger</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@checkpointTrigger:org.apache.spark.ml.param.Param[com.intel.analytics.bigdl.optim.Trigger]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#clear" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clear(param:org.apache.spark.ml.param.Param[_]):Params.this.type"></a>
+      <a id="clear(Param[_]):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clear</span><span class="params">(<span name="param">param: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[_]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@clear(param:org.apache.spark.ml.param.Param[_]):Params.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#clearGradientClipping" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="clearGradientClipping():NNEstimator.this.type"></a>
+      <a id="clearGradientClipping():NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clearGradientClipping</span><span class="params">()</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@clearGradientClipping():NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Clear clipping params, in this case, clipping will not be applied.</p>
+    </li><li name="scala.AnyRef#clone" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="clone():Object"></a>
+      <a id="clone():AnyRef"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">clone</span><span class="params">()</span><span class="result">: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@clone():Object" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.CloneNotSupportedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#constantGradientClippingParams" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="constantGradientClippingParams:org.apache.spark.ml.param.Param[(Float,Float)]"></a>
+      <a id="constantGradientClippingParams:Param[(Float,Float)]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">constantGradientClippingParams</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[(<span class="extype" name="scala.Float">Float</span>, <span class="extype" name="scala.Float">Float</span>)]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@constantGradientClippingParams:org.apache.spark.ml.param.Param[(Float,Float)]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Constant gradient clipping thresholds.</p><div class="fullcomment"><div class="comment cmt"><p>Constant gradient clipping thresholds.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#copy" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="copy(extra:org.apache.spark.ml.param.ParamMap):com.intel.analytics.zoo.pipeline.nnframes.NNEstimator[T]"></a>
+      <a id="copy(ParamMap):NNEstimator[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">copy</span><span class="params">(<span name="extra">extra: <span class="extype" name="org.apache.spark.ml.param.ParamMap">ParamMap</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@copy(extra:org.apache.spark.ml.param.ParamMap):com.intel.analytics.zoo.pipeline.nnframes.NNEstimator[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Return a deep copy for DLEstimator.</p><div class="fullcomment"><div class="comment cmt"><p>Return a deep copy for DLEstimator.
+Note that trainSummary and validationSummary will not be copied to the new instance since
+currently they are not thread-safe.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a> → DLEstimatorBase → Estimator → PipelineStage → Params</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#copyValues" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="copyValues[T&lt;:org.apache.spark.ml.param.Params](to:T,extra:org.apache.spark.ml.param.ParamMap):T"></a>
+      <a id="copyValues[T&lt;:Params](T,ParamMap):T"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">copyValues</span><span class="tparams">[<span name="T">T &lt;: <span class="extype" name="org.apache.spark.ml.param.Params">Params</span></span>]</span><span class="params">(<span name="to">to: <span class="extype" name="org.apache.spark.ml.param.Params.copyValues.T">T</span></span>, <span name="extra">extra: <span class="extype" name="org.apache.spark.ml.param.ParamMap">ParamMap</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Params.copyValues.T">T</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@copyValues[T&lt;:org.apache.spark.ml.param.Params](to:T,extra:org.apache.spark.ml.param.ParamMap):T" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#criterion" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="criterion:com.intel.analytics.bigdl.Criterion[T]"></a>
+      <a id="criterion:Criterion[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">criterion</span><span class="result">: <a href="../../../bigdl/package.html#Criterion[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractCriterion[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Criterion">Criterion</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@criterion:com.intel.analytics.bigdl.Criterion[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">BigDL criterion</p>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#dataCacheLevel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="dataCacheLevel:org.apache.spark.ml.param.Param[com.intel.analytics.zoo.feature.pmem.MemoryType]"></a>
+      <a id="dataCacheLevel:Param[MemoryType]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">dataCacheLevel</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<a href="../../feature/pmem/MemoryType.html" class="extype" name="com.intel.analytics.zoo.feature.pmem.MemoryType">MemoryType</a>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@dataCacheLevel:org.apache.spark.ml.param.Param[com.intel.analytics.zoo.feature.pmem.MemoryType]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">How to cache the training data, options are defined in com.intel.analytics.zoo.feature.pmem.</p><div class="fullcomment"><div class="comment cmt"><p>How to cache the training data, options are defined in com.intel.analytics.zoo.feature.pmem.
+If it's DRAM, will cache dataset into dynamic random-access memory
+If it's PMEM, will cache dataset into Intel Optane DC Persistent Memory
+If it's DISK_AND_DRAM(numSlice: Int), will cache dataset into disk, and only hold 1/n
+     of the data into memory during the training. After going through the 1/n, we will
+     release the current cache, and load another 1/n into memory.
+By default, DRAM is used.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#defaultCopy" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="defaultCopy[T&lt;:org.apache.spark.ml.param.Params](extra:org.apache.spark.ml.param.ParamMap):T"></a>
+      <a id="defaultCopy[T&lt;:Params](ParamMap):T"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">defaultCopy</span><span class="tparams">[<span name="T">T &lt;: <span class="extype" name="org.apache.spark.ml.param.Params">Params</span></span>]</span><span class="params">(<span name="extra">extra: <span class="extype" name="org.apache.spark.ml.param.ParamMap">ParamMap</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Params.defaultCopy.T">T</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@defaultCopy[T&lt;:org.apache.spark.ml.param.Params](extra:org.apache.spark.ml.param.ParamMap):T" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#endWhen" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="endWhen:org.apache.spark.ml.param.Param[com.intel.analytics.bigdl.optim.Trigger]"></a>
+      <a id="endWhen:Param[Trigger]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">endWhen</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@endWhen:org.apache.spark.ml.param.Param[com.intel.analytics.bigdl.optim.Trigger]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">When to stop the training, passed in a <span class="extype" name="Trigger">Trigger</span>.</p><div class="fullcomment"><div class="comment cmt"><p>When to stop the training, passed in a <span class="extype" name="Trigger">Trigger</span>. E.g. Trigger.maxIterations
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="scala.AnyRef#eq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="eq(x$1:AnyRef):Boolean"></a>
+      <a id="eq(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">eq</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@eq(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#equals" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="equals(x$1:Any):Boolean"></a>
+      <a id="equals(Any):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">equals</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@equals(x$1:Any):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#explainParam" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="explainParam(param:org.apache.spark.ml.param.Param[_]):String"></a>
+      <a id="explainParam(Param[_]):String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">explainParam</span><span class="params">(<span name="param">param: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[_]</span>)</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@explainParam(param:org.apache.spark.ml.param.Param[_]):String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#explainParams" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="explainParams():String"></a>
+      <a id="explainParams():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">explainParams</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@explainParams():String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#extractParamMap" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="extractParamMap():org.apache.spark.ml.param.ParamMap"></a>
+      <a id="extractParamMap():ParamMap"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">extractParamMap</span><span class="params">()</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.ParamMap">ParamMap</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@extractParamMap():org.apache.spark.ml.param.ParamMap" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#extractParamMap" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="extractParamMap(extra:org.apache.spark.ml.param.ParamMap):org.apache.spark.ml.param.ParamMap"></a>
+      <a id="extractParamMap(ParamMap):ParamMap"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">extractParamMap</span><span class="params">(<span name="extra">extra: <span class="extype" name="org.apache.spark.ml.param.ParamMap">ParamMap</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.ParamMap">ParamMap</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@extractParamMap(extra:org.apache.spark.ml.param.ParamMap):org.apache.spark.ml.param.ParamMap" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.shared.HasFeaturesCol#featuresCol" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="featuresCol:org.apache.spark.ml.param.Param[String]"></a>
+      <a id="featuresCol:Param[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">featuresCol</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@featuresCol:org.apache.spark.ml.param.Param[String]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>HasFeaturesCol</dd></dl></div>
+    </li><li name="scala.AnyRef#finalize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="finalize():Unit"></a>
+      <a id="finalize():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">finalize</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@finalize():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected[<a href="../../../../../../java$lang.html" class="extype" name="java.lang">java.lang</a>] </dd><dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="symbol">classOf[java.lang.Throwable]</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="org.apache.spark.ml.DLEstimatorBase#fit" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fit(dataset:org.apache.spark.sql.Dataset[_]):M"></a>
+      <a id="fit(Dataset[_]):NNModel[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fit</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.sql.Dataset">Dataset</span>[_]</span>)</span><span class="result">: <a href="NNModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNModel">NNModel</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@fit(dataset:org.apache.spark.sql.Dataset[_]):M" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>DLEstimatorBase → Estimator</dd></dl></div>
+    </li><li name="org.apache.spark.ml.Estimator#fit" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fit(dataset:org.apache.spark.sql.Dataset[_],paramMaps:Array[org.apache.spark.ml.param.ParamMap]):Seq[M]"></a>
+      <a id="fit(Dataset[_],Array[ParamMap]):Seq[NNModel[T]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fit</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.sql.Dataset">Dataset</span>[_]</span>, <span name="paramMaps">paramMaps: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="org.apache.spark.ml.param.ParamMap">ParamMap</span>]</span>)</span><span class="result">: <a href="../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<a href="NNModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNModel">NNModel</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@fit(dataset:org.apache.spark.sql.Dataset[_],paramMaps:Array[org.apache.spark.ml.param.ParamMap]):Seq[M]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Estimator</dd><dt>Annotations</dt><dd>
+                <span class="name">@Since</span><span class="args">(<span>
+      
+      <span class="symbol">&quot;2.0.0&quot;</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="org.apache.spark.ml.Estimator#fit" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fit(dataset:org.apache.spark.sql.Dataset[_],paramMap:org.apache.spark.ml.param.ParamMap):M"></a>
+      <a id="fit(Dataset[_],ParamMap):NNModel[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fit</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.sql.Dataset">Dataset</span>[_]</span>, <span name="paramMap">paramMap: <span class="extype" name="org.apache.spark.ml.param.ParamMap">ParamMap</span></span>)</span><span class="result">: <a href="NNModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNModel">NNModel</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@fit(dataset:org.apache.spark.sql.Dataset[_],paramMap:org.apache.spark.ml.param.ParamMap):M" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Estimator</dd><dt>Annotations</dt><dd>
+                <span class="name">@Since</span><span class="args">(<span>
+      
+      <span class="symbol">&quot;2.0.0&quot;</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="org.apache.spark.ml.Estimator#fit" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="fit(dataset:org.apache.spark.sql.Dataset[_],firstParamPair:org.apache.spark.ml.param.ParamPair[_],otherParamPairs:org.apache.spark.ml.param.ParamPair[_]*):M"></a>
+      <a id="fit(Dataset[_],ParamPair[_],ParamPair[_]*):NNModel[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">fit</span><span class="params">(<span name="dataset">dataset: <span class="extype" name="org.apache.spark.sql.Dataset">Dataset</span>[_]</span>, <span name="firstParamPair">firstParamPair: <span class="extype" name="org.apache.spark.ml.param.ParamPair">ParamPair</span>[_]</span>, <span name="otherParamPairs">otherParamPairs: <span class="extype" name="org.apache.spark.ml.param.ParamPair">ParamPair</span>[_]*</span>)</span><span class="result">: <a href="NNModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNModel">NNModel</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@fit(dataset:org.apache.spark.sql.Dataset[_],firstParamPair:org.apache.spark.ml.param.ParamPair[_],otherParamPairs:org.apache.spark.ml.param.ParamPair[_]*):M" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Estimator</dd><dt>Annotations</dt><dd>
+                <span class="name">@Since</span><span class="args">(<span>
+      
+      <span class="symbol">&quot;2.0.0&quot;</span>
+    </span>)</span>
+              
+                <span class="name">@varargs</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#get" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="get[T](param:org.apache.spark.ml.param.Param[T]):Option[T]"></a>
+      <a id="get[T](Param[T]):Option[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">get</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="param">param: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="org.apache.spark.ml.param.Params.get.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="org.apache.spark.ml.param.Params.get.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@get[T](param:org.apache.spark.ml.param.Param[T]):Option[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.HasBatchSize#getBatchSize" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getBatchSize:Int"></a>
+      <a id="getBatchSize:Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getBatchSize</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getBatchSize:Int" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>HasBatchSize</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#getCheckpointPath" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getCheckpointPath:String"></a>
+      <a id="getCheckpointPath:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getCheckpointPath</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getCheckpointPath:String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Get check point path.</p><div class="fullcomment"><div class="comment cmt"><p>Get check point path.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="scala.AnyRef#getClass" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getClass():Class[_]"></a>
+      <a id="getClass():Class[_]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getClass</span><span class="params">()</span><span class="result">: <span class="extype" name="java.lang.Class">Class</span>[_]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getClass():Class[_]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#getDataCacheLevel" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getDataCacheLevel:com.intel.analytics.zoo.feature.pmem.MemoryType"></a>
+      <a id="getDataCacheLevel:MemoryType"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getDataCacheLevel</span><span class="result">: <a href="../../feature/pmem/MemoryType.html" class="extype" name="com.intel.analytics.zoo.feature.pmem.MemoryType">MemoryType</a></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getDataCacheLevel:com.intel.analytics.zoo.feature.pmem.MemoryType" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#getDefault" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getDefault[T](param:org.apache.spark.ml.param.Param[T]):Option[T]"></a>
+      <a id="getDefault[T](Param[T]):Option[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getDefault</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="param">param: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="org.apache.spark.ml.param.Params.getDefault.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="org.apache.spark.ml.param.Params.getDefault.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getDefault[T](param:org.apache.spark.ml.param.Param[T]):Option[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#getEndWhen" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getEndWhen:com.intel.analytics.bigdl.optim.Trigger"></a>
+      <a id="getEndWhen:Trigger"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getEndWhen</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getEndWhen:com.intel.analytics.bigdl.optim.Trigger" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.shared.HasFeaturesCol#getFeaturesCol" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getFeaturesCol:String"></a>
+      <a id="getFeaturesCol:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getFeaturesCol</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getFeaturesCol:String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>HasFeaturesCol</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.shared.HasLabelCol#getLabelCol" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getLabelCol:String"></a>
+      <a id="getLabelCol:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getLabelCol</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getLabelCol:String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>HasLabelCol</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#getLearningRate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getLearningRate:Double"></a>
+      <a id="getLearningRate:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getLearningRate</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getLearningRate:Double" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#getLearningRateDecay" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getLearningRateDecay:Double"></a>
+      <a id="getLearningRateDecay:Double"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getLearningRateDecay</span><span class="result">: <span class="extype" name="scala.Double">Double</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getLearningRateDecay:Double" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#getMaxEpoch" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getMaxEpoch:Int"></a>
+      <a id="getMaxEpoch:Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getMaxEpoch</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getMaxEpoch:Int" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#getOptimMethod" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getOptimMethod:com.intel.analytics.bigdl.optim.OptimMethod[T]"></a>
+      <a id="getOptimMethod:OptimMethod[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getOptimMethod</span><span class="result">: <span class="extype" name="com.intel.analytics.bigdl.optim.OptimMethod">OptimMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getOptimMethod:com.intel.analytics.bigdl.optim.OptimMethod[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#getOrDefault" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getOrDefault[T](param:org.apache.spark.ml.param.Param[T]):T"></a>
+      <a id="getOrDefault[T](Param[T]):T"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getOrDefault</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="param">param: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="org.apache.spark.ml.param.Params.getOrDefault.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Params.getOrDefault.T">T</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getOrDefault[T](param:org.apache.spark.ml.param.Param[T]):T" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#getParam" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getParam(paramName:String):org.apache.spark.ml.param.Param[Any]"></a>
+      <a id="getParam(String):Param[Any]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getParam</span><span class="params">(<span name="paramName">paramName: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="scala.Any">Any</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getParam(paramName:String):org.apache.spark.ml.param.Param[Any]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.shared.HasPredictionCol#getPredictionCol" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getPredictionCol:String"></a>
+      <a id="getPredictionCol:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getPredictionCol</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getPredictionCol:String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>HasPredictionCol</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNParams#getSamplePreprocessing" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getSamplePreprocessing:com.intel.analytics.zoo.feature.common.Preprocessing[Any,com.intel.analytics.bigdl.dataset.Sample[T]]"></a>
+      <a id="getSamplePreprocessing:Preprocessing[Any,Sample[T]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getSamplePreprocessing</span><span class="result">: <a href="../../feature/common/Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[<span class="extype" name="scala.Any">Any</span>, <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getSamplePreprocessing:com.intel.analytics.zoo.feature.common.Preprocessing[Any,com.intel.analytics.bigdl.dataset.Sample[T]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NNParams</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#getTrainSummary" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="getTrainSummary:Option[com.intel.analytics.bigdl.visualization.TrainSummary]"></a>
+      <a id="getTrainSummary:Option[TrainSummary]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getTrainSummary</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.bigdl.visualization.TrainSummary">TrainSummary</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getTrainSummary:Option[com.intel.analytics.bigdl.visualization.TrainSummary]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#getValidation" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getValidation:Option[(com.intel.analytics.bigdl.optim.Trigger,org.apache.spark.sql.DataFrame,Array[com.intel.analytics.bigdl.optim.ValidationMethod[T]],Int)]"></a>
+      <a id="getValidation:Option[(Trigger,DataFrame,Array[ValidationMethod[T]],Int)]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getValidation</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[(<span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span>, <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span>, <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]], <span class="extype" name="scala.Int">Int</span>)]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getValidation:Option[(com.intel.analytics.bigdl.optim.Trigger,org.apache.spark.sql.DataFrame,Array[com.intel.analytics.bigdl.optim.ValidationMethod[T]],Int)]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">get the validate configuration during training
+</p><div class="fullcomment"><div class="comment cmt"><p>get the validate configuration during training
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>an Option of Tuple(ValidationTrigger, Validation data, Array[ValidationMethod[T] ],
+        batchsize)</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#getValidationSummary" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getValidationSummary:Option[com.intel.analytics.bigdl.visualization.ValidationSummary]"></a>
+      <a id="getValidationSummary:Option[ValidationSummary]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getValidationSummary</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.bigdl.visualization.ValidationSummary">ValidationSummary</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getValidationSummary:Option[com.intel.analytics.bigdl.visualization.ValidationSummary]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Statistics (LearningRate, Loss, Throughput, Parameters) collected during training for the
+validation data if validation data is set, which can be used for visualization via
+Tensorboard.</p><div class="fullcomment"><div class="comment cmt"><p>Statistics (LearningRate, Loss, Throughput, Parameters) collected during training for the
+validation data if validation data is set, which can be used for visualization via
+Tensorboard. Use setValidationSummary to enable validation logger. Then the log will be
+saved to logDir/appName/ as specified by the parameters of validationSummary.</p><p>Default: None
+</p></div></div>
+    </li><li name="org.apache.spark.ml.VectorCompatibility#getVectorSeq" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getVectorSeq(row:org.apache.spark.sql.Row,colType:org.apache.spark.sql.types.DataType,index:Int):Seq[AnyVal]"></a>
+      <a id="getVectorSeq(Row,DataType,Int):Seq[AnyVal]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">getVectorSeq</span><span class="params">(<span name="row">row: <span class="extype" name="org.apache.spark.sql.Row">Row</span></span>, <span name="colType">colType: <span class="extype" name="org.apache.spark.sql.types.DataType">DataType</span></span>, <span name="index">index: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="../../../../../../scala/package.html#Seq[+A]=Seq[A]" class="extmbr" name="scala.Seq">Seq</a>[<span class="extype" name="scala.AnyVal">AnyVal</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@getVectorSeq(row:org.apache.spark.sql.Row,colType:org.apache.spark.sql.types.DataType,index:Int):Seq[AnyVal]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>VectorCompatibility</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#hasDefault" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hasDefault[T](param:org.apache.spark.ml.param.Param[T]):Boolean"></a>
+      <a id="hasDefault[T](Param[T]):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hasDefault</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="param">param: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="org.apache.spark.ml.param.Params.hasDefault.T">T</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@hasDefault[T](param:org.apache.spark.ml.param.Param[T]):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#hasParam" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hasParam(paramName:String):Boolean"></a>
+      <a id="hasParam(String):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hasParam</span><span class="params">(<span name="paramName">paramName: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@hasParam(paramName:String):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="scala.AnyRef#hashCode" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="hashCode():Int"></a>
+      <a id="hashCode():Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">hashCode</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@hashCode():Int" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#initializeLogIfNecessary" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="initializeLogIfNecessary(isInterpreter:Boolean,silent:Boolean):Boolean"></a>
+      <a id="initializeLogIfNecessary(Boolean,Boolean):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">initializeLogIfNecessary</span><span class="params">(<span name="isInterpreter">isInterpreter: <span class="extype" name="scala.Boolean">Boolean</span></span>, <span name="silent">silent: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@initializeLogIfNecessary(isInterpreter:Boolean,silent:Boolean):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#initializeLogIfNecessary" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="initializeLogIfNecessary(isInterpreter:Boolean):Unit"></a>
+      <a id="initializeLogIfNecessary(Boolean):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">initializeLogIfNecessary</span><span class="params">(<span name="isInterpreter">isInterpreter: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@initializeLogIfNecessary(isInterpreter:Boolean):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#internalFit" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="internalFit(dataFrame:org.apache.spark.sql.DataFrame):com.intel.analytics.zoo.pipeline.nnframes.NNModel[T]"></a>
+      <a id="internalFit(DataFrame):NNModel[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">internalFit</span><span class="params">(<span name="dataFrame">dataFrame: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>)</span><span class="result">: <a href="NNModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNModel">NNModel</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@internalFit(dataFrame:org.apache.spark.sql.DataFrame):com.intel.analytics.zoo.pipeline.nnframes.NNModel[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a> → DLEstimatorBase</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#isCachingSample" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isCachingSample:Boolean"></a>
+      <a id="isCachingSample:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isCachingSample</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@isCachingSample:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#isDefined" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isDefined(param:org.apache.spark.ml.param.Param[_]):Boolean"></a>
+      <a id="isDefined(Param[_]):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isDefined</span><span class="params">(<span name="param">param: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[_]</span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@isDefined(param:org.apache.spark.ml.param.Param[_]):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <a id="isInstanceOf[T0]:Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isInstanceOf</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@isInstanceOf[T0]:Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#isSet" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isSet(param:org.apache.spark.ml.param.Param[_]):Boolean"></a>
+      <a id="isSet(Param[_]):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isSet</span><span class="params">(<span name="param">param: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[_]</span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@isSet(param:org.apache.spark.ml.param.Param[_]):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#isTraceEnabled" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="isTraceEnabled():Boolean"></a>
+      <a id="isTraceEnabled():Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">isTraceEnabled</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@isTraceEnabled():Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#l2GradientClippingParams" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="l2GradientClippingParams:org.apache.spark.ml.param.FloatParam"></a>
+      <a id="l2GradientClippingParams:FloatParam"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">l2GradientClippingParams</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.FloatParam">FloatParam</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@l2GradientClippingParams:org.apache.spark.ml.param.FloatParam" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">L2 norm gradient clipping threshold.</p><div class="fullcomment"><div class="comment cmt"><p>L2 norm gradient clipping threshold.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.shared.HasLabelCol#labelCol" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="labelCol:org.apache.spark.ml.param.Param[String]"></a>
+      <a id="labelCol:Param[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">labelCol</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@labelCol:org.apache.spark.ml.param.Param[String]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>HasLabelCol</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#log" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="log:org.slf4j.Logger"></a>
+      <a id="log:Logger"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">log</span><span class="result">: <span class="extype" name="org.slf4j.Logger">Logger</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@log:org.slf4j.Logger" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#logDebug" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logDebug(msg:=&gt;String,throwable:Throwable):Unit"></a>
+      <a id="logDebug(⇒String,Throwable):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logDebug</span><span class="params">(<span name="msg">msg: ⇒ <span class="extype" name="scala.Predef.String">String</span></span>, <span name="throwable">throwable: <a href="../../../../../../scala/package.html#Throwable=Throwable" class="extmbr" name="scala.Throwable">Throwable</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@logDebug(msg:=&gt;String,throwable:Throwable):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#logDebug" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logDebug(msg:=&gt;String):Unit"></a>
+      <a id="logDebug(⇒String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logDebug</span><span class="params">(<span name="msg">msg: ⇒ <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@logDebug(msg:=&gt;String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#logError" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logError(msg:=&gt;String,throwable:Throwable):Unit"></a>
+      <a id="logError(⇒String,Throwable):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logError</span><span class="params">(<span name="msg">msg: ⇒ <span class="extype" name="scala.Predef.String">String</span></span>, <span name="throwable">throwable: <a href="../../../../../../scala/package.html#Throwable=Throwable" class="extmbr" name="scala.Throwable">Throwable</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@logError(msg:=&gt;String,throwable:Throwable):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#logError" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logError(msg:=&gt;String):Unit"></a>
+      <a id="logError(⇒String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logError</span><span class="params">(<span name="msg">msg: ⇒ <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@logError(msg:=&gt;String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#logInfo" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logInfo(msg:=&gt;String,throwable:Throwable):Unit"></a>
+      <a id="logInfo(⇒String,Throwable):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logInfo</span><span class="params">(<span name="msg">msg: ⇒ <span class="extype" name="scala.Predef.String">String</span></span>, <span name="throwable">throwable: <a href="../../../../../../scala/package.html#Throwable=Throwable" class="extmbr" name="scala.Throwable">Throwable</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@logInfo(msg:=&gt;String,throwable:Throwable):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#logInfo" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logInfo(msg:=&gt;String):Unit"></a>
+      <a id="logInfo(⇒String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logInfo</span><span class="params">(<span name="msg">msg: ⇒ <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@logInfo(msg:=&gt;String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#logName" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logName:String"></a>
+      <a id="logName:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logName</span><span class="result">: <span class="extype" name="java.lang.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@logName:String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#logTrace" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logTrace(msg:=&gt;String,throwable:Throwable):Unit"></a>
+      <a id="logTrace(⇒String,Throwable):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logTrace</span><span class="params">(<span name="msg">msg: ⇒ <span class="extype" name="scala.Predef.String">String</span></span>, <span name="throwable">throwable: <a href="../../../../../../scala/package.html#Throwable=Throwable" class="extmbr" name="scala.Throwable">Throwable</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@logTrace(msg:=&gt;String,throwable:Throwable):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#logTrace" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logTrace(msg:=&gt;String):Unit"></a>
+      <a id="logTrace(⇒String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logTrace</span><span class="params">(<span name="msg">msg: ⇒ <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@logTrace(msg:=&gt;String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#logWarning" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logWarning(msg:=&gt;String,throwable:Throwable):Unit"></a>
+      <a id="logWarning(⇒String,Throwable):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logWarning</span><span class="params">(<span name="msg">msg: ⇒ <span class="extype" name="scala.Predef.String">String</span></span>, <span name="throwable">throwable: <a href="../../../../../../scala/package.html#Throwable=Throwable" class="extmbr" name="scala.Throwable">Throwable</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@logWarning(msg:=&gt;String,throwable:Throwable):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="org.apache.spark.internal.Logging#logWarning" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="logWarning(msg:=&gt;String):Unit"></a>
+      <a id="logWarning(⇒String):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">logWarning</span><span class="params">(<span name="msg">msg: ⇒ <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@logWarning(msg:=&gt;String):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Logging</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#maxEpoch" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="maxEpoch:org.apache.spark.ml.param.IntParam"></a>
+      <a id="maxEpoch:IntParam"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">maxEpoch</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.IntParam">IntParam</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@maxEpoch:org.apache.spark.ml.param.IntParam" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Number of max Epoch for the training, an epoch refers to a traverse over the training data
+Default: 50
+</p><div class="fullcomment"><div class="comment cmt"><p>Number of max Epoch for the training, an epoch refers to a traverse over the training data
+Default: 50
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#model" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="model:com.intel.analytics.bigdl.Module[T]"></a>
+      <a id="model:Module[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">model</span><span class="result">: <a href="../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@model:com.intel.analytics.bigdl.Module[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">BigDL module to be optimized</p>
+    </li><li name="scala.AnyRef#ne" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="ne(x$1:AnyRef):Boolean"></a>
+      <a id="ne(AnyRef):Boolean"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">ne</span><span class="params">(<span name="arg0">arg0: <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>)</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@ne(x$1:AnyRef):Boolean" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notify" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notify():Unit"></a>
+      <a id="notify():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notify</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@notify():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="scala.AnyRef#notifyAll" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="notifyAll():Unit"></a>
+      <a id="notifyAll():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">notifyAll</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@notifyAll():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#optimMethod" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="optimMethod:org.apache.spark.ml.param.Param[com.intel.analytics.bigdl.optim.OptimMethod[T]]"></a>
+      <a id="optimMethod:Param[OptimMethod[T]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">optimMethod</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="com.intel.analytics.bigdl.optim.OptimMethod">OptimMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@optimMethod:org.apache.spark.ml.param.Param[com.intel.analytics.bigdl.optim.OptimMethod[T]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">optimization method to be used.</p><div class="fullcomment"><div class="comment cmt"><p>optimization method to be used. BigDL supports many optimization methods like Adam,
+SGD and LBFGS. Refer to package com.intel.analytics.bigdl.optim for all the options.
+Default: SGD
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#params" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="params:Array[org.apache.spark.ml.param.Param[_]]"></a>
+      <a id="params:Array[Param[_]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">lazy val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">params</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[_]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@params:Array[org.apache.spark.ml.param.Param[_]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.shared.HasPredictionCol#predictionCol" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="predictionCol:org.apache.spark.ml.param.Param[String]"></a>
+      <a id="predictionCol:Param[String]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">predictionCol</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@predictionCol:org.apache.spark.ml.param.Param[String]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>HasPredictionCol</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNParams#samplePreprocessing" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="samplePreprocessing:org.apache.spark.ml.param.Param[com.intel.analytics.zoo.feature.common.Preprocessing[Any,com.intel.analytics.bigdl.dataset.Sample[T]]]"></a>
+      <a id="samplePreprocessing:Param[Preprocessing[Any,Sample[T]]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">samplePreprocessing</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<a href="../../feature/common/Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[<span class="extype" name="scala.Any">Any</span>, <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@samplePreprocessing:org.apache.spark.ml.param.Param[com.intel.analytics.zoo.feature.common.Preprocessing[Any,com.intel.analytics.bigdl.dataset.Sample[T]]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>NNParams</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#set" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="set(paramPair:org.apache.spark.ml.param.ParamPair[_]):Params.this.type"></a>
+      <a id="set(ParamPair[_]):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">set</span><span class="params">(<span name="paramPair">paramPair: <span class="extype" name="org.apache.spark.ml.param.ParamPair">ParamPair</span>[_]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@set(paramPair:org.apache.spark.ml.param.ParamPair[_]):Params.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#set" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="set(param:String,value:Any):Params.this.type"></a>
+      <a id="set(String,Any):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">set</span><span class="params">(<span name="param">param: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="value">value: <span class="extype" name="scala.Any">Any</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@set(param:String,value:Any):Params.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#set" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="set[T](param:org.apache.spark.ml.param.Param[T],value:T):Params.this.type"></a>
+      <a id="set[T](Param[T],T):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">set</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="param">param: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="org.apache.spark.ml.param.Params.set.T">T</span>]</span>, <span name="value">value: <span class="extype" name="org.apache.spark.ml.param.Params.set.T">T</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@set[T](param:org.apache.spark.ml.param.Param[T],value:T):Params.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setBatchSize" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setBatchSize(value:Int):NNEstimator.this.type"></a>
+      <a id="setBatchSize(Int):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setBatchSize</span><span class="params">(<span name="value">value: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setBatchSize(value:Int):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Set global batch size across the cluster.</p><div class="fullcomment"><div class="comment cmt"><p>Set global batch size across the cluster. Global batch size = Batch per thread * num of cores.
+default is 1.
+</p></div></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setCachingSample" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setCachingSample(value:Boolean):NNEstimator.this.type"></a>
+      <a id="setCachingSample(Boolean):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setCachingSample</span><span class="params">(<span name="value">value: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setCachingSample(value:Boolean):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setCheckpoint" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setCheckpoint(path:String,trigger:com.intel.analytics.bigdl.optim.Trigger,isOverWrite:Boolean):NNEstimator.this.type"></a>
+      <a id="setCheckpoint(String,Trigger,Boolean):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setCheckpoint</span><span class="params">(<span name="path">path: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="trigger">trigger: <span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span></span>, <span name="isOverWrite">isOverWrite: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setCheckpoint(path:String,trigger:com.intel.analytics.bigdl.optim.Trigger,isOverWrite:Boolean):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Set check points during training.</p><div class="fullcomment"><div class="comment cmt"><p>Set check points during training. Not enabled by default.
+</p></div><dl class="paramcmts block"><dt class="param">path</dt><dd class="cmt"><p>the directory to save</p></dd><dt class="param">trigger</dt><dd class="cmt"><p>how often to save the check point</p></dd><dt>returns</dt><dd class="cmt"><p>this estimator</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setConstantGradientClipping" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setConstantGradientClipping(min:Float,max:Float):NNEstimator.this.type"></a>
+      <a id="setConstantGradientClipping(Float,Float):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setConstantGradientClipping</span><span class="params">(<span name="min">min: <span class="extype" name="scala.Float">Float</span></span>, <span name="max">max: <span class="extype" name="scala.Float">Float</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setConstantGradientClipping(min:Float,max:Float):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setDataCacheLevel" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setDataCacheLevel(value:com.intel.analytics.zoo.feature.pmem.MemoryType):NNEstimator.this.type"></a>
+      <a id="setDataCacheLevel(MemoryType):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setDataCacheLevel</span><span class="params">(<span name="value">value: <a href="../../feature/pmem/MemoryType.html" class="extype" name="com.intel.analytics.zoo.feature.pmem.MemoryType">MemoryType</a></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setDataCacheLevel(value:com.intel.analytics.zoo.feature.pmem.MemoryType):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="org.apache.spark.ml.param.Params#setDefault" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setDefault(paramPairs:org.apache.spark.ml.param.ParamPair[_]*):Params.this.type"></a>
+      <a id="setDefault(ParamPair[_]*):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setDefault</span><span class="params">(<span name="paramPairs">paramPairs: <span class="extype" name="org.apache.spark.ml.param.ParamPair">ParamPair</span>[_]*</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setDefault(paramPairs:org.apache.spark.ml.param.ParamPair[_]*):Params.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="org.apache.spark.ml.param.Params#setDefault" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setDefault[T](param:org.apache.spark.ml.param.Param[T],value:T):Params.this.type"></a>
+      <a id="setDefault[T](Param[T],T):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setDefault</span><span class="tparams">[<span name="T">T</span>]</span><span class="params">(<span name="param">param: <span class="extype" name="org.apache.spark.ml.param.Param">Param</span>[<span class="extype" name="org.apache.spark.ml.param.Params.setDefault.T">T</span>]</span>, <span name="value">value: <span class="extype" name="org.apache.spark.ml.param.Params.setDefault.T">T</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setDefault[T](param:org.apache.spark.ml.param.Param[T],value:T):Params.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>Params</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setEndWhen" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setEndWhen(trigger:com.intel.analytics.bigdl.optim.Trigger):NNEstimator.this.type"></a>
+      <a id="setEndWhen(Trigger):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setEndWhen</span><span class="params">(<span name="trigger">trigger: <span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setEndWhen(trigger:com.intel.analytics.bigdl.optim.Trigger):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setFeaturesCol" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setFeaturesCol(featuresColName:String):NNEstimator.this.type"></a>
+      <a id="setFeaturesCol(String):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setFeaturesCol</span><span class="params">(<span name="featuresColName">featuresColName: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setFeaturesCol(featuresColName:String):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setGradientClippingByL2Norm" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setGradientClippingByL2Norm(clipNorm:Float):NNEstimator.this.type"></a>
+      <a id="setGradientClippingByL2Norm(Float):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setGradientClippingByL2Norm</span><span class="params">(<span name="clipNorm">clipNorm: <span class="extype" name="scala.Float">Float</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setGradientClippingByL2Norm(clipNorm:Float):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setLabelCol" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setLabelCol(labelColName:String):NNEstimator.this.type"></a>
+      <a id="setLabelCol(String):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setLabelCol</span><span class="params">(<span name="labelColName">labelColName: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setLabelCol(labelColName:String):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setMaxEpoch" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setMaxEpoch(value:Int):NNEstimator.this.type"></a>
+      <a id="setMaxEpoch(Int):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setMaxEpoch</span><span class="params">(<span name="value">value: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setMaxEpoch(value:Int):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setOptimMethod" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setOptimMethod(value:com.intel.analytics.bigdl.optim.OptimMethod[T]):NNEstimator.this.type"></a>
+      <a id="setOptimMethod(OptimMethod[T]):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setOptimMethod</span><span class="params">(<span name="value">value: <span class="extype" name="com.intel.analytics.bigdl.optim.OptimMethod">OptimMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setOptimMethod(value:com.intel.analytics.bigdl.optim.OptimMethod[T]):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setPredictionCol" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setPredictionCol(value:String):NNEstimator.this.type"></a>
+      <a id="setPredictionCol(String):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setPredictionCol</span><span class="params">(<span name="value">value: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setPredictionCol(value:String):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setSamplePreprocessing" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="setSamplePreprocessing[FF,LL](value:com.intel.analytics.zoo.feature.common.Preprocessing[(FF,Option[LL]),com.intel.analytics.bigdl.dataset.Sample[T]]):NNEstimator.this.type"></a>
+      <a id="setSamplePreprocessing[FF,LL](Preprocessing[(FF,Option[LL]),Sample[T]]):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setSamplePreprocessing</span><span class="tparams">[<span name="FF">FF</span>, <span name="LL">LL</span>]</span><span class="params">(<span name="value">value: <a href="../../feature/common/Preprocessing.html" class="extype" name="com.intel.analytics.zoo.feature.common.Preprocessing">Preprocessing</a>[(<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.setSamplePreprocessing.FF">FF</span>, <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.setSamplePreprocessing.LL">LL</span>]), <span class="extype" name="com.intel.analytics.bigdl.dataset.Sample">Sample</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]]</span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setSamplePreprocessing[FF,LL](value:com.intel.analytics.zoo.feature.common.Preprocessing[(FF,Option[LL]),com.intel.analytics.bigdl.dataset.Sample[T]]):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setTrainSummary" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setTrainSummary(value:com.intel.analytics.bigdl.visualization.TrainSummary):NNEstimator.this.type"></a>
+      <a id="setTrainSummary(TrainSummary):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setTrainSummary</span><span class="params">(<span name="value">value: <span class="extype" name="com.intel.analytics.bigdl.visualization.TrainSummary">TrainSummary</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setTrainSummary(value:com.intel.analytics.bigdl.visualization.TrainSummary):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Statistics (LearningRate, Loss, Throughput, Parameters) collected during training for the
+training data, which can be used for visualization via Tensorboard.</p><div class="fullcomment"><div class="comment cmt"><p>Statistics (LearningRate, Loss, Throughput, Parameters) collected during training for the
+training data, which can be used for visualization via Tensorboard.
+Use setTrainSummary to enable train logger. Then the log will be saved to
+logDir/appName/train as specified by the parameters of TrainSummary.</p><p>Default: Not enabled
+</p></div></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setValidation" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setValidation(trigger:com.intel.analytics.bigdl.optim.Trigger,validationDF:org.apache.spark.sql.DataFrame,vMethods:Array[com.intel.analytics.bigdl.optim.ValidationMethod[T]],batchSize:Int):NNEstimator.this.type"></a>
+      <a id="setValidation(Trigger,DataFrame,Array[ValidationMethod[T]],Int):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setValidation</span><span class="params">(<span name="trigger">trigger: <span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span></span>, <span name="validationDF">validationDF: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>, <span name="vMethods">vMethods: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]]</span>, <span name="batchSize">batchSize: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setValidation(trigger:com.intel.analytics.bigdl.optim.Trigger,validationDF:org.apache.spark.sql.DataFrame,vMethods:Array[com.intel.analytics.bigdl.optim.ValidationMethod[T]],batchSize:Int):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Set a validate evaluation during training.</p><div class="fullcomment"><div class="comment cmt"><p>Set a validate evaluation during training. Default: not enabled.
+</p></div><dl class="paramcmts block"><dt class="param">trigger</dt><dd class="cmt"><p>how often to evaluation validation set</p></dd><dt class="param">validationDF</dt><dd class="cmt"><p>validate data set</p></dd><dt class="param">vMethods</dt><dd class="cmt"><p>a set of validation method <span class="extype" name="ValidationMethod">ValidationMethod</span></p></dd><dt class="param">batchSize</dt><dd class="cmt"><p>batch size for validation</p></dd><dt>returns</dt><dd class="cmt"><p>this estimator</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setValidationSummary" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setValidationSummary(value:com.intel.analytics.bigdl.visualization.ValidationSummary):NNEstimator.this.type"></a>
+      <a id="setValidationSummary(ValidationSummary):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">setValidationSummary</span><span class="params">(<span name="value">value: <span class="extype" name="com.intel.analytics.bigdl.visualization.ValidationSummary">ValidationSummary</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setValidationSummary(value:com.intel.analytics.bigdl.visualization.ValidationSummary):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Enable validation Summary.</p><div class="fullcomment"><div class="comment cmt"><p>Enable validation Summary. Default: not enabled.
+</p></div></div>
+    </li><li name="scala.AnyRef#synchronized" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="synchronized[T0](x$1:=&gt;T0):T0"></a>
+      <a id="synchronized[T0](⇒T0):T0"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">synchronized</span><span class="tparams">[<span name="T0">T0</span>]</span><span class="params">(<span name="arg0">arg0: ⇒ <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>)</span><span class="result">: <span class="extype" name="java.lang.AnyRef.synchronized.T0">T0</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@synchronized[T0](x$1:=&gt;T0):T0" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd></dl></div>
+    </li><li name="org.apache.spark.ml.util.Identifiable#toString" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="toString():String"></a>
+      <a id="toString():String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">toString</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@toString():String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Identifiable → AnyRef → Any</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#transformSchema" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="transformSchema(schema:org.apache.spark.sql.types.StructType):org.apache.spark.sql.types.StructType"></a>
+      <a id="transformSchema(StructType):StructType"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">transformSchema</span><span class="params">(<span name="schema">schema: <span class="extype" name="org.apache.spark.sql.types.StructType">StructType</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.sql.types.StructType">StructType</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@transformSchema(schema:org.apache.spark.sql.types.StructType):org.apache.spark.sql.types.StructType" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a> → PipelineStage</dd></dl></div>
+    </li><li name="org.apache.spark.ml.PipelineStage#transformSchema" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="transformSchema(schema:org.apache.spark.sql.types.StructType,logging:Boolean):org.apache.spark.sql.types.StructType"></a>
+      <a id="transformSchema(StructType,Boolean):StructType"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">transformSchema</span><span class="params">(<span name="schema">schema: <span class="extype" name="org.apache.spark.sql.types.StructType">StructType</span></span>, <span name="logging">logging: <span class="extype" name="scala.Boolean">Boolean</span></span>)</span><span class="result">: <span class="extype" name="org.apache.spark.sql.types.StructType">StructType</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@transformSchema(schema:org.apache.spark.sql.types.StructType,logging:Boolean):org.apache.spark.sql.types.StructType" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>PipelineStage</dd><dt>Annotations</dt><dd>
+                <span class="name">@DeveloperApi</span><span class="args">()</span>
+              
+        </dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#uid" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="uid:String"></a>
+      <a id="uid:String"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">uid</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@uid:String" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a> → Identifiable</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNParams#unwrapVectorAsNecessary" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="unwrapVectorAsNecessary(colType:org.apache.spark.sql.types.DataType):(org.apache.spark.sql.Row,Int)=&gt;Any"></a>
+      <a id="unwrapVectorAsNecessary(DataType):(Row,Int)⇒Any"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">unwrapVectorAsNecessary</span><span class="params">(<span name="colType">colType: <span class="extype" name="org.apache.spark.sql.types.DataType">DataType</span></span>)</span><span class="result">: (<span class="extype" name="org.apache.spark.sql.Row">Row</span>, <span class="extype" name="scala.Int">Int</span>) ⇒ <span class="extype" name="scala.Any">Any</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@unwrapVectorAsNecessary(colType:org.apache.spark.sql.types.DataType):(org.apache.spark.sql.Row,Int)=&gt;Any" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd><dt>Definition Classes</dt><dd>NNParams</dd></dl></div>
+    </li><li name="org.apache.spark.ml.VectorCompatibility#validVectorTypes" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="validVectorTypes:Seq[org.apache.spark.sql.types.UserDefinedType[_&gt;:org.apache.spark.mllib.linalg.Vectorwithorg.apache.spark.ml.linalg.Vector&lt;:Serializable]{defsqlType:org.apache.spark.sql.types.StructType}]"></a>
+      <a id="validVectorTypes:Seq[UserDefinedType[_&gt;:VectorwithVector&lt;:Serializable]{defsqlType:org.apache.spark.sql.types.StructType}]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name">validVectorTypes</span><span class="result">: <span class="extype" name="scala.collection.Seq">Seq</span>[<span class="extype" name="org.apache.spark.sql.types.UserDefinedType">UserDefinedType</span>[_ &gt;: <span class="extype" name="org.apache.spark.mllib.linalg.Vector">Vector</span> with <span class="extype" name="org.apache.spark.ml.linalg.Vector">Vector</span> &lt;: <span class="extype" name="scala.Serializable">Serializable</span>] { def sqlType: org.apache.spark.sql.types.StructType }]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@validVectorTypes:Seq[org.apache.spark.sql.types.UserDefinedType[_&gt;:org.apache.spark.mllib.linalg.Vectorwithorg.apache.spark.ml.linalg.Vector&lt;:Serializable]{defsqlType:org.apache.spark.sql.types.StructType}]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>VectorCompatibility</dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#validateParams" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="validateParams(schema:org.apache.spark.sql.types.StructType):Unit"></a>
+      <a id="validateParams(StructType):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">validateParams</span><span class="params">(<span name="schema">schema: <span class="extype" name="org.apache.spark.sql.types.StructType">StructType</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@validateParams(schema:org.apache.spark.sql.types.StructType):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#validationBatchSize" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="validationBatchSize:Int"></a>
+      <a id="validationBatchSize:Int"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">validationBatchSize</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@validationBatchSize:Int" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#validationDF" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="validationDF:org.apache.spark.sql.DataFrame"></a>
+      <a id="validationDF:DataFrame"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">validationDF</span><span class="result">: <span class="extype" name="org.apache.spark.sql.DataFrame">DataFrame</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@validationDF:org.apache.spark.sql.DataFrame" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#validationMethods" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="validationMethods:Array[com.intel.analytics.bigdl.optim.ValidationMethod[T]]"></a>
+      <a id="validationMethods:Array[ValidationMethod[T]]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">validationMethods</span><span class="result">: <span class="extype" name="scala.Array">Array</span>[<span class="extype" name="com.intel.analytics.bigdl.optim.ValidationMethod">ValidationMethod</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@validationMethods:Array[com.intel.analytics.bigdl.optim.ValidationMethod[T]]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#validationTrigger" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="validationTrigger:Option[com.intel.analytics.bigdl.optim.Trigger]"></a>
+      <a id="validationTrigger:Option[Trigger]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">var</span>
+      </span>
+      <span class="symbol">
+        <span class="name">validationTrigger</span><span class="result">: <span class="extype" name="scala.Option">Option</span>[<span class="extype" name="com.intel.analytics.bigdl.optim.Trigger">Trigger</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@validationTrigger:Option[com.intel.analytics.bigdl.optim.Trigger]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait():Unit"></a>
+      <a id="wait():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@wait():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long,x$2:Int):Unit"></a>
+      <a id="wait(Long,Int):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>, <span name="arg1">arg1: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@wait(x$1:Long,x$2:Int):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="scala.AnyRef#wait" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wait(x$1:Long):Unit"></a>
+      <a id="wait(Long):Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wait</span><span class="params">(<span name="arg0">arg0: <span class="extype" name="scala.Long">Long</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@wait(x$1:Long):Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef</dd><dt>Annotations</dt><dd>
+                <span class="name">@throws</span><span class="args">(<span>
+      
+      <span class="defval" name="classOf[java.lang.InterruptedException]">...</span>
+    </span>)</span>
+              
+        </dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#wrapBigDLModel" visbl="prt" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="wrapBigDLModel(m:com.intel.analytics.bigdl.Module[T]):com.intel.analytics.zoo.pipeline.nnframes.NNModel[T]"></a>
+      <a id="wrapBigDLModel(Module[T]):NNModel[T]"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">wrapBigDLModel</span><span class="params">(<span name="m">m: <a href="../../../bigdl/package.html#Module[T]=com.intel.analytics.bigdl.nn.abstractnn.AbstractModule[com.intel.analytics.bigdl.nn.abstractnn.Activity,com.intel.analytics.bigdl.nn.abstractnn.Activity,T]" class="extmbr" name="com.intel.analytics.bigdl.Module">Module</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</span>)</span><span class="result">: <a href="NNModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNModel">NNModel</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@wrapBigDLModel(m:com.intel.analytics.bigdl.Module[T]):com.intel.analytics.zoo.pipeline.nnframes.NNModel[T]" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">sub classes can extend the method and return required model for different transform tasks
+</p><div class="fullcomment"><div class="comment cmt"><p>sub classes can extend the method and return required model for different transform tasks
+</p></div><dl class="attributes block"> <dt>Attributes</dt><dd>protected </dd></dl></div>
+    </li></ol>
+            </div>
+
+        
+
+        <div id="values" class="values members">
+              <h3>Deprecated Value Members</h3>
+              <ol><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#learningRate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="learningRate:org.apache.spark.ml.param.DoubleParam"></a>
+      <a id="learningRate:DoubleParam"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.4.0) Please set the learning rate with optimMethod directly">learningRate</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.DoubleParam">DoubleParam</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@learningRate:org.apache.spark.ml.param.DoubleParam" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">learning rate for the optimizer in the NNEstimator.</p><div class="fullcomment"><div class="comment cmt"><p>learning rate for the optimizer in the NNEstimator.
+Default: 0.001
+:: deprecated, please set the learning rate with optimMethod directly.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.4.0)</i> Please set the learning rate with optimMethod directly</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams#learningRateDecay" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="learningRateDecay:org.apache.spark.ml.param.DoubleParam"></a>
+      <a id="learningRateDecay:DoubleParam"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier">final </span>
+        <span class="kind">val</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.4.0) Please set the learning rate decay with optimMethod directly">learningRateDecay</span><span class="result">: <span class="extype" name="org.apache.spark.ml.param.DoubleParam">DoubleParam</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@learningRateDecay:org.apache.spark.ml.param.DoubleParam" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">learning rate decay for each iteration.</p><div class="fullcomment"><div class="comment cmt"><p>learning rate decay for each iteration.
+Default: 0
+:: deprecated, please set the learning rate decay with optimMethod directly.
+</p></div><dl class="attributes block"> <dt>Definition Classes</dt><dd>TrainingParams</dd><dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.4.0)</i> Please set the learning rate decay with optimMethod directly</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setLearningRate" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setLearningRate(value:Double):NNEstimator.this.type"></a>
+      <a id="setLearningRate(Double):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.4.0) Please set with optimMethod directly">setLearningRate</span><span class="params">(<span name="value">value: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setLearningRate(value:Double):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">:: deprecated, please set the learning rate with optimMethod directly.</p><div class="fullcomment"><div class="comment cmt"><p>:: deprecated, please set the learning rate with optimMethod directly.
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.4.0)</i> Please set with optimMethod directly</p></dd></dl></div>
+    </li><li name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator#setLearningRateDecay" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="setLearningRateDecay(value:Double):NNEstimator.this.type"></a>
+      <a id="setLearningRateDecay(Double):NNEstimator.this.type"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name deprecated" title="Deprecated: (Since version 0.4.0) Please set with optimMethod directly.">setLearningRateDecay</span><span class="params">(<span name="value">value: <span class="extype" name="scala.Double">Double</span></span>)</span><span class="result">: <a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>.this.type</span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.pipeline.nnframes.NNEstimator@setLearningRateDecay(value:Double):NNEstimator.this.type" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">:: deprecated, please set with optimMethod directly.</p><div class="fullcomment"><div class="comment cmt"><p>:: deprecated, please set with optimMethod directly.
+</p></div><dl class="attributes block"> <dt>Annotations</dt><dd>
+                <span class="name">@deprecated</span>
+              
+        </dd><dt>Deprecated</dt><dd class="cmt"><p><i>(Since version 0.4.0)</i> Please set with optimMethod directly.</p></dd></dl></div>
+    </li></ol>
+            </div>
+        </div>
+
+        <div id="inheritedMembers">
+        <div class="parent" name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.TrainingParams">TrainingParams</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</h3>
+            </div><div class="parent" name="com.intel.analytics.zoo.pipeline.nnframes.NNParams">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNParams">NNParams</span>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]</h3>
+            </div><div class="parent" name="org.apache.spark.ml.VectorCompatibility">
+              <h3>Inherited from <span class="extype" name="org.apache.spark.ml.VectorCompatibility">VectorCompatibility</span></h3>
+            </div><div class="parent" name="com.intel.analytics.zoo.pipeline.nnframes.HasBatchSize">
+              <h3>Inherited from <span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.HasBatchSize">HasBatchSize</span></h3>
+            </div><div class="parent" name="org.apache.spark.ml.adapter.HasPredictionCol">
+              <h3>Inherited from <span class="extype" name="org.apache.spark.ml.adapter.HasPredictionCol">HasPredictionCol</span></h3>
+            </div><div class="parent" name="org.apache.spark.ml.param.shared.HasPredictionCol">
+              <h3>Inherited from <span class="extype" name="org.apache.spark.ml.param.shared.HasPredictionCol">HasPredictionCol</span></h3>
+            </div><div class="parent" name="org.apache.spark.ml.adapter.HasFeaturesCol">
+              <h3>Inherited from <span class="extype" name="org.apache.spark.ml.adapter.HasFeaturesCol">HasFeaturesCol</span></h3>
+            </div><div class="parent" name="org.apache.spark.ml.param.shared.HasFeaturesCol">
+              <h3>Inherited from <span class="extype" name="org.apache.spark.ml.param.shared.HasFeaturesCol">HasFeaturesCol</span></h3>
+            </div><div class="parent" name="org.apache.spark.ml.DLEstimatorBase">
+              <h3>Inherited from <span class="extype" name="org.apache.spark.ml.DLEstimatorBase">DLEstimatorBase</span>[<a href="" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator">NNEstimator</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>], <a href="NNModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNModel">NNModel</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]]</h3>
+            </div><div class="parent" name="org.apache.spark.ml.param.shared.HasLabelCol">
+              <h3>Inherited from <span class="extype" name="org.apache.spark.ml.param.shared.HasLabelCol">HasLabelCol</span></h3>
+            </div><div class="parent" name="org.apache.spark.ml.Estimator">
+              <h3>Inherited from <span class="extype" name="org.apache.spark.ml.Estimator">Estimator</span>[<a href="NNModel.html" class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNModel">NNModel</a>[<span class="extype" name="com.intel.analytics.zoo.pipeline.nnframes.NNEstimator.T">T</span>]]</h3>
+            </div><div class="parent" name="org.apache.spark.ml.PipelineStage">
+              <h3>Inherited from <span class="extype" name="org.apache.spark.ml.PipelineStage">PipelineStage</span></h3>
+            </div><div class="parent" name="org.apache.spark.internal.Logging">
+              <h3>Inherited from <span class="extype" name="org.apache.spark.internal.Logging">Logging</span></h3>
+            </div><div class="parent" name="org.apache.spark.ml.param.Params">
+              <h3>Inherited from <span class="extype" name="org.apache.spark.ml.param.Params">Params</span></h3>
+            </div><div class="parent" name="scala.Serializable">
+              <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="java.io.Serializable">
+              <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="org.apache.spark.ml.util.Identifiable">
+              <h3>Inherited from <span class="extype" name="org.apache.spark.ml.util.Identifiable">Identifiable</span></h3>
+            </div><div class="parent" name="scala.AnyRef">
+              <h3>Inherited from <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></h3>
+            </div><div class="parent" name="scala.Any">
+              <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
+            </div>
+        
+        </div>
+
+        <div id="groupedMembers">
+        <div class="group" name="Ungrouped">
+              <h3>Ungrouped</h3>
+              
+            </div>
+        </div>
+
+      </div>
+
+      <div id="tooltip"></div>
+
+      <div id="footer">  </div>
+
+
+    </body>
+      </html>
