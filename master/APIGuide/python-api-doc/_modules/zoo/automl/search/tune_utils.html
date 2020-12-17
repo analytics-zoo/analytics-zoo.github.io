@@ -1,0 +1,248 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.automl.search.tune_utils &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../search.html" accesskey="U">zoo.automl.search</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.automl.search.tune_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="c1"># Copyright 2017 The Ray Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#  http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+
+<span class="c1"># This file is adapted from</span>
+<span class="c1"># https://github.com/ray-project/ray/blob/master/python/ray/tune/suggest/__init__.py</span>
+<span class="c1"># https://github.com/ray-project/ray/blob/master/python/ray/tune/schedulers/__init__.py</span>
+
+
+<span class="kn">from</span> <span class="nn">ray.tune.suggest.basic_variant</span> <span class="kn">import</span> <span class="n">BasicVariantGenerator</span>
+
+<span class="kn">from</span> <span class="nn">ray.tune.schedulers.trial_scheduler</span> <span class="kn">import</span> <span class="n">FIFOScheduler</span>
+<span class="kn">from</span> <span class="nn">ray.tune.schedulers.hyperband</span> <span class="kn">import</span> <span class="n">HyperBandScheduler</span>
+<span class="kn">from</span> <span class="nn">ray.tune.schedulers.hb_bohb</span> <span class="kn">import</span> <span class="n">HyperBandForBOHB</span>
+<span class="kn">from</span> <span class="nn">ray.tune.schedulers.async_hyperband</span> <span class="kn">import</span> <span class="n">AsyncHyperBandScheduler</span>
+<span class="kn">from</span> <span class="nn">ray.tune.schedulers.median_stopping_rule</span> <span class="kn">import</span> <span class="n">MedianStoppingRule</span>
+<span class="kn">from</span> <span class="nn">ray.tune.schedulers.pbt</span> <span class="kn">import</span> <span class="n">PopulationBasedTraining</span>
+
+
+<span class="c1"># Shim Instantiation is supported after ray 1.0.0. Therefore create_searcher and create_scheduler</span>
+<span class="c1"># should be removed after ray 1.0.0 is supported.</span>
+<div class="viewcode-block" id="create_searcher"><a class="viewcode-back" href="../../../../zoo.automl.search.html#zoo.automl.search.tune_utils.create_searcher">[docs]</a><span class="k">def</span> <span class="nf">create_searcher</span><span class="p">(</span>
+        <span class="n">search_alg</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Instantiate a search algorithm based on the given string.</span>
+
+<span class="sd">    This is useful for swapping between different search algorithms.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        search_alg (str): The search algorithm to use.</span>
+<span class="sd">        metric (str): The training result objective value attribute. Stopping</span>
+<span class="sd">            procedures will use this attribute.</span>
+<span class="sd">        mode (str): One of {min, max}. Determines whether objective is</span>
+<span class="sd">            minimizing or maximizing the metric attribute.</span>
+<span class="sd">        **kwargs: Additional parameters.</span>
+<span class="sd">            These keyword arguments will be passed to the initialization</span>
+<span class="sd">            function of the chosen class.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        ray.tune.suggest.Searcher: The search algorithm.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_import_variant_generator</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">BasicVariantGenerator</span>
+
+    <span class="k">def</span> <span class="nf">_import_ax_search</span><span class="p">():</span>
+        <span class="kn">from</span> <span class="nn">ray.tune.suggest.ax</span> <span class="kn">import</span> <span class="n">AxSearch</span>
+        <span class="k">return</span> <span class="n">AxSearch</span>
+
+    <span class="k">def</span> <span class="nf">_import_dragonfly_search</span><span class="p">():</span>
+        <span class="kn">from</span> <span class="nn">ray.tune.suggest.dragonfly</span> <span class="kn">import</span> <span class="n">DragonflySearch</span>
+        <span class="k">return</span> <span class="n">DragonflySearch</span>
+
+    <span class="k">def</span> <span class="nf">_import_skopt_search</span><span class="p">():</span>
+        <span class="kn">from</span> <span class="nn">ray.tune.suggest.skopt</span> <span class="kn">import</span> <span class="n">SkOptSearch</span>
+        <span class="k">return</span> <span class="n">SkOptSearch</span>
+
+    <span class="k">def</span> <span class="nf">_import_hyperopt_search</span><span class="p">():</span>
+        <span class="kn">from</span> <span class="nn">ray.tune.suggest.hyperopt</span> <span class="kn">import</span> <span class="n">HyperOptSearch</span>
+        <span class="k">return</span> <span class="n">HyperOptSearch</span>
+
+    <span class="k">def</span> <span class="nf">_import_bayesopt_search</span><span class="p">():</span>
+        <span class="kn">from</span> <span class="nn">ray.tune.suggest.bayesopt</span> <span class="kn">import</span> <span class="n">BayesOptSearch</span>
+        <span class="k">return</span> <span class="n">BayesOptSearch</span>
+
+    <span class="k">def</span> <span class="nf">_import_bohb_search</span><span class="p">():</span>
+        <span class="kn">from</span> <span class="nn">ray.tune.suggest.bohb</span> <span class="kn">import</span> <span class="n">TuneBOHB</span>
+        <span class="k">return</span> <span class="n">TuneBOHB</span>
+
+    <span class="k">def</span> <span class="nf">_import_nevergrad_search</span><span class="p">():</span>
+        <span class="kn">from</span> <span class="nn">ray.tune.suggest.nevergrad</span> <span class="kn">import</span> <span class="n">NevergradSearch</span>
+        <span class="k">return</span> <span class="n">NevergradSearch</span>
+
+    <span class="k">def</span> <span class="nf">_import_zoopt_search</span><span class="p">():</span>
+        <span class="kn">from</span> <span class="nn">ray.tune.suggest.zoopt</span> <span class="kn">import</span> <span class="n">ZOOptSearch</span>
+        <span class="k">return</span> <span class="n">ZOOptSearch</span>
+
+    <span class="k">def</span> <span class="nf">_import_sigopt_search</span><span class="p">():</span>
+        <span class="kn">from</span> <span class="nn">ray.tune.suggest.sigopt</span> <span class="kn">import</span> <span class="n">SigOptSearch</span>
+        <span class="k">return</span> <span class="n">SigOptSearch</span>
+
+    <span class="n">SEARCH_ALG_IMPORT</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;variant_generator&quot;</span><span class="p">:</span> <span class="n">_import_variant_generator</span><span class="p">,</span>
+        <span class="s2">&quot;random&quot;</span><span class="p">:</span> <span class="n">_import_variant_generator</span><span class="p">,</span>
+        <span class="s2">&quot;ax&quot;</span><span class="p">:</span> <span class="n">_import_ax_search</span><span class="p">,</span>
+        <span class="s2">&quot;dragonfly&quot;</span><span class="p">:</span> <span class="n">_import_dragonfly_search</span><span class="p">,</span>
+        <span class="s2">&quot;skopt&quot;</span><span class="p">:</span> <span class="n">_import_skopt_search</span><span class="p">,</span>
+        <span class="s2">&quot;hyperopt&quot;</span><span class="p">:</span> <span class="n">_import_hyperopt_search</span><span class="p">,</span>
+        <span class="s2">&quot;bayesopt&quot;</span><span class="p">:</span> <span class="n">_import_bayesopt_search</span><span class="p">,</span>
+        <span class="s2">&quot;bohb&quot;</span><span class="p">:</span> <span class="n">_import_bohb_search</span><span class="p">,</span>
+        <span class="s2">&quot;nevergrad&quot;</span><span class="p">:</span> <span class="n">_import_nevergrad_search</span><span class="p">,</span>
+        <span class="s2">&quot;zoopt&quot;</span><span class="p">:</span> <span class="n">_import_zoopt_search</span><span class="p">,</span>
+        <span class="s2">&quot;sigopt&quot;</span><span class="p">:</span> <span class="n">_import_sigopt_search</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">search_alg</span> <span class="o">=</span> <span class="n">search_alg</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">search_alg</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SEARCH_ALG_IMPORT</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Search alg must be one of </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">SEARCH_ALG_IMPORT</span><span class="p">)</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Got: </span><span class="si">{</span><span class="n">search_alg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">SearcherClass</span> <span class="o">=</span> <span class="n">SEARCH_ALG_IMPORT</span><span class="p">[</span><span class="n">search_alg</span><span class="p">]()</span>
+    <span class="k">return</span> <span class="n">SearcherClass</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_scheduler"><a class="viewcode-back" href="../../../../zoo.automl.search.html#zoo.automl.search.tune_utils.create_scheduler">[docs]</a><span class="k">def</span> <span class="nf">create_scheduler</span><span class="p">(</span>
+        <span class="n">scheduler</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Instantiate a scheduler based on the given string.</span>
+
+<span class="sd">    This is useful for swapping between different schedulers.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        scheduler (str): The scheduler to use.</span>
+<span class="sd">        **kwargs: Scheduler parameters.</span>
+<span class="sd">            These keyword arguments will be passed to the initialization</span>
+<span class="sd">            function of the chosen scheduler.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        ray.tune.schedulers.trial_scheduler.TrialScheduler: The scheduler.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">SCHEDULER_IMPORT</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;fifo&quot;</span><span class="p">:</span> <span class="n">FIFOScheduler</span><span class="p">,</span>
+        <span class="s2">&quot;async_hyperband&quot;</span><span class="p">:</span> <span class="n">AsyncHyperBandScheduler</span><span class="p">,</span>
+        <span class="s2">&quot;asynchyperband&quot;</span><span class="p">:</span> <span class="n">AsyncHyperBandScheduler</span><span class="p">,</span>
+        <span class="s2">&quot;median_stopping_rule&quot;</span><span class="p">:</span> <span class="n">MedianStoppingRule</span><span class="p">,</span>
+        <span class="s2">&quot;medianstopping&quot;</span><span class="p">:</span> <span class="n">MedianStoppingRule</span><span class="p">,</span>
+        <span class="s2">&quot;hyperband&quot;</span><span class="p">:</span> <span class="n">HyperBandScheduler</span><span class="p">,</span>
+        <span class="s2">&quot;hb_bohb&quot;</span><span class="p">:</span> <span class="n">HyperBandForBOHB</span><span class="p">,</span>
+        <span class="s2">&quot;pbt&quot;</span><span class="p">:</span> <span class="n">PopulationBasedTraining</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">scheduler</span> <span class="o">=</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">scheduler</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SCHEDULER_IMPORT</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;scheduler must be one of </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">SCHEDULER_IMPORT</span><span class="p">)</span><span class="si">}</span><span class="s2">. &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Got: </span><span class="si">{</span><span class="n">scheduler</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">SchedulerClass</span> <span class="o">=</span> <span class="n">SCHEDULER_IMPORT</span><span class="p">[</span><span class="n">scheduler</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">SchedulerClass</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >Module code</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../search.html" >zoo.automl.search</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>

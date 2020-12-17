@@ -26,6 +26,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="zoo.pipeline.nnframes.html" title="zoo.pipeline.nnframes package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -42,8 +45,8 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.pipeline.inference package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-pipeline-inference-inference-model-module">zoo.pipeline.inference.inference_model module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li><a class="reference internal" href="#module-zoo.pipeline.inference.inference_model">zoo.pipeline.inference.inference_model module</a></li>
+<li><a class="reference internal" href="#module-zoo.pipeline.inference">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -86,11 +89,154 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-pipeline-inference-inference-model-module">
-<h2>zoo.pipeline.inference.inference_model module<a class="headerlink" href="#zoo-pipeline-inference-inference-model-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.pipeline.inference.inference_model">
+<span id="zoo-pipeline-inference-inference-model-module"></span><h2>zoo.pipeline.inference.inference_model module<a class="headerlink" href="#module-zoo.pipeline.inference.inference_model" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="zoo.pipeline.inference.inference_model.InferenceModel">
+<em class="property">class </em><code class="descclassname">zoo.pipeline.inference.inference_model.</code><code class="descname">InferenceModel</code><span class="sig-paren">(</span><em>supported_concurrent_num=1</em>, <em>bigdl_type='float'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/inference/inference_model.html#InferenceModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.inference.inference_model.InferenceModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">bigdl.util.common.JavaValue</span></code></p>
+<p>Model for thread-safe inference.
+To do inference, you need to first initiate an InferenceModel instance, then call
+load|load_caffe|load_openvino to load a pre-trained model, and finally call predict.</p>
+<p># Arguments
+supported_concurrent_num: Int. How many concurrent threads to invoke. Default is 1.</p>
+<dl class="method">
+<dt id="zoo.pipeline.inference.inference_model.InferenceModel.distributed_predict">
+<code class="descname">distributed_predict</code><span class="sig-paren">(</span><em>inputs</em>, <em>sc</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/inference/inference_model.html#InferenceModel.distributed_predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.inference.inference_model.InferenceModel.distributed_predict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.inference.inference_model.InferenceModel.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>model_path</em>, <em>weight_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/inference/inference_model.html#InferenceModel.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.inference.inference_model.InferenceModel.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a pre-trained Analytics Zoo or BigDL model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_path</strong> – String. The file path to the model.</li>
+<li><strong>weight_path</strong> – String. The file path to the weights if any. Default is None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.inference.inference_model.InferenceModel.load_bigdl">
+<code class="descname">load_bigdl</code><span class="sig-paren">(</span><em>model_path</em>, <em>weight_path=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/inference/inference_model.html#InferenceModel.load_bigdl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.inference.inference_model.InferenceModel.load_bigdl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a pre-trained Analytics Zoo or BigDL model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_path</strong> – String. The file path to the model.</li>
+<li><strong>weight_path</strong> – String. The file path to the weights if any. Default is None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.inference.inference_model.InferenceModel.load_caffe">
+<code class="descname">load_caffe</code><span class="sig-paren">(</span><em>model_path</em>, <em>weight_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/inference/inference_model.html#InferenceModel.load_caffe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.inference.inference_model.InferenceModel.load_caffe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a pre-trained Caffe model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_path</strong> – String. The file path to the prototxt file.</li>
+<li><strong>weight_path</strong> – String. The file path to the Caffe model.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.inference.inference_model.InferenceModel.load_openvino">
+<code class="descname">load_openvino</code><span class="sig-paren">(</span><em>model_path</em>, <em>weight_path</em>, <em>batch_size=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/inference/inference_model.html#InferenceModel.load_openvino"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.inference.inference_model.InferenceModel.load_openvino" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an OpenVINI IR.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_path</strong> – String. The file path to the OpenVINO IR xml file.</li>
+<li><strong>weight_path</strong> – String. The file path to the OpenVINO IR bin file.</li>
+<li><strong>batch_size</strong> – Int. Set batch Size, default is 0 (use default batch size).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.inference.inference_model.InferenceModel.load_tensorflow">
+<code class="descname">load_tensorflow</code><span class="sig-paren">(</span><em>model_path</em>, <em>model_type</em>, <em>inputs</em>, <em>outputs</em>, <em>intra_op_parallelism_threads=1</em>, <em>inter_op_parallelism_threads=1</em>, <em>use_per_session_threads=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/inference/inference_model.html#InferenceModel.load_tensorflow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.inference.inference_model.InferenceModel.load_tensorflow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a TensorFlow model using tensorflow.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_path</strong> – String. The file path to the TensorFlow model.</li>
+<li><strong>model_type</strong> – String. The type of the tensorflow model file: “frozenModel” or</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>“savedModel”.
+:param inputs: Array[String]. the inputs of the model.
+inputs outputs: Array[String]. the outputs of the model.
+:param intra_op_parallelism_threads: Int. The number of intraOpParallelismThreads.
+Default is 1.
+:param inter_op_parallelism_threads: Int. The number of interOpParallelismThreads.
+Default is 1.
+:param use_per_session_threads: Boolean. Whether to use perSessionThreads. Default is True.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.inference.inference_model.InferenceModel.load_torch">
+<code class="descname">load_torch</code><span class="sig-paren">(</span><em>model_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/inference/inference_model.html#InferenceModel.load_torch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.inference.inference_model.InferenceModel.load_torch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a pytorch model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_path</strong> – the path of saved pytorch model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="zoo.pipeline.inference.inference_model.InferenceModel.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>inputs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/pipeline/inference/inference_model.html#InferenceModel.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.pipeline.inference.inference_model.InferenceModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do prediction on inputs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inputs</strong> – A numpy array or a list of numpy arrays or JTensor or a list of JTensors.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-zoo.pipeline.inference">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.pipeline.inference" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -106,6 +252,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.pipeline.nnframes.html" title="zoo.pipeline.nnframes package"
              >next</a> |</li>

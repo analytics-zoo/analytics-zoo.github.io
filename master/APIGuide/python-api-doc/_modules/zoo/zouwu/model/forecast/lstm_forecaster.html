@@ -1,0 +1,157 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>zoo.zouwu.model.forecast.lstm_forecaster &#8212; analytics-zoo  documentation</title>
+    <link rel="stylesheet" href="../../../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for zoo.zouwu.model.forecast.lstm_forecaster</h1><div class="highlight"><pre>
+<span></span><span class="c1">#</span>
+<span class="c1"># Copyright 2018 Analytics Zoo Authors.</span>
+<span class="c1">#</span>
+<span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="c1"># you may not use this file except in compliance with the License.</span>
+<span class="c1"># You may obtain a copy of the License at</span>
+<span class="c1">#</span>
+<span class="c1">#     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="c1">#</span>
+<span class="c1"># Unless required by applicable law or agreed to in writing, software</span>
+<span class="c1"># distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="c1"># WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="c1"># See the License for the specific language governing permissions and</span>
+<span class="c1"># limitations under the License.</span>
+<span class="c1">#</span>
+
+<span class="kn">from</span> <span class="nn">zoo.automl.model.VanillaLSTM</span> <span class="kn">import</span> <span class="n">VanillaLSTM</span> <span class="k">as</span> <span class="n">LSTMKerasModel</span>
+<span class="kn">from</span> <span class="nn">zoo.zouwu.model.forecast.tfpark_forecaster</span> <span class="kn">import</span> <span class="n">TFParkForecaster</span>
+
+
+<div class="viewcode-block" id="LSTMForecaster"><a class="viewcode-back" href="../../../../../zoo.zouwu.model.forecast.html#zoo.zouwu.model.forecast.lstm_forecaster.LSTMForecaster">[docs]</a><span class="k">class</span> <span class="nc">LSTMForecaster</span><span class="p">(</span><span class="n">TFParkForecaster</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vanilla LSTM Forecaster</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">target_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">feature_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">lstm_units</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+                 <span class="n">dropouts</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                 <span class="n">metric</span><span class="o">=</span><span class="s2">&quot;mean_squared_error&quot;</span><span class="p">,</span>
+                 <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+                 <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;mse&quot;</span><span class="p">,</span>
+                 <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;Adam&quot;</span><span class="p">,</span>
+                 <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build a LSTM Forecast Model.</span>
+
+<span class="sd">        :param target_dim: dimension of model output</span>
+<span class="sd">        :param feature_dim: dimension of input feature</span>
+<span class="sd">        :param lstm_units: num of units for LSTM layers.</span>
+<span class="sd">            Positive int or a list/tuple of positive ints.</span>
+<span class="sd">        :param dropouts: dropout for the dropout layers. The same dropout rate will be set to all</span>
+<span class="sd">            layers if dropouts is a float while lstm_units has multiple elements.</span>
+<span class="sd">        :param metric: the metric for validation and evaluation. For regression, we support</span>
+<span class="sd">            Mean Squared Error: (&quot;mean_squared_error&quot;, &quot;MSE&quot; or &quot;mse&quot;),</span>
+<span class="sd">            Mean Absolute Error: (&quot;mean_absolute_error&quot;,&quot;MAE&quot; or &quot;mae&quot;),</span>
+<span class="sd">            Mean Absolute Percentage Error: (&quot;mean_absolute_percentage_error&quot;, &quot;MAPE&quot;, &quot;mape&quot;)</span>
+<span class="sd">            Cosine Proximity: (&quot;cosine_proximity&quot;, &quot;cosine&quot;)</span>
+<span class="sd">        :param lr: learning rate</span>
+<span class="sd">        :param loss: the target function you want to optimize on. Defaults to mse.</span>
+<span class="sd">        :param optimizer: the optimizer used for training. Defaults to Adam.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_optional_config</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;input_dim&quot;</span><span class="p">:</span> <span class="n">feature_dim</span><span class="p">,</span>
+            <span class="s2">&quot;output_dim&quot;</span><span class="p">:</span> <span class="n">target_dim</span><span class="p">,</span>
+            <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="n">lr</span><span class="p">,</span>
+            <span class="s2">&quot;lstm_units&quot;</span><span class="p">:</span> <span class="n">lstm_units</span><span class="p">,</span>
+            <span class="s2">&quot;dropouts&quot;</span><span class="p">:</span> <span class="n">dropouts</span><span class="p">,</span>
+            <span class="s2">&quot;optim&quot;</span><span class="p">:</span> <span class="n">optimizer</span><span class="p">,</span>
+            <span class="s2">&quot;metric&quot;</span><span class="p">:</span> <span class="n">metric</span><span class="p">,</span>
+            <span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">loss</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">internal</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build LSTM Model in tf.keras</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># build model with TF/Keras</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">internal</span> <span class="o">=</span> <span class="n">LSTMKerasModel</span><span class="p">(</span><span class="n">check_optional_config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">check_optional_config</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">internal</span><span class="o">.</span><span class="n">model_creator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../../index.html">analytics-zoo  documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Intel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.4.
+    </div>
+  </body>
+</html>
