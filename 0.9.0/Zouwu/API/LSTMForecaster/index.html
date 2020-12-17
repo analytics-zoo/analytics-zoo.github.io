@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>LSTMForecaster - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "LSTMForecaster", url: "#lstmforecaster", children: [
+              {title: "Introduction", url: "#introduction" },
+              {title: "Method", url: "#method" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>LSTMForecaster</strong></h1>
+    <hr>
+    <h1 id="lstmforecaster">LSTMForecaster</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Long short-term memory(LSTM) is a special type of recurrent neural network(RNN). We implement the basic version of LSTM - VanillaLSTM for this forecaster for time-series forecasting task. It has two LSTM layers, two dropout layer and a dense layer. LSTMForecaster is derived from tfpark.KerasMode, and can use all methods of KerasModel. Refer to <a href="../../../APIGuide/TFPark/model/">tfpark.KerasModel API Doc</a> for details.</p>
+<p>For the detailed algorithm description, please refer to <a href="../../Algorithm/LSTMAlgorithm/">here</a>.</p>
+<h2 id="method">Method</h2>
+<h3 id="arguments">Arguments</h3>
+<ul>
+<li><strong><code>target_dim</code></strong>: Specify the number of variables we want to forecast. i.e. the the dimension of model output feature. This value defaults to 1.</li>
+<li><strong><code>feature_dim</code></strong>: Specify the number of variables we have in the input data. i.e. the the dimension of model input feature. This value defaults to 1.</li>
+<li><strong><code>lstm_units</code></strong>: Specify the dimensionality of the output space for LSTM layers. This value defaults to (16, 8). </li>
+<li><strong><code>dropouts</code></strong>: Specify the fraction of the input units to drop for dropout layers. This value defaults to 0.2. Note that The same dropout rate will be set to all
+            layers if dropouts is one float value while lstm_units has multiple elements.</li>
+<li><strong><code>metric</code></strong>: Specify the metric for validation and evaluation. This value defaults to MSE.</li>
+<li><strong><code>lr</code></strong>: Specify the learning rate. This value defaults to 0.001.</li>
+<li><strong><code>loss</code></strong>: Specify the target function you want to optimize on. This value defaults to MSE.</li>
+<li><strong><code>optimizer</code></strong>: Specify the optimizer used for training. This value defaults to Adam.</li>
+</ul>
+<h3 id="__init__">__init__</h3>
+<pre><code class="python">LSTMForecaster(target_dim=1,
+               feature_dim=1,
+               lstm_units=(16, 8),
+               dropouts=0.2,
+               metric=&quot;mean_squared_error&quot;,
+               lr=0.001,
+               loss=&quot;mse&quot;,
+               optimizer=&quot;Adam&quot;,
+               )
+</code></pre>
+
+<h3 id="fit-evaluate-predict">fit, evaluate, predict</h3>
+<p>Refer to <strong>fit</strong>, <strong>evaluate</strong>, <strong>predict</strong> defined in <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/APIGuide/TFPark/model.md">tfpark.KerasModel API Doc</a></p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

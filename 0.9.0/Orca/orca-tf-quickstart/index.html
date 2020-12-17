@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>TensorFlow Quickstart - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Step 0: Prepare Environment", url: "#step-0-prepare-environment", children: [
+          ]},
+          {title: "Step 1: Init Orca Context", url: "#step-1-init-orca-context", children: [
+          ]},
+          {title: "Step 2: Define Model, Loss Function and Metrics", url: "#step-2-define-model-loss-function-and-metrics", children: [
+          ]},
+          {title: "Step 3: Fit with Orca TensorFlow Estimator", url: "#step-3-fit-with-orca-tensorflow-estimator", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>TensorFlow Quickstart</strong></h1>
+    <hr>
+    <p><strong>In this guide we’ll show you how to organize your TensorFlow code into Orca in 3 steps.</strong></p>
+<p>Scaling your TensorFlow applications with Orca makes your code:</p>
+<ul>
+<li>Well-organized and flexible</li>
+<li>Easier to reproduce</li>
+<li>Able to perform distributed training without changing your model</li>
+</ul>
+<h3 id="step-0-prepare-environment"><strong>Step 0: Prepare Environment</strong></h3>
+<p>We recommend you to use <a href="https://www.anaconda.com/distribution/#linux">Anaconda</a> to prepare the environments, especially if you want to run on a yarn cluster (yarn-client mode only).</p>
+<p>Download and install latest analytics-zoo whl by the following instructions <a href="../../PythonUserGuide/install/#install-the-latest-nightly-build-wheels-for-pip">here</a>.</p>
+<p><strong>Note:</strong> Conda environment is required to run on Yarn, but not strictly necessary for running on local.</p>
+<pre><code class="bash">conda create -n zoo python=3.7 # zoo is conda enviroment name, you can set another name you like.
+conda activate zoo
+pip install analytics_zoo-${VERSION}-${TIMESTAMP}-py2.py3-none-${OS}_x86_64.whl
+pip install tensorflow==1.15.0
+pip install psutil
+</code></pre>
+
+<h3 id="step-1-init-orca-context"><strong>Step 1: Init Orca Context</strong></h3>
+<pre><code class="python">from zoo.orca import init_orca_context, stop_orca_context
+
+# run in local mode
+init_orca_context(cluster_mode=&quot;local&quot;, cores=4)
+
+# run in yarn client mode
+init_orca_context(cluster_mode=&quot;yarn-client&quot;, num_nodes=2, cores=2, driver_memory=&quot;6g&quot;)
+</code></pre>
+
+<p><strong>Note:</strong> You should <code>export HADOOP_CONF_DIR=/path/to/hadoop/conf/dir</code>.</p>
+<p>View <a href="../context">Orca Context</a> for more details.</p>
+<h3 id="step-2-define-model-loss-function-and-metrics"><strong>Step 2: Define Model, Loss Function and Metrics</strong></h3>
+<ul>
+<li>For Keras Users</li>
+</ul>
+<pre><code class="python">import tensorflow as tf
+
+model = tf.keras.Sequential(
+    [tf.keras.layers.Conv2D(20, kernel_size=(5, 5), strides=(1, 1), activation='tanh',
+                            input_shape=(28, 28, 1), padding='valid'),
+     tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='valid'),
+     tf.keras.layers.Conv2D(50, kernel_size=(5, 5), strides=(1, 1), activation='tanh',
+                            padding='valid'),
+     tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='valid'),
+     tf.keras.layers.Flatten(),
+     tf.keras.layers.Dense(500, activation='tanh'),
+     tf.keras.layers.Dense(10, activation='softmax'),
+    ]
+)
+
+model.compile(optimizer=tf.keras.optimizers.RMSprop(),
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+</code></pre>
+
+<ul>
+<li>For Graph Users</li>
+</ul>
+<pre><code class="python">import tensorflow as tf
+
+def accuracy(logits, labels):
+    predictions = tf.argmax(logits, axis=1, output_type=labels.dtype)
+    is_correct = tf.cast(tf.equal(predictions, labels), dtype=tf.float32)
+    return tf.reduce_mean(is_correct)
+
+def lenet(images):
+    with tf.variable_scope('LeNet', [images]):
+        net = tf.layers.conv2d(images, 32, (5, 5), activation=tf.nn.relu, name='conv1')
+        net = tf.layers.max_pooling2d(net, (2, 2), 2, name='pool1')
+        net = tf.layers.conv2d(net, 64, (5, 5), activation=tf.nn.relu, name='conv2')
+        net = tf.layers.max_pooling2d(net, (2, 2), 2, name='pool2')
+        net = tf.layers.flatten(net)
+        net = tf.layers.dense(net, 1024, activation=tf.nn.relu, name='fc3')
+        logits = tf.layers.dense(net, 10)
+        return logits
+
+# tensorflow inputs
+images = tf.placeholder(dtype=tf.float32, shape=(None, 28, 28, 1))
+# tensorflow labels
+labels = tf.placeholder(dtype=tf.int32, shape=(None,))
+
+logits = lenet(images)
+loss = tf.reduce_mean(tf.losses.sparse_softmax_cross_entropy(logits=logits, labels=labels))
+acc = accuracy(logits, labels)
+</code></pre>
+
+<h3 id="step-3-fit-with-orca-tensorflow-estimator"><strong>Step 3: Fit with Orca TensorFlow Estimator</strong></h3>
+<p>1)  Define the dataset in whatever way you want. Orca supports <a href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">tf.data.Dataset</a>, <a href="https://spark.apache.org/docs/latest/sql-programming-guide.html">Spark DataFrame</a> and <a href="../data">Orca SparkXShards</a>.</p>
+<pre><code class="python">def preprocess(x, y):
+    return tf.to_float(tf.reshape(x, (-1, 28, 28, 1))) / 255.0, y
+
+# get DataSet
+(train_feature, train_label), (val_feature, val_label) = tf.keras.datasets.mnist.load_data()
+
+# tf.data.Dataset.from_tensor_slices is for demo only. For production use, please use
+# file-based approach (e.g. tfrecord).
+train_dataset = tf.data.Dataset.from_tensor_slices((train_feature, train_label))
+train_dataset = train_dataset.map(preprocess)
+val_dataset = tf.data.Dataset.from_tensor_slices((val_feature, val_label))
+val_dataset = val_dataset.map(preprocess)
+</code></pre>
+
+<p>2)  Create an Estimator</p>
+<ul>
+<li>For Keras Users</li>
+</ul>
+<pre><code class="python">from zoo.orca.learn.tf.estimator import Estimator
+
+zoo_estimator = Estimator.from_keras(keras_model=model)
+</code></pre>
+
+<ul>
+<li>For Graph Users</li>
+</ul>
+<pre><code class="python">from zoo.orca.learn.tf.estimator import Estimator
+
+zoo_estimator = Estimator.from_graph(inputs=images, 
+                                     outputs=logits,
+                                     labels=labels,
+                                     loss=loss,
+                                     optimizer=tf.train.AdamOptimizer(),
+                                     metrics={&quot;acc&quot;: acc})
+</code></pre>
+
+<p>3)  Fit with Estimator</p>
+<pre><code class="python">zoo_estimator.fit(data=train_dataset,
+                  batch_size=320,
+                  epochs=100,
+                  validation_data=val_dataset)
+</code></pre>
+
+<p>4)  Evaluate with Estimator</p>
+<pre><code class="python">result = zoo_estimator.evaluate(val_dataset)
+print(result)
+</code></pre>
+
+<p>5)  Save Model</p>
+<ul>
+<li>For Keras Users</li>
+</ul>
+<pre><code class="python">zoo_estimator.save_keras_model(&quot;/tmp/mnist_keras.h5&quot;)
+</code></pre>
+
+<ul>
+<li>For Graph Users</li>
+</ul>
+<pre><code class="python">zoo_estimator.save_tf_checkpoint(&quot;/tmp/lenet/model&quot;)
+</code></pre>
+
+<p><strong>Note:</strong> You should call <code>stop_orca_context()</code> when your application finishes.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

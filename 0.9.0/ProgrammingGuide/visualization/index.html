@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Visualization - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Generating Summary", url: "#generating-summary", children: [
+              {title: "Generating summary in NNEstimator", url: "#generating-summary-in-nnestimator" },
+              {title: "Generating summary in Keras API", url: "#generating-summary-in-keras-api" },
+              {title: "Generating summary in KerasModel", url: "#generating-summary-in-kerasmodel" },
+              {title: "Generating summary in TFEstimator", url: "#generating-summary-in-tfestimator" },
+          ]},
+          {title: "Visualizing training with TensorBoard", url: "#visualizing-training-with-tensorboard", children: [
+              {title: "Installing TensorBoard", url: "#installing-tensorboard" },
+              {title: "Launching TensorBoard", url: "#launching-tensorboard" },
+              {title: "Visualizations in TensorBoard", url: "#visualizations-in-tensorboard" },
+              {title: "Retrieving summary from build-in API", url: "#retrieving-summary-from-build-in-api" },
+              {title: "Visualizing training with Jupyter notebook", url: "#visualizing-training-with-jupyter-notebook" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Visualization</strong></h1>
+    <hr>
+    <h2 id="generating-summary">Generating Summary</h2>
+<p>To enable visualization support, you need first properly configure to collect statistics summary in different stages of training. It should be done before the training starts. See examples below: </p>
+<h3 id="generating-summary-in-nnestimator">Generating summary in NNEstimator</h3>
+<p><strong>scala</strong></p>
+<pre><code class="scala">val estimator = NNEstimator(...)
+...
+val logdir = &quot;mylogdir&quot;
+val appName = &quot;myapp&quot;
+val trainSummary = TrainSummary(logdir, appName)
+val validationSummary = ValidationSummary(logdir, appName)
+estimator.setTrainSummary(trainSummary)
+estimator.setValidationSummary(validationSummary)
+...
+val nnModel = estimator.fit(...)
+</code></pre>
+
+<p><strong>python</strong></p>
+<pre><code class="python">from bigdl.optim.optimizer import TrainSummary, ValidationSummary
+
+estimator = NNEstimator(...)
+...
+log_dir = 'mylogdir'
+app_name = 'myapp'
+train_summary = TrainSummary(log_dir=log_dir, app_name=app_name)
+val_summary = ValidationSummary(log_dir=log_dir, app_name=app_name)
+estimator.set_train_summary(train_summary)
+estimator.set_val_summary(val_summary)
+...
+nnModel = estimator.fit(...)
+</code></pre>
+
+<h3 id="generating-summary-in-keras-api">Generating summary in Keras API</h3>
+<p><strong>scala</strong></p>
+<pre><code class="scala">val model = [...new keras model]
+...
+val logdir = &quot;mylogdir&quot;
+val appName = &quot;myapp&quot;
+model.setTensorBoard(logdir, appName)
+...
+model.fit(...)
+</code></pre>
+
+<p><strong>python</strong></p>
+<pre><code class="python">model = [...new keras model]
+...
+log_dir = 'mylogdir'
+app_name = 'myapp'
+model.set_tensorboard(log_dir, app_name)
+...
+model.fit(...)
+</code></pre>
+
+<h3 id="generating-summary-in-kerasmodel">Generating summary in KerasModel</h3>
+<p><strong>python</strong></p>
+<pre><code class="python">import tensorflow as tf
+from zoo.tfpark import KerasModel
+from bigdl.optim.optimizer import TrainSummary, ValidationSummary
+
+model = [...new keras model]
+model = KerasModel(model, model_dir=&quot;mylogdir&quot;)
+...
+model.fit(...)
+</code></pre>
+
+<h3 id="generating-summary-in-tfestimator">Generating summary in TFEstimator</h3>
+<p><strong>python</strong></p>
+<pre><code class="python">from zoo.tfpark.estimator import TFEstimator
+
+estimator = TFEstimator.from_model_fn(..., model_dir=&quot;mylogdir&quot;)
+...
+estimator.train(...)
+</code></pre>
+
+<p><strong>Notice</strong>:  </p>
+<p>If logdir is relative path, like <code>logdir/inpcetion_log</code>, the log will be stored in your local file system;  </p>
+<p>If logdir is absolute path started with <code>/</code>, like <code>/user/logdir/inpcetion_log</code>, the log will be stored in your local file system;  </p>
+<p>If logdir is URI started with <code>hdfs://[host:port]/</code>, like <code>hdfs://172.168.0.101:8020/user/logdir/inpcetion_log</code>, the log will be stored to HDFS;  </p>
+<hr />
+<h1 id="visualizing-training-with-tensorboard">Visualizing training with TensorBoard</h1>
+<p>With the summary info generated, we can then use <a href="https://pypi.python.org/pypi/tensorboard">TensorBoard</a> to visualize the behaviors of the training program.  </p>
+<h3 id="installing-tensorboard"><em>Installing TensorBoard</em></h3>
+<p>Prerequisites:</p>
+<ol>
+<li>Python version: 3.6 or 3.7</li>
+<li>Pip version &gt;= 9.0.1</li>
+<li>TensorFlow 1.13.1</li>
+</ol>
+<h3 id="launching-tensorboard"><em>Launching TensorBoard</em></h3>
+<h4 id="loading-from-local-directory">Loading from local directory</h4>
+<p>You can launch TensorBoard using the command below:</p>
+<pre><code class="bash">tensorboard --logdir=[logdir path]
+</code></pre>
+
+<p>After that, navigate to the TensorBoard dashboard using a browser. You can find the URL in the console output after TensorBoard is successfully launched; by default the URL is http://your_node:6006</p>
+<h4 id="loading-from-hdfs">Loading from HDFS</h4>
+<p>If the logdir is a HDFS folder, you need to configure the HDFS environment before running <code>tensorboard</code>.<br />
+Prerequisites:
+1. JDK &gt;= 1.8, Orcale JDK recommended 
+2. Hadoop &gt;= 2.7</p>
+<p>Set env before running <code>tensorboard</code>:</p>
+<pre><code>export JAVA_HOME=[your java home path]
+export HADOOP_HOME=[your hadoop home path]
+source ${HADOOP_HOME}/libexec/hadoop-config.sh
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${JAVA_HOME}/jre/lib/amd64/server
+</code></pre>
+
+<p>If the Hadoop cluster is in secure mode, also set the environment variable <code>KRB5CCNAME</code>:</p>
+<pre><code>export KRB5CCNAME={Path of Kerberos ticket cache file}
+</code></pre>
+
+<p>Run tensorboard, for example:</p>
+<pre><code>CLASSPATH=$(${HADOOP_HOME}/bin/hadoop classpath --glob) tensorboard --logdir=hdfs://[ip:port]/[hdfs path]
+</code></pre>
+
+<h3 id="visualizations-in-tensorboard"><em>Visualizations in TensorBoard</em></h3>
+<p>Within the TensorBoard dashboard, you will be able to read the visualizations of each run, including the “Loss” and “Throughput” curves under the SCALARS tab (as illustrated below):
+<img alt="Scalar" src="../../Image/tensorboard-scalar.png" /></p>
+<p>And “weights”, “bias”, “gradientWeights” and “gradientBias” under the DISTRIBUTIONS and HISTOGRAMS tabs (as illustrated below):
+<img alt="histogram1" src="../../Image/tensorboard-histo1.png" />
+<img alt="histogram2" src="../../Image/tensorboard-histo2.png" />
+As getting DISTRIBUTIONS and HISTOGRAMS may affect the training performance, so we don't enable this option by default. For example you want to fetch this parameters every 20 iteartions, you should call <code>trainSummary.setSummaryTrigger("Parameters", Trigger.severalIteration(20))</code>(<code>set_summary_trigger</code> in python API) before calling <code>setTrainSummary</code>.</p>
+<hr />
+<h2 id="retrieving-summary-from-build-in-api">Retrieving summary from build-in API</h2>
+<p>You can use provided API to retrieve the summaries into readable format, and export them to other tools for further analysis or visualization.</p>
+<p>Please note this approach does not work for KerasModel and TFEstimator.</p>
+<ul>
+<li><em><strong>Example: Reading summary info in NNestimator</strong></em> </li>
+</ul>
+<p><strong>scala</strong></p>
+<pre><code class="scala">val estimator = NNEstimator(...)
+...
+val logdir = &quot;mylogdir&quot;
+val appName = &quot;myapp&quot;
+val trainSummary = TrainSummary(logdir, appName)
+val validationSummary = ValidationSummary(logdir, appName)
+estimator.setTrainSummary(trainSummary)
+estimator.setValidationSummary(validationSummary)
+...
+val nnModel = estimator.fit(...)
+val trainLoss = trainSummary.readScalar(&quot;Loss&quot;)
+val valLoss = validationSummary.readScalar(&quot;Loss&quot;)
+</code></pre>
+
+<p><strong>python</strong></p>
+<pre><code class="python">from bigdl.optim.optimizer import TrainSummary, ValidationSummary
+
+estimator = NNEstimator(...)
+...
+log_dir = 'mylogdir'
+app_name = 'myapp'
+train_summary = TrainSummary(log_dir=log_dir, app_name=app_name)
+val_summary = ValidationSummary(log_dir=log_dir, app_name=app_name)
+estimator.set_train_summary(train_summary)
+estimator.set_val_summary(val_summary)
+...
+train_loss = np.array(train_summary.read_scalar('Loss'))
+val_loss = np.array(val_summary.read_scalar('Loss'))
+</code></pre>
+
+<ul>
+<li><em><strong>Example: Reading summary info in keras API</strong></em></li>
+</ul>
+<p><strong>scala</strong></p>
+<pre><code class="scala">val trainLoss = model.getTrainSummary(&quot;loss&quot;)
+val valLoss = model.getValidationSummary(&quot;loss&quot;)
+</code></pre>
+
+<p><strong>python</strong></p>
+<pre><code class="python">train_loss = model.get_train_summary('loss')
+val_loss = model.get_validation_summary('loss')
+</code></pre>
+
+<p>If your training job has finished and existed, but a new program wants retrieving summary with <code>readScalar</code>(<code>read_scalar</code> in python) API. 
+You can re-create the TrainingSummary and ValidationSummary with the same <code>logDir</code> and <code>appName</code> in your new job. </p>
+<hr />
+<h2 id="visualizing-training-with-jupyter-notebook">Visualizing training with Jupyter notebook</h2>
+<p>If you're using Jupyter notebook, you can also draw the training curves using popular plotting tools (e.g. matplotlib) and show the plots inline. </p>
+<p>First, retrieve the summaries as instructed in <a href="#retrieving-summary-from-build-in-api">Retrieve Summary</a>. The retrieved summary is a list of tuples. Each tuple is a recorded event in format (iteration count, recorded value, timestamp). You can convert it to numpy array or dataframe to plot it. See example below:  </p>
+<p>Please note this approach does not work for KerasModel and TFEstimator.</p>
+<ul>
+<li><em><strong>Example: Plot the train/validation loss in Jupyter</strong></em></li>
+</ul>
+<pre><code class="python">#retrieve train and validation summary object and read the loss data into ndarray's. 
+loss = np.array(train_summary.read_scalar(&quot;Loss&quot;))
+val_loss  = np.array(val_summary.read_scalar(&quot;Loss&quot;))
+
+#plot the train and validation curves
+# each event data is a tuple in form of (iteration_count, value, timestamp)
+plt.plot(loss[:,0],loss[:,1],label='train loss')
+plt.plot(val_loss[:,0],val_loss[:,1],label='val loss',color='green')
+plt.scatter(val_loss[:,0],val_loss[:,1],color='green')
+plt.legend();
+</code></pre>
+
+<p><img alt="jupyter" src="../../Image/jupyter.png" /></p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

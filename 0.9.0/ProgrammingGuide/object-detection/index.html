@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Object Detection API - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Object Detection examples", url: "#object-detection-examples", children: [
+          ]},
+          {title: "Download link", url: "#download-link", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Object Detection API</strong></h1>
+    <hr>
+    <p>Analytics Zoo provides a collection of pre-trained models for Object Detection. These models can be used for out-of-the-box inference if you are interested in categories already in the corresponding datasets. According to the business scenarios, users can embed the models locally, distributedly in Apache Spark, Apache Storm or Apache Flink.</p>
+<h2 id="object-detection-examples">Object Detection examples</h2>
+<p>Analytics Zoo provides two typical kind of pre-trained Object Detection models : <a href="https://arxiv.org/abs/1512.02325">SSD</a> and <a href="https://arxiv.org/abs/1506.01497">Faster-RCNN</a> on dataset <a href="http://host.robots.ox.ac.uk/pascal/VOC/">PASCAL</a> and <a href="http://cocodataset.org/#home">COCO</a>. For the usage of these models, please check below examples.</p>
+<p><strong>Scala</strong></p>
+<p><a href="https://github.com/intel-analytics/analytics-zoo/blob/master/zoo/src/main/scala/com/intel/analytics/zoo/examples/objectdetection/inference/Predict.scala">Scala example</a></p>
+<p>It's very easy to apply the model for inference with below code piece.</p>
+<pre><code class="scala">val model = ObjectDetector.load[Float](params.model)
+val data = ImageSet.read(params.image, sc, params.nPartition)
+val output = model.predictImageSet(data)
+</code></pre>
+
+<p>For preprocessors for Object Detection models, please check <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/zoo/src/main/scala/com/intel/analytics/zoo/models/image/objectdetection/ObjectDetectionConfig.scala">Object Detection Config</a></p>
+<p>Note: We expect the loaded images has 3 channels. If the channel is not 3(eg, gray/png images), please set <code>imageCodec</code> when loading images <code>ImageSet.read</code>. See https://analytics-zoo.github.io/0.1.0/#ProgrammingGuide/object-detection/#object-detection-examples</p>
+<p>Users can also do the inference directly using Analytics zoo.
+Sample code for SSD VGG on PASCAL as below:</p>
+<pre><code class="scala">val model = ObjectDetector.load[Float](params.model)
+val data = ImageSet.read(params.image, sc, params.nPartition)
+val preprocessor = Resize(300, 300) -&gt;
+                         ChannelNormalize(123f, 117f, 104f, 1f, 1f, 1f) -&gt;
+                         MatToTensor() -&gt; ImageFrameToSample()
+val output = model.predictImageset(data)
+</code></pre>
+
+<p><strong>Python</strong></p>
+<p><a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/objectdetection">Python example</a></p>
+<p>It's very easy to apply the model for inference with below code piece.</p>
+<pre><code>model = ObjectDetector.load_model(model_path)
+image_set = ImageSet.read(img_path, sc)
+output = model.predict_image_set(image_set)
+</code></pre>
+
+<p>User can also define his own configuration to do the inference with below code piece.</p>
+<pre><code>model = ObjectDetector.load_model(model_path)
+image_set = ImageSet.read(img_path, sc)
+preprocessing = ChainedPreprocessing(
+                [ImageResize(256, 256), ImageCenterCrop(224, 224),
+                ImageChannelNormalize(123.0, 117.0, 104.0), ImageMatToTensor(),
+                ImageSetToSample()])
+config = ImageConfigure(preprocessing)
+output = model.predict_image_set(image_set)
+</code></pre>
+
+<p>For preprocessors for Object Detection models, please check <a href="https://github.com/intel-analytics/zoo/blob/master/zoo/src/main/scala/com/intel/analytics/zoo/models/image/objectdetection/ObjectDetectionConfig.scala">Object Detection Config</a></p>
+<h2 id="download-link">Download link</h2>
+<p><strong>PASCAL VOC models</strong></p>
+<ul>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_ssd-mobilenet-300x300_PASCAL_0.1.0.model">SSD 300x300 MobileNet</a></li>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_ssd-vgg16-300x300_PASCAL_0.1.0.model">SSD 300x300 VGG</a></li>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_ssd-vgg16-300x300-quantize_PASCAL_0.1.0.model">SSD 300x300 VGG Quantize</a></li>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_ssd-vgg16-512x512_PASCAL_0.1.0.model">SSD 512x512 VGG</a></li>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_ssd-vgg16-512x512-quantize_PASCAL_0.1.0.model">SSD 512x512 VGG Quantize</a></li>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_frcnn-vgg16_PASCAL_0.1.0.model">Faster-RCNN VGG</a></li>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_frcnn-vgg16-compress_PASCAL_0.1.0.model">Faster-RCNN VGG Compress</a></li>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_frcnn-vgg16-compress-quantize_PASCAL_0.1.0.model">Faster-RCNN VGG Compress Quantize</a></li>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_frcnn-pvanet_PASCAL_0.1.0.model">Faster-RCNN PvaNet</a></li>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_frcnn-pvanet-compress_PASCAL_0.1.0.model">Faster-RCNN PvaNet Compress</a></li>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_frcnn-pvanet-compress-quantize_PASCAL_0.1.0.model">Faster-RCNN PvaNet Compress Quantize</a></li>
+</ul>
+<p><strong>COCO models</strong></p>
+<ul>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_ssd-vgg16-300x300_COCO_0.1.0.model">SSD 300x300 VGG</a></li>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_ssd-vgg16-300x300-quantize_COCO_0.1.0.model">SSD 300x300 VGG Quantize</a></li>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_ssd-vgg16-512x512_COCO_0.1.0.model">SSD 512x512 VGG</a></li>
+<li><a href="https://sourceforge.net/projects/analytics-zoo/files/analytics-zoo-models/object-detection/analytics-zoo_ssd-vgg16-512x512-quantize_COCO_0.1.0.model">SSD 512x512 VGG Quantize</a></li>
+</ul>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

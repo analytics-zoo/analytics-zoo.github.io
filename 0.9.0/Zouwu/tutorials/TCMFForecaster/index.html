@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>TCMFForecaster - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Step 0: Prepare environment", url: "#step-0-prepare-environment", children: [
+          ]},
+          {title: "Step 1: Init Orca Context", url: "#step-1-init-orca-context", children: [
+          ]},
+          {title: "Step 2: Create a TCMFForecaster", url: "#step-2-create-a-tcmfforecaster", children: [
+          ]},
+          {title: "Step 3: Use TCMFForecaster", url: "#step-3-use-tcmfforecaster", children: [
+              {title: "Fit with TCMFForecaster", url: "#fit-with-tcmfforecaster" },
+              {title: "Evaluate with TCMFForecaster", url: "#evaluate-with-tcmfforecaster" },
+              {title: "Incremental fit TCMFForecaster", url: "#incremental-fit-tcmfforecaster" },
+              {title: "Save and Load", url: "#save-and-load" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>TCMFForecaster</strong></h1>
+    <hr>
+    <p>In this guide, we will show you how to use Zouwu TCMFForecaster for high dimension time series forecasting.</p>
+<p>Refer to <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/zouwu/examples/run_electricity.py">TCMFForecaster example</a> for demonstration of using TCMFForecaster for distributed training and inference. </p>
+<p>Refer to <a href="../../API/TCMFForecaster/">TCMFForecaster API Guide</a> for more details of AutoTS APIs.</p>
+<hr />
+<h3 id="step-0-prepare-environment"><strong>Step 0: Prepare environment</strong></h3>
+<p>a. We recommend conda to set up your environment. Note that conda environment is required to run onq
+yarn, but not strictly necessary for running on local. </p>
+<pre><code>conda create -n zoo python=3.7
+conda activate zoo
+</code></pre>
+
+<p>b. If you want to enable TCMFForecaster distributed training, it requires pre-install pytorch and horovod. You can follow the <a href="https://github.com/horovod/horovod/blob/master/docs/install.rst">horovod document</a> to install the horovod and pytorch with Gloo support.
+And here are the commands that work on for us on ubuntu 16.04. The exact steps may vary from different machines.</p>
+<pre><code>conda install -y pytorch==1.4.0 torchvision==0.5.0 cpuonly -c pytorch
+conda install -y cmake==3.16.0 -c conda-forge
+conda install cxx-compiler==1.0 -c conda-forge
+conda install openmpi
+HOROVOD_WITH_PYTORCH=1; HOROVOD_WITH_GLOO=1; pip install --no-cache-dir horovod==0.19.1
+pip install analytics_zoo-${VERSION}-${TIMESTAMP}-py2.py3-none-${OS}_x86_64.whl[ray]
+</code></pre>
+
+<p>If you don't need distributed training. You only need to install pytorch in your environment.</p>
+<pre><code>pip install torch==1.4.0 torchvision==0.5.0
+</code></pre>
+
+<p>c. Download and install nightly build analytics zoo whl by following instructions (<a href="https://analytics-zoo.github.io/master/#PythonUserGuide/install/#install-the-latest-nightly-build-wheels-for-pip">here</a>).</p>
+<pre><code>pip install analytics_zoo-${VERSION}-${TIMESTAMP}-py2.py3-none-${OS}_x86_64.whl[ray]
+</code></pre>
+
+<p>d. Install other packages</p>
+<pre><code>pip install scikit-learn==0.22
+pip install pandas==1.0
+pip install requests
+</code></pre>
+
+<h3 id="step-1-init-orca-context"><strong>Step 1: Init Orca Context</strong></h3>
+<p>You need to init an orca context with <code>init_ray_on_spark=True</code> before distributed training, and stop it after training is completed. Note orca context is not needed if you don't want to enable distributed training.</p>
+<pre><code class="python">from zoo.orca import init_orca_context, stop_orca_context
+
+# run in local mode
+init_orca_context(cluster_mode=&quot;local&quot;, cores=4, memory='2g', num_nodes=1, init_ray_on_spark=True)
+
+# run in yarn client mode
+init_orca_context(cluster_mode=&quot;yarn-client&quot;, 
+                  num_nodes=2, cores=2, 
+                  driver_memory=&quot;6g&quot;, driver_cores=4, 
+                  conda_name='zoo', 
+                  extra_memory_for_ray=&quot;10g&quot;, 
+                  object_store_memory='5g')
+</code></pre>
+
+<ul>
+<li>Reference: <a href="https://analytics-zoo.github.io/master/#Orca/context/">Orca Context</a></li>
+</ul>
+<h3 id="step-2-create-a-tcmfforecaster"><strong>Step 2: Create a TCMFForecaster</strong></h3>
+<pre><code class="python">from zoo.zouwu.model.forecast.tcmf_forecaster import TCMFForecaster
+model = TCMFForecaster(
+        vbsize=128,
+        hbsize=256,
+        num_channels_X=[32, 32, 32, 32, 32, 1],
+        num_channels_Y=[16, 16, 16, 16, 16, 1],
+        kernel_size=7,
+        dropout=0.1,
+        rank=64,
+        kernel_size_Y=7,
+        learning_rate=0.0005,
+        normalize=False,
+        use_time=True,
+        svd=True,)
+</code></pre>
+
+<h3 id="step-3-use-tcmfforecaster"><strong>Step 3: Use TCMFForecaster</strong></h3>
+<h4 id="fit-with-tcmfforecaster"><strong>Fit with TCMFForecaster</strong></h4>
+<pre><code>model.fit(
+        x,
+        val_len=24,
+        start_date=&quot;2020-4-1&quot;,
+        freq=&quot;1H&quot;,
+        covariates=None,
+        dti=None,
+        period=24,
+        y_iters=10,
+        init_FX_epoch=100,
+        max_FX_epoch=300,
+        max_TCN_epoch=300,
+        alt_iters=10,
+        num_workers=num_workers_for_fit)
+</code></pre>
+
+<h4 id="evaluate-with-tcmfforecaster"><strong>Evaluate with TCMFForecaster</strong></h4>
+<p>You can either directly call <code>model.evaluate</code> as</p>
+<pre><code>model.evaluate(target_value,
+               metric=['mae'],
+               target_covariates=None,
+               target_dti=None,
+               num_workers=num_workers_for_predict,
+               )
+</code></pre>
+
+<p>Or you could predict first and then evaluate with metric name.</p>
+<pre><code>yhat = model.predict(horizon,
+                     future_covariates=None,
+                     future_dti=None,
+                     num_workers=num_workers_for_predict)
+
+from zoo.automl.common.metrics import Evaluator
+evaluate_mse = Evaluator.evaluate(&quot;mse&quot;, target_data, yhat)
+</code></pre>
+
+<h4 id="incremental-fit-tcmfforecaster"><strong>Incremental fit TCMFForecaster</strong></h4>
+<pre><code class="python">model.fit_incremental(x_incr, covariates_incr=None, dti_incr=None)
+</code></pre>
+
+<h4 id="save-and-load"><strong>Save and Load</strong></h4>
+<pre><code class="python">model.save(dirname)
+loaded_model = TCMFForecaster.load(dirname)
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
