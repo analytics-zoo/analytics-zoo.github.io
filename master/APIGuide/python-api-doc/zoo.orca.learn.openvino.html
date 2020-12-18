@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.orca.learn.optimizers.html" title="zoo.orca.learn.optimizers package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -46,8 +43,8 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.orca.learn.openvino package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.orca.learn.openvino.estimator">zoo.orca.learn.openvino.estimator module</a></li>
-<li><a class="reference internal" href="#module-zoo.orca.learn.openvino">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-orca-learn-openvino-estimator-module">zoo.orca.learn.openvino.estimator module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,181 +87,11 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.orca.learn.openvino.estimator">
-<span id="zoo-orca-learn-openvino-estimator-module"></span><h2>zoo.orca.learn.openvino.estimator module<a class="headerlink" href="#module-zoo.orca.learn.openvino.estimator" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.orca.learn.openvino.estimator.Estimator">
-<em class="property">class </em><code class="descclassname">zoo.orca.learn.openvino.estimator.</code><code class="descname">Estimator</code><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#Estimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.Estimator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="staticmethod">
-<dt id="zoo.orca.learn.openvino.estimator.Estimator.from_openvino">
-<em class="property">static </em><code class="descname">from_openvino</code><span class="sig-paren">(</span><em>*</em>, <em>model_path</em>, <em>batch_size=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#Estimator.from_openvino"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.Estimator.from_openvino" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load an openVINO Estimator.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>model_path</strong> – String. The file path to the OpenVINO IR xml file.</li>
-<li><strong>batch_size</strong> – Int. Set batch Size, default is 0 (use default batch size).</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper">
-<em class="property">class </em><code class="descclassname">zoo.orca.learn.openvino.estimator.</code><code class="descname">OpenvinoEstimatorWrapper</code><span class="sig-paren">(</span><em>*</em>, <em>model_path</em>, <em>batch_size=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="zoo.orca.learn.html#zoo.orca.learn.spark_estimator.Estimator" title="zoo.orca.learn.spark_estimator.Estimator"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.orca.learn.spark_estimator.Estimator</span></code></a></p>
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.clear_gradient_clipping">
-<code class="descname">clear_gradient_clipping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.clear_gradient_clipping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.clear_gradient_clipping" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clear gradient clipping parameters. In this case, gradient clipping will not be applied.
-In order to take effect, it needs to be called before fit.
-:return:</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.evaluate">
-<code class="descname">evaluate</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.evaluate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>data</em>, <em>epochs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.fit" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.get_model">
-<code class="descname">get_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.get_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.get_model" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.get_train_summary">
-<code class="descname">get_train_summary</code><span class="sig-paren">(</span><em>tag=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.get_train_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.get_train_summary" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the scalar from model train summary
-Return list of summary data of [iteration_number, scalar_value, timestamp]
-# Arguments
-tag: The string variable represents the scalar wanted</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.get_validation_summary">
-<code class="descname">get_validation_summary</code><span class="sig-paren">(</span><em>tag=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.get_validation_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.get_validation_summary" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the scalar from model validation summary
-Return list of summary data of [iteration_number, scalar_value, timestamp]</p>
-<p>Note: The metric and tag may not be consistent
-Please look up following form to pass tag parameter
-Left side is your metric during compile
-Right side is the tag you should pass
-‘Accuracy’                  |   ‘Top1Accuracy’
-‘BinaryAccuracy’            |   ‘Top1Accuracy’
-‘CategoricalAccuracy’       |   ‘Top1Accuracy’
-‘SparseCategoricalAccuracy’ |   ‘Top1Accuracy’
-‘AUC’                       |   ‘AucScore’
-‘HitRatio’                  |   ‘HitRate&#64;k’ (k is Top-k)
-‘Loss’                      |   ‘Loss’
-‘MAE’                       |   ‘MAE’
-‘NDCG’                      |   ‘NDCG’
-‘TFValidationMethod’        |   ‘${name + ” ” + valMethod.toString()}’
-‘Top5Accuracy’              |   ‘Top5Accuracy’
-‘TreeNNAccuracy’            |   ‘TreeNNAccuracy()’
-‘MeanAveragePrecision’      |   ‘MAP&#64;k’ (k is Top-k) (BigDL)
-‘MeanAveragePrecision’      |   ‘PascalMeanAveragePrecision’ (Zoo)
-‘StatelessMetric’           |   ‘${name}’
-# Arguments
-tag: The string variable represents the scalar wanted</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.load">
-<code class="descname">load</code><span class="sig-paren">(</span><em>model_path</em>, <em>batch_size=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.load" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load an openVINO model.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>model_path</strong> – String. The file path to the OpenVINO IR xml file.</li>
-<li><strong>batch_size</strong> – Int. Set batch Size, default is 0 (use default batch size).</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.load_latest_orca_checkpoint">
-<code class="descname">load_latest_orca_checkpoint</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.load_latest_orca_checkpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.load_latest_orca_checkpoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load latest Orca checkpoint under specified directory.
-:param path: directory containing Orca checkpoint files.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.load_orca_checkpoint">
-<code class="descname">load_orca_checkpoint</code><span class="sig-paren">(</span><em>path</em>, <em>version</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.load_orca_checkpoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.load_orca_checkpoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load specified Orca checkpoint.
-:param path: checkpoint directory which contains model.* and
-optimMethod-TFParkTraining.* files.
-:param version: checkpoint version, which is the suffix of model.* file,
-i.e., for modle.4 file, the version is 4.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.predict" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>model_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.save" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.set_constant_gradient_clipping">
-<code class="descname">set_constant_gradient_clipping</code><span class="sig-paren">(</span><em>min</em>, <em>max</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.set_constant_gradient_clipping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.set_constant_gradient_clipping" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set constant gradient clipping during the training process.
-In order to take effect, it needs to be called before fit.
-:param min: The minimum value to clip by.
-:param max: The maximum value to clip by.
-:return:</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.set_l2_norm_gradient_clipping">
-<code class="descname">set_l2_norm_gradient_clipping</code><span class="sig-paren">(</span><em>clip_norm</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.set_l2_norm_gradient_clipping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.set_l2_norm_gradient_clipping" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clip gradient to a maximum L2-Norm during the training process.
-In order to take effect, it needs to be called before fit.
-:param clip_norm: Gradient L2-Norm threshold.
-:return:</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.set_tensorboard">
-<code class="descname">set_tensorboard</code><span class="sig-paren">(</span><em>log_dir</em>, <em>app_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/orca/learn/openvino/estimator.html#OpenvinoEstimatorWrapper.set_tensorboard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.orca.learn.openvino.estimator.OpenvinoEstimatorWrapper.set_tensorboard" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set summary information during the training process for visualization purposes.
-Saved summary can be viewed via TensorBoard.
-In order to take effect, it needs to be called before fit.</p>
-<p>Training summary will be saved to ‘log_dir/app_name/train’
-and validation summary (if any) will be saved to ‘log_dir/app_name/validation’.</p>
-<p># Arguments
-:param log_dir: The base directory path to store training and validation logs.
-:param app_name: The name of the application.</p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="zoo-orca-learn-openvino-estimator-module">
+<h2>zoo.orca.learn.openvino.estimator module<a class="headerlink" href="#zoo-orca-learn-openvino-estimator-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.orca.learn.openvino">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.orca.learn.openvino" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -280,9 +107,6 @@ and validation summary (if any) will be saved to ‘log_dir/app_name/validation�
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.orca.learn.optimizers.html" title="zoo.orca.learn.optimizers package"
              >next</a> |</li>

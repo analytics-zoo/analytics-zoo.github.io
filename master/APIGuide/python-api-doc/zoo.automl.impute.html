@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.automl.logger.html" title="zoo.automl.logger package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -45,9 +42,9 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.automl.impute package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.impute.abstract">zoo.automl.impute.abstract module</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.impute.impute">zoo.automl.impute.impute module</a></li>
-<li><a class="reference internal" href="#module-zoo.automl.impute">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-automl-impute-abstract-module">zoo.automl.impute.abstract module</a></li>
+<li><a class="reference internal" href="#zoo-automl-impute-impute-module">zoo.automl.impute.impute module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -90,106 +87,14 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.impute.abstract">
-<span id="zoo-automl-impute-abstract-module"></span><h2>zoo.automl.impute.abstract module<a class="headerlink" href="#module-zoo.automl.impute.abstract" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.automl.impute.abstract.BaseImputation">
-<em class="property">class </em><code class="descclassname">zoo.automl.impute.abstract.</code><code class="descname">BaseImputation</code><a class="reference internal" href="_modules/zoo/automl/impute/abstract.html#BaseImputation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.impute.abstract.BaseImputation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
-<p>Abstract Base class for imputation.</p>
-<dl class="method">
-<dt id="zoo.automl.impute.abstract.BaseImputation.impute">
-<code class="descname">impute</code><span class="sig-paren">(</span><em>input_df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/impute/abstract.html#BaseImputation.impute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.impute.abstract.BaseImputation.impute" title="Permalink to this definition">¶</a></dt>
-<dd><p>fill na value
-:param input_df: input dataframe
-:return:</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.impute.abstract.BaseImputation.restore">
-<code class="descname">restore</code><span class="sig-paren">(</span><em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/impute/abstract.html#BaseImputation.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.impute.abstract.BaseImputation.restore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore variables from file
-:param file_path: file contain saved parameters.
-i.e. some parameters are obtained during training,
-not in trial config, e.g. scaler fit params)
-:param config: the trial config
-:return:</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.impute.abstract.BaseImputation.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/impute/abstract.html#BaseImputation.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.impute.abstract.BaseImputation.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>save the feature tools internal variables.
-Some of the variables are derived after fit_transform, so only saving config is not enough.
-:param: file_path : the file to be saved
-:param: config: the trial config
-:return:</p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="zoo-automl-impute-abstract-module">
+<h2>zoo.automl.impute.abstract module<a class="headerlink" href="#zoo-automl-impute-abstract-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.impute.impute">
-<span id="zoo-automl-impute-impute-module"></span><h2>zoo.automl.impute.impute module<a class="headerlink" href="#module-zoo.automl.impute.impute" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="zoo.automl.impute.impute.FillZeroImpute">
-<em class="property">class </em><code class="descclassname">zoo.automl.impute.impute.</code><code class="descname">FillZeroImpute</code><a class="reference internal" href="_modules/zoo/automl/impute/impute.html#FillZeroImpute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.impute.impute.FillZeroImpute" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.automl.impute.abstract.BaseImputation" title="zoo.automl.impute.abstract.BaseImputation"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.impute.abstract.BaseImputation</span></code></a></p>
-<p>FillZero imputation</p>
-<dl class="method">
-<dt id="zoo.automl.impute.impute.FillZeroImpute.impute">
-<code class="descname">impute</code><span class="sig-paren">(</span><em>input_df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/impute/impute.html#FillZeroImpute.impute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.impute.impute.FillZeroImpute.impute" title="Permalink to this definition">¶</a></dt>
-<dd><p>fill na value
-:param input_df: input dataframe
-:return:</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.impute.impute.LastFillImpute">
-<em class="property">class </em><code class="descclassname">zoo.automl.impute.impute.</code><code class="descname">LastFillImpute</code><a class="reference internal" href="_modules/zoo/automl/impute/impute.html#LastFillImpute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.impute.impute.LastFillImpute" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.automl.impute.abstract.BaseImputation" title="zoo.automl.impute.abstract.BaseImputation"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.impute.abstract.BaseImputation</span></code></a></p>
-<p>LastFill imputation</p>
-<dl class="method">
-<dt id="zoo.automl.impute.impute.LastFillImpute.impute">
-<code class="descname">impute</code><span class="sig-paren">(</span><em>input_df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/impute/impute.html#LastFillImpute.impute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.impute.impute.LastFillImpute.impute" title="Permalink to this definition">¶</a></dt>
-<dd><p>fill na value
-:param input_df: input dataframe
-:return:</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="zoo.automl.impute.impute.LastFillImpute.restore">
-<code class="descname">restore</code><span class="sig-paren">(</span><em>**config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/impute/impute.html#LastFillImpute.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.impute.impute.LastFillImpute.restore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restore variables from file
-:param file_path: file contain saved parameters.
-i.e. some parameters are obtained during training,
-not in trial config, e.g. scaler fit params)
-:param config: the trial config
-:return:</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="zoo.automl.impute.impute.TimeMergeImputor">
-<em class="property">class </em><code class="descclassname">zoo.automl.impute.impute.</code><code class="descname">TimeMergeImputor</code><span class="sig-paren">(</span><em>time_interval</em>, <em>timestamp_column_name</em>, <em>mode=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/impute/impute.html#TimeMergeImputor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.impute.impute.TimeMergeImputor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#zoo.automl.impute.abstract.BaseImputation" title="zoo.automl.impute.abstract.BaseImputation"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoo.automl.impute.abstract.BaseImputation</span></code></a></p>
-<p>Merge rows whose timestamp are seconds apart</p>
-<dl class="method">
-<dt id="zoo.automl.impute.impute.TimeMergeImputor.impute">
-<code class="descname">impute</code><span class="sig-paren">(</span><em>input_df</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/automl/impute/impute.html#TimeMergeImputor.impute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.automl.impute.impute.TimeMergeImputor.impute" title="Permalink to this definition">¶</a></dt>
-<dd><p>fill na value
-:param input_df: input dataframe
-:return:</p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="zoo-automl-impute-impute-module">
+<h2>zoo.automl.impute.impute module<a class="headerlink" href="#zoo-automl-impute-impute-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.automl.impute">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.automl.impute" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -205,9 +110,6 @@ not in trial config, e.g. scaler fit params)
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.automl.logger.html" title="zoo.automl.logger package"
              >next</a> |</li>

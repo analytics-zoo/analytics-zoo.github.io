@@ -26,9 +26,6 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="zoo.examples.tensorflow.tfpark.keras.html" title="zoo.examples.tensorflow.tfpark.keras package"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -48,9 +45,9 @@
   <ul>
 <li><a class="reference internal" href="#">zoo.examples.tensorflow.tfpark.inception.nets package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-zoo.examples.tensorflow.tfpark.inception.nets.inception_utils">zoo.examples.tensorflow.tfpark.inception.nets.inception_utils module</a></li>
-<li><a class="reference internal" href="#module-zoo.examples.tensorflow.tfpark.inception.nets.inception_v1">zoo.examples.tensorflow.tfpark.inception.nets.inception_v1 module</a></li>
-<li><a class="reference internal" href="#module-zoo.examples.tensorflow.tfpark.inception.nets">Module contents</a></li>
+<li><a class="reference internal" href="#zoo-examples-tensorflow-tfpark-inception-nets-inception-utils-module">zoo.examples.tensorflow.tfpark.inception.nets.inception_utils module</a></li>
+<li><a class="reference internal" href="#zoo-examples-tensorflow-tfpark-inception-nets-inception-v1-module">zoo.examples.tensorflow.tfpark.inception.nets.inception_v1 module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -93,106 +90,14 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.examples.tensorflow.tfpark.inception.nets.inception_utils">
-<span id="zoo-examples-tensorflow-tfpark-inception-nets-inception-utils-module"></span><h2>zoo.examples.tensorflow.tfpark.inception.nets.inception_utils module<a class="headerlink" href="#module-zoo.examples.tensorflow.tfpark.inception.nets.inception_utils" title="Permalink to this headline">¶</a></h2>
-<p>Contains common code shared by all inception models.</p>
-<p>Usage of arg scope:
-with slim.arg_scope(inception_arg_scope()):
-logits, end_points = inception.inception_v3(images, num_classes,
-is_training=is_training)</p>
-<dl class="function">
-<dt id="zoo.examples.tensorflow.tfpark.inception.nets.inception_utils.inception_arg_scope">
-<code class="descclassname">zoo.examples.tensorflow.tfpark.inception.nets.inception_utils.</code><code class="descname">inception_arg_scope</code><span class="sig-paren">(</span><em>weight_decay=4e-05</em>, <em>use_batch_norm=True</em>, <em>batch_norm_decay=0.9997</em>, <em>batch_norm_epsilon=0.001</em>, <em>activation_fn=&lt;function relu&gt;</em>, <em>batch_norm_updates_collections='update_ops'</em>, <em>batch_norm_scale=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/examples/tensorflow/tfpark/inception/nets/inception_utils.html#inception_arg_scope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.examples.tensorflow.tfpark.inception.nets.inception_utils.inception_arg_scope" title="Permalink to this definition">¶</a></dt>
-<dd><p>Defines the default arg scope for inception models.</p>
-<p>Args:
-weight_decay: The weight decay to use for regularizing the model.
-use_batch_norm: “If <cite>True</cite>, batch_norm is applied after each convolution.
-batch_norm_decay: Decay for batch norm moving average.
-batch_norm_epsilon: Small float added to variance to avoid dividing by zero
-in batch norm.
-activation_fn: Activation function for conv2d.
-batch_norm_updates_collections: Collection for the update ops for
-batch norm.
-batch_norm_scale: If True, uses an explicit <cite>gamma</cite> multiplier to scale the
-activations in the batch normalization layer.</p>
-<p>Returns:
-An <cite>arg_scope</cite> to use for the inception models.</p>
-</dd></dl>
-
+<div class="section" id="zoo-examples-tensorflow-tfpark-inception-nets-inception-utils-module">
+<h2>zoo.examples.tensorflow.tfpark.inception.nets.inception_utils module<a class="headerlink" href="#zoo-examples-tensorflow-tfpark-inception-nets-inception-utils-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.examples.tensorflow.tfpark.inception.nets.inception_v1">
-<span id="zoo-examples-tensorflow-tfpark-inception-nets-inception-v1-module"></span><h2>zoo.examples.tensorflow.tfpark.inception.nets.inception_v1 module<a class="headerlink" href="#module-zoo.examples.tensorflow.tfpark.inception.nets.inception_v1" title="Permalink to this headline">¶</a></h2>
-<p>Contains the definition for inception v1 classification network.</p>
-<dl class="function">
-<dt id="zoo.examples.tensorflow.tfpark.inception.nets.inception_v1.inception_v1">
-<code class="descclassname">zoo.examples.tensorflow.tfpark.inception.nets.inception_v1.</code><code class="descname">inception_v1</code><span class="sig-paren">(</span><em>inputs</em>, <em>num_classes=1000</em>, <em>is_training=True</em>, <em>dropout_keep_prob=0.8</em>, <em>prediction_fn=&lt;function softmax&gt;</em>, <em>spatial_squeeze=True</em>, <em>reuse=None</em>, <em>scope='InceptionV1'</em>, <em>global_pool=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/examples/tensorflow/tfpark/inception/nets/inception_v1.html#inception_v1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.examples.tensorflow.tfpark.inception.nets.inception_v1.inception_v1" title="Permalink to this definition">¶</a></dt>
-<dd><p>Defines the Inception V1 architecture.</p>
-<p>This architecture is defined in:</p>
-<p>Going deeper with convolutions
-Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed,
-Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich.
-<a class="reference external" href="http://arxiv.org/pdf/1409.4842v1.pdf">http://arxiv.org/pdf/1409.4842v1.pdf</a>.</p>
-<p>The default image size used to train this network is 224x224.</p>
-<p>Args:
-inputs: a tensor of size [batch_size, height, width, channels].
-num_classes: number of predicted classes. If 0 or None, the logits layer
-is omitted and the input features to the logits layer (before dropout)
-are returned instead.
-is_training: whether is training or not.
-dropout_keep_prob: the percentage of activation values that are retained.
-prediction_fn: a function to get predictions out of logits.
-spatial_squeeze: if True, logits is of shape [B, C], if false logits is of
-shape [B, 1, 1, C], where B is batch_size and C is number of classes.
-reuse: whether or not the network and its variables should be reused. To be
-able to reuse ‘scope’ must be given.
-scope: Optional variable_scope.
-global_pool: Optional boolean flag to control the avgpooling before the
-logits layer. If false or unset, pooling is done with a fixed window
-that reduces default-sized inputs to 1x1, while larger inputs lead to
-larger outputs. If true, any input size is pooled down to 1x1.</p>
-<p>Returns:
-net: a Tensor with the logits (pre-softmax activations) if num_classes
-is a non-zero integer, or the non-dropped-out input to the logits layer
-if num_classes is 0 or None.
-end_points: a dictionary from components of the network to the corresponding
-activation.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.examples.tensorflow.tfpark.inception.nets.inception_v1.inception_v1_base">
-<code class="descclassname">zoo.examples.tensorflow.tfpark.inception.nets.inception_v1.</code><code class="descname">inception_v1_base</code><span class="sig-paren">(</span><em>inputs</em>, <em>final_endpoint='Mixed_5c'</em>, <em>include_root_block=True</em>, <em>scope='InceptionV1'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/zoo/examples/tensorflow/tfpark/inception/nets/inception_v1.html#inception_v1_base"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#zoo.examples.tensorflow.tfpark.inception.nets.inception_v1.inception_v1_base" title="Permalink to this definition">¶</a></dt>
-<dd><p>Defines the Inception V1 base architecture.</p>
-<p>This architecture is defined in:
-Going deeper with convolutions
-Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed,
-Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich.
-<a class="reference external" href="http://arxiv.org/pdf/1409.4842v1.pdf">http://arxiv.org/pdf/1409.4842v1.pdf</a>.</p>
-<p>Args:
-inputs: a tensor of size [batch_size, height, width, channels].
-final_endpoint: specifies the endpoint to construct the network up to. It
-can be one of [‘Conv2d_1a_7x7’, ‘MaxPool_2a_3x3’, ‘Conv2d_2b_1x1’,
-‘Conv2d_2c_3x3’, ‘MaxPool_3a_3x3’, ‘Mixed_3b’, ‘Mixed_3c’,
-‘MaxPool_4a_3x3’, ‘Mixed_4b’, ‘Mixed_4c’, ‘Mixed_4d’, ‘Mixed_4e’,
-‘Mixed_4f’, ‘MaxPool_5a_2x2’, ‘Mixed_5b’, ‘Mixed_5c’]. If
-include_root_block is False, [‘Conv2d_1a_7x7’, ‘MaxPool_2a_3x3’,
-‘Conv2d_2b_1x1’, ‘Conv2d_2c_3x3’, ‘MaxPool_3a_3x3’] will not be available.
-include_root_block: If True, include the convolution and max-pooling layers
-before the inception modules. If False, excludes those layers.
-scope: Optional variable_scope.</p>
-<p>Returns:
-A dictionary from components of the network to the corresponding activation.</p>
-<p>Raises:
-ValueError: if final_endpoint is not set to one of the predefined values.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="zoo.examples.tensorflow.tfpark.inception.nets.inception_v1.trunc_normal">
-<code class="descclassname">zoo.examples.tensorflow.tfpark.inception.nets.inception_v1.</code><code class="descname">trunc_normal</code><span class="sig-paren">(</span><em>stddev</em><span class="sig-paren">)</span><a class="headerlink" href="#zoo.examples.tensorflow.tfpark.inception.nets.inception_v1.trunc_normal" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="zoo-examples-tensorflow-tfpark-inception-nets-inception-v1-module">
+<h2>zoo.examples.tensorflow.tfpark.inception.nets.inception_v1 module<a class="headerlink" href="#zoo-examples-tensorflow-tfpark-inception-nets-inception-v1-module" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-zoo.examples.tensorflow.tfpark.inception.nets">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-zoo.examples.tensorflow.tfpark.inception.nets" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -208,9 +113,6 @@ ValueError: if final_endpoint is not set to one of the predefined values.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
         <li class="right" >
           <a href="zoo.examples.tensorflow.tfpark.keras.html" title="zoo.examples.tensorflow.tfpark.keras package"
              >next</a> |</li>
