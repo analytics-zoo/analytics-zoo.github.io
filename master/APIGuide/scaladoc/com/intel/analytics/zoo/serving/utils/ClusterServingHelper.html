@@ -47,7 +47,7 @@
         <span class="kind">class</span>
       </span>
       <span class="symbol">
-        <span class="name">ClusterServingHelper</span><span class="result"> extends <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></span>
+        <span class="name">ClusterServingHelper</span><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       </h4>
       
@@ -57,7 +57,7 @@ However, in some condition, models are distributed to remote machine
 and locate in tmp directory, but other configs are still needed.
 Thus model directory could be passed and overwrite that in config YAML</p></div><div class="toggleContainer block">
           <span class="toggle">Linear Supertypes</span>
-          <div class="superTypes hiddenContent"><a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
+          <div class="superTypes hiddenContent"><span class="extype" name="scala.Serializable">Serializable</span>, <span class="extype" name="java.io.Serializable">Serializable</span>, <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a>, <span class="extype" name="scala.Any">Any</span></div>
         </div></div>
         
 
@@ -75,7 +75,7 @@ Thus model directory could be passed and overwrite that in config YAML</p></div>
                 <span class="filtertype">Inherited<br />
                 </span>
                 <ol id="linearization">
-                  <li class="in" name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper"><span>ClusterServingHelper</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
+                  <li class="in" name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper"><span>ClusterServingHelper</span></li><li class="in" name="scala.Serializable"><span>Serializable</span></li><li class="in" name="java.io.Serializable"><span>Serializable</span></li><li class="in" name="scala.AnyRef"><span>AnyRef</span></li><li class="in" name="scala.Any"><span>Any</span></li>
                 </ol>
               </div><div id="ancestors">
             <span class="filtertype"></span>
@@ -248,23 +248,6 @@ The running jobs info is stored in manager YAML</p><div class="fullcomment"><div
 If yes, existed name is not allow to used, will not submit
 the job
 The running jobs info is stored in manager YAML</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>false if running jobs exists this name</p></dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#checkStop" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="checkStop():Boolean"></a>
-      <a id="checkStop():Boolean"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">checkStop</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@checkStop():Boolean" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Check stop signal, return true if signal detected</p>
     </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#chwFlag" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="chwFlag:Boolean"></a>
       <a id="chwFlag:Boolean"></a>
@@ -447,23 +430,6 @@ The running jobs info is stored in manager YAML</p></div><dl class="paramcmts bl
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#getSparkSession" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="getSparkSession():org.apache.spark.sql.SparkSession"></a>
-      <a id="getSparkSession():SparkSession"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">getSparkSession</span><span class="params">()</span><span class="result">: <span class="extype" name="org.apache.spark.sql.SparkSession">SparkSession</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@getSparkSession():org.apache.spark.sql.SparkSession" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Get spark session for structured streaming</p>
     </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#getYaml" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="getYaml(configList:ClusterServingHelper.this.HM,key:String,default:Any):Any"></a>
       <a id="getYaml(HM,String,Any):Any"></a>
@@ -498,44 +464,6 @@ The running jobs info is stored in manager YAML</p></div><dl class="paramcmts bl
       </a>
     </span>
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#initArgs" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="initArgs():Unit"></a>
-      <a id="initArgs():Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">initArgs</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@initArgs():Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Initialize the parameters by loading config file
-create log file, set backend engine type flag
-create &quot;running&quot; flag, for listening the stop signal
-</p>
-    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#initContext" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="initContext():Unit"></a>
-      <a id="initContext():Unit"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">initContext</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@initContext():Unit" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      <p class="shortcomment cmt">Initialize the Spark Context
-</p>
     </li><li name="scala.Any#isInstanceOf" visbl="pub" data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <a id="isInstanceOf[T0]:Boolean"></a>
@@ -587,6 +515,26 @@ create &quot;running&quot; flag, for listening the stop signal
       </a>
     </span>
       
+    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#loadConfig" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="loadConfig():Unit"></a>
+      <a id="loadConfig():Unit"></a>
+      <h4 class="signature">
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">loadConfig</span><span class="params">()</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+      </span>
+      </h4><span class="permalink">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@loadConfig():Unit" title="Permalink" target="_top">
+        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
+      </a>
+    </span>
+      <p class="shortcomment cmt">Initialize the parameters by loading config file
+create log file, set backend engine type flag
+create &quot;running&quot; flag, for listening the stop signal
+</p>
     </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#loadInferenceModel" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="loadInferenceModel(concurrentNum:Int):com.intel.analytics.zoo.pipeline.inference.InferenceModel"></a>
       <a id="loadInferenceModel(Int):InferenceModel"></a>
@@ -623,23 +571,6 @@ backend engine type</p>
       </a>
     </span>
       <p class="shortcomment cmt">Log error message to local log file</p>
-    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#logger" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="logger:org.apache.log4j.Logger"></a>
-      <a id="logger:Logger"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">val</span>
-      </span>
-      <span class="symbol">
-        <span class="name">logger</span><span class="result">: <span class="extype" name="org.apache.log4j.Logger">Logger</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@logger:org.apache.log4j.Logger" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
     </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#modelDir" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="modelDir:String"></a>
       <a id="modelDir:String"></a>
@@ -814,18 +745,18 @@ model definition file and model weight file</p>
     </span>
       
     </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#redisPort" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="redisPort:String"></a>
-      <a id="redisPort:String"></a>
+      <a id="redisPort:Int"></a>
+      <a id="redisPort:Int"></a>
       <h4 class="signature">
       <span class="modifier_kind">
         <span class="modifier"></span>
         <span class="kind">var</span>
       </span>
       <span class="symbol">
-        <span class="name">redisPort</span><span class="result">: <span class="extype" name="scala.Predef.String">String</span></span>
+        <span class="name">redisPort</span><span class="result">: <span class="extype" name="scala.Int">Int</span></span>
       </span>
       </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@redisPort:String" title="Permalink" target="_top">
+      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@redisPort:Int" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -912,23 +843,6 @@ model definition file and model weight file</p>
       </span>
       </h4><span class="permalink">
       <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@resize:Boolean" title="Permalink" target="_top">
-        <img src="../../../../../../lib/permalink.png" alt="Permalink" />
-      </a>
-    </span>
-      
-    </li><li name="com.intel.analytics.zoo.serving.utils.ClusterServingHelper#sc" visbl="pub" data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="sc:org.apache.spark.SparkContext"></a>
-      <a id="sc:SparkContext"></a>
-      <h4 class="signature">
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">var</span>
-      </span>
-      <span class="symbol">
-        <span class="name">sc</span><span class="result">: <span class="extype" name="org.apache.spark.SparkContext">SparkContext</span></span>
-      </span>
-      </h4><span class="permalink">
-      <a href="../../../../../../index.html#com.intel.analytics.zoo.serving.utils.ClusterServingHelper@sc:org.apache.spark.SparkContext" title="Permalink" target="_top">
         <img src="../../../../../../lib/permalink.png" alt="Permalink" />
       </a>
     </span>
@@ -1116,7 +1030,11 @@ manager YAML stores the info of running Cluster Serving jobs</p></div><dl class=
         </div>
 
         <div id="inheritedMembers">
-        <div class="parent" name="scala.AnyRef">
+        <div class="parent" name="scala.Serializable">
+              <h3>Inherited from <span class="extype" name="scala.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="java.io.Serializable">
+              <h3>Inherited from <span class="extype" name="java.io.Serializable">Serializable</span></h3>
+            </div><div class="parent" name="scala.AnyRef">
               <h3>Inherited from <a href="../../../../../../scala/package.html#AnyRef=Object" class="extmbr" name="scala.AnyRef">AnyRef</a></h3>
             </div><div class="parent" name="scala.Any">
               <h3>Inherited from <span class="extype" name="scala.Any">Any</span></h3>
