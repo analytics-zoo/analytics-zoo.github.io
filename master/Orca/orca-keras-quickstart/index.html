@@ -11,7 +11,7 @@
     
     <link rel="shortcut icon" href="/img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>TensorFlow Quickstart - Analytics Zoo</title>
+    <title>TensorFlow Keras Quickstart - Analytics Zoo</title>
     <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="/css/base.css" rel="stylesheet">
@@ -67,9 +67,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 
 <div class="container-fluid wm-page-content">
     
-    <h1><strong>TensorFlow Quickstart</strong></h1>
+    <h1><strong>TensorFlow Keras Quickstart</strong></h1>
     <hr>
-    <p><strong>In this guide we will describe how to scale out TensorFlow (v1.15) programs using Orca in 4 simple steps.</strong></p>
+    <p><strong>In this guide we will describe how to scale out Keras (v2.3) programs using Orca in 4 simple steps.</strong></p>
 <h3 id="step-0-prepare-environment"><strong>Step 0: Prepare Environment</strong></h3>
 <p>We recommend using <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/">Conda</a> to prepare the environment. Please refer to the <a href="../../PythonUserGuide/install/">install guide</a> for more details.</p>
 <p><strong>Note:</strong> Conda environment is required to run on the distributed cluster, but not strictly necessary for running on the local machine.</p>
@@ -79,52 +79,47 @@ pip install analytics_zoo-${VERSION} # install either version 0.9 or latest nigh
 pip install tensorflow==1.15.0
 pip install tensorflow-datasets==2.0
 pip install psutil
+pip install pandas
+pip install scikit-learn
 </code></pre>
 
-<p><strong>Note:</strong> The original <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/examples/orca/learn/tf/lenet/lenet_mnist_graph.py">source code</a> for the tutorial below only supports TensorFlow 1.15.</p>
+<p><strong>Note:</strong> The original <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/examples/orca/learn/tf/lenet/lenet_mnist_keras.py">source code</a> for the tutorial below only supports TensorFlow 1.15.</p>
 <h3 id="step-1-init-orca-context"><strong>Step 1: Init Orca Context</strong></h3>
-<pre><code class="python">if args.cluster_mode == &quot;local&quot;:  
+<pre><code class="python">if args.cluster_mode == &quot;local&quot;:
     init_orca_context(cluster_mode=&quot;local&quot;, cores=4)# run in local mode
-elif args.cluster_mode == &quot;yarn&quot;:  
+elif args.cluster_mode == &quot;yarn&quot;:
     init_orca_context(cluster_mode=&quot;k8s&quot;, num_nodes=2, cores=2) # run on K8s cluster
-elif args.cluster_mode == &quot;yarn&quot;:  
-    init_orca_context(cluster_mode=&quot;yarn-client&quot;, num_nodes=2, cores=2) # run on Hadoop YARN cluster
+elif args.cluster_mode == &quot;yarn&quot;:
+    init_orca_context(cluster_mode=&quot;yarn-client&quot;, num_nodes=2, cores=2, driver_memory=&quot;6g&quot;) # run on Hadoop YARN cluster
 </code></pre>
 
 <p>This is the only place where you need to specify local or distributed mode. View <a href="../context">Orca Context</a> for more details.</p>
 <h3 id="step-2-define-the-model"><strong>Step 2: Define the Model</strong></h3>
-<p>You may define your model, loss and metrics in the same way as in any standard (single node) TensorFlow program.</p>
-<pre><code class="python">import tensorflow as tf
+<p>You may define your model, loss and metrics in the same way as in any standard (single node) Keras program.</p>
+<pre><code class="python">from tensorflow import keras
 
-def accuracy(logits, labels):
-    predictions = tf.argmax(logits, axis=1, output_type=labels.dtype)
-    is_correct = tf.cast(tf.equal(predictions, labels), dtype=tf.float32)
-    return tf.reduce_mean(is_correct)
+model = keras.Sequential(
+    [keras.layers.Conv2D(20, kernel_size=(5, 5), strides=(1, 1), activation='tanh',
+                         input_shape=(28, 28, 1), padding='valid'),
+     keras.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='valid'),
+     keras.layers.Conv2D(50, kernel_size=(5, 5), strides=(1, 1), activation='tanh',
+                         padding='valid'),
+     keras.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='valid'),
+     keras.layers.Flatten(),
+     keras.layers.Dense(500, activation='tanh'),
+     keras.layers.Dense(10, activation='softmax'),
+     ]
+)
 
-def lenet(images):
-    with tf.variable_scope('LeNet', [images]):
-        net = tf.layers.conv2d(images, 32, (5, 5), activation=tf.nn.relu, name='conv1')
-        net = tf.layers.max_pooling2d(net, (2, 2), 2, name='pool1')
-        net = tf.layers.conv2d(net, 64, (5, 5), activation=tf.nn.relu, name='conv2')
-        net = tf.layers.max_pooling2d(net, (2, 2), 2, name='pool2')
-        net = tf.layers.flatten(net)
-        net = tf.layers.dense(net, 1024, activation=tf.nn.relu, name='fc3')
-        logits = tf.layers.dense(net, 10)
-        return logits
-
-# tensorflow inputs
-images = tf.placeholder(dtype=tf.float32, shape=(None, 28, 28, 1))
-# tensorflow labels
-labels = tf.placeholder(dtype=tf.int32, shape=(None,))
-
-logits = lenet(images)
-loss = tf.reduce_mean(tf.losses.sparse_softmax_cross_entropy(logits=logits, labels=labels))
-acc = accuracy(logits, labels)
+model.compile(optimizer=tf.keras.optimizers.RMSprop(),
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
 </code></pre>
 
 <h3 id="step-3-define-train-dataset"><strong>Step 3: Define Train Dataset</strong></h3>
 <p>You can define the dataset using standard <a href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">tf.data.Dataset</a>. Orca also supports <a href="https://spark.apache.org/docs/latest/sql-programming-guide.html">Spark DataFrame</a> and <a href="../data">Orca XShards</a>.</p>
-<pre><code class="python">import tensorflow_datasets as tfds
+<pre><code class="python">import tensorflow as tf
+import tensorflow_datasets as tfds
 
 def preprocess(data):
     data['image'] = tf.cast(data[&quot;image&quot;], tf.float32) / 255.
@@ -142,16 +137,11 @@ mnist_test = mnist_test.map(preprocess)
 <p>First, create an Estimator.</p>
 <pre><code class="python">from zoo.orca.learn.tf.estimator import Estimator
 
-est = Estimator.from_graph(inputs=images,
-                           outputs=logits,
-                           labels=labels,
-                           loss=loss,
-                           optimizer=tf.train.AdamOptimizer(),
-                           metrics={&quot;acc&quot;: acc})
+est = Estimator.from_keras(keras_model=model)
 </code></pre>
 
 <p>Next, fit and evaluate using the Estimator.</p>
-<pre><code class="python">est.fit(data=train_dataset,
+<pre><code class="python">est.fit(data=mnist_train,
         batch_size=320,
         epochs=5,
         validation_data=mnist_test)
