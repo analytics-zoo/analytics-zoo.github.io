@@ -37,9 +37,11 @@
           ]},
           {title: "Step 1: Init Orca Context", url: "#step-1-init-orca-context", children: [
           ]},
-          {title: "Step 2: Define PyTorch Model, Loss function and Optimizer", url: "#step-2-define-pytorch-model-loss-function-and-optimizer", children: [
+          {title: "Step 2: Define the Model", url: "#step-2-define-the-model", children: [
           ]},
-          {title: "Step 3: Fit with Orca PyTorch Estimator", url: "#step-3-fit-with-orca-pytorch-estimator", children: [
+          {title: "Step 3: Define Train Dataset", url: "#step-3-define-train-dataset", children: [
+          ]},
+          {title: "Step 4: Fit with Orca Estimator", url: "#step-4-fit-with-orca-estimator", children: [
           ]},
         ];
 
@@ -67,46 +69,43 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
     <h1><strong>PyTorch Quickstart</strong></h1>
     <hr>
-    <p><strong>In this guide we’ll show you how to organize your PyTorch code into Orca in 3 steps.</strong></p>
-<p>Scaling your Pytorch applications with Orca makes your code:</p>
-<ul>
-<li>Well-organized and flexible</li>
-<li>Easier to reproduce</li>
-<li>Able to perform distributed training without changing your model</li>
-</ul>
+    <p><strong>In this guide we will describe how to scale out PyTorch (v1.5 or above) programs using Orca in 4 simple steps.</strong></p>
 <h3 id="step-0-prepare-environment"><strong>Step 0: Prepare Environment</strong></h3>
-<p>We recommend you to use <a href="https://www.anaconda.com/distribution/#linux">Anaconda</a> to prepare the environments, especially if you want to run on a yarn cluster (yarn-client mode only).</p>
-<p>Download and install latest analytics-zoo whl by the following instructions <a href="../../PythonUserGuide/install/#install-the-latest-nightly-build-wheels-for-pip">here</a>.  </p>
-<p><strong>Note:</strong> Conda environment is required to run on Yarn, but not strictly necessary for running on local.</p>
-<pre><code class="bash">conda create -n zoo python=3.7 # zoo is conda enviroment name, you can set another name you like.
+<p>We recommend you to use <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/">Conda</a> to prepare the environment. Please refer to the <a href="../../PythonUserGuide/install/">install guide</a> for more details.</p>
+<p><strong>Note:</strong> Conda environment is required to run on the distributed cluster, but not strictly necessary for running on the local machine.</p>
+<pre><code class="bash">conda create -n zoo python=3.7 # zoo is conda environment name, you can use any name you like.
 conda activate zoo
-pip install analytics_zoo-${VERSION}-${TIMESTAMP}-py2.py3-none-${OS}_x86_64.whl 
+pip install analytics-zoo # install either version 0.9 or latest nightly build
+pip install torch==1.7.1 torchvision==0.8.2
+pip install six cloudpickle
 pip install jep==3.9.0
-conda install pytorch torchvision cpuonly -c pytorch # command for linux
-conda install pytorch torchvision -c pytorch # command for macOS
 </code></pre>
 
+<p><strong>Note:</strong> The original <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/examples/orca/learn/pytorch/mnist/lenet_mnist.py">source code</a> for the tutorial below only supports torch version &gt;= 1.5.</p>
 <h3 id="step-1-init-orca-context"><strong>Step 1: Init Orca Context</strong></h3>
 <pre><code class="python">from zoo.orca import init_orca_context, stop_orca_context
 
-# run in local mode
-sc = init_orca_context(cores=1, memory=&quot;20g&quot;)
 
-# run in yarn client mode
-sc = init_orca_context(
+if args.cluster_mode == &quot;local&quot;:
+    init_orca_context(cores=1, memory=&quot;2g&quot;)   # run in local mode
+elif args.cluster_mode == &quot;yarn&quot;:
+    init_orca_context(cluster_mode=&quot;k8s&quot;, num_nodes=2, cores=4) # run on K8s cluster
+elif args.cluster_mode == &quot;yarn&quot;:
+    init_orca_context(
     cluster_mode=&quot;yarn-client&quot;, cores=4, num_nodes=2, memory=&quot;2g&quot;,
     driver_memory=&quot;10g&quot;, driver_cores=1,
     conf={&quot;spark.rpc.message.maxSize&quot;: &quot;1024&quot;,
         &quot;spark.task.maxFailures&quot;: &quot;1&quot;,
-        &quot;spark.driver.extraJavaOptions&quot;: &quot;-Dbigdl.failure.retryTimes=1&quot;})
+        &quot;spark.driver.extraJavaOptions&quot;: &quot;-Dbigdl.failure.retryTimes=1&quot;})   # run on Hadoop YARN cluster
 </code></pre>
 
-<p><strong>Note:</strong> You should <code>export HADOOP_CONF_DIR=/path/to/hadoop/conf/dir</code>. </p>
-<p>View <a href="../context">Orca Context</a> for more details.</p>
-<h3 id="step-2-define-pytorch-model-loss-function-and-optimizer"><strong>Step 2: Define PyTorch Model, Loss function and Optimizer</strong></h3>
-<pre><code class="python">import torch.nn as nn
+<p>This is the only place where you need to specify local or distributed mode. View <a href="../context">Orca Context</a> for more details.</p>
+<p><strong>Note:</strong> You should <code>export HADOOP_CONF_DIR=/path/to/hadoop/conf/dir</code> when you run on Hadoop YARN cluster.</p>
+<h3 id="step-2-define-the-model"><strong>Step 2: Define the Model</strong></h3>
+<p>You may define your model, loss and optimizer in the same way as in any standard (single node) PyTorch program.</p>
+<pre><code class="python">import torch
+import torch.nn as nn
 import torch.nn.functional as F
-from bigdl.optim.optimizer import Adam
 
 class LeNet(nn.Module):
     def __init__(self):
@@ -129,11 +128,11 @@ class LeNet(nn.Module):
 model = LeNet()
 model.train()
 criterion = nn.NLLLoss()
-adam = Adam(1e-4)
+adam = torch.optim.Adam(model.parameters(), 0.001)
 </code></pre>
 
-<h3 id="step-3-fit-with-orca-pytorch-estimator"><strong>Step 3: Fit with Orca PyTorch Estimator</strong></h3>
-<p>1)  Define the data in whatever way you want. Orca just needs a <a href="https://pytorch.org/docs/stable/data.html">Pytorch DataLoader</a>, a data creator function or <a href="../data">Orca SparkXShards</a>.</p>
+<h3 id="step-3-define-train-dataset"><strong>Step 3: Define Train Dataset</strong></h3>
+<p>You can define the dataset using standard <a href="https://pytorch.org/docs/stable/data.html">Pytorch DataLoader</a>. Orca also supports a data creator function or <a href="../data">Orca SparkXShards</a>.</p>
 <pre><code class="python">import torch
 from torchvision import datasets, transforms
 
@@ -157,18 +156,23 @@ test_loader = torch.utils.data.DataLoader(
     batch_size=test_batch_size, shuffle=False) 
 </code></pre>
 
-<p>2)  Create an Estimator</p>
+<h3 id="step-4-fit-with-orca-estimator"><strong>Step 4: Fit with Orca Estimator</strong></h3>
+<p>First, Create an Estimator</p>
 <pre><code class="python">from zoo.orca.learn.pytorch import Estimator 
 
-zoo_estimator = Estimator.from_torch(model=model, optimizer=adam, loss=criterion, backend=&quot;bigdl&quot;) 
+est = Estimator.from_torch(model=model, optimizer=adam, loss=criterion)
 </code></pre>
 
-<p>3)  Fit with Estimator</p>
+<p>Next, fit and evaluate using the Estimator</p>
 <pre><code class="python">from zoo.orca.learn.metrics import Accuracy
 from zoo.orca.learn.trigger import EveryEpoch 
 
-zoo_estimator.fit(data=train_loader, epochs=10, validation_data=test_loader,
-                  validation_methods=[Accuracy()], checkpoint_trigger=EveryEpoch()) 
+est.fit(data=train_loader, epochs=10, validation_data=test_loader,
+        validation_methods=[Accuracy()], checkpoint_trigger=EveryEpoch())
+
+result = est.evaluate(data=test_loader, validation_methods=[Accuracy()])
+for r in result:
+    print(str(r))
 </code></pre>
 
 <p><strong>Note:</strong> You should call <code>stop_orca_context()</code> when your application finishes.</p>
