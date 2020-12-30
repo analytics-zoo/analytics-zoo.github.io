@@ -113,30 +113,33 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>A sample Python client program</li>
 </ul>
 <p>Use one command to run Cluster Serving container. (We provide quick start model in older version of docker image, for newest version, please refer to following sections and we remove the model to reduce the docker image size).</p>
-<pre><code>docker run --name cluster-serving -itd --net=host intelanalytics/zoo-cluster-serving:0.9.0
+<pre><code>docker run --name cluster-serving -itd --net=host intelanalytics/zoo-cluster-serving:0.9.1
 </code></pre>
 
-<p>Log into the container using <code>docker exec -it cluster-serving bash</code>, go to Cluster Serving working directory by <code>cd cluster-serving</code>.</p>
-<p>You can see prepared TensorFlow frozen ResNet50 model in <code>resources/model</code> directory with following structure.</p>
+<p>Log into the container using <code>docker exec -it cluster-serving bash</code>, and run</p>
+<pre><code>cd cluster-serving
+cluster-serving-init
+</code></pre>
+
+<p><code>zoo.jar</code> and <code>config.yaml</code> is in your directory now.</p>
+<p>Also, you can see prepared TensorFlow frozen ResNet50 model in <code>resources/model</code> directory with following structure.</p>
 <pre><code>cluster-serving | 
                -- | model
                  -- frozen_graph.pb
                  -- graph_meta.json
 </code></pre>
 
-<p>Modify <code>config.yaml</code> and add following to <code>filter:</code> config</p>
-<pre><code>data:
-  shape: [3,224,224]
-  filter: topN(1)
+<p>Modify <code>config.yaml</code> and add following to <code>model</code> config</p>
+<pre><code>model:
+    path: resources/model
 </code></pre>
 
-<p>This will tell the shape of input image is [3,224,224] and rank Top-1 result of the model output.</p>
 <p>Start Cluster Serving using <code>cluster-serving-start</code>. </p>
 <p>Run python program <code>python3 image_classification_and_object_detection_quick_start.py -i resources/test_image</code> to push data into queue and get inference result. </p>
 <p>Then you can see the inference output in console. </p>
-<pre><code>image: fish1.jpeg, classification-result:class: 5's prob: 0.18204997
-image: dog1.jpeg, classification-result:class: 267's prob: 0.27166227
-image: cat1.jpeg, classification-result:class: 292's prob: 0.32633427
+<pre><code>cat prediction layer shape:  (1000,)
+the class index of prediction of cat image result:  292
+cat prediction layer shape:  (1000,)
 </code></pre>
 
 <p>Wow! You made it!</p>
