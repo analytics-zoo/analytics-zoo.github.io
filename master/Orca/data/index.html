@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Data - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Introduction", url: "#introduction", children: [
+          ]},
+          {title: "XShards", url: "#xshards", children: [
+              {title: "XShards General Operations", url: "#xshards-general-operations" },
+              {title: "XShards with Pandas DataFrame", url: "#xshards-with-pandas-dataframe" },
+              {title: "XShards with Numpy", url: "#xshards-with-numpy" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Data</strong></h1>
+    <hr>
+    <h2 id="introduction"><strong>Introduction</strong></h2>
+<p>Analytics Zoo Orca data provides data-parallel pre-processing support for Python AI.</p>
+<p>It supports data pre-processing from different data sources, like TensorFlow DataSet, PyTorch DataLoader, MXNet DataLoader, etc. and it supports various data formats, like Pandas DataFrame, Numpy, Images, Parquet, etc.</p>
+<p>The distributed backend engine can be <a href="https://spark.apache.org/">Spark</a> or <a href="https://github.com/ray-project/ray">Ray</a>. We now support Spark-based transformations to do the pre-processing, and provide functionality to seamlessly put data to Ray cluster for later training/inference on Ray. </p>
+<hr />
+<h2 id="xshards"><strong>XShards</strong></h2>
+<p>XShards is a collection of data in Orca data API. We provide different backends(Spark and Ray) for XShards.</p>
+<h3 id="xshards-general-operations"><strong>XShards General Operations</strong></h3>
+<h4 id="pre-processing-on-xshards"><strong>Pre-processing on XShards</strong></h4>
+<p>You can do pre-processing with your customized function on XShards using below API:</p>
+<pre><code>transform_shard(func, *args)
+</code></pre>
+
+<ul>
+<li><code>func</code> is your pre-processing function. In this function, you can do the pre-processing with the data using common Python libraries such as Pandas, Numpy, PIL, TensorFlow Dataset, PyTorch DataLoader, etc., then return the processed object. </li>
+<li><code>args</code> are the augurments for the pre-processing function.</li>
+</ul>
+<p>This method would parallelly pre-process each element in the XShards with the customized function, and return a new XShards after transformation.</p>
+<h5 id="sharedvalue"><strong>SharedValue</strong></h5>
+<p>SharedValue can be used to give every node a copy of a large input dataset in an efficient manner.
+This is an example of using SharedValue:</p>
+<pre><code>def func(df, item_set)
+   item_set = item_set.value
+   ....
+
+item_set= ...
+item_set= orca.data.SharedValue(item_set)
+full_data.transform_shard(func, item_set)
+</code></pre>
+
+<h4 id="get-all-the-elements-in-xshards"><strong>Get all the elements in XShards</strong></h4>
+<p>You can get all of elements in XShards with such API:</p>
+<pre><code>collect()
+</code></pre>
+
+<p>This method returns a list that contains all of the elements in this XShards. </p>
+<h4 id="repartition-xshards"><strong>Repartition XShards</strong></h4>
+<p>You can repartition XShards to different number of partitions.</p>
+<pre><code>repartition(num_partitions)
+</code></pre>
+
+<ul>
+<li><code>num_partitions</code> is the target number of partitions for the new XShards.</li>
+</ul>
+<p>The method returns a new XShards that has exactly num_partitions partitions.</p>
+<h4 id="split-xshards"><strong>Split XShards</strong></h4>
+<p>You can split one XShards into multiple XShards. Each element in the XShards needs be a list or tuple with same length.</p>
+<pre><code>split()
+</code></pre>
+
+<p>This method returns splits of XShards. If each element in the input SparkDataShard is not a list or tuple, return list of input SparkDataShards.</p>
+<h4 id="saveload-xshards"><strong>Save/Load XShards</strong></h4>
+<p>You can save XShards on Spark as SequenceFiles of serialized objects.
+The serializer used is pyspark.serializers.PickleSerializer.</p>
+<pre><code>save_pickle(path, batchSize=10)
+</code></pre>
+
+<ul>
+<li><code>path</code> is target save path.</li>
+<li><code>batchSize</code> batch size for each chunk in sequence file.</li>
+</ul>
+<p>And you can load pickle file to XShards if you use save_pickle() to save data.</p>
+<pre><code>zoo.orca.data.XShards.load_pickle(path, minPartitions=None)
+</code></pre>
+
+<ul>
+<li><code>path</code>: The pickle file path/directory.</li>
+<li><code>minPartitions</code>: The minimum partitions for the XShards.</li>
+</ul>
+<p>This method return an XShards object from pickle files.</p>
+<h4 id="move-xshards-on-spark-to-ray-backend"><strong>Move XShards on Spark to Ray backend</strong></h4>
+<p>You can put data of the XShards on Spark to Ray cluster object store for later processing on Ray.</p>
+<pre><code>to_ray()
+</code></pre>
+
+<p>This method save data of XShards on Spark to Ray object store, and return a new RayXShards which contains plasma ObjectID, the plasma object_store_address and the node IP on each partition.</p>
+<h3 id="xshards-with-pandas-dataframe"><strong>XShards with Pandas DataFrame</strong></h3>
+<h4 id="read-data-into-xshards"><strong>Read data into XShards</strong></h4>
+<p>You can read csv/json files/directory into XShards with such APIs:</p>
+<pre><code>zoo.orca.data.pandas.read_csv(file_path, **kwargs)
+
+zoo.orca.data.pandas.read_json(file_path, **kwargs)
+</code></pre>
+
+<ul>
+<li>The <code>file_path</code> could be a csv/json file, list of multiple csv/json file paths, a directory containing csv/json files. Supported file systems are local file system,<code>hdfs</code>, and <code>s3</code>.</li>
+<li><code>**kwargs</code> is read_csv/read_json options supported by pandas.</li>
+<li>You can use <code>OrcaContext.pandas_read_backend = "pandas"</code> to switch to pandas backend. Reference: <a href="https://analytics-zoo.github.io/master/#Orca/context/">Orca Context</a></li>
+</ul>
+<p>After calling these APIs, you would get a XShards of Pandas DataFrame on Spark.</p>
+<p><strong>For Cloudera YARN client mode users:</strong>
+If you use <code>pandas</code> as pandas_read_backend, you should configure <code>ARROW_LIBHDFS_DIR</code> before calling read_csv:
+1. use <code>locate libhdfs.so</code> to find libhdfs.so
+2. <code>export ARROW_LIBHDFS_DIR=/opt/cloudera/parcels/CDH-5.15.2-1.cdh5.15.2.p0.3/lib64</code> (replace with the result of <code>locate libhdfs.so</code>)
+3. use <code>--conf "spark.executorEnv.ARROW_LIBHDFS_DIR=/opt/cloudera/parcels/CDH-5.15.2-1.cdh5.15.2.p0.3/lib64"</code> to export the environment variable to all executors.</p>
+<h4 id="partition-by-pandas-dataframe-columns"><strong>Partition by Pandas DataFrame columns</strong></h4>
+<p>You can re-partition XShards of Pandas DataFrame with specified columns.</p>
+<pre><code>partition_by(cols, num_partitions=None)
+</code></pre>
+
+<ul>
+<li><code>cols</code>: DataFrame columns to partition by.</li>
+<li><code>num_partitions</code>: target number of partitions. If not specified, the new XShards would keep the current partition number.</li>
+</ul>
+<p>This method return a new XShards partitioned using the specified columns.</p>
+<h4 id="get-unique-element-list-of-xshards-of-pandas-series"><strong>Get unique element list of XShards of Pandas Series</strong></h4>
+<p>You can get a unique list of elements of this XShards. This is useful when you want to count/get unique set of some column in the XShards of Pandas DataFrame. </p>
+<pre><code>unique()
+</code></pre>
+
+<p>This method return a unique list of elements of the XShards of Pandas Series.</p>
+<h3 id="xshards-with-numpy"><strong>XShards with Numpy</strong></h3>
+<h4 id="load-local-numpy-data-to-xshards"><strong>Load local numpy data to XShards</strong></h4>
+<p>You can partition local in memory data and form an XShards on Spark.</p>
+<pre><code>zoo.orca.data.XShards.partition(data)
+</code></pre>
+
+<ul>
+<li><code>data</code>: The local data can be numpy.ndarray, a tuple, list, dict of numpy.ndarray, or a nested structure made of tuple, list, dict with ndarray as the leaf value.</li>
+</ul>
+<p>This method returns a XShards which dispatch local data in parallel on Spark.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
