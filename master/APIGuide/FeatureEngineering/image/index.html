@@ -116,7 +116,7 @@ You can read image data as <code>ImageSet</code> from local/distributed image pa
 <ul>
 <li>data: array of ImageFeature</li>
 </ul>
-<pre><code>def read(path: String, sc: SparkContext = null, minPartitions: Int = 1, resizeH: Int = -1, resizeW: Int = -1): ImageSet
+<pre><code>def read(path: String, sc: SparkContext = null, minPartitions: Int = 1, resizeH: Int = -1, resizeW: Int = -1, imageCodec: Int = Imgcodecs.CV_LOAD_IMAGE_UNCHANGED, withLabel: Boolean = false, oneBasedLabel: Boolean = true): ImageSet
 </code></pre>
 
 <p>Read images as Image Set.
@@ -128,6 +128,9 @@ If sc is null, Read image as LocalImageSet from local file system</p>
 <li>minPartitions: A suggestion value of the minimal splitting number for input data.</li>
 <li>resizeH: height after resize, by default is -1 which will not resize the image</li>
 <li>resizeW: width after resize, by default is -1 which will not resize the image</li>
+<li>imageCodec: specifying the color type of a loaded image, same as in OpenCV.imread. By default is <code>Imgcodecs.CV_LOAD_IMAGE_UNCHANGED</code>.</li>
+<li>withLabel: whether to treat folders in the path as image classification labels and read the labels into ImageSet.</li>
+<li>oneBasedLabel: whether the labels start from 1. If true, the labels starts from 1, else the labels start from 0.</li>
 </ul>
 <p>Example:</p>
 <pre><code>// create LocalImageSet from an image folder
@@ -141,7 +144,7 @@ val distributedImageSet2 = ImageSet.read(&quot;/tmp/image/&quot;, sc, 2)
 <pre><code>class zoo.feature.image.ImageSet
 </code></pre>
 
-<pre><code>read(path, sc=None, min_partitions=1, resize_height=-1, resize_width=-1, bigdl_type=&quot;float&quot;)
+<pre><code>read(path, sc=None, min_partitions=1, resize_height=-1, resize_width=-1, image_codec=-1, with_label=False, one_based_label=True, bigdl_type=&quot;float&quot;)
 </code></pre>
 
 <p>Read images as Image Set.
@@ -153,6 +156,9 @@ If sc is null, Read image as LocalImageSet from local file system</p>
 <li>min_partitions: A suggestion value of the minimal splitting number for input data.</li>
 <li>resize_height height after resize, by default is -1 which will not resize the image</li>
 <li>resize_width width after resize, by default is -1 which will not resize the image</li>
+<li>image_codec: specifying the color type of a loaded image, same as in OpenCV.imread. By default is -1(<code>Imgcodecs.CV_LOAD_IMAGE_UNCHANGED</code>).</li>
+<li>with_label: whether to treat folders in the path as image classification labels and read the labels into ImageSet.</li>
+<li>one_based_label: whether the labels start from 1. By default it is true, else the labels start from 0.</li>
 </ul>
 <p>Python example:</p>
 <pre><code class="python"># create LocalImageSet from an image folder
