@@ -219,10 +219,11 @@ params:
 
 <p><strong><em>Tensorflow Frozen Graph</em></strong></p>
 <pre><code>|-- model
-   |-- frozen_graph.pb
+   |-- frozen_inference_graph.pb
    |-- graph_meta.json
 </code></pre>
 
+<p><strong>note:</strong> <code>.pb</code> is the weight file which name must be <code>frozen_inference_graph.pb</code>, <code>.json</code> is the inputs and outputs definition file which name must be <code>graph_meta.json</code>, with contents like <code>{"input_names":["input:0"],"output_names":["output:0"]}</code></p>
 <p><strong><em>Tensorflow Checkpoint</em></strong>
 Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/tensorflow/freeze_checkpoint">freeze checkpoint example</a></p>
 <p><strong>Pytorch</strong></p>
