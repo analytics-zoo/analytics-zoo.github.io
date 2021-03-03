@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>TensorFlow Keras Quickstart - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Step 0: Prepare Environment", url: "#step-0-prepare-environment", children: [
+          ]},
+          {title: "Step 1: Init Orca Context", url: "#step-1-init-orca-context", children: [
+          ]},
+          {title: "Step 2: Define the Model", url: "#step-2-define-the-model", children: [
+          ]},
+          {title: "Step 3: Define Train Dataset", url: "#step-3-define-train-dataset", children: [
+          ]},
+          {title: "Step 4: Fit with Orca Estimator", url: "#step-4-fit-with-orca-estimator", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>TensorFlow Keras Quickstart</strong></h1>
+    <hr>
+    <p><strong>In this guide we will describe how to scale out Keras (v2.3) programs using Orca in 4 simple steps.</strong></p>
+<p><a target="_blank" href="https://colab.research.google.com/github/intel-analytics/analytics-zoo/blob/master/docs/docs/colab-notebook/orca/quickstart/keras_lenet_mnist.ipynb"><img src="https://www.tensorflow.org/images/colab_logo_32px.png" />Run in Google Colab</a>&nbsp; <a target="_blank" href="https://github.com/intel-analytics/analytics-zoo/blob/master/docs/docs/colab-notebook/orca/quickstart/keras_lenet_mnist.ipynb"><img src="https://www.tensorflow.org/images/GitHub-Mark-32px.png" />View source on GitHub</a></p>
+<h3 id="step-0-prepare-environment"><strong>Step 0: Prepare Environment</strong></h3>
+<p>We recommend using <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/">Conda</a> to prepare the environment. Please refer to the <a href="https://analytics-zoo.readthedocs.io/en/latest/doc/UserGuide/python.html">install guide</a> for more details.</p>
+<p><strong>Note:</strong> Conda environment is required to run on the distributed cluster, but not strictly necessary for running on the local machine.</p>
+<pre><code class="bash">conda create -n zoo python=3.7 # &quot;zoo&quot; is conda environment name, you can use any name you like.
+conda activate zoo
+pip install analytics_zoo-${VERSION} # install either version 0.9 or latest nightly build
+pip install tensorflow==1.15.0
+pip install tensorflow-datasets==2.1.0
+pip install psutil
+pip install pandas
+pip install scikit-learn
+</code></pre>
+
+<h3 id="step-1-init-orca-context"><strong>Step 1: Init Orca Context</strong></h3>
+<pre><code class="python">if args.cluster_mode == &quot;local&quot;:
+    init_orca_context(cluster_mode=&quot;local&quot;, cores=4)# run in local mode
+elif args.cluster_mode == &quot;k8s&quot;:
+    init_orca_context(cluster_mode=&quot;k8s&quot;, num_nodes=2, cores=2) # run on K8s cluster
+elif args.cluster_mode == &quot;yarn&quot;:
+    init_orca_context(cluster_mode=&quot;yarn-client&quot;, num_nodes=2, cores=2, driver_memory=&quot;6g&quot;) # run on Hadoop YARN cluster
+</code></pre>
+
+<p>This is the only place where you need to specify local or distributed mode. View <a href="https://analytics-zoo.readthedocs.io/en/latest/doc/Orca/Overview/orca-context.html">Orca Context</a> for more details.</p>
+<p><strong>Note:</strong> You should <code>export HADOOP_CONF_DIR=/path/to/hadoop/conf/dir</code> when you run on Hadoop YARN cluster.</p>
+<h3 id="step-2-define-the-model"><strong>Step 2: Define the Model</strong></h3>
+<p>You may define your model, loss and metrics in the same way as in any standard (single node) Keras program.</p>
+<pre><code class="python">from tensorflow import keras
+
+model = keras.Sequential(
+    [keras.layers.Conv2D(20, kernel_size=(5, 5), strides=(1, 1), activation='tanh',
+                         input_shape=(28, 28, 1), padding='valid'),
+     keras.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='valid'),
+     keras.layers.Conv2D(50, kernel_size=(5, 5), strides=(1, 1), activation='tanh',
+                         padding='valid'),
+     keras.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='valid'),
+     keras.layers.Flatten(),
+     keras.layers.Dense(500, activation='tanh'),
+     keras.layers.Dense(10, activation='softmax'),
+     ]
+)
+
+model.compile(optimizer=tf.keras.optimizers.RMSprop(),
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+</code></pre>
+
+<h3 id="step-3-define-train-dataset"><strong>Step 3: Define Train Dataset</strong></h3>
+<p>You can define the dataset using standard <a href="https://www.tensorflow.org/api_docs/python/tf/data/Dataset">tf.data.Dataset</a>. Orca also supports <a href="https://spark.apache.org/docs/latest/sql-programming-guide.html">Spark DataFrame</a> and <a href="../data">Orca XShards</a>.</p>
+<pre><code class="python">import tensorflow as tf
+import tensorflow_datasets as tfds
+
+def preprocess(data):
+    data['image'] = tf.cast(data[&quot;image&quot;], tf.float32) / 255.
+    return data['image'], data['label']
+
+# get DataSet
+mnist_train = tfds.load(name=&quot;mnist&quot;, split=&quot;train&quot;, data_dir=dataset_dir)
+mnist_test = tfds.load(name=&quot;mnist&quot;, split=&quot;test&quot;, data_dir=dataset_dir)
+
+mnist_train = mnist_train.map(preprocess)
+mnist_test = mnist_test.map(preprocess)
+</code></pre>
+
+<h3 id="step-4-fit-with-orca-estimator"><strong>Step 4: Fit with Orca Estimator</strong></h3>
+<p>First, create an Estimator.</p>
+<pre><code class="python">from zoo.orca.learn.tf.estimator import Estimator
+
+est = Estimator.from_keras(keras_model=model)
+</code></pre>
+
+<p>Next, fit and evaluate using the Estimator.</p>
+<pre><code class="python">est.fit(data=mnist_train,
+        batch_size=320,
+        epochs=5,
+        validation_data=mnist_test)
+
+result = est.evaluate(mnist_test)
+print(result)
+</code></pre>
+
+<p>That's it, the same code can run seamlessly in your local laptop and the distribute K8s or Hadoop cluster.</p>
+<p><strong>Note:</strong> You should call <code>stop_orca_context()</code> when your program finishes.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

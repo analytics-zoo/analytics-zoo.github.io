@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>TCNForecaster - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "TCNForecaster", url: "#tcnforecaster", children: [
+              {title: "Introduction", url: "#introduction" },
+              {title: "Method", url: "#method" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>TCNForecaster</strong></h1>
+    <hr>
+    <h1 id="tcnforecaster">TCNForecaster</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Temporal Convolutional Networks (TCN) is a neural network that use convolutional architecture rather than recurrent networks. It supports multi-step and multi-variant cases. Causal Convolutions enables large scale parallel computing which makes TCN has less inference time than RNN based model such as LSTM.</p>
+<h2 id="method">Method</h2>
+<h3 id="arguments">Arguments</h3>
+<ul>
+<li><strong><code>num_channels</code></strong>: Specify the convolutional layer filter number in TCN's encoder.</li>
+<li><strong><code>kernel_size</code></strong>: Specify convolutional layer filter height in TCN's encoder.</li>
+<li><strong><code>dropout</code></strong>: Specify the dropout close possibility (i.e. the close possibility to a neuron).</li>
+<li><strong><code>optimizer</code></strong>: Specify the optimizer used for training. This value defaults to Adam.</li>
+<li><strong><code>lr</code></strong>: Specify the learning rate. This value defaults to 0.001.</li>
+</ul>
+<h3 id="__init__">__init__</h3>
+<pre><code class="python">TCNForecaster(num_channels=[30]*8,
+              kernel_size=7,
+              dropout=0.2,
+              optimizer=&quot;Adam&quot;,
+              lr=0.001,
+              )
+</code></pre>
+
+<h3 id="fit">fit</h3>
+<pre><code class="python">fit(x, y, epochs=1, metric=&quot;mse&quot;, batch_size=32)
+</code></pre>
+
+<ul>
+<li><strong><code>x</code></strong>: A numpy array with size (num_samples, input_time_steps, input_feature_dim).</li>
+<li><strong><code>y</code></strong>: A numpy array with size (num_samples, output_time_steps, output_feature_dim).</li>
+<li><strong><code>epochs</code></strong>: Number of epochs you want to train.</li>
+<li><strong><code>batch_size</code></strong>: Number of batch size you want to train.</li>
+<li><strong><code>metric</code></strong>: The metric for training data.</li>
+</ul>
+<h3 id="evaluate">evaluate</h3>
+<pre><code class="python">evaluate(x, y, metric=['mse'])
+</code></pre>
+
+<ul>
+<li><strong><code>x</code></strong>: A numpy array with size (num_samples, input_time_steps, input_feature_dim).</li>
+<li><strong><code>y</code></strong>: A numpy array with size (num_samples, output_time_steps, output_feature_dim).</li>
+<li><strong><code>metric</code></strong>: The metric for test/valid data.</li>
+</ul>
+<h3 id="predict">predict</h3>
+<pre><code class="python">predict(x)
+</code></pre>
+
+<ul>
+<li><strong><code>x</code></strong>: A numpy array with size (num_samples, input_time_steps, input_feature_dim).</li>
+</ul>
+<h3 id="save">save</h3>
+<pre><code class="python">save(checkpoint_file)
+</code></pre>
+
+<ul>
+<li><strong><code>checkpoint_file</code></strong>: The location you want to save the forecaster</li>
+</ul>
+<h3 id="restore">restore</h3>
+<pre><code class="python">restore(checkpoint_file)
+</code></pre>
+
+<ul>
+<li><strong><code>checkpoint_file</code></strong>: The location you want to save the forecaster</li>
+</ul>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
