@@ -182,10 +182,6 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 <h5 id="requirements">Requirements</h5>
 <p>Non-Docker users need to install <a href="https://archive.apache.org/dist/flink/flink-1.10.0/">Flink 1.10.0+</a>, 1.10.0 by default, <a href="https://redis.io/topics/quickstart">Redis 5.0.0+</a>, 5.0.5 by default.</p>
 <p>After preparing dependencies above, make sure the environment variable <code>$FLINK_HOME</code> (/path/to/flink-FLINK_VERSION-bin), <code>$REDIS_HOME</code>(/path/to/redis-REDIS_VERSION) is set before following steps. </p>
-<h5 id="install-cluster-serving-by-download-release">Install Cluster Serving by download release</h5>
-<p>For users who need to deploy and start Cluster Serving, download Cluster Serving zip <code>analytics-zoo-xxx-cluster-serving-all.zip</code> from <a href="https://oss.sonatype.org/content/repositories/snapshots/com/intel/analytics/zoo/analytics-zoo-bigdl_0.12.1-spark_2.4.3/0.10.0-SNAPSHOT/">here</a> and unzip it, then run <code>source cluster-serving-setup.sh</code>.
-For users who need to do inference, aka. predict data only, download Analytics Zoo python zip <code>analytics-zoo-xxx-cluster-serving-python.zip</code> from <a href="https://oss.sonatype.org/content/repositories/snapshots/com/intel/analytics/zoo/analytics-zoo-bigdl_0.12.1-spark_2.4.3/0.10.0-SNAPSHOT/">here</a> and run <code>export PYTHONPATH=$PYTHONPATH:/path/to/zip</code> to add this zip to <code>PYTHONPATH</code> environment variable.</p>
-<h5 id="install-cluster-serving-by-pip">Install Cluster Serving by pip</h5>
 <p>Download package from <a href="https://sourceforge.net/projects/analytics-zoo/files/cluster-serving-py/">here</a>, run following command to install Cluster Serving</p>
 <pre><code>pip install analytics_zoo_serving-*.whl
 </code></pre>
@@ -262,6 +258,17 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
 <ul>
 <li>core_number: the <strong>batch size</strong> you use for model inference, usually the core number of your machine is recommended. Thus you could just provide your machine core number at this field. We recommend this value to be not smaller than 4 and not larger than 512. In general, using larger batch size means higher throughput, but also increase the latency between batches accordingly.</li>
 </ul>
+<h4 id="high-performance-configuration-recommended">High Performance Configuration Recommended</h4>
+<p>Tensorflow, Pytorch, BigDL model recommend following configuration</p>
+<pre><code>params:  
+  # default: model number will auto-adapt to core_number, do not set it if not sure about the behavior
+  model_number: core_number of your machine
+</code></pre>
+
+<p>OpenVINO model recommend following configuration</p>
+<pre><code>export OMP_NUM_THREADS=core_number of your machine
+</code></pre>
+
 <h3 id="3-launching-service">3. Launching Service</h3>
 <p>This section is about how to start and stop Cluster Serving. </p>
 <h4 id="start">Start</h4>
@@ -278,6 +285,16 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
 <pre><code>cluster-serving-shutdown
 </code></pre>
 
+<h4 id="start-multiple-serving">Start Multiple Serving</h4>
+<p>To run multiple Cluster Serving job, e.g. the second job name is <code>serving2</code>, then use following configuration</p>
+<pre><code>model:
+  # model path must be provided
+  path: /path/to/model
+  # name, default is serving_stream, you need to specify if running multiple servings
+  name: serving2
+</code></pre>
+
+<p>then call <code>cluster-serving-start</code> in this directory</p>
 <p>If you are using Docker, you could also run <code>docker rm</code> to shutdown Cluster Serving.</p>
 <h4 id="http-server-for-sync-api-only">HTTP Server (for sync API only)</h4>
 <p>If you want to use sync API for inference, you should start a provided HTTP server first. User can submit HTTP requests to the HTTP server through RESTful APIs. The HTTP server will parse the input requests and pub them to Redis input queues, then retrieve the output results and render them as json results in HTTP responses.</p>
