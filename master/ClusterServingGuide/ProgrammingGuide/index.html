@@ -285,6 +285,7 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
 <pre><code>cluster-serving-shutdown
 </code></pre>
 
+<p>If you are using Docker, you could also run <code>docker rm</code> to shutdown Cluster Serving.</p>
 <h4 id="start-multiple-serving">Start Multiple Serving</h4>
 <p>To run multiple Cluster Serving job, e.g. the second job name is <code>serving2</code>, then use following configuration</p>
 <pre><code>model:
@@ -294,8 +295,13 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
   name: serving2
 </code></pre>
 
-<p>then call <code>cluster-serving-start</code> in this directory</p>
-<p>If you are using Docker, you could also run <code>docker rm</code> to shutdown Cluster Serving.</p>
+<p>then call <code>cluster-serving-start</code> in this directory would start another Cluster Serving job with this new configuration.</p>
+<p>Then, in Python API, pass <code>name=serving2</code> argument during creating object, e.g.</p>
+<pre><code>input_queue=InputQueue(name=serving2)
+output_queue=OutputQueue(name=serving2)
+</code></pre>
+
+<p>Then the Python API would interact with job <code>serving2</code>.</p>
 <h4 id="http-server-for-sync-api-only">HTTP Server (for sync API only)</h4>
 <p>If you want to use sync API for inference, you should start a provided HTTP server first. User can submit HTTP requests to the HTTP server through RESTful APIs. The HTTP server will parse the input requests and pub them to Redis input queues, then retrieve the output results and render them as json results in HTTP responses.</p>
 <h5 id="prepare">Prepare</h5>
