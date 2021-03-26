@@ -403,16 +403,16 @@ assert 'prediction' in predictions[0]
 
 <h4 id="checkpointing-and-resume-training"><strong>Checkpointing and Resume Training</strong></h4>
 <p>During training, Orca TF Estimator would save Orca checkpoint every epoch. You can also specify <code>checkpoint_trigger</code> in fit() to set checkpoint interval. The Orca checckpoints are saved in <code>model_dir</code> which is specified when you create estimator. You can load previous Orca checkpoint and resume train with it with such APIs:</p>
-<pre><code>load_latest_orca_checkpoint(path)
+<pre><code>load_orca_checkpoint(path, version=None)
 </code></pre>
 
 <ul>
 <li>path: directory containing Orca checkpoint files.</li>
 </ul>
-<p>This method load latest checkpoint under specified directory.</p>
+<p>With <code>version=None</code>, this method load latest checkpoint under specified directory.</p>
 <p>E.g.</p>
 <pre><code>est = Estimator.from_keras(keras_model=model, model_dir=model_dir)
-est.load_latest_orca_checkpoint(model_dir)
+est.load_orca_checkpoint(model_dir, version=None)
 est.fit(data=data_shard,
         batch_size=8,
         epochs=10,
