@@ -16,7 +16,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="zoo.zouwu.model.forecast package" href="zoo.zouwu.model.forecast.html" />
+    <link rel="next" title="zoo.zouwu.model.anomaly package" href="zoo.zouwu.model.anomaly.html" />
     <link rel="prev" title="zoo.zouwu.feature package" href="zoo.zouwu.feature.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -26,7 +26,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="zoo.zouwu.model.forecast.html" title="zoo.zouwu.model.forecast package"
+          <a href="zoo.zouwu.model.anomaly.html" title="zoo.zouwu.model.anomaly package"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="zoo.zouwu.feature.html" title="zoo.zouwu.feature package"
@@ -43,7 +43,14 @@
 <li><a class="reference internal" href="#">zoo.zouwu.model package</a><ul>
 <li><a class="reference internal" href="#subpackages">Subpackages</a></li>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#zoo-zouwu-model-anomaly-module">zoo.zouwu.model.anomaly module</a></li>
+<li><a class="reference internal" href="#zoo-zouwu-model-mtnet-keras-module">zoo.zouwu.model.MTNet_keras module</a></li>
+<li><a class="reference internal" href="#zoo-zouwu-model-seq2seq-module">zoo.zouwu.model.Seq2Seq module</a></li>
+<li><a class="reference internal" href="#zoo-zouwu-model-seq2seq-pytorch-module">zoo.zouwu.model.Seq2Seq_pytorch module</a></li>
+<li><a class="reference internal" href="#zoo-zouwu-model-vanillalstm-module">zoo.zouwu.model.VanillaLSTM module</a></li>
+<li><a class="reference internal" href="#zoo-zouwu-model-vanillalstm-pytorch-module">zoo.zouwu.model.VanillaLSTM_pytorch module</a></li>
+<li><a class="reference internal" href="#zoo-zouwu-model-tcmf-model-module">zoo.zouwu.model.tcmf_model module</a></li>
+<li><a class="reference internal" href="#zoo-zouwu-model-tcn-module">zoo.zouwu.model.tcn module</a></li>
+<li><a class="reference internal" href="#zoo-zouwu-model-time-sequence-module">zoo.zouwu.model.time_sequence module</a></li>
 <li><a class="reference internal" href="#module-contents">Module contents</a></li>
 </ul>
 </li>
@@ -53,8 +60,8 @@
   <p class="topless"><a href="zoo.zouwu.feature.html"
                         title="previous chapter">zoo.zouwu.feature package</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="zoo.zouwu.model.forecast.html"
-                        title="next chapter">zoo.zouwu.model.forecast package</a></p>
+  <p class="topless"><a href="zoo.zouwu.model.anomaly.html"
+                        title="next chapter">zoo.zouwu.model.anomaly package</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -88,41 +95,13 @@
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="zoo.zouwu.model.anomaly.html">zoo.zouwu.model.anomaly package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.anomaly.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.anomaly.html#zoo-zouwu-model-anomaly-anomaly-module">zoo.zouwu.model.anomaly.anomaly module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.anomaly.html#module-contents">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="zoo.zouwu.model.forecast.html">zoo.zouwu.model.forecast package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.forecast.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html">zoo.zouwu.model.forecast.model package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="zoo.zouwu.model.forecast.model.tcmf.html">zoo.zouwu.model.forecast.model.tcmf package</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="zoo.zouwu.model.forecast.model.tcmf.html#submodules">Submodules</a></li>
-<li class="toctree-l6"><a class="reference internal" href="zoo.zouwu.model.forecast.model.tcmf.html#zoo-zouwu-model-forecast-model-tcmf-deepglo-module">zoo.zouwu.model.forecast.model.tcmf.DeepGLO module</a></li>
-<li class="toctree-l6"><a class="reference internal" href="zoo.zouwu.model.forecast.model.tcmf.html#zoo-zouwu-model-forecast-model-tcmf-data-loader-module">zoo.zouwu.model.forecast.model.tcmf.data_loader module</a></li>
-<li class="toctree-l6"><a class="reference internal" href="zoo.zouwu.model.forecast.model.tcmf.html#zoo-zouwu-model-forecast-model-tcmf-local-model-module">zoo.zouwu.model.forecast.model.tcmf.local_model module</a></li>
-<li class="toctree-l6"><a class="reference internal" href="zoo.zouwu.model.forecast.model.tcmf.html#zoo-zouwu-model-forecast-model-tcmf-local-model-distributed-trainer-module">zoo.zouwu.model.forecast.model.tcmf.local_model_distributed_trainer module</a></li>
-<li class="toctree-l6"><a class="reference internal" href="zoo.zouwu.model.forecast.model.tcmf.html#zoo-zouwu-model-forecast-model-tcmf-time-module">zoo.zouwu.model.forecast.model.tcmf.time module</a></li>
-<li class="toctree-l6"><a class="reference internal" href="zoo.zouwu.model.forecast.model.tcmf.html#module-contents">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#zoo-zouwu-model-forecast-model-mtnet-keras-module">zoo.zouwu.model.forecast.model.MTNet_keras module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#zoo-zouwu-model-forecast-model-seq2seq-module">zoo.zouwu.model.forecast.model.Seq2Seq module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#zoo-zouwu-model-forecast-model-seq2seq-pytorch-module">zoo.zouwu.model.forecast.model.Seq2Seq_pytorch module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#zoo-zouwu-model-forecast-model-vanillalstm-module">zoo.zouwu.model.forecast.model.VanillaLSTM module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#zoo-zouwu-model-forecast-model-vanillalstm-pytorch-module">zoo.zouwu.model.forecast.model.VanillaLSTM_pytorch module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#zoo-zouwu-model-forecast-model-xgboost-module">zoo.zouwu.model.forecast.model.XGBoost module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#zoo-zouwu-model-forecast-model-abstract-module">zoo.zouwu.model.forecast.model.abstract module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#zoo-zouwu-model-forecast-model-base-keras-model-module">zoo.zouwu.model.forecast.model.base_keras_model module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#zoo-zouwu-model-forecast-model-base-pytorch-model-module">zoo.zouwu.model.forecast.model.base_pytorch_model module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#zoo-zouwu-model-forecast-model-model-builder-module">zoo.zouwu.model.forecast.model.model_builder module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#zoo-zouwu-model-forecast-model-tcmf-model-module">zoo.zouwu.model.forecast.model.tcmf_model module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#zoo-zouwu-model-forecast-model-tcn-module">zoo.zouwu.model.forecast.model.tcn module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#zoo-zouwu-model-forecast-model-time-sequence-module">zoo.zouwu.model.forecast.model.time_sequence module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="zoo.zouwu.model.forecast.model.html#module-contents">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.forecast.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.forecast.html#zoo-zouwu-model-forecast-abstract-module">zoo.zouwu.model.forecast.abstract module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.forecast.html#zoo-zouwu-model-forecast-lstm-forecaster-module">zoo.zouwu.model.forecast.lstm_forecaster module</a></li>
@@ -133,14 +112,45 @@
 <li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.forecast.html#module-contents">Module contents</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="zoo.zouwu.model.tcmf.html">zoo.zouwu.model.tcmf package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.tcmf.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.tcmf.html#zoo-zouwu-model-tcmf-deepglo-module">zoo.zouwu.model.tcmf.DeepGLO module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.tcmf.html#zoo-zouwu-model-tcmf-data-loader-module">zoo.zouwu.model.tcmf.data_loader module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.tcmf.html#zoo-zouwu-model-tcmf-local-model-module">zoo.zouwu.model.tcmf.local_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.tcmf.html#zoo-zouwu-model-tcmf-local-model-distributed-trainer-module">zoo.zouwu.model.tcmf.local_model_distributed_trainer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.tcmf.html#zoo-zouwu-model-tcmf-time-module">zoo.zouwu.model.tcmf.time module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zoo.zouwu.model.tcmf.html#module-contents">Module contents</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="zoo-zouwu-model-anomaly-module">
-<h2>zoo.zouwu.model.anomaly module<a class="headerlink" href="#zoo-zouwu-model-anomaly-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="zoo-zouwu-model-mtnet-keras-module">
+<h2>zoo.zouwu.model.MTNet_keras module<a class="headerlink" href="#zoo-zouwu-model-mtnet-keras-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="zoo-zouwu-model-seq2seq-module">
+<h2>zoo.zouwu.model.Seq2Seq module<a class="headerlink" href="#zoo-zouwu-model-seq2seq-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="zoo-zouwu-model-seq2seq-pytorch-module">
+<h2>zoo.zouwu.model.Seq2Seq_pytorch module<a class="headerlink" href="#zoo-zouwu-model-seq2seq-pytorch-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="zoo-zouwu-model-vanillalstm-module">
+<h2>zoo.zouwu.model.VanillaLSTM module<a class="headerlink" href="#zoo-zouwu-model-vanillalstm-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="zoo-zouwu-model-vanillalstm-pytorch-module">
+<h2>zoo.zouwu.model.VanillaLSTM_pytorch module<a class="headerlink" href="#zoo-zouwu-model-vanillalstm-pytorch-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="zoo-zouwu-model-tcmf-model-module">
+<h2>zoo.zouwu.model.tcmf_model module<a class="headerlink" href="#zoo-zouwu-model-tcmf-model-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="zoo-zouwu-model-tcn-module">
+<h2>zoo.zouwu.model.tcn module<a class="headerlink" href="#zoo-zouwu-model-tcn-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="zoo-zouwu-model-time-sequence-module">
+<h2>zoo.zouwu.model.time_sequence module<a class="headerlink" href="#zoo-zouwu-model-time-sequence-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-contents">
 <h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
@@ -160,7 +170,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="zoo.zouwu.model.forecast.html" title="zoo.zouwu.model.forecast package"
+          <a href="zoo.zouwu.model.anomaly.html" title="zoo.zouwu.model.anomaly package"
              >next</a> |</li>
         <li class="right" >
           <a href="zoo.zouwu.feature.html" title="zoo.zouwu.feature package"

@@ -38,6 +38,7 @@
               {title: "Workflow Overview", url: "#workflow-overview" },
               {title: "Deploy your Own Cluster Serving", url: "#deploy-your-own-cluster-serving" },
               {title: "Optional Operations", url: "#optional-operations" },
+              {title: "Others", url: "#others" },
           ]},
         ];
 
@@ -90,7 +91,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><a href="#3-launching-service">Launching Service</a></p>
 </li>
 <li>
-<p><a href="#4-model-inference">Model inference</a></p>
+<p><a href="#4-model-inference">Model Inference</a></p>
 </li>
 <li>
 <p><a href="#optional-operations">Optional Operations</a></p>
@@ -101,6 +102,14 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>
 <p><a href="#logs-and-visualization">Logs and Visualization</a></p>
 </li>
+</ul>
+</li>
+<li>
+<p><a href="#others">Others</a></p>
+<ul>
+<li><a href="#transfer-local-code-to-cluster-serving">Transfer Local Code to Cluster Serving</a></li>
+<li><a href="#debug-guide">Debug Guide</a></li>
+<li><a href="#contribution-guide">Contribution Guide</a></li>
 </ul>
 </li>
 </ul>
@@ -175,13 +184,16 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 <pre><code>docker exec -it cluster-serving bash
 </code></pre>
 
-<p><code>cd ./cluster-serving</code>, you can see all the environments are prepared.</p>
-<h5 id="yarn-user">Yarn user</h5>
-<p>For Yarn user using docker, start Flink on Yarn inside the container. The other operations are the same.</p>
+<p><code>cd ./cluster-serving</code>, you can see all the environments prepared.</p>
 <h4 id="manual-installation">Manual installation</h4>
 <h5 id="requirements">Requirements</h5>
 <p>Non-Docker users need to install <a href="https://archive.apache.org/dist/flink/flink-1.10.0/">Flink 1.10.0+</a>, 1.10.0 by default, <a href="https://redis.io/topics/quickstart">Redis 5.0.0+</a>, 5.0.5 by default.</p>
 <p>After preparing dependencies above, make sure the environment variable <code>$FLINK_HOME</code> (/path/to/flink-FLINK_VERSION-bin), <code>$REDIS_HOME</code>(/path/to/redis-REDIS_VERSION) is set before following steps. </p>
+<h5 id="install-release-version">Install release version</h5>
+<pre><code>pip install analytics-zoo-serving
+</code></pre>
+
+<h5 id="install-nightly-version">Install nightly version</h5>
 <p>Download package from <a href="https://sourceforge.net/projects/analytics-zoo/files/cluster-serving-py/">here</a>, run following command to install Cluster Serving</p>
 <pre><code>pip install analytics_zoo_serving-*.whl
 </code></pre>
@@ -189,7 +201,12 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 <p>For users who need to deploy and start Cluster Serving, run <code>cluster-serving-init</code> to download and prepare dependencies.</p>
 <p>For users who need to do inference, aka. predict data only, the environment is ready.</p>
 <h3 id="2-configuration">2. Configuration</h3>
-<h4 id="how-to-config">How to Config</h4>
+<h4 id="set-up-cluster">Set up cluster</h4>
+<p>Cluster Serving uses Flink cluster, make sure you have it according to <a href="#1-installation">Installation</a>.</p>
+<p>For docker user, the cluster should be already started. You could use <code>netstat -tnlp | grep 8081</code> to check if Flink REST port is working, if not, call <code>$FLINK_HOME/bin/start-cluster.sh</code> to start Flink cluster.</p>
+<p>If you need to start Flink on yarn, refer to <a href="https://ci.apache.org/projects/flink/flink-docs-stable/deployment/resource-providers/yarn.html">Flink on Yarn</a>, or K8s, refer to <a href="https://ci.apache.org/projects/flink/flink-docs-stable/deployment/resource-providers/standalone/kubernetes.html">Flink on K8s</a> at Flink official documentation.</p>
+<p>If you use Flink standalone, call <code>$FLINK_HOME/bin/start-cluster.sh</code> to start Flink cluster.</p>
+<h4 id="configuration-file">Configuration file</h4>
 <p>After <a href="#1-installation">Installation</a>, you will see a config file <code>config.yaml</code> in your current working directory. This file contains all the configurations that you can customize for your Cluster Serving. See an example of <code>config.yaml</code> below.</p>
 <pre><code>## Analytics Zoo Cluster Serving Config Example
 
@@ -249,8 +266,7 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
 <p>The field <code>data</code> contains your input data configuration.</p>
 <ul>
 <li>src: the queue you subscribe for your input data, e.g. default config of Redis on local machine is <code>localhost:6379</code>. Note that please use the host address in your network instead of localhost or 127.0.0.1 when you run serving in cluster, and make sure other nodes in cluster could also recognize this address.</li>
-<li>shape: the shape of your input data. e.g. [[1],[3,224,224],[3]], if your model contains only one input, brackets could be omitted.</li>
-<li>filter: the post-processing of pipeline, could be none. Except none, currently supported filters are,</li>
+<li>filter: the post-processing of pipeline, usually none, the model output would be returned. Except none, currently supported filters are,</li>
 </ul>
 <p>Top-N, e.g. <code>topN(1)</code> represents Top-1 result is kept and returned with index. User should follow this schema <code>topN(n)</code>. Noted if the top-N number is larger than model output size of the the final layer, it would just return all the outputs.</p>
 <h4 id="other-configuration">Other Configuration</h4>
@@ -276,8 +292,7 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
 <pre><code>cluster-serving-start
 </code></pre>
 
-<p>Use <code>cluster-serving-start -p 5</code> to start Cluster Serving with Flink parallelism 5.</p>
-<p>Use <code>cluster-serving-start -c config_path</code> to path config path <code>config_path</code> to Cluster Serving manually.</p>
+<p>Normally, when calling <code>cluster-serving-start</code>, your <code>config.yaml</code> should be in current directory. You can also use <code>cluster-serving-start -c config_path</code> to pass config path <code>config_path</code> to Cluster Serving manually.</p>
 <h4 id="stop">Stop</h4>
 <p>You can use Flink UI in <code>localhost:8081</code> by default, to cancel your Cluster Serving job.</p>
 <h4 id="shut-down">Shut Down</h4>
@@ -524,6 +539,14 @@ In case of error, all APIs will return a JSON object in the response body with e
 <p>To visualize Cluster Serving performance, go to your flink job UI, default <code>localhost:8081</code>, and go to Cluster Serving job -&gt; metrics. Add <code>numRecordsOut</code> to see total record number and <code>numRecordsOutPerSecond</code> to see throughput.</p>
 <p>See example of visualization:</p>
 <p><img alt="Example Chart" src="../serving-visualization.png" /></p>
+<h2 id="others">Others</h2>
+<h3 id="transfer-local-code-to-cluster-serving">Transfer Local Code to Cluster Serving</h3>
+<p>If you have existed local application, we provide some example for you to transfer them to Cluster Serving application.</p>
+<p>We recommend <a href="../OtherFrameworkUsers/keras-to-cluster-serving-example.ipynb">Keras tranformation guide</a>. For Tensorflow v1 users, we also provide <a href="../OtherFrameworkUsers/tf1-to-cluster-serving-example.ipynb">Tensorflow v1 transformation guide</a>.</p>
+<h3 id="debug-guide">Debug Guide</h3>
+<p>If you follow this programming guide but Cluster Serving does not work, we provide a <a href="DebugGuide.md">Debug Guide</a> for you to figure out the problem step by step.</p>
+<h3 id="contribution-guide">Contribution Guide</h3>
+<p>We are glad if you are willing to contribute to Cluster Serving, refer to <a href="ContributeGuide.md">Contribution Guide</a> for details.</p>
 
   <br>
 </div>
