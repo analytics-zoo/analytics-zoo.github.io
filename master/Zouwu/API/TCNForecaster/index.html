@@ -94,12 +94,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </code></pre>
 
 <h3 id="fit">fit</h3>
-<pre><code class="python">fit(x, y, epochs=1, metric=&quot;mse&quot;, batch_size=32)
+<pre><code class="python">fit(x, y, validation_data=None, epochs=1, metric=&quot;mse&quot;, batch_size=32)
 </code></pre>
 
 <ul>
 <li><strong><code>x</code></strong>: A numpy array with shape (num_samples, lookback, feature_dim). lookback and feature_dim should be the same as <code>past_seq_len</code> and <code>input_feature_num</code>.</li>
 <li><strong><code>y</code></strong>: A numpy array with shape (num_samples, horizon, target_dim). horizon and target_dim should be the same as <code>future_seq_len</code> and <code>output_feature_num</code>.</li>
+<li><strong><code>validation_data</code></strong>: A tuple (x_valid, y_valid) as validation data. Default to None.</li>
 <li><strong><code>epochs</code></strong>: Number of epochs you want to train.</li>
 <li><strong><code>batch_size</code></strong>: Number of batch size you want to train.</li>
 <li><strong><code>metric</code></strong>: The metric for training data.</li>
