@@ -101,6 +101,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>Please choose the available suffix above according to your Spark platform you want to use.</li>
 <li>You don't need to add the BigDL dependency to your project as it has already been packaged within Analytics Zoo.</li>
 <li>You can find the option <code>${ANALYTICS_ZOO_VERSION}</code> from the <a href="../../release-download/">Release Page</a>.</li>
+<li>For mac users, it's recommend to add <code>zoo-core-mkl-mac</code> to the dependency.
+  eg. For mac SBT users,
+  <code>sbt
+  libraryDependencies ++= Seq(
+  "com.intel.analytics.zoo" % "analytics-zoo-bigdl_0.12.1-spark_2.4.3" % "0.10.0-SNAPSHOT",
+  "com.intel.analytics.zoo" % "zoo-core-mkl-mac" % "0.10.0-SNAPSHOT"
+  )</code></li>
 </ul>
 <hr />
 <h2 id="link-with-a-development-version"><strong>Link with a development version</strong></h2>
