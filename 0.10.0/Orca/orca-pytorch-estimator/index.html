@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>PyTorch Estimator - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Introduction", url: "#introduction", children: [
+              {title: "Orca PyTorch Estimator", url: "#orca-pytorch-estimator" },
+              {title: "Create Estimator from pyTorch Model", url: "#create-estimator-from-pytorch-model" },
+              {title: "Use horovod Estimator", url: "#use-horovod-estimator" },
+              {title: "Use BigDL Estimator", url: "#use-bigdl-estimator" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>PyTorch Estimator</strong></h1>
+    <hr>
+    <h2 id="introduction"><strong>Introduction</strong></h2>
+<p>Analytics Zoo Orca PyTorch Estimator provides a set APIs for running PyTorch model on Spark in a distributed fashion.</p>
+<p><strong>Remarks</strong>:</p>
+<ul>
+<li>You need to install <strong>torch==1.5.0</strong> and <strong>torchvision==0.6.0</strong> on your driver node.</li>
+<li>Your operating system (OS) is required to be one of the following 64-bit systems:
+<strong>Ubuntu 16.04 or later</strong> and <strong>macOS 10.12.6 or later</strong>.</li>
+</ul>
+<hr />
+<h3 id="orca-pytorch-estimator">Orca PyTorch Estimator</h3>
+<p>Orca PyTorch Estimator is an estimator to do PyTorch training/evaluation/prediction on Spark in a distributed fashion.</p>
+<p>It can support various data types, like XShards, PyTorch DataLoader, PyTorch DataLoader creator, etc.</p>
+<p>It supports horovod backend and BigDL backend in the unified APIs.</p>
+<h3 id="create-estimator-from-pytorch-model">Create Estimator from pyTorch Model</h3>
+<p>You can create Orca PyTorch Estimator with native PyTorch model.</p>
+<pre><code>from zoo.orca.learn.pytorch import Estimator
+Estimator.from_torch(*,
+                   model,
+                   optimizer,
+                   loss=None,
+                   metrics=None,
+                   scheduler_creator=None,
+                   training_operator_cls=TrainingOperator,
+                   initialization_hook=None,
+                   config=None,
+                   scheduler_step_freq=&quot;batch&quot;,
+                   use_tqdm=False,
+                   workers_per_node=1,
+                   model_dir=None,
+                   backend=&quot;bigdl&quot;):
+</code></pre>
+
+<ul>
+<li><code>model</code>: PyTorch model if <code>backend="bigdl"</code>, PyTorch model creator if <code>backend="horovod" or "torch_distributed"</code></li>
+<li><code>optimizer</code>: Orca optimizer or PyTorch optimizer if <code>backend="bigdl"</code>, PyTorch optimizer creator if <code>backend="horovod" or "torch_distributed"</code></li>
+<li><code>loss</code>: PyTorch loss if <code>backend="bigdl"</code>, PyTorch loss creator if <code>backend="horovod" or "torch_distributed"</code></li>
+<li><code>metrics</code>: Orca validation methods for evaluate.</li>
+<li><code>scheduler_creator</code>: parameter for <code>horovod</code> and <code>torch_distributed</code> backends. a learning rate scheduler wrapping the optimizer. You will need to set <code>scheduler_step_freq="epoch"</code> for the scheduler to be incremented correctly.</li>
+<li><code>training_operator_cls</code>: parameter for <code>horovod</code> and <code>torch_distributed</code> backends. Custom training operator class that subclasses the TrainingOperator class. This class will be copied onto all remote workers and used to specify custom training and validation operations. Defaults to TrainingOperator.</li>
+<li><code>initialization_hook</code>: parameter for <code>horovod</code> and <code>torch_distributed</code> backends.</li>
+<li><code>config</code>: parameter for <code>horovod</code> and <code>torch_distributed</code> backends. Config dict to create model, optimizer loss and data.</li>
+<li><code>scheduler_step_freq</code>: parameter for <code>horovod</code> and <code>torch_distributed</code> backends. "batch", "epoch" or None. This will determine when <code>scheduler.step</code> is called. If "batch", <code>step</code> will be called after every optimizer step. If "epoch", <code>step</code> will be called after one pass of the DataLoader. If a scheduler is passed in, this value is expected to not be None.</li>
+<li><code>use_tqdm</code>: parameter for <code>horovod</code> and <code>torch_distributed</code> backends. You can monitor training progress if use_tqdm=True.</li>
+<li><code>workers_per_node</code>: parameter for <code>horovod</code> and <code>torch_distributed</code> backends. worker number on each node. default: 1.</li>
+<li><code>model_dir</code>: parameter for <code>bigdl</code> backend. The path to save model. During the training, if checkpoint_trigger is defined and triggered, the model will be saved to model_dir.</li>
+<li><code>backend</code>: You can choose "horovod",  "torch_distributed" or "bigdl" as backend. Default: bigdl.</li>
+</ul>
+<h3 id="use-horovod-estimator">Use horovod Estimator</h3>
+<h4 id="train-model"><strong>Train model</strong></h4>
+<p>After an Estimator is created, you can call estimator API to train PyTorch model:</p>
+<pre><code>fit(self, data, epochs=1, profile=False, reduce_results=True, info=None)
+</code></pre>
+
+<ul>
+<li><code>data</code>: (callable) a funtion that takes a config dict and <code>batch_size</code> as input and return a data loader containing the training data.</li>
+<li><code>epochs</code>: (int) Number of epochs to train the model</li>
+<li><code>profile</code>: (bool) Returns time stats for the training procedure.</li>
+<li><code>reduce_results</code>: (bool) Whether to average all metrics across all workers into one dict. If a metric is a non-numerical value (or nested dictionaries), one value will be randomly selected among the workers. If False, returns a list of dicts.</li>
+<li><code>info</code>: (dict) Optional dictionary passed to the training operator for <code>train_epoch</code> and <code>train_batch</code>.</li>
+</ul>
+<h4 id="evaluate-model"><strong>Evaluate model</strong></h4>
+<p>After Training, you can call estimator API to evaluate PyTorch model:</p>
+<pre><code>evaluate(self, data, num_steps=None, profile=False, info=None)
+</code></pre>
+
+<ul>
+<li><code>data</code>: (callable) a funtion that takes a config dict and <code>batch_size</code> as input and return a data loader containing the validation data.</li>
+<li><code>num_steps</code>: (int) Number of batches to compute update steps on. This corresponds also to the number of times <code>TrainingOperator.validate_batch</code> is called.</li>
+<li><code>profile</code>: (bool) Returns time stats for the evaluation procedure.</li>
+<li><code>info</code>: (dict) Optional dictionary passed to the training operator for <code>validate</code> and <code>validate_batch</code>.</li>
+</ul>
+<h4 id="get-model"><strong>Get model</strong></h4>
+<p>You can get the trained model using <code>get_model(self)</code></p>
+<h4 id="save-model"><strong>Save model</strong></h4>
+<p>You can save model using <code>save(self, model_path)</code>
+* <code>model_path</code>: (str) Path to save the model.</p>
+<h4 id="load-model"><strong>Load model</strong></h4>
+<p>You can load an exsiting model saved by <code>save(self, model_path)</code> using <code>load(self, model_path)</code>
+* <code>model_path</code>: (str) Path to the existing model.</p>
+<h4 id="shutdown-workers"><strong>Shutdown workers</strong></h4>
+<p>You can shut down workers and releases resources using <code>shutdown(self, force=False)</code></p>
+<h3 id="use-bigdl-estimator">Use BigDL Estimator</h3>
+<h4 id="train-model_1"><strong>Train model</strong></h4>
+<p>After an Estimator is created, you can call estimator API to train PyTorch model:</p>
+<pre><code>fit(self, data, epochs=1, batch_size=32, feature_cols=None, label_cols=None, validation_data=None, checkpoint_trigger=None)
+</code></pre>
+
+<ul>
+<li><code>data</code>: Training data. SparkXShard, PyTorch DataLoader and PyTorch DataLoader creator are supported.</li>
+<li><code>epochs</code>: Number of epochs to train the model.Default: 32.</li>
+<li><code>batch_size</code>: Batch size used for training. Only used when data is a SparkXShard.</li>
+<li><code>feature_cols</code>: Feature column name(s) of data. Only used when data is a Spark DataFrame. Default: None.</li>
+<li><code>label_cols</code>: Label column name(s) of data. Only used when data is a Spark DataFrame. Default: None.</li>
+<li><code>validation_data</code>: Validation data. SparkXShard, PyTorch DataLoader and PyTorch DataLoader creator are supported.</li>
+<li><code>checkpoint_trigger</code>: Orca Trigger to set a checkpoint.</li>
+</ul>
+<h4 id="evaluate-model_1"><strong>Evaluate model</strong></h4>
+<p>After Training, you can call estimator API to evaluate PyTorch model:</p>
+<pre><code>evaluate(self, data, batch_size=32, feature_cols=None, label_cols=None)
+</code></pre>
+
+<ul>
+<li><code>data</code>: Validation data. SparkXShard, PyTorch DataLoader and PyTorch DataLoader creator are supported.</li>
+<li><code>batch_size</code>: Batch size used for evaluation. Only used when data is a SparkXShard.</li>
+<li><code>feature_cols</code>: (Not supported yet) Feature column name(s) of data. Only used when data is a Spark DataFrame. Default: None.</li>
+<li><code>label_cols</code>: (Not supported yet) Label column name(s) of data. Only used when data is a Spark DataFrame. Default: None.</li>
+</ul>
+<h4 id="inference"><strong>Inference</strong></h4>
+<p>After training or loading trained model, you can call estimator API to inference:</p>
+<pre><code>predict(self, data, batch_size=4, feature_cols=None)
+</code></pre>
+
+<ul>
+<li><code>data</code>: Inference data. Only SparkXShards is supported.</li>
+<li><code>batch_size</code>: Batch size used for inference.</li>
+<li><code>feature_cols</code>: Feature column name(s) of data. Only used when data is a Spark DataFrame. Default: None.</li>
+</ul>
+<h4 id="get-model_1"><strong>Get model</strong></h4>
+<p>You can get model using <code>get_model(self)</code></p>
+<h4 id="save-model_1"><strong>Save model</strong></h4>
+<p>You can save model using <code>save(self, model_path)</code>
+* <code>model_path</code>: (str) Path to save the model.</p>
+<h4 id="load-model_1"><strong>Load model</strong></h4>
+<p>You can load an exsiting model saved by <code>save(self, model_path)</code> using <code>load(self, model_path)</code>
+* <code>model_path</code>: (str) Path to the existing model.</p>
+<h4 id="load-orca-checkpoint"><strong>Load orca checkpoint</strong></h4>
+<p>You can load saved orca checkpoint using <code>load_orca_checkpoint(self, path, version, prefix)</code>. To load a specific checkpoint, 
+please provide both <code>version</code> and <code>perfix</code>. If <code>version</code> is None, then the latest checkpoint will be loaded.
+* <code>path</code>: Path to the existing checkpoint (or directory containing Orca checkpoint files if <code>version</code> is None).
+* <code>version</code>: checkpoint version, which is the suffix of model.* file, i.e., for
+               modle.4 file, the version is 4. If it is <code>None</code>, then load the latest checkpoint.
+* <code>prefix</code>: optimMethod prefix, for example 'optimMethod-TorchModelf53bddcc'. If loading the latest checkpoint, just leave it as <code>None</code>.</p>
+<h4 id="clear-gradient-clipping"><strong>Clear gradient clipping</strong></h4>
+<p>You can clear gradient clipping parameters using <code>clear_gradient_clipping(self)</code>. In this case, gradient clipping will not be applied.
+<strong>Note:</strong> In order to take effect, it needs to be called before fit.</p>
+<h4 id="set-constant-gradient-clipping"><strong>Set constant gradient clipping</strong></h4>
+<p>You can Set constant gradient clipping during the training process using <code>set_constant_gradient_clipping(self, min, max)</code>.
+* <code>min</code>: The minimum value to clip by.
+* <code>max</code>: The maximum value to clip by.
+<strong>Note:</strong> In order to take effect, it needs to be called before fit.</p>
+<h4 id="set-clip-gradient-to-a-maximum-l2-norm"><strong>Set clip gradient to a maximum L2-Norm</strong></h4>
+<p>You can set clip gradient to a maximum L2-Norm during the training process using <code>set_l2_norm_gradient_clipping(self, clip_norm)</code>.
+* <code>clip_norm</code>: Gradient L2-Norm threshold.
+<strong>Note:</strong> In order to take effect, it needs to be called before fit.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

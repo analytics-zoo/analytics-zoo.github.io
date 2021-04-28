@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>TFOptimizer - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "TFOptimizer", url: "#tfoptimizer", children: [
+              {title: "Methods", url: "#methods" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>TFOptimizer</strong></h1>
+    <hr>
+    <h1 id="tfoptimizer">TFOptimizer</h1>
+<p>TFOptimizer is used for optimizing a TensorFlow model with respect to its training variables
+on Spark/BigDL.</p>
+<p><strong>Remarks</strong>:</p>
+<ul>
+<li>You need to install <strong>tensorflow==1.15.0</strong> on your driver node.</li>
+<li>Your operating system (OS) is required to be one of the following 64-bit systems:
+<strong>Ubuntu 16.04 or later</strong> and <strong>macOS 10.12.6 or later</strong>.</li>
+<li>To run on other systems, you need to manually compile the TensorFlow source code. Instructions can
+  be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</li>
+</ul>
+<p><strong>Create a TFOptimizer</strong>:</p>
+<pre><code class="python">import tensorflow as tf
+from zoo.tfpark import TFOptimizer
+from bigdl.optim.optimizer import *
+loss = ...
+optimizer = TFOptimizer.from_loss(loss, Adam(1e-3))
+optimizer.optimize(end_trigger=MaxEpoch(5))
+</code></pre>
+
+<p>For Keras model:</p>
+<pre><code class="python">from zoo.tfpark import TFOptimizer
+from bigdl.optim.optimizer import *
+from tensorflow.keras.models import Model
+
+model = Model(inputs=..., outputs=...)
+
+model.compile(optimizer='rmsprop',
+            loss='sparse_categorical_crossentropy',
+            metrics=['accuracy'])
+
+optimizer = TFOptimizer.from_keras(model, dataset)
+optimizer.optimize(end_trigger=MaxEpoch(5))
+</code></pre>
+
+<h2 id="methods">Methods</h2>
+<h3 id="from_loss-factory-method">from_loss (factory method)</h3>
+<p>Create a TFOptimizer from a TensorFlow loss tensor.
+The loss tensor must come from a TensorFlow graph that only takes TFDataset.tensors and
+the tensors in <code>tensor_with_value</code> as inputs.</p>
+<pre><code class="python">from_loss(loss, optim_method, session=None, val_outputs=None,
+                  val_labels=None, val_method=None,
+                  clip_norm=None, clip_value=None, metrics=None,
+                  tensor_with_value=None, **kwargs)
+</code></pre>
+
+<h4 id="arguments">Arguments</h4>
+<ul>
+<li><strong>loss</strong>: The loss tensor of the TensorFlow model, should be a scalar.
+            The loss tensor must come from a TensorFlow graph that only takes TFDataset.tensors and
+            the tensors in <code>tensor_with_value</code> as inputs.</li>
+<li><strong>optim_method</strong>: the optimization method to be used, such as bigdl.optim.optimizer.Adam</li>
+<li><strong>session</strong>: the current TensorFlow Session, if you want to used a pre-trained model,
+             you should use the Session to load the pre-trained variables and pass it to TFOptimizer.</li>
+<li><strong>val_outputs</strong>: the validation output TensorFlow tensor to be used by val_methods</li>
+<li><strong>val_labels</strong>: the validation label TensorFlow tensor to be used by val_methods</li>
+<li><strong>val_method</strong>: the BigDL val_method(s) to be used.</li>
+<li><strong>clip_norm</strong>: float &gt;= 0. Gradients will be clipped when their L2 norm exceeds
+               this value.</li>
+<li><strong>clip_value</strong>: float &gt;= 0. Gradients will be clipped when their absolute value
+                exceeds this value.</li>
+<li><strong>metrics</strong>: a dictionary. The key should be a string representing the metric's name
+             and the value should be the corresponding TensorFlow tensor, which should be a scalar.</li>
+<li><strong>tensor_with_value</strong>: a dictionary. The key is TensorFlow tensor, usually a
+                      placeholder, the value of the dictionary is a tuple of two elements. The first one of
+                      the tuple is the value to feed to the tensor in training phase and the second one
+                      is the value to feed to the tensor in validation phase.</li>
+</ul>
+<h3 id="from_keras-factory-method">from_keras (factory method)</h3>
+<p>Create a TFOptimizer from a tensorflow.keras model. The model must be compiled.</p>
+<pre><code class="python">from_keras(keras_model, dataset, optim_method=None, **kwargs)
+</code></pre>
+
+<h4 id="arguments_1">Arguments</h4>
+<ul>
+<li><strong>keras_model</strong>: the tensorflow.keras model, which must be compiled.</li>
+<li><strong>dataset</strong>: a <a href="../tf-dataset/">TFDataset</a></li>
+<li><strong>optim_method</strong>: the optimization method to be used, such as bigdl.optim.optimizer.Adam</li>
+</ul>
+<h3 id="set_train_summary">set_train_summary</h3>
+<pre><code class="python">set_train_summary(summary)
+</code></pre>
+
+<h4 id="arguments_2">Arguments</h4>
+<ul>
+<li><strong>summary</strong>: The train summary to be set. A TrainSummary object contains information
+               necessary for the optimizer to know how often the logs are recorded,
+               where to store the logs and how to retrieve them, etc. For details,
+               refer to the docs of <a href="https://bigdl-project.github.io/0.9.0/#ProgrammingGuide/visualization/">TrainSummary</a>.</li>
+</ul>
+<h3 id="set_val_summary">set_val_summary</h3>
+<pre><code class="python">set_val_summary(summary)
+</code></pre>
+
+<h4 id="arguments_3">Arguments</h4>
+<ul>
+<li><strong>summary</strong>: The validation summary to be set. A ValidationSummary object contains information
+               necessary for the optimizer to know how often the logs are recorded,
+               where to store the logs and how to retrieve them, etc. For details,
+               refer to the docs of <a href="https://bigdl-project.github.io/0.9.0/#ProgrammingGuide/visualization/">ValidationSummary</a>.</li>
+</ul>
+<h3 id="set_constant_gradient_clipping">set_constant_gradient_clipping</h3>
+<pre><code class="python">set_constant_gradient_clipping(min_value, max_value)
+</code></pre>
+
+<h4 id="arguments_4">Arguments</h4>
+<ul>
+<li><strong>min_value</strong>: the minimum value to clip by</li>
+<li><strong>max_value</strong>: the maxmimum value to clip by</li>
+</ul>
+<h3 id="set_gradient_clipping_by_l2_norm">set_gradient_clipping_by_l2_norm</h3>
+<pre><code class="python">set_gradient_clipping_by_l2_norm(self, clip_norm)
+</code></pre>
+
+<h4 id="arguments_5">Arguments</h4>
+<ul>
+<li><strong>clip_norm</strong>: gradient L2-Norm threshold</li>
+</ul>
+<h3 id="optimize">optimize</h3>
+<pre><code class="python">optimize(self, end_trigger=None)
+</code></pre>
+
+<h4 id="arguments_6">Arguments</h4>
+<ul>
+<li><strong>end_trigger</strong>: BigDL's <a href="https://bigdl-project.github.io/0.9.0/#APIGuide/Triggers/">Trigger</a> to indicate when to stop the training. If none, defaults to
+                   train for one epoch.</li>
+</ul>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

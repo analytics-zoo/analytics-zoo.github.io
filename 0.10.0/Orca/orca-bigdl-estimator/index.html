@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>BigDL Estimator - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Introduction", url: "#introduction", children: [
+              {title: "Orca BigDL Estimator", url: "#orca-bigdl-estimator" },
+              {title: "Create Estimator from BigDL Model", url: "#create-estimator-from-bigdl-model" },
+              {title: "Train BigDL model with orca BigDL Estimator", url: "#train-bigdl-model-with-orca-bigdl-estimator" },
+              {title: "Inference with orca BigDL Estimator", url: "#inference-with-orca-bigdl-estimator" },
+              {title: "Evaluate model", url: "#evaluate-model" },
+              {title: "Get model", url: "#get-model" },
+              {title: "Save model", url: "#save-model" },
+              {title: "Load model", url: "#load-model" },
+              {title: "Set TensorBoard &amp; get Training and Validation Summary", url: "#set-tensorboard-get-training-and-validation-summary" },
+              {title: "Clear gradient clipping", url: "#clear-gradient-clipping" },
+              {title: "Set constant gradient clipping", url: "#set-constant-gradient-clipping" },
+              {title: "Set clip gradient to a maximum L2-Norm", url: "#set-clip-gradient-to-a-maximum-l2-norm" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>BigDL Estimator</strong></h1>
+    <hr>
+    <h2 id="introduction"><strong>Introduction</strong></h2>
+<p>Analytics Zoo Orca BigDL Estimator provides a set APIs for running BigDL model on Spark in a distributed fashion.</p>
+<hr />
+<h3 id="orca-bigdl-estimator">Orca BigDL Estimator</h3>
+<p>Orca BigDL Estimator is an estimator to do BigDL training/evaluation/prediction on Spark in a distributed fashion.</p>
+<p>It can support various data types, like XShards, Spark DataFrame, etc.</p>
+<p>It supports BigDL backend in the unified APIs.</p>
+<h3 id="create-estimator-from-bigdl-model">Create Estimator from BigDL Model</h3>
+<p>You can create Orca BigDL Estimator with BigDL model.</p>
+<pre><code>from zoo.orca.learn.bigdl import Estimator
+Estimator.from_bigdl(*, model, loss=None, optimizer=None, feature_preprocessing=None,
+                   label_preprocessing=None, model_dir=None)
+</code></pre>
+
+<ul>
+<li><code>model</code>: BigDL Model to be trained.</li>
+<li><code>optimizer</code>: BigDL optimizer.</li>
+<li><code>loss</code>: BigDL criterion.</li>
+<li><code>feature_preprocessing</code>: Used if the input data in fit function is Spark DataFrame.The param converts the data in feature column to a Tensor or to a Sample directly. It expects a List of Int as the size of the converted Tensor, or a Preprocessing[F, Tensor[T]]
+    If a List of Int is set as feature_preprocessing, it can only handle the case that feature column contains the following data types: Float, Double, Int, Array[Float], Array[Double], Array[Int] and MLlib Vector. The feature data are converted to Tensors with the specified sizes before sending to the model. Internally, a SeqToTensor is generated according to the size, and used as the feature_preprocessing.
+    Alternatively, user can set feature_preprocessing as Preprocessing[F, Tensor[T]] that transforms the feature data to a Tensor[T]. Some pre-defined Preprocessing are provided in package zoo.feature. Multiple Preprocessing can be combined as a ChainedPreprocessing.
+    The feature_preprocessing will also be copied to the generated NNModel and applied to feature column during transform.</li>
+<li><code>label_preprocessing</code>: Similar to feature_preprocessing, but applies to Label data.</li>
+<li><code>model_dir</code>: The path to save model. During the training, if checkpoint_trigger is defined and triggered, the model will be saved to model_dir.</li>
+</ul>
+<h3 id="train-bigdl-model-with-orca-bigdl-estimator">Train BigDL model with orca BigDL Estimator</h3>
+<p>After an Estimator is created, you can call estimator API to train BigDL model:</p>
+<pre><code>fit(self, data, epochs, batch_size=32, feature_cols=&quot;features&quot;, label_cols=&quot;label&quot;,
+    caching_sample=True, validation_data=None, validation_trigger=None,
+    validation_metrics=None, checkpoint_trigger=None)
+</code></pre>
+
+<ul>
+<li><code>data</code>: Training data. SparkXShard and Spark DataFrame are supported.</li>
+<li><code>epochs</code>: (int) Number of epochs to train the model.</li>
+<li><code>batch_size</code>: (int) Batch size used for training. Default: 32.</li>
+<li><code>feature_cols</code>: (string or list of string) Feature column name(s) of data. Only used when data is a Spark DataFrame. Default: "features".</li>
+<li><code>label_cols</code>: (string or list of string) Label column name(s) of data. Only used when data is a Spark DataFrame. Default: "label".</li>
+<li><code>caching_sample</code>: (Boolean) Whether to cache the Samples after preprocessing. Default: True.</li>
+<li><code>validation_data</code>: Validation data. SparkXShard and Spark DataFrame are supported. Default: None.</li>
+<li><code>validation_trigger</code>: Orca Trigger to validate model.</li>
+<li><code>validation_metrics</code>: Orca validation methods.</li>
+<li><code>checkpoint_trigger</code>: Orca Trigger to set a checkpoint.</li>
+</ul>
+<h3 id="inference-with-orca-bigdl-estimator">Inference with orca BigDL Estimator</h3>
+<p>After training or loading trained model, you can call estimator API to inference:</p>
+<pre><code>predict(self, data, batch_size=4, feature_cols=&quot;features&quot;, sample_preprocessing=None)
+</code></pre>
+
+<ul>
+<li><code>data</code>: Inference data. SparkXShard and Spark DataFrame are supported.</li>
+<li><code>batch_size</code>: (int) Batch size used for inference. Default: 4.</li>
+<li><code>feature_cols</code>:  (string or list of string) Feature column name(s) of data. Only used when data is a Spark DataFrame.</li>
+<li><code>sample_preprocessing</code>: Used if the input data in predict function is Spark DataFrame. The user defined sample_preprocessing will directly compose Sample according to user-specified Preprocessing.</li>
+</ul>
+<h3 id="evaluate-model">Evaluate model</h3>
+<p>After Training, you can call estimator API to evaluate BigDL model:</p>
+<pre><code>evaluate(self, data, batch_size=32, feature_cols=None, label_cols=None, validation_metrics=None)
+</code></pre>
+
+<ul>
+<li><code>data</code>: Validation data. SparkXShard and Spark DataFrame are supported.</li>
+<li><code>batch_size</code>: Batch size used for evaluation. Only used when data is a SparkXShard.</li>
+<li><code>feature_cols</code>: (string or list of string) Feature column name(s) of data. Only used when data is a Spark DataFrame. Default: None.</li>
+<li><code>label_cols</code>: (string or list of string) Label column name(s) of data. Only used when data is a Spark DataFrame. Default: None.</li>
+<li><code>validation_metrics</code>: Orca validation methods.</li>
+</ul>
+<h3 id="get-model">Get model</h3>
+<p>You can get model using <code>get_model(self)</code></p>
+<h3 id="save-model">Save model</h3>
+<p>You can save model using <code>save(self, model_path)</code>
+* <code>model_path</code>: (str) Path to model saved folder.</p>
+<h3 id="load-model">Load model</h3>
+<p>You can load saved model using</p>
+<pre><code>load(self, checkpoint, optimizer=None, loss=None, feature_preprocessing=None,
+             label_preprocessing=None, model_dir=None, is_checkpoint=False):
+</code></pre>
+
+<ul>
+<li><code>checkpoint</code>: (str) Path to target checkpoint file or saved model folder.</li>
+<li><code>optimizer</code>: BigDL optimizer.</li>
+<li><code>loss</code>: BigDL criterion.</li>
+<li><code>feature_preprocessing</code>: Used if the input data in fit function is Spark DataFrame.The param converts the data in feature column to a Tensor or to a Sample directly. It expects a List of Int as the size of the converted Tensor, or a Preprocessing[F, Tensor[T]]
+    If a List of Int is set as feature_preprocessing, it can only handle the case that feature column contains the following data types: Float, Double, Int, Array[Float], Array[Double], Array[Int] and MLlib Vector. The feature data are converted to Tensors with the specified sizes before sending to the model. Internally, a SeqToTensor is generated according to the size, and used as the feature_preprocessing.
+    Alternatively, user can set feature_preprocessing as Preprocessing[F, Tensor[T]] that transforms the feature data to a Tensor[T]. Some pre-defined Preprocessing are provided in package zoo.feature. Multiple Preprocessing can be combined as a ChainedPreprocessing.
+    The feature_preprocessing will also be copied to the generated NNModel and applied to feature column during transform.</li>
+<li><code>label_preprocessing</code>: Similar to feature_preprocessing, but applies to Label data.</li>
+<li><code>model_dir</code>: The path to save model. During the training, if checkpoint_trigger is defined and triggered, the model will be saved to model_dir.</li>
+<li><code>is_checkpoint</code>: (boolean) Whether load BigDL saved model or checkpoint.</li>
+</ul>
+<h3 id="set-tensorboard-get-training-and-validation-summary">Set TensorBoard &amp; get Training and Validation Summary</h3>
+<p>During training and validation, Orca BigDL Estimator would save summary data to specified log_dir. This data can be visualized in TensorBoard, or you can use estimator's APIs to retrieve it. You can set the logdir and app name with such API:</p>
+<pre><code>set_tensorboard(log_dir, app_name)
+</code></pre>
+
+<ul>
+<li><code>log_dir</code>: The base directory path to store training and validation logs.</li>
+<li><code>app_name</code>: The name of the application.</li>
+</ul>
+<p>This method sets summary information during the training process for visualization purposes. Saved summary can be viewed via TensorBoard. In order to take effect, it needs to be called before fit.</p>
+<p>Training summary will be saved to 'log_dir/app_name/train' and validation summary (if any) will be saved to 'log_dir/app_name/validation'.</p>
+<p>You can get Training summary with <code>get_train_summary(self, tag=None)</code> and Validation summary with <code>get_validation_summary(self, tag=None)</code>.</p>
+<h3 id="clear-gradient-clipping">Clear gradient clipping</h3>
+<p>You can clear gradient clipping parameters using <code>clear_gradient_clipping(self)</code>. In this case, gradient clipping will not be applied.
+<strong>Note:</strong> In order to take effect, it needs to be called before fit.</p>
+<h3 id="set-constant-gradient-clipping">Set constant gradient clipping</h3>
+<p>You can Set constant gradient clipping during the training process using <code>set_constant_gradient_clipping(self, min, max)</code>.
+* <code>min</code>: The minimum value to clip by.
+* <code>max</code>: The maximum value to clip by.
+<strong>Note:</strong> In order to take effect, it needs to be called before fit.</p>
+<h3 id="set-clip-gradient-to-a-maximum-l2-norm">Set clip gradient to a maximum L2-Norm</h3>
+<p>You can set clip gradient to a maximum L2-Norm during the training process using <code>set_l2_norm_gradient_clipping(self, clip_norm)</code>.
+* <code>clip_norm</code>: Gradient L2-Norm threshold.
+<strong>Note:</strong> In order to take effect, it needs to be called before fit.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

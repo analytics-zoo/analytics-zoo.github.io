@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>GANEstimator - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "GANEstimator", url: "#ganestimator", children: [
+              {title: "train", url: "#train" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>GANEstimator</strong></h1>
+    <hr>
+    <p>Analytics-Zoo provides a GANEstimator to support training GAN like models.
+Currently we support standard unconditional/conditional GAN and other GAN types will be supported in the future.</p>
+<hr />
+<h2 id="ganestimator"><strong>GANEstimator</strong></h2>
+<p><strong>Python</strong></p>
+<pre><code class="python">GANEstimator(generator_fn,
+             discriminator_fn,
+             generator_loss_fn,
+             discriminator_loss_fn,
+             generator_optimizer,
+             discriminator_optimizer,
+             generator_steps=1,
+             discriminator_steps=1,
+             model_dir=None,
+    )
+</code></pre>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>generator_fn</strong>: a python function that defines the generator. It should takes a single noise tensor (unconditional)
+a tuple of tensors in which the first element represents noise and the second label (conditional) and return the
+generated data.  </li>
+<li><strong>discriminator_fn</strong>: a python function that defines the discriminator. The discriminator_fn should have two inputs.
+The first input should be the real data or generated data. The inputs to generator will also be passed too discriminator
+as the second input.</li>
+<li><strong>generator_loss_fn</strong>: the loss function on the generator. It should take the output of discriminator on generated data
+and return the loss for generator.</li>
+<li><strong>discriminator_loss_fn</strong>: the loss function on the discriminator. The discriminator_loss_fn should have two inputs. The
+first input is the output of discriminator on generated data and the second input is the output of discriminator on real data.</li>
+<li><strong>generator_optimizer</strong>: the optimizer to optimize generator, should be an instance of tf.train.Optimizer</li>
+<li><strong>discriminator_optimizer</strong>: the optimizer to optimizer discriminator, should be an instance of tf.train.Optimizer</li>
+<li><strong>generator_steps</strong>: the number of consecutive steps to run generator in each round</li>
+<li><strong>discriminator_steps</strong>: the number of consecutive steps to run discriminator in each round</li>
+</ul>
+<h3 id="train">train</h3>
+<pre><code class="python">estimator.train(input_fn=input_fn, end_trigger=MaxIteration(100))
+</code></pre>
+
+<p><strong>Arguments</strong></p>
+<ul>
+<li><strong>input_fn</strong>: a python function that takes zero arguments and return a TFDataset. Each record in the TFDataset should
+a tuple. The first element of the tuple is generator inputs, and the second element of the tuple should be real data.</li>
+<li><strong>end_trigger</strong>: BigDL's <a href="https://bigdl-project.github.io/0.9.0/#APIGuide/Triggers/">Trigger</a> to indicate when to stop the training. If none, defaults to
+train for one epoch.</li>
+</ul>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

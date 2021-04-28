@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>PyTorch - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "System Requirement", url: "#system-requirement", children: [
+          ]},
+          {title: "Pytorch API", url: "#pytorch-api", children: [
+          ]},
+          {title: "Examples", url: "#examples", children: [
+          ]},
+          {title: "FAQ", url: "#faq", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>PyTorch</strong></h1>
+    <hr>
+    <p>Analytics-Zoo supports distributed Pytorch training and inference on on Apache Spark. User can
+define their model and loss function with Pytorch API, and run it in a distributed environment
+with the wrapper layers provided by Analytics Zoo.</p>
+<h1 id="system-requirement">System Requirement</h1>
+<p>Pytorch version: 1.5.0 or above<br />
+torchvision: 0.6.0 or above<br />
+cloudpickle: 1.6.0<br />
+jep: 3.9.0<br />
+Python: 3.7</p>
+<h1 id="pytorch-api">Pytorch API</h1>
+<p>A few wrappers are defined in Analytics Zoo for Pytorch:</p>
+<ol>
+<li>TorchModel: TorchModel is a wrapper class for Pytorch model.
+User may create a TorchModel by providing a Pytorch model, e.g.</li>
+</ol>
+<pre><code class="python">from zoo.pipeline.api.torch import TorchModel
+import torchvision
+zoo_model = TorchModel.from_pytorch(torchvision.models.resnet18(pretrained=True))
+</code></pre>
+
+<p>The above line creates TorchModel wrapping a ResNet model, and user can use the TorchModel for
+training or inference with Analytics Zoo.</p>
+<ol>
+<li>TorchLoss: TorchLoss is a wrapper for loss functions defined by Pytorch.
+User may create a TorchLoss from a Pytorch Criterion, </li>
+</ol>
+<pre><code class="python">import torch
+from zoo.pipeline.api.torch import TorchLoss
+
+az_criterion = TorchLoss.from_pytorch(torch.nn.MSELoss())
+</code></pre>
+
+<p>or from a custom loss function, which takes input and label as parameters</p>
+<pre><code class="python">import torch
+from zoo.pipeline.api.torch import TorchLoss
+
+criterion = torch.nn.MSELoss()
+
+# this loss function is calculating loss for a multi-output model
+def lossFunc(input, label):
+    loss1 = criterion(input[0], label[0])
+    loss2 = criterion(input[1], label[1])
+    loss = loss1 + 0.4 * loss2
+    return loss
+
+az_criterion = TorchLoss.from_pytorch(lossFunc)
+</code></pre>
+
+<ol>
+<li>TorchOptim: TorchOptim wraps a torch optimizer for distributed training.</li>
+</ol>
+<pre><code class="python">from zoo.pipeline.api.torch import TorchOptim
+import torch
+
+model = torchvision.models.resnet18(pretrained=True))
+adam = torch.optim.Adam(model.parameters())
+zoo_optimizer = TorchOptim.from_pytorch(adam)
+</code></pre>
+
+<h1 id="examples">Examples</h1>
+<p>Here we provide a simple end to end example, where we use TorchModel and TorchLoss to
+train a simple model with Spark DataFrame.</p>
+<pre><code class="python">#
+# Copyright 2018 Analytics Zoo Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+import torch
+import torch.nn as nn
+from zoo.common.nncontext import *
+from zoo.pipeline.api.torch import TorchModel, TorchLoss, TorchOptim
+from zoo.pipeline.nnframes import *
+
+from pyspark.ml.linalg import Vectors
+from pyspark.sql import SparkSession
+
+
+# define model with Pytorch
+class SimpleTorchModel(nn.Module):
+    def __init__(self):
+        super(SimpleTorchModel, self).__init__()
+        self.dense1 = nn.Linear(2, 4)
+        self.dense2 = nn.Linear(4, 1)
+
+    def forward(self, x):
+        x = self.dense1(x)
+        x = torch.sigmoid(self.dense2(x))
+        return x
+
+if __name__ == '__main__':
+    sc = init_spark_on_local(cores=1)
+    spark = SparkSession \
+        .builder \
+        .getOrCreate()
+
+    df = spark.createDataFrame(
+        [(Vectors.dense([2.0, 1.0]), 1.0),
+         (Vectors.dense([1.0, 2.0]), 0.0),
+         (Vectors.dense([2.0, 1.0]), 1.0),
+         (Vectors.dense([1.0, 2.0]), 0.0)],
+        [&quot;features&quot;, &quot;label&quot;])
+
+    torch_model = SimpleTorchModel()
+    torch_criterion = nn.MSELoss()
+    torch_optimizer = torch.optim.Adam(torch_model.parameters())
+
+    az_model = TorchModel.from_pytorch(torch_model)
+    az_criterion = TorchLoss.from_pytorch(torch_criterion)
+    az_optimizer = TorchOptim.from_pytorch(torch_optimizer)
+
+    classifier = NNClassifier(az_model, az_criterion) \
+        .setBatchSize(4) \
+        .setOptimMethod(az_optimizer) \
+        .setLearningRate(0.01) \
+        .setMaxEpoch(10)
+
+    nnClassifierModel = classifier.fit(df)
+
+    print(&quot;After training: &quot;)
+    res = nnClassifierModel.transform(df)
+    res.show(10, False)
+
+</code></pre>
+
+<p>You can simply use <code>python</code> to execute the script above. We expects to see the output like:</p>
+<pre><code class="python">+---------+-----+----------+
+|features |label|prediction|
++---------+-----+----------+
+|[2.0,1.0]|1.0  |1.0       |
+|[1.0,2.0]|0.0  |0.0       |
+|[2.0,1.0]|1.0  |1.0       |
+|[1.0,2.0]|0.0  |0.0       |
++---------+-----+----------+
+</code></pre>
+
+<h1 id="faq">FAQ</h1>
+<ol>
+<li>
+<p>Does analytics-zoo's distributed pytorch support training or inference?<br />
+Analytics-Zoo support both training and inference.</p>
+</li>
+<li>
+<p>How to prepare the environment?<br />
+We recommend you to use <a href="https://www.anaconda.com/distribution/#linux">Anaconda</a> to prepare the enviroments, especially if you want to run on a yarn cluster(yarn-client mode only). </p>
+</li>
+</ol>
+<pre><code class="bash">conda create -n zoo python=3.7 #zoo is conda enviroment name, you can set another name you like.
+conda activate zoo
+pip install analytics-zoo[torch]
+</code></pre>
+
+<p>Note that the extra dependencies (including BigDL, torch, torchvision, jep, cloudpickle, conda-pack) will be installed by specifying [torch].  </p>
+<ol>
+<li>
+<p>How to determine how many resources do you use in analytics-zoo's distributed mode?<br />
+If you are running your jobs on yarn cluster, you can use <code>init_spark_on_yarn</code> from package <code>zoo.common.nncontext</code> to request cores and memorys from resource manager.<br />
+If you are running your jobs on Spark standalone cluster, you can use <code>init_spark_standalone</code> from package <code>zoo.common.nncontext</code> to request resources from Spark master.<br />
+If you are running your jobs on spark local mode(single-node, pseudo-distributed), you can use <code>init_spark_on_local</code> from package <code>zoo.common.nncontext</code> to declare how many cores and memorys.</p>
+</li>
+<li>
+<p>Supported torch and torchvision version?<br />
+We support torch 1.5.x and 1.6.x, torchvision's version should match torch's version.  </p>
+</li>
+<li>
+<p>How to migrate training from pytorch to AZ?<br />
+Here is a simple example migrate <a href="https://github.com/pytorch/examples/blob/60108edfa3838a823220e16428cb5f98e8e88d53/mnist/main.py">pytorch mnist example</a> to <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/pytorch/train/mnist">analytics-zoo distributed pytorch mnist example</a>.</p>
+</li>
+</ol>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

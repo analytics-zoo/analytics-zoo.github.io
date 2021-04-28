@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Cluster Serving - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "API Guide", url: "#api-guide", children: [
+              {title: "Python", url: "#python" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Cluster Serving</strong></h1>
+    <hr>
+    <h1 id="api-guide">API Guide</h1>
+<h2 id="python">Python</h2>
+<h3 id="class-inputqueue">class InputQueue</h3>
+<p>The class <code>Input</code> defines methods allowing you to input data into Cluster Serving <a href="">Input Pipeline</a>.</p>
+<h4 id="init"><strong>init</strong></h4>
+<p><a href="">view source</a></p>
+<pre><code>__init__(host=None, port=None, sync=False, frontend_url=None)
+</code></pre>
+
+<p>sets up a connection with configuration in your Cluster Serving <a href="">configuration file</a> <code>config.yaml</code>.</p>
+<p><em>return</em>: None</p>
+<h4 id="enqueue">enqueue</h4>
+<p><a href="">view source</a></p>
+<pre><code>enqueue(uri, data*)
+</code></pre>
+
+<p>puts key-value pair into data pipeline, if your model has key regulation, pass corresponded key. Otherwise, give the key any name you want.</p>
+<p><em>return</em>: None</p>
+<p><code>uri</code>: a string, unique identification of your image</p>
+<p><code>data</code>: key-value pair of your data.</p>
+<p>There are 4 types of inputs in total, string, image, tensor, sparse tensor. See following example to enqueue specific type of data.
+<em>Example</em>
+Import the dependency and create an instance of <code>InputQueue</code></p>
+<pre><code>from zoo.serving.client import InputQueue
+input_api = InputQueue()
+</code></pre>
+
+<p>To enqueue a list of string, pass a list of str objects, list of str type input is usually used in Tensorflow models.</p>
+<pre><code>input_api.enqueue('my-string-input', user_define_key=['hello', 'world'])
+</code></pre>
+
+<p>To enqueue an image, you could pass either image path or base64 encoded image bytes, the type of your parameter is identified by key of dict, see example below. If you pass image path, <code>cv2</code> package is required. (Could be installed by <code>pip install opencv-python</code>)</p>
+<p>To pass image path, use key <code>path</code></p>
+<pre><code>image_path = &quot;path/to/image&quot;
+input_api.enqueue('my-image1', user_define_key={&quot;path&quot;: image_path})
+</code></pre>
+
+<p>To pass base64 encoded image bytes, use key <code>b64</code></p>
+<pre><code>image_bytes = &quot;base64_encoded_bytes&quot;
+input_api.enqueue('my-image1', user_define_key={&quot;b64&quot;: image_bytes})
+</code></pre>
+
+<p>To enqueue a tensor or sparse tensor, <code>numpy</code> package is required. (Would be installed while you installed Analytics Zoo, if not, could be installed by <code>pip install numpy</code>)</p>
+<p>To enqueue a tensor, pass a ndarray object.</p>
+<pre><code>import numpy as np
+input_api.enqueue('my-tensor1', a=np.array([1,2]))
+</code></pre>
+
+<p>To enqueue a sparse tensor pass a list of ndarray object, normally sparse tensor is only used if your model specifies the input as sparse tensor. The list should have size of 3, where the 1st element is a 2-D ndarray, representing the indices of values, the 2nd element is a 1-D ndarray, representing the values corresponded with the indices, the 3rd element is a 1-D ndarray representing the shape of the sparse tensor.</p>
+<p>A sparse tensor of shape (5,10), with 3 elements at position (0, 0), (1, 2), (4, 5), having value 101, 102, 103, visualized as following,</p>
+<pre><code>101. 0.   0.   0.   0.   0.   0.   0.   0.   0
+0.   0.   102. 0.   0.   0.   0.   0.   0.   0
+0.   0.   0.   0.   0.   0.   0.   0.   0.   0
+0.   0.   0.   0.   0.   0.   0.   0.   0.   0
+0.   0.   0.   0.   0.   103. 0.   0.   0.   0
+</code></pre>
+
+<p>could be represented as following list.</p>
+<pre><code>indices = np.array([[0, 1, 4], [0, 2, 5]])
+values = np.array([101, 102, 103])
+shape = np.array([5, 10])
+tensor = [indices, values, shape]
+</code></pre>
+
+<p>and enqueue it by</p>
+<pre><code>input_api.enqueue(&quot;my-sparse-tensor&quot;, input=tensor)
+</code></pre>
+
+<p>To enqueue an instance containing several images, tensors and sparse tensors.</p>
+<pre><code>import numpy as np
+input_api.enqueue('my-instance', 
+    img1={&quot;path: 'path/to/image1'},
+    img2={&quot;path: 'path/to/image2'},
+    tensor1=np.array([1,2]), 
+    tensor2=np.array([[1,3],[2,3]])
+    sparse_tensor=[np.array([[0, 1, 4], [0, 2, 5]]),
+                   np.array([101, 102, 103])
+                   np.array([5, 10])]
+)
+</code></pre>
+
+<h4 id="predict"><strong>predict</strong></h4>
+<p><a href="">view source</a></p>
+<pre><code>predict(request_str)
+</code></pre>
+
+<p><em>return</em>: Numpy ndarray</p>
+<p><em>Example</em></p>
+<pre><code>from zoo.serving.client import InputQueue
+input_api = InputQueue(sync=True, frontend_url=frontend_server_url)
+request_json_string='''{
+  &quot;instances&quot; : [ {
+    &quot;ids&quot; : [ 100.0, 88.0 ]
+  }]
+}'''
+response = input_api.predict(request_json_string)
+print(response.text)
+</code></pre>
+
+<h3 id="class-outputqueue">class OutputQueue</h3>
+<p>The class <code>Output</code> defines methods allowing you to get result from Cluster Serving <a href="">Output Pipeline</a>.</p>
+<h4 id="init_1"><strong>init</strong></h4>
+<p><a href="">view source</a></p>
+<pre><code>__init__()
+</code></pre>
+
+<p>sets up a connection with configuration in your Cluster Serving <a href="">configuration file</a> <code>config.yaml</code>.</p>
+<h4 id="query">query</h4>
+<p><a href="">view source</a></p>
+<pre><code>query(uri)
+</code></pre>
+
+<p>query result in output Pipeline by key <code>uri</code></p>
+<p><em>return</em>: Numpy ndarray</p>
+<p>Format: </p>
+<pre><code>{
+    &quot;class_1&quot;: &quot;probability_1&quot;,
+    &quot;class_2&quot;: &quot;probability_2&quot;,
+    ...,
+    &quot;class_n&quot;: &quot;probability_n&quot;
+}
+</code></pre>
+
+<p>where <code>n</code> is <code>top_n</code> in your serving config, the result is sorted by output probability.</p>
+<p><em>Example</em></p>
+<pre><code>from zoo.serving.client import OutputQueue
+import json
+output_api = OutputQueue()
+d = output_api.query('my-image') 
+
+tmp_dict = json.loads(d)
+for class_idx in tmp_dict.keys():
+    output += &quot;class: &quot; + class_idx + &quot;'s prob: &quot; + tmp_dict[class_idx]
+print(output)
+</code></pre>
+
+<h4 id="dequeue">dequeue</h4>
+<p><a href="">view source</a></p>
+<pre><code>dequeue()
+</code></pre>
+
+<p>gets all result of your model prediction and dequeue them from OutputQueue</p>
+<p><em>return</em>: dict(), with keys the <code>uri</code> of your <a href="">enqueue</a>, string type, and values the output of your prediction, Numpy ndarray</p>
+<p>Format: </p>
+<pre><code>{
+  &quot;image1&quot;: {
+      &quot;class_1&quot;: &quot;probability_1&quot;,
+      &quot;class_2&quot;: &quot;probability_2&quot;,
+      ...,
+      &quot;class_n&quot;: &quot;probability_n&quot;
+  }, 
+  &quot;image2&quot;: {
+      &quot;class_1&quot;: &quot;probability_1&quot;,
+      &quot;class_2&quot;: &quot;probability_2&quot;,
+      ...,
+      &quot;class_n&quot;: &quot;probability_n&quot;
+  }
+  ...
+}
+</code></pre>
+
+<p>where <code>n</code> is <code>top_n</code> in your serving config, the result is sorted by output probability.</p>
+<p><em>Example</em></p>
+<pre><code>from zoo.serving.client import OutputQueue
+import json
+output_api = OutputQueue()
+d = output_api.dequeue()
+
+for k in d.keys():
+    output = &quot;image: &quot; + k + &quot;, classification-result:&quot;
+    tmp_dict = json.loads(result[k])
+    for class_idx in tmp_dict.keys():
+        output += &quot;class: &quot; + class_idx + &quot;'s prob: &quot; + tmp_dict[class_idx]
+    print(output)
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

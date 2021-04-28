@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Text Models - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Model Construction", url: "#model-construction", children: [
+          ]},
+          {title: "Data Preparation", url: "#data-preparation", children: [
+          ]},
+          {title: "Model Training", url: "#model-training", children: [
+          ]},
+          {title: "Model Evaluation", url: "#model-evaluation", children: [
+          ]},
+          {title: "Model Save and Load", url: "#model-save-and-load", children: [
+          ]},
+          {title: "Model Inference", url: "#model-inference", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Text Models</strong></h1>
+    <hr>
+    <p>There are a number of built-in <strong>compiled</strong> text models in Analytics Zoo TFPark for Natural Language Processing (NLP) tasks based on <a href="../../APIGuide/TFPark/model/">KerasModel</a>.</p>
+<p>See <a href="../../APIGuide/TFPark/text-models/">this page</a> for more details about how to construct built-in models for intent extraction, named entity extraction and pos tagging. etc.</p>
+<p>In this page, we show the general steps how to train and evaluate an <a href="../../APIGuide/TFPark/text-models/#named-entity-recognition">NER</a> model in a distributed fashion and use this model for distributed inference.
+For other models, the steps are more or less quite similar.</p>
+<p><strong>Remarks</strong>:</p>
+<ul>
+<li>You need to install <strong>tensorflow==1.15.0</strong> on your driver node.</li>
+<li>Your operating system (OS) is required to be one of the following 64-bit systems:
+<strong>Ubuntu 16.04 or later</strong>, <strong>macOS 10.12.6 or later</strong> and <strong>Windows 7 or later</strong>.</li>
+<li>To run on other systems, you need to manually compile the TensorFlow source code. Instructions can
+  be found <a href="https://github.com/tensorflow/tensorflow/tree/v1.10.0/tensorflow/java">here</a>.</li>
+</ul>
+<hr />
+<h2 id="model-construction"><strong>Model Construction</strong></h2>
+<p>You can easily construct a model for named entity recognition using the following API.</p>
+<pre><code class="python">from zoo.tfpark.text.keras import NER
+
+model = NER(num_entities, word_vocab_size, char_vocab_size, word_length)
+</code></pre>
+
+<hr />
+<h2 id="data-preparation"><strong>Data Preparation</strong></h2>
+<p>The NER model has two inputs: word indices and character indices.</p>
+<p>Thus, each raw text record needs to go through word-wise tokenization, character-wise segmentation and alignment to the same target length for preprocessing.</p>
+<p>If you are using numpy arrays, then the input <code>x</code> should be a list of two numpy arrays:</p>
+<ul>
+<li><code>x_words</code> of shape (batch, sequence_length) for word indices</li>
+<li><code>x_chars</code> of shape (batch, sequence_length, word_length) for character indices.</li>
+<li><code>x = [x_words, x_char]</code></li>
+</ul>
+<p>If there are labels (for training and evaluation), <code>y</code> should be another numpy array of shape (batch, sequence_length, word_length) for entity tags.</p>
+<p>Alternatively, you can construct a <a href="../../ProgrammingGuide/tensorflow/#tfdataset">TFDataSet</a> directly if you are dealing with RDD.
+Each record in TFDataSet should contain word indices, character indices and labels (if any) as well.</p>
+<hr />
+<h2 id="model-training"><strong>Model Training</strong></h2>
+<p>You can easily call <a href="../../APIGuide/TFPark/model/#fit">fit</a> to train the NER model in a distributed fashion. You don't need to specify <code>y</code> if <code>x</code> is already a TFDataSet.</p>
+<pre><code class="python">model.fit(x, y, batch_size, epochs, distributed=True)
+</code></pre>
+
+<hr />
+<h2 id="model-evaluation"><strong>Model Evaluation</strong></h2>
+<p>You can easily call <a href="../../APIGuide/TFPark/model/#evaluate">evaluate</a> to evaluate the NER model in a distributed fashion. You don't need to specify <code>y</code> if <code>x</code> is already a TFDataSet.</p>
+<pre><code class="python">result = model.evaluate(x, y, distributed=True)
+</code></pre>
+
+<hr />
+<h2 id="model-save-and-load"><strong>Model Save and Load</strong></h2>
+<p>After training, you can save the <code>NER</code> model to a single HDF5 file.</p>
+<pre><code class="python">model.save_model(path)
+</code></pre>
+
+<p>For inference, you can load a directly trained <code>NER</code> model (with weights) from HDF5 file.</p>
+<pre><code class="python">from zoo.tfpark.text.keras import NER
+
+model = NER.load_model(path)
+</code></pre>
+
+<hr />
+<h2 id="model-inference"><strong>Model Inference</strong></h2>
+<p>You can easily call <a href="../../APIGuide/TFPark/model/#predict">predict</a> to use the trained NER model for distributed inference. Note that you don't necessarily need labels for prediction.</p>
+<pre><code class="python">predictions = model.predict(x, distributed=True)
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

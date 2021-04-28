@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Recipe - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Recipe", url: "#recipe", children: [
+              {title: "SmokeRecipe", url: "#smokerecipe" },
+              {title: "LSTMRandomGridRecipe", url: "#lstmrandomgridrecipe" },
+              {title: "MTNetRandomGridRecipe", url: "#mtnetrandomgridrecipe" },
+              {title: "RandomRecipe", url: "#randomrecipe" },
+              {title: "GridRandomRecipe", url: "#gridrandomrecipe" },
+              {title: "BayesRecipe", url: "#bayesrecipe" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Recipe</strong></h1>
+    <hr>
+    <h1 id="recipe">Recipe</h1>
+<p>You can use <code>Recipe</code> to choose some presets for the <code>TimeSequencePredictor</code> fitting process by passing to the <code>recipe</code> field in the <code>fit</code> method.</p>
+<h3 id="smokerecipe">SmokeRecipe</h3>
+<p>A very simple Recipe for smoke test that runs one epoch and one iteration with only 1 random sample.</p>
+<pre><code class="python">SmokeRecipe()
+</code></pre>
+
+<h3 id="lstmrandomgridrecipe">LSTMRandomGridRecipe</h3>
+<p>A recipe mixing random and grid using LSTM Model only</p>
+<pre><code class="python">LSTMGridRandomRecipe(num_rand_samples=1,epochs=5,training_iteration=10,look_back=2,lstm_1_units=[16, 32, 64, 128],lstm_2_units=[16, 32, 64], batch_size=[32, 64])
+</code></pre>
+
+<h4 id="arguments">Arguments</h4>
+<ul>
+<li>:param lstm_1_units: random search candidates for num of lstm_1_units</li>
+<li>:param lstm_2_units: grid search candidates for num of lstm_1_units</li>
+<li>:param batch_size: grid search candidates for batch size</li>
+<li>:param num_rand_samples: number of hyper-param configurations sampled randomly</li>
+<li>:param look_back: the length to look back, either a tuple with 2 int values,
+          which is in format is (min len, max len), or a single int, which is
+          a fixed length to look back.</li>
+<li>:param training_iteration: no. of iterations for training (n epochs) in trials</li>
+<li>:param epochs: no. of epochs to train in each iteration</li>
+</ul>
+<h3 id="mtnetrandomgridrecipe">MTNetRandomGridRecipe</h3>
+<p>A recipe mixing random and grid using MTNet Model only</p>
+<pre><code class="python">MTNetGridRandomRecipe(num_rand_samples=1,
+                 epochs=5,
+                 training_iteration=10,
+                 time_step=[3, 4],
+                 long_num=[3, 4],
+                 cnn_height=[2, 3],
+                 cnn_hid_size=[32, 50, 100],
+                 ar_size=[2, 3],
+                 batch_size=[32, 64])
+</code></pre>
+
+<h4 id="arguments_1">Arguments</h4>
+<ul>
+<li>:param num_rand_samples: number of hyper-param configurations sampled randomly</li>
+<li>:param training_iteration: no. of iterations for training (n epochs) in trials</li>
+<li>:param epochs: no. of epochs to train in each iteration</li>
+<li>:param time_step: random search candidates for model param "time_step"</li>
+<li>:param long_num: random search candidates for model param "long_num"</li>
+<li>:param ar_size: random search candidates for model param "ar_size"</li>
+<li>:param batch_size: grid search candidates for batch size</li>
+<li>:param cnn_height: random search candidates for model param "cnn_height"</li>
+<li>:param cnn_hid_size: random search candidates for model param "cnn_hid_size"</li>
+</ul>
+<h3 id="randomrecipe">RandomRecipe</h3>
+<p>Pure random sample Recipe. Often used as baseline.</p>
+<pre><code class="python">RandomRecipe(num_rand_samples=1, look_back=2)
+</code></pre>
+
+<h4 id="arguments_2">Arguments</h4>
+<ul>
+<li>
+<p><strong>num_rand_samples</strong>: number of hyper-param configurations sampled randomly.</p>
+</li>
+<li>
+<p><strong>look_back</strong>: The length to look back. It could be</p>
+<ul>
+<li>A single int, which is a fixed length to look back. Note that the look back value should be larger than 1 to take the series information into account.</li>
+<li>A tuple with 2 int values, which is in format is (min len, max len). The <code>min len</code> value should also be larger than 1.</li>
+</ul>
+</li>
+</ul>
+<h3 id="gridrandomrecipe">GridRandomRecipe</h3>
+<p>A recipe involves both grid search and random search. The arguments are the same with <code>RandomRecipe</code>.</p>
+<pre><code class="python">GridRandomRecipe(num_rand_samples=1, look_back=2)
+</code></pre>
+
+<h3 id="bayesrecipe">BayesRecipe</h3>
+<p>A recipe to search with Bayes Optimization. You need to pre-install <code>bayesian-optimization</code> before using the recipe.</p>
+<pre><code class="python">BayesRecipe(num_samples=1, look_back=2)
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>RayOnSpark - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Introduction", url: "#introduction", children: [
+          ]},
+          {title: "Steps to run RayOnSpark", url: "#steps-to-run-rayonspark", children: [
+          ]},
+          {title: "FAQ", url: "#faq", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>RayOnSpark</strong></h1>
+    <hr>
+    <h3 id="introduction"><strong>Introduction</strong></h3>
+<p><a href="https://github.com/ray-project/ray">Ray</a> is a distributed framework for emerging AI applications open-sourced by <a href="https://rise.cs.berkeley.edu">UC Berkeley RISELab</a>. 
+It implements a unified interface, distributed scheduler, and distributed and fault-tolerant store to address the new and demanding systems requirements for advanced AI technologies. </p>
+<p>Ray allows users to easily and efficiently to run many emerging AI applications, such as deep reinforcement learning using RLlib, scalable hyperparameter search using Ray Tune, automatic program synthesis using AutoPandas, etc.</p>
+<p>Analytics Zoo provides a mechanism to deploy Python dependencies and Ray services automatically
+across yarn cluster, meaning python users would be able to run <code>analytics-zoo</code> or <code>ray</code>
+in a pythonic way on yarn without <code>spark-submit</code> or installing analytics-zoo or ray across all cluster nodes.</p>
+<hr />
+<h3 id="steps-to-run-rayonspark"><strong>Steps to run RayOnSpark</strong></h3>
+<p><strong>NOTE:</strong> We have been tested on Ray 0.8.4 and you are highly recommended to use this Ray version.</p>
+<p>1) Install <a href="https://docs.conda.io/projects/conda/en/latest/commands/install.html">Conda</a> in your environment.</p>
+<p>2) Create a new conda environment (with name "zoo" for example):</p>
+<pre><code>conda create -n zoo python=3.6
+source activate zoo
+</code></pre>
+
+<p>3) Install analytics-zoo in the created conda environment:</p>
+<pre><code>pip install analytics-zoo[ray]
+</code></pre>
+
+<p>Note that the essential dependencies (including <code>ray==1.2.0</code>, <code>psutil</code>, <code>aiohttp</code>, <code>setproctitle</code>, <code>pyarrow==0.17.0</code>) will be installed by specifying the extras key <code>[ray]</code> when you pip install analytics-zoo.</p>
+<p>4) Download JDK8 and set the environment variable: JAVA_HOME (recommended).</p>
+<p>You can also install JDK via conda without setting the JAVA_HOME manually:</p>
+<p><code>conda install -c anaconda openjdk=8.0.152</code></p>
+<p>5) Start <code>python</code> and then execute the following example.</p>
+<ul>
+<li>Create a SparkContext on yarn, only <strong>yarn-client mode</strong> is supported for now:</li>
+</ul>
+<pre><code class="python">from zoo import init_spark_on_yarn
+
+sc = init_spark_on_yarn(
+    hadoop_conf=&quot;path to the yarn configuration folder&quot;,
+    conda_name=&quot;zoo&quot;, # The name of the created conda-env
+    num_executors=2,
+    executor_cores=4,
+    executor_memory=&quot;8g&quot;,
+    driver_memory=&quot;2g&quot;,
+    driver_cores=4,
+    extra_executor_memory_for_ray=&quot;10g&quot;)
+</code></pre>
+
+<ul>
+<li>[Optional] If you don't have a yarn cluster, this can also be tested locally by creating a SparkContext
+with <code>init_spark_on_local</code>:</li>
+</ul>
+<pre><code class="python">from zoo import init_spark_on_local
+
+sc = init_spark_on_local(cores=4)
+</code></pre>
+
+<ul>
+<li>
+<p>Once the SparkContext is created, we can write more logic here such as training an Analytics Zoo model
+or launching ray on Spark.</p>
+</li>
+<li>
+<p>Run the following simple example to launch a ray cluster on top of the SparkContext configurations and verify if RayOnSpark can work smoothly.</p>
+</li>
+</ul>
+<pre><code class="python">import ray
+from zoo.ray import RayContext
+
+ray_ctx = RayContext(sc=sc, object_store_memory=&quot;5g&quot;)
+ray_ctx.init()
+
+@ray.remote
+class Counter(object):
+      def __init__(self):
+          self.n = 0
+
+      def increment(self):
+          self.n += 1
+          return self.n
+
+
+counters = [Counter.remote() for i in range(5)]
+print(ray.get([c.increment.remote() for c in counters]))
+
+ray_ctx.stop()
+sc.stop()
+</code></pre>
+
+<hr />
+<h3 id="faq"><strong>FAQ</strong></h3>
+<ul>
+<li>If you encounter the following error when initiating RayOnSpark, especially when you are using Spark standalone cluster:</li>
+</ul>
+<pre><code>This system supports the C.UTF-8 locale which is recommended. You might be able to resolve your issue by exporting the following environment variables:
+
+    export LC_ALL=C.UTF-8
+    export LANG=C.UTF-8
+</code></pre>
+
+<p>Add the environment variables when initiating RayContext would resolve the issue:</p>
+<pre><code class="python">ray_ctx = RayContext(sc=sc, object_store_memory=&quot;5g&quot;, env={&quot;LANG&quot;: &quot;C.UTF-8&quot;, &quot;LC_ALL&quot;: &quot;C.UTF-8&quot;})
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Cluster Serving - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Programming Guide", url: "#programming-guide", children: [
+              {title: "Quick Start", url: "#quick-start" },
+              {title: "Workflow Overview", url: "#workflow-overview" },
+              {title: "Deploy your Own Cluster Serving", url: "#deploy-your-own-cluster-serving" },
+              {title: "Optional Operations", url: "#optional-operations" },
+              {title: "Others", url: "#others" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>Cluster Serving</strong></h1>
+    <hr>
+    <h1 id="programming-guide">Programming Guide</h1>
+<p>Analytics Zoo Cluster Serving is a lightweight distributed, real-time serving solution that supports a wide range of deep learning models (such as TensorFlow, PyTorch, Caffe, BigDL and OpenVINO models). It provides a simple pub/sub API, so that the users can easily send their inference requests to the input queue (using a simple Python API); Cluster Serving will then automatically manage the scale-out and real-time model inference across a large cluster (using distributed streaming frameworks such as Apache Spark Streaming, Apache Flink, etc.) </p>
+<p>The overall architecture of Analytics Zoo Cluster Serving solution is illustrated as below: </p>
+<p><img alt="overview" src="../cluster_serving_overview.jpg" /></p>
+<p>This page contains the guide for you to run Analytics Zoo Cluster Serving, including following:</p>
+<ul>
+<li>
+<p><a href="#quick-start">Quick Start</a></p>
+</li>
+<li>
+<p><a href="#workflow-overview">Workflow Overview</a> </p>
+</li>
+<li>
+<p><a href="#deploy-your-own-cluster-serving">Deploy Your Own Cluster Serving</a></p>
+</li>
+<li>
+<p><a href="#1-installation">Installation</a></p>
+</li>
+<li>
+<p><a href="#2-configuration">Configuration</a> </p>
+</li>
+<li>
+<p><a href="#3-launching-service">Launching Service</a></p>
+</li>
+<li>
+<p><a href="#4-model-inference">Model Inference</a></p>
+</li>
+<li>
+<p><a href="#optional-operations">Optional Operations</a></p>
+<ul>
+<li>
+<p><a href="#update-model-or-configurations">Update Model or Configurations</a></p>
+</li>
+<li>
+<p><a href="#logs-and-visualization">Logs and Visualization</a></p>
+</li>
+</ul>
+</li>
+<li>
+<p><a href="#others">Others</a></p>
+<ul>
+<li><a href="#transfer-local-code-to-cluster-serving">Transfer Local Code to Cluster Serving</a></li>
+<li><a href="#debug-guide">Debug Guide</a></li>
+<li><a href="#contribution-guide">Contribution Guide</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="quick-start">Quick Start</h2>
+<p>This section provides a quick start example for you to run Analytics Zoo Cluster Serving. To simplify the example, we use docker to run Cluster Serving. If you do not have docker installed, <a href="https://docs.docker.com/install/">install docker</a> first. The quick start example contains all the necessary components so the first time users can get it up and running within minutes:</p>
+<ul>
+<li>A docker image for Analytics Zoo Cluster Serving (with all dependencies installed)</li>
+<li>A sample configuration file</li>
+<li>A sample trained TensorFlow model, and sample data for inference</li>
+<li>A sample Python client program</li>
+</ul>
+<p>Use one command to run Cluster Serving container. (We provide quick start model in older version of docker image, for newest version, please refer to following sections and we remove the model to reduce the docker image size).</p>
+<pre><code>docker run --name cluster-serving -itd --net=host intelanalytics/zoo-cluster-serving:0.9.1
+</code></pre>
+
+<p>Log into the container using <code>docker exec -it cluster-serving bash</code>, and run</p>
+<pre><code>cd cluster-serving
+cluster-serving-init
+</code></pre>
+
+<p><code>zoo.jar</code> and <code>config.yaml</code> is in your directory now.</p>
+<p>Also, you can see prepared TensorFlow frozen ResNet50 model in <code>resources/model</code> directory with following structure.</p>
+<pre><code>cluster-serving | 
+               -- | model
+                 -- frozen_graph.pb
+                 -- graph_meta.json
+</code></pre>
+
+<p>Modify <code>config.yaml</code> and add following to <code>model</code> config</p>
+<pre><code>model:
+    path: resources/model
+</code></pre>
+
+<p>Start Cluster Serving using <code>cluster-serving-start</code>. </p>
+<p>Run python program <code>python3 image_classification_and_object_detection_quick_start.py -i resources/test_image</code> to push data into queue and get inference result. </p>
+<p>Then you can see the inference output in console. </p>
+<pre><code>cat prediction layer shape:  (1000,)
+the class index of prediction of cat image result:  292
+cat prediction layer shape:  (1000,)
+</code></pre>
+
+<p>Wow! You made it!</p>
+<p>Note that the Cluster Serving quick start example will run on your local node only. Check the <a href="#deploy-your-own-cluster-serving">Deploy Your Own Cluster Serving</a> section for how to configure and run Cluster Serving in a distributed fashion.</p>
+<p>For more details, refer to following sections.</p>
+<h2 id="workflow-overview">Workflow Overview</h2>
+<p>The figure below illustrates the simple 3-step "Prepare-Launch-Inference" workflow for Cluster Serving.</p>
+<p><img alt="steps" src="../cluster_serving_steps.jpg" /></p>
+<h4 id="1-install-and-prepare-cluster-serving-environment-on-a-local-node">1. Install and prepare Cluster Serving environment on a local node:</h4>
+<ul>
+<li>Copy a previously trained model to the local node; currently TensorFlow, PyTorch, Caffe, BigDL and OpenVINO models are supported.</li>
+<li>Install Analytics Zoo on the local node (e.g., using a single pip install command)</li>
+<li>Configure Cluster Server on the local node, including the file path to the trained model and the address of the cluster (such as Apache Hadoop YARN cluster, K8s cluster, etc.).
+Please note that you only need to deploy the Cluster Serving solution on a single local node, and NO modifications are needed for the (YARN or K8s) cluster. </li>
+</ul>
+<h4 id="2-launch-the-cluster-serving-service">2. Launch the Cluster Serving service</h4>
+<p>You can launch the Cluster Serving service by running the startup script on the local node. Under the hood, Cluster Serving will automatically deploy the trained model and serve the model inference requests across the cluster in a distributed fashion. You may monitor its runtime status (such as inference throughput) using TensorBoard. </p>
+<h4 id="3-distributed-real-time-streaming-inference">3. Distributed, real-time (streaming) inference</h4>
+<p>Cluster Serving provides a simple pub/sub API to the users, so that you can easily send the inference requests to an input queue (currently Redis Streams is used) using a simple Python API.</p>
+<p>Cluster Serving will then read the requests from the Redis stream, run the distributed real-time inference across the cluster (using Flink), and return the results back through Redis. As a result, you may get the inference results again using a simple Python API.</p>
+<h2 id="deploy-your-own-cluster-serving">Deploy your Own Cluster Serving</h2>
+<h3 id="1-installation">1. Installation</h3>
+<p>It is recommended to install Cluster Serving by pulling the pre-built Docker image to your local node, which have packaged all the required dependencies. Alternatively, you may also manually install Cluster Serving (through either pip or direct downloading), Redis on the local node.</p>
+<h4 id="docker">Docker</h4>
+<pre><code>docker pull intelanalytics/zoo-cluster-serving
+</code></pre>
+
+<p>then, (or directly run <code>docker run</code>, it will pull the image if it does not exist)</p>
+<pre><code>docker run --name cluster-serving -itd --net=host intelanalytics/zoo-cluster-serving:0.9.0
+</code></pre>
+
+<p>Log into the container</p>
+<pre><code>docker exec -it cluster-serving bash
+</code></pre>
+
+<p><code>cd ./cluster-serving</code>, you can see all the environments prepared.</p>
+<h4 id="manual-installation">Manual installation</h4>
+<h5 id="requirements">Requirements</h5>
+<p>Non-Docker users need to install <a href="https://archive.apache.org/dist/flink/flink-1.10.0/">Flink 1.10.0+</a>, 1.10.0 by default, <a href="https://redis.io/topics/quickstart">Redis 5.0.0+</a>, 5.0.5 by default.</p>
+<p>After preparing dependencies above, make sure the environment variable <code>$FLINK_HOME</code> (/path/to/flink-FLINK_VERSION-bin), <code>$REDIS_HOME</code>(/path/to/redis-REDIS_VERSION) is set before following steps. </p>
+<h5 id="install-release-version">Install release version</h5>
+<pre><code>pip install analytics-zoo-serving
+</code></pre>
+
+<h5 id="install-nightly-version">Install nightly version</h5>
+<p>Download package from <a href="https://sourceforge.net/projects/analytics-zoo/files/cluster-serving-py/">here</a>, run following command to install Cluster Serving</p>
+<pre><code>pip install analytics_zoo_serving-*.whl
+</code></pre>
+
+<p>For users who need to deploy and start Cluster Serving, run <code>cluster-serving-init</code> to download and prepare dependencies.</p>
+<p>For users who need to do inference, aka. predict data only, the environment is ready.</p>
+<h3 id="2-configuration">2. Configuration</h3>
+<h4 id="set-up-cluster">Set up cluster</h4>
+<p>Cluster Serving uses Flink cluster, make sure you have it according to <a href="#1-installation">Installation</a>.</p>
+<p>For docker user, the cluster should be already started. You could use <code>netstat -tnlp | grep 8081</code> to check if Flink REST port is working, if not, call <code>$FLINK_HOME/bin/start-cluster.sh</code> to start Flink cluster.</p>
+<p>If you need to start Flink on yarn, refer to <a href="https://ci.apache.org/projects/flink/flink-docs-stable/deployment/resource-providers/yarn.html">Flink on Yarn</a>, or K8s, refer to <a href="https://ci.apache.org/projects/flink/flink-docs-stable/deployment/resource-providers/standalone/kubernetes.html">Flink on K8s</a> at Flink official documentation.</p>
+<p>If you use Flink standalone, call <code>$FLINK_HOME/bin/start-cluster.sh</code> to start Flink cluster.</p>
+<h4 id="configuration-file">Configuration file</h4>
+<p>After <a href="#1-installation">Installation</a>, you will see a config file <code>config.yaml</code> in your current working directory. This file contains all the configurations that you can customize for your Cluster Serving. See an example of <code>config.yaml</code> below.</p>
+<pre><code>## Analytics Zoo Cluster Serving Config Example
+
+model:
+  # model path must be set
+  path: /opt/work/model
+params:
+  # default, 4
+  core_num:  
+</code></pre>
+
+<h4 id="preparing-model">Preparing Model</h4>
+<p>Currently Analytics Zoo Cluster Serving supports TensorFlow, OpenVINO, PyTorch, BigDL, Caffe models. Supported types are listed below.</p>
+<p>You need to put your model file into a directory with layout like following according to model type, note that only one model is allowed in your directory. Then, set in <code>config.yaml</code> file with <code>model:path:/path/to/dir</code>.</p>
+<p><strong>Tensorflow*<em>
+</em></strong>Tensorflow SavedModel***</p>
+<pre><code>|-- model
+   |-- saved_model.pb
+   |-- variables
+       |-- variables.data-00000-of-00001
+       |-- variables.index
+</code></pre>
+
+<p><strong><em>Tensorflow Frozen Graph</em></strong></p>
+<pre><code>|-- model
+   |-- frozen_inference_graph.pb
+   |-- graph_meta.json
+</code></pre>
+
+<p><strong>note:</strong> <code>.pb</code> is the weight file which name must be <code>frozen_inference_graph.pb</code>, <code>.json</code> is the inputs and outputs definition file which name must be <code>graph_meta.json</code>, with contents like <code>{"input_names":["input:0"],"output_names":["output:0"]}</code></p>
+<p><strong><em>Tensorflow Checkpoint</em></strong>
+Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/examples/tensorflow/freeze_checkpoint">freeze checkpoint example</a></p>
+<p><strong>Pytorch</strong></p>
+<pre><code>|-- model
+   |-- xx.pt
+</code></pre>
+
+<p>Running Pytorch model needs extra dependency and config. Refer to <a href="https://github.com/intel-analytics/analytics-zoo/blob/master/pyzoo/zoo/examples/pytorch/train/README.md">here</a> to install dependencies, and set environment variable <code>$PYTHONHOME</code> to your python, e.g. python could be run by <code>$PYTHONHOME/bin/python</code> and library is at <code>$PYTHONHOME/lib/</code>.</p>
+<p><strong>OpenVINO</strong></p>
+<pre><code>|-- model
+   |-- xx.xml
+   |-- xx.bin
+</code></pre>
+
+<p><strong>BigDL</strong></p>
+<pre><code>|--model
+   |-- xx.model
+</code></pre>
+
+<p><strong>Caffe</strong></p>
+<pre><code>|-- model
+   |-- xx.prototxt
+   |-- xx.caffemodel
+</code></pre>
+
+<h4 id="data-configuration">Data Configuration</h4>
+<p>The field <code>data</code> contains your input data configuration.</p>
+<ul>
+<li>src: the queue you subscribe for your input data, e.g. default config of Redis on local machine is <code>localhost:6379</code>. Note that please use the host address in your network instead of localhost or 127.0.0.1 when you run serving in cluster, and make sure other nodes in cluster could also recognize this address.</li>
+<li>filter: the post-processing of pipeline, usually none, the model output would be returned. Except none, currently supported filters are,</li>
+</ul>
+<p>Top-N, e.g. <code>topN(1)</code> represents Top-1 result is kept and returned with index. User should follow this schema <code>topN(n)</code>. Noted if the top-N number is larger than model output size of the the final layer, it would just return all the outputs.</p>
+<h4 id="other-configuration">Other Configuration</h4>
+<p>The field <code>params</code> contains your inference parameter configuration.</p>
+<ul>
+<li>core_number: the <strong>batch size</strong> you use for model inference, usually the core number of your machine is recommended. Thus you could just provide your machine core number at this field. We recommend this value to be not smaller than 4 and not larger than 512. In general, using larger batch size means higher throughput, but also increase the latency between batches accordingly.</li>
+</ul>
+<h4 id="high-performance-configuration-recommended">High Performance Configuration Recommended</h4>
+<p>Tensorflow, Pytorch, BigDL model recommend following configuration</p>
+<pre><code>params:  
+  # default: model number will auto-adapt to core_number, do not set it if not sure about the behavior
+  model_number: core_number of your machine
+</code></pre>
+
+<p>OpenVINO model recommend following configuration</p>
+<pre><code>export OMP_NUM_THREADS=core_number of your machine
+</code></pre>
+
+<h3 id="3-launching-service">3. Launching Service</h3>
+<p>This section is about how to start and stop Cluster Serving. </p>
+<h4 id="start">Start</h4>
+<p>You can use following command to start Cluster Serving.</p>
+<pre><code>cluster-serving-start
+</code></pre>
+
+<p>Normally, when calling <code>cluster-serving-start</code>, your <code>config.yaml</code> should be in current directory. You can also use <code>cluster-serving-start -c config_path</code> to pass config path <code>config_path</code> to Cluster Serving manually.</p>
+<h4 id="stop">Stop</h4>
+<p>You can use Flink UI in <code>localhost:8081</code> by default, to cancel your Cluster Serving job.</p>
+<h4 id="shut-down">Shut Down</h4>
+<p>You can use following command to shutdown Cluster Serving. This operation will stop all running services related to Cluster Serving. Note that your data in Redis will be removed when you shutdown. </p>
+<pre><code>cluster-serving-shutdown
+</code></pre>
+
+<p>If you are using Docker, you could also run <code>docker rm</code> to shutdown Cluster Serving.</p>
+<h4 id="start-multiple-serving">Start Multiple Serving</h4>
+<p>To run multiple Cluster Serving job, e.g. the second job name is <code>serving2</code>, then use following configuration</p>
+<pre><code>model:
+  # model path must be provided
+  path: /path/to/model
+  # name, default is serving_stream, you need to specify if running multiple servings
+  name: serving2
+</code></pre>
+
+<p>then call <code>cluster-serving-start</code> in this directory would start another Cluster Serving job with this new configuration.</p>
+<p>Then, in Python API, pass <code>name=serving2</code> argument during creating object, e.g.</p>
+<pre><code>input_queue=InputQueue(name=serving2)
+output_queue=OutputQueue(name=serving2)
+</code></pre>
+
+<p>Then the Python API would interact with job <code>serving2</code>.</p>
+<h4 id="http-server-for-sync-api-only">HTTP Server (for sync API only)</h4>
+<p>If you want to use sync API for inference, you should start a provided HTTP server first. User can submit HTTP requests to the HTTP server through RESTful APIs. The HTTP server will parse the input requests and pub them to Redis input queues, then retrieve the output results and render them as json results in HTTP responses.</p>
+<h5 id="prepare">Prepare</h5>
+<p>User can download a analytics-zoo-${VERSION}-http.jar from the Nexus Repository with GAVP: </p>
+<pre><code>&lt;groupId&gt;com.intel.analytics.zoo&lt;/groupId&gt;
+&lt;artifactId&gt;analytics-zoo-bigdl_${BIGDL_VERSION}-spark_${SPARK_VERSION}&lt;/artifactId&gt;
+&lt;version&gt;${ZOO_VERSION}&lt;/version&gt;
+</code></pre>
+
+<p>User can also build from the source code:</p>
+<pre><code>mvn clean package -P spark_2.4+ -Dmaven.test.skip=true
+</code></pre>
+
+<h5 id="start-the-http-server">Start the HTTP Server</h5>
+<p>User can start the HTTP server with following command.</p>
+<pre><code>java -jar analytics-zoo-bigdl_${BIGDL_VERSION}-spark_${SPARK_VERSION}-${ZOO_VERSION}-http.jar
+</code></pre>
+
+<p>And check the status of the HTTP server with:</p>
+<pre><code>curl  http://${BINDED_HOST_IP}:${BINDED_HOST_PORT}/
+</code></pre>
+
+<p>If you get a response like "welcome to analytics zoo web serving frontend", that means the HTTP server is started successfully.</p>
+<h5 id="start-options">Start options</h5>
+<p>User can pass options to the HTTP server when start it:</p>
+<pre><code>java -jar analytics-zoo-bigdl_${BIGDL_VERSION}-spark_${SPARK_VERSION}-${ZOO_VERSION}-http.jar --redisHost=&quot;172.16.0.109&quot;
+</code></pre>
+
+<p>All the supported parameter are listed here:
+* <strong>interface</strong>: the binded server interface, default is "0.0.0.0"
+* <strong>port</strong>: the binded server port, default is 10020
+* <strong>redisHost</strong>: the host IP of redis server, default is "localhost"
+* <strong>redisPort</strong>: the host port of redis server, default is 6379
+* <strong>redisInputQueue</strong>: the input queue of redis server, default is "serving_stream"
+* <strong>redisOutputQueue</strong>: the output queue of redis server, default is "result:" 
+* <strong>parallelism</strong>: the parallelism of requests processing, default is 1000
+* <strong>timeWindow</strong>: the timeWindow wait to pub inputs to redis, default is 0
+* <strong>countWindow</strong>: the timeWindow wait to ub inputs to redis, default is 56
+* <strong>tokenBucketEnabled</strong>: the switch to enable/disable RateLimiter, default is false
+* <strong>tokensPerSecond</strong>: the rate of permits per second, default is 100
+* <strong>tokenAcquireTimeout</strong>: acquires a permit from this RateLimiter if it can be obtained without exceeding the specified timeout(ms), default is 100</p>
+<p><strong>User can adjust these options to tune the performance of the HTTP server.</strong></p>
+<h3 id="4-model-inference">4. Model Inference</h3>
+<p>We support Python API and HTTP RESTful API for conducting inference with Data Pipeline in Cluster Serving. </p>
+<h4 id="python-api">Python API</h4>
+<p>For Python API, the requirements of python packages are <code>opencv-python</code>(for raw image only), <code>pyyaml</code>, <code>redis</code>. You can use <code>InputQueue</code> and <code>OutputQueue</code> to connect to data pipeline by providing the pipeline url, e.g. <code>my_input_queue = InputQueue(host, port)</code> and <code>my_output_queue = OutputQueue(host, port)</code>. If parameters are not provided, default url <code>localhost:6379</code> would be used.</p>
+<p>We provide some basic usages here, for more details, please see <a href="../APIGuide/">API Guide</a>.</p>
+<h5 id="async-api">Async API</h5>
+<p>Async API provide method to enqueue data, the method would not block and user can query the data anytime afterwards.</p>
+<p>To input data to queue, you need a <code>InputQueue</code> instance, and using <code>enqueue</code> method, for each input, give a key correspond to your model or give arbitrary key if your model does not care about it.</p>
+<p>To enqueue an image</p>
+<pre><code>from zoo.serving.client import InputQueue
+input_api = InputQueue()
+input_api.enqueue('my-image1', user_define_key={&quot;path: 'path/to/image1'})
+</code></pre>
+
+<p>To enqueue an instance containing 1 image and 2 ndarray</p>
+<pre><code>from zoo.serving.client import InputQueue
+import numpy as np
+input_api = InputQueue()
+t1 = np.array([1,2])
+t2 = np.array([[1,2], [3,4]])
+input_api.enqueue('my-instance', img={&quot;path&quot;: 'path/to/image'}, tensor1=t1, tensor2=t2)
+</code></pre>
+
+<p>There are 4 types of inputs in total, string, image, tensor, sparse tensor, which could represents nearly all types of models. For more details of usage, go to <a href="../APIGuide/">API Guide</a></p>
+<p>To get data from queue, you need a <code>OutputQueue</code> instance, and using <code>query</code> or <code>dequeue</code> method. The <code>query</code> method takes image uri as parameter and returns the corresponding result. The <code>dequeue</code> method takes no parameter and just returns all results and also delete them in data queue. See following example.</p>
+<pre><code>from zoo.serving.client import OutputQueue
+output_api = OutputQueue()
+img1_result = output_api.query('img1')
+all_result = output_api.dequeue() # the output queue is empty after this code
+</code></pre>
+
+<p>Consider the code above,</p>
+<pre><code>img1_result = output_api.query('img1')
+</code></pre>
+
+<h5 id="sync-api">Sync API</h5>
+<p>Sync API provide method to predict data, the method would block until the result is available.</p>
+<p>User need to create a <code>InputQueue</code> instance with <code>sync=True</code> and <code>frontend_url=frontend_server_url</code> argument.</p>
+<pre><code>from zoo.serving.client import InputQueue
+input_api = InputQueue(sync=True, frontend_url=frontend_server_url)
+response = input_api.predict(request_json_string)
+print(response.text)
+</code></pre>
+
+<p>example of <code>request_json_string</code> is</p>
+<pre><code>'{
+  &quot;instances&quot; : [ {
+    &quot;ids&quot; : [ 100.0, 88.0 ]
+  }]
+}'
+</code></pre>
+
+<p>This API is also a python support of <a href="#restful-api">Restful API</a> section, so for more details of input format, refer to it.</p>
+<h4 id="restful-api">RESTful API</h4>
+<p>This part describes API endpoints and end-to-end examples on usage. 
+The requests and responses are in JSON format. The composition of them depends on the requests type or verb. See the APIs for details.
+In case of error, all APIs will return a JSON object in the response body with error as key and the error message as the value:</p>
+<pre><code>{
+  &quot;error&quot;: &lt;error message string&gt;
+}
+</code></pre>
+
+<h5 id="predict-api">Predict API</h5>
+<p>URL</p>
+<pre><code>POST http://host:port/predict
+</code></pre>
+
+<p>Request Example for images as inputs:</p>
+<pre><code>curl -d \
+'{
+  &quot;instances&quot;: [
+    {
+      &quot;image&quot;: &quot;/9j/4AAQSkZJRgABAQEASABIAAD/7RcEUGhvdG9za...&quot;
+    },   
+    {
+      &quot;image&quot;: &quot;/9j/4AAQSkZJRgABAQEASABIAAD/7RcEUGhvdG9za...&quot;
+    }
+  ]
+}' \
+-X POST http://host:port/predict
+</code></pre>
+
+<p>Response Example</p>
+<pre><code>{
+  &quot;predictions&quot;: [
+    &quot;{value=[[903,0.1306194]]}&quot;,    
+    &quot;{value=[[903,0.1306194]]}&quot;
+  ]
+}
+</code></pre>
+
+<p>Request Example for tensor as inputs:</p>
+<pre><code>curl -d \
+'{
+  &quot;instances&quot; : [ {
+    &quot;ids&quot; : [ 100.0, 88.0 ]
+  }, {
+    &quot;ids&quot; : [ 100.0, 88.0 ]
+  } ]
+}' \
+-X POST http://host:port/predict
+</code></pre>
+
+<p>Response Example</p>
+<pre><code>{
+  &quot;predictions&quot;: [
+    &quot;{value=[[1,0.6427843]]}&quot;,
+    &quot;{value=[[1,0.6427842]]}&quot;
+  ]
+}
+</code></pre>
+
+<p>Another request example for composition of scalars and tensors.</p>
+<pre><code>curl -d \
+ '{
+  &quot;instances&quot; : [ {
+    &quot;intScalar&quot; : 12345,
+    &quot;floatScalar&quot; : 3.14159,
+    &quot;stringScalar&quot; : &quot;hello, world. hello, arrow.&quot;,
+    &quot;intTensor&quot; : [ 7756, 9549, 1094, 9808, 4959, 3831, 3926, 6578, 1870, 1741 ],
+    &quot;floatTensor&quot; : [ 0.6804766, 0.30136853, 0.17394465, 0.44770062, 0.20275897, 0.32762378, 0.45966738, 0.30405098, 0.62053126, 0.7037923 ],
+    &quot;stringTensor&quot; : [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ],
+    &quot;intTensor2&quot; : [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ],
+    &quot;floatTensor2&quot; : [ [ [ 0.2, 0.3 ], [ 0.5, 0.6 ] ], [ [ 0.2, 0.3 ], [ 0.5, 0.6 ] ] ],
+    &quot;stringTensor2&quot; : [ [ [ [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ] ], [ [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ] ] ], [ [ [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ] ], [ [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ], [ &quot;come&quot;, &quot;on&quot;, &quot;united&quot; ] ] ] ]
+  }]
+}' \
+-X POST http://host:port/predict
+</code></pre>
+
+<p>Another request example for composition of sparse and dense tensors.</p>
+<pre><code>curl -d \
+'{
+  &quot;instances&quot; : [ {
+    &quot;sparseTensor&quot; : {
+      &quot;shape&quot; : [ 100, 10000, 10 ],
+      &quot;data&quot; : [ 0.2, 0.5, 3.45, 6.78 ],
+      &quot;indices&quot; : [ [ 1, 1, 1 ], [ 2, 2, 2 ], [ 3, 3, 3 ], [ 4, 4, 4 ] ]
+    },
+    &quot;intTensor2&quot; : [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]
+  }]
+}' \
+-X POST http://host:port/predict
+</code></pre>
+
+<h5 id="metrics-api">Metrics API</h5>
+<p>URL</p>
+<pre><code>GET http://host:port/metrics
+</code></pre>
+
+<p>Response example:</p>
+<pre><code>[
+  {
+    name: &quot;zoo.serving.redis.get&quot;,
+    count: 810,
+    meanRate: 12.627772820651845,
+    min: 0,
+    max: 25,
+    mean: 0.9687099303718213,
+    median: 0.928579,
+    stdDev: 0.8150031623593447,
+    _75thPercentile: 1.000047,
+    _95thPercentile: 1.141443,
+    _98thPercentile: 1.268665,
+    _99thPercentile: 1.608387,
+    _999thPercentile: 25.874584
+  }
+]
+</code></pre>
+
+<h2 id="optional-operations">Optional Operations</h2>
+<h3 id="update-model-or-configurations">Update Model or Configurations</h3>
+<p>To update your model, you could replace your model file in your model directory, and restart Cluster Serving by <code>cluster-serving-restart</code>. Note that you could also change your configurations in <code>config.yaml</code> and restart serving.</p>
+<h3 id="logs-and-visualization">Logs and Visualization</h3>
+<h4 id="logs">Logs</h4>
+<p>To see log, please refer to Flink UI <code>localhost:8081</code> by default.</p>
+<h4 id="visualization">Visualization</h4>
+<p>To visualize Cluster Serving performance, go to your flink job UI, default <code>localhost:8081</code>, and go to Cluster Serving job -&gt; metrics. Add <code>numRecordsOut</code> to see total record number and <code>numRecordsOutPerSecond</code> to see throughput.</p>
+<p>See example of visualization:</p>
+<p><img alt="Example Chart" src="../serving-visualization.png" /></p>
+<h2 id="others">Others</h2>
+<h3 id="transfer-local-code-to-cluster-serving">Transfer Local Code to Cluster Serving</h3>
+<p>If you have existed local application, we provide some example for you to transfer them to Cluster Serving application.</p>
+<p>We recommend <a href="../OtherFrameworkUsers/keras-to-cluster-serving-example.ipynb">Keras tranformation guide</a>. For Tensorflow v1 users, we also provide <a href="../OtherFrameworkUsers/tf1-to-cluster-serving-example.ipynb">Tensorflow v1 transformation guide</a>.</p>
+<h3 id="debug-guide">Debug Guide</h3>
+<p>If you follow this programming guide but Cluster Serving does not work, we provide a <a href="DebugGuide.md">Debug Guide</a> for you to figure out the problem step by step.</p>
+<h3 id="contribution-guide">Contribution Guide</h3>
+<p>We are glad if you are willing to contribute to Cluster Serving, refer to <a href="ContributeGuide.md">Contribution Guide</a> for details.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
