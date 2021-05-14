@@ -188,6 +188,23 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 <h4 id="manual-installation">Manual installation</h4>
 <h5 id="requirements">Requirements</h5>
 <p>Non-Docker users need to install <a href="https://archive.apache.org/dist/flink/flink-1.10.0/">Flink 1.10.0+</a>, 1.10.0 by default, <a href="https://redis.io/topics/quickstart">Redis 5.0.0+</a>, 5.0.5 by default.</p>
+<p>For users do not have above dependencies, we provide following command to quickly set up.</p>
+<p>Redis</p>
+<pre><code>$ export REDIS_VERSION=5.0.5
+$ wget http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz &amp;&amp; \
+    tar xzf redis-${REDIS_VERSION}.tar.gz &amp;&amp; \
+    rm redis-${REDIS_VERSION}.tar.gz &amp;&amp; \
+    cd redis-${REDIS_VERSION} &amp;&amp; \
+    make
+</code></pre>
+
+<p>Flink</p>
+<pre><code>$ export FLINK_VERSION=1.11.2
+$ wget https://archive.apache.org/dist/flink/flink-${FLINK_VERSION}/flink-${FLINK_VERSION}-bin-scala_2.11.tgz &amp;&amp; \
+    tar xzf flink-${FLINK_VERSION}-bin-scala_2.11.tgz &amp;&amp; \
+    rm flink-${FLINK_VERSION}-bin-scala_2.11.tgz.tgz
+</code></pre>
+
 <p>After preparing dependencies above, make sure the environment variable <code>$FLINK_HOME</code> (/path/to/flink-FLINK_VERSION-bin), <code>$REDIS_HOME</code>(/path/to/redis-REDIS_VERSION) is set before following steps. </p>
 <h5 id="install-release-version">Install release version</h5>
 <pre><code>pip install analytics-zoo-serving
@@ -209,18 +226,13 @@ Please note that you only need to deploy the Cluster Serving solution on a singl
 <h4 id="configuration-file">Configuration file</h4>
 <p>After <a href="#1-installation">Installation</a>, you will see a config file <code>config.yaml</code> in your current working directory. This file contains all the configurations that you can customize for your Cluster Serving. See an example of <code>config.yaml</code> below.</p>
 <pre><code>## Analytics Zoo Cluster Serving Config Example
-
-model:
-  # model path must be set
-  path: /opt/work/model
-params:
-  # default, 4
-  core_num:  
+# model path must be provided
+modelPath: /path/to/model
 </code></pre>
 
 <h4 id="preparing-model">Preparing Model</h4>
 <p>Currently Analytics Zoo Cluster Serving supports TensorFlow, OpenVINO, PyTorch, BigDL, Caffe models. Supported types are listed below.</p>
-<p>You need to put your model file into a directory with layout like following according to model type, note that only one model is allowed in your directory. Then, set in <code>config.yaml</code> file with <code>model:path:/path/to/dir</code>.</p>
+<p>You need to put your model file into a directory with layout like following according to model type, note that only one model is allowed in your directory. Then, set in <code>config.yaml</code> file with <code>modelPath:/path/to/dir</code>.</p>
 <p><strong>Tensorflow*<em>
 </em></strong>Tensorflow SavedModel***</p>
 <pre><code>|-- model
@@ -275,13 +287,18 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
 <li>core_number: the <strong>batch size</strong> you use for model inference, usually the core number of your machine is recommended. Thus you could just provide your machine core number at this field. We recommend this value to be not smaller than 4 and not larger than 512. In general, using larger batch size means higher throughput, but also increase the latency between batches accordingly.</li>
 </ul>
 <h4 id="high-performance-configuration-recommended">High Performance Configuration Recommended</h4>
-<p>Tensorflow, Pytorch, BigDL model recommend following configuration</p>
-<pre><code>params:  
-  # default: model number will auto-adapt to core_number, do not set it if not sure about the behavior
-  model_number: core_number of your machine
+<h5 id="tensorflow-pytorch">Tensorflow, Pytorch</h5>
+<p>1 &lt;= thread_per_model &lt;= 8, in config</p>
+<pre><code># default: number of models used in serving
+# modelParallelism: core_number of your machine / thread_per_model
 </code></pre>
 
-<p>OpenVINO model recommend following configuration</p>
+<p>environment variable</p>
+<pre><code>export OMP_NUM_THREADS=thread_per_model
+</code></pre>
+
+<h5 id="openvino">OpenVINO</h5>
+<p>environment variable</p>
 <pre><code>export OMP_NUM_THREADS=core_number of your machine
 </code></pre>
 
@@ -303,11 +320,11 @@ Please refer to <a href="https://github.com/intel-analytics/analytics-zoo/tree/m
 <p>If you are using Docker, you could also run <code>docker rm</code> to shutdown Cluster Serving.</p>
 <h4 id="start-multiple-serving">Start Multiple Serving</h4>
 <p>To run multiple Cluster Serving job, e.g. the second job name is <code>serving2</code>, then use following configuration</p>
-<pre><code>model:
-  # model path must be provided
-  path: /path/to/model
-  # name, default is serving_stream, you need to specify if running multiple servings
-  name: serving2
+<pre><code># model path must be provided
+# modelPath: /path/to/model
+
+# name, default is serving_stream, you need to specify if running multiple servings
+# jobName: serving2
 </code></pre>
 
 <p>then call <code>cluster-serving-start</code> in this directory would start another Cluster Serving job with this new configuration.</p>
