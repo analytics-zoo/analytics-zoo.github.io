@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>AutoTSTrainer - Analytics Zoo</title>
+    <link href="/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link href="../../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "AutoTSTrainer", url: "#autotstrainer", children: [
+              {title: "Methods", url: "#methods" },
+          ]},
+        ];
+
+    </script>
+    <script src="/js/base.js"></script>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-125166209-1', 'analytics-zoo.github.io');
+        ga('send', 'pageview');
+    </script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+    
+    <h1><strong>AutoTSTrainer</strong></h1>
+    <hr>
+    <h1 id="autotstrainer">AutoTSTrainer</h1>
+<p>Chronos AutoTSTrainer is used to train a TSPipeline for forecasting using AutoML.</p>
+<p>It is built upon <a href="https://github.com/intel-analytics/analytics-zoo/tree/master/pyzoo/zoo/automl">Analytics Zoo AutoML module</a> (refer to <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/AutoML/overview/">AutoML ProgrammingGuide</a> and <a href="https://analytics-zoo.github.io/master/#APIGuide/AutoML/time-sequence-predictor/">AutoML APIGuide</a> for details), which uses <a href="https://github.com/ray-project/ray/tree/master/python/ray/tune">Ray Tune</a> for hyper parameter tuning and runs on <a href="https://analytics-zoo.github.io/master/#ProgrammingGuide/rayonspark/">Analytics Zoo RayOnSpark</a>.</p>
+<h2 id="methods">Methods</h2>
+<h3 id="__init__">__init__</h3>
+<pre><code class="python">from zoo.chronos.autots.forecast import AutoTSTrainer
+
+trainer = AutoTSTrainer(dt_col=&quot;datetime&quot;,
+                         target_col=&quot;value&quot;,
+                         horizon=1,
+                         extra_features_col=None,
+                         search_alg=None,
+                         search_alg_params=None,
+                         scheduler=None,
+                         scheduler_params=None,)
+
+</code></pre>
+
+<ul>
+<li><strong>dt_col</strong>: the column specifying datetime</li>
+<li><strong>target_col</strong>: target column to predict</li>
+<li><strong>horizon</strong> : num of steps to look forward</li>
+<li><strong>extra_feature_col</strong>: a list of columns which are also included in input as features except target column</li>
+<li><strong>search_alg</strong>: Optional(str). The search algorithm to use. We only support "bayesopt" and "skopt" for now.
+                The default search_alg is None and variants will be generated according to the search method in search space.</li>
+<li><strong>search_alg_params</strong>: Optional(Dict). params of search_alg.</li>
+<li><strong>scheduler</strong>: Optional(str). Scheduler name. Allowed scheduler names are "fifo", "async_hyperband",
+    "asynchyperband", "median_stopping_rule", "medianstopping", "hyperband", "hb_bohb", "pbt". The default scheduler is "fifo".</li>
+<li><strong>scheduler_params</strong>: Optional(Dict). Necessary params of scheduler.</li>
+</ul>
+<h3 id="fit">fit</h3>
+<p><code>python 
+fit(train_df,
+    validation_df=None,
+    metric="mse",
+    recipe: Recipe = SmokeRecipe(),
+    uncertainty: bool = False)</code></p>
+<ul>
+<li><strong>train_df</strong>: the input dataframe (as pandas.dataframe)</li>
+<li><strong>validation_df</strong>: the validation dataframe (as pandas.dataframe)</li>
+<li><strong>recipe</strong>: the configuration of searching, refer to definition in <a href="../../../APIGuide/AutoML/recipe/">automl.config.recipe</a></li>
+<li><strong>metric</strong>: the evaluation metric to optimize</li>
+<li><strong>uncertainty</strong>: whether to enable uncertainty calculation (will output an uncertainty sigma)</li>
+<li><strong>return</strong>: a TSPipeline</li>
+</ul>
+<p><strong>Note:</strong></p>
+<p>train_df and validation_df are data frames. An exmaple data frame looks like below.</p>
+<table>
+<thead>
+<tr>
+<th>datetime</th>
+<th>value</th>
+<th>extra_feature_1</th>
+<th>extra_feature_2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2019-06-06</td>
+<td>1.2</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2019-06-07</td>
+<td>2.3</td>
+<td>0</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

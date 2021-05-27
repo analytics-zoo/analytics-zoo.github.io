@@ -110,7 +110,7 @@ ray_ctx.init()
 <li><code>dt_col</code> and <code>target_col</code> are datetime cols and target column in the input dataframe </li>
 <li><code>future_seq_len</code> is how many data points ahead to predict.</li>
 </ul>
-<pre><code class="python">from zoo.zouwu.regression.time_sequence_predictor import TimeSequencePredictor
+<pre><code class="python">from zoo.chronos.regression.time_sequence_predictor import TimeSequencePredictor
 
 tsp = TimeSequencePredictor(dt_col=&quot;datetime&quot;, target_col=&quot;value&quot;, extra_features_col=None,
                             future_seq_len=1)
@@ -158,7 +158,7 @@ tsp = TimeSequencePredictor(dt_col=&quot;datetime&quot;, target_col=&quot;value&
 <ul>
 <li>Load the <em>Pipeline</em> object from a file</li>
 </ul>
-<pre><code class="python">from zoo.zouwu.pipeline.time_sequence import load_ts_pipeline
+<pre><code class="python">from zoo.chronos.pipeline.time_sequence import load_ts_pipeline
 
 pipeline = load_ts_pipeline(&quot;/tmp/saved_pipeline/my.ppl&quot;)
 </code></pre>
