@@ -134,7 +134,7 @@ sudo systemctl restart docker
 
 <h3 id="2-launch-analytics-zoo-docker-container">2. Launch Analytics Zoo Docker container</h3>
 <p>Launch an Analytics Zoo Docker container with this command line: </p>
-<pre><code>$sudo docker run -it --rm --net=host -e NotebookPort=12345 -e NotebookToken=&quot;your-token&quot; intelanalytics/analytics-zoo:latest bash
+<pre><code>$sudo docker run -it --rm --net=host -e NOTEBOOK_PORT=12345 -e NOTEBOOK_TOKEN=&quot;your-token&quot; intelanalytics/analytics-zoo:latest bash
 </code></pre>
 
 <ul>
@@ -143,15 +143,15 @@ sudo systemctl restart docker
 </ul>
 <p>If you want to specify an Analytics Zoo version, for example 0.7.0, use: </p>
 <pre><code>sudo docker run -it --rm --net=host \
-    -e NotebookPort=12345 \
-    -e NotebookToken=&quot;your-token&quot; \
+    -e NOTEBOOK_PORT=12345 \
+    -e NOTEBOOK_TOKEN=&quot;your-token&quot; \
     intelanalytics/analytics-zoo:0.7.0-bigdl_0.10.0-spark_2.4.3 bash
 </code></pre>
 
 <p>If you need to use http/https proxy, use:  </p>
 <pre><code>sudo docker run -it --rm --net=host \
-    -e NotebookPort=12345 \
-    -e NotebookToken=&quot;your-token&quot; \
+    -e NOTEBOOK_PORT=12345 \
+    -e NOTEBOOK_TOKEN=&quot;your-token&quot; \
     -e http_proxy=http://your-proxy-host:your-proxy-port \
     -e https_proxy=https://your-proxy-host:your-proxy-port \
     intelanalytics/analytics-zoo:default bash

@@ -128,8 +128,8 @@ sudo systemctl restart docker
 <pre><code class="bash">sudo docker run -itd --net=host \
     -v /etc/kubernetes:/etc/kubernetes \
     -v /root/.kube:/root/.kube \
-    -e NotebookPort=12345 \
-    -e NotebookToken=&quot;your-token&quot; \
+    -e NOTEBOOK_PORT=12345 \
+    -e NOTEBOOK_TOKEN=&quot;your-token&quot; \
     -e http_proxy=http://your-proxy-host:your-proxy-port \
     -e https_proxy=https://your-proxy-host:your-proxy-port \
     -e RUNTIME_SPARK_MASTER=k8s://https://&lt;k8s-apiserver-host&gt;:&lt;k8s-apiserver-port&gt; \
@@ -148,8 +148,8 @@ sudo systemctl restart docker
 </code></pre>
 
 <ul>
-<li>NotebookPort value 12345 is a user specified port number.</li>
-<li>NotebookToken value "your-token" is a user specified string.</li>
+<li>NOTEBOOK_PORT value 12345 is a user specified port number.</li>
+<li>NOTEBOOK_TOKEN value "your-token" is a user specified string.</li>
 <li>http_proxy is to specify http proxy.</li>
 <li>https_proxy is to specify https proxy.</li>
 <li>RUNTIME_SPARK_MASTER is to specify spark master, which should be <code>k8s://https://&lt;k8s-apiserver-host&gt;:&lt;k8s-apiserver-port&gt;</code> or <code>spark://&lt;spark-master-host&gt;:&lt;spark-master-port&gt;</code>. </li>
@@ -286,7 +286,7 @@ sudo systemctl restart docker
 
 <h3 id="run-analytics-zoo-jupyter-notebooks-on-remote-spark-cluster-or-k8s"><strong>Run Analytics Zoo Jupyter Notebooks on remote Spark cluster or k8s</strong></h3>
 <p>When started a Docker container with specified argument RUNTIME_SPARK_MASTER=<code>k8s://https://&lt;k8s-apiserver-host&gt;:&lt;k8s-apiserver-port&gt;</code> or RUNTIME_SPARK_MASTER=<code>spark://&lt;spark-master-host&gt;:&lt;spark-master-port&gt;</code>, the container will submit jobs to k8s cluster or spark cluster if you use $RUNTIME_SPARK_MASTER as url of spark master.</p>
-<p>You may also need to specify NotebookPort=<code>&lt;your-port&gt;</code> and NotebookToken=<code>&lt;your-token&gt;</code> to start Jupyter Notebook on the specified port and bind to 0.0.0.0.</p>
+<p>You may also need to specify NOTEBOOK_PORT=<code>&lt;your-port&gt;</code> and NOTEBOOK_TOKEN=<code>&lt;your-token&gt;</code> to start Jupyter Notebook on the specified port and bind to 0.0.0.0.</p>
 <p>To start the Jupyter notebooks on remote spark cluster, please use RUNTIME_SPARK_MASTER=<code>spark://&lt;spark-master-host&gt;:&lt;spark-master-port&gt;</code>, and attach the client container with command: “docker exec -it <code>&lt;container-id&gt;</code>  bash”, then run the shell script: “/opt/start-notebook-spark.sh”, this will start a Jupyter notebook instance on local container, and each tutorial in it will be submitted to the specified spark cluster. User can access the notebook with url <code>http://&lt;local-ip&gt;:&lt;your-port&gt;</code> in a preferred browser, and also need to input required  token with <code>&lt;your-token&gt;</code> to browse and run the tutorials of Analytics Zoo. Each tutorial will run driver part code in local container and run executor part code on spark cluster.</p>
 <p>To start the Jupyter notebooks on Kubernetes cluster, please use RUNTIME_SPARK_MASTER=<code>k8s://https://&lt;k8s-apiserver-host&gt;:&lt;k8s-apiserver-port&gt;</code>, and attach the client container with command: “docker exec -it <code>&lt;container-id&gt;</code>  bash”, then run the shell script: “/opt/start-notebook-k8s.sh”, this will start a Jupyter notebook instance on local container, and each tutorial in it will be submitted to the specified kubernetes cluster. User can access the notebook with url <code>http://&lt;local-ip&gt;:&lt;your-port&gt;</code> in a preferred browser, and also need to input required  token with <code>&lt;your-token&gt;</code> to browse and run the tutorials of Analytics Zoo. Each tutorial will run driver part code in local container and run executor part code in dynamic allocated spark executor pods on k8s cluster. </p>
 <h3 id="launch-analytics-zoo-cluster-serving"><strong>Launch Analytics Zoo cluster serving</strong></h3>
