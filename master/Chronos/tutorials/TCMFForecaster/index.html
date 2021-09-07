@@ -126,7 +126,7 @@ init_orca_context(cluster_mode=&quot;yarn-client&quot;,
 <li>Reference: <a href="https://analytics-zoo.github.io/master/#Orca/context/">Orca Context</a></li>
 </ul>
 <h3 id="step-2-create-a-tcmfforecaster"><strong>Step 2: Create a TCMFForecaster</strong></h3>
-<pre><code class="python">from zoo.chronos.model.forecast.tcmf_forecaster import TCMFForecaster
+<pre><code class="python">from zoo.chronos.forecast.tcmf_forecaster import TCMFForecaster
 model = TCMFForecaster(
         vbsize=128,
         hbsize=256,
@@ -176,7 +176,7 @@ model = TCMFForecaster(
                      future_dti=None,
                      num_workers=num_workers_for_predict)
 
-from zoo.automl.metrics import Evaluator
+from zoo.orca.automl.metrics import Evaluator
 evaluate_mse = Evaluator.evaluate(&quot;mse&quot;, target_data, yhat)
 </code></pre>
 
