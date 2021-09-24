@@ -131,7 +131,7 @@ init_orca_context(cluster_mode=&quot;yarn-client&quot;,
     "asynchyperband", "median_stopping_rule", "medianstopping", "hyperband", "hb_bohb", "pbt". The default scheduler is "fifo".</li>
 <li><code>scheduler_params</code>: Optional(Dict). Necessary params of scheduler.</li>
 </ul>
-<pre><code class="python">from zoo.chronos.autots.forecast import AutoTSTrainer
+<pre><code class="python">from zoo.chronos.autots.deprecated.forecast import AutoTSTrainer
 
 trainer = AutoTSTrainer(dt_col=&quot;datetime&quot;,
                         target_col=&quot;value&quot;,
@@ -183,7 +183,7 @@ ts_pipeline.predict(test_df)
 </code></pre>
 
 <p>Use <code>TSPipeline.save/load</code> to load from file or save to file. </p>
-<pre><code class="python">from zoo.chronos.autots.forecast import TSPipeline
+<pre><code class="python">from zoo.chronos.autots.deprecated.forecast import TSPipeline
 loaded_ppl = TSPipeline.load(file)
 # ... do sth. e.g. incremental fitting
 loaded_ppl.save(another_file)
